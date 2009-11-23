@@ -16,6 +16,7 @@ SCALE_HEIGHT = 'h'
 SCALE_BOTH = 'both'
 
 def scale(max_x, pair):
+    ''' scales an image to the desired size '''
     x, y = pair
     new_y = (float(max_x) / x) * y
     return (int(max_x), int(new_y))
@@ -23,6 +24,7 @@ def scale(max_x, pair):
 
 @register.filter
 def thumbnail2(file, size='200w'):
+    ''' creates a thumbnail of the picture supplied '''
     # defining the size
     if (size.lower().endswith('h')):
         mode = 'h'
@@ -79,6 +81,7 @@ Parameters in detail:
 '''
 @register.filter("thumbnail")
 def thumbnail(file, args='size=104x104'):
+    ''' creates a thumbnail of the picture supplied '''
 
     # defining the size
     params = QueryDict(args) # Getting params as a query dictionary
