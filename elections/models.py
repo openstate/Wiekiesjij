@@ -41,7 +41,7 @@ class ElectionInstance(models.Model):
     election_event  = models.ForeignKey(ElectionEvent, verbose_name=_('Election Event'))
     
     parties         = models.ManyToManyField('Party', verbose_name=_('Parties'))
-    questions       = models.ManyToManyField(settings.QUESTION_MODEL, 
+    questions       = models.ManyToManyField('questions.Question', 
                             through='ElectionInstanceQuestion', 
                             verbose_name=_('Questions'))
                             
@@ -54,7 +54,7 @@ class ElectionInstanceQuestion(models.Model):
         Has a locked property to indicate that the question is only editable for the admin
     """
     election_instance   = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
-    question            = models.ForeignKey(settings.QUESTION_MODEL, verbose_name=_('Question'))
+    question            = models.ForeignKey('questions.Question', verbose_name=_('Question'))
     
      #locked means it can only be edited by admins because it's used in multiple electioninstances
     locked              = models.BooleanField(_('Locked'), default=False)
@@ -96,7 +96,7 @@ class Candidacy(models.Model):
     election_instance   = models.ForeignKey(ElectionInstance, verbose_name=('Election Instance'))
     position            = models.PositiveIntegerField(_('Position'))
     
-    answers             = models.ManyToManyField(settings.ANSWER_MODEL, verbose_name=_('Answers'))
+    answers             = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
     
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
