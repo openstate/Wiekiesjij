@@ -1,0 +1,8 @@
+Django==1.1.1
+django-debug-toolbar==0.8.1
+South==0.6.2
+django-extensions==0.4.1
+
+
+# Source installs
+-e hg+https://bitbucket.org/jezdez/django-staticfiles/@6f803ec3df13df01d5c7192577861b5574537a4d#egg=django-staticfiles
