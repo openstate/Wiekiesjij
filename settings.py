@@ -111,9 +111,6 @@ ELECTIONS_CONTACT_LIMITATION = {'contactprofile__isnull': False}
 ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
 
-ELECTIONS_QUESTION_MODEL = 'questions.Question'
-ELECTIONS_ANSWER_MODEL = 'questions.Answer'
-
 if DEBUG:
     
     #debug_toolbar

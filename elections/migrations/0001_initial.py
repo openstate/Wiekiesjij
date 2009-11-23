@@ -5,6 +5,10 @@ from elections.models import *
 
 class Migration:
     
+    depends_on = (
+        ("questions", "0001_initial"),
+    )
+        
     def forwards(self, orm):
         
         # Adding model 'ElectionInstanceQuestion'
