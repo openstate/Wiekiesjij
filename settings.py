@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'elections',
     'political_profiles',
     'questions',
+    'utils',
 )
 
 try:
