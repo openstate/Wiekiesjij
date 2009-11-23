@@ -3,7 +3,7 @@ PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replac
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+TEMPLATE_COMMENTS = True
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -26,7 +26,7 @@ TIME_ZONE = 'Europe/Amsterdam'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'nl'
+LANGUAGE_CODE = 'EN-GB'
 
 SITE_ID = 1
 
