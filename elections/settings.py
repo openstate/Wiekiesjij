@@ -13,7 +13,7 @@ def _check_model_settings(setting, name):
     if setting is not None:
         app_label, model_name = setting.split('.')
         m = models.get_model(app_label, model_name)
-        if m is None:
+        if m is not None:
             return
     raise ImproperlyConfigured('{0} setting needs to be in the format of `app_label.model_name`'.format(name))
     
