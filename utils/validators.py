@@ -2,27 +2,44 @@
 Holds validation functions
 """
 
-def is_valid_tag(tags):
-    #letters, numbers, -
-    if not re.match('[A-Za-z0-9-,]{3,}$', tags):
-        return False
-    return True
+import re
+from django.utils.translation import ugettext_lazy as _
+from django.forms import ValidationError
 
-def is_valid_email(email):
-    if len(email) > 7:
-        if re.match("^[a-zA-Z0-9._%-+]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,6}$", email) != None:
-            return True
-    return False
+def validate_postcode(value):
+    """
+        Test if the given value is a valid postcode
+        If valid it returns a cleaned up version
+        raises ValidationError if not valid
+    """    
+    matches = re.match('^(?P<numbers>[1-9]{1}[0-9]{3})\s*(?P<letters>[A-Z]{2})$', value.strip().upper())
+    if matches is None:
+        raise ValidationError(_('%(value)s is not a valid postcode') % {'value': value})
+    return '{0}{1}'.format(matches.group('numbers'), matches.group('letters'))
 
-def is_valid_phonenumber(phone):
-    if len(phone) > 10:
-        if re.match('[0-9 -]{9,}$', phone) != None: #hope
-            return True
-    return False
-
-def is_valid_groupname(groupname):
-    #letters, numbers, _,- and + only
-    return re.match('[_A-Za-z0-9-]{3,}$', groupname)
-
-def is_valid_zipcode(zipcode):
-    return re.match('^[1-9]{1}[0-9]{3}\s?[A-Z]{2}$', zipcode)
+def validate_dutchbanknumber(value):
+    """
+        Test if the given value is a valid dutch bank account number
+        if valid it returns a cleaned up version
+        raises ValidationError if not valid
+        
+        see http://nl.wikipedia.org/wiki/Elfproef
+    """
+    special_cases = ['000000000', '111111110', '999999999']
+    
+    value = value.strip().upper()
+    # Postbank numbers, we can't really validate these
+    if re.match('^P[0-9]{3,7}$', value):
+        return value
+    
+    # We only have numbers
+    if re.match('^[0-9]+$', value):
+        result = 0
+        for position, character in enumerate(value):
+            result += int(character) * (9 - position)
+        
+        if result % 11 == 0 and value not in special_cases:
+            return value
+        
+    raise ValidationError(_('%(value)s is not a valid bank account number, postbank numbers should be prefixed with a P') % {'value': value})
+        
