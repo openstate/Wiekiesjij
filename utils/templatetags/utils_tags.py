@@ -1,0 +1,75 @@
+from django import template
+from django.template.loader import render_to_string
+from django.utils.encoding import smart_str
+
+register = template.Library()
+
+class BlockwrapNode(template.Node):
+    """
+        Wraps the nodelist using the given template and kwargs
+    """
+    def __init__(self, nodelist, template_name, extra_args):
+        self.nodelist = nodelist
+        self.kwargs = extra_args
+        self.template_name = template_name
+
+    def render(self, context):
+        kwargs = dict([(smart_str(k,'ascii'), v.resolve(context))
+                       for k, v in self.kwargs.items()])
+
+        template_name = self.template_name.resolve(context)
+        
+        # if someone added a content variable to the kwargs, tough luck
+        kwargs['content'] = self.nodelist.render(context)
+
+        template_search_list = [
+            "utils/blockwrap/_{0}.html".format(template_name),
+        ]
+        context.push()
+        result = render_to_string(template_search_list, kwargs, context)
+        context.pop()
+        return result
+
+
+@register.tag
+def blockwrap(parser, token):
+    """
+         Wraps the content using a template
+
+        Example usage::
+
+            {% blockwrap %}
+                Somecontent
+            {% endblockwrap %}
+
+        This example would render the default template 'templateblocks/default.html'
+        passing the wrapped content as a content variable to the template
+
+        Another example::
+            {% blockwrap template='myown' title='Some title'}
+                Some content
+            {% endblockwrap %}
+
+        This example would render 'templateblocks/myown.html' with in the context the title and content variables
+
+    """
+    tokens = token.split_contents()
+    kwargs = {}
+    template_name = 'default'
+
+    if len(tokens) > 2:
+        bits = iter(tokens[1:])
+        for bit in bits:
+            if '=' in bit:
+                k, v = bit.split('=', 1)
+                k = k.strip()
+                if k == 'template':
+                    template_name = parser.compile_filter(v)
+                else:
+                    kwargs[k] = parser.compile_filter(v)
+            else:
+                 raise template.TemplateSyntaxError('{0} tag only accepts keyword arguments !'.format(tokens[0]))
+
+    nodelist = parser.parse(('endblockwrap', ))
+    parser.delete_first_token()
+    return BlockwrapNode(nodelist, template_name, kwargs)
