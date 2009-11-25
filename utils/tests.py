@@ -1,13 +1,7 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
-from utils.validators import validate_postcode, validate_dutchbanknumber
 from django import forms
+
+from utils.validators import validate_postcode, validate_dutchbanknumber
 
 class PostalCodeValidationTest(TestCase):
     """
@@ -97,4 +91,7 @@ class DutchBankNumberValidationTest(TestCase):
         """
         for number in self.special_invalid_numbers:
             self.assertRaises(forms.ValidationError, validate_dutchbanknumber, number)
+        
+        
+        
         
