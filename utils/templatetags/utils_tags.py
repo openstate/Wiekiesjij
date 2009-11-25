@@ -42,7 +42,7 @@ def blockwrap(parser, token):
                 Somecontent
             {% endblockwrap %}
 
-        This example would render the default template 'templateblocks/default.html'
+        This example would render the default template 'utils/blockwrap/_default.html'
         passing the wrapped content as a content variable to the template
 
         Another example::
@@ -50,7 +50,7 @@ def blockwrap(parser, token):
                 Some content
             {% endblockwrap %}
 
-        This example would render 'templateblocks/myown.html' with in the context the title and content variables
+        This example would render 'utils/blockwrap/_myown.html' with in the context the title and content variables
 
     """
     tokens = token.split_contents()
