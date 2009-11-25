@@ -13,7 +13,7 @@ class Council(models.Model):
     region      = models.CharField(_('Region'), max_length=255) #Autocomplete other council regions
     level       = models.CharField(_('Level'), max_length=255) #Autocomplete other council levels
     
-    chancery    = models.ForeignKey(User, limit_choices_to=settings.CHANCERY_LIMITATION, verbose_name=_('Chancery'))
+    chanceries  = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION, verbose_name=_('Chanceries'))
     
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
@@ -69,7 +69,7 @@ class Party(models.Model):
     
     name    = models.CharField(_('Name'), max_length=255)
 
-    contact = models.ForeignKey(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contact'))
+    contacts = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
     
     region  = models.CharField(_('Region'), max_length=255) #autocomplete other party regions
     level   = models.CharField(_('Level'), max_length=255) #autocomplete other party levels
