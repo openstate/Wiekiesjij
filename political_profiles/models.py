@@ -3,6 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from tagging.fields import TagField
+
+
+
+# Profiles
+
 
 class Profile(models.Model):
     """
@@ -28,13 +34,38 @@ class PoliticianProfile(Profile):
     """
         A profile for a politician
     """
-    class Meta:
-        verbose_name, verbose_name_plural = _('Politician Profile'), _('Politicians Profiles')
-    
+    initials        = models.CharField(_('Level'), max_length=15)
+    gender          = models.CharField(_('Gender'), max_length=10, help_text=_("Please choose your gender."))
+    dateofbirth     = models.DateField(_('Start Date'))
+    email           = models.EmailField(_('E-Mail'))
+    picture         = models.ImageField(_('Picture'), upload_to='media/politician', height_field='height', width_field='width')
+    movie           = models.URLField(_('movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
+    introduction    = models.CharField(_('Introduction'), max_length=2550)
+    motivation      = models.CharField(_('Motivation'), max_length=2550)
+    #hobby = models.CharField(_('Hobbies'), max_length=255)
+	#charity = models.CharField(_('Favourite Charities'), max_length=255)
+    #pets =  models.CharField(_('Pets'), max_length=255)
+    #fanclubs = models.CharField(_('Fan Clubs'), max_length=255)
+    #goals		Refrence
+    #Votes		Reference
+    #Expenses	Reference
+
 class ChanceryProfile(Profile):
     """
         A profile for a chancery
     """
+    email       = models.EmailField(_('E-Mail'))
+    telephone	= models.CharField(_('Phone Number'), max_length=255)
+    workingdays = models.CharField(_('Working Days'), max_length=255)
+    street      = models.CharField(_('Street'), max_length=40)
+    house_num   = models.CharField(_('House Number'), max_length=5)
+    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town        = models.CharField(_('Town/City'), max_length=30)
+    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
+    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
+                null=True, blank=True)
+
     class Meta:
         verbose_name, verbose_name_plural = _('Chancery Profile'), _('Chancery Profiles')
     
@@ -43,6 +74,18 @@ class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
     """
+    email       = models.EmailField(_('E-Mail'))
+    telephone	= models.CharField(_('Phone Number'), max_length=255)
+    workingdays = models.CharField(_('Working Days'), max_length=255)
+    street      = models.CharField(_('Street'), max_length=40)
+    house_num   = models.CharField(_('House Number'), max_length=5)
+    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town        = models.CharField(_('Town/City'), max_length=30)
+    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    picture     = models.ImageField(_('Picture'), upload_to='media/contact', height_field='height', width_field='width')
+    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
+                null=True, blank=True)
+
     class Meta:
         verbose_name, verbose_name_plural = _('Contact Profile'), _('Contact Profiles')
 
@@ -77,3 +120,89 @@ def user_profile(u):
     return u._cached_profile
 # Python power, add the function as a property to the user
 User.profile = property(user_profile)
+
+# Profile Attribute Classes
+
+class Link():
+    """
+        A class to hold a link to the politician
+    """
+    name        = models.CharField(_('Name'), max_length=255)
+    url         = models.CharField(_('URL'), max_length=255)
+    description	= models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    class Meta:
+        verbose_name, verbose_name_plural = _('Link'), _('Links')
+
+class Interest():
+    """
+        A class to hold an interest of the politician
+    """
+    organization    = models.CharField(_('Organisation Name'), max_length=255)
+    url             = models.CharField(_('URL'), max_length=255)
+    description     = models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    class Meta:
+        verbose_name, verbose_name_plural = _('Intrest'), _('Intrests')
+
+class Appearence():
+    """
+        A class to hold an aperance (where they attended somthing) of the politician
+    """
+    name        = models.CharField(_('Affiliated Organisation Name'), max_length=255)
+    location	= models.CharField(_('Location'), max_length=255)
+    url         = models.CharField(_('URL'), max_length=255)
+    description = models.CharField(_('Description'), max_length=2550)
+    datetime    = models.DateTimeField(_('Date and Time of Appearance'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appeariences')
+
+class WorkExperience():
+    """
+        A class to hold work experience
+    """
+    company_name 	= models.CharField(_('Company Name'), max_length=255)
+    sector          = models.CharField(_('Sector'), max_length=255)
+    position        = models.CharField(_('Position'), max_length=255)
+    startdate       = models.DateField(_('Start Date'))
+    enddate         = models.DateField(_('End Date'))
+    current         = models.BooleanField(_('Currently employed'), default=False)
+    description     = models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Work experience'), _('Work experience')
+
+class Education():
+    """
+        A period of education
+    """
+    institute   = models.CharField(_('Institute Name'), max_length=255)
+    level       = models.CharField(_('Level'), max_length=255)
+    field       = models.CharField(_('Field'), max_length=255)
+    startdate   = models.DateField(_('Start Date'))
+    enddate     = models.DateField(_('End Date'))
+    description = models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Education'), _('Education')
+
+class PoliticialExperience():
+    """
+        Experience in the political world
+    """
+    organisation    = models.CharField(_('Organisation'), max_length=255)
+    type            = models.CharField(_('Level'), max_length=255)
+    position        = models.CharField(_('Level'), max_length=255)
+    startdate       = models.DateField(_('Start Date'))
+    enddate         = models.DateField(_('End Date'))
+    description     = models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    tags            = TagField()
+    class Meta:
+        verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')
+

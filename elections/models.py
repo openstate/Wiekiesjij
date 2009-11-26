@@ -8,13 +8,26 @@ class Council(models.Model):
     """
     A council
     """
-    
     name        = models.CharField(_('Name'), max_length=255)    
     region      = models.CharField(_('Region'), max_length=255) #Autocomplete other council regions
     level       = models.CharField(_('Level'), max_length=255) #Autocomplete other council levels
-    
-    chanceries  = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION, verbose_name=_('Chanceries'))
-    
+    chanceries  = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION,
+                    verbose_name=_('Chanceries'))
+    abbreviation= models.CharField(_('Abbreviated Name'), max_length=15)
+    email       = models.EmailField(_('E-Mail'))
+    street      = models.CharField(_('Street'), max_length=40)
+    house_num   = models.CharField(_('House Number'), max_length=5)
+    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town        = models.CharField(_('Town/City'), max_length=30)
+    seats       = models.PositiveIntegerField(_('Seats'), max_length=30)
+    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    picture     = models.ImageField(_('Picture'), upload_to='media/council', height_field='height', width_field='width',
+                    help_text=_("A picture that will be used when displaying council details."), null=True, blank=True)
+    desciption  = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
+                null=True, blank=True)
+    history     = models.CharField(_('History'), max_length=255 , help_text=_("A short history of the council"),
+                    null=True, blank=True)
+
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
@@ -27,7 +40,8 @@ class ElectionEvent(models.Model):
     name            = models.CharField(_('Name'), max_length=255)
     parent_region   = models.CharField(_('Parent region'), max_length=255) #autocomplete other electionevent regions
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
-    
+    desciption  = models.CharField(_('Description'), max_length=255, null=True, blank=True)
+
     class Meta:
         verbose_name, verbose_name_plural = _('Election Event'), _('Election Events')
 
@@ -39,11 +53,12 @@ class ElectionInstance(models.Model):
     
     council         = models.ForeignKey(Council, verbose_name=_('Council'))
     election_event  = models.ForeignKey(ElectionEvent, verbose_name=_('Election Event'))
-    
-    parties         = models.ManyToManyField('Party', verbose_name=_('Parties'))
-    questions       = models.ManyToManyField('questions.Question', 
-                            through='ElectionInstanceQuestion', 
-                            verbose_name=_('Questions'))
+    parties         = models.ManyToManyField('Party', verbose_name=_('Parties'), null=True, blank=True)
+    questions       = models.ManyToManyField('questions.Question', through='ElectionInstanceQuestion', verbose_name=_('Questions'), null=True, blank=True)
+    name            = models.CharField(_('Name'), max_length=255)
+    start_date      = models.DateTimeField(_('Start Date'))
+    end_date        = models.DateTimeField(_('End Date'))
+    website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
                             
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')
@@ -66,16 +81,28 @@ class Party(models.Model):
     """
         A party within an election instance
     """
-    
-    name    = models.CharField(_('Name'), max_length=255)
-
-    contacts = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
-    
     region  = models.CharField(_('Region'), max_length=255) #autocomplete other party regions
     level   = models.CharField(_('Level'), max_length=255) #autocomplete other party levels
-    
+    name        = models.CharField(_('Name'), max_length=255)
+    abbreviation= models.CharField(_('Abbreviated Name'), max_length=10)
+    website     = models.CharField(_('Parties Website'), max_length=255, null=True, blank=True)
+    contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
+    slogan      = models.CharField(_('Slogan'), max_length=255, null=True, blank=True)
+    telephone	= models.CharField(_('Phone Number'), max_length=255)
+    email		= models.EmailField(_('E-Mail'), null=True, blank=True)
+    goals		= models.CharField(_('Goals'), max_length=255, null=True, blank=True)
+    description	= models.CharField(_('Description'), max_length=255, null=True, blank=True)
+    history		= models.CharField(_('Short History'), max_length=255, null=True, blank=True)
+    manifasto_summary = models.CharField(_('Manifesto Summary'), max_length=255, null=True, blank=True)
+    manifesto   = models.CharField(_('Manifesto'), max_length=2550, null=True, blank=True)
+    logo = models.ImageField(_('Image'), upload_to='media/party', height_field='height', width_field='width', null=True, blank=True)
+
+
     class Meta:
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
+
+
+
 
 
 class Candidacy(models.Model):
@@ -83,19 +110,10 @@ class Candidacy(models.Model):
         A candidacy for a position within a council for optionally a party.
         Position indicated the number on the list.
     """
-    party               = models.ForeignKey(Party, 
-                                related_name='candidates', 
-                                null=True, 
-                                blank=True, 
-                                verbose_name=_('Party'))
-    
-    politician          = models.ForeignKey(User, 
-                                limit_choices_to=settings.POLITICIAN_LIMITATION, 
-                                verbose_name=_('Politician'))
-    
+    party               = models.ForeignKey(Party, related_name='candidates', null=True, blank=True, verbose_name=_('Party'))
+    candidate           = models.ForeignKey(User, limit_choices_to=settings.POLITICIAN_LIMITATION, verbose_name=_('Politician'))
     election_instance   = models.ForeignKey(ElectionInstance, verbose_name=('Election Instance'))
     position            = models.PositiveIntegerField(_('Position'))
-    
     answers             = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
     
     class Meta:
