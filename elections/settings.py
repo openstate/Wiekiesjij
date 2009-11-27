@@ -3,16 +3,13 @@
 """
 from django.conf import settings
 from django.db import models
+from django.core.exceptions import ImproperlyConfigured
     
 
-CONTACT_LIMITATION = {}
-if hasattr(settings, 'ELECTIONS_CONTACT_LIMITATION'):
-    CONTACT_LIMITATION = settings.ELECTIONS_CONTACT_LIMITATION
-    
-CHANCERY_LIMITATION = {}
-if hasattr(settings, 'ELECTIONS_CHANCERY_LIMITATION'):
-    CHANCERY_LIMITATION = settings.ELECTIONS_CHANCERY_LIMITATION
-    
-POLITICIAN_LIMITATION = {}
-if hasattr(settings, 'ELECTIONS_POLITICIAN_LIMITATION'):
-    POLITICIAN_LIMITATION = settings.ELECTIONS_POLITICIAN_LIMITATION
+CONTACT_LIMITATION = getattr(settings, 'ELECTIONS_CONTACT_LIMITATION', {})
+CHANCERY_LIMITATION = getattr(settings, 'ELECTIONS_CHANCERY_LIMITATION', {})
+POLITICIAN_LIMITATION = getattr(settings, 'ELECTIONS_POLITICIAN_LIMITATION', {})
+
+PROFILE_APP = getattr(settings, 'ELECTIONS_PROFILE_APP', None)
+if PROFILE_APP is None or PROFILE_APP not in settings.INSTALLED_APPS:
+    raise ImproperlyConfigured('ELECTIONS_PROFILE_APP incorrect or invalid, could not find the app "%(app)s" in the INSTALLED_APPS' % {'app': PROFILE_APP})

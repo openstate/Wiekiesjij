@@ -111,6 +111,7 @@ except ImportError:
 ELECTIONS_CONTACT_LIMITATION = {'contactprofile__isnull': False}
 ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
+ELECTIONS_PROFILE_APP = 'political_profiles'
 
 if DEBUG:
     
