@@ -19,6 +19,10 @@ class Profile(models.Model):
     middle_name = models.CharField(_('Middle name'), blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
     
+    @classmethod
+    def get_forms(cls, type):
+        raise NotImplementedError('This function should be implemented in the %r class' % cls.__name__)
+    
     class Meta:
         abstract = True
         verbose_name, verbose_name_plural = _('Profile'), _('Profiles')
