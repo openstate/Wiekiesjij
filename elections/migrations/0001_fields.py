@@ -5,10 +5,6 @@ from elections.models import *
 
 class Migration:
     
-    depends_on = (
-        ("questions", "0001_initial"),
-    )
-        
     def forwards(self, orm):
         
         # Adding model 'ElectionInstanceQuestion'
@@ -26,6 +22,7 @@ class Migration:
             ('name', orm['elections.ElectionEvent:name']),
             ('parent_region', orm['elections.ElectionEvent:parent_region']),
             ('level', orm['elections.ElectionEvent:level']),
+            ('desciption', orm['elections.ElectionEvent:desciption']),
         ))
         db.send_create_signal('elections', ['ElectionEvent'])
         
@@ -33,7 +30,7 @@ class Migration:
         db.create_table('elections_candidacy', (
             ('id', orm['elections.Candidacy:id']),
             ('party', orm['elections.Candidacy:party']),
-            ('politician', orm['elections.Candidacy:politician']),
+            ('candidate', orm['elections.Candidacy:candidate']),
             ('election_instance', orm['elections.Candidacy:election_instance']),
             ('position', orm['elections.Candidacy:position']),
         ))
@@ -45,7 +42,17 @@ class Migration:
             ('name', orm['elections.Council:name']),
             ('region', orm['elections.Council:region']),
             ('level', orm['elections.Council:level']),
-            ('chancery', orm['elections.Council:chancery']),
+            ('abbreviation', orm['elections.Council:abbreviation']),
+            ('email', orm['elections.Council:email']),
+            ('street', orm['elections.Council:street']),
+            ('house_num', orm['elections.Council:house_num']),
+            ('postcode', orm['elections.Council:postcode']),
+            ('town', orm['elections.Council:town']),
+            ('seats', orm['elections.Council:seats']),
+            ('website', orm['elections.Council:website']),
+            ('picture', orm['elections.Council:picture']),
+            ('desciption', orm['elections.Council:desciption']),
+            ('history', orm['elections.Council:history']),
         ))
         db.send_create_signal('elections', ['Council'])
         
@@ -54,16 +61,30 @@ class Migration:
             ('id', orm['elections.ElectionInstance:id']),
             ('council', orm['elections.ElectionInstance:council']),
             ('election_event', orm['elections.ElectionInstance:election_event']),
+            ('name', orm['elections.ElectionInstance:name']),
+            ('start_date', orm['elections.ElectionInstance:start_date']),
+            ('end_date', orm['elections.ElectionInstance:end_date']),
+            ('website', orm['elections.ElectionInstance:website']),
         ))
         db.send_create_signal('elections', ['ElectionInstance'])
         
         # Adding model 'Party'
         db.create_table('elections_party', (
             ('id', orm['elections.Party:id']),
-            ('name', orm['elections.Party:name']),
-            ('contact', orm['elections.Party:contact']),
             ('region', orm['elections.Party:region']),
             ('level', orm['elections.Party:level']),
+            ('name', orm['elections.Party:name']),
+            ('abbreviation', orm['elections.Party:abbreviation']),
+            ('website', orm['elections.Party:website']),
+            ('slogan', orm['elections.Party:slogan']),
+            ('telephone', orm['elections.Party:telephone']),
+            ('email', orm['elections.Party:email']),
+            ('goals', orm['elections.Party:goals']),
+            ('description', orm['elections.Party:description']),
+            ('history', orm['elections.Party:history']),
+            ('manifasto_summary', orm['elections.Party:manifasto_summary']),
+            ('manifesto', orm['elections.Party:manifesto']),
+            ('logo', orm['elections.Party:logo']),
         ))
         db.send_create_signal('elections', ['Party'])
         
@@ -79,6 +100,20 @@ class Migration:
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('electioninstance', models.ForeignKey(orm.ElectionInstance, null=False)),
             ('party', models.ForeignKey(orm.Party, null=False))
+        ))
+        
+        # Adding ManyToManyField 'Council.chanceries'
+        db.create_table('elections_council_chanceries', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('council', models.ForeignKey(orm.Council, null=False)),
+            ('user', models.ForeignKey(orm['auth.User'], null=False))
+        ))
+        
+        # Adding ManyToManyField 'Party.contacts'
+        db.create_table('elections_party_contacts', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('party', models.ForeignKey(orm.Party, null=False)),
+            ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
         
     
@@ -108,6 +143,12 @@ class Migration:
         
         # Dropping ManyToManyField 'ElectionInstance.parties'
         db.delete_table('elections_electioninstance_parties')
+        
+        # Dropping ManyToManyField 'Council.chanceries'
+        db.delete_table('elections_council_chanceries')
+        
+        # Dropping ManyToManyField 'Party.contacts'
+        db.delete_table('elections_party_contacts')
         
     
     
@@ -148,20 +189,32 @@ class Migration:
         },
         'elections.candidacy': {
             'answers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Answer']"}),
+            'candidate': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'party': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'candidates'", 'null': 'True', 'to': "orm['elections.Party']"}),
-            'politician': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'elections.council': {
-            'chancery': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'chanceries': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"}),
+            'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
+            'history': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'house_num': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'region': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
+            'region': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'seats': ('django.db.models.fields.PositiveIntegerField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'town': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'elections.electionevent': {
+            'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -170,9 +223,13 @@ class Migration:
         'elections.electioninstance': {
             'council': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.Council']"}),
             'election_event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionEvent']"}),
+            'end_date': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
-            'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']"})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']", 'null': 'True', 'blank': 'True'}),
+            'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),
+            'start_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'elections.electioninstancequestion': {
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
@@ -181,11 +238,22 @@ class Migration:
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questions.Question']"})
         },
         'elections.party': {
-            'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'contacts': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
+            'goals': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'history': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'logo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'manifasto_summary': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'manifesto': ('django.db.models.fields.CharField', [], {'max_length': '2550', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'region': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'region': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slogan': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'website': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'questions.answer': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

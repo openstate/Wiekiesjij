@@ -24,6 +24,16 @@ class Migration:
             ('first_name', orm['political_profiles.ChanceryProfile:first_name']),
             ('middle_name', orm['political_profiles.ChanceryProfile:middle_name']),
             ('last_name', orm['political_profiles.ChanceryProfile:last_name']),
+            ('email', orm['political_profiles.ChanceryProfile:email']),
+            ('telephone', orm['political_profiles.ChanceryProfile:telephone']),
+            ('workingdays', orm['political_profiles.ChanceryProfile:workingdays']),
+            ('street', orm['political_profiles.ChanceryProfile:street']),
+            ('house_num', orm['political_profiles.ChanceryProfile:house_num']),
+            ('postcode', orm['political_profiles.ChanceryProfile:postcode']),
+            ('town', orm['political_profiles.ChanceryProfile:town']),
+            ('website', orm['political_profiles.ChanceryProfile:website']),
+            ('picture', orm['political_profiles.ChanceryProfile:picture']),
+            ('description', orm['political_profiles.ChanceryProfile:description']),
         ))
         db.send_create_signal('political_profiles', ['ChanceryProfile'])
         
@@ -34,6 +44,14 @@ class Migration:
             ('first_name', orm['political_profiles.PoliticianProfile:first_name']),
             ('middle_name', orm['political_profiles.PoliticianProfile:middle_name']),
             ('last_name', orm['political_profiles.PoliticianProfile:last_name']),
+            ('initials', orm['political_profiles.PoliticianProfile:initials']),
+            ('gender', orm['political_profiles.PoliticianProfile:gender']),
+            ('dateofbirth', orm['political_profiles.PoliticianProfile:dateofbirth']),
+            ('email', orm['political_profiles.PoliticianProfile:email']),
+            ('picture', orm['political_profiles.PoliticianProfile:picture']),
+            ('movie', orm['political_profiles.PoliticianProfile:movie']),
+            ('introduction', orm['political_profiles.PoliticianProfile:introduction']),
+            ('motivation', orm['political_profiles.PoliticianProfile:motivation']),
         ))
         db.send_create_signal('political_profiles', ['PoliticianProfile'])
         
@@ -44,6 +62,16 @@ class Migration:
             ('first_name', orm['political_profiles.ContactProfile:first_name']),
             ('middle_name', orm['political_profiles.ContactProfile:middle_name']),
             ('last_name', orm['political_profiles.ContactProfile:last_name']),
+            ('email', orm['political_profiles.ContactProfile:email']),
+            ('telephone', orm['political_profiles.ContactProfile:telephone']),
+            ('workingdays', orm['political_profiles.ContactProfile:workingdays']),
+            ('street', orm['political_profiles.ContactProfile:street']),
+            ('house_num', orm['political_profiles.ContactProfile:house_num']),
+            ('postcode', orm['political_profiles.ContactProfile:postcode']),
+            ('town', orm['political_profiles.ContactProfile:town']),
+            ('website', orm['political_profiles.ContactProfile:website']),
+            ('picture', orm['political_profiles.ContactProfile:picture']),
+            ('description', orm['political_profiles.ContactProfile:description']),
         ))
         db.send_create_signal('political_profiles', ['ContactProfile'])
         
@@ -101,24 +129,52 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'political_profiles.chanceryprofile': {
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
+            'house_num': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'chanceryprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
+            'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'town': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'chanceryprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'workingdays': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'political_profiles.contactprofile': {
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
+            'house_num': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'contactprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
+            'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'town': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'contactprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'workingdays': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'political_profiles.politicianprofile': {
+            'dateofbirth': ('django.db.models.fields.DateField', [], {}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
+            'gender': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'initials': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'introduction': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
+            'motivation': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'movie': ('django.db.models.fields.URLField', [], {'max_length': '255'}),
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'politicianprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
         },
         'political_profiles.visitorprofile': {

@@ -19,7 +19,7 @@ class Council(models.Model):
     house_num   = models.CharField(_('House Number'), max_length=5)
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
-    seats       = models.PositiveIntegerField(_('Seats'), max_length=30)
+    seats       = models.PositiveIntegerField(_('Seats'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
     picture     = models.ImageField(_('Picture'), upload_to='media/council', height_field='height', width_field='width',
                     help_text=_("A picture that will be used when displaying council details."), null=True, blank=True)
