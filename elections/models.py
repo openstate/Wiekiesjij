@@ -53,7 +53,7 @@ class ElectionInstance(models.Model):
     
     council         = models.ForeignKey(Council, verbose_name=_('Council'))
     election_event  = models.ForeignKey(ElectionEvent, verbose_name=_('Election Event'))
-    parties         = models.ManyToManyField('Party', verbose_name=_('Parties'), null=True, blank=True)
+    parties         = models.ManyToManyField('Party', verbose_name=_('Parties'), through='ElectionInstanceParty')
     questions       = models.ManyToManyField('questions.Question', through='ElectionInstanceQuestion', verbose_name=_('Questions'), null=True, blank=True)
     name            = models.CharField(_('Name'), max_length=255)
     start_date      = models.DateTimeField(_('Start Date'))
@@ -61,8 +61,8 @@ class ElectionInstance(models.Model):
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
                             
     class Meta:
-        verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')
-
+        verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
+    
 class ElectionInstanceQuestion(models.Model):
     """
         Links a election instance to a question
@@ -107,13 +107,23 @@ class Candidacy(models.Model):
         A candidacy for a position within a council for optionally a party.
         Position indicated the number on the list.
     """
-    party               = models.ForeignKey(Party, related_name='candidates', null=True, blank=True, verbose_name=_('Party'))
-    candidate           = models.ForeignKey(User, limit_choices_to=settings.POLITICIAN_LIMITATION, verbose_name=_('Politician'))
-    election_instance   = models.ForeignKey(ElectionInstance, verbose_name=('Election Instance'))
-    position            = models.PositiveIntegerField(_('Position'))
-    answers             = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
+    election_party_instance     = models.ForeignKey('ElectionInstanceParty', 
+                                                verbose_name=_('Election Party Instance'), 
+                                                related_name='candidates')
+    candidate                   = models.ForeignKey(User, 
+                                        limit_choices_to=settings.POLITICIAN_LIMITATION, 
+                                        verbose_name=_('Politician'))
+    position                    = models.PositiveIntegerField(_('Position'))
+    answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
     
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
 
         
+class ElectionInstanceParty(models.Model):
+    """
+        A link between the party, the election instance and the candidates
+    """
+    election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
+    party = models.ForeignKey(Party, verbose_name=_('Party'))
+    position = models.PositiveIntegerField(_('Party Position'))
