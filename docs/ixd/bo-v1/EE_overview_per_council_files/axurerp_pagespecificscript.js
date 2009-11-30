@@ -82,7 +82,7 @@ function Clicku63(e)
 
 if (true) {
 
-	self.location.href="Party_contact_home.html" + GetQuerystring();
+	self.location.href="Council_admin_home.html" + GetQuerystring();
 
 }
 
@@ -186,7 +186,7 @@ function Clicku61(e)
 
 if (true) {
 
-	self.location.href="PC_Party_overview.html" + GetQuerystring();
+	self.location.href="CC_Council_overview.html" + GetQuerystring();
 
 }
 
@@ -212,7 +212,7 @@ function Clicku58(e)
 
 if (true) {
 
-	self.location.href="PC_Party_overview.html" + GetQuerystring();
+	self.location.href="CC_Council_overview.html" + GetQuerystring();
 
 }
 

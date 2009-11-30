@@ -74,7 +74,7 @@ function Clicku67(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
@@ -112,7 +112,7 @@ function Clicku54(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
@@ -152,7 +152,7 @@ function Clicku66(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
@@ -218,7 +218,7 @@ function Clicku60(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
@@ -238,7 +238,7 @@ function Clicku55(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
@@ -256,7 +256,7 @@ function Clicku61(e)
 
 if (true) {
 
-	self.location.href="EE_overview_per_party.html" + GetQuerystring();
+	self.location.href="EE_overview_per_council.html" + GetQuerystring();
 
 }
 
