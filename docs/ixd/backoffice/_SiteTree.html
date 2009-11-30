@@ -1,0 +1,227 @@
+<HTML><HEAD><meta http-equiv="content-type" content="text/html; charset=utf-8"><link href="Resources/axurerpprototype.css" type="text/css" rel="stylesheet"></HEAD>
+<BODY>
+<A href=# onclick='parent.CloseSitemap()' style='font-size:8pt'>Close Frames</A><br><br>
+
+<SCRIPT LANGUAGE="JavaScript">
+image1 = new Image();
+image1.src = 'Resources/plus.gif';
+
+function CloseSitemap()
+{
+	parent.URL = parent.mainFrame.URL
+}
+
+function ToggleDiv(node, id)
+{
+	sibling = document.getElementById(id);
+	if (sibling.style.display == 'none')
+	{
+		if (node.childNodes.length > 0)
+		{
+			if (node.childNodes[0].tagName == "IMG")
+			{
+				node.childNodes[0].src = "Resources/minus.gif";
+			}
+		}
+
+		sibling.style.display = '';
+	}
+	else
+	{
+		if (node.childNodes.length > 0)
+		{
+			if (node.childNodes[0].tagName == "IMG")
+			{
+				node.childNodes[0].src = "Resources/plus.gif";
+			}
+		}
+		sibling.style.display = 'none';
+	}
+}
+
+var currentPage = null;
+
+function highlight(id)
+{
+	if (currentPage != null)
+	{
+		currentPage.style.backgroundColor = '#EEEEFF';
+		currentPage.style.paddingLeft = '0px';
+		currentPage.style.paddingRight = '0px';
+		currentPage.style.border = '0px solid #666666';
+	}
+	
+	currentPage = document.getElementById(id);
+    if (currentPage) {
+	    currentPage.style.backgroundColor = '#DDDDDD';
+	    currentPage.style.paddingLeft = '3px';
+	    currentPage.style.paddingRight = '3px';
+	    currentPage.style.border = '1px solid #666666';
+    }
+}
+
+</SCRIPT>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD nowrap><IMG SRC="Resources/transparent.gif" WIDTH=17px HEIGHT=9px><A onclick="parent.mainFrame.location='EE_overview.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p828e4fac312445ec808e81c2d2260cc7">EE overview</SPAN></A><DIV id="td828e4fac312445ec808e81c2d2260cc7">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD nowrap><A onclick="ToggleDiv(this, 'df7220c149338481c994f4d3ac1ebc556')"><IMG SRC="Resources/minus.gif"></A>&nbsp;&nbsp;<A onclick="parent.mainFrame.location='EI_overview.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pf7220c149338481c994f4d3ac1ebc556">EI overview</SPAN></A><DIV id="df7220c149338481c994f4d3ac1ebc556">
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_1_-_base_info.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p120163c57dd54bd890858664a8ab6458">add 1 - base info</SPAN></A><DIV id="td120163c57dd54bd890858664a8ab6458">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_1.5_-_chancellery_registration.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p6989b26f5bca48709c216403341419f7">add 1.5 - chancellery registration</SPAN></A><DIV id="td6989b26f5bca48709c216403341419f7">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_2_-_election_details.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p25abb035b0734d28a932092f3c13caea">add 2 - election details</SPAN></A><DIV id="td25abb035b0734d28a932092f3c13caea">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_3_-_council_info.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pa4dfe8e318cf490b818c3974db21063f">add 3 - council info</SPAN></A><DIV id="tda4dfe8e318cf490b818c3974db21063f">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_4_-_styling.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p7a67de6760b04b498cb117af6c7e553e">add 4 - styling</SPAN></A><DIV id="td7a67de6760b04b498cb117af6c7e553e">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_5_-_select_prev_parties.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pd84eba01fa524cedb128faa01b2f825c">add 5 - select prev parties</SPAN></A><DIV id="tdd84eba01fa524cedb128faa01b2f825c">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD nowrap><A onclick="ToggleDiv(this, 'd8eb82fb61ac1419e8fa51bea9cfd6dbe')"><IMG SRC="Resources/minus.gif"></A>&nbsp;&nbsp;<A onclick="parent.mainFrame.location='Party_overview.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p8eb82fb61ac1419e8fa51bea9cfd6dbe">Party overview</SPAN></A><DIV id="d8eb82fb61ac1419e8fa51bea9cfd6dbe">
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_1_-_base_info_1.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p3710464552ad4080b4588fc6f2fdd494">add 1 - base info</SPAN></A><DIV id="td3710464552ad4080b4588fc6f2fdd494">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add__1.5_-_party_contact_reg..html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p00e1572b2fcc46c98290eee6efb5850d">add&nbsp; 1.5 - party contact reg.</SPAN></A><DIV id="td00e1572b2fcc46c98290eee6efb5850d">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_2_-_party_info.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pb09fc0e067cc4544b3a4ba64a1040c21">add 2 - party info</SPAN></A><DIV id="tdb09fc0e067cc4544b3a4ba64a1040c21">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_3_-_party_contacts.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p8c39f97303b3474685a451eaeae4f3bc">add 3 - party contacts</SPAN></A><DIV id="td8c39f97303b3474685a451eaeae4f3bc">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='batch_add_1.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p0c1c14974c774a599e41c15ae2fee31a">batch add 1</SPAN></A><DIV id="td0c1c14974c774a599e41c15ae2fee31a">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='batch_add_2.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p6ec98b1b944b408eafb9dc4ca1b6afe8">batch add 2</SPAN></A><DIV id="td6ec98b1b944b408eafb9dc4ca1b6afe8">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD nowrap><A onclick="ToggleDiv(this, 'd91a1de43f8b34e9c919d5af5bd25897a')"><IMG SRC="Resources/minus.gif"></A>&nbsp;&nbsp;<A onclick="parent.mainFrame.location='Candidate.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p91a1de43f8b34e9c919d5af5bd25897a">Candidate</SPAN></A><DIV id="d91a1de43f8b34e9c919d5af5bd25897a">
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_1_-_new_candidate.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p83b193cd30674bb79be2038139eb6471">add 1 - new candidate</SPAN></A><DIV id="td83b193cd30674bb79be2038139eb6471">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='add_1_-_invite_info.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pf11f0cc87b8747269a524c6b244e3890">add 1 - invite info</SPAN></A><DIV id="tdf11f0cc87b8747269a524c6b244e3890">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='batch_add_1_-_template.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p6758a95ea8134689ac81a397efa034c7">batch add 1 - template</SPAN></A><DIV id="td6758a95ea8134689ac81a397efa034c7">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='batch_add_2_-_upload.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="p1e414c2eb34a47f4ae1955ebc3d2198d">batch add 2 - upload</SPAN></A><DIV id="td1e414c2eb34a47f4ae1955ebc3d2198d">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE BORDER="0" cellspacing="0" cellpadding="0">
+	<TR>
+		<TD WIDTH="30" nowrap>&nbsp;</TD>
+		<TD nowrap><A onclick="parent.mainFrame.location='batch_add_3_-_confirm.html'"><IMG class="plusminus" SRC="Resources/page.gif" border=0><SPAN id="pbdc774bd328f465abbed9b5ed7d2716e">batch add 3 - confirm</SPAN></A><DIV id="tdbdc774bd328f465abbed9b5ed7d2716e">
+			</DIV>
+		</TD>
+	</TR>
+</TABLE>
+			</DIV>
+		</TD>
+	</TR>
+</TABLE></BODY></HTML>
