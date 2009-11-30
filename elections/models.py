@@ -102,9 +102,6 @@ class Party(models.Model):
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
 
-
-
-
 class Candidacy(models.Model):
     """
         A candidacy for a position within a council for optionally a party.
