@@ -52,7 +52,7 @@ function Clicku109(e)
 
 if (true) {
 
-	self.location.href="batch_add_1_1.html" + GetQuerystring();
+	self.location.href="batch_add_1_-_template.html" + GetQuerystring();
 
 }
 
@@ -308,7 +308,7 @@ function Clicku113(e)
 
 if (true) {
 
-	self.location.href="batch_add_1_1.html" + GetQuerystring();
+	self.location.href="batch_add_1_-_template.html" + GetQuerystring();
 
 }
 
@@ -348,7 +348,7 @@ function Clicku111(e)
 
 if (true) {
 
-	self.location.href="batch_add_1_1.html" + GetQuerystring();
+	self.location.href="batch_add_1_-_template.html" + GetQuerystring();
 
 }
 

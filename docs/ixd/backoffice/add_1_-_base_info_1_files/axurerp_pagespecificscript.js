@@ -68,6 +68,8 @@ var u45 = document.getElementById('u45');
 gv_vAlignTable['u45'] = 'center';
 var u51 = document.getElementById('u51');
 gv_vAlignTable['u51'] = 'top';
+var u79 = document.getElementById('u79');
+gv_vAlignTable['u79'] = 'top';
 var u42 = document.getElementById('u42');
 
 var u26 = document.getElementById('u26');
@@ -81,39 +83,11 @@ gv_vAlignTable['u76'] = 'top';
 var u14 = document.getElementById('u14');
 
 var u67 = document.getElementById('u67');
-
-u67.style.cursor = 'pointer';
-if (bIE) u67.attachEvent("onclick", Clicku67);
-else u67.addEventListener("click", Clicku67, true);
-function Clicku67(e)
-{
-
-if (true) {
-
-	self.location.href="add_2_-_party_info.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u67'] = 'center';
 var u20 = document.getElementById('u20');
 
 var u73 = document.getElementById('u73');
-
-u73.style.cursor = 'pointer';
-if (bIE) u73.attachEvent("onclick", Clicku73);
-else u73.addEventListener("click", Clicku73, true);
-function Clicku73(e)
-{
-
-if (true) {
-
-	SetPanelStateu53("pd1u53");
-
-}
-
-}
-
+gv_vAlignTable['u73'] = 'top';
 var u48 = document.getElementById('u48');
 
 var u4 = document.getElementById('u4');
@@ -123,7 +97,7 @@ gv_vAlignTable['u11'] = 'center';
 var u64 = document.getElementById('u64');
 gv_vAlignTable['u64'] = 'center';
 var u70 = document.getElementById('u70');
-
+gv_vAlignTable['u70'] = 'top';
 var u39 = document.getElementById('u39');
 gv_vAlignTable['u39'] = 'center';
 var u55 = document.getElementById('u55');
@@ -143,7 +117,7 @@ var u0 = document.getElementById('u0');
 var u24 = document.getElementById('u24');
 
 var u77 = document.getElementById('u77');
-
+gv_vAlignTable['u77'] = 'top';
 var u30 = document.getElementById('u30');
 
 var u58 = document.getElementById('u58');
@@ -153,42 +127,28 @@ gv_vAlignTable['u15'] = 'center';
 var u21 = document.getElementById('u21');
 gv_vAlignTable['u21'] = 'center';
 var u74 = document.getElementById('u74');
-gv_vAlignTable['u74'] = 'top';
+
+u74.style.cursor = 'pointer';
+if (bIE) u74.attachEvent("onclick", Clicku74);
+else u74.addEventListener("click", Clicku74, true);
+function Clicku74(e)
+{
+
+if (true) {
+
+	SetPanelStateu53("pd1u53");
+
+}
+
+}
+
 var u49 = document.getElementById('u49');
 gv_vAlignTable['u49'] = 'center';
 var u12 = document.getElementById('u12');
 
 var u65 = document.getElementById('u65');
-
-u65.style.cursor = 'pointer';
-if (bIE) u65.attachEvent("onclick", Clicku65);
-else u65.addEventListener("click", Clicku65, true);
-function Clicku65(e)
-{
-
-if (true) {
-
-	self.location.href="EI_overview.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u65'] = 'top';
 var u71 = document.getElementById('u71');
-
-u71.style.cursor = 'pointer';
-if (bIE) u71.attachEvent("onclick", Clicku71);
-else u71.addEventListener("click", Clicku71, true);
-function Clicku71(e)
-{
-
-if (true) {
-
-	SetPanelStateu53("pd0u53");
-
-}
-
-}
 
 var u62 = document.getElementById('u62');
 gv_vAlignTable['u62'] = 'top';
@@ -209,7 +169,21 @@ var u34 = document.getElementById('u34');
 var u40 = document.getElementById('u40');
 
 var u68 = document.getElementById('u68');
-gv_vAlignTable['u68'] = 'center';
+
+u68.style.cursor = 'pointer';
+if (bIE) u68.attachEvent("onclick", Clicku68);
+else u68.addEventListener("click", Clicku68, true);
+function Clicku68(e)
+{
+
+if (true) {
+
+	self.location.href="add_2_-_party_info.html" + GetQuerystring();
+
+}
+
+}
+
 var u25 = document.getElementById('u25');
 gv_vAlignTable['u25'] = 'center';
 var u31 = document.getElementById('u31');
@@ -223,7 +197,21 @@ gv_vAlignTable['u75'] = 'top';
 var u8 = document.getElementById('u8');
 
 var u72 = document.getElementById('u72');
-gv_vAlignTable['u72'] = 'top';
+
+u72.style.cursor = 'pointer';
+if (bIE) u72.attachEvent("onclick", Clicku72);
+else u72.addEventListener("click", Clicku72, true);
+function Clicku72(e)
+{
+
+if (true) {
+
+	SetPanelStateu53("pd0u53");
+
+}
+
+}
+
 var u56 = document.getElementById('u56');
 
 var u47 = document.getElementById('u47');
@@ -241,13 +229,13 @@ gv_vAlignTable['u50'] = 'top';
 var u19 = document.getElementById('u19');
 gv_vAlignTable['u19'] = 'center';
 var u78 = document.getElementById('u78');
-gv_vAlignTable['u78'] = 'top';
+
 var u7 = document.getElementById('u7');
 gv_vAlignTable['u7'] = 'center';
 var u41 = document.getElementById('u41');
 gv_vAlignTable['u41'] = 'center';
 var u69 = document.getElementById('u69');
-gv_vAlignTable['u69'] = 'top';
+gv_vAlignTable['u69'] = 'center';
 var u32 = document.getElementById('u32');
 
 var u16 = document.getElementById('u16');
@@ -257,7 +245,21 @@ gv_vAlignTable['u9'] = 'center';
 var u13 = document.getElementById('u13');
 gv_vAlignTable['u13'] = 'center';
 var u66 = document.getElementById('u66');
-gv_vAlignTable['u66'] = 'center';
+
+u66.style.cursor = 'pointer';
+if (bIE) u66.attachEvent("onclick", Clicku66);
+else u66.addEventListener("click", Clicku66, true);
+function Clicku66(e)
+{
+
+if (true) {
+
+	self.location.href="EI_overview.html" + GetQuerystring();
+
+}
+
+}
+
 var u6 = document.getElementById('u6');
 
 var u35 = document.getElementById('u35');
