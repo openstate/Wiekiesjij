@@ -6,10 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
 
 
-
 # Profiles
-
-
 class Profile(models.Model):
     """
     A abstract profile, put general shared profile information in here
@@ -18,10 +15,6 @@ class Profile(models.Model):
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
     middle_name = models.CharField(_('Middle name'), blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
-    
-    @classmethod
-    def get_forms(cls, type):
-        raise NotImplementedError('This function should be implemented in the %r class' % cls.__name__)
     
     class Meta:
         abstract = True
@@ -72,8 +65,10 @@ class ChanceryProfile(Profile):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Chancery Profile'), _('Chancery Profiles')
-    
-    
+    #Expenses	Reference
+
+
+
 class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
@@ -92,6 +87,7 @@ class ContactProfile(Profile):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Contact Profile'), _('Contact Profiles')
+    #Expenses	Reference
 
 def user_profile(u):
     """
@@ -125,6 +121,7 @@ def user_profile(u):
 # Python power, add the function as a property to the user
 User.profile = property(user_profile)
 
+
 # Profile Attribute Classes
 
 class Link():
@@ -135,6 +132,7 @@ class Link():
     url         = models.CharField(_('URL'), max_length=255)
     description	= models.CharField(_('Description'), max_length=2550)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+
     class Meta:
         verbose_name, verbose_name_plural = _('Link'), _('Links')
 
@@ -146,6 +144,7 @@ class Interest():
     url             = models.CharField(_('URL'), max_length=255)
     description     = models.CharField(_('Description'), max_length=2550)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+
     class Meta:
         verbose_name, verbose_name_plural = _('Intrest'), _('Intrests')
 
@@ -159,7 +158,6 @@ class Appearence():
     description = models.CharField(_('Description'), max_length=2550)
     datetime    = models.DateTimeField(_('Date and Time of Appearance'))
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
-
 
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appeariences')
@@ -195,7 +193,7 @@ class Education():
     class Meta:
         verbose_name, verbose_name_plural = _('Education'), _('Education')
 
-class PoliticialExperience():
+class PoliticalExperience():
     """
         Experience in the political world
     """
