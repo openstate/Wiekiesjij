@@ -21,6 +21,7 @@ class Question(models.Model):
     
     title           = models.CharField(_('Title'), max_length=255)
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
+    weight          = models.PositiveIntegerField(_('Weight'), default=1,)
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')

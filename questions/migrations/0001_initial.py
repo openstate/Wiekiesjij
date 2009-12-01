@@ -19,6 +19,7 @@ class Migration:
             ('id', orm['questions.Question:id']),
             ('title', orm['questions.Question:title']),
             ('question_type', orm['questions.Question:question_type']),
+            ('weight', orm['questions.Question:weight']),
         ))
         db.send_create_signal('questions', ['Question'])
         
@@ -64,7 +65,8 @@ class Migration:
         'questions.question': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})
         },
         'questions.questionset': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
