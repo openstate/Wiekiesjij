@@ -46,6 +46,8 @@ class PoliticianProfile(Profile):
     #goals		Refrence
     #Votes		Reference
     #Expenses	Reference
+    class Meta:
+        verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
 
 class ChanceryProfile(Profile):
     """
