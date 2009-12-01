@@ -29,12 +29,20 @@ class Migration:
         # Adding model 'Candidacy'
         db.create_table('elections_candidacy', (
             ('id', orm['elections.Candidacy:id']),
-            ('party', orm['elections.Candidacy:party']),
+            ('election_party_instance', orm['elections.Candidacy:election_party_instance']),
             ('candidate', orm['elections.Candidacy:candidate']),
-            ('election_instance', orm['elections.Candidacy:election_instance']),
             ('position', orm['elections.Candidacy:position']),
         ))
         db.send_create_signal('elections', ['Candidacy'])
+        
+        # Adding model 'ElectionInstanceParty'
+        db.create_table('elections_electioninstanceparty', (
+            ('id', orm['elections.ElectionInstanceParty:id']),
+            ('election_instance', orm['elections.ElectionInstanceParty:election_instance']),
+            ('party', orm['elections.ElectionInstanceParty:party']),
+            ('position', orm['elections.ElectionInstanceParty:position']),
+        ))
+        db.send_create_signal('elections', ['ElectionInstanceParty'])
         
         # Adding model 'Council'
         db.create_table('elections_council', (
@@ -95,13 +103,6 @@ class Migration:
             ('answer', models.ForeignKey(orm['questions.Answer'], null=False))
         ))
         
-        # Adding ManyToManyField 'ElectionInstance.parties'
-        db.create_table('elections_electioninstance_parties', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('electioninstance', models.ForeignKey(orm.ElectionInstance, null=False)),
-            ('party', models.ForeignKey(orm.Party, null=False))
-        ))
-        
         # Adding ManyToManyField 'Council.chanceries'
         db.create_table('elections_council_chanceries', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
@@ -129,6 +130,9 @@ class Migration:
         # Deleting model 'Candidacy'
         db.delete_table('elections_candidacy')
         
+        # Deleting model 'ElectionInstanceParty'
+        db.delete_table('elections_electioninstanceparty')
+        
         # Deleting model 'Council'
         db.delete_table('elections_council')
         
@@ -140,9 +144,6 @@ class Migration:
         
         # Dropping ManyToManyField 'Candidacy.answers'
         db.delete_table('elections_candidacy_answers')
-        
-        # Dropping ManyToManyField 'ElectionInstance.parties'
-        db.delete_table('elections_electioninstance_parties')
         
         # Dropping ManyToManyField 'Council.chanceries'
         db.delete_table('elections_council_chanceries')
@@ -190,9 +191,8 @@ class Migration:
         'elections.candidacy': {
             'answers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Answer']"}),
             'candidate': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
+            'election_party_instance': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'candidates'", 'to': "orm['elections.ElectionInstanceParty']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'party': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'candidates'", 'null': 'True', 'to': "orm['elections.Party']"}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'elections.council': {
@@ -226,10 +226,16 @@ class Migration:
             'end_date': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']", 'null': 'True', 'blank': 'True'}),
+            'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
             'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),
             'start_date': ('django.db.models.fields.DateTimeField', [], {}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
+        },
+        'elections.electioninstanceparty': {
+            'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'party': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.Party']"}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'elections.electioninstancequestion': {
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
