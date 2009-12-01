@@ -49,21 +49,20 @@ def get_profile_wizards(for_function, type):
         Get a list of forms to use for the <type> action
     """
     politician_form_wizard_map = {
-            'create': [PoliticianProfileFormWizard],
-            'edit': [PoliticianProfileFormWizard],
-            'invite': [PoliticianProfileFormWizard],
+            #'create': [PoliticianProfileFormWizard],
+            #'edit': [PoliticianProfileFormWizard],
+            #'invite': [PoliticianProfileFormWizard],
             }
     chancery_form_wizard_map = {
-            'create': [ChanceryProfileFormWizard],
-            'edit': [ChanceryProfileFormWizard],
-            'invite': [ChanceryProfileFormWizard],
+            #'create': [ChanceryProfileFormWizard],
+            #'edit': [ChanceryProfileFormWizard],
+            #'invite': [ChanceryProfileFormWizard],
             }
     contact_form_wizard_map = {
-            'create': [ContactProfileFormWizard],
-            'edit': [ContactProfileFormWizard],
-            'invite': [ContactProfileFormWizard],
+            #'create': [ContactProfileFormWizard],
+            #'edit': [ContactProfileFormWizard],
+            #'invite': [ContactProfileFormWizard],
             }
-
 
     if model_map[for_function] == PoliticianProfile:
         return politician_form_wizard_map[type]

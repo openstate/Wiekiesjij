@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
-
+from django.contrib.formtools.wizard import FormWizard
 
 class PoliticianProfileForm(forms.ModelForm):
     '''
@@ -78,5 +78,3 @@ class PoliticalExperienceForm(forms.ModelForm):
 
     class Meta:
         model = PoliticalExperience
-
-
