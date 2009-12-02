@@ -1,21 +1,16 @@
 from django.db import models
 from questions.models import Question, Answer
 from elections.models import Party
+from django.contrib.auth.models import User
 
 class PoliticianAnswerCache(models.Model):
-    _db = null
+    politician = models.ForeignKey(User, related_name="%(class)s", unique=True, verbose_name=_('User'))
+    question = models.ForeignKey(Question, related_name="%(class)s", unique=True, verbose_name=_('Question'))
+    answer = models.CharField(_('Answer'), related_name="%(class)s", max_length=255, verbose_name=_('Answer'))
 
     class Meta:
         db_table = 'pol_answer_cache'
-
-    def _db(self):
-        if not self._db:
-            #self._db =
-        '''
-        if (!self::$_db)
-			self::$_db = DBs::inst(DBs::SYSTEM);
-		return self::$_db;
-        '''
+        unique_together = (('politician', 'question'),)
 
     @staticmethod
     def fetch(*args, **kargs):
@@ -26,15 +21,11 @@ class PoliticianAnswerCache(models.Model):
 
     @staticmethod
     def invalidate_politician(self, politician_id):
-        query = 'DELETE FROM {0} WHERE politician_id = {1}'.format(self._meta.db_table, politician_id)
-        return query
-        # TODO return query result
+        return PoliticianAnswerCache.objects.filter(politician_id=politician_id).delete()
 
     @staticmethod
     def invalidate_question(self, question_id):
-        query = 'DELETE FROM {0} WHERE question_id = {1}'.format(self._meta.db_table, question_id)
-        return query
-        # TODO return query result
+        return PoliticianAnswerCache.objects.filter(question_id=question_id).delete()
 
     @staticmethod
     def revalidate(self, politician_id):
@@ -48,6 +39,7 @@ class PoliticianAnswerCache(models.Model):
 			WHERE t.id IS NULL'
         ''' + ('' if not politician_id else ' AND v.politician_id = {0}'.format(politician_id))
         invalidated_entries_query = invalidated_entries_query.format(self._meta.db_table)
+
 
 class Match:
     @staticmethod
