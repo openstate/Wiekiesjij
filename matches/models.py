@@ -15,9 +15,25 @@ class PoliticianAnswerCache(models.Model):
     @staticmethod
     def fetch(*args, **kargs):
         '''
-        TODO - translate from PHP
+        TODO - translate from PHP still.
         '''
-        where = ''
+        '''
+        $args = func_get_args();
+		$where = $args ? ' '.call_user_func_array(array(self::db(), 'formatQuery'), $args) : '';
+		$raw = self::db()->query('SELECT t.* FROM %t t%l', self::$tableName, $where)->fetchAllRows();
+		$data = array();
+		foreach ($raw as $row)
+			$data[$row['politician_id']][$row['question_id']][] = $row['answer'];
+		return $data;
+        '''
+
+        where = '' if not args else args
+        raw = PoliticianAnswerCache.objects.filter(where)
+        data = {}
+        for row in raw:
+            data[row.politician_id] = {}
+            data[row.politician_id][row.question_id] = row.answer
+        return data
 
     @staticmethod
     def invalidate_politician(self, politician_id):
@@ -29,7 +45,11 @@ class PoliticianAnswerCache(models.Model):
 
     @staticmethod
     def revalidate(self, politician_id):
+        '''
+        TODO - change this, as for now it won't work at all.
+        '''
         questions = Question.objects.filter()
+
         invalidated_entries_query = '''SELECT v.question_id, v.politician_id
 			FROM (
 				SELECT p.id AS politician_id, q.id AS question_id
@@ -39,6 +59,58 @@ class PoliticianAnswerCache(models.Model):
 			WHERE t.id IS NULL'
         ''' + ('' if not politician_id else ' AND v.politician_id = {0}'.format(politician_id))
         invalidated_entries_query = invalidated_entries_query.format(self._meta.db_table)
+        '''
+        require_once('Question.class.php');
+		require_once('PoliticianExtended.class.php');
+		$question = new Question();
+		$questions = $question->select()->get();
+
+		$invalidatedEntries = self::db()->query('
+			SELECT v.question_id, v.politician_id
+			FROM (
+				SELECT p.id AS politician_id, q.id AS question_id
+				FROM politicians_extended p, questions q
+			) v LEFT JOIN %t t
+			USING (question_id, politician_id)
+			WHERE t.id IS NULL'.
+			($politicianId ? ' AND v.politician_id = %' : ''),
+			self::$tableName, $politicianId
+		)->fetchAllCells(false, 'politician_id');
+
+		if (!$invalidatedEntries) return;
+
+		$politician = new PoliticianExtended();
+		$politicians = $politician->select()->where('t1.id IN (%l)', implode(', ', array_map('intval', array_keys($invalidatedEntries))))->get();
+
+		foreach ($politicians as $pol)
+			foreach ($invalidatedEntries[$pol->id] as $qid) {
+				$question = $questions[$qid];
+				if (!$question->field)
+					$answer = array();
+				else {
+					@list($field, $subfield) = explode('.', $question->field, 2);
+					$answer = $pol->$field;
+					if ($answer instanceof RecordCollection)
+						$answer = $answer->toArray();
+					if ($subfield)
+						if (is_array($answer))
+							$answer = array_map(create_function('$x', 'return $x->'.$subfield.';'), $answer);
+						else
+							$answer = array($answer->$subfield);
+					if (!is_array($answer))
+						$answer = array($answer);
+					$answer = array_filter(array_unique(array_flatten($answer)), 'is_scalar');
+				}
+				if (!$answer) $answer = array(null);
+				foreach ($answer as $ans)
+					self::db()->query(
+						'INSERT INTO %t (politician_id, question_id, answer) VALUES (%, %, %)',
+						self::$tableName, $pol->id, $qid, $ans
+					);
+			}
+        '''
+
+
 
 
 class Match:
@@ -130,5 +202,5 @@ class Match:
         return scores
 
 '''
-TODO - move this finally to the test
+TODO - write a test for this.
 '''

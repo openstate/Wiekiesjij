@@ -170,4 +170,22 @@ def f8(*args, **kargs):
     print 'args: ', args
     print 'kargs: ', kargs
 
-f8(['fds', '123', lambda x: x + 1], 'fdsfsdjkfdsjkfjsk', {'fd': '7789789fdskfldsklfsdfsdl'}, method='post', type='get', func=(lambda y: 10 ** y))
+#f8(['fds', '123', lambda x: x + 1], 'fdsfsdjkfdsjkfjsk', {'fd': '7789789fdskfldsklfsdfsdl'}, method='post', type='get', func=(lambda y: 10 ** y))
+
+def f9():
+    data = ({'id': 1, 'title': 'Lorem', 'visible': True},
+            {'id': 2, 'title': 'Lorem2', 'visible': True},
+            {'id': 3, 'title': 'Lorem3', 'visible': False},
+            {'id': 4, 'title': 'Lorem4', 'visible': True},
+            {'id': 5, 'title': 'Lorem5', 'visible': False},
+            {'id': 6, 'title': 'Lorem6', 'visible': True})
+
+    raw = {}
+
+    for row in data:
+        raw[row['id']] = {}
+        raw[row['id']]['title'] = (row['title'], row['visible'])
+
+    print raw
+
+f9()
