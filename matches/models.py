@@ -86,6 +86,24 @@ class Match:
 
                 scores[politician_id] += sc
 
+        
+        '''
+        asort($scores);
+		$scores = array_reverse($scores, true);
+		$scores = array_slice($scores, 0, $limit, true);
+
+		if (!$scores) return array();
+
+		foreach ($scores as $key => &$val)
+			$val = array(
+				'politician_id' => $key,
+				'score' => (int) round($val / $totalScore * 100),
+				'detail' => $detailScores[$key]
+			);
+		unset($val);
+
+		return array_values($scores);
+        '''
 
 '''
 TODO - move this finally to the test
