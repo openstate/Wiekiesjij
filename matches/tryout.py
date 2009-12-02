@@ -99,7 +99,69 @@ def f4():
     dict={'one': '1', 'three': '3', 'four': '4', 'two': '2', 'nine': '9', 'z': 'z', 'a': 'a', 'b': 'b'}
 
     print 'Before: ', dict
-    print 'After: ', sorted(dict.items(), lambda x, y: cmp(x[1], y[1]))
-    print 'Final: ', 
+    sorted_dict = sorted(dict.items(), lambda x, y: cmp(x[1], y[1]))
+    sorted_dict_reverse = sorted(dict.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
+    print 'After (normal sorting): ', sorted_dict
+    print 'After (reversed sorting): ', sorted_dict_reverse
+    print 'After limiting: ', sorted_dict_reverse[0:2]
 
-f4()
+    for key, value in sorted_dict_reverse:
+        print 'Key: ', key
+        print 'Value: ', value
+        value = '123456'
+    
+    print sorted_dict_reverse
+#f4()
+
+def f5():
+    def passCheck(b):
+        b = 'new'
+
+    def doesThisLanguageBindByValue(language):
+        a = 'original'
+        b = a
+        b = 'new'
+        if a == 'original':
+            print "%s assigns by value" % (language)
+        else:
+            print "%s does not assigns by value" % (language)
+
+    a = 'original'
+    passCheck(a)
+    if a == 'original':
+        print "%s passes by value" % (language)
+    else:
+        print "%s does not pass by value" % (language)
+
+    doesThisLanguageBindByValue('Python')
+
+#f5()
+
+def f6():
+    n = 10.45
+    result = round(n, 0)
+    print result
+
+    result = int(result)
+    print result
+
+#f6()
+
+
+def f7():
+    list = [('z', 'z'), ('b', 'b'), ('a', 'a'), ('nine', '9'), ('four', '4'), ('three', '3'), ('two', '2'), ('one', '1')]
+
+    print list
+    data = []
+
+
+    for key, value in list:
+        data.append(value)
+        #list[key] = 123
+
+    print data
+
+    del data
+
+    #print data
+f7()

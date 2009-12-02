@@ -86,24 +86,20 @@ class Match:
 
                 scores[politician_id] += sc
 
-        
-        '''
-        asort($scores);
-		$scores = array_reverse($scores, true);
-		$scores = array_slice($scores, 0, $limit, true);
+        tmp_scores = sorted(dict.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)[0:limit]
 
-		if (!$scores) return array();
+        if not tmp_scores:
+            return []
 
-		foreach ($scores as $key => &$val)
-			$val = array(
-				'politician_id' => $key,
-				'score' => (int) round($val / $totalScore * 100),
-				'detail' => $detailScores[$key]
-			);
-		unset($val);
+        scores = []
+        for key, val in tmp_scores:
+            scores.append({'politician_id': key,
+                           'score': int(round(val / total_score * 100)),
+                           'detail': detail_scores[key]})
 
-		return array_values($scores);
-        '''
+        del tmp_scores
+
+        return scores
 
 '''
 TODO - move this finally to the test
