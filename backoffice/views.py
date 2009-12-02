@@ -47,4 +47,5 @@ def election_instance_add(request):
     steps = Step('add_election_instance', step_args)
     add_election_wizard = MultiPathFormWizard(steps)
     return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
-                              context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))=======
+
