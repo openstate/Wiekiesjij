@@ -5,8 +5,8 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
-from utils.validators import is_valid_zipcode, is_valid_phonenumber
-from utils.fields import ZipCodeField, PhoneField
+#from utils.validators import 
+#from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 
 
@@ -27,6 +27,7 @@ class CouncilForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Council
+        exclude = ('chanceries')
 
 
 class ElectionEventForm(BetterModelForm, TemplateForm):
@@ -44,6 +45,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = ElectionInstance
+        fields = ('name', 'start_date', 'end_date', 'website' )
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''

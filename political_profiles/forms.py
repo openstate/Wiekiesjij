@@ -1,10 +1,12 @@
+from form_utils.forms import BetterModelForm
+from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from django.contrib.formtools.wizard import FormWizard
 
-class PoliticianProfileForm(forms.ModelForm):
+class PoliticianProfileForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
@@ -14,7 +16,7 @@ class PoliticianProfileForm(forms.ModelForm):
 
 
 
-class ChanceryProfileForm(forms.ModelForm):
+class ChanceryProfileForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
@@ -23,7 +25,7 @@ class ChanceryProfileForm(forms.ModelForm):
         model = ChanceryProfile
 
 
-class ContactProfileForm(forms.ModelForm):
+class ContactProfileForm(BetterModelForm, TemplateForm):
     '''
     Contact Profile admin
     '''
@@ -31,7 +33,7 @@ class ContactProfileForm(forms.ModelForm):
     class Meta:
         model = ContactProfile
 
-class LinkForm(forms.ModelForm):
+class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin
     '''
@@ -39,7 +41,7 @@ class LinkForm(forms.ModelForm):
     class Meta:
         model = Link
 
-class InterestForm(forms.ModelForm):
+class InterestForm(BetterModelForm, TemplateForm):
     '''
     Interest admin
     '''
@@ -47,7 +49,7 @@ class InterestForm(forms.ModelForm):
     class Meta:
         model = Interest
 
-class AppearenceForm(forms.ModelForm):
+class AppearenceForm(BetterModelForm, TemplateForm):
     '''
     Appearence admin
     '''
@@ -55,7 +57,7 @@ class AppearenceForm(forms.ModelForm):
     class Meta:
         model = Appearence
 
-class WorkExperienceForm(forms.ModelForm):
+class WorkExperienceForm(BetterModelForm, TemplateForm):
     '''
     WorkExperience admin
     '''
@@ -63,7 +65,7 @@ class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperience
 
-class EducationForm(forms.ModelForm):
+class EducationForm(BetterModelForm, TemplateForm):
     '''
     Education admin
     '''
@@ -71,7 +73,7 @@ class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
 
-class PoliticalExperienceForm(forms.ModelForm):
+class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     '''
     PoliticalExperience admin
     '''
