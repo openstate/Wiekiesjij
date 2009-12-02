@@ -194,4 +194,14 @@ def f10():
     print True if None else False
     print True if '' else False
 
-f10()
+#f10()
+
+def f11():
+    data = ({'id': 1, 'title': 'Lorem', 'visible': True},
+            {'id': 2, 'title': 'Lorem2', 'visible': True},
+            {'id': 3, 'title': 'Lorem3', 'visible': False},
+            {'id': 4, 'title': 'Lorem4', 'visible': True},
+            {'id': 5, 'title': 'Lorem5', 'visible': False},
+            {'id': 6, 'title': 'Lorem6', 'visible': True})
+
+f11()

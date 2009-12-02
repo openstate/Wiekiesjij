@@ -1,4 +1,5 @@
 from django.db import models
+from working-copy1.political_profiles.models import politician
 from questions.models import Question, Answer
 from political_profiles.models import PoliticianProfile
 from elections.models import Party
@@ -58,6 +59,11 @@ class PoliticianAnswerCache(models.Model):
 
         politician = PoliticianProfile.objects.filter(user__in=(','.join(map(lambda x: int(x.politician_id), invalidated_entries))))
 
+        politician = map(lambda x: {int(x.id): x}, politician)
+
+        for pol in politician:
+            for qid in invalidated_entries[pol.id]:
+                pass
         '''
         require_once('Question.class.php');
 		require_once('PoliticianExtended.class.php');

@@ -1,0 +1,38 @@
+<HTML><HEAD><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="imagetoolbar" content="no"><link href="Resources/axurerppage.css" type="text/css" rel="stylesheet"></HEAD><BODY>
+<script type="text/javascript">
+function InitializeSubmenu(submenucontainerid, tablecellroid, tablecellid, fname) { 
+var s = "";
+s = s + "function " + fname + "() { ";
+s = s + "document.getElementById(submenucontainerid).style.visibility='';";
+s = s + "BringToFront(submenucontainerid);";
+s = s + "}";
+if ((index = navigator.userAgent.indexOf("MSIE")) >= 0)
+s = s + "document.getElementById('" + tablecellid + "').attachEvent(\"onmouseover\", " + fname + ");";
+else
+s = s + "document.getElementById('" + tablecellid + "').addEventListener(\"mouseover\", " + fname + ", true);";
+s = s + "document.getElementById(tablecellroid).onclick = function() {";
+s = s + "if( document.createEvent ) {";
+s = s + "var evObj = document.createEvent('MouseEvents');";
+s = s + "evObj.initEvent( 'click', true, false );";
+s = s + "document.getElementById(tablecellid).dispatchEvent(evObj);";
+s = s + "} else if( document.createEventObject ) {";
+s = s + "document.getElementById(tablecellid).fireEvent('onclick');";
+s = s + "}";
+s = s + "}";
+eval(s);
+}
+</script>
+
+<DIV id=u0 style="position:absolute; left:50px; top:110px; width:100px; height:22px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u0_rtf><span style=" font-family:'Arial'; color:#0000FF; font-size:19px;"><u><b>Admin</b></u></span></DIV></DIV>
+<DIV id=u1 style="position:absolute; left:50px; top:160px; width:140px; height:22px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u1_rtf><span style=" font-family:'Arial'; color:#0000FF; font-size:19px;"><u>Chancellery</u></span></DIV></DIV>
+<DIV id=u2 style="position:absolute; left:50px; top:208px; width:150px; height:22px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u2_rtf><span style=" font-family:'Arial'; color:#0000FF; font-size:19px;"><u>Party Contact</u></span></DIV></DIV>
+<DIV id=u3 style="position:absolute; left:50px; top:30px; width:470px; height:58px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u3_rtf><span style=" font-family:'Arial'; color:#000000; font-size:19px;">Enter Backoffice as one of the following roles:</span><br><span style=" font-family:'Arial'; color:#000000; font-size:16px;">(Note: this is after the first login. first login will display wizard, and so does an invite-link)</span></DIV></DIV>
+<DIV id=u4 style="position:absolute; left:210px; top:164px; width:710px; height:18px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u4_rtf><span style=" font-family:'Arial'; color:#000000; font-size:16px;">Note: some things like breadcrumbs wont be correct on 'deeper' pages, due to reuse of pages</span></DIV></DIV>
+<DIV id=u5 style="position:absolute; left:210px; top:210px; width:710px; height:18px; ; ; text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;" >
+<DIV id=u5_rtf><span style=" font-family:'Arial'; color:#000000; font-size:16px;">Note: some things like breadcrumbs wont be correct on 'deeper' pages, due to reuse of pages</span></DIV></DIV><SCRIPT src="Resources/axurerp_pagescript.js"></SCRIPT>
+<SCRIPT src="0_entry-points_files/axurerp_pagespecificscript.js"></SCRIPT></BODY></HTML>
