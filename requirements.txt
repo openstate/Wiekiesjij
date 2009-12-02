@@ -7,3 +7,4 @@ django-form-utils==0.1.6
 
 # Source installs
 -e hg+https://bitbucket.org/jezdez/django-staticfiles/@6f803ec3df13df01d5c7192577861b5574537a4d#egg=django-staticfiles
+-e svn+http://django-tagging.googlecode.com/svn/trunk/#egg=django-tagging
