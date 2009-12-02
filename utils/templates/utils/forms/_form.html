@@ -1,0 +1,27 @@
+{% block content %}
+	{% block form_errors %}
+		{% if form.non_field_errors %}
+			<div class="errors">
+				{% for error in form.non_field_errors %}
+				<p class="error">{{ error }}</p>
+			 	{% endfor %}
+			</div>	
+		{% endif %}
+	{% endblock form_errors %}
+	
+	{% block fieldsets %}
+		{% for fieldset in form.fieldsets %}
+			<fieldset class="{% if fieldset.classes %}{{ fieldset.classes }}{% else %}default{% endif %}">
+			{% if fieldset.legend %}
+				<legend>{{ fieldset.legend }}</legend>
+			{% endif %}
+				
+			{% block fields %}
+				{% for field in fieldset %}
+				    {% include field_template %}
+				{% endfor %}
+			{% endblock fields %}
+			</fieldset>
+		{% endfor %}
+	{% endblock fieldsets %}
+{% endblock content %}

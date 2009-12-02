@@ -1,0 +1,20 @@
+{% load form_tags %}
+{% block field %}
+{% if field.is_hidden %}
+	{{ field }}
+{% else %}
+<div id="field-{{ field.auto_id }}" class="field {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
+	<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label.title }}</label>
+	{% block description %}{% endblock description %}
+	{{ field|with_class }}
+	<div id="{{ field.auto_id }}-help" class="help">
+		{% if field.help_text %}
+			<p>{{ field.help_text }}</p>
+		{% endif %}
+		{% for error in field.errors %}
+			<p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="error">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+{% endblock field %}

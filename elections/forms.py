@@ -1,14 +1,16 @@
+from form_utils.forms import BetterModelForm
+from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
-from utils.validators import is_valid_zipcode, is_valid_phonenumber
-from utils.fields import ZipCodeField, PhoneField
+#from utils.validators import 
+#from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 
 
-class CandidacyForm(forms.ModelForm):
+class CandidacyForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
@@ -18,16 +20,17 @@ class CandidacyForm(forms.ModelForm):
 
 
 
-class CouncilForm(forms.ModelForm):
+class CouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
 
     class Meta:
         model = Council
+        exclude = ('chanceries')
 
 
-class ElectionEventForm(forms.ModelForm):
+class ElectionEventForm(BetterModelForm, TemplateForm):
     '''
     Contact Profile admin
     '''
@@ -35,15 +38,16 @@ class ElectionEventForm(forms.ModelForm):
     class Meta:
         model = ElectionEvent
 
-class ElectionInstanceForm(forms.ModelForm):
+class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
     Link admin
     '''
 
     class Meta:
         model = ElectionInstance
+        fields = ('name', 'start_date', 'end_date', 'website' )
 
-class ElectionInstanceQuestionForm(forms.ModelForm):
+class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''
     Interest admin
     '''
@@ -51,7 +55,7 @@ class ElectionInstanceQuestionForm(forms.ModelForm):
     class Meta:
         model = ElectionInstanceQuestion
 
-class PartyForm(forms.ModelForm):
+class PartyForm(BetterModelForm, TemplateForm):
     '''
     Appearence admin
     '''

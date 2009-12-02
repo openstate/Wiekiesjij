@@ -1,0 +1,7 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+	{% block content %}
+		{{ election_events }}
+         <a href="/backoffice/add_election_instance/">{% trans "Add Election Instance" %}</a>
+
+	{% endblock content %}

@@ -1,0 +1,51 @@
+--- utils_tags ----
+Has general tags.
+
+
+----- Blockwrap ----
+
+Wraps the content in a template.
+Usage:
+{% blockwrap %}
+    Somecontent
+{% endblockwrap %}
+
+As default it will use the utils/blockwrap/_default.html template and just wrap it in a div with a class block:
+<div class="block">
+  Somecontent
+</div>
+
+Changing the template to use can be done by passing it a templatename:
+
+{% blockwrap template='myown' %}
+  Somecontent
+{% endblockwrap %}
+
+It will then use the utils/blockwrap/_myown.html template.
+It will pass the content of the block as the context variable content
+
+You can also pass it other variables if needed:
+
+{% blockwrap title='MyTitle' %}
+  Somecontent
+{% endblockwrap %}
+
+It will then also pass title to the context.
+
+
+
+  
+--- form_tags ---
+
+----- get_class -----
+A filter which expects to be applied to a form field.
+It will return a string representing the widget's class. 
+The idea is that you can then use it as a css class and apply specific styling for the widget.
+
+----- get_required_class ----
+A filter which exptect to be applied to a form field.
+It will return 'required' or 'optional' depending on if the field is required or not
+
+---- with_class ----
+A filter which exptect to be applied to a form field.
+Used the get_class and get_required_class methods to add the results as css classes to the field.
