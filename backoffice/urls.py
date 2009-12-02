@@ -7,6 +7,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     url(r'^/$', 'backoffice.views.election_event',name='backoffice.election_event'),
-    url(r'^add_election_instance/$', 'backoffice.views.election_instance_add', name='backoffice.add_election_instance'),
+    url(r'^/add_election_instance/$', 'backoffice.views.election_instance_add', name='backoffice.add_election_instance'),
 
 )

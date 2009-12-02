@@ -14,7 +14,9 @@ from django.contrib.auth.decorators import login_required
 from elections.models import ElectionEvent
 #from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
-from elections.forms import ElectionInstanceForm
+from elections.forms import ElectionInstanceForm, CouncilForm
+from political_profiles.forms import ChanceryProfileForm
+
 
 #@login_required
 def election_event(request):
@@ -27,14 +29,19 @@ def election_instance_add(request):
 
     step_args = dict(
             forms = dict( #list of forms for this page as name => form_class
-                    form        = ElectionInstanceForm,
+                    chancery_form = ChanceryProfileForm,
+                    election_instance_form        = ElectionInstanceForm,
+                    council_form       = CouncilForm,
+                    
                 ),
             prefixes = dict( # name => prefix; if not set, then name is used
-                    form     = 'main_form',
-                    linkform = 'link_form',
+                    
                 ),
             initial = dict( # initial value (dict, model object, query set etc)
-                    form     = None,
+                    chancery_form = None,
+                    election_instance_form     = None,
+                    council_form = None,
+                    
                 ),
 
             # optional extra content, will be passed to step template
@@ -44,8 +51,11 @@ def election_instance_add(request):
             #template = 'foo/bar.html'
         )
 
-    steps = Step('add_election_instance', step_args)
+    steps = Step('add_election_instance', forms=step_args['forms'], template='backoffice/wizard/step1.html')
+    
     add_election_wizard = MultiPathFormWizard(steps)
-    return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
-                              context_instance=RequestContext(request))=======
+
+    return add_election_wizard(request)
+    #return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
+    #                          context_instance=RequestContext(request))
 
