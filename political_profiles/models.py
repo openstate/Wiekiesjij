@@ -15,6 +15,8 @@ class Profile(models.Model):
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
     middle_name = models.CharField(_('Middle name'), blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
+
+
     
     class Meta:
         abstract = True
@@ -24,6 +26,9 @@ class VisitorProfile(Profile):
     """
         A profile for visitors of the website when they "register"
     """
+    def __unicode__(self):
+        return self.user.username
+
     class Meta:
         verbose_name, verbose_name_plural = _('Visitor Profile'), _('Visitor Profiles')
     
@@ -46,6 +51,8 @@ class PoliticianProfile(Profile):
     #goals		Refrence
     #Votes		Reference
     #Expenses	Reference
+    def __unicode__(self):
+        return self.user.username
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
 
@@ -61,9 +68,12 @@ class ChanceryProfile(Profile):
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
+    picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Chancery Profile'), _('Chancery Profiles')
@@ -83,9 +93,12 @@ class ContactProfile(Profile):
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/contact', height_field='height', width_field='width')
+    picture     = models.ImageField(_('Picture'), upload_to='media/contact')
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Contact Profile'), _('Contact Profiles')

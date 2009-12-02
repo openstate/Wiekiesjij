@@ -34,6 +34,7 @@ class DutchPostcodeField(CharField):
             kwargs.update({'max_length': 7})
         if not 'help_text' in kwargs.keys():
             kwargs.update({'help_text': _('For example 1234 AA')})
+        print kwargs
         super(DutchPostcodeField, self).__init__(*args, **kwargs)
     
     def clear(self, value):

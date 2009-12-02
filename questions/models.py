@@ -21,7 +21,10 @@ class Question(models.Model):
     
     title           = models.CharField(_('Title'), max_length=255)
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
-    
+
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
     
@@ -32,6 +35,9 @@ class QuestionSet(models.Model):
     """
     name        = models.CharField(_('Name'), max_length=255)
     question    = models.ManyToManyField(Question, verbose_name=_('Questions'))
+
+    def __unicode__(self):
+        return self.name
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question set'), _('Question sets')
@@ -43,3 +49,6 @@ class Answer(models.Model):
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'))
     value       = models.TextField(_('Value'))
+
+    def __unicode__(self):
+        return self.question
