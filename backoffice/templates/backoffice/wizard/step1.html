@@ -1,0 +1,5 @@
+<form method="post">
+    {% for form in forms.values %}
+        {{ form.as_template }}
+    {% endfor %}
+</form>
