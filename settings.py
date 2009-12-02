@@ -99,7 +99,7 @@ INSTALLED_APPS = (
     'political_profiles',
     'questions',
     'utils',
-    
+    'invitations',
     'backoffice',
 )
 
