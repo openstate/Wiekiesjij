@@ -1,4 +1,5 @@
 from django import forms
+from django.template import loader, Context
 
 class TemplateForm(object):
     """
@@ -56,15 +57,12 @@ class TemplateForm(object):
         Renders a form from a template
         """
         
-        template_name = getattr(self, '_template_name', 'utils/forms/form.html')            
+        template_name = getattr(self, '_template_name', 'utils/forms/_form.html')            
         self.tpl = loader.get_template(template_name)
 
         context_dict = dict(
-            non_field_errors=self.non_field_errors(),
-            fields=[ forms.forms.BoundField(self, field, name) for name, field in self.fields.iteritems()],
-            errors=self.errors,
-            data=self.data,
             form=self,
+            field_template = getattr(self, '_field_template_name', 'utils/forms/_form_field.html'),
         )
 
         if getattr(self, 'initial', None):
