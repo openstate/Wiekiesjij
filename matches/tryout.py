@@ -188,4 +188,10 @@ def f9():
 
     print raw
 
-f9()
+#f9()
+
+def f10():
+    print True if None else False
+    print True if '' else False
+
+f10()

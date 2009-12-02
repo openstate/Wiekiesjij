@@ -1,5 +1,6 @@
 from django.db import models
 from questions.models import Question, Answer
+from political_profiles.models import PoliticianProfile
 from elections.models import Party
 from django.contrib.auth.models import User
 
@@ -17,6 +18,7 @@ class PoliticianAnswerCache(models.Model):
         '''
         TODO - translate from PHP still.
         '''
+
         '''
         $args = func_get_args();
 		$where = $args ? ' '.call_user_func_array(array(self::db(), 'formatQuery'), $args) : '';
@@ -50,15 +52,12 @@ class PoliticianAnswerCache(models.Model):
         '''
         questions = Question.objects.filter()
 
-        invalidated_entries_query = '''SELECT v.question_id, v.politician_id
-			FROM (
-				SELECT p.id AS politician_id, q.id AS question_id
-				FROM politicians_extended p, questions q
-			) v LEFT JOIN {0} t
-			USING (question_id, politician_id)
-			WHERE t.id IS NULL'
-        ''' + ('' if not politician_id else ' AND v.politician_id = {0}'.format(politician_id))
-        invalidated_entries_query = invalidated_entries_query.format(self._meta.db_table)
+        invalidated_entries = PoliticianAnswerCache.objects.filter()
+        if politician_id:
+            invalidated_entries = invalidated_entries.filter(politician_id=politician_id)
+
+        politician = PoliticianProfile.objects.filter(user__in=(','.join(map(lambda x: int(x.politician_id), invalidated_entries))))
+
         '''
         require_once('Question.class.php');
 		require_once('PoliticianExtended.class.php');
