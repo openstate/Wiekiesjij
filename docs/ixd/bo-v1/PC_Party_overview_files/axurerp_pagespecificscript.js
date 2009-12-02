@@ -72,7 +72,7 @@ function Clicku51(e)
 
 if (true) {
 
-	self.location.href="EE_overview.html" + GetQuerystring();
+	self.location.href="1_EE_overview.html" + GetQuerystring();
 
 }
 

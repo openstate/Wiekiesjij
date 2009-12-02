@@ -54,7 +54,7 @@ function Clicku64(e)
 
 if (true) {
 
-	self.location.href="Party_overview.html" + GetQuerystring();
+	self.location.href="3_Party_overview.html" + GetQuerystring();
 
 }
 

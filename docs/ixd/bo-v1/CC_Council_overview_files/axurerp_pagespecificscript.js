@@ -130,7 +130,7 @@ function Clicku55(e)
 
 if (true) {
 
-	self.location.href="Party_overview.html" + GetQuerystring();
+	self.location.href="3_Party_overview.html" + GetQuerystring();
 
 }
 
@@ -146,7 +146,7 @@ function Clicku61(e)
 
 if (true) {
 
-	self.location.href="Party_overview.html" + GetQuerystring();
+	self.location.href="3_Party_overview.html" + GetQuerystring();
 
 }
 
@@ -214,7 +214,7 @@ function Clicku71(e)
 
 if (true) {
 
-	self.location.href="add_1_-_base_info_1.html" + GetQuerystring();
+	self.location.href="3_1_add_1_-_base_info.html" + GetQuerystring();
 
 }
 
@@ -264,7 +264,7 @@ function Clicku75(e)
 
 if (true) {
 
-	self.location.href="add_1_-_base_info_1.html" + GetQuerystring();
+	self.location.href="3_1_add_1_-_base_info.html" + GetQuerystring();
 
 }
 
