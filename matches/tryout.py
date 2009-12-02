@@ -164,4 +164,10 @@ def f7():
     del data
 
     #print data
-f7()
+#f7()
+
+def f8(*args, **kargs):
+    print 'args: ', args
+    print 'kargs: ', kargs
+
+f8(['fds', '123', lambda x: x + 1], 'fdsfsdjkfdsjkfjsk', {'fd': '7789789fdskfldsklfsdfsdl'}, method='post', type='get', func=(lambda y: 10 ** y))

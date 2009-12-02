@@ -3,15 +3,51 @@ from questions.models import Question, Answer
 from elections.models import Party
 
 class PoliticianAnswerCache(models.Model):
+    _db = null
+
     class Meta:
         db_table = 'pol_answer_cache'
 
+    def _db(self):
+        if not self._db:
+            #self._db =
+        '''
+        if (!self::$_db)
+			self::$_db = DBs::inst(DBs::SYSTEM);
+		return self::$_db;
+        '''
+
     @staticmethod
-    def fetch():
+    def fetch(*args, **kargs):
         '''
         TODO - translate from PHP
         '''
-        pass
+        where = ''
+
+    @staticmethod
+    def invalidate_politician(self, politician_id):
+        query = 'DELETE FROM {0} WHERE politician_id = {1}'.format(self._meta.db_table, politician_id)
+        return query
+        # TODO return query result
+
+    @staticmethod
+    def invalidate_question(self, question_id):
+        query = 'DELETE FROM {0} WHERE question_id = {1}'.format(self._meta.db_table, question_id)
+        return query
+        # TODO return query result
+
+    @staticmethod
+    def revalidate(self, politician_id):
+        questions = Question.objects.filter()
+        invalidated_entries_query = '''SELECT v.question_id, v.politician_id
+			FROM (
+				SELECT p.id AS politician_id, q.id AS question_id
+				FROM politicians_extended p, questions q
+			) v LEFT JOIN {0} t
+			USING (question_id, politician_id)
+			WHERE t.id IS NULL'
+        ''' + ('' if not politician_id else ' AND v.politician_id = {0}'.format(politician_id))
+        invalidated_entries_query = invalidated_entries_query.format(self._meta.db_table)
 
 class Match:
     @staticmethod
