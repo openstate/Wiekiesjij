@@ -38,7 +38,7 @@ class PoliticianProfile(Profile):
     picture         = models.ImageField(_('Picture'), upload_to='media/politician', height_field='height', width_field='width')
     width           = models.PositiveIntegerField(editable=False, default=0, null=True)
     height          = models.PositiveIntegerField(editable=False, default=0, null=True)
-    movie           = models.URLField(_('movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
+    movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
     introduction    = models.CharField(_('Introduction'), max_length=2550)
     motivation      = models.CharField(_('Motivation'), max_length=2550)
     #hobby = models.CharField(_('Hobbies'), max_length=255)
@@ -105,7 +105,7 @@ class Link(models.Model):
     name        = models.CharField(_('Name'), max_length=255)
     url         = models.CharField(_('URL'), max_length=255)
     description	= models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Link'), _('Links')
@@ -117,7 +117,7 @@ class Interest(models.Model):
     organization    = models.CharField(_('Organisation Name'), max_length=255)
     url             = models.CharField(_('URL'), max_length=255)
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Intrest'), _('Intrests')
@@ -131,7 +131,7 @@ class Appearence(models.Model):
     url         = models.CharField(_('URL'), max_length=255)
     description = models.CharField(_('Description'), max_length=2550)
     datetime    = models.DateTimeField(_('Date and Time of Appearance'))
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appeariences')
@@ -147,7 +147,7 @@ class WorkExperience(models.Model):
     enddate         = models.DateField(_('End Date'))
     current         = models.BooleanField(_('Currently employed'), default=False)
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Work experience'), _('Work experience')
@@ -162,7 +162,7 @@ class Education(models.Model):
     startdate   = models.DateField(_('Start Date'))
     enddate     = models.DateField(_('End Date'))
     description = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Education'), _('Education')
@@ -177,7 +177,7 @@ class PoliticalExperience(models.Model):
     startdate       = models.DateField(_('Start Date'))
     enddate         = models.DateField(_('End Date'))
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('poitician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
     tags            = TagField()
     class Meta:
         verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')

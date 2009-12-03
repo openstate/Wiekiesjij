@@ -4,9 +4,8 @@ from utils.multipathform import MultiPathFormWizard, Step
 
 # Even though your IDE might say this is an unused import, please do not remove the following Form imports
 from political_profiles.forms import *
-from elections.forms import *
 
-def instance_view(request, profile_type):
+def form_view(request, profile_type):
     try:
         formslist = dict(
             generic_form = globals()[profile_type],
