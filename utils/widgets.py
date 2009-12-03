@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 class AddressWidget(forms.widgets.MultiWidget):
     """
-        Widget for an address field
+        Widget for an address field bit
     """
     
     TEMPLATE = """
@@ -40,14 +40,15 @@ class AddressWidget(forms.widgets.MultiWidget):
         widgets = (
             forms.widgets.TextInput(),
             forms.widgets.TextInput(attrs={'size': 10}),
-            forms.widgets.TextInput(attrs={'size': 10}),
+            forms.widgets.TextInput(attrs={'size': 7}),
             forms.widgets.TextInput(),
         )
         super(AddressWidget, self).__init__(widgets, attrs)
     
     def decompress(self, value):
         if value:
-            return value.split(" ", 4)
+            matches = value.match("^(.+) (\d+.*) (\d+.*) (.+)$", value)
+            return [matches.group(1), matches.group(2), matches.group(3), matches.group(4)]
         else:
             return [None, None, None, None]
         

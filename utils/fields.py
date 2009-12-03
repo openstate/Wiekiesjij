@@ -64,6 +64,15 @@ class AddressField(MultiValueField):
         )
         super(AddressField, self).__init__(fields, *args, **kwargs)
         
+        
     def compress(self, data_list):
-        return " ".join(data_list)
+        """
+            returns a dict with the values
+        """
+        return {
+            'street': data_list[0],
+            'number': data_list[1],
+            'postalcode': data_list[2],
+            'city': data_list[3],
+        }
     
