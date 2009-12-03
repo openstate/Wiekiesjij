@@ -42,26 +42,16 @@ function OnLoad() {
 
 }
 
+var u71 = document.getElementById('u71');
+gv_vAlignTable['u71'] = 'top';
 var u20 = document.getElementById('u20');
 
 var u64 = document.getElementById('u64');
-
-u64.style.cursor = 'pointer';
-if (bIE) u64.attachEvent("onclick", Clicku64);
-else u64.addEventListener("click", Clicku64, true);
-function Clicku64(e)
-{
-
-if (true) {
-
-	self.location.href="3_Party_overview.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u64'] = 'top';
 var u51 = document.getElementById('u51');
 gv_vAlignTable['u51'] = 'top';
+var u70 = document.getElementById('u70');
+gv_vAlignTable['u70'] = 'top';
 var u36 = document.getElementById('u36');
 
 var u31 = document.getElementById('u31');
@@ -74,20 +64,26 @@ var u27 = document.getElementById('u27');
 gv_vAlignTable['u27'] = 'center';
 var u6 = document.getElementById('u6');
 
+var u67 = document.getElementById('u67');
+
 var u4 = document.getElementById('u4');
 
+var u73 = document.getElementById('u73');
+gv_vAlignTable['u73'] = 'top';
 var u2 = document.getElementById('u2');
 
 var u10 = document.getElementById('u10');
 
 var u0 = document.getElementById('u0');
 
+var u69 = document.getElementById('u69');
+
 var u26 = document.getElementById('u26');
 
 var u49 = document.getElementById('u49');
 gv_vAlignTable['u49'] = 'center';
 var u63 = document.getElementById('u63');
-gv_vAlignTable['u63'] = 'top';
+
 var u35 = document.getElementById('u35');
 gv_vAlignTable['u35'] = 'center';
 var u29 = document.getElementById('u29');
@@ -98,10 +94,14 @@ var u8 = document.getElementById('u8');
 
 var u34 = document.getElementById('u34');
 
+var u68 = document.getElementById('u68');
+gv_vAlignTable['u68'] = 'top';
 var u14 = document.getElementById('u14');
 
 var u48 = document.getElementById('u48');
 
+var u72 = document.getElementById('u72');
+gv_vAlignTable['u72'] = 'top';
 var u28 = document.getElementById('u28');
 
 var u44 = document.getElementById('u44');
@@ -143,17 +143,17 @@ gv_vAlignTable['u5'] = 'center';
 var u15 = document.getElementById('u15');
 gv_vAlignTable['u15'] = 'center';
 var u56 = document.getElementById('u56');
-
+gv_vAlignTable['u56'] = 'center';
 var u3 = document.getElementById('u3');
 gv_vAlignTable['u3'] = 'center';
 var u65 = document.getElementById('u65');
-gv_vAlignTable['u65'] = 'center';
+
 var u1 = document.getElementById('u1');
 gv_vAlignTable['u1'] = 'center';
 var u25 = document.getElementById('u25');
 gv_vAlignTable['u25'] = 'center';
 var u59 = document.getElementById('u59');
-gv_vAlignTable['u59'] = 'top';
+gv_vAlignTable['u59'] = 'center';
 var u43 = document.getElementById('u43');
 gv_vAlignTable['u43'] = 'center';
 var u16 = document.getElementById('u16');
@@ -167,35 +167,35 @@ gv_vAlignTable['u9'] = 'center';
 var u30 = document.getElementById('u30');
 
 var u60 = document.getElementById('u60');
-
-u60.style.cursor = 'pointer';
-if (bIE) u60.attachEvent("onclick", Clicku60);
-else u60.addEventListener("click", Clicku60, true);
-function Clicku60(e)
-{
-
-if (true) {
-
-	self.location.href="add_1_-_new_candidate.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u60'] = 'top';
 var u24 = document.getElementById('u24');
 
 var u46 = document.getElementById('u46');
 
 var u55 = document.getElementById('u55');
-gv_vAlignTable['u55'] = 'top';
+
+u55.style.cursor = 'pointer';
+if (bIE) u55.attachEvent("onclick", Clicku55);
+else u55.addEventListener("click", Clicku55, true);
+function Clicku55(e)
+{
+
+if (true) {
+
+	self.location.href="#" + GetQuerystring();
+
+}
+
+}
+
 var u38 = document.getElementById('u38');
 
 var u61 = document.getElementById('u61');
-gv_vAlignTable['u61'] = 'center';
+
 var u18 = document.getElementById('u18');
 
 var u62 = document.getElementById('u62');
-
+gv_vAlignTable['u62'] = 'top';
 var u32 = document.getElementById('u32');
 
 var u42 = document.getElementById('u42');
@@ -203,5 +203,19 @@ var u42 = document.getElementById('u42');
 var u23 = document.getElementById('u23');
 gv_vAlignTable['u23'] = 'center';
 var u58 = document.getElementById('u58');
+
+u58.style.cursor = 'pointer';
+if (bIE) u58.attachEvent("onclick", Clicku58);
+else u58.addEventListener("click", Clicku58, true);
+function Clicku58(e)
+{
+
+if (true) {
+
+	self.location.href="3_Party_overview.html" + GetQuerystring();
+
+}
+
+}
 
 if (window.OnLoad) OnLoad();

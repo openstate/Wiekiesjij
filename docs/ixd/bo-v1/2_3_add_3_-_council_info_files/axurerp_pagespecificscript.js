@@ -49,7 +49,21 @@ var u86 = document.getElementById('u86');
 var u54 = document.getElementById('u54');
 
 var u138 = document.getElementById('u138');
-gv_vAlignTable['u138'] = 'center';
+
+u138.style.cursor = 'pointer';
+if (bIE) u138.attachEvent("onclick", Clicku138);
+else u138.addEventListener("click", Clicku138, true);
+function Clicku138(e)
+{
+
+if (true) {
+
+	self.location.href="2_5_add_5_-_select_prev_parties.html" + GetQuerystring();
+
+}
+
+}
+
 var u60 = document.getElementById('u60');
 
 var u29 = document.getElementById('u29');
@@ -71,21 +85,7 @@ var u96 = document.getElementById('u96');
 var u79 = document.getElementById('u79');
 gv_vAlignTable['u79'] = 'center';
 var u139 = document.getElementById('u139');
-
-u139.style.cursor = 'pointer';
-if (bIE) u139.attachEvent("onclick", Clicku139);
-else u139.addEventListener("click", Clicku139, true);
-function Clicku139(e)
-{
-
-if (true) {
-
-	self.location.href="2_5_add_5_-_select_prev_parties.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u139'] = 'center';
 var u42 = document.getElementById('u42');
 
 var u80 = document.getElementById('u80');
@@ -103,9 +103,37 @@ gv_vAlignTable['u23'] = 'center';
 var u76 = document.getElementById('u76');
 
 var u142 = document.getElementById('u142');
-gv_vAlignTable['u142'] = 'center';
+
+u142.style.cursor = 'pointer';
+if (bIE) u142.attachEvent("onclick", Clicku142);
+else u142.addEventListener("click", Clicku142, true);
+function Clicku142(e)
+{
+
+if (true) {
+
+	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
+
+}
+
+}
+
 var u155 = document.getElementById('u155');
-gv_vAlignTable['u155'] = 'center';
+
+u155.style.cursor = 'pointer';
+if (bIE) u155.attachEvent("onclick", Clicku155);
+else u155.addEventListener("click", Clicku155, true);
+function Clicku155(e)
+{
+
+if (true) {
+
+	self.location.href="Resources/reload.html#" + encodeURI(PageUrl + GetQuerystring());
+
+}
+
+}
+
 var u110 = document.getElementById('u110');
 
 var u14 = document.getElementById('u14');
@@ -119,25 +147,25 @@ gv_vAlignTable['u73'] = 'center';
 var u48 = document.getElementById('u48');
 
 var u149 = document.getElementById('u149');
-gv_vAlignTable['u149'] = 'center';
-var u4 = document.getElementById('u4');
 
-var u141 = document.getElementById('u141');
-
-u141.style.cursor = 'pointer';
-if (bIE) u141.attachEvent("onclick", Clicku141);
-else u141.addEventListener("click", Clicku141, true);
-function Clicku141(e)
+u149.style.cursor = 'pointer';
+if (bIE) u149.attachEvent("onclick", Clicku149);
+else u149.addEventListener("click", Clicku149, true);
+function Clicku149(e)
 {
 
 if (true) {
 
-	self.location.href="2_5_add_5_-_select_prev_parties.html" + GetQuerystring();
+	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
 
 }
 
 }
 
+var u4 = document.getElementById('u4');
+
+var u141 = document.getElementById('u141');
+gv_vAlignTable['u141'] = 'center';
 var u11 = document.getElementById('u11');
 gv_vAlignTable['u11'] = 'center';
 var u64 = document.getElementById('u64');
@@ -147,25 +175,11 @@ var u70 = document.getElementById('u70');
 var u39 = document.getElementById('u39');
 gv_vAlignTable['u39'] = 'center';
 var u146 = document.getElementById('u146');
-gv_vAlignTable['u146'] = 'center';
+gv_vAlignTable['u146'] = 'top';
 var u133 = document.getElementById('u133');
-
-u133.style.cursor = 'pointer';
-if (bIE) u133.attachEvent("onclick", Clicku133);
-else u133.addEventListener("click", Clicku133, true);
-function Clicku133(e)
-{
-
-if (true) {
-
-	self.location.href="2_3_6_add_3_-_chancellery_info.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u133'] = 'center';
 var u119 = document.getElementById('u119');
-
+gv_vAlignTable['u119'] = 'center';
 var u87 = document.getElementById('u87');
 gv_vAlignTable['u87'] = 'center';
 var u55 = document.getElementById('u55');
@@ -187,21 +201,7 @@ var u52 = document.getElementById('u52');
 var u90 = document.getElementById('u90');
 
 var u158 = document.getElementById('u158');
-
-u158.style.cursor = 'pointer';
-if (bIE) u158.attachEvent("onclick", Clicku158);
-else u158.addEventListener("click", Clicku158, true);
-function Clicku158(e)
-{
-
-if (true) {
-
-	self.location.href="Resources/reload.html#" + encodeURI(PageUrl + GetQuerystring());
-
-}
-
-}
-
+gv_vAlignTable['u158'] = 'center';
 var u36 = document.getElementById('u36');
 
 var u89 = document.getElementById('u89');
@@ -209,27 +209,27 @@ gv_vAlignTable['u89'] = 'center';
 var u81 = document.getElementById('u81');
 gv_vAlignTable['u81'] = 'center';
 var u136 = document.getElementById('u136');
-gv_vAlignTable['u136'] = 'center';
+
+u136.style.cursor = 'pointer';
+if (bIE) u136.attachEvent("onclick", Clicku136);
+else u136.addEventListener("click", Clicku136, true);
+function Clicku136(e)
+{
+
+if (true) {
+
+	self.location.href="2_4_add_4_-_styling.html" + GetQuerystring();
+
+}
+
+}
+
 var u27 = document.getElementById('u27');
 gv_vAlignTable['u27'] = 'center';
 var u33 = document.getElementById('u33');
 gv_vAlignTable['u33'] = 'center';
 var u154 = document.getElementById('u154');
-
-u154.style.cursor = 'pointer';
-if (bIE) u154.attachEvent("onclick", Clicku154);
-else u154.addEventListener("click", Clicku154, true);
-function Clicku154(e)
-{
-
-if (true) {
-
-	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u154'] = 'center';
 var u101 = document.getElementById('u101');
 
 u101.style.cursor = 'pointer';
@@ -267,59 +267,13 @@ var u74 = document.getElementById('u74');
 var u49 = document.getElementById('u49');
 gv_vAlignTable['u49'] = 'center';
 var u159 = document.getElementById('u159');
-gv_vAlignTable['u159'] = 'center';
+
 var u151 = document.getElementById('u151');
-gv_vAlignTable['u151'] = 'center';
-var u12 = document.getElementById('u12');
 
-var u65 = document.getElementById('u65');
-gv_vAlignTable['u65'] = 'center';
-var u128 = document.getElementById('u128');
-gv_vAlignTable['u128'] = 'center';
-var u71 = document.getElementById('u71');
-gv_vAlignTable['u71'] = 'center';
-var u156 = document.getElementById('u156');
-
-u156.style.cursor = 'pointer';
-if (bIE) u156.attachEvent("onclick", Clicku156);
-else u156.addEventListener("click", Clicku156, true);
-function Clicku156(e)
-{
-
-if (true) {
-
-	self.location.href="Resources/reload.html#" + encodeURI(PageUrl + GetQuerystring());
-
-}
-
-}
-
-var u143 = document.getElementById('u143');
-
-u143.style.cursor = 'pointer';
-if (bIE) u143.attachEvent("onclick", Clicku143);
-else u143.addEventListener("click", Clicku143, true);
-function Clicku143(e)
-{
-
-if (true) {
-
-	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
-
-}
-
-}
-
-var u130 = document.getElementById('u130');
-gv_vAlignTable['u130'] = 'center';
-var u134 = document.getElementById('u134');
-gv_vAlignTable['u134'] = 'center';
-var u121 = document.getElementById('u121');
-
-u121.style.cursor = 'pointer';
-if (bIE) u121.attachEvent("onclick", Clicku121);
-else u121.addEventListener("click", Clicku121, true);
-function Clicku121(e)
+u151.style.cursor = 'pointer';
+if (bIE) u151.attachEvent("onclick", Clicku151);
+else u151.addEventListener("click", Clicku151, true);
+function Clicku151(e)
 {
 
 if (true) {
@@ -330,48 +284,40 @@ if (true) {
 
 }
 
-var u94 = document.getElementById('u94');
+var u12 = document.getElementById('u12');
 
-var u62 = document.getElementById('u62');
+var u65 = document.getElementById('u65');
+gv_vAlignTable['u65'] = 'center';
+var u128 = document.getElementById('u128');
 
-var u137 = document.getElementById('u137');
-
-u137.style.cursor = 'pointer';
-if (bIE) u137.attachEvent("onclick", Clicku137);
-else u137.addEventListener("click", Clicku137, true);
-function Clicku137(e)
+u128.style.cursor = 'pointer';
+if (bIE) u128.attachEvent("onclick", Clicku128);
+else u128.addEventListener("click", Clicku128, true);
+function Clicku128(e)
 {
 
 if (true) {
 
-	self.location.href="2_4_add_4_-_styling.html" + GetQuerystring();
+	self.location.href="2_3_6_add_3_-_chancellery_info.html" + GetQuerystring();
 
 }
 
 }
 
-var u147 = document.getElementById('u147');
-gv_vAlignTable['u147'] = 'top';
-var u46 = document.getElementById('u46');
+var u71 = document.getElementById('u71');
+gv_vAlignTable['u71'] = 'center';
+var u160 = document.getElementById('u160');
+gv_vAlignTable['u160'] = 'center';
+var u156 = document.getElementById('u156');
+gv_vAlignTable['u156'] = 'center';
+var u143 = document.getElementById('u143');
+gv_vAlignTable['u143'] = 'center';
+var u130 = document.getElementById('u130');
 
-var u126 = document.getElementById('u126');
-gv_vAlignTable['u126'] = 'center';
-var u153 = document.getElementById('u153');
-gv_vAlignTable['u153'] = 'center';
-var u117 = document.getElementById('u117');
-gv_vAlignTable['u117'] = 'top';
-var u85 = document.getElementById('u85');
-gv_vAlignTable['u85'] = 'center';
-var u120 = document.getElementById('u120');
-gv_vAlignTable['u120'] = 'center';
-var u91 = document.getElementById('u91');
-gv_vAlignTable['u91'] = 'center';
-var u125 = document.getElementById('u125');
-
-u125.style.cursor = 'pointer';
-if (bIE) u125.attachEvent("onclick", Clicku125);
-else u125.addEventListener("click", Clicku125, true);
-function Clicku125(e)
+u130.style.cursor = 'pointer';
+if (bIE) u130.attachEvent("onclick", Clicku130);
+else u130.addEventListener("click", Clicku130, true);
+function Clicku130(e)
 {
 
 if (true) {
@@ -382,6 +328,104 @@ if (true) {
 
 }
 
+var u134 = document.getElementById('u134');
+
+u134.style.cursor = 'pointer';
+if (bIE) u134.attachEvent("onclick", Clicku134);
+else u134.addEventListener("click", Clicku134, true);
+function Clicku134(e)
+{
+
+if (true) {
+
+	self.location.href="2_4_add_4_-_styling.html" + GetQuerystring();
+
+}
+
+}
+
+var u121 = document.getElementById('u121');
+gv_vAlignTable['u121'] = 'center';
+var u94 = document.getElementById('u94');
+
+var u62 = document.getElementById('u62');
+
+var u137 = document.getElementById('u137');
+gv_vAlignTable['u137'] = 'center';
+var u147 = document.getElementById('u147');
+
+u147.style.cursor = 'pointer';
+if (bIE) u147.attachEvent("onclick", Clicku147);
+else u147.addEventListener("click", Clicku147, true);
+function Clicku147(e)
+{
+
+if (true) {
+
+	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
+
+}
+
+}
+
+var u46 = document.getElementById('u46');
+
+var u126 = document.getElementById('u126');
+
+u126.style.cursor = 'pointer';
+if (bIE) u126.attachEvent("onclick", Clicku126);
+else u126.addEventListener("click", Clicku126, true);
+function Clicku126(e)
+{
+
+if (true) {
+
+	self.location.href="2_3_5_add_3_-_council_meta_data.html" + GetQuerystring();
+
+}
+
+}
+
+var u153 = document.getElementById('u153');
+
+u153.style.cursor = 'pointer';
+if (bIE) u153.attachEvent("onclick", Clicku153);
+else u153.addEventListener("click", Clicku153, true);
+function Clicku153(e)
+{
+
+if (true) {
+
+	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
+
+}
+
+}
+
+var u117 = document.getElementById('u117');
+gv_vAlignTable['u117'] = 'top';
+var u85 = document.getElementById('u85');
+gv_vAlignTable['u85'] = 'center';
+var u120 = document.getElementById('u120');
+
+u120.style.cursor = 'pointer';
+if (bIE) u120.attachEvent("onclick", Clicku120);
+else u120.addEventListener("click", Clicku120, true);
+function Clicku120(e)
+{
+
+if (true) {
+
+	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
+
+}
+
+}
+
+var u91 = document.getElementById('u91');
+gv_vAlignTable['u91'] = 'center';
+var u125 = document.getElementById('u125');
+gv_vAlignTable['u125'] = 'center';
 var u37 = document.getElementById('u37');
 gv_vAlignTable['u37'] = 'center';
 var u43 = document.getElementById('u43');
@@ -399,39 +443,11 @@ var u34 = document.getElementById('u34');
 var u40 = document.getElementById('u40');
 
 var u135 = document.getElementById('u135');
-
-u135.style.cursor = 'pointer';
-if (bIE) u135.attachEvent("onclick", Clicku135);
-else u135.addEventListener("click", Clicku135, true);
-function Clicku135(e)
-{
-
-if (true) {
-
-	self.location.href="2_4_add_4_-_styling.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u135'] = 'center';
 var u68 = document.getElementById('u68');
 
 var u150 = document.getElementById('u150');
-
-u150.style.cursor = 'pointer';
-if (bIE) u150.attachEvent("onclick", Clicku150);
-else u150.addEventListener("click", Clicku150, true);
-function Clicku150(e)
-{
-
-if (true) {
-
-	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u150'] = 'center';
 var u25 = document.getElementById('u25');
 gv_vAlignTable['u25'] = 'center';
 var u31 = document.getElementById('u31');
@@ -449,33 +465,11 @@ var u88 = document.getElementById('u88');
 var u8 = document.getElementById('u8');
 
 var u132 = document.getElementById('u132');
-gv_vAlignTable['u132'] = 'center';
-var u152 = document.getElementById('u152');
 
-u152.style.cursor = 'pointer';
-if (bIE) u152.attachEvent("onclick", Clicku152);
-else u152.addEventListener("click", Clicku152, true);
-function Clicku152(e)
-{
-
-if (true) {
-
-	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
-
-}
-
-}
-
-var u112 = document.getElementById('u112');
-
-var u72 = document.getElementById('u72');
-
-var u129 = document.getElementById('u129');
-
-u129.style.cursor = 'pointer';
-if (bIE) u129.attachEvent("onclick", Clicku129);
-else u129.addEventListener("click", Clicku129, true);
-function Clicku129(e)
+u132.style.cursor = 'pointer';
+if (bIE) u132.attachEvent("onclick", Clicku132);
+else u132.addEventListener("click", Clicku132, true);
+function Clicku132(e)
 {
 
 if (true) {
@@ -486,18 +480,22 @@ if (true) {
 
 }
 
+var u152 = document.getElementById('u152');
+gv_vAlignTable['u152'] = 'center';
+var u112 = document.getElementById('u112');
+
+var u72 = document.getElementById('u72');
+
+var u129 = document.getElementById('u129');
+gv_vAlignTable['u129'] = 'center';
 var u56 = document.getElementById('u56');
 
 var u157 = document.getElementById('u157');
-gv_vAlignTable['u157'] = 'center';
-var u144 = document.getElementById('u144');
-gv_vAlignTable['u144'] = 'center';
-var u131 = document.getElementById('u131');
 
-u131.style.cursor = 'pointer';
-if (bIE) u131.attachEvent("onclick", Clicku131);
-else u131.addEventListener("click", Clicku131, true);
-function Clicku131(e)
+u157.style.cursor = 'pointer';
+if (bIE) u157.attachEvent("onclick", Clicku157);
+else u157.addEventListener("click", Clicku157, true);
+function Clicku157(e)
 {
 
 if (true) {
@@ -508,10 +506,42 @@ if (true) {
 
 }
 
+var u144 = document.getElementById('u144');
+
+u144.style.cursor = 'pointer';
+if (bIE) u144.attachEvent("onclick", Clicku144);
+else u144.addEventListener("click", Clicku144, true);
+function Clicku144(e)
+{
+
+if (true) {
+
+	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
+
+}
+
+}
+
+var u131 = document.getElementById('u131');
+gv_vAlignTable['u131'] = 'center';
 var u95 = document.getElementById('u95');
 gv_vAlignTable['u95'] = 'center';
 var u122 = document.getElementById('u122');
-gv_vAlignTable['u122'] = 'center';
+
+u122.style.cursor = 'pointer';
+if (bIE) u122.attachEvent("onclick", Clicku122);
+else u122.addEventListener("click", Clicku122, true);
+function Clicku122(e)
+{
+
+if (true) {
+
+	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
+
+}
+
+}
+
 var u108 = document.getElementById('u108');
 
 var u113 = document.getElementById('u113');
@@ -521,21 +551,7 @@ gv_vAlignTable['u47'] = 'center';
 var u53 = document.getElementById('u53');
 gv_vAlignTable['u53'] = 'center';
 var u127 = document.getElementById('u127');
-
-u127.style.cursor = 'pointer';
-if (bIE) u127.attachEvent("onclick", Clicku127);
-else u127.addEventListener("click", Clicku127, true);
-function Clicku127(e)
-{
-
-if (true) {
-
-	self.location.href="2_3_5_add_3_-_council_meta_data.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u127'] = 'center';
 var u114 = document.getElementById('u114');
 
 var u28 = document.getElementById('u28');
@@ -545,7 +561,21 @@ var u92 = document.getElementById('u92');
 var u2 = document.getElementById('u2');
 
 var u124 = document.getElementById('u124');
-gv_vAlignTable['u124'] = 'center';
+
+u124.style.cursor = 'pointer';
+if (bIE) u124.attachEvent("onclick", Clicku124);
+else u124.addEventListener("click", Clicku124, true);
+function Clicku124(e)
+{
+
+if (true) {
+
+	self.location.href="Resources/reload.html#" + encodeURI(PageUrl + GetQuerystring());
+
+}
+
+}
+
 var u44 = document.getElementById('u44');
 
 var u50 = document.getElementById('u50');
@@ -563,21 +593,7 @@ gv_vAlignTable['u111'] = 'top';
 var u69 = document.getElementById('u69');
 gv_vAlignTable['u69'] = 'center';
 var u123 = document.getElementById('u123');
-
-u123.style.cursor = 'pointer';
-if (bIE) u123.attachEvent("onclick", Clicku123);
-else u123.addEventListener("click", Clicku123, true);
-function Clicku123(e)
-{
-
-if (true) {
-
-	self.location.href="2_2_add_2_-_election_details.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u123'] = 'center';
 var u32 = document.getElementById('u32');
 
 var u16 = document.getElementById('u16');
@@ -595,23 +611,23 @@ gv_vAlignTable['u105'] = 'top';
 var u6 = document.getElementById('u6');
 
 var u148 = document.getElementById('u148');
+gv_vAlignTable['u148'] = 'center';
+var u140 = document.getElementById('u140');
 
-u148.style.cursor = 'pointer';
-if (bIE) u148.attachEvent("onclick", Clicku148);
-else u148.addEventListener("click", Clicku148, true);
-function Clicku148(e)
+u140.style.cursor = 'pointer';
+if (bIE) u140.attachEvent("onclick", Clicku140);
+else u140.addEventListener("click", Clicku140, true);
+function Clicku140(e)
 {
 
 if (true) {
 
-	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
+	self.location.href="2_5_add_5_-_select_prev_parties.html" + GetQuerystring();
 
 }
 
 }
 
-var u140 = document.getElementById('u140');
-gv_vAlignTable['u140'] = 'center';
 var u35 = document.getElementById('u35');
 gv_vAlignTable['u35'] = 'center';
 var u57 = document.getElementById('u57');
@@ -621,25 +637,11 @@ var u10 = document.getElementById('u10');
 var u63 = document.getElementById('u63');
 gv_vAlignTable['u63'] = 'center';
 var u145 = document.getElementById('u145');
-
-u145.style.cursor = 'pointer';
-if (bIE) u145.attachEvent("onclick", Clicku145);
-else u145.addEventListener("click", Clicku145, true);
-function Clicku145(e)
-{
-
-if (true) {
-
-	self.location.href="2_1_5_add_1.5_-_chancellery_registration.html" + GetQuerystring();
-
-}
-
-}
-
+gv_vAlignTable['u145'] = 'center';
 var u38 = document.getElementById('u38');
 
 var u118 = document.getElementById('u118');
-gv_vAlignTable['u118'] = 'top';
+
 var u3 = document.getElementById('u3');
 gv_vAlignTable['u3'] = 'center';
 if (window.OnLoad) OnLoad();

@@ -364,6 +364,8 @@ if (true) {
 
 var u71 = document.getElementById('u71');
 gv_vAlignTable['u71'] = 'top';
+var u130 = document.getElementById('u130');
+gv_vAlignTable['u130'] = 'top';
 var u121 = document.getElementById('u121');
 gv_vAlignTable['u121'] = 'center';
 var u94 = document.getElementById('u94');
@@ -514,7 +516,7 @@ function Clicku72(e)
 
 if (true) {
 
-	self.location.href="2_EI_overview.html" + GetQuerystring();
+	self.location.href="2_6_add_6_-_finish.html" + GetQuerystring();
 
 }
 
