@@ -6,15 +6,17 @@ import re
 from django.utils.translation import ugettext_lazy as _
 from django.forms import ValidationError
 
-def validate_postcode(value):
+def validate_postcode(value, error_message=None):
     """
         Test if the given value is a valid postcode
         If valid it returns a cleaned up version
         raises ValidationError if not valid
-    """    
+    """
+    if error_message is None:
+        error_message = _(u'%(value)s is not a valid postalcode')
     matches = re.match('^(?P<numbers>[1-9]{1}[0-9]{3})\s*(?P<letters>[A-Z]{2})$', value.strip().upper())
     if matches is None:
-        raise ValidationError(_('%(value)s is not a valid postcode') % {'value': value})
+        raise ValidationError(error_message % {'value': value})
     return '{0}{1}'.format(matches.group('numbers'), matches.group('letters'))
 
 def validate_dutchbanknumber(value):
