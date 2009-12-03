@@ -102,6 +102,14 @@ INSTALLED_APPS = (
     'backoffice',
 )
 
+# Email settings
+EMAIL_HOST = 'smtp.xs4all.nl'
+EMAIL_HOST_USER = 'accepte'
+EMAIL_HOST_PASSWORD = '9712hv'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 25
+EMAIL_FROM = 'info@wiekiesjij.eu'
+
 try:
     from local_settings import *
 except ImportError:

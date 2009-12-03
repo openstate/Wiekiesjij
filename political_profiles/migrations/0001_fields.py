@@ -33,6 +33,8 @@ class Migration:
             ('town', orm['political_profiles.ChanceryProfile:town']),
             ('website', orm['political_profiles.ChanceryProfile:website']),
             ('picture', orm['political_profiles.ChanceryProfile:picture']),
+            ('width', orm['political_profiles.ChanceryProfile:width']),
+            ('height', orm['political_profiles.ChanceryProfile:height']),
             ('description', orm['political_profiles.ChanceryProfile:description']),
         ))
         db.send_create_signal('political_profiles', ['ChanceryProfile'])
@@ -49,6 +51,8 @@ class Migration:
             ('dateofbirth', orm['political_profiles.PoliticianProfile:dateofbirth']),
             ('email', orm['political_profiles.PoliticianProfile:email']),
             ('picture', orm['political_profiles.PoliticianProfile:picture']),
+            ('width', orm['political_profiles.PoliticianProfile:width']),
+            ('height', orm['political_profiles.PoliticianProfile:height']),
             ('movie', orm['political_profiles.PoliticianProfile:movie']),
             ('introduction', orm['political_profiles.PoliticianProfile:introduction']),
             ('motivation', orm['political_profiles.PoliticianProfile:motivation']),
@@ -71,6 +75,8 @@ class Migration:
             ('town', orm['political_profiles.ContactProfile:town']),
             ('website', orm['political_profiles.ContactProfile:website']),
             ('picture', orm['political_profiles.ContactProfile:picture']),
+            ('width', orm['political_profiles.ContactProfile:width']),
+            ('height', orm['political_profiles.ContactProfile:height']),
             ('description', orm['political_profiles.ContactProfile:description']),
         ))
         db.send_create_signal('political_profiles', ['ContactProfile'])
@@ -137,6 +143,8 @@ class Migration:
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'width': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
+            'height': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
             'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -154,6 +162,8 @@ class Migration:
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'width': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
+            'height': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
             'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -175,6 +185,8 @@ class Migration:
             'motivation': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
             'movie': ('django.db.models.fields.URLField', [], {'max_length': '255'}),
             'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'width': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
+            'height': ('django.db.models.fields.PositiveIntegerField', [], {'editable': 'False', 'default': '0', 'null': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'politicianprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
         },
         'political_profiles.visitorprofile': {

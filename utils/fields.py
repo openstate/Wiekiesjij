@@ -3,9 +3,10 @@ Holds fields
 """
 import re
 from django.utils.translation import ugettext_lazy as _
+from django.forms.fields import CharField, MultiValueField, RegexField
 
 from utils.validators import validate_dutchbanknumber, validate_postcode
-from django.forms.fields import CharField
+from utils.widgets import AddressWidget
 
 class DutchBankAccountField(CharField):
     """
@@ -27,6 +28,10 @@ class DutchPostcodeField(CharField):
     Validates input for valid dutch postcode
     """
     
+    default_error_messages = {
+        'invalid_postalcode': _(u'%(value)s is not a valid postalcode'),
+    }
+    
     def __init__(self, *args, **kwargs):
         if not 'min_length' in kwargs.keys():
             kwargs.update({'min_length': 6})
@@ -36,5 +41,38 @@ class DutchPostcodeField(CharField):
             kwargs.update({'help_text': _('For example 1234 AA')})
         super(DutchPostcodeField, self).__init__(*args, **kwargs)
     
-    def clear(self, value):
-        return validate_postcode(value)
+    def clean(self, value):
+        return validate_postcode(value, self.error_messages['invalid_postalcode'])
+
+class AddressField(MultiValueField):
+    """
+        Multi widget for the address and the house number
+    """
+    widget = AddressWidget
+    
+    def __init__(self, *args, **kwargs):
+        postal_code_errors_messages = {
+            'max_length': _(u'Ensure the postalcode has at most %(max)d characters (it has %(length)d).'),
+            'min_length': _(u'Ensure the postalcode has at least %(min)d characters (it has %(length)d).'),
+            'invalid_postalcode': _(u'%(value)s is not a valid postalcode'),
+        }
+        fields = (
+            CharField(),
+            RegexField(regex='^\d+.*$', error_message=_(u'Housenumber should start with a number')),
+            DutchPostcodeField(error_messages=postal_code_errors_messages),
+            CharField(),
+        )
+        super(AddressField, self).__init__(fields, *args, **kwargs)
+        
+        
+    def compress(self, data_list):
+        """
+            returns a dict with the values
+        """
+        return {
+            'street': data_list[0],
+            'number': data_list[1],
+            'postalcode': data_list[2],
+            'city': data_list[3],
+        }
+    

@@ -33,6 +33,14 @@ You can also pass it other variables if needed:
 It will then also pass title to the context.
 
 
+--- email_tags ---
+Tags used for emails
+
+---- stylegroup <name> ----
+A block tag which will capture the content css and store it in the email_classes context variable under the given name
+
+---- use_stylegroup <name> ----
+A tag which will insert the styles for the stylegroup into the html 
 
   
 --- form_tags ---
