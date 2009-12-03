@@ -1,5 +1,8 @@
-<form method="post">
+<form method="post" action="">
     {% for form in forms.values %}
         {{ form.as_template }}
     {% endfor %}
+	<div class="button">
+		<button type="submit" class="submit">Submit</button>
+	</div>
 </form>

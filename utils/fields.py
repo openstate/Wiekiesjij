@@ -49,6 +49,9 @@ class AddressField(MultiValueField):
         Multi widget for the address and the house number
     """
     widget = AddressWidget
+    default_error_messages = {
+        'required': _(u'The address fields are (all) required')
+    }
     
     def __init__(self, *args, **kwargs):
         postal_code_errors_messages = {
