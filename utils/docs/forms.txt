@@ -1,0 +1,10 @@
+--- TemplateForm ---
+
+A mixin for forms to add an `as_template` function.
+This will render the form using a set of default templates or templates specified on the form itself.
+
+To specify the form to use for the form as a whole use: `_template_name`
+To specify the form to use for the fields of the form use: `_field_template_name`
+
+When using this you should also have django-form-utils installed and extend from form_utils.form.BetterForm or 
+form_utils.forms.BetterModelForm Because the default templates expect the form to be of this time.
