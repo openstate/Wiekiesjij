@@ -14,9 +14,10 @@ from django.contrib.auth.decorators import login_required
 from elections.models import ElectionEvent
 #from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
-from elections.forms import ElectionInstanceForm, CouncilForm
-from political_profiles.forms import ChanceryProfileForm
-
+# Even though your IDE (or your brains) might say this is an unused import,
+# please do not remove the following Form imports
+from political_profiles.forms import *
+from elections.forms import *
 
 #@login_required
 def election_event(request):
@@ -59,3 +60,20 @@ def election_instance_add(request):
     #return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
     #                          context_instance=RequestContext(request))
 
+def form_view(request, profile_type):
+    try:
+        formslist = dict(
+            generic_form = globals()[profile_type],
+        )
+    except KeyError:
+        raise NameError(profile_type + ' is not an existing form\nHave you checked your imports?')
+
+
+    step_args = dict(
+        forms = formslist,
+    )
+
+    steps = Step('add_election_instance', forms=step_args['forms'], template='backoffice/wizard/step1.html')
+    politician_profile_wizard = MultiPathFormWizard(steps)
+
+    return politician_profile_wizard(request)

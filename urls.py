@@ -7,7 +7,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
-    (r'^(?P<profile_type>[-\w]+)/', 'political_profiles.views.form_view'),
     (r'^backoffice', include('backoffice.urls')),
 )
 
