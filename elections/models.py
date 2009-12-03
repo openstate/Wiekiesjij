@@ -4,6 +4,7 @@ from elections import settings
 
 from django.contrib.auth.models import User
 
+
 class Council(models.Model):
     """
     A council
@@ -21,7 +22,7 @@ class Council(models.Model):
     town        = models.CharField(_('Town/City'), max_length=30)
     seats       = models.PositiveIntegerField(_('Seats'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/council', height_field='height', width_field='width',
+    picture     = models.ImageField(_('Picture'), upload_to='media/council',
                     help_text=_("A picture that will be used when displaying council details."), null=True, blank=True)
     desciption  = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
@@ -95,7 +96,7 @@ class Party(models.Model):
     history		= models.CharField(_('Short History'), max_length=255, null=True, blank=True)
     manifasto_summary = models.CharField(_('Manifesto Summary'), max_length=255, null=True, blank=True)
     manifesto   = models.CharField(_('Manifesto'), max_length=2550, null=True, blank=True)
-    logo = models.ImageField(_('Image'), upload_to='media/party', height_field='height', width_field='width', null=True, blank=True)
+    logo = models.ImageField(_('Image'), upload_to='media/party', null=True, blank=True)
 
 
     class Meta:

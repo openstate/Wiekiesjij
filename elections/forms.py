@@ -9,7 +9,14 @@ from django.utils.translation import ugettext_lazy as _
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 
+class ElectionInstanceSelectPartiesForm(forms.Form):
+    '''
+    Select a list of parties that are in your election from a list of hardcoded partys in the netherlands.
+    '''
+    parties = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
 
+
+        
 class CandidacyForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
@@ -19,7 +26,16 @@ class CandidacyForm(BetterModelForm, TemplateForm):
         model = Candidacy
 
 
+class InitialCouncilForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
 
+    class Meta:
+        model = Council
+        fields = ('name', 'house_num', 'street', 'postcode', 'town', 'website' )
+
+        
 class CouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
@@ -27,8 +43,8 @@ class CouncilForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Council
-        exclude = ('chanceries')
-
+        fields = ('seats', 'picture', 'history' )
+ 
 
 class ElectionEventForm(BetterModelForm, TemplateForm):
     '''
@@ -38,18 +54,27 @@ class ElectionEventForm(BetterModelForm, TemplateForm):
     class Meta:
         model = ElectionEvent
 
-class ElectionInstanceForm(BetterModelForm, TemplateForm):
+class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
-    Link admin
+     ElectionInstance admin
     '''
 
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'start_date', 'end_date', 'website' )
+        fields = ('name' )
+
+class ElectionInstanceForm(BetterModelForm, TemplateForm):
+    '''
+     ElectionInstance admin
+    '''
+
+    class Meta:
+        model = ElectionInstance
+        fields = ('start_date', 'website' )
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''
-    Interest admin
+    ElectionInstanceQuestion
     '''
 
     class Meta:
@@ -57,7 +82,7 @@ class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
 
 class PartyForm(BetterModelForm, TemplateForm):
     '''
-    Appearence admin
+    Party admin
     '''
 
     class Meta:

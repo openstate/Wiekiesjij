@@ -15,15 +15,68 @@ class PoliticianProfileForm(BetterModelForm, TemplateForm):
         model = PoliticianProfile
 
 
+class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
+    class Meta:
+        model = PoliticianProfile
+        fields = ('first_name','middle_name','last_name','email','gender' )
+        exclude = ('user')
+
+class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
+    class Meta:
+        model = ChanceryProfile
+        fields = ('first_name','middle_name','last_name','email','gender' )
+        exclude = ('user', 'phone', 'workingdays', 'website')
+
+
+DAYS =  (('Monday',_('Monday')),
+         ('Tuesday', _('Tuesday')),
+         ('Wednesday', _('Wednesday')),
+         ('Thursday', _('Thursday')),
+         ('Friday', _('Friday')),
+         ('Saturday', _('Saturday')),
+         ('Sunday', _('Sunday')),
+        )
+
 
 class ChanceryProfileForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
 
+    def __init__(self, *args, **kwargs):
+        super(ChanceryProfileForm, self).__init__(*args, **kwargs)
+        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=DAYS,)
+
     class Meta:
         model = ChanceryProfile
+        exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description')
 
+
+
+class LastChanceryProfileForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
+    councils_address = forms.BooleanField(label=_('Use Councils Address'), help_text=_('Select if you want to use the same address as the councils address'))
+
+    class Meta:
+        model = ChanceryProfile
+        fields = ('house_num', 'street', 'postcode', 'town', 'website', 'description')
+
+class InitialContactProfileForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
+    class Meta:
+        model = ContactProfile
+        fields = ('first_name','middle_name','last_name','email','gender' )
+        exclude = ('user')
 
 class ContactProfileForm(BetterModelForm, TemplateForm):
     '''
@@ -32,6 +85,8 @@ class ContactProfileForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = ContactProfile
+        exclude = ('user')
+
 
 class LinkForm(BetterModelForm, TemplateForm):
     '''
@@ -40,6 +95,7 @@ class LinkForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Link
+        exclude = ('politician')
 
 class InterestForm(BetterModelForm, TemplateForm):
     '''
@@ -48,6 +104,7 @@ class InterestForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Interest
+        exclude = ('politician')
 
 class AppearenceForm(BetterModelForm, TemplateForm):
     '''
@@ -64,6 +121,7 @@ class WorkExperienceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = WorkExperience
+        exclude = ('politician')
 
 class EducationForm(BetterModelForm, TemplateForm):
     '''
@@ -72,6 +130,7 @@ class EducationForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Education
+        exclude = ('politician')
 
 class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     '''
@@ -80,3 +139,4 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = PoliticalExperience
+        exclude = ('politician')

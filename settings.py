@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext, ugettext_lazy as _
 PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
 
 DEBUG = True
@@ -116,7 +117,15 @@ except ImportError:
     pass
 
 
-#Settings 
+#Settings
+COMMON_PARTIES =  (('Monday',_('Monday')),
+         ('Tuesday', _('Tuesday')),
+         ('Wednesday', _('Wednesday')),
+         ('Thursday', _('Thursday')),
+         ('Friday', _('Friday')),
+         ('Saturday', _('Saturday')),
+         ('Sunday', _('Sunday')),
+        )
 ELECTIONS_CONTACT_LIMITATION = {'contactprofile__isnull': False}
 ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}

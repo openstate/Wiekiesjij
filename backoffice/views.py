@@ -19,6 +19,7 @@ from utils.multipathform import MultiPathFormWizard, Step
 from political_profiles.forms import *
 from elections.forms import *
 
+
 #@login_required
 def election_event(request):
     election_events = ElectionEvent.objects.all()
@@ -30,18 +31,20 @@ def election_instance_add(request):
 
     step_args = dict(
             forms = dict( #list of forms for this page as name => form_class
-                    chancery_form = ChanceryProfileForm,
-                    election_instance_form        = ElectionInstanceForm,
-                    council_form       = CouncilForm,
+                    #i_chancery_form = InitialChanceryProfileForm,
+                    #chancery_form = ChanceryProfileForm,
+                    l_chancery_form = ElectionInstanceSelectPartiesForm,
+                    #council_form       = CouncilForm,
                     
                 ),
             prefixes = dict( # name => prefix; if not set, then name is used
                     
                 ),
             initial = dict( # initial value (dict, model object, query set etc)
-                    chancery_form = None,
-                    election_instance_form     = None,
-                    council_form = None,
+                    #i_chancery_form = None,
+                    #chancery_form = None,
+                    l_chancery_form = None,
+                    #council_form = None,
                     
                 ),
 

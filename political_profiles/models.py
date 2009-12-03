@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
 
+GENDERS = (('Male',_('Male')),
+           ('Female', _('Female')))
 
 # Profiles
 class Profile(models.Model):
@@ -32,10 +34,9 @@ class PoliticianProfile(Profile):
         A profile for a politician
     """
     initials        = models.CharField(_('Level'), max_length=15)
-    gender          = models.CharField(_('Gender'), max_length=10, help_text=_("Please choose your gender."))
+    gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS , help_text=_("Please choose your gender."), default='Male')
     dateofbirth     = models.DateField(_('Start Date'))
-    email           = models.EmailField(_('E-Mail'))
-    picture         = models.ImageField(_('Picture'), upload_to='media/politician', height_field='height', width_field='width')
+    picture         = models.ImageField(_('Picture'), upload_to='media/politician')
     width           = models.PositiveIntegerField(editable=False, default=0, null=True)
     height          = models.PositiveIntegerField(editable=False, default=0, null=True)
     movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
@@ -53,17 +54,15 @@ class ChanceryProfile(Profile):
     """
         A profile for a chancery
     """
-    email       = models.EmailField(_('E-Mail'))
+    gender = models.CharField(_('Gender'), max_length=25,choices=GENDERS, help_text=_("Please choose your gender."))
     telephone	= models.CharField(_('Phone Number'), max_length=255)
     workingdays = models.CharField(_('Working Days'), max_length=255)
     street      = models.CharField(_('Street'), max_length=40)
     house_num   = models.CharField(_('House Number'), max_length=5)
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
-    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
-    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
-    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
+    website     = models.URLField(_('Your Personal Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
 
@@ -77,7 +76,7 @@ class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
     """
-    email       = models.EmailField(_('E-Mail'))
+    gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS, help_text=_("Please choose your gender."))
     telephone	= models.CharField(_('Phone Number'), max_length=255)
     workingdays = models.CharField(_('Working Days'), max_length=255)
     street      = models.CharField(_('Street'), max_length=40)
@@ -85,10 +84,10 @@ class ContactProfile(Profile):
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/contact', height_field='height', width_field='width')
+    picture     = models.ImageField(_('Picture'), upload_to='media/contact')
     width       = models.PositiveIntegerField(editable=False, default=0, null=True)
     height      = models.PositiveIntegerField(editable=False, default=0, null=True)
-    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
+    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of yourself"),
                 null=True, blank=True)
 
     class Meta:
