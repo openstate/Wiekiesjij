@@ -1,5 +1,4 @@
 from django.db import models
-from working-copy1.political_profiles.models import politician
 from questions.models import Question, Answer
 from political_profiles.models import PoliticianProfile
 from elections.models import Party
@@ -17,7 +16,7 @@ class PoliticianAnswerCache(models.Model):
     @staticmethod
     def fetch(*args, **kargs):
         '''
-        TODO - translate from PHP still.
+        TODO - translated from PHP. Test this well.
         '''
 
         '''
