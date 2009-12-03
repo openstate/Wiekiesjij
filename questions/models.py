@@ -27,15 +27,12 @@ class Question(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
 
-    @staticmethod
-    def get_themes():
+    @classmethod
+    def get_themes(cls):
         '''
         Gets lists of available themes.
         '''
-        ql = Question.objects.all()
-        ql.query.group_by = ['theme']
-        ql = ql.all()
-        return ql
+        return cls.objects.distinct().value_list('theme', flat=True).order('theme')
 
     def __unicode__(self):
         return self.title
@@ -50,6 +47,10 @@ class QuestionSet(models.Model):
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question set'), _('Question sets')
+        
+        
+    def __unicode__(self):
+        return self.name
 
 class Answer(models.Model):
     """

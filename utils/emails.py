@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import loader, Context
 from django.conf import settings
 
-def render_content(context, template):
+def _render_content(context, template):
     '''
     Renders context of the e-mail. If no template specified, simply returns the context back, otherwise loads context
     into the specified template.
@@ -30,11 +30,11 @@ def send_email(subject, from_email, to, context, template):
     to_list = [to]
     if not settings.DEBUG:
         to_list.append('info@wkj.eu')
-    text_content = render_content(context, template['plain'])
+    text_content = _render_content(context, template['plain'])
     msg = EmailMultiAlternatives(subject, text_content, from_email, to_list)
 
     if template.has_key('html'):
-        html_content = render_content(context, template['html'])
+        html_content = _render_content(context, template['html'])
         msg.attach_alternative(html_content, "text/html")
 
     msg.send()

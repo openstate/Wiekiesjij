@@ -1,0 +1,6 @@
+-- send_email(subject, from_email, to, template) ---
+
+Sends an email with the given subject the given from and the given to using the specified html and plain templates
+
+template should be a dict with a plain key holding the path to the template to use for the plain text and optionally
+a html key which points to the html template
