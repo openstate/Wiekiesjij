@@ -21,10 +21,25 @@ class Question(models.Model):
     
     title           = models.CharField(_('Title'), max_length=255)
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
+    weight          = models.PositiveIntegerField(_('Weight'), default=1,)
+    theme           = models.CharField(_('Theme'), max_length=255, blank=True, null=False, default='')
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
-    
+
+    @staticmethod
+    def get_themes():
+        '''
+        Gets lists of available themes.
+        '''
+        ql = Question.objects.all()
+        ql.query.group_by = ['theme']
+        ql = ql.all()
+        return ql
+
+    def __unicode__(self):
+        return self.title
+
 class QuestionSet(models.Model):
     """
         A set of questions for grouping questions
@@ -43,3 +58,12 @@ class Answer(models.Model):
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'))
     value       = models.TextField(_('Value'))
+
+    def get_value(self):
+        '''
+        Returns self.value if not empty, otherwise returns question title
+        '''
+        if '' == self.value:
+            return self.question.title
+        else:
+            return self.value

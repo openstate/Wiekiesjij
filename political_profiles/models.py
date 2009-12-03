@@ -15,7 +15,7 @@ class Profile(models.Model):
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
     middle_name = models.CharField(_('Middle name'), blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
-    
+
     class Meta:
         abstract = True
         verbose_name, verbose_name_plural = _('Profile'), _('Profiles')
@@ -36,6 +36,8 @@ class PoliticianProfile(Profile):
     dateofbirth     = models.DateField(_('Start Date'))
     email           = models.EmailField(_('E-Mail'))
     picture         = models.ImageField(_('Picture'), upload_to='media/politician', height_field='height', width_field='width')
+    width           = models.PositiveIntegerField(editable=False, default=0, null=True)
+    height          = models.PositiveIntegerField(editable=False, default=0, null=True)
     movie           = models.URLField(_('movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
     introduction    = models.CharField(_('Introduction'), max_length=2550)
     motivation      = models.CharField(_('Motivation'), max_length=2550)
@@ -60,6 +62,8 @@ class ChanceryProfile(Profile):
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
     picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
+    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
+    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
 
@@ -82,6 +86,8 @@ class ContactProfile(Profile):
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
     picture     = models.ImageField(_('Picture'), upload_to='media/contact', height_field='height', width_field='width')
+    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
+    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
 
