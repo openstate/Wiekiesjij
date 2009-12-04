@@ -11,7 +11,6 @@ urlpatterns = patterns('',
     (r'^invitations/', include('invitations.urls')),
 )
 
-
 if settings.DEBUG:
     urlpatterns += patterns('', 
         (r'', include('staticfiles.urls')),
