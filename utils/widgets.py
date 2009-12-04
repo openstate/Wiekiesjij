@@ -152,3 +152,43 @@ class AutoCompleter(forms.widgets.TextInput):
         result = super(AutoCompleter, self).render(*args, **kwargs)
 
         return result + mark_safe(self.CLIENT_CODE % dict(id=html_id, data=data, limit=limit))
+
+class ColorPicker(forms.widgets.TextInput):
+    """
+        Color Picker
+    """
+    CLIENT_CODE = """
+        <script type="text/javascript">
+            jQuery('#%(id)s').ColorPicker({
+        	onSubmit: function(hsb, hex, rgb, el) {
+                    $(el).val(hex);
+                    $(el).ColorPickerHide();
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                }
+            })
+            .bind('keyup', function(){
+                $(this).ColorPickerSetColor(this.value);
+            });
+        </script>
+    """
+
+    class Media:
+        js = (
+            'static/utils/javascripts/colorpicker.js',
+        )
+        css = {
+            'screen': (
+                'static/utils/css/colorpicker.css',
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ColorPicker, self).__init__(*args, **kwargs)
+
+    def render(self, *args, **kwargs):
+        html_id = kwargs.get('attrs', {}).get('id', '')
+        result = super(ColorPicker, self).render(*args, **kwargs)
+
+        return result + mark_safe(self.CLIENT_CODE % dict(id=html_id))

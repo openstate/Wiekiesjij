@@ -1,6 +1,6 @@
 from form_utils.forms import BetterModelForm
 from utils.forms import TemplateForm
-from utils.widgets import AutoCompleter
+from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField
 from django import forms
 from django.conf import settings
@@ -14,7 +14,8 @@ class PoliticianProfileForm(BetterModelForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(PoliticianProfileForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field = 'first_name')
+        self.fields['first_name'].widget = ColorPicker()
+        #self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field='first_name')
 
     class Meta:
         model = PoliticianProfile
