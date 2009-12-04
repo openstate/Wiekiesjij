@@ -26,6 +26,9 @@ class VisitorProfile(Profile):
     """
         A profile for visitors of the website when they "register"
     """
+    def __unicode__(self):
+        return self.user.username
+
     class Meta:
         verbose_name, verbose_name_plural = _('Visitor Profile'), _('Visitor Profiles')
     
@@ -50,6 +53,12 @@ class PoliticianProfile(Profile):
     #Votes		Reference
     #Expenses	Reference
 
+    def __unicode__(self):
+        return self.user.username
+    
+    class Meta:
+        verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
+
 class ChanceryProfile(Profile):
     """
         A profile for a chancery
@@ -61,10 +70,16 @@ class ChanceryProfile(Profile):
     house_num   = models.CharField(_('House Number'), max_length=5)
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
-    website     = models.URLField(_('Your Personal Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
+    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
+    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
+    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
+
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Chancery Profile'), _('Chancery Profiles')
@@ -89,6 +104,9 @@ class ContactProfile(Profile):
     height      = models.PositiveIntegerField(editable=False, default=0, null=True)
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of yourself"),
                 null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Contact Profile'), _('Contact Profiles')

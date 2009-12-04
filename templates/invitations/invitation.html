@@ -1,0 +1,14 @@
+<form method="POST" action="">
+    <table>
+        <tr><td></td><td>{{ form.first_name.errors }}</td></tr>
+        <tr><td><label for="id_first_name">Voornaam:</label></td><td>{{ form.first_name }}</td></tr>
+        <tr><td></td><td>{{ form.last_name.errors }}</td></tr>
+        <tr><td><label for="id_last_name">Achternaam:</label></td><td>{{ form.last_name}}</td></tr>
+        <tr><td></td><td>{{form.email.errors }}</td></tr>
+        <tr><td><label for="id_email">E-mail adres:</label></td><td>{{ form.email }}</td></tr>
+        <tr><td></td><td>{{ form.message.errors }}</td></tr>
+        <tr><td><label for="id_message">Bericht:</label></td><td>{{ form.message }}</td></tr>
+        <tr><td><input type="submit" value="Verzenden"></td></tr>
+    </table>
+
+</form>

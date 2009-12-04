@@ -29,6 +29,8 @@ class Council(models.Model):
     history     = models.CharField(_('History'), max_length=255 , help_text=_("A short history of the council"),
                     null=True, blank=True)
 
+    def __unicode__(self):
+        return self.name
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
@@ -43,6 +45,9 @@ class ElectionEvent(models.Model):
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
     desciption  = models.CharField(_('Description'), max_length=255, null=True, blank=True)
 
+    def __unicode(self):
+        return self.name
+    
     class Meta:
         verbose_name, verbose_name_plural = _('Election Event'), _('Election Events')
 
@@ -60,7 +65,9 @@ class ElectionInstance(models.Model):
     start_date      = models.DateTimeField(_('Start Date'))
     end_date        = models.DateTimeField(_('End Date'))
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
-                            
+
+    def __unicode__(self):
+        return self.council
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
     
@@ -75,6 +82,8 @@ class ElectionInstanceQuestion(models.Model):
      #locked means it can only be edited by admins because it's used in multiple electioninstances
     locked              = models.BooleanField(_('Locked'), default=False)
 
+    def __unicode__(self):
+        return self.election_instance.council
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
     
@@ -85,7 +94,7 @@ class Party(models.Model):
     region  = models.CharField(_('Region'), max_length=255) #autocomplete other party regions
     level   = models.CharField(_('Level'), max_length=255) #autocomplete other party levels
     name        = models.CharField(_('Name'), max_length=255)
-    abbreviation= models.CharField(_('Abbreviated Name'), max_length=10)
+    abbreviation = models.CharField(_('Abbreviated Name'), max_length=10)
     website     = models.CharField(_('Parties Website'), max_length=255, null=True, blank=True)
     contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
     slogan      = models.CharField(_('Slogan'), max_length=255, null=True, blank=True)
@@ -98,7 +107,12 @@ class Party(models.Model):
     manifesto   = models.CharField(_('Manifesto'), max_length=2550, null=True, blank=True)
     logo = models.ImageField(_('Image'), upload_to='media/party', null=True, blank=True)
 
-
+    def __unicode__(self):
+        if self.abbreviation:
+            return self.abbreviation
+        else:
+            return self.name
+        
     class Meta:
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
@@ -116,6 +130,9 @@ class Candidacy(models.Model):
                                         verbose_name=_('Politician'))
     position                    = models.PositiveIntegerField(_('Position'))
     answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
+
+    def __unicode__(self):
+        return self.candidate.username
     
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
@@ -128,3 +145,6 @@ class ElectionInstanceParty(models.Model):
     election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
     party = models.ForeignKey(Party, verbose_name=_('Party'))
     position = models.PositiveIntegerField(_('Party Position'))
+
+    def __unicode(self):
+        return self.election_instance.council + " - " + self.party.name
