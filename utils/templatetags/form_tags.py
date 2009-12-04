@@ -4,6 +4,7 @@ register = template.Library()
 
 # Used for "converting the widgets class name to the one for css"
 class_converter = {
+    'colorpicker': 'textinput',
 }
 
 @register.filter
