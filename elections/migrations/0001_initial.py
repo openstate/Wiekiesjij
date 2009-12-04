@@ -23,6 +23,10 @@ class Migration:
             ('parent_region', orm['elections.ElectionEvent:parent_region']),
             ('level', orm['elections.ElectionEvent:level']),
             ('desciption', orm['elections.ElectionEvent:desciption']),
+            ('question_due_period', orm['elections.ElectionEvent:question_due_period']),
+            ('profile_due_period', orm['elections.ElectionEvent:profile_due_period']),
+            ('candidate_due_period', orm['elections.ElectionEvent:candidate_due_period']),
+            ('party_due_period', orm['elections.ElectionEvent:party_due_period']),
         ))
         db.send_create_signal('elections', ['ElectionEvent'])
         
@@ -41,6 +45,7 @@ class Migration:
             ('election_instance', orm['elections.ElectionInstanceParty:election_instance']),
             ('party', orm['elections.ElectionInstanceParty:party']),
             ('position', orm['elections.ElectionInstanceParty:position']),
+            ('list_length', orm['elections.ElectionInstanceParty:list_length']),
         ))
         db.send_create_signal('elections', ['ElectionInstanceParty'])
         
@@ -72,6 +77,7 @@ class Migration:
             ('name', orm['elections.ElectionInstance:name']),
             ('start_date', orm['elections.ElectionInstance:start_date']),
             ('end_date', orm['elections.ElectionInstance:end_date']),
+            ('wizard_start_date', orm['elections.ElectionInstance:wizard_start_date']),
             ('website', orm['elections.ElectionInstance:website']),
         ))
         db.send_create_signal('elections', ['ElectionInstance'])
@@ -214,11 +220,15 @@ class Migration:
             'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'elections.electionevent': {
+            'candidate_due_period': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'parent_region': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'parent_region': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'party_due_period': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'profile_due_period': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'question_due_period': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'elections.electioninstance': {
             'council': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.Council']"}),
@@ -229,11 +239,13 @@ class Migration:
             'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
             'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),
             'start_date': ('django.db.models.fields.DateTimeField', [], {}),
-            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'wizard_start_date': ('django.db.models.fields.DateTimeField', [], {})
         },
         'elections.electioninstanceparty': {
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'list_length': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'party': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.Party']"}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {})
         },

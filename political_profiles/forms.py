@@ -1,11 +1,11 @@
 from form_utils.forms import BetterModelForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter
+from utils.fields import NameField
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
-from django.contrib.formtools.wizard import FormWizard
 
 class PoliticianProfileForm(BetterModelForm, TemplateForm):
     '''
@@ -33,30 +33,36 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
+    
+    name = NameField(_('Name'))
+    email = forms.EmailField(_('Email'))
+    
+    def __init__(self, *args, **kwargs):
+        super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices[1:])
+    
     class Meta:
         model = ChanceryProfile
-        fields = ('first_name','middle_name','last_name','email','gender' )
-        exclude = ('user', 'phone', 'workingdays', 'website')
-
-
-DAYS =  (('Monday',_('Monday')),
-         ('Tuesday', _('Tuesday')),
-         ('Wednesday', _('Wednesday')),
-         ('Thursday', _('Thursday')),
-         ('Friday', _('Friday')),
-         ('Saturday', _('Saturday')),
-         ('Sunday', _('Sunday')),
-        )
-
-
+        fields = ('name','email', 'gender' )
+        
+        
 class ChanceryProfileForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
+    
+    DAYS =  (('Monday',_('Monday')),
+             ('Tuesday', _('Tuesday')),
+             ('Wednesday', _('Wednesday')),
+             ('Thursday', _('Thursday')),
+             ('Friday', _('Friday')),
+             ('Saturday', _('Saturday')),
+             ('Sunday', _('Sunday')),
+            )
 
     def __init__(self, *args, **kwargs):
         super(ChanceryProfileForm, self).__init__(*args, **kwargs)
-        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=DAYS,)
+        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
 
     class Meta:
         model = ChanceryProfile

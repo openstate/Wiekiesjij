@@ -1,8 +1,12 @@
+import datetime
+
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm
 from elections.functions import get_profile_forms
+
+from elections.models import ElectionInstance, Council, ElectionEvent
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -32,12 +36,30 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             for name, form in forms.iteritems():
                 if name == 'initial_ei':
                     #create election instance 
-                    import ipdb; ipdb.set_trace()
-                    #ei = ElectionInstance.objects.create(form.cleaned_data)
-                    pass
+                    self.ei_data = form.cleaned_data
                 else:
-                    import ipdb; ipdb.set_trace()
-                    # Gather data from all other forms to create the council and admin
-                    pass
+                    if not hasattr(self, 'council_data'):
+                        self.council_data = {}
+                    self.council_data.update(form.cleaned_data)
         
-        return render_to_response('backoffice/wizard/addelection/done.html', {}, contact_instance=RequestContext(request))
+        council = Council.objects.create(
+            name='Council of %s' % self.ei_data['name'],
+            region=self.ei_data['region'],
+            level=self.ei_data['level']
+        )
+        
+        ee = ElectionEvent.objects.all()[0]
+        ei = ElectionInstance.objects.create(
+            name=self.ei_data['name'],
+            council=council,
+            election_event=ee,
+            start_date=datetime.datetime.now(),
+            end_date=datetime.datetime.now(),
+            wizard_start_date=datetime.datetime.now(),
+        )
+        
+        #Invite council admin
+        
+        
+        
+        return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))

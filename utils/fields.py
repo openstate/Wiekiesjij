@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import CharField, MultiValueField, RegexField
 
 from utils.validators import validate_dutchbanknumber, validate_postcode
-from utils.widgets import AddressWidget
+from utils.widgets import AddressWidget, NameWidget
 
 class DutchBankAccountField(CharField):
     """
@@ -77,5 +77,33 @@ class AddressField(MultiValueField):
             'number': data_list[1],
             'postalcode': data_list[2],
             'city': data_list[3],
+        }
+        
+        
+class NameField(MultiValueField):
+    """
+        Multi widget for filling in your name
+    """
+    widget = NameWidget
+    default_error_messages = {
+        'required': _(u'The first and last name field are required')
+    }
+    
+    def __init__(self, *args, **kwargs):
+        fields = (
+            CharField(**kwargs.get('first_name_kwargs', {})),
+            CharField(**kwargs.get('last_name_kwargs', {})),
+            CharField(**kwargs.get('middle_name_kwargs', {})),
+        )
+        super(NameField, self).__init__(fields, *args, **kwargs)
+        
+    def compress(self, data_list):
+        """
+            Returns a dict with the values
+        """
+        return {
+            'first_name': data_list[0],
+            'middle_name': data_list[2],
+            'last_name': data_list[1],
         }
     

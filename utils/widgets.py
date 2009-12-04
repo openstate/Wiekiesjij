@@ -6,8 +6,6 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-
-
 class AddressWidget(forms.widgets.MultiWidget):
     """
         Widget for an address field bit
@@ -66,6 +64,58 @@ class AddressWidget(forms.widgets.MultiWidget):
         )
         
         
+class NameWidget(forms.widgets.MultiWidget):
+    """
+        Widget to fill out a name
+    """
+    TEMPLATE = """
+        <div class="fields">
+            <table>
+                <tr>
+                    <td>%(first_name_label)s</td>
+                    <td>%(last_name_label)s</td>
+                </tr>
+                <tr>
+                    <td>%(first_name_field)s</td>
+                    <td>%(last_name_field)s</td>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>%(middle_name_label)s</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>%(middle_name_field)s</td>
+                </tr>
+            </table>
+        </div>
+    """
+    
+    def __init__(self, attrs=None):
+        widgets = (
+            forms.widgets.TextInput(),
+            forms.widgets.TextInput(),
+            forms.widgets.TextInput(),
+        )
+        super(NameWidget, self).__init__(widgets, attrs)
+        
+    def decompress(self, value):
+        if value:
+            return value.split(' ', 3)
+        else:
+            return [None, None, None] 
+        
+    def format_output(self, rendered_widgets):
+        return self.TEMPLATE % dict(
+            first_name_label = _('First name'),
+            last_name_label = _('Last name'),
+            middle_name_label = _('Middle name'),
+            
+            first_name_field = rendered_widgets[0],
+            last_name_field = rendered_widgets[1],
+            middle_name_field = rendered_widgets[2],
+        )
+    
+    
 class AutoCompleter(forms.widgets.TextInput):
     """ 
         Auto completer 

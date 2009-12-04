@@ -3,8 +3,10 @@ from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-
+from utils.widgets import AutoCompleter
 from utils.fields import AddressField
+
+from elections.models import Party
 
 
 #from utils.validators import 
@@ -75,11 +77,12 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
         ('SMS', 'SMS Module'),
     )
     modules = forms.MultipleChoiceField(label=_('Modules'), choices=MODULE_CHOICES, widget=forms.widgets.CheckboxSelectMultiple)
-    
+    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Party, field='region'))
+    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Party, field='region'))
 
     class Meta:
         model = ElectionInstance
-        fields = ('name', )
+        fields = ('name', 'region', 'level')
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
