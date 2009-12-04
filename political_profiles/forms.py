@@ -1,4 +1,5 @@
 from form_utils.forms import BetterModelForm
+from backoffice import widgets
 from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
@@ -10,6 +11,10 @@ class PoliticianProfileForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
+
+    def __init__(self, *args, **kwargs):
+        super(PoliticianProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget = widgets.AutoCompleter(model = 'PoliticianProfile', field = 'first_name')
 
     class Meta:
         model = PoliticianProfile

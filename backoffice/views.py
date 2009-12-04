@@ -65,6 +65,8 @@ def election_instance_add(request):
     #return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
     #                          context_instance=RequestContext(request))
 
+
+#TODO: This can probably be neater. I don't see why we would need step_args for example.
 def form_view(request, profile_type):
     try:
         formslist = dict(
@@ -73,15 +75,9 @@ def form_view(request, profile_type):
     except KeyError:
         raise NameError(profile_type + ' is not an existing form\nHave you checked your imports?')
 
-
-    step_args = dict(
-        forms = formslist,
-    )
-
-    steps = Step('add_election_instance', forms=step_args['forms'], template='backoffice/wizard/step1.html')
-    politician_profile_wizard = MultiPathFormWizard(steps)
-
-    return politician_profile_wizard(request)
+    steps = Step('add_election_instance', forms=formslist, template='backoffice/wizard/step1.html')
+    generic_form = MultiPathFormWizard(steps)
+    return generic_form(request)
     
 def wizard_view(request, wizard_type):
     try:

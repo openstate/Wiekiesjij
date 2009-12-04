@@ -1,3 +1,10 @@
+{% extends 'backoffice/base.html' %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}utils/javascripts/autocomplete.js" type="javascript"></script>
+{% endblock extrahead %}
+
+{% block content %}
 <form method="post" action="">
     {% for form in forms.values %}
         {{ form.as_template }}
@@ -6,3 +13,4 @@
 		<button type="submit" class="submit">Submit</button>
 	</div>
 </form>
+{% endblock content %}

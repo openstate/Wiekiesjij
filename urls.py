@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     (r'^backoffice/', include('backoffice.urls')),
 )
 
-
 if settings.DEBUG:
     urlpatterns += patterns('', 
         (r'', include('staticfiles.urls')),
