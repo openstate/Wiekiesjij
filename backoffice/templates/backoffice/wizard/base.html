@@ -1,0 +1,24 @@
+{% extends 'backoffice/base.html' %}
+
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block content %}
+	<form method="POST" action="">
+		<input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+		{% block forms %}
+			{% for form in forms.values %}
+				{{ form.as_template }}
+			{% endfor %}
+		{% endblock forms %}
+		{{ previous_fields|safe }}
+		{% block buttons %}
+			<div class="buttons">
+				<button type="submit">Next</button>
+			</div>
+		{% endblock buttons %}
+	</form>
+{% endblock content %}

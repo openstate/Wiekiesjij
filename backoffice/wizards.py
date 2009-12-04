@@ -1,26 +1,25 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm
-from django.template import RequestContext
+from elections.functions import get_profile_forms
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
-        Wizard for adding an election instance
+        Wizard for adding an election instance and council
     """
     def __init__(self, *args, **kwargs):
+        step1_forms = dict(
+            initial_ei=InitialElectionInstanceForm,
+        )
+        idx = 0;
+        for profile_form in get_profile_forms('council_admin', 'invite'):
+            step1_forms.update({'invite_contact_%s' % idx : profile_form})
+            idx += 1
         step1 = Step('electioninstance', 
-            forms=dict(
-                initial_ei=InitialElectionInstanceForm,
-            ),
-            template='backoffice/wizard/addelection/step1.html',
+            forms=step1_forms,
+            template='backoffice/wizard/addelection/base.html',
         )
-        step2 = Step('council', 
-            forms=dict(
-                initial_council=InitialCouncilForm,
-            ),
-            template='backoffice/wizard/addelection/step2.html',
-        )
-        step1.next(step2)
         template = 'backoffice/wizard/addelection/base.html',
         super(AddElectionInstanceWizard, self).__init__(step1, template)
         
@@ -32,10 +31,10 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         for path, forms in form_dict.iteritems():
             for name, form in forms.iteritems():
                 if name == 'initial_ei':
-                    #create election instance
+                    #create election instance 
                     pass
-                elif name == 'initial_counsil':
-                    #create council
+                else:
+                    # Gather data from all other forms to create the council and admin
                     pass
         
         return render_to_response('backoffice/wizard/addelection/done.html', {}, contact_instance=RequestContext(request))

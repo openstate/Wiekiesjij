@@ -70,6 +70,12 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
      ElectionInstance admin
     '''
+    
+    MODULE_CHOICES = (
+        ('SMS', 'SMS Module'),
+    )
+    modules = forms.MultipleChoiceField(label=_('Modules'), choices=MODULE_CHOICES, widget=forms.widgets.CheckboxSelectMultiple)
+    
 
     class Meta:
         model = ElectionInstance

@@ -26,5 +26,5 @@ def get_profile_model(for_function):
     return get_profile_app().get_profile_model(for_function)
     
     
-def get_profile_forms(for_function, type):
+def get_profile_forms(for_function, form_type):
     return get_profile_app().get_profile_forms(for_function, form_type)

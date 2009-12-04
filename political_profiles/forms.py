@@ -1,6 +1,6 @@
 from form_utils.forms import BetterModelForm
-from backoffice import widgets
 from utils.forms import TemplateForm
+from utils.widgets import AutoCompleter
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +14,7 @@ class PoliticianProfileForm(BetterModelForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(PoliticianProfileForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget = widgets.AutoCompleter(model = PoliticianProfile, field = 'first_name')
+        self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field = 'first_name')
 
     class Meta:
         model = PoliticianProfile

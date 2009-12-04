@@ -1,5 +1,6 @@
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
+from political_profiles.forms import InitialChanceryProfileForm
 
 
 model_map = {
@@ -27,7 +28,7 @@ def get_profile_forms(for_function, type):
     chancery_form_map = {
             'create': [ChanceryProfileForm],
             'edit': [ChanceryProfileForm],
-            'invite': [ChanceryProfileForm],
+            'invite': [InitialChanceryProfileForm],
             }
     contact_form_map = {
             'create': [ContactProfileForm],

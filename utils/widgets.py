@@ -3,6 +3,7 @@
 """
 import re
 from django import forms
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 
@@ -63,3 +64,38 @@ class AddressWidget(forms.widgets.MultiWidget):
             post_field = rendered_widgets[2],
             city_field = rendered_widgets[3]
         )
+        
+        
+class AutoCompleter(forms.widgets.TextInput):
+    """ 
+        Auto completer 
+    """
+    CLIENT_CODE = """
+        <script type="text/javascript">
+             jQuery(document).ready(function(){
+                jQuery('#%(id)s').autocomplete("%(data)s".split(', '), {max: %(limit)d});
+             });
+        </script>
+    """
+    
+    class Media:
+        js = (
+            'static/utils/javascripts/jquery.autocomplete.min.js',
+        )
+        css = (
+            
+        )
+        
+    def __init__(self, model, field, *args, **kwargs):
+        super(AutoCompleter, self).__init__(*args, **kwargs)
+        self.items = model.objects.values_list(field, flat=True).order_by(field)
+
+
+    def render(self, *args, **kwargs):
+        html_id = kwargs.get('attrs', {}).get('id', '')
+        data = ", ".join(self.items)
+        limit = 15
+
+        result = super(AutoCompleter, self).render(*args, **kwargs)
+
+        return result + mark_safe(self.CLIENT_CODE % dict(id=html_id, data=data, limit=limit))
