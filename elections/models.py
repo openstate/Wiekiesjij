@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from elections import settings
+import datetime
 
 from django.contrib.auth.models import User
 
@@ -34,6 +35,9 @@ class Council(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
+    def profile_incomplete(self):
+        return not self.seats or not self.website or not self.picture or not self.description or not self.history
+
 class ElectionEvent(models.Model):
     """
     A election event
@@ -44,6 +48,10 @@ class ElectionEvent(models.Model):
     parent_region   = models.CharField(_('Parent region'), max_length=255) #autocomplete other electionevent regions
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
     desciption  = models.CharField(_('Description'), max_length=255, null=True, blank=True)
+    question_due_period = models.PositiveIntegerField(_('Question due period')) #7
+    profile_due_period = models.PositiveIntegerField(_('Profile due period')) #7
+    candidate_due_period = models.PositiveIntegerField(_('Candidate due period')) #33
+    party_due_period = models.PositiveIntegerField(_('Party due period')) #33
 
     def __unicode(self):
         return self.name
@@ -64,12 +72,37 @@ class ElectionInstance(models.Model):
     name            = models.CharField(_('Name'), max_length=255)
     start_date      = models.DateTimeField(_('Start Date'))
     end_date        = models.DateTimeField(_('End Date'))
+    wizard_start_date = models.DateTimeField(_('Wizard start date'))
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
 
     def __unicode__(self):
         return self.council
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
+
+    def question_deadline(self):
+        return self.wizard_start_date.date() - datetime.timedelta(days=self.election_event.question_due_period)
+
+    def profile_deadline(self):
+        return self.wizard_start_date.date() - datetime.timedelta(days=self.election_event.profile_due_period)
+
+    def candidate_deadline(self):
+        return self.wizard_start_date.date() - datetime.timedelta(days=self.election_event.candidate_due_period)
+
+    def party_deadline(self):
+        return self.wizard_start_date.date() - datetime.timedelta(days=self.election_event.party_due_period)
+
+    def question_overdue(self):
+        return datetime.date.today() > self.question_deadline()
+
+    def profile_overdue(self):
+        return datetime.date.today() > self.profile_deadline()
+
+    def candidate_overdue(self):
+        return datetime.date.today() > self.candidate_deadline()
+
+    def party_overdue(self):
+        return datetime.date.today() > self.party_deadline()
     
 class ElectionInstanceQuestion(models.Model):
     """
@@ -116,6 +149,9 @@ class Party(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
+    def profile_incomplete(self):
+        return not self.website or not self.slogan or not self.email or not self.goals or not self.description or \
+               not self.history or not self.manifasto_summary or not self. manifesto or not self.logo
 
 class Candidacy(models.Model):
     """
@@ -137,7 +173,12 @@ class Candidacy(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
 
-        
+    def profile_incomplete(self):
+        return True#self.candidate.profile.profile_incomplete()
+
+    def questions_incomplete(self):
+        return len(self.election_party_instance.instance.questions) - len(self.answers)
+
 class ElectionInstanceParty(models.Model):
     """
         A link between the party, the election instance and the candidates
@@ -145,6 +186,24 @@ class ElectionInstanceParty(models.Model):
     election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
     party = models.ForeignKey(Party, verbose_name=_('Party'))
     position = models.PositiveIntegerField(_('Party Position'))
+    list_length = models.PositiveIntegerField(_('List length'))
 
-    def __unicode(self):
+    def candidate_dict(self):
+        list = dict(map(lambda x: (x, None), range(1, self.list_length+1)))
+        list.update(dict(map(lambda x: (x.position, x), self.candidates.all())))
+        return list
+
+    def candidates_invited(self):
+        return len(self.candidates.all())
+
+    def candidates_notinvited(self):
+        return self.list_length - self.candidates_invited()
+
+    def candidates_profile_incomplete(self):
+        return len(filter(lambda x: x.profile_incomplete(), self.candidates.all()))
+
+    def candidates_questions_incomplete(self):
+        return len(filter(lambda x: x.questions_incomplete(), self.candidates.all()))
+
+    def __unicode__(self):
         return self.election_instance.council + " - " + self.party.name

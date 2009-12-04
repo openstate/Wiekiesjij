@@ -22,6 +22,9 @@ class Profile(models.Model):
         abstract = True
         verbose_name, verbose_name_plural = _('Profile'), _('Profiles')
     
+    def full_name(self):
+        return ' '.join(filter(lambda x: x, (self.first_name, self.middle_name, self.last_name)))
+    
 class VisitorProfile(Profile):
     """
         A profile for visitors of the website when they "register"
@@ -52,6 +55,9 @@ class PoliticianProfile(Profile):
     #goals		Refrence
     #Votes		Reference
     #Expenses	Reference
+    
+    def profile_incomplete(self):
+        return False
 
     def __unicode__(self):
         return self.user.username
@@ -103,7 +109,7 @@ class ContactProfile(Profile):
     width       = models.PositiveIntegerField(editable=False, default=0, null=True)
     height      = models.PositiveIntegerField(editable=False, default=0, null=True)
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of yourself"),
-                null=True, blank=True)
+                                   null=True, blank=True)
 
     def __unicode__(self):
         return self.user.username

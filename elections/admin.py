@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from elections.models import Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party, Candidacy
+from elections.models import Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, ElectionInstanceParty, Party, Candidacy
 
 class CouncilAdmin(admin.ModelAdmin):
     pass
@@ -16,6 +16,11 @@ class ElectionInstanceAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(ElectionInstance, ElectionInstanceAdmin)
+
+class ElectionInstancePartyAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ElectionInstanceParty, ElectionInstancePartyAdmin)
 
 class ElectionInstanceQuestionAdmin(admin.ModelAdmin):
     pass

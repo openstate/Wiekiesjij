@@ -1,0 +1,47 @@
+{{ instance.election_event.name }} &gt; <a href="{% url election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
+
+<h1>{{ eip.party.name }} <span>({{ eip.party.abbreviation }})</h1>
+
+<ul>
+{% if eip.party.profile_incomplete %}<li>You did not completely fill in the party profile. <a href="#">Do it now &gt;</a></li>{% endif %}
+{% if not eip.party.contacts.all %}<li>You did not assign a party contact yet. <a href="#">Do it now &gt;</a></li>{% endif %}
+</ul>
+
+<h2>Candidate list</h2>
+
+<div><a href="#">Add new candidate</a> <a href="#">Batch add candidates</a></div>
+{% for index, can in eip.candidate_dict.items %}
+<div>
+	<div>{{ index }}</div>
+	{% if can %}
+	<img src="{{ can.candidate.profile.picture }}" />
+	<h3><a href="#">{{ eip.candidate.profile.full_name }}</a></h3>
+	<ul>
+	{% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>Candidate has not responded yet ({% if instance.candidate_overdue %}over{% endif %}due {{ instance.candidate_deadline }})</li>{% endif %}
+	{% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>Candidate did not fill in their profile yet ({% if instance.profile_overdue %}over{% endif %}due {{ instance.profile_deadline }})</li>{% endif %}
+	{% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}>Candidate did not answer the questions yet ({% if instance.questions_overdue %}over{% endif %}due {{ instance.questions_deadline }})</li>{% endif %}
+	<div><a href="#">View candidate profile &gt;</a></div>
+	<div><a href="#">Remove candidate</a></div>
+	{% else %}
+	<h3><a href="#">Invite politician</a></h3>
+	{% endif %}
+</div>
+{% endfor %}
+<div><a href="#">Add new candidate</a> <a href="#">Batch add candidates</a></div>
+<div class="sidebar">
+<strong>Party profile:</strong> <a href="#">edit</a>
+Council profile info (partly)
+<a href="#">Complete profile &gt;</a>
+</div>
+<div class="sidebar">
+<strong>Party contacts</strong>
+{% if eip.party.contacts.all %}
+{% for contact in eip.party.contacts.all %}
+Contact <a href="#">edit</a> <a href="#">delete</a>
+{% endfor %}
+<a href="#">Add a party contact</a>
+{% else %}
+<em>You did not assign a party contact yet</em>
+<a href="#">Invite a party contact now &gt;</a>
+{% endif %}
+</div>

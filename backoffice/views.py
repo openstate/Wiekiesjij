@@ -11,7 +11,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
 #import utils
-from elections.models import ElectionEvent
+from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
 #from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
 # Even though your IDE (or your brains) might say this is an unused import,
@@ -21,6 +21,13 @@ from political_profiles.forms import *
 from elections.forms import *
 from backoffice.wizards import *
 
+def election_instance_view(request, id):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
+
+def election_party_view(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
 
 #@login_required
 def election_event(request):
