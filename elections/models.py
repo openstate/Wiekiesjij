@@ -32,6 +32,7 @@ class Council(models.Model):
 
     def __unicode__(self):
         return self.name
+        
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
@@ -53,7 +54,7 @@ class ElectionEvent(models.Model):
     candidate_due_period = models.PositiveIntegerField(_('Candidate due period')) #33
     party_due_period = models.PositiveIntegerField(_('Party due period')) #33
 
-    def __unicode(self):
+    def __unicode__(self):
         return self.name
     
     class Meta:
@@ -77,6 +78,7 @@ class ElectionInstance(models.Model):
 
     def __unicode__(self):
         return self.council
+
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
 
@@ -117,6 +119,7 @@ class ElectionInstanceQuestion(models.Model):
 
     def __unicode__(self):
         return self.election_instance.council
+    
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
     

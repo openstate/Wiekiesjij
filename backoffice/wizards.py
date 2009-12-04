@@ -12,6 +12,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
     """
+    # TODO: Add election_event_id
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
             initial_ei=InitialElectionInstanceForm,
