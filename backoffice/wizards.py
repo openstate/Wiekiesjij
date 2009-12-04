@@ -32,8 +32,11 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             for name, form in forms.iteritems():
                 if name == 'initial_ei':
                     #create election instance 
+                    import ipdb; ipdb.set_trace()
+                    #ei = ElectionInstance.objects.create(form.cleaned_data)
                     pass
                 else:
+                    import ipdb; ipdb.set_trace()
                     # Gather data from all other forms to create the council and admin
                     pass
         
