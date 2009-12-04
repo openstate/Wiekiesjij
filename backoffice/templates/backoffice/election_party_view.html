@@ -1,4 +1,7 @@
-{{ instance.election_event.name }} &gt; <a href="{% url election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+{% block content %}
+{{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
 
 <h1>{{ eip.party.name }} <span>({{ eip.party.abbreviation }})</h1>
 
@@ -45,3 +48,4 @@ Contact <a href="#">edit</a> <a href="#">delete</a>
 <a href="#">Invite a party contact now &gt;</a>
 {% endif %}
 </div>
+{% endblock %}

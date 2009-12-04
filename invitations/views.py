@@ -100,7 +100,7 @@ def activate(request, hash):
         raise Exception(_("No entry found in the database with this hash. (Hash is not valid, or hash is allready used"))
 
     if request.method == 'POST':
-        form =
+        form = ''
         password = forms.cleaned_data['password']
         password_again = forms.clean_data['password']
 

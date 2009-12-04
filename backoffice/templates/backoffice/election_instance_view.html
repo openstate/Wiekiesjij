@@ -1,3 +1,6 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+{% block content %}
 {{ instance.election_event.name }} &gt;
 
 <h1>{{ instance.council.region }}</h1>
@@ -12,7 +15,7 @@
 {% for eip in instance.electioninstanceparty_set.all %}
 <div>
 	<img src="{{ eip.party.logo }}" />
-	<h3><a href="{% url election_party_view eip.id %}">{{ eip.party.name }}</a> ({{ eip.party.abbreviation }})</h3>
+	<h3><a href="{% url backoffice.election_party_view eip.id %}">{{ eip.party.name }}</a> ({{ eip.party.abbreviation }})</h3>
 	<div>{% if eip.candidates_invited %}{{ eip.list_length }} candidates ({{ eip.candidates_invited }} invited){% else %}no candidates defined{% endif %}</div>
 	<ul>
 	{% if eip.party.profile_incomplete %}<li class="warning">You have not finished filling in the party profile <a href="#">Fill in now &gt;</a></li>{% endif %}
@@ -51,3 +54,4 @@ Chancery <a href="#">edit</a>
 <img src="{ % url 'style.preview' instance.id % }" />
 <a href="#">Customize styling &gt;</a>
 </div>
+{% endblock %}
