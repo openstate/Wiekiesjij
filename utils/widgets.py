@@ -82,9 +82,12 @@ class AutoCompleter(forms.widgets.TextInput):
         js = (
             'static/utils/javascripts/jquery.autocomplete.min.js',
         )
-        css = (
-            
-        )
+        css = {
+            'screen': (
+                'static/utils/css/autocomplete.css',
+            ),
+        }
+    
         
     def __init__(self, model, field, *args, **kwargs):
         super(AutoCompleter, self).__init__(*args, **kwargs)
