@@ -19,6 +19,7 @@ from utils.multipathform import MultiPathFormWizard, Step
 # FIXME: Remove import * once the test functions can be removed !
 from political_profiles.forms import *
 from elections.forms import *
+from backoffice.wizards import *
 
 
 #@login_required
@@ -81,3 +82,11 @@ def form_view(request, profile_type):
     politician_profile_wizard = MultiPathFormWizard(steps)
 
     return politician_profile_wizard(request)
+    
+def wizard_view(request, wizard_type):
+    try:
+        wizard = globals()[wizard_type]
+    except KeyError:
+        raise NameError('%s is not an existing wizard\nHave you checked your imports?')
+        
+    return wizard()(request)

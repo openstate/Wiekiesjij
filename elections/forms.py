@@ -4,6 +4,8 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from utils.fields import AddressField
+
 
 #from utils.validators import 
 #from utils.fields import ZipCodeField, PhoneField
@@ -30,10 +32,20 @@ class InitialCouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
+    
+    address = AddressField(_('Address'))
 
     class Meta:
         model = Council
-        fields = ('name', 'house_num', 'street', 'postcode', 'town', 'website' )
+        fields = ('name', 'address', 'website' )
+        
+    def clean_address(self):
+        """
+            Puts the subfields of the address multivaluefield into separate fields
+        """
+        for key in ['street', 'number', 'postalcode', 'city']:
+            self.cleaned_data[key] = self.cleaned_data['address'][key]
+        return self.cleaned_data['address']
 
         
 class CouncilForm(BetterModelForm, TemplateForm):
