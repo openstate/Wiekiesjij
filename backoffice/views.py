@@ -16,6 +16,7 @@ from elections.models import ElectionEvent
 from utils.multipathform import MultiPathFormWizard, Step
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
+# FIXME: Remove import * once the test functions can be removed !
 from political_profiles.forms import *
 from elections.forms import *
 

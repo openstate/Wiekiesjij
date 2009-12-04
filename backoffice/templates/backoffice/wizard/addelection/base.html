@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='en-us' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+	<meta charset='utf-8'>
+	<title>AddElectionInstance</title>
+</head>
+<body>
+	{% block content %}
+		<form method="POST" action="">
+			{% block forms %}
+				{% for form in forms.values %}
+					{{ form }}
+				{% endfor %}
+			{% endblock forms %}
+			{% block buttons %}
+				<div class="buttons">
+					<button type="submit">Next</button>
+				</div>
+			{% endblock buttons %}
+		</form>
+	{% endblock content %}
+</body>
+</html>

@@ -61,7 +61,7 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = ElectionInstance
-        fields = ('name' )
+        fields = ('name', )
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
