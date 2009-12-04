@@ -23,7 +23,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             idx += 1
         step1 = Step('electioninstance', 
             forms=step1_forms,
-            template='backoffice/wizard/addelection/base.html',
+            template='backoffice/wizard/addelection/step1.html',
         )
         template = 'backoffice/wizard/addelection/base.html',
         super(AddElectionInstanceWizard, self).__init__(step1, template)
