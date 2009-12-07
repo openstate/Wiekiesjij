@@ -97,18 +97,26 @@ class ElectionSetupWizard(MultiPathFormWizard):
             council_additional_information=CouncilForm,
         )
 
-        scenario_tree = Step('chancery_registration_1',
-                             forms=step1_forms,
-                             template='backoffice/wizard/election_setup/step1.html',).next(
-                                 Step('chancery_registration_2',
-                                      forms=step2_forms,
-                                      template='backoffice/wizard/election_setup/step2.html',).next(
-                                          Step('chancery_registration_3',
-                                               forms=step3_forms,
-                                               template='backoffice/wizard/election_setup/step3.html',).next(
-                                                   Step('chancery_registration_4',
-                                                        forms=step4_forms,
-                                                        template='backoffice/wizard/election_setup/step4.html',)
+        step1 = Step('chancery_registration_1',
+                    forms=step1_forms,
+                    template='backoffice/wizard/election_setup/step1.html',)
+        step2 = Step('chancery_registration_2',
+                    forms=step2_forms,
+                    template='backoffice/wizard/election_setup/step2.html',)
+        step3 = Step('chancery_registration_3',
+                     forms=step3_forms,
+                     template='backoffice/wizard/election_setup/step3.html',)
+        step4 = Step('chancery_registration_4',
+                     forms=step4_forms,
+                     template='backoffice/wizard/election_setup/step4.html',)
+        step5 = Step('chancery_registration_5',
+                     forms=step4_forms,
+                     template='backoffice/wizard/election_setup/step5.html',)
+
+        scenario_tree = step1.next(
+                                   step2.next(
+                                              step3.next(
+                                                         step4
                                                )))
 
         template = 'backoffice/wizard/election_setup/base.html',
