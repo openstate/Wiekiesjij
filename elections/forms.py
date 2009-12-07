@@ -8,7 +8,6 @@ from utils.fields import AddressField
 
 from elections.models import Party
 
-
 #from utils.validators import 
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
@@ -74,7 +73,7 @@ class CouncilStylingSetupForm(BetterModelForm, TemplateForm):
     '''
 
     def __init__(self, *args, **kwargs):
-        super(PoliticianProfileForm, self).__init__(*args, **kwargs)
+        super(CouncilStylingSetupForm, self).__init__(*args, **kwargs)
         self.fields['background_color'].widget = ColorPicker()
         self.fields['foreground_color'].widget = ColorPicker()
         self.fields['another_color'].widget = ColorPicker()
