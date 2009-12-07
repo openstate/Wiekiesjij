@@ -19,7 +19,6 @@ class ElectionInstanceSelectPartiesForm(forms.Form):
     parties = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
 
 
-        
 class CandidacyForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
