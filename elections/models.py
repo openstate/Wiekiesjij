@@ -10,25 +10,32 @@ class Council(models.Model):
     """
     A council
     """
-    name        = models.CharField(_('Name'), max_length=255)    
-    region      = models.CharField(_('Region'), max_length=255) #Autocomplete other council regions
-    level       = models.CharField(_('Level'), max_length=255) #Autocomplete other council levels
-    chanceries  = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION,
-                    verbose_name=_('Chanceries'))
-    abbreviation= models.CharField(_('Abbreviated Name'), max_length=15)
-    email       = models.EmailField(_('E-Mail'))
-    street      = models.CharField(_('Street'), max_length=40)
-    house_num   = models.CharField(_('House Number'), max_length=5)
-    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
-    town        = models.CharField(_('Town/City'), max_length=30)
-    seats       = models.PositiveIntegerField(_('Seats'), max_length=30, null=True, blank=True)
-    website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/council',
-                    help_text=_("A picture that will be used when displaying council details."), null=True, blank=True)
-    desciption  = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
-                null=True, blank=True)
-    history     = models.CharField(_('History'), max_length=255 , help_text=_("A short history of the council"),
-                    null=True, blank=True)
+    name                = models.CharField(_('Name'), max_length=255)
+    region              = models.CharField(_('Region'), max_length=255) #Autocomplete other council regions
+    level               = models.CharField(_('Level'), max_length=255) #Autocomplete other council levels
+    chanceries          = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION,
+                                          verbose_name=_('Chanceries'))
+    abbreviation        = models.CharField(_('Abbreviated Name'), max_length=15)
+    email               = models.EmailField(_('E-Mail'))
+    street              = models.CharField(_('Street'), max_length=40)
+    house_num           = models.CharField(_('House Number'), max_length=5)
+    postcode            = models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town                = models.CharField(_('Town/City'), max_length=30)
+    seats               = models.PositiveIntegerField(_('Seats'), max_length=30, null=True, blank=True)
+    website             = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True,
+                                          blank=True)
+    picture             = models.ImageField(_('Picture'), upload_to='media/council', null=True, blank=True,
+                                     help_text=_("A picture that will be used when displaying council details."),)
+    desciption          = models.CharField(_('Description'), max_length=255, null=True, blank=True,
+                                           help_text=_("A short description of the council"),)
+    history             = models.CharField(_('History'), max_length=255, help_text=_("A short history of the council"),
+                                           null=True, blank=True)
+    background_color   = models.CharField(_('Background color'), max_length=7, help_text=_("Background color"),
+                                          null=True, blank=True)
+    foreground_color   = models.CharField(_('Foreground color'), max_length=7, help_text=_("Foreground color"),
+                                          null=True, blank=True)
+    another_color   = models.CharField(_('Another color'), max_length=7, help_text=_("Another color"),
+                                          null=True, blank=True)
 
     def __unicode__(self):
         return self.name

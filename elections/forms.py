@@ -61,12 +61,21 @@ class CouncilForm(BetterModelForm, TemplateForm):
 
 class CouncilContactInformationForm(BetterModelForm, TemplateForm):
     '''
-    ChanceryProfile Information Form (used in 2. Election overview)
+    Council information form (used in 2. Election overview)
     '''
 
     class Meta:
         model = Council
         fields = ('name', 'street', 'house_num', 'postcode', 'town', 'website',)
+
+class CouncilStylingSetupForm(BetterModelForm, TemplateForm):
+    '''
+    Council styling setup form (used in 2. Election overview)
+    '''
+
+    class Meta:
+        model = Council
+        fields = ('background_color', 'foreground_color', 'another_color',)
 
 class ElectionEventForm(BetterModelForm, TemplateForm):
     '''
