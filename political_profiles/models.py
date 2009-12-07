@@ -77,9 +77,9 @@ class ChanceryProfile(Profile):
     postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    picture     = models.ImageField(_('Picture'), upload_to='media/chancery', height_field='height', width_field='width')
-    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
-    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
+
+    picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
+
 
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)

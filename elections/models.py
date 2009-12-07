@@ -32,7 +32,7 @@ class Council(models.Model):
 
     def __unicode__(self):
         return self.name
-        
+
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
@@ -77,7 +77,7 @@ class ElectionInstance(models.Model):
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
 
     def __unicode__(self):
-        return self.council
+        return self.council.name
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    

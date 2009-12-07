@@ -90,6 +90,6 @@ def wizard_view(request, wizard_type):
     try:
         wizard = globals()[wizard_type]
     except KeyError:
-        raise NameError('%s is not an existing wizard\nHave you checked your imports?')
+        raise NameError('%s is not an existing wizard\nHave you checked your imports?' % (wizard_type))
         
     return wizard()(request)

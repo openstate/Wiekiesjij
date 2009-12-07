@@ -11,6 +11,7 @@ import string
 
 SUBJECT = "Uitnodiging Wiekiesjij"
 
+#TODO: set url
 MESSAGE = """
 Geachte %s %s,
 
@@ -100,9 +101,16 @@ def activate(request, hash):
         raise Exception(_("No entry found in the database with this hash. (Hash is not valid, or hash is allready used"))
 
     if request.method == 'POST':
+#<<<<<<< TREE
+#        form = InvitationActivationForm(request.POST)
+#        if form.is_valid():
+#            password = forms.cleaned_data['password']
+#            password_again = forms.clean_data['password']
+#=======
         form = ''
         password = forms.cleaned_data['password']
         password_again = forms.clean_data['password']
+
 
     return render_to_response('invitations/activate.html', {
         'hash' : hash,
