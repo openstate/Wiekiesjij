@@ -9,7 +9,7 @@ from django.forms.util import ErrorList
 from django.forms import ValidationError
 
 from utils.validators import validate_dutchbanknumber, validate_postcode
-from utils.widgets import AddressWidget, NameWidget
+from utils.widgets import AddressWidget, NameWidget, HiddenAddressWidget, HiddenNameWidget
 
 
 class PartialRequiredMultiValueField(MultiValueField):
@@ -107,6 +107,7 @@ class AddressField(MultiValueField):
         Multi widget for the address and the house number
     """
     widget = AddressWidget
+    hidden_widget = HiddenAddressWidget
     default_error_messages = {
         'required': _(u'The address fields are (all) required')
     }
@@ -143,6 +144,7 @@ class NameField(PartialRequiredMultiValueField):
         Multi widget for filling in your name
     """
     widget = NameWidget
+    hidden_widget = HiddenNameWidget
     default_error_messages = {
         'required': _(u'The first and last name field are required')
     }

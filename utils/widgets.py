@@ -6,6 +6,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
+            
 class AddressWidget(forms.widgets.MultiWidget):
     """
         Widget for an address field bit
@@ -35,14 +36,17 @@ class AddressWidget(forms.widgets.MultiWidget):
             </table>
         </div>"""
     
-    def __init__(self, attrs=None):
+    def __init__(self, *args, **kwargs):
         widgets = (
             forms.widgets.TextInput(),
             forms.widgets.TextInput(attrs={'size': 10}),
             forms.widgets.TextInput(attrs={'size': 7}),
             forms.widgets.TextInput(),
         )
-        super(AddressWidget, self).__init__(widgets, attrs)
+        kwargs.update({
+            'widgets': widgets,
+        })
+        super(AddressWidget, self).__init__(*args, **kwargs)
     
     def decompress(self, value):
         if value:
@@ -63,6 +67,20 @@ class AddressWidget(forms.widgets.MultiWidget):
             city_field = rendered_widgets[3]
         )
         
+class HiddenAddressWidget(AddressWidget):
+    
+    def __init__(self, *args, **kwargs):
+        super(HiddenAddressWidget, self).__init__(*args, **kwargs)
+        
+        self.widgets = (
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+        )
+        
+    def format_output(self, rendered_widgets):
+        return "\n".join(rendered_widgets)
         
 class NameWidget(forms.widgets.MultiWidget):
     """
@@ -90,13 +108,16 @@ class NameWidget(forms.widgets.MultiWidget):
         </div>
     """
     
-    def __init__(self, attrs=None):
+    def __init__(self, *args, **kwargs):
         widgets = (
             forms.widgets.TextInput(),
             forms.widgets.TextInput(),
             forms.widgets.TextInput(),
         )
-        super(NameWidget, self).__init__(widgets, attrs)
+        kwargs.update({
+            'widgets': widgets,
+        })
+        super(NameWidget, self).__init__(*args, **kwargs)
         
     def decompress(self, value):
         if value:
@@ -115,7 +136,23 @@ class NameWidget(forms.widgets.MultiWidget):
             middle_name_field = rendered_widgets[2],
         )
     
-    
+class HiddenNameWidget(NameWidget):
+
+    def __init__(self, *args, **kwargs):
+        super(HiddenNameWidget, self).__init__(*args, **kwargs)
+
+        self.widgets = (
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+        )
+
+    def format_output(self, rendered_widgets):
+        return "\n".join(rendered_widgets)
+        
+        
+        
 class AutoCompleter(forms.widgets.TextInput):
     """ 
         Auto completer 

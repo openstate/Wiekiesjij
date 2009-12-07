@@ -11,6 +11,9 @@ urlpatterns = patterns('',
     url(r'^setup/$', ElectionSetupWizard(), name='backoffice.election_setup'),
     url(r'^election_instance/(?P<id>\d+)/$', 'backoffice.views.election_instance_view', name='backoffice.election_instance_view'),
     url(r'^election_party/(?P<id>\d+)/$', 'backoffice.views.election_party_view', name='backoffice.election_party_view'),
+    
+    
+    #TODO: Debug views remove at some point 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'backoffice.views.wizard_view', name='backoffice.show_wizard'),
     url(r'^(?P<profile_type>[-\w]+)/$', 'backoffice.views.form_view', name='backoffice.show_forms'),
 )
