@@ -3,10 +3,12 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+
 from utils.multipathform import Step, MultiPathFormWizard
+
+from elections import settings
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm
 from elections.functions import get_profile_forms
-
 from elections.models import ElectionInstance, Council, ElectionEvent
 
 from political_profiles.models import ChanceryProfile
@@ -16,7 +18,6 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
     """
-    # TODO: Add election_event_id so we can add the election instance to it 
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
             initial_ei=InitialElectionInstanceForm,
@@ -49,13 +50,13 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                     self.council_data.update(form.cleaned_data)
         
         
+        ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
         # council = Council.objects.create(
         #             name='Council of %s' % self.ei_data['name'],
         #             region=self.ei_data['region'],
         #             level=self.ei_data['level']
         #         )
         #         
-        #         ee = ElectionEvent.objects.all()[0]
         #         ei = ElectionInstance.objects.create(
         #             name=self.ei_data['name'],
         #             council=council,
