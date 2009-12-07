@@ -7,7 +7,7 @@ from django.template import RequestContext
 
 from utils.multipathform import Step, MultiPathFormWizard
 from elections import settings
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm, ElectionInstanceSelectPartiesForm
 from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
@@ -111,6 +111,9 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step6_forms = dict(
             council_styling_setup=CouncilStylingSetupForm,
         )
+        step7_forms = dict(
+            election_select_parties=ElectionInstanceSelectPartiesForm,
+        )
 
         step1 = Step('chancery_registration',
                     forms=step1_forms,
@@ -130,14 +133,18 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step6 = Step('council_styling_setup',
                      forms=step6_forms,
                      template='backoffice/wizard/election_setup/step6.html',)
+        step7 = Step('election_select_parties',
+                     forms=step7_forms,
+                     template='backoffice/wizard/election_setup/step7.html',)
 
         scenario_tree = step1.next(
                                    step2.next(
                                               step3.next(
                                                          step4.next(
                                                                     step5.next(
-                                                                               step6
-                                                                                )))))
+                                                                               step6.next(
+                                                                                          step7
+                                                                                          ))))))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)
