@@ -16,7 +16,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
     """
-    # TODO: Add election_event_id
+    # TODO: Add election_event_id so we can add the election instance to it 
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
             initial_ei=InitialElectionInstanceForm,
@@ -29,8 +29,9 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             forms=step1_forms,
             template='backoffice/wizard/addelection/step1.html',
         )
+        #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/addelection/base.html',
-        super(AddElectionInstanceWizard, self).__init__(step1, template)
+        super(AddElectionInstanceWizard, self).__init__(step1, template, *args, **kwargs)
         
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0

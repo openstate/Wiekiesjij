@@ -35,7 +35,7 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     ChanceryProfile admin
     '''
     
-    name = NameField(_('Name'))
+    name = NameField(label=_('Name'))
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
