@@ -7,7 +7,6 @@ from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
-<<<<<<< TREE
 
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm
 from elections.forms import CouncilContactInformationForm
