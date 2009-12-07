@@ -18,14 +18,19 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
     """
+    __name__ = 'Test'
+    
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
             initial_ei=InitialElectionInstanceForm,
         )
+        # Get the form(s) for inviting a council admin and add them to step1_forms
         idx = 0;
         for profile_form in get_profile_forms('council_admin', 'invite'):
             step1_forms.update({'invite_contact_%s' % idx : profile_form})
             idx += 1
+        
+        #add step1
         step1 = Step('electioninstance', 
             forms=step1_forms,
             template='backoffice/wizard/addelection/step1.html',
@@ -39,6 +44,9 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         
     @transaction.commit_manually
     def done(self, request, form_dict):
+        """
+            Called after all steps are done
+        """
         try:
             # This needs to be easier !?!
             for path, forms in form_dict.iteritems():
@@ -55,14 +63,15 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                         del cleaned_data['name']
                         self.profile_data.update(cleaned_data)
         
-        
+            #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
+            #Create the council
             council = Council.objects.create(
                 name='Council of %s' % self.ei_data['name'],
                 region=self.ei_data['region'],
                 level=self.ei_data['level']
             )
-        
+            #Create the election instance
             ei = ElectionInstance.objects.create(
                 name=self.ei_data['name'],
                 council=council,
@@ -71,7 +80,9 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 end_date=datetime.datetime.now(),
                 wizard_start_date=datetime.datetime.now(),
             )
+            #Create the profile
             profile = create_profile('council_admin', self.profile_data)
+            #Link the profile to the council
             council.chanceries.add(profile.user)
         
             #TODO: Save the enabled modules somewhere
