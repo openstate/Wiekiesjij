@@ -48,6 +48,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                         self.council_data = {}
                     self.council_data.update(form.cleaned_data)
         
+        
         # council = Council.objects.create(
         #             name='Council of %s' % self.ei_data['name'],
         #             region=self.ei_data['region'],

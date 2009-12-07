@@ -133,6 +133,8 @@ ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
 ELECTIONS_PROFILE_APP = 'political_profiles'
 
+ELECTIONS_ELECTION_EVENT_ID = 1
+
 if DEBUG:
     
     #debug_toolbar
