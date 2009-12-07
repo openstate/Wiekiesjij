@@ -76,18 +76,27 @@ class ElectionSetupWizard(MultiPathFormWizard):
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
             chancery_profile_form=ChanceryProfileForm,
-            election_instance=ElectionInstanceForm,
         )
-        idx = 0;
-        for profile_form in get_profile_forms('council_admin', 'invite'):
-            step1_forms.update({'invite_contact_%s' % idx : profile_form})
-            idx += 1
+        #idx = 0
+        #for profile_form in get_profile_forms('council_admin', 'invite'):
+        #    step1_forms.update({'invite_contact_%s' % idx : profile_form})
+        #    idx += 1
         step1 = Step('chancery_registration',
             forms=step1_forms,
             template='backoffice/wizard/election_setup/step1.html',
         )
+
+        step2_forms = dict(
+            election_instance=ElectionInstanceForm,
+        )
+        step2 = Step('chancery_registration',
+            forms=step2_forms,
+            template='backoffice/wizard/election_setup/step2.html',
+        )
+        
         template = 'backoffice/wizard/election_setup/base.html',
-        super(ElectionSetupWizard, self).__init__(step1, template)
+        #super(ElectionSetupWizard, self).__init__(step1, template)
+        super(ElectionSetupWizard, self).__init__(step2, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
