@@ -1,5 +1,6 @@
 import datetime
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
@@ -43,24 +44,22 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                         self.council_data = {}
                     self.council_data.update(form.cleaned_data)
         
-        council = Council.objects.create(
-            name='Council of %s' % self.ei_data['name'],
-            region=self.ei_data['region'],
-            level=self.ei_data['level']
-        )
-        
-        ee = ElectionEvent.objects.all()[0]
-        ei = ElectionInstance.objects.create(
-            name=self.ei_data['name'],
-            council=council,
-            election_event=ee,
-            start_date=datetime.datetime.now(),
-            end_date=datetime.datetime.now(),
-            wizard_start_date=datetime.datetime.now(),
-        )
+        # council = Council.objects.create(
+        #             name='Council of %s' % self.ei_data['name'],
+        #             region=self.ei_data['region'],
+        #             level=self.ei_data['level']
+        #         )
+        #         
+        #         ee = ElectionEvent.objects.all()[0]
+        #         ei = ElectionInstance.objects.create(
+        #             name=self.ei_data['name'],
+        #             council=council,
+        #             election_event=ee,
+        #             start_date=datetime.datetime.now(),
+        #             end_date=datetime.datetime.now(),
+        #             wizard_start_date=datetime.datetime.now(),
+        #         )
         
         #Invite council admin
         
-        
-        #TODO: Redirect
-        return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))
+        return HttpResponseRedirect("%sthankyou/" % (request.path))
