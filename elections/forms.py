@@ -3,7 +3,7 @@ from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from utils.widgets import AutoCompleter
+from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import AddressField
 
 from elections.models import Party
@@ -72,6 +72,12 @@ class CouncilStylingSetupForm(BetterModelForm, TemplateForm):
     '''
     Council styling setup form (used in 2. Election overview)
     '''
+
+    def __init__(self, *args, **kwargs):
+        super(PoliticianProfileForm, self).__init__(*args, **kwargs)
+        self.fields['background_color'].widget = ColorPicker()
+        self.fields['foreground_color'].widget = ColorPicker()
+        self.fields['another_color'].widget = ColorPicker()
 
     class Meta:
         model = Council
