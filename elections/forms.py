@@ -84,13 +84,17 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     MODULE_CHOICES = (
         ('SMS', 'SMS Module'),
     )
-    modules = forms.MultipleChoiceField(label=_('Modules'), choices=MODULE_CHOICES, widget=forms.widgets.CheckboxSelectMultiple)
-    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Party, field='region'))
-    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Party, field='region'))
+    modules = forms.MultipleChoiceField(
+                    label=_('Modules'), 
+                    choices=MODULE_CHOICES, 
+                    widget=forms.widgets.CheckboxSelectMultiple,
+                    required=False)
+    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
+    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='region'))
 
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'region', 'level')
+        fields = ('name', 'region', 'level', 'modules')
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
