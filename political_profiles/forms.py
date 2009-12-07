@@ -138,7 +138,6 @@ class ContactProfileForm(BetterModelForm, TemplateForm):
         model = ContactProfile
         exclude = ('user')
 
-
 class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin

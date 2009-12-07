@@ -120,7 +120,7 @@ except ImportError:
 
 
 #Settings
-COMMON_PARTIES =  (('CDA',_('CDA')),
+COMMON_PARTIES =  (('CDA', _('CDA')),
                    ('PvdA', _('PvdA')),
                    ('SP', _('SP')),
                    ('VVD', _('VVD')),

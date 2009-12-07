@@ -96,7 +96,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         
         if request.POST.get('next', 'overview') == 'overview':
             return redirect('backoffice.election_event')
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')            
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 
 class ElectionSetupWizard(MultiPathFormWizard):
