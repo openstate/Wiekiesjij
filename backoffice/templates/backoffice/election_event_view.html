@@ -3,5 +3,5 @@
 	{% block content %}
 		{{ election_events }}
          <a href="/backoffice/add_election_instance/">{% trans "Add Election Instance" %}</a>
-
+         <a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>
 	{% endblock content %}
