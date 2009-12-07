@@ -1,57 +1,77 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+div.item { border: 1px solid black; padding: 10px; margin-bottom: 10px; position: relative; }
+div.index { float: left; }
+.warning { color: red; }
+div.main_content { width: 60%; float: left; }
+div.sidebar { width: 30%; float: right; }
+br.clear { clear: both; }
+strong { display: block; padding-top: 5px; }
+strong a { font-weight: normal; }
+</style>
+{% endblock %}
 {% block content %}
 {{ instance.election_event.name }} &gt;
 
 <h1>{{ instance.council.region }}</h1>
 
+<div class="main_content">
 <ul>
-{% if instance.council.profile_incomplete %}<li>You did not completely fill in the council profile. <a href="#">Do it now &gt;</a></li>{% endif %}
-{% if not instance.council.chanceries %}<li>You did not assign a chancellery yet. <a href="#">Do it now &gt;</a></li>{% endif %}
+{% if instance.council.profile_incomplete %}<li>{% trans 'You did not completely fill in the council profile.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+{% if not instance.council.chanceries.count %}<li>{% trans 'You did not assign a chancellery yet.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
 </ul>
 
-<h2>The following parties are taking part in this election:</h2>
-<div><a href="#">Add a party</a> <a href="#">Batch add parties</a></div>
+<h2>{% trans 'The following parties are taking part in this election' %}:</h2>
+<div><a href="#">{% trans 'Add a party' %}</a> <a href="#">{% trans 'Batch add parties' %}</a></div>
 {% for eip in instance.electioninstanceparty_set.all %}
-<div>
+<div class="item">
+	<div class="main_content">
 	<img src="{{ eip.party.logo }}" />
 	<h3><a href="{% url backoffice.election_party_view eip.id %}">{{ eip.party.name }}</a> ({{ eip.party.abbreviation }})</h3>
-	<div>{% if eip.candidates_invited %}{{ eip.list_length }} candidates ({{ eip.candidates_invited }} invited){% else %}no candidates defined{% endif %}</div>
+	<div>{% if eip.candidates_invited %}{{ eip.list_length }} candidates ({{ eip.candidates_invited }} {% trans 'invited' %}){% else %}{% trans 'no candidates defined' %}{% endif %}</div>
 	<ul>
-	{% if eip.party.profile_incomplete %}<li class="warning">You have not finished filling in the party profile <a href="#">Fill in now &gt;</a></li>{% endif %}
+	{% if eip.party.profile_incomplete %}<li class="warning">{% trans 'You have not finished filling in the party profile' %} <a href="#">{% trans 'Fill in now' %} &gt;</a></li>{% endif %}
 	{% if eip.candidates_invited %}
-	{% if eip.candidates_notinvited %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_notinvited }} candidates</u> not invited yet ({% if instance.candidate_overdue %}over{% endif %}due {{ instance.candidate_deadline }}) <a href="#">Do it now &gt;</a></li>{% endif %}
-	{% if eip.candidates_notresponded %}<li><u>{{ eip.candidates_notresponded }} candidates</u> have not responded yet</li>{% endif %}
-	{% if eip.candidates_profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_profile_incomplete }} candidates</u> did not fill in their profile yet ({% if instance.profile_overdue %}over{% endif %}due {{ instance.profile_deadline }})</li>{% endif %}
-	{% if eip.candidates_questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_questions_incomplete }} candidates</u> did not answer the questions yet ({% if instance.questions_overdue %}over{% endif %}due {{ instance.questions_deadline }})</li>{% endif %}
-	{% else %}<li{% if instance.invite_overdue %} class="warning"{% endif %}>There are no candidates defined for this party ({% if instance.invite_overdue %}over{% endif %}due {{ instance.invite_deadline }}) <a href="#">Do it now &gt;</a></li>{% endif %}
-	<div><a href="#">{% if eip.candidates_count %}View candidate list{% else %}Add candidates{% endif %} &gt;</a></div>
-	<div><a href="#">Edit party profile</a> <a href="#">Remove party</a></div>
+	{% if eip.candidates_notinvited %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_notinvited }} {{ eip.candidates_notinvited|pluralize:_('candidate,candidates') }}</u> {% trans 'not invited yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }}) <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+	{% if eip.candidates_notresponded %}<li><u>{{ eip.candidates_notresponded }} {{ eip.candidates_notresponded|pluralize:_('candidate,candidates') }}</u> {% trans 'have not responded yet' %}</li>{% endif %}
+	{% if eip.candidates_profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_profile_incomplete }} {{ eip.candidates_profile_incomplete|pluralize:_('candidate,candidates') }}</u> {% trans 'did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
+	{% if eip.candidates_questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}><u>{{ eip.candidates_questions_incomplete }} {{ eip.candidates_questions_incomplete|pluralize:_('candidate,candidates') }}</u> {% trans 'did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
+	{% else %}<li{% if instance.invite_overdue %} class="warning"{% endif %}>There are no candidates defined for this party ({% if instance.invite_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.invite_deadline }}) <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+	</div>
+	<div class="sidebar"><a href="#">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Add candidates' %}{% endif %} &gt;</a></div>
+	<div class="sidebar"><a href="#">{% trans 'Edit party profile' %}</a><br /><a href="#">{% trans 'Remove party' %}</a></div>
+	<br class="clear" />
 </div>
 {% endfor %}
-<div><a href="#">Add a party</a> <a href="#">Batch add parties</a></div>
-<div class="sidebar">
-<strong>Taking place on:</strong> {{ instance.start_date }} <a href="#">edit</a></strong>
+<div><a href="#">{% trans 'Add a party' %}</a> <a href="#">{% trans 'Batch add parties' %}</a></div>
 </div>
 <div class="sidebar">
-<strong>Council profile:</strong> <a href="#">edit</a>
-Council profile info (partly)
-<a href="#">Complete profile &gt;</a>
+<strong>{% trans 'Taking place on' %}: <a href="#">{% trans 'edit' %}</a></strong> {{ instance.start_date }}
 </div>
 <div class="sidebar">
-<strong>Chancellery</strong> <a href="#">edit</a>
-{% if instance.council.chanceries %}
+<strong>{% trans 'Council profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
+{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a><br />
+{% trans 'Description' %}: {{ instance.council.description }}<br />
+{% trans 'E-mail' %}: <a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a><br />
+{% if instance.council.profile_incomplete %}<a href="#">{% trans 'Complete profile' %} &gt;</a>{% endif %}
+</div>
+<div class="sidebar">
+<strong>{% trans 'Chancellery' %} <a href="#">{% trans 'edit' %}</a></strong>
+{% if instance.council.chanceries.count %}
 {% for chancery in instance.council.chanceries.all %}
-Chancery <a href="#">edit</a>
+{{ chancery.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
 {% endfor %}
+<a href="#">{% trans 'Add a chancellery' %}</a>
 {% else %}
-<em>You did not assign a chancellery yet</em>
-<a href="#">Invite a chancellery now &gt;</a>
+<em>{% trans 'You did not assign a chancellery yet' %}</em><br />
+<a href="#">{% trans 'Invite a chancellery now' %} &gt;</a>
 {% endif %}
 </div>
 <div class="sidebar">
-<strong>Styling</strong> <a href="#">edit</a>
+<strong>{% trans 'Styling' %} <a href="#">{% trans 'edit' %}</a></strong>
 <img src="{ % url 'style.preview' instance.id % }" />
-<a href="#">Customize styling &gt;</a>
+<a href="#">{% trans 'Customize styling' %} &gt;</a>
 </div>
 {% endblock %}
