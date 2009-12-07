@@ -30,11 +30,11 @@ class Council(models.Model):
                                            help_text=_("A short description of the council"),)
     history             = models.CharField(_('History'), max_length=255, help_text=_("A short history of the council"),
                                            null=True, blank=True)
-    background_color   = models.CharField(_('Background color'), max_length=7, help_text=_("Background color"),
+    background_color   = models.CharField(_('Background color'), max_length=6, help_text=_("Background color"),
                                           null=True, blank=True)
-    foreground_color   = models.CharField(_('Foreground color'), max_length=7, help_text=_("Foreground color"),
+    foreground_color   = models.CharField(_('Foreground color'), max_length=6, help_text=_("Foreground color"),
                                           null=True, blank=True)
-    another_color   = models.CharField(_('Another color'), max_length=7, help_text=_("Another color"),
+    another_color   = models.CharField(_('Another color'), max_length=6, help_text=_("Another color"),
                                           null=True, blank=True)
 
     def __unicode__(self):
