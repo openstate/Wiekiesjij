@@ -5,12 +5,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from utils.multipathform import Step, MultiPathFormWizard
-
 from elections import settings
-
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm
-from elections.forms import CouncilContactInformationForm
-
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm
 from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
@@ -158,5 +154,37 @@ class ElectionSetupWizard(MultiPathFormWizard):
         #         )
 
         #Invite council admin
+        return HttpResponseRedirect("%sthankyou/" % (request.path))
 
+class AddCandidateWizard(MultiPathFormWizard):
+    """
+        Wizard for adding a Candidate
+    """
+
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(
+        )
+        idx = 0;
+        for profile_form in get_profile_forms('candidate', 'invite'):
+            step1_forms.update({'invite_contact_%s' % idx : profile_form})
+            idx += 1
+        step1 = Step('candidate',
+            forms = step1_forms,
+            template = 'backoffice/wizard/addcandidate/step1.html',
+        )
+        template='backoffice/wizard/addcandidate/base.html'
+        super(AddCandidateWizard, self).__init__(step1, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    def done(self, request, form_dict):
+        for path, forms in form_dict.iteritems():
+            for name, form in forms.iteritems():
+                if name == 'initial_form':
+                    self.form_data = form.cleaned_data
+                else:
+                    if not hasattr(self, 'form_data'):
+                        self. form_data = {}
+                    self.form_data.update(form.cleaned_data)
         return HttpResponseRedirect("%sthankyou/" % (request.path))

@@ -1,6 +1,6 @@
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
-from political_profiles.forms import InitialChanceryProfileForm
+from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm
 
 from django.contrib.auth.models import User
 
@@ -25,7 +25,7 @@ def get_profile_forms(for_function, type):
     politician_form_map = {
             'create': [PoliticianProfileForm],
             'edit': [PoliticianProfileForm],
-            'invite': [PoliticianProfileForm],
+            'invite': [InitialPoliticianProfileForm],
             }
     chancery_form_map = {
             'create': [ChanceryProfileForm],
