@@ -62,5 +62,5 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         #Invite council admin
         
         
-        
+        #TODO: Redirect
         return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))

@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
 #from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
+
+from backoffice.wizards import AddElectionInstanceWizard
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
@@ -36,41 +38,10 @@ def election_event(request):
     return render_to_response('backoffice/election_event_view.html', {'election_events': election_events,},
                               context_instance=RequestContext(request))
 
-def election_instance_add(request):
-
-    step_args = dict(
-            forms = dict( #list of forms for this page as name => form_class
-                    #i_chancery_form = InitialChanceryProfileForm,
-                    #chancery_form = ChanceryProfileForm,
-                    l_chancery_form = ElectionInstanceSelectPartiesForm,
-                    #council_form       = CouncilForm,
-                    
-                ),
-            prefixes = dict( # name => prefix; if not set, then name is used
-                    
-                ),
-            initial = dict( # initial value (dict, model object, query set etc)
-                    #i_chancery_form = None,
-                    #chancery_form = None,
-                    l_chancery_form = None,
-                    #council_form = None,
-                    
-                ),
-
-            # optional extra content, will be passed to step template
-            extra_context = dict(),
-
-            # specific template for this step, optional
-            #template = 'foo/bar.html'
-        )
-
-    steps = Step('add_election_instance', forms=step_args['forms'], template='backoffice/wizard/step1.html')
-    
-    add_election_wizard = MultiPathFormWizard(steps)
-
-    return add_election_wizard(request)
-    #return render_to_response('backoffice/add_election_instance_view.html', {'add_election_wizard': add_election_wizard},
-    #                          context_instance=RequestContext(request))
+def election_instance_add(request, done=None):
+    if done is not None:
+        return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))
+    return AddElectionInstanceWizard()(request)
 
 
 #TODO: This can probably be neater. I don't see why we would need step_args for example.
