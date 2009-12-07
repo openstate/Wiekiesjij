@@ -70,17 +70,16 @@ class ChanceryProfileForm(BetterModelForm, TemplateForm):
             )
     #address = AddressField(label=_('Chancery Address'))
     #name = NameField(label=_('Name'))
-    
+
     def __init__(self, *args, **kwargs):
         super(ChanceryProfileForm, self).__init__(*args, **kwargs)
         self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
 
     class Meta:
         model = ChanceryProfile
-        #fields = ('name', 'gender', 'telephone', 'workingdays',)
+        #fields = ('name', 'gender', 'telephone', 'workingdays',) # 'picture' is temporary excluded
         fields = ('first_name', 'middle_name', 'last_name', 'gender', 'telephone', 'workingdays',)
         #exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description', 'picture')
-        # 'picture' is temporary excluded
     '''
     def clean_address(self):
         """

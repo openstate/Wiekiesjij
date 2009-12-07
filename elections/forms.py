@@ -12,11 +12,14 @@ from elections.models import Party
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 
-class ElectionInstanceSelectPartiesForm(forms.Form):
+class ElectionInstanceSelectPartiesForm(BetterModelForm, TemplateForm):
     '''
     Select a list of parties that are in your election from a list of hardcoded partys in the netherlands.
     '''
     parties = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
+    print parties
+    class Meta:
+        fields = ('parties',)
 
 
 class CandidacyForm(BetterModelForm, TemplateForm):
