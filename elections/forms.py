@@ -58,6 +58,16 @@ class CouncilForm(BetterModelForm, TemplateForm):
     class Meta:
         model = Council
         fields = ('seats', 'picture', 'history' )
+
+
+class CouncilContactInformationForm(BetterModelForm, TemplateForm):
+    '''
+    ChanceryProfile admin
+    '''
+
+    class Meta:
+        model = Council
+        fields = ('name', 'street', 'house_num', 'postcode', 'town', 'website',)
  
 
 class ElectionEventForm(BetterModelForm, TemplateForm):

@@ -7,7 +7,7 @@ from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilContactInformationForm
 from elections.functions import get_profile_forms
 from elections.models import ElectionInstance, Council, ElectionEvent
 
@@ -82,17 +82,19 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step2_forms = dict(
             election_instance=ElectionInstanceForm,
         )
-        step2 = Step('chancery_registration',
-            forms=step2_forms,
-            template='backoffice/wizard/election_setup/step2.html',
+        step3_forms = dict(
+            election_instance=CouncilContactInformationForm,
         )
 
-        scenario_tree = Step('chancery_registration',
+        scenario_tree = Step('chancery_registration_1',
                              forms=step1_forms,
                              template='backoffice/wizard/election_setup/step1.html',).next(
-                                Step('chancery_registration_2',
-                                     forms=step2_forms,
-                                     template='backoffice/wizard/election_setup/step2.html',))
+                                 Step('chancery_registration_2',
+                                      forms=step2_forms,
+                                      template='backoffice/wizard/election_setup/step2.html',).next(
+                                          Step('chancery_registration_3',
+                                               forms=step3_forms,
+                                               template='backoffice/wizard/election_setup/step3.html',)))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)
