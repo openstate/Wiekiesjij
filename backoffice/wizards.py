@@ -7,8 +7,11 @@ from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
+<<<<<<< TREE
 
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilContactInformationForm
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm
+from elections.forms import CouncilContactInformationForm
+
 from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
@@ -89,7 +92,10 @@ class ElectionSetupWizard(MultiPathFormWizard):
             election_instance=ElectionInstanceForm,
         )
         step3_forms = dict(
-            election_instance=CouncilContactInformationForm,
+            council_contact_information=CouncilContactInformationForm,
+        )
+        step4_forms = dict(
+            council_additional_information=CouncilForm,
         )
 
         scenario_tree = Step('chancery_registration_1',
@@ -100,7 +106,11 @@ class ElectionSetupWizard(MultiPathFormWizard):
                                       template='backoffice/wizard/election_setup/step2.html',).next(
                                           Step('chancery_registration_3',
                                                forms=step3_forms,
-                                               template='backoffice/wizard/election_setup/step3.html',)))
+                                               template='backoffice/wizard/election_setup/step3.html',).next(
+                                                   Step('chancery_registration_4',
+                                                        forms=step4_forms,
+                                                        template='backoffice/wizard/election_setup/step4.html',)
+                                               )))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)

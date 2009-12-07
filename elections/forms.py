@@ -59,16 +59,14 @@ class CouncilForm(BetterModelForm, TemplateForm):
         model = Council
         fields = ('seats', 'picture', 'history' )
 
-
 class CouncilContactInformationForm(BetterModelForm, TemplateForm):
     '''
-    ChanceryProfile admin
+    ChanceryProfile Information Form (used in 2. Election overview)
     '''
 
     class Meta:
         model = Council
         fields = ('name', 'street', 'house_num', 'postcode', 'town', 'website',)
- 
 
 class ElectionEventForm(BetterModelForm, TemplateForm):
     '''
