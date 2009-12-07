@@ -1,7 +1,8 @@
 import datetime
 
+from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
 from utils.multipathform import Step, MultiPathFormWizard
@@ -36,43 +37,55 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
         
+    @transaction.commit_manually
     def done(self, request, form_dict):
-        # This needs to be easier !?!
-        for path, forms in form_dict.iteritems():
-            for name, form in forms.iteritems():
-                if name == 'initial_ei':
-                    #create election instance 
-                    self.ei_data = form.cleaned_data
-                else:
-                    if not hasattr(self, 'profile_data'):
-                        self.profile_data = {}
-                    self.profile_data.update(form.cleaned_data)
+        try:
+            # This needs to be easier !?!
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'initial_ei':
+                        #create election instance 
+                        self.ei_data = form.cleaned_data
+                    else:
+                        if not hasattr(self, 'profile_data'):
+                            self.profile_data = {}
+                        cleaned_data = form.cleaned_data
+                        for key, value in cleaned_data['name'].iteritems():
+                            cleaned_data[key] = value
+                        del cleaned_data['name']
+                        self.profile_data.update(cleaned_data)
         
         
-        ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
-        council = Council.objects.create(
-            name='Council of %s' % self.ei_data['name'],
-            region=self.ei_data['region'],
-            level=self.ei_data['level']
-        )
+            ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
+            council = Council.objects.create(
+                name='Council of %s' % self.ei_data['name'],
+                region=self.ei_data['region'],
+                level=self.ei_data['level']
+            )
         
-        ei = ElectionInstance.objects.create(
-            name=self.ei_data['name'],
-            council=council,
-            election_event=ee,
-            start_date=datetime.datetime.now(),
-            end_date=datetime.datetime.now(),
-            wizard_start_date=datetime.datetime.now(),
-        )
-        #TODO: Save Modules
-        create_profile('council_admin', self.profile_data)
+            ei = ElectionInstance.objects.create(
+                name=self.ei_data['name'],
+                council=council,
+                election_event=ee,
+                start_date=datetime.datetime.now(),
+                end_date=datetime.datetime.now(),
+                wizard_start_date=datetime.datetime.now(),
+            )
+            profile = create_profile('council_admin', self.profile_data)
+            council.chanceries.add(profile.user)
         
-        #Invite council admin
-        # PROBLEM: How do we know what the profile forms returned?
-        # PROBLEM: How do we know what object we should create for the profile?
+            #TODO: Save the enabled modules somewhere
+            #TODO: Create the invitation 
         
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
         
-        return HttpResponseRedirect("%sthankyou/" % (request.path))
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect('backoffice.election_event')
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')            
 
 class ElectionSetupWizard(MultiPathFormWizard):
     """

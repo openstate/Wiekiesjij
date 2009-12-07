@@ -1,10 +1,12 @@
+from django import forms
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
+
 from form_utils.forms import BetterModelForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField
-from django import forms
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
 class PoliticianProfileForm(BetterModelForm, TemplateForm):

@@ -38,11 +38,6 @@ def election_event(request):
     return render_to_response('backoffice/election_event_view.html', {'election_events': election_events,},
                               context_instance=RequestContext(request))
 
-def election_instance_add(request, done=None):
-    if done is not None:
-        return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))
-    return AddElectionInstanceWizard()(request)
-
 def election_setup(request, done=None):
     '''
     Election setup

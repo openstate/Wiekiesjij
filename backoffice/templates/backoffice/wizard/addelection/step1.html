@@ -2,6 +2,7 @@
 {% load i18n %}
 {% block buttons %}
 	<div class="buttons">
-		<button type="submit">{% trans "Finish" %}</button>
+		<button type="submit" name="next" value="next">{% trans "Start council setup wizard" %} &gt;</button>
+		<button type="submit" class="default" name="next" value="overview">{% trans "Skip Council setup wizard" %} &gt;</button>
 	</div>
 {% endblock buttons %}

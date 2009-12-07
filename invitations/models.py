@@ -7,11 +7,13 @@ class CandidateInvitation(models.Model):
     user_to = models.ForeignKey(User, related_name="invitation_to", verbose_name=_('To User'))
     hash = models.CharField(max_length=32)
     accepted = models.BooleanField()
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     view = models.CharField(max_length=255)
     text = models.TextField()
     email = models.CharField(max_length=255)
+    
+    send = models.DateTimeField(blank=True, null=True) #Is the invitation send or not
     
     def __unicode__(self):
         return self.user_to.email

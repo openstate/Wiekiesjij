@@ -31,4 +31,16 @@ def get_profile_forms(for_function, form_type):
     
     
 def create_profile(for_function, data):
+    """
+        Creates a profile for the given for_function using the data
+    """
     return get_profile_app().create_profile(for_function, data)
+    
+    
+def profile_invite_email_templates(for_function):
+    """
+        Get the templates to use for sending an invitation
+        
+        Returns a dict with a plain and a hhtml key pointing to the template files to use
+    """
+    return get_profile_app().profile_invite_email_templates(for_function)

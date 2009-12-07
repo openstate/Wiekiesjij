@@ -77,7 +77,7 @@ def get_profile_wizards(for_function, type):
     return []
     
     
-def get_profile_invite_email_templates(for_function):
+def profile_invite_email_templates(for_function):
     templates = {
         'candidate': {
             'plain': 'political_profiles/emails/invitations/candidate.txt',
