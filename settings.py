@@ -120,14 +120,17 @@ except ImportError:
 
 
 #Settings
-COMMON_PARTIES =  (('Monday',_('Monday')),
-         ('Tuesday', _('Tuesday')),
-         ('Wednesday', _('Wednesday')),
-         ('Thursday', _('Thursday')),
-         ('Friday', _('Friday')),
-         ('Saturday', _('Saturday')),
-         ('Sunday', _('Sunday')),
-        )
+COMMON_PARTIES =  (('CDA',_('CDA')),
+                   ('PvdA', _('PvdA')),
+                   ('SP', _('SP')),
+                   ('VVD', _('VVD')),
+                   ('PVV', _('PVV')),
+                   ('GL', _('GL')),
+                   ('CU', _('CU')),
+                   ('D66', _('D66')),
+                   ('PvdD', _('PvdD')),
+                   ('SGP', _('SGP')),
+                   ('OSF', _('OSF')),)
 ELECTIONS_CONTACT_LIMITATION = {'contactprofile__isnull': False}
 ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}

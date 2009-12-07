@@ -33,20 +33,22 @@ class InitialCouncilForm(BetterModelForm, TemplateForm):
     ChanceryProfile admin
     '''
     
-    address = AddressField(_('Address'))
+    #address = AddressField(_('Address'))
 
     class Meta:
         model = Council
-        fields = ('name', 'address', 'website' )
-        
+        fields = ('name', 'house_num', 'street', 'postcode', 'town', 'website' )
+
+    '''
     def clean_address(self):
         """
             Puts the subfields of the address multivaluefield into separate fields
         """
-        for key in ['street', 'number', 'postalcode', 'city']:
-            self.cleaned_data[key] = self.cleaned_data['address'][key]
+        fields = ['street', 'number', 'postalcode', 'city']
+        for key in fields:
+            self.cleaned_data[key] = self.cleaned_data['address'].split(' ')[fields.index(key)]
         return self.cleaned_data['address']
-
+    '''
         
 class CouncilForm(BetterModelForm, TemplateForm):
     '''

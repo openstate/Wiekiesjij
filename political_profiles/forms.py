@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from form_utils.forms import BetterModelForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
-from utils.fields import NameField
+from utils.fields import NameField, AddressField
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
 class PoliticianProfileForm(BetterModelForm, TemplateForm):
@@ -68,20 +68,48 @@ class ChanceryProfileForm(BetterModelForm, TemplateForm):
              ('Saturday', _('Saturday')),
              ('Sunday', _('Sunday')),
             )
-
+    #address = AddressField(label=_('Chancery Address'))
+    #name = NameField(label=_('Name'))
+    
     def __init__(self, *args, **kwargs):
         super(ChanceryProfileForm, self).__init__(*args, **kwargs)
         self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
 
     class Meta:
         model = ChanceryProfile
-        exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description', 'picture')
+        #fields = ('name', 'gender', 'telephone', 'workingdays',)
+        fields = ('first_name', 'middle_name', 'last_name', 'gender', 'telephone', 'workingdays',)
+        #exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description', 'picture')
         # 'picture' is temporary excluded
+    '''
+    def clean_address(self):
+        """
+            Puts the subfields of the address multivaluefield into separate fields
+        """
+        fields = ['street', 'number', 'postalcode', 'city']
+        for key in fields:
+            self.cleaned_data[key] = self.cleaned_data['address'].split(' ')[fields.index(key)]
+        return self.cleaned_data['address']
+    '''
 
 class ChanceryContactInformationForm(BetterModelForm, TemplateForm):
+    '''
+    Chancery contact information form.
+    '''
+    #address = AddressField(label=_('Chancery Contact Information'))
+
     class Meta:
         model = ChanceryProfile
-        fields = ('website', 'street', 'house_num', 'postcode', 'town',)
+        fields = ('website', 'house_num', 'street', 'postcode', 'town',) #'street', 'house_num', 'postcode', 'town',
+    '''
+    def clean_address(self):
+        """
+            Puts the subfields of the address multivaluefield into separate fields
+        """
+        for key in ['street', 'number', 'postalcode', 'city']:
+            self.cleaned_data[key] = self.cleaned_data['address'][key]
+        return self.cleaned_data['address']
+    '''
 
 class LastChanceryProfileForm(BetterModelForm, TemplateForm):
     '''

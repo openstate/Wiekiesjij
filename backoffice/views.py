@@ -38,13 +38,6 @@ def election_event(request):
     return render_to_response('backoffice/election_event_view.html', {'election_events': election_events,},
                               context_instance=RequestContext(request))
 
-def election_setup(request, done=None):
-    '''
-    Election setup
-    '''
-    if done is not None:
-        return render_to_response('backoffice/wizard/election_setup/done.html', {}, context_instance=RequestContext(request))
-    return ElectionSetupWizard()(request)
 
 #TODO: This can probably be neater. I don't see why we would need step_args for example.
 def form_view(request, profile_type):

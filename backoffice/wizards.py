@@ -87,6 +87,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             return redirect('backoffice.election_event')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')            
 
+
 class ElectionSetupWizard(MultiPathFormWizard):
     """
         #2.1.5 of interaction design.
