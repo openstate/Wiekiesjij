@@ -15,7 +15,7 @@ from elections.models import ElectionEvent, ElectionInstance, ElectionInstancePa
 #from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
 
-from backoffice.wizards import AddElectionInstanceWizard
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
@@ -42,6 +42,11 @@ def election_instance_add(request, done=None):
     if done is not None:
         return render_to_response('backoffice/wizard/addelection/done.html', {}, context_instance=RequestContext(request))
     return AddElectionInstanceWizard()(request)
+
+def election_setup(request, done=None):
+    if done is not None:
+        return render_to_response('backoffice/wizard/election_setup/done.html', {}, context_instance=RequestContext(request))
+    return ElectionSetupWizard()(request)
 
 
 #TODO: This can probably be neater. I don't see why we would need step_args for example.
