@@ -144,35 +144,58 @@ class ElectionSetupWizard(MultiPathFormWizard):
         return 0
 
     def done(self, request, form_dict):
-        # This needs to be easier !?!
-        for path, forms in form_dict.iteritems():
-            for name, form in forms.iteritems():
-                if name == 'initial_ei':
-                    #create election instance
-                    self.ei_data = form.cleaned_data
-                else:
-                    if not hasattr(self, 'council_data'):
-                        self.council_data = {}
-                    self.council_data.update(form.cleaned_data)
+        try:
+            # This needs to be easier !?!
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'chancery_registration':
+                        #create election instance
+                        self.chancery_data = form.cleaned_data
+                    else:
+                        if not hasattr(self, 'chancery_contact_information'):
+                            self.profile_data = {}
+                        cleaned_data = form.cleaned_data
+                        for key, value in cleaned_data['name'].iteritems():
+                            cleaned_data[key] = value
+                        del cleaned_data['name']
+                        self.profile_data.update(cleaned_data)
 
-        # council = Council.objects.create(
-        #             name='Council of %s' % self.ei_data['name'],
-        #             region=self.ei_data['region'],
-        #             level=self.ei_data['level']
-        #         )
-        #
-        #         ee = ElectionEvent.objects.all()[0]
-        #         ei = ElectionInstance.objects.create(
-        #             name=self.ei_data['name'],
-        #             council=council,
-        #             election_event=ee,
-        #             start_date=datetime.datetime.now(),
-        #             end_date=datetime.datetime.now(),
-        #             wizard_start_date=datetime.datetime.now(),
-        #         )
+            #profile = create_profile('chancery_admin', self.chancery_data)
+            
+            #Get the election event
+            ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
+            #Create the council
+            council = Council.objects.create(
+                name='Council of %s' % self.ei_data['name'],
+                region=self.ei_data['region'],
+                level=self.ei_data['level']
+            )
+            #Create the election instance
+            ei = ElectionInstance.objects.create(
+                name=self.ei_data['name'],
+                council=council,
+                election_event=ee,
+                start_date=datetime.datetime.now(),
+                end_date=datetime.datetime.now(),
+                wizard_start_date=datetime.datetime.now(),
+            )
+            #Create the profile
+            profile = create_profile('council_admin', self.profile_data)
+            #Link the profile to the council
+            council.chanceries.add(profile.user)
 
-        #Invite council admin
-        return HttpResponseRedirect("%sthankyou/" % (request.path))
+            #TODO: Save the enabled modules somewhere
+            #TODO: Create the invitation
+
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect('backoffice.election_setup')
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class AddCandidateWizard(MultiPathFormWizard):
     """

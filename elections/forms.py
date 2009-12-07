@@ -15,9 +15,11 @@ from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance
 class ElectionInstanceSelectPartiesForm(forms.Form):
     '''
     Select a list of parties that are in your election from a list of hardcoded partys in the netherlands.
+    TODO. I don't know why, but the form doesn't show anything.
     '''
-    parties = forms.MultipleChoiceField(widget=forms.widgets.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
-
+    parties = forms.MultipleChoiceField1(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
+    class Meta:
+        fields = ('parties',)
 
 class CandidacyForm(BetterModelForm, TemplateForm):
     '''
