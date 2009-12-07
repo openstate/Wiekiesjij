@@ -15,7 +15,7 @@ from utils.widgets import AddressWidget, NameWidget
 class PartialRequiredMultiValueField(MultiValueField):
     """
         Overwrites the default django multivalue field.
-        Instead of checking the required for ALL fields we check the separate fields.
+        Instead of checking the required for ALL fields we don't throw errors
     """
     
     fields_required = []
@@ -23,7 +23,6 @@ class PartialRequiredMultiValueField(MultiValueField):
     def __init__(self, fields=(), *args, **kwargs):
         for f in fields:
             self.fields_required.append(bool(f.required))
-            f.required = False
         self.fields = fields
         super(MultiValueField, self).__init__(fields, *args, **kwargs)
         
@@ -35,6 +34,8 @@ class PartialRequiredMultiValueField(MultiValueField):
         For example, if this MultiValueField was instantiated with
         fields=(DateField(), TimeField()), clean() would call
         DateField.clean(value[0]) and TimeField.clean(value[1]).
+        
+        Added the field specific required check
         """
         clean_data = []
         errors = ErrorList()
@@ -51,7 +52,6 @@ class PartialRequiredMultiValueField(MultiValueField):
                 field_value = value[i]
             except IndexError:
                 field_value = None
-            print "=== %s -> %s" % (field_value, self.fields_required[i])
             if self.required and field_value in EMPTY_VALUES and self.fields_required[i]:
                 raise ValidationError(self.error_messages['required'])
             try:
