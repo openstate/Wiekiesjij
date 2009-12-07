@@ -94,34 +94,20 @@ class ElectionSetupWizard(MultiPathFormWizard):
     """
     # TODO: Add election_event_id
     def __init__(self, *args, **kwargs):
-        step1_forms = dict(
-            chancery_profile_form=ChanceryProfileForm,
-        )
-        step2_forms = dict(
-            election_instance=ElectionInstanceForm,
-        )
-        step3_forms = dict(
-            council_contact_information=CouncilContactInformationForm,
-        )
-        step4_forms = dict(
-            council_additional_information=CouncilForm,
-        )
-        step5_forms = dict(
-            chancery_contact_information=ChanceryContactInformationForm,
-        )
-        step6_forms = dict(
-            council_styling_setup=CouncilStylingSetupForm,
-        )
-        step7_forms = dict(
-            election_select_parties=ElectionInstanceSelectPartiesForm,
-        )
+        step1_forms = dict(chancery_profile_form=ChanceryProfileForm,)
+        step2_forms = dict(election_instance=ElectionInstanceForm,)
+        step3_forms = dict(council_contact_information=CouncilContactInformationForm,)
+        step4_forms = dict(council_additional_information=CouncilForm,)
+        step5_forms = dict(chancery_contact_information=ChanceryContactInformationForm,)
+        step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,)
+        step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,)
 
         step1 = Step('chancery_registration',
-                    forms=step1_forms,
-                    template='backoffice/wizard/election_setup/step1.html',)
+                     forms=step1_forms,
+                     template='backoffice/wizard/election_setup/step1.html',)
         step2 = Step('election_details',
-                    forms=step2_forms,
-                    template='backoffice/wizard/election_setup/step2.html',)
+                     forms=step2_forms,
+                     template='backoffice/wizard/election_setup/step2.html',)
         step3 = Step('council_contact_information',
                      forms=step3_forms,
                      template='backoffice/wizard/election_setup/step3.html',)
