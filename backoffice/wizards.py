@@ -15,7 +15,7 @@ from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
 from political_profiles.models import ChanceryProfile
-from political_profiles.forms import ChanceryProfileForm
+from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -96,6 +96,9 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step4_forms = dict(
             council_additional_information=CouncilForm,
         )
+        step5_forms = dict(
+            chancery_contact_information=ChanceryContactInformationForm,
+        )
 
         step1 = Step('chancery_registration_1',
                     forms=step1_forms,
@@ -110,14 +113,15 @@ class ElectionSetupWizard(MultiPathFormWizard):
                      forms=step4_forms,
                      template='backoffice/wizard/election_setup/step4.html',)
         step5 = Step('chancery_registration_5',
-                     forms=step4_forms,
+                     forms=step5_forms,
                      template='backoffice/wizard/election_setup/step5.html',)
 
         scenario_tree = step1.next(
                                    step2.next(
                                               step3.next(
-                                                         step4
-                                               )))
+                                                         step4.next(
+                                                                    step5
+                                                            ))))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)

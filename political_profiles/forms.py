@@ -70,6 +70,10 @@ class ChanceryProfileForm(BetterModelForm, TemplateForm):
         exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description', 'picture')
         # 'picture' is temporary excluded
 
+class ChanceryContactInformationForm(BetterModelForm, TemplateForm):
+    class Meta:
+        model = ChanceryProfile
+        fields = ('website', 'street', 'house_num', 'postcode', 'town',)
 
 class LastChanceryProfileForm(BetterModelForm, TemplateForm):
     '''
