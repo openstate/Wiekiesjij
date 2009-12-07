@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm
 from elections.functions import get_profile_forms
 
 from elections.models import ElectionInstance, Council, ElectionEvent
@@ -75,7 +75,8 @@ class ElectionSetupWizard(MultiPathFormWizard):
     # TODO: Add election_event_id
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
-            initial_ei=ChanceryProfileForm,
+            chancery_profile_form=ChanceryProfileForm,
+            election_instance=ElectionInstanceForm,
         )
         idx = 0;
         for profile_form in get_profile_forms('council_admin', 'invite'):

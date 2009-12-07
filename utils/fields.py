@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import CharField, RegexField
 from django.forms.fields import MultiValueField, EMPTY_VALUES
 from django.forms.util import ErrorList
+from django.forms import ValidationError
 
 from utils.validators import validate_dutchbanknumber, validate_postcode
 from utils.widgets import AddressWidget, NameWidget

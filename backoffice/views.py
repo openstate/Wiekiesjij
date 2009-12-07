@@ -63,7 +63,7 @@ def form_view(request, profile_type):
     steps = Step('add_election_instance', forms=formslist, template='backoffice/wizard/step1.html')
     generic_form = MultiPathFormWizard(steps)
     return generic_form(request)
-    
+
 def wizard_view(request, wizard_type):
     try:
         wizard = globals()[wizard_type]
