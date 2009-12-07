@@ -299,11 +299,11 @@ class Migration:
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['political_profiles.PoliticianProfile']"}),
             'position': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'startdate': ('django.db.models.fields.DateField', [], {}),
-            'tags': ('tagging.fields.TagField', [], {}),
+            'tags': ('tagging.fields.TagField', [], {'default': "''"}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'political_profiles.politicianprofile': {
-            'dateofbirth': ('django.db.models.fields.DateField', [], {}),
+            'dateofbirth': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'gender': ('django.db.models.fields.CharField', [], {'default': "'Male'", 'max_length': '25'}),
             'height': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'null': 'True'}),

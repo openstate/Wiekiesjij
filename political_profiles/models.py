@@ -41,7 +41,7 @@ class PoliticianProfile(Profile):
     """
     initials        = models.CharField(_('Level'), max_length=15)
     gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS , help_text=_("Please choose your gender."), default='Male')
-    dateofbirth     = models.DateField(_('Start Date'))
+    dateofbirth     = models.DateField(_('Start Date'), null=True, blank=True)
     picture         = models.ImageField(_('Picture'), upload_to='media/politician')
     width           = models.PositiveIntegerField(editable=False, default=0, null=True)
     height          = models.PositiveIntegerField(editable=False, default=0, null=True)

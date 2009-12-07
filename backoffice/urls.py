@@ -15,5 +15,5 @@ urlpatterns = patterns('',
     
     #TODO: Debug views remove at some point 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'backoffice.views.wizard_view', name='backoffice.show_wizard'),
-    url(r'^(?P<profile_type>[-\w]+)/$', 'backoffice.views.form_view', name='backoffice.show_forms'),
+    url(r'^(?P<form_type>[-\w]+)/$', 'backoffice.views.form_view', name='backoffice.show_forms'),
 )

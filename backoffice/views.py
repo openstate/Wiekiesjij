@@ -40,13 +40,13 @@ def election_event(request):
 
 
 #TODO: This can probably be neater. I don't see why we would need step_args for example.
-def form_view(request, profile_type):
+def form_view(request, form_type):
     try:
         formslist = dict(
-            generic_form = globals()[profile_type],
+            generic_form = globals()[form_type],
         )
     except KeyError:
-        raise NameError(profile_type + ' is not an existing form\nHave you checked your imports?')
+        raise NameError('%s is not an existing form\nHave you checked your imports?' % (form_type))
 
     steps = Step('add_election_instance', forms=formslist, template='backoffice/wizard/step1.html')
     generic_form = MultiPathFormWizard(steps)

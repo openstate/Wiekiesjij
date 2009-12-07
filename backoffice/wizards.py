@@ -11,7 +11,7 @@ from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, Elec
 from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
-from political_profiles.models import ChanceryProfile
+from political_profiles.models import ChanceryProfile, PoliticianProfile
 from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
@@ -213,6 +213,25 @@ class AddCandidateWizard(MultiPathFormWizard):
                     self.form_data = form.cleaned_data
                 else:
                     if not hasattr(self, 'form_data'):
-                        self. form_data = {}
+                        self.form_data = {}
                     self.form_data.update(form.cleaned_data)
+
+        tmp_data = {
+            'first_name': self.form_data['name']['first_name'],
+            'middle_name': self.form_data['name']['middle_name'],
+            'last_name': self.form_data['name']['first_name'],
+            'email': self.form_data['email'],
+            'gender': self.form_data['gender'],
+        }
+        import ipdb; ipdb.set_trace()
+        create_profile('candidate', tmp_data)
+
+        #politician = PoliticianProfile.objects.create(
+        #    first_name = self.form_data['name']['first_name'],
+        #    middle_name = self.form_data['name']['middle_name'],
+        #    last_name = self.form_data['name']['last_name'],
+        #    email = self.form_data['email'],
+        #    gender = self.form_data['gender'],
+        #)
+
         return HttpResponseRedirect("%sthankyou/" % (request.path))
