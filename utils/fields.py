@@ -131,7 +131,7 @@ class AddressField(MultiValueField):
         """
             returns a dict with the values
         """
-        return "%(street)s %(number)s %(postalcode)s %(city)s" % {
+        return {
             'street': data_list[0],
             'number': data_list[1],
             'postalcode': data_list[2],
@@ -161,7 +161,7 @@ class NameField(PartialRequiredMultiValueField):
         """
             Returns a dict with the values
         """
-        return "%(first_name)s %(last_name)s %(middle_name)s" % {
+        return {
             'first_name': data_list[0],
             'middle_name': data_list[2],
             'last_name': data_list[1],
