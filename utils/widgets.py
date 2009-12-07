@@ -120,7 +120,7 @@ class AutoCompleter(forms.widgets.TextInput):
     """ 
         Auto completer 
     """
-    CLIENT_CODE = """
+    TEMPLATE = """
         <script type="text/javascript">
              jQuery(document).ready(function(){
                 jQuery('#%(id)s').autocomplete("%(data)s".split(', '), {max: %(limit)d});
@@ -151,26 +151,43 @@ class AutoCompleter(forms.widgets.TextInput):
 
         result = super(AutoCompleter, self).render(*args, **kwargs)
 
-        return result + mark_safe(self.CLIENT_CODE % dict(id=html_id, data=data, limit=limit))
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id, data=data, limit=limit))
 
 class ColorPicker(forms.widgets.TextInput):
     """
         Color Picker
     """
-    CLIENT_CODE = """
+    TEMPLATE = """
+        <!-- Following div could need CSS -->
+        <div class="cp_preview" id="%(id)s_preview" style="height: 20px; width: 20px;"></div>
         <script type="text/javascript">
             jQuery('#%(id)s').ColorPicker({
-        	onSubmit: function(hsb, hex, rgb, el) {
-                    $(el).val(hex);
-                    $(el).ColorPickerHide();
+
+                onShow: function (colpkr) {
+                    $(colpkr).fadeIn(500);
+                    return false;
+                },
+                onHide: function (colpkr) {
+                    $(colpkr).fadeOut(500);
+                    return false;
                 },
                 onBeforeShow: function () {
                     $(this).ColorPickerSetColor(this.value);
+                },
+                onChange: function (hsb, hex, rgb) {
+                    $('#%(id)s_preview').css('backgroundColor', '#' + hex);
+                    $('#%(id)s').val(hex);
                 }
+
             })
             .bind('keyup', function(){
                 $(this).ColorPickerSetColor(this.value);
             });
+
+            jQuery(document).ready(function(){
+                $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
+            });
+
         </script>
     """
 
@@ -191,4 +208,4 @@ class ColorPicker(forms.widgets.TextInput):
         html_id = kwargs.get('attrs', {}).get('id', '')
         result = super(ColorPicker, self).render(*args, **kwargs)
 
-        return result + mark_safe(self.CLIENT_CODE % dict(id=html_id))
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id))
