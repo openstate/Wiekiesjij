@@ -223,7 +223,6 @@ class AddCandidateWizard(MultiPathFormWizard):
             'email': self.form_data['email'],
             'gender': self.form_data['gender'],
         }
-        import ipdb; ipdb.set_trace()
         create_profile('candidate', tmp_data)
 
         #politician = PoliticianProfile.objects.create(
