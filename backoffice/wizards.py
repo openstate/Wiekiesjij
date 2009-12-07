@@ -7,8 +7,9 @@ from django.template import RequestContext
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
+
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilContactInformationForm
-from elections.functions import get_profile_forms
+from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
 from political_profiles.models import ChanceryProfile
@@ -45,28 +46,33 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                     #create election instance 
                     self.ei_data = form.cleaned_data
                 else:
-                    if not hasattr(self, 'council_data'):
-                        self.council_data = {}
-                    self.council_data.update(form.cleaned_data)
+                    if not hasattr(self, 'profile_data'):
+                        self.profile_data = {}
+                    self.profile_data.update(form.cleaned_data)
         
         
         ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
-        # council = Council.objects.create(
-        #             name='Council of %s' % self.ei_data['name'],
-        #             region=self.ei_data['region'],
-        #             level=self.ei_data['level']
-        #         )
-        #         
-        #         ei = ElectionInstance.objects.create(
-        #             name=self.ei_data['name'],
-        #             council=council,
-        #             election_event=ee,
-        #             start_date=datetime.datetime.now(),
-        #             end_date=datetime.datetime.now(),
-        #             wizard_start_date=datetime.datetime.now(),
-        #         )
+        council = Council.objects.create(
+            name='Council of %s' % self.ei_data['name'],
+            region=self.ei_data['region'],
+            level=self.ei_data['level']
+        )
+        
+        ei = ElectionInstance.objects.create(
+            name=self.ei_data['name'],
+            council=council,
+            election_event=ee,
+            start_date=datetime.datetime.now(),
+            end_date=datetime.datetime.now(),
+            wizard_start_date=datetime.datetime.now(),
+        )
+        #TODO: Save Modules
+        create_profile('council_admin', self.profile_data)
         
         #Invite council admin
+        # PROBLEM: How do we know what the profile forms returned?
+        # PROBLEM: How do we know what object we should create for the profile?
+        
         
         return HttpResponseRedirect("%sthankyou/" % (request.path))
 

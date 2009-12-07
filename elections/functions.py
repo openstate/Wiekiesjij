@@ -28,3 +28,7 @@ def get_profile_model(for_function):
     
 def get_profile_forms(for_function, form_type):
     return get_profile_app().get_profile_forms(for_function, form_type)
+    
+    
+def create_profile(for_function, data):
+    return get_profile_app().create_profile(for_function, data)
