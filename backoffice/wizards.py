@@ -217,13 +217,15 @@ class ElectionSetupWizard(MultiPathFormWizard):
             self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
 
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
+            #self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
 
             self.user = User.objects.get(id=self.user_id)
+            self.chancery_profile = ChanceryProfile.objects.get(user=self.user_id)
+            print 'self.chancery_profile: '; print self.chancery_profile
 
             #print 'self.election_instance: '; print self.election_instance
             #print 'self.user: '; print self.user
-        
+
         except Exception, e:
             raise e
 
@@ -261,8 +263,6 @@ class ElectionSetupWizard(MultiPathFormWizard):
 
         template = 'backoffice/wizard/election_setup/base.html',
 
-        
-
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
@@ -296,33 +296,22 @@ class ElectionSetupWizard(MultiPathFormWizard):
                         pass # TODO: throw an error
 
             # Here we need to update the ChanceryProfile
+            for (key, value) in self.chancery_profile_data.items():
+                self.chancery_profile.key = value
 
-            # Here we need to update the CouncilProfile
-            
-            #Get the election event
-            ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
-            #Updates the council
-            council = Council.objects.create(
-                name='Council of %s' % self.ei_data['name'],
-                region=self.ei_data['region'],
-                level=self.ei_data['level']
-            )
-            #Create the election instance
-            ei = ElectionInstance.objects.create(
-                name=self.ei_data['name'],
-                council=council,
-                election_event=ee,
-                start_date=datetime.datetime.now(),
-                end_date=datetime.datetime.now(),
-                wizard_start_date=datetime.datetime.now(),
-            )
-            #Create the profile
-            profile = create_profile('council_admin', self.profile_data)
-            #Link the profile to the council
-            council.chanceries.add(profile.user)
+            self.chancery_profile.save() # Updating the ChanceryProfile
 
-            #TODO: Save the enabled modules somewhere
-            #TODO: Create the invitation
+            # Here we need to update the Council
+            for (key, value) in self.council_data.items():
+                self.election_instance.council.key = value
+
+            self.election_instance.council.save() # Updating the Council
+
+            # Here we need to update the ElectionInstance
+            for (key, value) in self.election_instance_data.items():
+                self.election_instance.key = value
+
+            self.election_instance.save() # Updating the ElectionInstance
 
         except Exception, e:
             transaction.rollback()

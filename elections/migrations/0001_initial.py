@@ -4,7 +4,6 @@ from django.db import models
 from elections.models import *
 
 class Migration:
-    
     def forwards(self, orm):
         
         # Adding model 'ElectionInstanceQuestion'
