@@ -119,6 +119,16 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,) # Updates Council
         step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,) # Updates ElectionInstance
 
+        if 'user_id' in kwargs:
+            self.user_id = kwargs['user_id']
+
+        if 'election_instance_id' in kwargs:
+            self.election_instance_id = kwargs['election_instance_id']
+
+        print 'named arguments: '; print kwargs
+
+        print 'self.user_id: '; print self.user_id
+        print 'self.election_instance_id: '; print self.election_instance_id
         '''
         TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
         chancery already exists.
@@ -148,6 +158,9 @@ class ElectionSetupWizard(MultiPathFormWizard):
         scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
 
         template = 'backoffice/wizard/election_setup/base.html',
+
+        
+
         super(ElectionSetupWizard, self).__init__(scenario_tree, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
@@ -165,13 +178,17 @@ class ElectionSetupWizard(MultiPathFormWizard):
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.chancery_profile_data = dict(self.chancery_profile_data.items() + form.cleaned_data.items())
                     elif name in ('council_contact_information', 'council_additional_information', 'council_styling_setup'):
-                        # Updates the Council with data from step 3, 4 or 6
+                        # Updates the Council with data from step 3, 4 or 6.
                         if not hasattr(self, 'council_data'):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
                     elif name in ('election_details', 'election_select_parties'):
-                        # Updates the Election Instance from step 7
+                        # Updates the Election Instance from step 2 or 7.
+                        if not hasattr(self, 'election_instance_data'):
+                            self.election_instance_data = {}
+                        # We merge two dictinaries, letting the form data to overwrite the existing data
+                        self.election_instance_data = dict(self.election_instance_data.items() + form.cleaned_data.items())
                         pass
                     else:
                         pass # TODO: throw an error
@@ -181,7 +198,8 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # Here we need to update the CouncilProfile
 
             # Here we need to update the ElectionInstance
-
+            ei = ElectionInstance.objects.get(id='')
+            
             #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
             #Updates the council

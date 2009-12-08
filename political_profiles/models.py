@@ -55,13 +55,13 @@ class PoliticianProfile(Profile):
     #goals		Refrence
     #Votes		Reference
     #Expenses	Reference
-    
+
     def profile_incomplete(self):
         return False
 
     def __unicode__(self):
         return self.user.username
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
 
