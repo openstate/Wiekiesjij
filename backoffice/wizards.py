@@ -119,6 +119,10 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,) # Updates Council
         step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,) # Updates ElectionInstance
 
+        '''
+        TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
+        chancery already exists.
+        '''
         step1 = Step('chancery_registration',
                      forms=step1_forms,
                      template='backoffice/wizard/election_setup/step1.html',)
@@ -154,25 +158,18 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # This needs to be easier !?!
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if 'chancery_registration' == name: # Updates the ChanceryProfile with data from step 1
+                    if name in ('chancery_registration', 'chancery_contact_information'):
+                        # Updates the ChanceryProfile with data from step 1 or 5.
                         if not hasattr(self, 'chancery_profile_data'):
                             self.chancery_profile_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.chancery_profile_data = dict(self.chancery_profile_data.items() + form.cleaned_data.items())
-                    elif 'chancery_contact_information' == name: # Updates the ChanceryProfile with data from step 5
-                        if not hasattr(self, 'chancery_data'):
-                            self.chancery_profile_data = {}
-                        # We merge two dictionaries, letting the form data to overwrite the existing data
-                        self.chancery_profile_data = dict(self.chancery_profile_data.items() + form.cleaned_data.items())
-                    elif 'council_contact_information' == name: # Updates the ChanceryProfile with data from step 3
+                    elif name in ('council_contact_information', 'council_additional_information', 'council_styling_setup'):
+                        # Updates the Council with data from step 3, 4 or 6
                         if not hasattr(self, 'council_data'):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
-                    elif 'council_additional_information' == name: # Updates the ChanceryProfile with data from step 4
-                        pass
-                    elif 'council_styling_setup' == name: # Updates the ChanceryProfile with data from step 6
-                        pass
                     elif 'election_details' == name: # Updates the ChanceryProfile with data from step 2
                         pass
                     elif 'election_select_parties' == name: # Updates the ChanceryProfile with data from step 7
