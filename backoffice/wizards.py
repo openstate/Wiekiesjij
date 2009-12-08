@@ -4,6 +4,7 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 from utils.multipathform import Step, MultiPathFormWizard
 from elections import settings
@@ -241,8 +242,7 @@ class AddCandidateWizard(MultiPathFormWizard):
     """
 
     def __init__(self, *args, **kwargs):
-        step1_forms = dict(
-        )
+        step1_forms = dict()
         idx = 0;
         for profile_form in get_profile_forms('candidate', 'invite'):
             step1_forms.update({'invite_contact_%s' % idx : profile_form})
@@ -267,6 +267,7 @@ class AddCandidateWizard(MultiPathFormWizard):
                         self.form_data = {}
                     self.form_data.update(form.cleaned_data)
 
+        #TODO: Connect to EI/party
         tmp_data = {
             'first_name': self.form_data['name']['first_name'],
             'middle_name': self.form_data['name']['middle_name'],
@@ -276,12 +277,7 @@ class AddCandidateWizard(MultiPathFormWizard):
         }
         create_profile('candidate', tmp_data)
 
-        #politician = PoliticianProfile.objects.create(
-        #    first_name = self.form_data['name']['first_name'],
-        #    middle_name = self.form_data['name']['middle_name'],
-        #    last_name = self.form_data['name']['last_name'],
-        #    email = self.form_data['email'],
-        #    gender = self.form_data['gender'],
-        #)
+        #TODO: Make args=[1] dynamic. In addcandidate/step1.html too ('Cancel'-link)
 
-        return HttpResponseRedirect("%sthankyou/" % (request.path))
+        return HttpResponseRedirect(reverse('backoffice.election_party_view', args=[1]))
+                            

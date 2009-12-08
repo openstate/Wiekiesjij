@@ -33,6 +33,7 @@ class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(InitialPoliticianProfileForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
+        self.fields['email'].help_text = 'Invitation will be sent to this address'
     
     class Meta:
         model = PoliticianProfile
