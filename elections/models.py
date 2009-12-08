@@ -146,12 +146,16 @@ class ElectionInstance(models.Model):
         try:
             party = Party(name=party_name)
             party.save(force_insert=True)
-            party_instance = ElectionInstanceParty(election_instance=self,
-                                                   party=party,
-                                                   list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL)
-            party_instance.save(force_insert=True)
+            party_instance = ElectionInstanceParty(election_instance=self.id,
+                                                   party=party.id,
+                                                   list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
+                                                   position=0)
+            print 'Ccccccccc'
+            #party_instance.save(force_insert=True)
+            print 'Aaaaaaaaaaaaaaaaa: '; print party_instance
             return party_instance
         except:
+            print 'Bbbbbbbbbbbb'
             return False
     
 class ElectionInstanceQuestion(models.Model):
@@ -257,4 +261,4 @@ class ElectionInstanceParty(models.Model):
         return len(filter(lambda x: x.questions_incomplete(), self.candidates.all()))
 
     def __unicode__(self):
-        return self.election_instance.council + " - " + self.party.name
+        return self.election_instance.council.name + " - " + self.party.name
