@@ -11,6 +11,7 @@ from elections.models import Party
 #from utils.validators import 
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
+from elections.models import ElectionInstanceModule
 
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     '''
@@ -98,14 +99,10 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
     
-    MODULE_CHOICES = (
-        ('SMS', 'SMS Module'),
-    )
-    modules = forms.MultipleChoiceField(
-                    label=_('Modules'), 
-                    choices=MODULE_CHOICES, 
-                    widget=forms.widgets.CheckboxSelectMultiple,
-                    required=False)
+    modules = forms.ModelMultipleChoiceField(
+                            label=_('Modules'), 
+                            queryset=ElectionInstanceModule.objects,
+                            widget=forms.widgets.CheckboxSelectMultiple)
     region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
     level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='level'))
 
@@ -126,20 +123,13 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
     EditElectionInstanceForm
     """
-    MODULE_CHOICES = (
-        ('SMS', 'SMS Module'),
-    )
-    modules = forms.MultipleChoiceField(
-                    label=_('Modules'),
-                    choices=MODULE_CHOICES,
-                    widget=forms.widgets.CheckboxSelectMultiple,
-                    required=False)
-    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
-    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='level'))
-
+    modules = forms.ModelMultipleChoiceField(
+                            label=_('Modules'), 
+                            queryset=ElectionInstanceModule.objects,
+                            widget=forms.widgets.CheckboxSelectMultiple)
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'region', 'level', 'modules')
+        fields = ('name', 'modules')
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''

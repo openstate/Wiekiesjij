@@ -133,6 +133,13 @@ class Migration:
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
         
+        # Adding ManyToManyField 'ElectionInstance.modules'
+        db.create_table('elections_electioninstance_modules', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('electioninstance', models.ForeignKey(orm.ElectionInstance, null=False)),
+            ('electioninstancemodule', models.ForeignKey(orm.ElectionInstanceModule, null=False))
+        ))
+        
     
     
     def backwards(self, orm):
@@ -169,6 +176,9 @@ class Migration:
         
         # Dropping ManyToManyField 'Party.contacts'
         db.delete_table('elections_party_contacts')
+        
+        # Dropping ManyToManyField 'ElectionInstance.modules'
+        db.delete_table('elections_electioninstance_modules')
         
     
     
@@ -251,6 +261,7 @@ class Migration:
             'election_event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionEvent']"}),
             'end_date': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modules': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.ElectionInstanceModule']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
             'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),

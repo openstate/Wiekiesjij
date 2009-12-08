@@ -76,6 +76,7 @@ class ElectionInstanceModule(models.Model):
     
     class Meta:
         verbose_name, verbose_name_plural = _('Module'), _('Modules')
+        ordering = ('name',)
         
     def __unicode__(self):
         return self.name
@@ -96,6 +97,7 @@ class ElectionInstance(models.Model):
     end_date        = models.DateTimeField(_('End Date'))
     wizard_start_date = models.DateTimeField(_('Wizard start date'))
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
+    modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'))
 
     def __unicode__(self):
         return self.council.name

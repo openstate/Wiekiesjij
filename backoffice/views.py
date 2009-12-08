@@ -10,10 +10,12 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
+
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
 from utils.multipathform import MultiPathFormWizard, Step
+from backoffice.decorators import staff_required, council_admin_required
 
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
@@ -35,6 +37,17 @@ def election_event(request):
 
     return render_to_response('backoffice/election_event_view.html', {'election_events': election_events,},
                               context_instance=RequestContext(request))
+
+
+@staff_required
+def add_election_instance(request):
+    wizard = AddElectionInstanceWizard()
+    return wizard(request)
+    
+@staff_required
+def edit_election_instance(request, id):
+    wizard = EditElectionInstanceWizard(id)
+    return wizard(request)
 
 
 #TODO: This can probably be neater. I don't see why we would need step_args for example.
