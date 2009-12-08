@@ -72,8 +72,18 @@ def wizard_view(request, wizard_type):
     return wizard()(request)
 
 def election_setup(request, election_instance_id, user_id):
+    '''
+    Election setup wizard.
+    @param int election_instance_id
+    @param int user_id
+
+    Both parameters are required. It's obvious what they mean.
+    '''
     return ElectionSetupWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
 
 def election_setup_done(request):
+    '''
+    Election setup wizard success page.
+    '''
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))

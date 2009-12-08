@@ -305,7 +305,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
 
         except Exception, e:
-            transaction.rollback()
+            transaction.commit()#transaction.rollback()
             raise e
         else:
             transaction.commit()
