@@ -173,7 +173,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
                     
 class ElectionSetupWizard(MultiPathFormWizard):
     """
-    # 2.1.5 - 2.6 of interaction design.
+    Steps 2.1.5 - 2.6 of interaction design.
 
     We expect to have council, election instance and chancery already created. We need to  "Council ID",
     "Election Instance ID" and "Chancery ID". So we only update them.
@@ -305,7 +305,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
 
         except Exception, e:
-            transaction.commit()#transaction.rollback()
+            transaction.rollback()
             raise e
         else:
             transaction.commit()

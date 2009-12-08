@@ -72,7 +72,6 @@ def wizard_view(request, wizard_type):
     return wizard()(request)
 
 def election_setup(request, election_instance_id, user_id):
-    #print request
     return ElectionSetupWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
 
 def election_setup_done(request):
