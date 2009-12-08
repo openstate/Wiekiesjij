@@ -379,6 +379,7 @@ class AddCandidateWizard(MultiPathFormWizard):
                 candidate = self.candidate.user,
                 position = self.position,
             )
+            candidacy.save()
 
             #Create invitation
             templates = profile_invite_email_templates('candidate')
