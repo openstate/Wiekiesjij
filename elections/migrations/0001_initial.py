@@ -16,6 +16,29 @@ class Migration:
         ))
         db.send_create_signal('elections', ['ElectionInstanceQuestion'])
         
+        # Adding model 'Council'
+        db.create_table('elections_council', (
+            ('id', orm['elections.Council:id']),
+            ('name', orm['elections.Council:name']),
+            ('region', orm['elections.Council:region']),
+            ('level', orm['elections.Council:level']),
+            ('abbreviation', orm['elections.Council:abbreviation']),
+            ('email', orm['elections.Council:email']),
+            ('street', orm['elections.Council:street']),
+            ('house_num', orm['elections.Council:house_num']),
+            ('postcode', orm['elections.Council:postcode']),
+            ('town', orm['elections.Council:town']),
+            ('seats', orm['elections.Council:seats']),
+            ('website', orm['elections.Council:website']),
+            ('picture', orm['elections.Council:picture']),
+            ('desciption', orm['elections.Council:desciption']),
+            ('history', orm['elections.Council:history']),
+            ('background_color', orm['elections.Council:background_color']),
+            ('foreground_color', orm['elections.Council:foreground_color']),
+            ('another_color', orm['elections.Council:another_color']),
+        ))
+        db.send_create_signal('elections', ['Council'])
+        
         # Adding model 'ElectionEvent'
         db.create_table('elections_electionevent', (
             ('id', orm['elections.ElectionEvent:id']),
@@ -49,25 +72,13 @@ class Migration:
         ))
         db.send_create_signal('elections', ['ElectionInstanceParty'])
         
-        # Adding model 'Council'
-        db.create_table('elections_council', (
-            ('id', orm['elections.Council:id']),
-            ('name', orm['elections.Council:name']),
-            ('region', orm['elections.Council:region']),
-            ('level', orm['elections.Council:level']),
-            ('abbreviation', orm['elections.Council:abbreviation']),
-            ('email', orm['elections.Council:email']),
-            ('street', orm['elections.Council:street']),
-            ('house_num', orm['elections.Council:house_num']),
-            ('postcode', orm['elections.Council:postcode']),
-            ('town', orm['elections.Council:town']),
-            ('seats', orm['elections.Council:seats']),
-            ('website', orm['elections.Council:website']),
-            ('picture', orm['elections.Council:picture']),
-            ('desciption', orm['elections.Council:desciption']),
-            ('history', orm['elections.Council:history']),
+        # Adding model 'ElectionInstanceModule'
+        db.create_table('elections_electioninstancemodule', (
+            ('id', orm['elections.ElectionInstanceModule:id']),
+            ('name', orm['elections.ElectionInstanceModule:name']),
+            ('slug', orm['elections.ElectionInstanceModule:slug']),
         ))
-        db.send_create_signal('elections', ['Council'])
+        db.send_create_signal('elections', ['ElectionInstanceModule'])
         
         # Adding model 'ElectionInstance'
         db.create_table('elections_electioninstance', (
@@ -130,6 +141,9 @@ class Migration:
         # Deleting model 'ElectionInstanceQuestion'
         db.delete_table('elections_electioninstancequestion')
         
+        # Deleting model 'Council'
+        db.delete_table('elections_council')
+        
         # Deleting model 'ElectionEvent'
         db.delete_table('elections_electionevent')
         
@@ -139,8 +153,8 @@ class Migration:
         # Deleting model 'ElectionInstanceParty'
         db.delete_table('elections_electioninstanceparty')
         
-        # Deleting model 'Council'
-        db.delete_table('elections_council')
+        # Deleting model 'ElectionInstanceModule'
+        db.delete_table('elections_electioninstancemodule')
         
         # Deleting model 'ElectionInstance'
         db.delete_table('elections_electioninstance')
@@ -203,9 +217,12 @@ class Migration:
         },
         'elections.council': {
             'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'another_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
+            'background_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
             'chanceries': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"}),
             'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
+            'foreground_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
             'history': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'house_num': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -241,6 +258,11 @@ class Migration:
             'start_date': ('django.db.models.fields.DateTimeField', [], {}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'wizard_start_date': ('django.db.models.fields.DateTimeField', [], {})
+        },
+        'elections.electioninstancemodule': {
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'})
         },
         'elections.electioninstanceparty': {
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),

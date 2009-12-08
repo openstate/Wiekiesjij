@@ -67,6 +67,20 @@ class ElectionEvent(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Election Event'), _('Election Events')
 
+class ElectionInstanceModule(models.Model):
+    """
+        Holds modules for election instances
+    """
+    name = models.CharField(_('Name'), max_length=255)
+    slug = models.SlugField(_('Slug'), unique=True)
+    
+    class Meta:
+        verbose_name, verbose_name_plural = _('Module'), _('Modules')
+        
+    def __unicode__(self):
+        return self.name
+        
+    
 class ElectionInstance(models.Model):
     """
     A election instance for an election event
