@@ -101,7 +101,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
 
 class ElectionSetupWizard(MultiPathFormWizard):
     """
-        #2.1.5 of interaction design.
+        # 2.1.5 - 2.6 of interaction design.
 
         We expect to have council, election instance and chancery already created. We need to  "Council ID",
         "Election Instance ID" and "Chancery ID". So we only update them.
