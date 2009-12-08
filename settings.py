@@ -113,6 +113,11 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 EMAIL_FROM = 'info@wiekiesjij.eu'
 
+#login logout related
+LOGIN_URL = '/backoffice/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
 try:
     from local_settings import *
 except ImportError:
@@ -137,6 +142,9 @@ ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
 ELECTIONS_PROFILE_APP = 'political_profiles'
 
 ELECTIONS_ELECTION_EVENT_ID = 1
+
+
+
 
 if DEBUG:
     

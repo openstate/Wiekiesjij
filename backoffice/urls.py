@@ -4,8 +4,12 @@
 #Copyright 2009 Accepté. All Rights Reserved.
 from django.conf.urls.defaults import *
 
+urlpatterns = patterns('',
+   url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'backoffice/login.html'}, name='backoffice.login'),
+   url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'backoffice/logged_out.html'}, name='backoffice.logout'),
+)
 
-urlpatterns = patterns('backoffice.views',
+urlpatterns += patterns('backoffice.views',
     url(r'^$', 'election_event',name='backoffice.election_event'),
     url(r'^add/$', 'add_election_instance', name='backoffice.add_election_instance'),
     url(r'^setup/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/$', 'election_setup', name='backoffice.election_setup'),
