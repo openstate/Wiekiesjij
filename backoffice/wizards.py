@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import resolve
-
+from elections.settings import ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL
 
 from utils.multipathform import Step, MultiPathFormWizard
 
@@ -253,7 +253,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    print name, ': '; print form.cleaned_data.items(), '\n\n'
+                    #print name, ': '; print form.cleaned_data.items(), '\n\n'
                     if name in ('chancery_registration', 'chancery_contact_information'):
                         # Updates the ChanceryProfile with data from step 1 or 5.
                         if not hasattr(self, 'chancery_profile_data'):
@@ -266,12 +266,18 @@ class ElectionSetupWizard(MultiPathFormWizard):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
-                    elif name in ('election_details', 'election_select_parties'):
-                        # Updates the Election Instance from step 2 or 7.
+                    elif name in ('election_details',):
+                        # Updates the Election Instance from step 2
                         if not hasattr(self, 'election_instance_data'):
                             self.election_instance_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.election_instance_data = dict(self.election_instance_data.items() + form.cleaned_data.items())
+                    elif name in ('election_select_parties',):
+                        # Updates the Election Instance from step 7.
+                        if not hasattr(self, 'election_instance_parties_data'):
+                            self.election_instance_parties_data = {}
+                        # We merge two dictinaries, letting the form data to overwrite the existing data
+                        self.election_instance_parties_data = dict(self.election_instance_parties_data.items() + form.cleaned_data.items())
                     else:
                         pass # TODO: throw an error
 
@@ -285,24 +291,24 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # Here we need to update the ChanceryProfile
             for (key, value) in self.chancery_profile_data.items():
                 setattr(self.chancery_profile, key, value)
-                #self.chancery_profile.key = value
 
             self.chancery_profile.save(force_update=True) # Updating the ChanceryProfile
-            # /Great, this works!
 
             # Here we need to update the Council
             for (key, value) in self.council_data.items():
                 setattr(self.election_instance.council, key, value)
-                #self.election_instance.council.key = value
 
             self.election_instance.council.save(force_update=True) # Updating the Council
             
             # Here we need to update the ElectionInstance
             for (key, value) in self.election_instance_data.items():
                 setattr(self.election_instance, key, value)
-                #self.election_instance.key = value
 
             self.election_instance.save(force_update=True) # Updating the ElectionInstance
+
+            # Now we add all parties to the list
+            map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
+                
         except Exception, e:
             transaction.commit()#transaction.rollback()
             raise e

@@ -17,3 +17,5 @@ if PROFILE_APP is None or PROFILE_APP not in settings.INSTALLED_APPS:
 ELECTION_EVENT_ID = getattr(settings, 'ELECTIONS_ELECTION_EVENT_ID', None)
 if ELECTION_EVENT_ID is None:
     raise ImproperlyConfigured('ELECTIONS_ELECTION_EVENT_ID is missing from the settings')
+
+ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL = 10
