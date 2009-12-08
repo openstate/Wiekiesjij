@@ -362,7 +362,7 @@ class AddCandidateWizard(MultiPathFormWizard):
             #Create invitation
             templates = profile_invite_email_templates('candidate')
             invitation = Invitation.create(
-                user_from = candidate.user, #request.user
+                user_from = request.user,
                 user_to = candidate.user,
                 view = '',
                 text = 'Invitation text',
