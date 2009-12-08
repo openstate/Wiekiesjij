@@ -135,7 +135,7 @@ class ElectionInstance(models.Model):
     def party_overdue(self):
         return datetime.date.today() > self.party_deadline()
 
-    def add_party(self, party_name):
+    def add_party(self, party_name, position=0):
         '''
         Adds a party to the ElectionInstance, using ElectionInstanceParty.
         It only adds a name to the list, so the rest of the data shall be added manually.
@@ -149,7 +149,7 @@ class ElectionInstance(models.Model):
             party_instance = ElectionInstanceParty(election_instance=self.id,
                                                    party=party.id,
                                                    list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
-                                                   position=0)
+                                                   position=position)
             print 'Ccccccccc'
             #party_instance.save(force_insert=True)
             print 'Aaaaaaaaaaaaaaaaa: '; print party_instance
