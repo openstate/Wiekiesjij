@@ -194,15 +194,14 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
                     
 class ElectionSetupWizard(MultiPathFormWizard):
     """
-        # 2.1.5 - 2.6 of interaction design.
+    # 2.1.5 - 2.6 of interaction design.
 
-        We expect to have council, election instance and chancery already created. We need to  "Council ID",
-        "Election Instance ID" and "Chancery ID". So we only update them.
+    We expect to have council, election instance and chancery already created. We need to  "Council ID",
+    "Election Instance ID" and "Chancery ID". So we only update them.
 
-        We expect to have "Election Instance ID" and "Chancery ID" passed to the wizard. From "Election Instance" we get
-        the "Council". Those ids are to be included in invitation e-mail.
+    We expect to have "Election Instance ID" and "Chancery ID" passed to the wizard. From "Election Instance" we get
+    the "Council". Those ids are to be included in invitation e-mail.
     """
-    # TODO: Add election_event_id
     def __init__(self, *args, **kwargs):
         step1_forms = dict(chancery_profile_form=ChanceryProfileForm,) # Updates ChanceryProfile
         step2_forms = dict(election_instance=ElectionInstanceForm,) # Updates ElectionInstance
@@ -217,22 +216,20 @@ class ElectionSetupWizard(MultiPathFormWizard):
             self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
 
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            #self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
+            self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
 
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = ChanceryProfile.objects.get(user=self.user_id)
+
             print 'self.chancery_profile: '; print self.chancery_profile
-
-            #print 'self.election_instance: '; print self.election_instance
+            print 'self.election_instance: '; print self.election_instance
             #print 'self.user: '; print self.user
-
         except Exception, e:
             raise e
 
-        print 'named arguments: '; print kwargs
-
-        print 'self.user_id: '; print self.user_id
-        print 'self.election_instance_id: '; print self.election_instance_id
+        #print 'named arguments: '; print kwargs
+        #print 'self.user_id: '; print self.user_id
+        #print 'self.election_instance_id: '; print self.election_instance_id
         '''
         TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
         chancery already exists.
@@ -306,13 +303,12 @@ class ElectionSetupWizard(MultiPathFormWizard):
                 self.election_instance.council.key = value
 
             self.election_instance.council.save() # Updating the Council
-
+            
             # Here we need to update the ElectionInstance
             for (key, value) in self.election_instance_data.items():
                 self.election_instance.key = value
 
             self.election_instance.save() # Updating the ElectionInstance
-
         except Exception, e:
             transaction.rollback()
             raise e
