@@ -201,6 +201,12 @@ class ElectionSetupWizard(MultiPathFormWizard):
 
     We expect to have "Election Instance ID" and "Chancery ID" passed to the wizard. From "Election Instance" we get
     the "Council". Those ids are to be included in invitation e-mail.
+
+    Those we get as named arguments and process them in __init__().
+        @param int user_id --required
+        @param int election_instance_id --required
+
+    For the rest behaves like its' parent.
     """
     def __init__(self, *args, **kwargs):
         step1_forms = dict(chancery_profile_form=ChanceryProfileForm,) # Updates ChanceryProfile
