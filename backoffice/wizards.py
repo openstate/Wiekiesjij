@@ -203,40 +203,39 @@ class ElectionSetupWizard(MultiPathFormWizard):
         TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
         chancery already exists.
         '''
-        step1_forms = dict(chancery_registration=ChanceryProfileForm,) # Updates ChanceryProfile
-        step2_forms = dict(election_details=ElectionInstanceForm,) # Updates ElectionInstance
-        step3_forms = dict(council_contact_information=CouncilContactInformationForm,) # Updates Council
-        step4_forms = dict(council_additional_information=CouncilForm,) # Updates Council
-        step5_forms = dict(chancery_contact_information=ChanceryContactInformationForm,) # Updates ChanceryProfile
-        step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,) # Updates Council
-        step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,) # Updates ElectionInstance
-
+        # Updates ChanceryProfile
         step1 = Step('chancery_registration',
-                     forms=step1_forms,
+                     forms={'chancery_registration': ChanceryProfileForm},
                      template='backoffice/wizard/election_setup/step1.html',
                      initial=self.chancery_profile.__dict__)
+        # Updates ElectionInstance
         step2 = Step('election_details',
-                     forms=step2_forms,
+                     forms={'election_details': ElectionInstanceForm},
                      template='backoffice/wizard/election_setup/step2.html',
                      initial=self.election_instance.__dict__)
+        # Updates Council
         step3 = Step('council_contact_information',
-                     forms=step3_forms,
+                     forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/election_setup/step3.html',
                      initial=self.election_instance.council.__dict__)
+        # Updates Council
         step4 = Step('council_additional_information',
-                     forms=step4_forms,
+                     forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/election_setup/step4.html',
                      initial=self.election_instance.council.__dict__)
+        # Updates ChanceryProfile
         step5 = Step('chancery_contact_information',
-                     forms=step5_forms,
+                     forms={'chancery_contact_information': ChanceryContactInformationForm},
                      template='backoffice/wizard/election_setup/step5.html',
                      initial=self.chancery_profile.__dict__)
+        # Updates Council
         step6 = Step('council_styling_setup',
-                     forms=step6_forms,
+                     forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
                      initial=self.election_instance.council.__dict__)
+        # Updates ElectionInstance
         step7 = Step('election_select_parties',
-                     forms=step7_forms,
+                     forms={'election_select_parties': ElectionInstanceSelectPartiesForm},
                      template='backoffice/wizard/election_setup/step7.html',
                      initial=self.election_instance.__dict__)
 
@@ -252,7 +251,6 @@ class ElectionSetupWizard(MultiPathFormWizard):
     @transaction.commit_manually
     def done(self, request, form_dict):
         try:
-            # This needs to be easier !?!
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
                     print name, ': '; print form.cleaned_data.items(), '\n\n'
@@ -280,7 +278,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
 
             self.chancery_profile_data['workingdays'] = ','.join(map(lambda x: str(x), self.chancery_profile_data['workingdays']))
             
-            print '\nself.chancery_profile_data: \n', self.chancery_profile_data
+            #print '\nself.chancery_profile_data: \n', self.chancery_profile_data
             print '\nself.election_instance_data: \n', self.election_instance_data
             print '\nself.council_data: \n', self.council_data
 
@@ -290,6 +288,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
                 #self.chancery_profile.key = value
 
             self.chancery_profile.save(force_update=True) # Updating the ChanceryProfile
+            # /Great, this works!
 
             # Here we need to update the Council
             for (key, value) in self.council_data.items():
