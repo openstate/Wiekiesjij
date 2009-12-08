@@ -18,7 +18,9 @@ class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     TODO. I don't know why, but the form doesn't show anything.
     '''
     parties = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
-    
+    class Meta:
+        fields = ('parties',)
+
 class CandidacyForm(BetterModelForm, TemplateForm):
     '''
     PoliticianProfile admin
@@ -105,7 +107,7 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
                     widget=forms.widgets.CheckboxSelectMultiple,
                     required=False)
     region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
-    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='region'))
+    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='level'))
 
     class Meta:
         model = ElectionInstance
@@ -119,6 +121,25 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     class Meta:
         model = ElectionInstance
         fields = ('start_date', 'website' )
+
+class EditElectionInstanceForm(BetterModelForm, TemplateForm):
+    """
+    EditElectionInstanceForm
+    """
+    MODULE_CHOICES = (
+        ('SMS', 'SMS Module'),
+    )
+    modules = forms.MultipleChoiceField(
+                    label=_('Modules'),
+                    choices=MODULE_CHOICES,
+                    widget=forms.widgets.CheckboxSelectMultiple,
+                    required=False)
+    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
+    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='level'))
+
+    class Meta:
+        model = ElectionInstance
+        fields = ('name', 'region', 'level', 'modules')
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''

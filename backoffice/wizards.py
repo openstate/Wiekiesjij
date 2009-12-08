@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 from utils.multipathform import Step, MultiPathFormWizard
 from elections import settings
-from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm, ElectionInstanceSelectPartiesForm
+from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm, ElectionInstanceSelectPartiesForm, EditElectionInstanceForm
 from elections.functions import get_profile_forms, create_profile
 from elections.models import ElectionInstance, Council, ElectionEvent
 
@@ -101,7 +101,82 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             return redirect('backoffice.election_event')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
+class EditElectionInstanceWizard(MultiPathFormWizard):
+    # TODO: Add election_event_id so we can add the election instance to it
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(
+            initial_ei=EditElectionInstanceForm,
+        )
+        
+        step1 = Step('editelectioninstance',
+            forms=step1_forms,
+            template='backoffice/wizard/editelection/step1.html',
+        )
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/editelection/base.html',
+        #import ipdb; ipdb.set_trace()
+        super(EditElectionInstanceWizard, self).__init__(step1, template, *args, **kwargs)
 
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    def done(self, request, form_dict):
+        # This needs to be easier !?!
+        for path, forms in form_dict.iteritems():
+            for name, form in forms.iteritems():
+                if name == 'initial_ei':
+                    #create election instance
+                    self.ei_data = form.cleaned_data
+
+        #Get the election event
+        ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
+        #Updates the council
+        council = Council.objects.create(
+            name='Council of %s' % self.ei_data['name'],
+            region=self.ei_data['region'],
+            level=self.ei_data['level']
+        )
+
+        #Update the election instance
+        ei = ElectionInstance(
+            name=self.ei_data['name'],
+            council=council,
+            election_event=ee,
+            start_date=datetime.datetime.now(),
+            end_date=datetime.datetime.now(),
+            wizard_start_date=datetime.datetime.now(),
+        )
+        ei.save()
+
+        #TODO: set proper redirects
+        next_step = request.POST.get('next')
+        if next_step == 'overview':
+            return redirect('backoffice.election_setup')
+        elif next_step == 'next':
+            return redirect('backoffice.election_setup')
+        else:
+            return null
+
+        # council = Council.objects.create(
+        #             name='Council of %s' % self.ei_data['name'],
+        #             region=self.ei_data['region'],
+        #             level=self.ei_data['level']
+        #         )
+        #
+        #         ee = ElectionEvent.objects.all()[0]
+        #         ei = ElectionInstance.objects.create(
+        #             name=self.ei_data['name'],
+        #             council=council,
+        #             election_event=ee,
+        #             start_date=datetime.datetime.now(),
+        #             end_date=datetime.datetime.now(),
+        #             wizard_start_date=datetime.datetime.now(),
+        #         )
+
+        #Invite council admin
+
+        return HttpResponseRedirect("%sthankyou/" % (request.path))
+                    
 class ElectionSetupWizard(MultiPathFormWizard):
     """
         # 2.1.5 - 2.6 of interaction design.
