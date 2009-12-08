@@ -5,8 +5,53 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
 
-GENDERS = (('Male',_('Male')),
-           ('Female', _('Female')))
+GENDERS = (
+        ('Male',_('Male')),
+        ('Female', _('Female')),
+        )
+EDUCATION_LEVEL_CHOICES = (
+        ('edu1', _('SMS Module')),
+        ('edu2', _('SMS Module')),
+        ('edu3', _('SMS Module')),
+        ('edu4', _('SMS Module')),
+        ('edu5', _('SMS Module')),
+        ('edu6', _('SMS Module')),
+    )
+POLITICAL_TYPE_CHOICES = (
+        ('pol1', _('SMS Module')),
+        ('pol2', _('SMS Module')),
+        ('pol3', _('SMS Module')),
+        ('pol4', _('SMS Module')),
+        ('pol5', _('SMS Module')),
+        ('pol6', _('SMS Module')),
+    )
+WORK_SECTOR_CHOICES = (
+        ('work1', _('SMS Module')),
+        ('work2', _('SMS Module')),
+        ('work3', _('SMS Module')),
+        ('work4', _('SMS Module')),
+        ('work5', _('SMS Module')),
+        ('work6', _('SMS Module')),
+    )
+
+class WorkExperienceSector(models.Model):
+    """
+            Different Sectors that people could have worked in.
+    """
+    sector      = models.CharField(_('Sector'), max_length=255)
+
+
+class PoliticalExperienceType(models.Model):
+    """
+            Different Sectors that people could have worked in.
+    """
+    type      = models.CharField(_('Type'), max_length=255)
+
+class EducationLevel(models.Model):
+    """
+            Different Sectors that people could have worked in.
+    """
+    level      = models.CharField(_('Level'), max_length=255)
 
 # Profiles
 class Profile(models.Model):
@@ -39,12 +84,10 @@ class PoliticianProfile(Profile):
     """
         A profile for a politician
     """
-    initials        = models.CharField(_('Level'), max_length=15)
+    initials        = models.CharField(_('Initials'), max_length=15)
     gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS , help_text=_("Please choose your gender."), default='Male')
-    dateofbirth     = models.DateField(_('Start Date'), null=True, blank=True)
+    dateofbirth     = models.DateField(_('Date Of Birth'), null=True, blank=True)
     picture         = models.ImageField(_('Picture'), upload_to='media/politician')
-    width           = models.PositiveIntegerField(editable=False, default=0, null=True)
-    height          = models.PositiveIntegerField(editable=False, default=0, null=True)
     movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
     introduction    = models.CharField(_('Introduction'), max_length=2550)
     motivation      = models.CharField(_('Motivation'), max_length=2550)
@@ -164,7 +207,7 @@ class WorkExperience(models.Model):
         A class to hold work experience
     """
     company_name 	= models.CharField(_('Company Name'), max_length=255)
-    sector          = models.CharField(_('Sector'), max_length=255)
+    sector          = models.ForeignKey(WorkExperienceSector, verbose_name=_('sector'))
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'))
     enddate         = models.DateField(_('End Date'))
@@ -180,7 +223,7 @@ class Education(models.Model):
         A period of education
     """
     institute   = models.CharField(_('Institute Name'), max_length=255)
-    level       = models.CharField(_('Level'), max_length=255)
+    level       = models.ForeignKey(EducationLevel, verbose_name=_('level'))
     field       = models.CharField(_('Field'), max_length=255)
     startdate   = models.DateField(_('Start Date'))
     enddate     = models.DateField(_('End Date'))
@@ -195,18 +238,19 @@ class PoliticalExperience(models.Model):
         Experience in the political world
     """
     organisation    = models.CharField(_('Organisation'), max_length=255)
-    type            = models.CharField(_('Level'), max_length=255)
-    position        = models.CharField(_('Level'), max_length=255)
+    type  = models.ForeignKey(PoliticalExperienceType, verbose_name=_('type'))
+    position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'))
     enddate         = models.DateField(_('End Date'))
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
     tags            = TagField()
     class Meta:
         verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')
 
 
 
+    
 def user_profile(u):
     """
         Function to always get the users profile as a profile property

@@ -98,3 +98,10 @@ def election_setup_done(request):
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
 
+def politician_profile_setup(request, user_id):
+    return PoliticianProfileWizard(user_id=user_id)(request)
+
+def politician_profile_setup_done(request):
+    return render_to_response('backoffice/wizard/politician_profile/done.html',
+                              context_instance=RequestContext(request))
+

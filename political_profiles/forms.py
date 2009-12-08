@@ -16,11 +16,14 @@ class PoliticianProfileForm(BetterModelForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(PoliticianProfileForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget = ColorPicker()
         #self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field='first_name')
+        self.fields['introduction'].widget = forms.Textarea()
+        self.fields['motivation'].widget = forms.Textarea()
+        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
 
     class Meta:
         model = PoliticianProfile
+        exclude = ('user', 'level', 'picture' )
 
 
 class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
@@ -142,6 +145,7 @@ class ContactProfileForm(BetterModelForm, TemplateForm):
         model = ContactProfile
         exclude = ('user')
 
+
 class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin
@@ -167,6 +171,7 @@ class AppearenceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Appearence
+        exclude = ('politician')
 
 class WorkExperienceForm(BetterModelForm, TemplateForm):
     '''
