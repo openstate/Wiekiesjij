@@ -170,9 +170,8 @@ class ElectionSetupWizard(MultiPathFormWizard):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
-                    elif 'election_details' == name: # Updates the ChanceryProfile with data from step 2
-                        pass
-                    elif 'election_select_parties' == name: # Updates the ChanceryProfile with data from step 7
+                    elif name in ('election_details', 'election_select_parties'):
+                        # Updates the Election Instance from step 7
                         pass
                     else:
                         pass # TODO: throw an error
