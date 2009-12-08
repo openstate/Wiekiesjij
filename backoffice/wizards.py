@@ -15,6 +15,8 @@ from elections.models import ElectionInstance, Council, ElectionEvent
 from political_profiles.models import ChanceryProfile, PoliticianProfile
 from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
+from django.contrib.auth.models import User
+
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
@@ -120,11 +122,20 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,) # Updates Council
         step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,) # Updates ElectionInstance
 
-        if 'user_id' in kwargs:
-            self.user_id = kwargs['user_id']
+        # Getting "user_id" and "election_instance_id" passed to the Wizard.
+        try:
+            self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
 
-        if 'election_instance_id' in kwargs:
-            self.election_instance_id = kwargs['election_instance_id']
+            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
+            self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
+
+            self.user = User.objects.get(id=self.user_id)
+
+            #print 'self.election_instance: '; print self.election_instance
+            #print 'self.user: '; print self.user
+        
+        except Exception, e:
+            raise e
 
         print 'named arguments: '; print kwargs
 
@@ -197,9 +208,6 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # Here we need to update the ChanceryProfile
 
             # Here we need to update the CouncilProfile
-
-            # Here we need to update the ElectionInstance
-            ei = ElectionInstance.objects.get(id='')
             
             #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
