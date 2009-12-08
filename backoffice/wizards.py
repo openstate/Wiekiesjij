@@ -329,31 +329,52 @@ class AddCandidateWizard(MultiPathFormWizard):
             forms = step1_forms,
             template = 'backoffice/wizard/addcandidate/step1.html',
         )
-        template='backoffice/wizard/addcandidate/base.html'
+        template = 'backoffice/wizard/addcandidate/base.html'
         super(AddCandidateWizard, self).__init__(step1, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
 
+    @transaction.commit_manually
     def done(self, request, form_dict):
-        for path, forms in form_dict.iteritems():
-            for name, form in forms.iteritems():
-                if name == 'initial_form':
-                    self.form_data = form.cleaned_data
-                else:
-                    if not hasattr(self, 'form_data'):
-                        self.form_data = {}
-                    self.form_data.update(form.cleaned_data)
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'initial_form':
+                        self.form_data = form.cleaned_data
+                    else:
+                        if not hasattr(self, 'form_data'):
+                            self.form_data = {}
+                        self.form_data.update(form.cleaned_data)
 
-        #TODO: Connect to EI/party
-        tmp_data = {
-            'first_name': self.form_data['name']['first_name'],
-            'middle_name': self.form_data['name']['middle_name'],
-            'last_name': self.form_data['name']['first_name'],
-            'email': self.form_data['email'],
-            'gender': self.form_data['gender'],
-        }
-        create_profile('candidate', tmp_data)
+            #TODO: Connect to EI/party
+
+            #Store data
+            tmp_data = {
+                'first_name': self.form_data['name']['first_name'],
+                'middle_name': self.form_data['name']['middle_name'],
+                'last_name': self.form_data['name']['first_name'],
+                'email': self.form_data['email'],
+                'gender': self.form_data['gender'],
+            }
+            candidate = create_profile('candidate', tmp_data)
+
+            #Create invitation
+            templates = profile_invite_email_templates('candidate')
+            invitation = Invitation.create(
+                user_from = candidate.user, #request.user
+                user_to = candidate.user,
+                view = '',
+                text = 'Invitation text',
+                subject = 'Invitation',
+                html_template = templates['html'],
+                plain_template = templates['plain'],
+            )
+        except Exception, e:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
 
         #TODO: Make args=[1] dynamic. In addcandidate/step1.html too ('Cancel'-link)
 
