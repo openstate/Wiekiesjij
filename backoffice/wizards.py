@@ -151,9 +151,17 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # This needs to be easier !?!
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if name == 'chancery_registration':
-                        #create election instance
-                        self.chancery_data = form.cleaned_data
+                    if 'chancery_registration' == name: # Updates the ChanceryProfile
+                        if not hasattr(self, 'chancery_data'):
+                            self.chancery_data = {}
+                        # We merge two dictinaries, letting the form data to overwrite the existing data
+                        self.chancery_data = dict(self.chancery_data.items() + form.cleaned_data.items())
+                    elif 'chancery_contact_information' == name: # Updates the ChanceryProfile
+                        if not hasattr(self, 'chancery_data'):
+                            self.chancery_data = {}
+                        # We merge two dictionaries, letting the form data to overwrite the existing data
+                        self.chancery_data = dict(self.chancery_data.items() + form.cleaned_data.items())
+
                     else:
                         if not hasattr(self, 'chancery_contact_information'):
                             self.profile_data = {}
@@ -168,10 +176,10 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # Here we need to update the CouncilProfile
 
             # Here we need to update the ElectionInstance
-            
+
             #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
-            #Create the council
+            #Updates the council
             council = Council.objects.create(
                 name='Council of %s' % self.ei_data['name'],
                 region=self.ei_data['region'],
