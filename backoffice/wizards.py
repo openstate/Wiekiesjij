@@ -15,7 +15,7 @@ from elections import settings
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm, ElectionInstanceSelectPartiesForm, EditElectionInstanceForm
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
 
-from elections.models import ElectionInstance, Council, ElectionEvent
+from elections.models import ElectionInstance, Council, ElectionEvent, Candidacy, ElectionInstanceParty
 
 from political_profiles.models import ChanceryProfile, PoliticianProfile
 from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
@@ -334,6 +334,8 @@ class AddCandidateWizard(MultiPathFormWizard):
     """
 
     def __init__(self, *args, **kwargs):
+        self.election_instance_party_id = 1 #kwargs['election_instance_party_id']
+        self.position = 1 #kwargs['position']
         step1_forms = dict()
         idx = 0;
         for profile_form in get_profile_forms('candidate', 'invite'):
@@ -361,8 +363,6 @@ class AddCandidateWizard(MultiPathFormWizard):
                             self.form_data = {}
                         self.form_data.update(form.cleaned_data)
 
-            #TODO: Connect to EI/party
-
             #Store data
             tmp_data = {
                 'first_name': self.form_data['name']['first_name'],
@@ -371,19 +371,27 @@ class AddCandidateWizard(MultiPathFormWizard):
                 'email': self.form_data['email'],
                 'gender': self.form_data['gender'],
             }
-            candidate = create_profile('candidate', tmp_data)
+            self.candidate = create_profile('candidate', tmp_data)
+
+            #Link candidate to party
+            candidacy = Candidacy(
+                election_party_instance = get_object_or_404(ElectionInstanceParty, party=self.election_instance_party_id),
+                candidate = self.candidate.user,
+                position = self.position,
+            )
 
             #Create invitation
             templates = profile_invite_email_templates('candidate')
             invitation = Invitation.create(
                 user_from = request.user,
-                user_to = candidate.user,
+                user_to = self.candidate.user,
                 view = '',
                 text = 'Invitation text',
                 subject = 'Invitation',
                 html_template = templates['html'],
                 plain_template = templates['plain'],
             )
+
         except Exception, e:
             transaction.rollback()
             raise
