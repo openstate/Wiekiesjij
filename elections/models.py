@@ -96,6 +96,7 @@ class ElectionInstance(models.Model):
     start_date      = models.DateTimeField(_('Start Date'))
     end_date        = models.DateTimeField(_('End Date'))
     wizard_start_date = models.DateTimeField(_('Wizard start date'))
+    num_lists       = models.PositiveIntegerField(_('Number of lists'))
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
     modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'))
 
@@ -104,6 +105,11 @@ class ElectionInstance(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
+
+    def party_dict(self):
+        list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
+        list.update(dict(map(lambda x: (x.position, x), self.electioninstanceparty_set.all())))
+        return list
 
     def question_deadline(self):
         return self.wizard_start_date.date() - datetime.timedelta(days=self.election_event.question_due_period)

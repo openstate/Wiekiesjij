@@ -25,8 +25,10 @@ strong a { font-weight: normal; }
 
 <h2>{% trans 'The following parties are taking part in this election' %}:</h2>
 <div><a href="#">{% trans 'Add a party' %}</a> <a href="#">{% trans 'Batch add parties' %}</a></div>
-{% for eip in instance.electioninstanceparty_set.all %}
+{% for index, eip in instance.party_dict.items %}
 <div class="item">
+	<div class="index">{% trans 'List' %} {{ index }}</div>
+	{% if eip %}
 	<div class="main_content">
 	<img src="{{ eip.party.logo }}" />
 	<h3><a href="{% url backoffice.election_party_view eip.id %}">{{ eip.party.name }}</a> ({{ eip.party.abbreviation }})</h3>
@@ -42,6 +44,9 @@ strong a { font-weight: normal; }
 	</div>
 	<div class="sidebar"><a href="#">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Add candidates' %}{% endif %} &gt;</a></div>
 	<div class="sidebar"><a href="#">{% trans 'Edit party profile' %}</a><br /><a href="#">{% trans 'Remove party' %}</a></div>
+	{% else %}
+	<h3><a href="{% url backoffice.election_party_create instance.id index %}">{% trans 'Add a party' %}</a></h3>
+	{% endif %}
 	<br class="clear" />
 </div>
 {% endfor %}

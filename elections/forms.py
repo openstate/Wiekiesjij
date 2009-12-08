@@ -1,4 +1,4 @@
-from form_utils.forms import BetterModelForm, BetterForm
+from form_utils.forms import BetterForm, BetterModelForm
 from utils.forms import TemplateForm
 from django import forms
 from django.conf import settings
@@ -11,7 +11,7 @@ from elections.models import Party
 #from utils.validators import 
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
-from elections.models import ElectionInstanceModule
+from elections.models import ElectionInstanceParty, ElectionInstanceModule
 
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     '''
@@ -146,3 +146,35 @@ class PartyForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Party
+        
+class InitialElectionPartyForm(BetterForm, TemplateForm):
+    name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
+    abbreviation = forms.CharField(label=_('Abbreviation'))
+    position = forms.TypedChoiceField(label=_('List'), coerce=int)
+
+    @classmethod
+    def set_num_lists(cls, num_lists):
+        cls.num_lists = num_lists
+
+    def __init__(self, *args, **kwargs):
+        super(InitialElectionPartyForm, self).__init__(*args, **kwargs)
+        self.fields['position'].choices = map(lambda x: (str(x), str(x)), range(1, self.num_lists+1))
+
+class ElectionPartyContactForm(BetterForm, TemplateForm):
+    name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
+    abbreviation = forms.CharField(label=_('Abbreviation'))
+    address = AddressField(label=_('Address'))
+    email = forms.EmailField(label=_('E-mail address'))
+    phone = forms.CharField(label=_('Phone number'))
+    website = forms.URLField(label=_('Party website'))
+
+class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
+    list_length = forms.CharField(label=_('Number of candidates in this election'))
+    slogan = forms.CharField(label=_('Slogan'))
+    #logo = forms.FileField(_('Logo'))
+    num_seats = forms.CharField(label=_('Current number of seats'))
+
+class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
+    description = forms.CharField(label=_('Short description'))
+    history = forms.CharField(label=_('Short history'))
+    manifesto = forms.URLField(label=_('Link to the manifesto'))

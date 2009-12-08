@@ -122,13 +122,16 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
         fields = ('house_num', 'street', 'postcode', 'town', 'website', 'description')
 
 class InitialContactProfileForm(BetterModelForm, TemplateForm):
-    '''
-    ChanceryProfile admin
-    '''
+    name = NameField(label=_('Name'))
+    email = forms.EmailField(_('Email'))
+    
+    def __init__(self, *args, **kwargs):
+        super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices[1:])
+    
     class Meta:
-        model = ContactProfile
-        fields = ('first_name','middle_name','last_name','email','gender' )
-        exclude = ('user')
+        model = ChanceryProfile
+        fields = ('name','email', 'gender' )
 
 class ContactProfileForm(BetterModelForm, TemplateForm):
     '''

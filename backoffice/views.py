@@ -31,6 +31,16 @@ def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
 
+def election_party_create(request, id, position):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    wizard = AddElectionPartyWizard(instance, position)
+    return wizard(request)
+
+def election_party_edit(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    wizard = ElectionPartySetupWizard(eip)
+    return wizard(request)
+
 #@login_required
 def election_event(request):
     election_events = ElectionEvent.objects.all()
@@ -87,3 +97,4 @@ def election_setup_done(request):
     '''
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
+
