@@ -28,8 +28,6 @@ def send_email(subject, from_email, to, context, template):
         raise Exception(_("No plain-text template is specified for sending of an e-mail."))
 
     to_list = [to]
-    if not settings.DEBUG:
-        to_list.append('info@wkj.eu')
     text_content = _render_content(context, template['plain'])
     msg = EmailMultiAlternatives(subject, text_content, from_email, to_list)
 

@@ -1,0 +1,17 @@
+{% extends 'invitations/base.html' %}
+{% load i18n %}
+{% block content %}
+	<p>Welkom {{ invitation.user.profile.full_name }},</p>
+	
+	{{ invitation.text }}
+	
+	
+	<div class="buttons">
+		<form method="get" action="{% url invitations.accept hash=invitation.hash %}">
+		<button type="submit">{% trans "Accept invitation" %}</button>
+		</form>
+		<form method="get" action="{% url invitations.existing hash=invitation.hash %}">
+		<button type="submit">{% trans "I already have an account" %}</button>
+		</form>
+	</div>
+{% endblock content %}

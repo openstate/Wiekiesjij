@@ -1,7 +1,7 @@
 from django.contrib import admin
-from invitations.models import CandidateInvitation
+from invitations.models import Invitation
 
-class CandidateInvitationAdmin(admin.ModelAdmin):
+class InvitationAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(CandidateInvitation, CandidateInvitationAdmin)
+admin.site.register(Invitation, InvitationAdmin)

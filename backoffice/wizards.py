@@ -5,23 +5,27 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+
 
 from utils.multipathform import Step, MultiPathFormWizard
+
 from elections import settings
 from elections.forms import InitialElectionInstanceForm,InitialCouncilForm, ElectionInstanceForm, CouncilForm, CouncilContactInformationForm, CandidacyForm, CouncilStylingSetupForm, ElectionInstanceSelectPartiesForm, EditElectionInstanceForm
-from elections.functions import get_profile_forms, create_profile
+from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
+
 from elections.models import ElectionInstance, Council, ElectionEvent
 
 from political_profiles.models import ChanceryProfile, PoliticianProfile
 from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
-from django.contrib.auth.models import User
+from invitations.models import Invitation
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
     """
-    __name__ = 'Test'
+    __name__ = 'AddElectionInstanceWizard' # Needed for when we wrap it with a decorator
     
     def __init__(self, *args, **kwargs):
         step1_forms = dict(
@@ -87,13 +91,24 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             profile = create_profile('council_admin', self.profile_data)
             #Link the profile to the council
             council.chanceries.add(profile.user)
+            
 
-            #TODO: Save the enabled modules somewhere
+            #TODO: Save the enabled modules somewhere (mtm electioninstance & ElectionInstanceMOdule)
             #TODO: Create the invitation 
-
+            templates = profile_invite_email_templates('council_admin')
+            invitation = Invitation.create(
+                user_from=request.user, 
+                user_to=profile.user,
+                view='',
+                text='Invitation text',
+                subject='Invitation',
+                html_template=templates['html'],
+                plain_template=templates['plain'],
+                )
+            
         except Exception, e:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
         

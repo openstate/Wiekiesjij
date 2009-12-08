@@ -10,9 +10,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
-#import utils
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
-#from elections import forms
 from utils.multipathform import MultiPathFormWizard, Step
 
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard

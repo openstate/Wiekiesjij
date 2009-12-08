@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^backoffice/', include('backoffice.urls')),
-    (r'^invitations/', include('invitations.urls')),
+    (r'^invitation/', include('invitations.urls')),
 )
 
 if settings.DEBUG:

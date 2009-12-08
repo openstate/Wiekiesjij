@@ -96,6 +96,7 @@ def profile_invite_email_templates(for_function):
             'html': 'political_profiles/emails/invitations/party_admin.html',
         },
     }
+    return templates[for_function]
     
 def create_profile(for_function, data):
     """

@@ -1,4 +1,6 @@
 
 {% block content %}
-Email
+Geachte {{ invitation.user_to.profile.full_name }},
+
+http://localhost:8000{% url invitations.views.activate hash=invitation.hash %}
 {% endblock content %}
