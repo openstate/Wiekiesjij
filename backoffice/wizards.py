@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.core.urlresolvers import resolve
 
 
 from utils.multipathform import Step, MultiPathFormWizard
@@ -193,25 +194,17 @@ class ElectionSetupWizard(MultiPathFormWizard):
 
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
-
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = ChanceryProfile.objects.get(user=self.user_id)
-
-            print 'self.chancery_profile: '; print self.chancery_profile
-            print 'self.election_instance: '; print self.election_instance
-            #print 'self.user: '; print self.user
         except Exception, e:
             raise e
 
-        #print 'named arguments: '; print kwargs
-        #print 'self.user_id: '; print self.user_id
-        #print 'self.election_instance_id: '; print self.election_instance_id
         '''
         TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
         chancery already exists.
         '''
-        step1_forms = dict(chancery_profile_form=ChanceryProfileForm,) # Updates ChanceryProfile
-        step2_forms = dict(election_instance=ElectionInstanceForm,) # Updates ElectionInstance
+        step1_forms = dict(chancery_registration=ChanceryProfileForm,) # Updates ChanceryProfile
+        step2_forms = dict(election_details=ElectionInstanceForm,) # Updates ElectionInstance
         step3_forms = dict(council_contact_information=CouncilContactInformationForm,) # Updates Council
         step4_forms = dict(council_additional_information=CouncilForm,) # Updates Council
         step5_forms = dict(chancery_contact_information=ChanceryContactInformationForm,) # Updates ChanceryProfile
@@ -256,11 +249,13 @@ class ElectionSetupWizard(MultiPathFormWizard):
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
 
+    @transaction.commit_manually
     def done(self, request, form_dict):
         try:
             # This needs to be easier !?!
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
+                    print name, ': '; print form.cleaned_data.items(), '\n\n'
                     if name in ('chancery_registration', 'chancery_contact_information'):
                         # Updates the ChanceryProfile with data from step 1 or 5.
                         if not hasattr(self, 'chancery_profile_data'):
@@ -279,37 +274,57 @@ class ElectionSetupWizard(MultiPathFormWizard):
                             self.election_instance_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.election_instance_data = dict(self.election_instance_data.items() + form.cleaned_data.items())
-                        pass
                     else:
                         pass # TODO: throw an error
 
-            print 'self.chancery_profile_data: ', self.chancery_profile_data
-            print 'self.election_instance_data: ', self.election_instance_data
-            print 'self.council_data: ', self.council_data
+
+            self.chancery_profile_data['workingdays'] = ','.join(map(lambda x: str(x), self.chancery_profile_data['workingdays']))
+            
+            print '\nself.chancery_profile_data: \n', self.chancery_profile_data
+            print '\nself.election_instance_data: \n', self.election_instance_data
+            print '\nself.council_data: \n', self.council_data
 
             # Here we need to update the ChanceryProfile
             for (key, value) in self.chancery_profile_data.items():
-                self.chancery_profile.key = value
+                setattr(self.chancery_profile, key, value)
+                #self.chancery_profile.key = value
 
-            self.chancery_profile.save() # Updating the ChanceryProfile
+            self.chancery_profile.save(force_update=True) # Updating the ChanceryProfile
 
             # Here we need to update the Council
             for (key, value) in self.council_data.items():
-                self.election_instance.council.key = value
+                setattr(self.election_instance.council, key, value)
+                #self.election_instance.council.key = value
 
-            self.election_instance.council.save() # Updating the Council
+            self.election_instance.council.save(force_update=True) # Updating the Council
             
             # Here we need to update the ElectionInstance
             for (key, value) in self.election_instance_data.items():
-                self.election_instance.key = value
+                setattr(self.election_instance, key, value)
+                #self.election_instance.key = value
 
-            self.election_instance.save() # Updating the ElectionInstance
+            self.election_instance.save(force_update=True) # Updating the ElectionInstance
         except Exception, e:
-            transaction.rollback()
+            transaction.commit()#transaction.rollback()
             raise e
         else:
             transaction.commit()
 
+        print '\nUpdate data:\n'
+        print '\nElection Instance\n', self.election_instance.__dict__
+        print '\nCouncil\n', self.election_instance.council.__dict__
+        print '\nChanceryProfile\n', self.chancery_profile.__dict__
+
+        print '\n', 'ElectionInstance (from database): ', '\n'
+        ei_updated = ElectionInstance.objects.get(id=self.election_instance_id)
+        print '\n', ei_updated.__dict__
+        print '\n', 'Council (from database): ', '\n'
+        print '\n', ei_updated.council.__dict__
+
+        u_updated = ChanceryProfile.objects.get(user=self.user)
+        print '\n', 'User (from database): ', '\n'
+        print '\n', u_updated.__dict__
+        
         if request.POST.get('next', 'overview') == 'overview':
             return redirect('backoffice.election_setup')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
