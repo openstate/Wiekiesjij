@@ -84,10 +84,10 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             profile = create_profile('council_admin', self.profile_data)
             #Link the profile to the council
             council.chanceries.add(profile.user)
-        
+
             #TODO: Save the enabled modules somewhere
             #TODO: Create the invitation 
-        
+
         except Exception, e:
             transaction.rollback()
             raise e
@@ -102,16 +102,19 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
 class ElectionSetupWizard(MultiPathFormWizard):
     """
         #2.1.5 of interaction design.
+
+        We expect to have council, election instance and chancery already created. We need to  "Council ID",
+        "Election Instance ID" and "Chancery ID". So we only update them.
     """
     # TODO: Add election_event_id
     def __init__(self, *args, **kwargs):
-        step1_forms = dict(chancery_profile_form=ChanceryProfileForm,)
-        step2_forms = dict(election_instance=ElectionInstanceForm,)
-        step3_forms = dict(council_contact_information=CouncilContactInformationForm,)
-        step4_forms = dict(council_additional_information=CouncilForm,)
-        step5_forms = dict(chancery_contact_information=ChanceryContactInformationForm,)
-        step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,)
-        step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,)
+        step1_forms = dict(chancery_profile_form=ChanceryProfileForm,) # Updates ChanceryProfile
+        step2_forms = dict(election_instance=ElectionInstanceForm,) # Updates ElectionInstance
+        step3_forms = dict(council_contact_information=CouncilContactInformationForm,) # Updates Council
+        step4_forms = dict(council_additional_information=CouncilForm,) # Updates Council
+        step5_forms = dict(chancery_contact_information=ChanceryContactInformationForm,) # Updates ChanceryProfile
+        step6_forms = dict(council_styling_setup=CouncilStylingSetupForm,) # Updates Council
+        step7_forms = dict(election_select_parties=ElectionInstanceSelectPartiesForm,) # Updates ElectionInstance
 
         step1 = Step('chancery_registration',
                      forms=step1_forms,
@@ -160,7 +163,11 @@ class ElectionSetupWizard(MultiPathFormWizard):
                         del cleaned_data['name']
                         self.profile_data.update(cleaned_data)
 
-            #profile = create_profile('chancery_admin', self.chancery_data)
+            # Here we need to update the ChanceryProfile
+
+            # Here we need to update the CouncilProfile
+
+            # Here we need to update the ElectionInstance
             
             #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
