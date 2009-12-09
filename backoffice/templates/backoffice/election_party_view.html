@@ -11,7 +11,8 @@ br.clear { clear: both; }
 strong { display: block; padding-top: 5px; }
 strong a { font-weight: normal; }
 </style>
-{% endblock %}
+{% endblock extrahead %}
+
 {% block content %}
 {{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
 
@@ -47,8 +48,11 @@ strong a { font-weight: normal; }
 {% endfor %}
 <div><a href="#">{% trans 'Add new candidate' %}</a> <a href="#">{% trans 'Batch add candidates' %}</a></div>
 </div>
-<div class="sidebar">
-<strong>{% trans 'Party profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
+{% endblock content %}
+
+
+{% block sidebar %}
+	<strong>{% trans 'Party profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
 {% trans 'Website' %}: <a href="{{ eip.party.website }}">{{ eip.party.website }}</a><br />
 {% trans 'Slogan' %}: {{ eip.party.slogan }}<br />
 {% trans 'Telephone' %}: {{ eip.party.telephone }}<br />
@@ -66,5 +70,4 @@ strong a { font-weight: normal; }
 <em>{% trans 'You did not assign a party contact yet' %}</em><br />
 <a href="#">{% trans 'Invite a party contact now' %} &gt;</a>
 {% endif %}
-</div>
-{% endblock %}
+{% endblock sidebar %}

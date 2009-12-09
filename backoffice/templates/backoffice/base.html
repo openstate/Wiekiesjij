@@ -8,6 +8,33 @@
     <script src="/media/static/jsi18n.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}utils/javascripts/core.js" type="text/javascript"></script>
     {% block extrahead %}{% endblock extrahead %}
+
+	<style type="text/css" media="screen">
+		div.breadcrumbs {
+			width: 960px;
+		}
+		div#wrapper {
+			overflow: hidden;
+			width: 1060px;
+		}
+		div#content {
+			width: 750px;
+			float: left;
+		}
+		div#sidebar {
+			width: 300px;
+			float: right;
+		}
+		div.item {
+			border: 1px solid black; 
+			padding: 10px; 
+			margin-bottom: 10px;
+			overflow: hidden;
+		}
+		div.main_content { width: 450px; float: left; }
+		div.sidebar { width: 130px; float: right; }
+		br.clear { clear: both; }
+	</style>
 </head>
 <body>
 	<div class="breadcrumbs">
@@ -16,10 +43,19 @@
 	{% endblock breadcrumbs %}
 	</div>
 	
-	<div class="content">
-	{% block content %}
+	<div id="wrapper">
+		<div id="content">
+		{% block content %}
 		
-	{% endblock content %}
+		{% endblock content %}
+		</div>
+	
+	
+		<div id="sidebar">
+		{% block sidebar %}
+		
+		{% endblock sidebar %}
+		</div>
 	</div>
 </body>
 </html>
