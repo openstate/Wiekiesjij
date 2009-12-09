@@ -15,10 +15,6 @@ from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContact
 from elections.models import ElectionInstance, Council, ElectionEvent
 from invitations.models import Invitation
 
-#TODO: remove these, use the get_profile_forms function instead
-#from political_profiles.models import ChanceryProfile
-#from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
-
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
