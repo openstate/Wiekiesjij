@@ -254,22 +254,60 @@ class DatePicker(forms.widgets.TextInput):
     TEMPLATE = """
         <!-- Following div could need CSS -->
         <script type="text/javascript">
-            date_obj = new Date();
-            date_obj_hours = date_obj.getHours();
-            date_obj_mins = date_obj.getMinutes();
+            jQuery(document).ready(function(){
+                date_obj = new Date();
+                date_obj_hours = date_obj.getHours();
+                date_obj_mins = date_obj.getMinutes();
 
-            if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
+                if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
+                date_obj_am_pm = '';
+                date_obj_time = date_obj_hours + ':' + date_obj_mins;
 
-            if (date_obj_hours > 11) {
-                date_obj_hours = date_obj_hours - 12;
-                date_obj_am_pm = " PM";
-            } else {
-                date_obj_am_pm = " AM";
-            }
+                // Getting the element
+                var datePicker = jQuery('#%(id)s');
 
-            date_obj_time = "'"+date_obj_hours+":"+date_obj_mins+date_obj_am_pm+"'";
+                // Making another hidden element for date
+                var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
 
-            jQuery('#%(id)s').datepicker({dateFormat: $.datepicker.W3C + date_obj_time});
+                // Giving it the same name as our element
+                datePickerField.attr('name', datePicker.attr('name'));
+
+                // Saving the original date time value
+                originalDateTimeValue = datePicker.attr('value');
+
+                // Splitting the original date time value to get date and time separately
+                originalDateTimeSplit = originalDateTimeValue.split(' ', 2);
+                try {
+                    originalDateValue = originalDateTimeSplit[0];
+                    originalTimeValue = originalDateTimeSplit[1];
+                } catch (err) {
+                    originalDateValue = '';
+                    originalTimeValue = '';
+                }
+
+                // Changing the name of the original field
+                datePicker.attr('name', datePicker.attr('name') + '_original')
+
+                // Making another element for the time picking
+                var timePickerField = jQuery('<input type="text" value="" id="#%(id)s_time" maxlength="5" />');
+
+                // Adding the elements
+                datePicker.after(timePickerField);
+                datePicker.after(datePickerField);
+
+                // Copying the value of time to the time element
+                datePicker.attr('value', originalDateValue);
+                timePickerField.attr('value', originalTimeValue);
+
+                datePicker.datepicker({dateFormat: $.datepicker.W3C});
+
+                datePicker.change(function() {
+                    datePickerField.attr('value', datePicker.attr('value') + ' ' + date_obj_time);
+                    timePickerField.attr('value', date_obj_time);
+                });
+            });
+            
+            
         </script>
     """
 

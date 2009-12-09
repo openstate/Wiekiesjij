@@ -123,7 +123,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = ElectionInstance
-        fields = ('start_date', 'website')
+        fields = ('website', 'start_date',)
 
 class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
