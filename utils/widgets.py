@@ -253,53 +253,41 @@ class DatePicker(forms.widgets.TextInput):
     """
     TEMPLATE = """
         <!-- Following div could need CSS -->
-        <div class="cp_preview" id="%(id)s_preview" style="height: 20px; width: 20px;"></div>
         <script type="text/javascript">
-            jQuery('#%(id)s').ColorPicker({
+            date_obj = new Date();
+            date_obj_hours = date_obj.getHours();
+            date_obj_mins = date_obj.getMinutes();
 
-                onShow: function (colpkr) {
-                    $(colpkr).fadeIn(500);
-                    return false;
-                },
-                onHide: function (colpkr) {
-                    $(colpkr).fadeOut(500);
-                    return false;
-                },
-                onBeforeShow: function () {
-                    $(this).ColorPickerSetColor(this.value);
-                },
-                onChange: function (hsb, hex, rgb) {
-                    $('#%(id)s_preview').css('backgroundColor', '#' + hex);
-                    $('#%(id)s').val(hex);
-                }
+            if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
 
-            })
-            .bind('keyup', function(){
-                $(this).ColorPickerSetColor(this.value);
-            });
+            if (date_obj_hours > 11) {
+                date_obj_hours = date_obj_hours - 12;
+                date_obj_am_pm = " PM";
+            } else {
+                date_obj_am_pm = " AM";
+            }
 
-            jQuery(document).ready(function(){
-                $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
-            });
+            date_obj_time = "'"+date_obj_hours+":"+date_obj_mins+date_obj_am_pm+"'";
 
+            jQuery('#%(id)s').datepicker({dateFormat: $.datepicker.W3C + date_obj_time});
         </script>
     """
 
     class Media:
         js = (
-            'static/utils/javascripts/colorpicker.js',
+            'static/utils/javascripts/jquery-ui-1.7.2.custom.min.js',
         )
         css = {
             'screen': (
-                'static/utils/css/colorpicker.css',
+                #static/utils/css/colorpicker.css',
             ),
         }
 
     def __init__(self, *args, **kwargs):
-        super(ColorPicker, self).__init__(*args, **kwargs)
+        super(self.__class__, self).__init__(*args, **kwargs)
 
     def render(self, *args, **kwargs):
         html_id = kwargs.get('attrs', {}).get('id', '')
-        result = super(ColorPicker, self).render(*args, **kwargs)
+        result = super(self.__class__, self).render(*args, **kwargs)
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
