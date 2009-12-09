@@ -105,7 +105,7 @@ class ElectionInstance(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
-
+        
     def party_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
         list.update(dict(map(lambda x: (x.position, x), self.electioninstanceparty_set.all())))

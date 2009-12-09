@@ -11,6 +11,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
 
+from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
 from utils.multipathform import MultiPathFormWizard, Step
 from backoffice.decorators import staff_required, council_admin_required
@@ -43,9 +44,8 @@ def election_party_edit(request, id):
 
 #@login_required
 def election_event(request):
-    election_events = ElectionEvent.objects.all()
-
-    return render_to_response('backoffice/election_event_view.html', {'election_events': election_events,},
+    election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
+    return render_to_response('backoffice/election_event_view.html', {'election_instances': election_instances,},
                               context_instance=RequestContext(request))
 
 

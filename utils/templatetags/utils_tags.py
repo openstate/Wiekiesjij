@@ -55,9 +55,8 @@ def blockwrap(parser, token):
     """
     tokens = token.split_contents()
     kwargs = {}
-    template_name = 'default'
-
-    if len(tokens) > 2:
+    template_name = parser.compile_filter('default')
+    if len(tokens) >= 2:
         bits = iter(tokens[1:])
         for bit in bits:
             if '=' in bit:

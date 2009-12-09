@@ -4,10 +4,10 @@
 	<a href="{% url backoffice.add_election_instance %}">{% trans "Add Election Instance" %}</a>
 	{#}<a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
 	
-	
-	{% for ee in election_events %}
-		{% blockwrap %}
-			<p>{{ ee.name }}</p>
+	{% for ei in election_instances  %}
+		{% blockwrap template='electioninstance' %}
+			<h1><a href="{% url backoffice.election_instance_view id=ei.id %}">{{ ei.name }}</a></h1>
+			<p><a href="{% url backoffice.edit_election_instance id=ei.id %}">{% trans "Edit" %}</a></p>
 		{% endblockwrap %}
 	{% endfor %}
 {% endblock content %}
