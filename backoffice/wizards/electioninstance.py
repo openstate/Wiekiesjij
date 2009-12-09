@@ -215,37 +215,37 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step1 = Step('chancery_registration',
                      forms={'chancery_registration': ChanceryProfileForm},
                      template='backoffice/wizard/election_setup/step1.html',
-                     initial=self.chancery_profile.__dict__)
+                     initial={'chancery_registration': self.chancery_profile})
         # Updates ElectionInstance
         step2 = Step('election_details',
                      forms={'election_details': ElectionInstanceForm},
                      template='backoffice/wizard/election_setup/step2.html',
-                     initial=self.election_instance.__dict__)
+                     initial={'election_details': self.election_instance})
         # Updates Council
         step3 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/election_setup/step3.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_contact_information': self.election_instance.council})
         # Updates Council
         step4 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/election_setup/step4.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_additional_information': self.election_instance.council})
         # Updates ChanceryProfile
         step5 = Step('chancery_contact_information',
                      forms={'chancery_contact_information': ChanceryContactInformationForm},
                      template='backoffice/wizard/election_setup/step5.html',
-                     initial=self.chancery_profile.__dict__)
+                     initial={'chancery_contact_information': self.chancery_profile})
         # Updates Council
         step6 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_styling_setup': self.election_instance.council})
         # Updates ElectionInstance
         step7 = Step('election_select_parties',
                      forms={'election_select_parties': ElectionInstanceSelectPartiesForm},
                      template='backoffice/wizard/election_setup/step7.html',
-                     initial=self.election_instance.__dict__)
+                     initial={'election_select_parties': self.election_instance.parties.all()})
 
         scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
 

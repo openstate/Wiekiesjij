@@ -150,12 +150,8 @@ class ElectionInstance(models.Model):
                                                    party=party.id,
                                                    list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
                                                    position=position)
-            print 'Ccccccccc'
-            #party_instance.save(force_insert=True)
-            print 'Aaaaaaaaaaaaaaaaa: '; print party_instance
             return party_instance
         except:
-            print 'Bbbbbbbbbbbb'
             return False
     
 class ElectionInstanceQuestion(models.Model):

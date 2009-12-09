@@ -1,6 +1,6 @@
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
-from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm
+from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm, ChanceryContactInformationForm
 
 from django.contrib.auth.models import User
 
