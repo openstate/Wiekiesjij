@@ -194,7 +194,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)
-            self.chancery_profile = ChanceryProfile.objects.get(user=self.user_id) #TODO: User.profile should return a chancery profile !
+            self.chancery_profile = self.user.profile
         except Exception, e:
             raise e
 
@@ -252,7 +252,6 @@ class ElectionSetupWizard(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    #print name, ': '; print form.cleaned_data.items(), '\n\n'
                     if name in ('chancery_registration', 'chancery_contact_information'):
                         # Updates the ChanceryProfile with data from step 1 or 5.
                         if not hasattr(self, 'chancery_profile_data'):
