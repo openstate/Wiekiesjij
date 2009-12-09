@@ -90,9 +90,8 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('next', 'overview') == 'overview':
-            return redirect('backoffice.election_event')
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('backoffice.election_instance_view', id=ei.id)
+
 
 class ElectionPartySetupWizard(MultiPathFormWizard):
     def __init__(self, eip, *args, **kwargs):
