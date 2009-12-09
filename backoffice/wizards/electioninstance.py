@@ -208,8 +208,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             raise e
 
         '''
-        TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
-        chancery already exists.
+        TODO for checkboxes we need to populate the data properly, because now it doesn't happen.
         '''
         # Updates ChanceryProfile
         step1 = Step('chancery_registration',
