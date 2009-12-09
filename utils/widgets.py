@@ -246,3 +246,60 @@ class ColorPicker(forms.widgets.TextInput):
         result = super(ColorPicker, self).render(*args, **kwargs)
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
+
+class DatePicker(forms.widgets.TextInput):
+    """
+    Date Picker, based on jQuery UI.
+    """
+    TEMPLATE = """
+        <!-- Following div could need CSS -->
+        <div class="cp_preview" id="%(id)s_preview" style="height: 20px; width: 20px;"></div>
+        <script type="text/javascript">
+            jQuery('#%(id)s').ColorPicker({
+
+                onShow: function (colpkr) {
+                    $(colpkr).fadeIn(500);
+                    return false;
+                },
+                onHide: function (colpkr) {
+                    $(colpkr).fadeOut(500);
+                    return false;
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                },
+                onChange: function (hsb, hex, rgb) {
+                    $('#%(id)s_preview').css('backgroundColor', '#' + hex);
+                    $('#%(id)s').val(hex);
+                }
+
+            })
+            .bind('keyup', function(){
+                $(this).ColorPickerSetColor(this.value);
+            });
+
+            jQuery(document).ready(function(){
+                $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
+            });
+
+        </script>
+    """
+
+    class Media:
+        js = (
+            'static/utils/javascripts/colorpicker.js',
+        )
+        css = {
+            'screen': (
+                'static/utils/css/colorpicker.css',
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ColorPicker, self).__init__(*args, **kwargs)
+
+    def render(self, *args, **kwargs):
+        html_id = kwargs.get('attrs', {}).get('id', '')
+        result = super(ColorPicker, self).render(*args, **kwargs)
+
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id))

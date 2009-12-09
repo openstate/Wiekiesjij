@@ -101,7 +101,7 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
      ElectionInstance admin
     '''
-    
+
     modules = forms.ModelMultipleChoiceField(
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
@@ -117,7 +117,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
      ElectionInstance admin
     '''
-    
+
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['start_date'].widget = widgets.AdminDateWidget()
