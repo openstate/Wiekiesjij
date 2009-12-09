@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^backoffice/', include('backoffice.urls')),
     (r'^invitation/', include('invitations.urls')),
-    
+    (r'^media/static/jsi18n.js', 'django.views.i18n.javascript_catalog'),
     
 )
 

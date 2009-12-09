@@ -22,7 +22,6 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_instance/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='backoffice.election_party_create'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
     
-    
     #TODO: Debug views remove at some point 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'wizard_view', name='backoffice.show_wizard'),
     url(r'^(?P<form_type>[-\w]+)/$', 'form_view', name='backoffice.show_forms'),
