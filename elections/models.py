@@ -98,7 +98,7 @@ class ElectionInstance(models.Model):
     wizard_start_date = models.DateTimeField(_('Wizard start date'))
     num_lists       = models.PositiveIntegerField(_('Number of lists'), null=True, blank=True)
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'))
+    modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'), null=True, blank=True)
 
     def __unicode__(self):
         return self.council.name

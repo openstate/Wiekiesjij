@@ -35,31 +35,62 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         
     def done(self, request, form_dict):
         # This needs to be easier !?!
-        for path, forms in form_dict.iteritems():
-            for name, form in forms.iteritems():
-                if name == 'initial_ep':
-                    #create election instance 
-                    self.ep_data = form.cleaned_data
-                else:
-                    if not hasattr(self, 'invite_data'):
-                        self.invite_data = {}
-                    self.invite_data.update(form.cleaned_data)
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'initial_ep':
+                        #create election instance
+                        self.ep_data = form.cleaned_data
+                    else:
+                        if not hasattr(self, 'profile_data'):
+                            self.profile_data = {}
+                        cleaned_data = form.cleaned_data
+                        for key, value in cleaned_data['name'].iteritems():
+                            cleaned_data[key] = value
+                        del cleaned_data['name']
+                        self.profile_data.update(cleaned_data)
 
-        party = Party.objects.create(
-            region = self.election_instance.council.region,
-            level = self.election_instance.council.level,
-            name = self.ep_data['name'],
-            abbreviation = self.ep_data['abbreviation'])
-        
-        eip = ElectionInstanceParty.objects.create(
-            party=party,
-            election_instance=self.election_instance,
-            position=self.ep_data['position'],
-            list_length=10)
-        
-        #Invite party admin
-        
-        return HttpResponseRedirect("%sthankyou/" % (request.path))
+            party = Party.objects.create(
+                region = self.election_instance.council.region,
+                level = self.election_instance.council.level,
+                name = self.ep_data['name'],
+                abbreviation = self.ep_data['abbreviation'])
+
+            eip = ElectionInstanceParty.objects.create(
+                party=party,
+                election_instance=self.election_instance,
+                position=self.ep_data['position'],
+                list_length=10)
+
+            #Create the profile
+            profile = create_profile('party_admin', self.profile_data)
+            #Link the profile to the council
+            council.chanceries.add(profile.user)
+
+            ei.modules.clear()
+            ei.modules = self.ei_data['modules']
+
+            #Create the invitation
+            templates = profile_invite_email_templates('party_admin')
+            Invitation.create(
+                user_from=request.user,
+                user_to=profile.user,
+                view='',
+                text='Invitation text',
+                subject='Invitation',
+                html_template=templates['html'],
+                plain_template=templates['plain'],
+                )
+
+        except Exception:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect('backoffice.election_event')
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class ElectionPartySetupWizard(MultiPathFormWizard):
     def __init__(self, eip, *args, **kwargs):

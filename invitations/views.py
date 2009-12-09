@@ -7,7 +7,6 @@ from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm
 
 
-
 def index(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)

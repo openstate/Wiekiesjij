@@ -23,7 +23,6 @@ def send_email(subject, from_email, to, context, template):
     context - dictionary
     template - dictionary, must have at least one key named "plain"
     '''
-
     if not template.has_key('plain'):
         raise Exception(_("No plain-text template is specified for sending of an e-mail."))
 
@@ -32,6 +31,7 @@ def send_email(subject, from_email, to, context, template):
     msg = EmailMultiAlternatives(subject, text_content, from_email, to_list)
 
     if template.has_key('html'):
+        print context
         html_content = _render_content(context, template['html'])
         msg.attach_alternative(html_content, "text/html")
 
