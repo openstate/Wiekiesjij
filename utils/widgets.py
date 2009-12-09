@@ -49,9 +49,8 @@ class AddressWidget(forms.widgets.MultiWidget):
         super(AddressWidget, self).__init__(*args, **kwargs)
     
     def decompress(self, value):
-        if value:
-            matches = value.match("^(.+) (\d+.*) (\d+.*) (.+)$", value)
-            return [matches.group(1), matches.group(2), matches.group(3), matches.group(4)]
+        if value and isinstance(value, dict):
+            return [value.get('street'), value.get('number'), value.get('postalcode'), value.get('city')]
         else:
             return [None, None, None, None]
         
@@ -90,19 +89,19 @@ class NameWidget(forms.widgets.MultiWidget):
         <div class="fields">
             <table>
                 <tr>
-                    <td>%(first_name_label)s</td>
                     <td>%(last_name_label)s</td>
-                </tr>
-                <tr>
-                    <td>%(first_name_field)s</td>
-                    <td>%(last_name_field)s</td>
-                <tr>
-                    <td>&nbsp;</td>
                     <td>%(middle_name_label)s</td>
                 </tr>
                 <tr>
-                    <td>&nbsp;</td>
+                    <td>%(last_name_field)s</td>
                     <td>%(middle_name_field)s</td>
+                <tr>
+                    <td>%(first_name_label)s</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>%(first_name_field)s</td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
         </div>
@@ -120,8 +119,8 @@ class NameWidget(forms.widgets.MultiWidget):
         super(NameWidget, self).__init__(*args, **kwargs)
         
     def decompress(self, value):
-        if value:
-            return value.split(' ', 3)
+        if value and isinstance(value, dict):
+            return [value.get('first_name'), value.get('lastname'), value.get('middle_name')]
         else:
             return [None, None, None] 
         

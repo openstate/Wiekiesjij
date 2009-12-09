@@ -3,7 +3,6 @@ import datetime
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
-from django.core.urlresolvers import reverse
 
 from utils.multipathform import Step, MultiPathFormWizard
 
@@ -30,27 +29,20 @@ class CouncilEditWizard(MultiPathFormWizard):
 
     For the rest behaves like its' parent.
     """
-    def __init__(self, *args, **kwargs):
-        # Getting "user_id" and "election_instance_id" passed to the Wizard.
-        try:
-            self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
-
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
-            self.user = User.objects.get(id=self.user_id)
-            self.chancery_profile = self.user.profile
-            ChanceryProfileClass = get_profile_model('council_admin')
-            if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
-                e = Exception
-                raise Exception
-        except Exception, e:
-            raise e
+    def __init__(self, election_instance, *args, **kwargs):
+        self.election_instance = election_instance
 
         # Updates Council contact information
         step1 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/council/edit/step1.html',
-                     initial={'council_contact_information': self.election_instance.council})
+                     initial={'council_contact_information': {'name': self.election_instance.council.name,
+                                                               'address': {'street': self.election_instance.council.street,
+                                                                            'number': self.election_instance.council.house_num,
+                                                                            'postalcode': self.election_instance.council.postcode,
+                                                                            'city': self.election_instance.council.town,
+                                                                           },
+                                                                'website': self.election_instance.council.website,}})
         # Updates Council additional information
         step2 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
@@ -81,21 +73,24 @@ class CouncilEditWizard(MultiPathFormWizard):
                         if not hasattr(self, 'council_data'):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
-                        self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
-                    else:
-                        pass # TODO: throw an error
-
+                        self.council_data.update(form.cleaned_data)
+                        
             # Here we need to update the Council
             for (key, value) in self.council_data.items():
-                setattr(self.election_instance.council, key, value)
+                if key == 'address':
+                    self.election_instance.council.street = value['street']
+                    self.election_instance.council.house_num = value['number']
+                    self.election_instance.council.postcode = value['postalcode']
+                    self.election_instance.council.town = value['city']
+                else:
+                    setattr(self.election_instance.council, key, value)
 
             self.election_instance.council.save(force_update=True) # Updating the Council
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
-        if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.council_edit_done'))
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        
+        return redirect('backoffice.election_instance_view', id=self.election_instance.id)

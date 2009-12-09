@@ -53,7 +53,7 @@
 	{% endblockwrap %}
 
 	{% blockwrap %}
-		<strong>{% trans 'Council profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
+		<strong>{% trans 'Council profile' %}: <a href="{% url backoffice.edit_council id=instance.id %}">{% trans 'edit' %}</a></strong>
 		{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a><br />
 		{% trans 'Description' %}: {{ instance.council.description }}<br />
 		{% trans 'E-mail' %}: <a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a><br />

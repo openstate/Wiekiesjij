@@ -105,22 +105,13 @@ def politician_profile_setup_done(request):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
                               context_instance=RequestContext(request))
 
-def csv_import_candidates_step1(request):
-    return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
-
-def council_edit(request, election_instance_id, user_id):
+def council_edit(request, id):
     '''
     Council edit wizard.
-    @param int election_instance_id
-    @param int user_id
+    @param int id election_instance_id
+    '''
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    return CouncilEditWizard(election_instance=instance)(request)
 
-    Both parameters are required. It's obvious what they mean.
-    '''
-    return CouncilEditWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
-
-def council_edit_done(request):
-    '''
-    Council edit wizard success page.
-    '''
-    return render_to_response('backoffice/wizard/council/edit/done.html',
-                              context_instance=RequestContext(request))
+def csv_import_candidates_step1(request):
+    return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))

@@ -1,10 +1,12 @@
 from form_utils.forms import BetterForm, BetterModelForm
-from utils.forms import TemplateForm
+
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+
 from utils.widgets import AutoCompleter, ColorPicker, DatePicker
 from utils.fields import AddressField
+from utils.forms import TemplateForm
 
 from elections.models import Party
 
@@ -16,7 +18,6 @@ from elections.models import ElectionInstanceParty, ElectionInstanceModule
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     '''
     Select a list of parties that are in your election from a list of hardcoded partys in the netherlands.
-    TODO. I don't know why, but the form doesn't show anything.
     '''
 
     parties = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES,)
@@ -64,14 +65,17 @@ class CouncilForm(BetterModelForm, TemplateForm):
         model = Council
         fields = ('seats', 'picture', 'history' )
 
-class CouncilContactInformationForm(BetterModelForm, TemplateForm):
+class CouncilContactInformationForm(BetterForm, TemplateForm):
     '''
     Council information form (used in 2. Election overview)
     '''
+    
+    name = forms.CharField(label=_('Name'))
+    address = AddressField(label=_('Address'))
+    website = forms.URLField()
 
     class Meta:
-        model = Council
-        fields = ('name', 'street', 'house_num', 'postcode', 'town', 'website',)
+        fields = ('name', 'address', 'website',)
 
 class CouncilStylingSetupForm(BetterModelForm, TemplateForm):
     '''
@@ -156,16 +160,8 @@ class PartyForm(BetterModelForm, TemplateForm):
 class InitialElectionPartyForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
     abbreviation = forms.CharField(label=_('Abbreviation'))
-    position = forms.TypedChoiceField(label=_('List'), coerce=int)
-
-    @classmethod
-    def set_num_lists(cls, num_lists):
-        cls.num_lists = num_lists
-
-    def __init__(self, *args, **kwargs):
-        super(InitialElectionPartyForm, self).__init__(*args, **kwargs)
-        self.fields['position'].choices = map(lambda x: (str(x), str(x)), range(1, self.num_lists+1))
-
+    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
+    
 class ElectionPartyContactForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
     abbreviation = forms.CharField(label=_('Abbreviation'))

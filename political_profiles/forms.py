@@ -51,6 +51,7 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
         super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
     
@@ -130,7 +131,7 @@ class InitialContactProfileForm(BetterModelForm, TemplateForm):
     
     def __init__(self, *args, **kwargs):
         super(InitialContactProfileForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices[1:])
+        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
     
     class Meta:
         model = ChanceryProfile

@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db import transaction
 
 from utils.multipathform import Step, MultiPathFormWizard
 
@@ -16,7 +17,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         step1_forms = dict(
             initial_ep=InitialElectionPartyForm,
         )
-        step1_forms['initial_ep'].set_num_lists(instance.num_lists)
+        self.position = position
         idx = 0;
         for profile_form in get_profile_forms('party_admin', 'invite'):
             step1_forms.update({'invite_contact_%s' % idx : profile_form})
@@ -33,6 +34,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
         
+    @transaction.commit_manually
     def done(self, request, form_dict):
         # This needs to be easier !?!
         try:
