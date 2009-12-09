@@ -199,3 +199,18 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     class Meta:
         model = PoliticalExperience
         exclude = ('politician')
+
+class CsvUploadForm(BetterModelForm, TemplateForm):
+    '''
+    CsvUpload admin
+    '''
+
+    file = forms.FileField(required = True)
+
+class CsvConfirmForm(BetterModelForm, TemplateForm):
+    '''
+    CsvConfirm admin
+    '''
+
+    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct [etcetcetc]')
+

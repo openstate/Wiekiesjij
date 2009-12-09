@@ -9,8 +9,8 @@ from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
 
 #TODO: Use the get_profile_forms method and remove these
-from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearenceForm, WorkExperienceForm
-from political_profiles.forms import EducationForm, PoliticalExperienceForm
+#from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearenceForm, WorkExperienceForm
+#from political_profiles.forms import EducationForm, PoliticalExperienceForm
 
 from invitations.models import Invitation
 
@@ -120,11 +120,13 @@ class AddCandidateWizard(MultiPathFormWizard):
     def __init__(self, *args, **kwargs):
         self.election_instance_party_id = 1 #kwargs['election_instance_party_id']
         self.position = 1 #kwargs['position']
+
         step1_forms = dict()
         idx = 0;
         for profile_form in get_profile_forms('candidate', 'invite'):
             step1_forms.update({'invite_contact_%s' % idx : profile_form})
             idx += 1
+
         step1 = Step('candidate',
             forms = step1_forms,
             template = 'backoffice/wizard/addcandidate/step1.html',
@@ -183,7 +185,5 @@ class AddCandidateWizard(MultiPathFormWizard):
             raise
         else:
             transaction.commit()
-        #TODO: Make args=[1] dynamic. In addcandidate/step1.html too ('Cancel'-link)
 
-
-        return HttpResponseRedirect(reverse('backoffice.election_party_view', args=[1]))
+        return redirect('backoffice.election_party_view', args=self.election_instance_party_id)

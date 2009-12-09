@@ -105,6 +105,9 @@ def politician_profile_setup_done(request):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
                               context_instance=RequestContext(request))
 
+def csv_import_candidates_step1(request):
+    return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
+
 def council_edit(request, election_instance_id, user_id):
     '''
     Council edit wizard.
