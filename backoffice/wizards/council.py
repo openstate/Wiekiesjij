@@ -39,6 +39,10 @@ class EditCouncilWizard(MultiPathFormWizard):
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = self.user.profile
+            ChanceryProfileClass = get_profile_model('council_admin')
+            if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
+                e = Exception
+                raise Exception
         except Exception, e:
             raise e
 
@@ -54,11 +58,29 @@ class EditCouncilWizard(MultiPathFormWizard):
         '''
         TODO for checkboxes we need to populate the data properly, because now it doesn't happen.
         '''
+        step1_forms = {}
+        step1_initial = {}
+         # Get the form(s) for chancery profile and add them to step1_forms
+        idx = 0
+        for profile_form in get_profile_forms('council_admin', 'edit'):
+            step1_forms.update({'chancery_registration%s' % idx : profile_form})
+            step1_initial.update({'chancery_registration%s' % idx : self.chancery_profile})
+            idx += 1
+
+        step5_forms = {}
+        step5_initial = {}
+         # Get the form(s) for chancery profile and add them to step5_forms
+        idx = 0
+        for profile_form in get_profile_forms('council_admin', 'contact_information'):
+            step5_forms.update({'chancery_contact_information%s' % idx : profile_form})
+            step5_initial.update({'chancery_contact_information%s' % idx : self.chancery_profile})
+            idx += 1
+
         # Updates ChanceryProfile
         step1 = Step('chancery_registration',
-                     forms={'chancery_registration': ChanceryProfileForm},
+                     forms=step1_forms,
                      template='backoffice/wizard/election_setup/step1.html',
-                     initial={'chancery_registration': self.chancery_profile})
+                     initial=step1_initial)
         # Updates ElectionInstance
         step2 = Step('election_details',
                      forms={'election_details': ElectionInstanceForm},
@@ -76,9 +98,9 @@ class EditCouncilWizard(MultiPathFormWizard):
                      initial={'council_additional_information': self.election_instance.council})
         # Updates ChanceryProfile
         step5 = Step('chancery_contact_information',
-                     forms={'chancery_contact_information': ChanceryContactInformationForm},
+                     forms=step5_forms,
                      template='backoffice/wizard/election_setup/step5.html',
-                     initial={'chancery_contact_information': self.chancery_profile})
+                     initial=step5_initial)
         # Updates Council
         step6 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},

@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
+from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
 from elections.forms import InitialElectionInstanceForm, EditElectionInstanceForm
 from elections.forms import ElectionInstanceForm, ElectionInstanceSelectPartiesForm
 from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm
@@ -193,8 +193,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             self.chancery_profile = self.user.profile
             ChanceryProfileClass = get_profile_model('council_admin')
             if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
-                e = Exception
-                raise e
+                raise Exception
         except Exception, e:
             raise e
 
