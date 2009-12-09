@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext, ugettext_lazy as _
 PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
 
 DEBUG = True
@@ -46,7 +47,7 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
 
 #Static files settings
 STATIC_ROOT = PROJECT_DIR('media/static')
@@ -99,6 +100,8 @@ INSTALLED_APPS = (
     'political_profiles',
     'questions',
     'utils',
+
+    'invitations',
     'backoffice',
 )
 
@@ -110,17 +113,38 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 EMAIL_FROM = 'info@wiekiesjij.eu'
 
+#login logout related
+LOGIN_URL = '/backoffice/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
 try:
     from local_settings import *
 except ImportError:
     pass
 
 
-#Settings 
+#Settings
+COMMON_PARTIES =  (('CDA', _('CDA')),
+                   ('PvdA', _('PvdA')),
+                   ('SP', _('SP')),
+                   ('VVD', _('VVD')),
+                   ('PVV', _('PVV')),
+                   ('GL', _('GL')),
+                   ('CU', _('CU')),
+                   ('D66', _('D66')),
+                   ('PvdD', _('PvdD')),
+                   ('SGP', _('SGP')),
+                   ('OSF', _('OSF')),)
 ELECTIONS_CONTACT_LIMITATION = {'contactprofile__isnull': False}
 ELECTIONS_CHANCERY_LIMITATION = {'chanceryprofile__isnull': False}
 ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
 ELECTIONS_PROFILE_APP = 'political_profiles'
+
+ELECTIONS_ELECTION_EVENT_ID = 1
+
+
+
 
 if DEBUG:
     

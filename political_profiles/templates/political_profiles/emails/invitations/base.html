@@ -1,0 +1,14 @@
+{% load email_tags i18n %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body>
+{% stylegroup "font" %}
+	font: 12px Arial, Helvetica, sans-serif; 
+{% endstylegroup %}
+{% block content %}
+	<p style="{% use_stylegroup 'font' %}">Geachte {{ invitation.user_to.profile.full_name }},</p>
+	
+	<p style="{% use_stylegroup 'font' %}">http://localhost:8000{% url invitations.views.activate hash=invitation.hash %}</a>
+		
+{% endblock content %}
+</body>

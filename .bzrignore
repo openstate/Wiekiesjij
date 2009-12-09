@@ -1,3 +1,4 @@
 dev.db
 *.pyc
-models.dot
+nbproject*
+pip-log.txt  

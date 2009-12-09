@@ -1,0 +1,9 @@
+{% extends 'backoffice/wizard/addelection/base.html' %}
+{% load i18n %}
+{% block buttons %}
+	<div class="buttons">
+		<a href="{% url backoffice.election_event %}">{% trans "Cancel" %}</a>
+		<button type="submit" name="next" value="next">{% trans "Start council setup wizard" %} &gt;</button>
+		<button type="submit" class="default" name="next" value="overview">{% trans "Skip Council setup wizard" %} &gt;</button>
+	</div>
+{% endblock buttons %}

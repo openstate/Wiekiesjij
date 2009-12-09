@@ -3,10 +3,68 @@ Holds fields
 """
 import re
 from django.utils.translation import ugettext_lazy as _
-from django.forms.fields import CharField, MultiValueField, RegexField
+from django.forms.fields import CharField, RegexField
+from django.forms.fields import MultiValueField, EMPTY_VALUES
+from django.forms.util import ErrorList
+from django.forms import ValidationError
 
 from utils.validators import validate_dutchbanknumber, validate_postcode
-from utils.widgets import AddressWidget
+from utils.widgets import AddressWidget, NameWidget, HiddenAddressWidget, HiddenNameWidget
+
+
+class PartialRequiredMultiValueField(MultiValueField):
+    """
+        Overwrites the default django multivalue field.
+        Instead of checking the required for ALL fields we don't throw errors
+    """
+    
+    fields_required = []
+    
+    def __init__(self, fields=(), *args, **kwargs):
+        for f in fields:
+            self.fields_required.append(bool(f.required))
+        self.fields = fields
+        super(MultiValueField, self).__init__(fields, *args, **kwargs)
+        
+    def clean(self, value):
+        """
+        Validates every value in the given list. A value is validated against
+        the corresponding Field in self.fields.
+
+        For example, if this MultiValueField was instantiated with
+        fields=(DateField(), TimeField()), clean() would call
+        DateField.clean(value[0]) and TimeField.clean(value[1]).
+        
+        Added the field specific required check
+        """
+        clean_data = []
+        errors = ErrorList()
+        if not value or isinstance(value, (list, tuple)):
+            if not value or not [v for v in value if v not in EMPTY_VALUES]:
+                if self.required:
+                    raise ValidationError(self.error_messages['required'])
+                else:
+                    return self.compress([])
+        else:
+            raise ValidationError(self.error_messages['invalid'])
+        for i, field in enumerate(self.fields):
+            try:
+                field_value = value[i]
+            except IndexError:
+                field_value = None
+            if self.required and field_value in EMPTY_VALUES and self.fields_required[i]:
+                raise ValidationError(self.error_messages['required'])
+            try:
+                clean_data.append(field.clean(field_value))
+            except ValidationError, e:
+                # Collect all validation errors in a single list, which we'll
+                # raise at the end of clean(), rather than raising a single
+                # exception for the first error we encounter.
+                errors.extend(e.messages)
+        if errors:
+            raise ValidationError(errors)
+        return self.compress(clean_data)
+    
 
 class DutchBankAccountField(CharField):
     """
@@ -49,6 +107,10 @@ class AddressField(MultiValueField):
         Multi widget for the address and the house number
     """
     widget = AddressWidget
+    hidden_widget = HiddenAddressWidget
+    default_error_messages = {
+        'required': _(u'The address fields are (all) required')
+    }
     
     def __init__(self, *args, **kwargs):
         postal_code_errors_messages = {
@@ -74,5 +136,34 @@ class AddressField(MultiValueField):
             'number': data_list[1],
             'postalcode': data_list[2],
             'city': data_list[3],
+        }
+        
+        
+class NameField(PartialRequiredMultiValueField):
+    """
+        Multi widget for filling in your name
+    """
+    widget = NameWidget
+    hidden_widget = HiddenNameWidget
+    default_error_messages = {
+        'required': _(u'The first and last name field are required')
+    }
+    
+    def __init__(self, *args, **kwargs):        
+        fields = (
+            CharField(**kwargs.get('first_name_kwargs', {})),
+            CharField(**kwargs.get('last_name_kwargs', {})),
+            CharField(**kwargs.get('middle_name_kwargs', {'required': False})),
+        )
+        super(NameField, self).__init__(fields, *args, **kwargs)
+        
+    def compress(self, data_list):
+        """
+            Returns a dict with the values
+        """
+        return {
+            'first_name': data_list[0],
+            'middle_name': data_list[2],
+            'last_name': data_list[1],
         }
     

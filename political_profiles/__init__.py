@@ -1,5 +1,8 @@
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
+from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm
+
+from django.contrib.auth.models import User
 
 
 model_map = {
@@ -22,12 +25,13 @@ def get_profile_forms(for_function, type):
     politician_form_map = {
             'create': [PoliticianProfileForm],
             'edit': [PoliticianProfileForm],
-            'invite': [PoliticianProfileForm],
+            'invite': [InitialPoliticianProfileForm],
             }
     chancery_form_map = {
             'create': [ChanceryProfileForm],
             'edit': [ChanceryProfileForm],
-            'invite': [ChanceryProfileForm],
+            'invite': [InitialChanceryProfileForm],
+            'contact_information': [ChanceryContactInformationForm]
             }
     contact_form_map = {
             'create': [ContactProfileForm],
@@ -72,3 +76,46 @@ def get_profile_wizards(for_function, type):
         return contact_form_wizard_map[type]
 
     return []
+    
+    
+def profile_invite_email_templates(for_function):
+    templates = {
+        'candidate': {
+            'plain': 'political_profiles/emails/invitations/candidate.txt',
+            'html': 'political_profiles/emails/invitations/candidate.html',
+        },
+        'visitor': {
+            'plain': 'political_profiles/emails/invitations/visitor.txt',
+            'html': 'political_profiles/emails/invitations/visitor.html',
+        },
+        'council_admin': {
+            'plain': 'political_profiles/emails/invitations/council_admin.txt',
+            'html': 'political_profiles/emails/invitations/council_admin.html',
+        },
+        'party_admin': {
+            'plain': 'political_profiles/emails/invitations/party_admin.txt',
+            'html': 'political_profiles/emails/invitations/party_admin.html',
+        },
+    }
+    return templates[for_function]
+    
+def create_profile(for_function, data):
+    """
+        Create and return a profile object (with a linked user)
+        Assumes data contains at least an email key
+    """
+    user = User.objects.create(username=data['email'], email=data['email'], is_active=False)
+    #unset the email
+    del data['email']
+    data['user'] = user
+    if for_function == 'candidate':
+        profile = PoliticianProfile.objects.create(**data)
+    elif for_function == 'council_admin':
+        profile = ChanceryProfile.objects.create(**data)
+    elif for_function == 'party_admin':
+        profile = ContactProfile.objects.create(**data)
+    elif for_function == 'visitor':
+        profile = VisitorProfile.objects.create(**data)
+    else:
+        raise RuntimeError('%s is unknown' % for_function)
+    return profile

@@ -205,7 +205,6 @@ class MultiPathFormWizard(object):
         else:
             forms = cur_step.get_forms()
 
-
         valid = True
         for name, form in forms.iteritems():
             valid &= form.is_valid()

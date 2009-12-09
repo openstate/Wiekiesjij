@@ -1,0 +1,11 @@
+{% extends 'invitations/base.html' %}
+{% load i18n %}
+{% block content %}
+	<form action="" method="post" accept-charset="utf-8">
+		{{ form.as_template }}
+
+		<div class="buttons">
+			<button type="submit">{% trans "Submit" %}</button>
+		</div>
+	</form>
+{% endblock content %}

@@ -1,8 +1,8 @@
 
-var PageName = 'Candidate';
+var PageName = '4_Candidate';
 var PageId = 'p91a1de43f8b34e9c919d5af5bd25897a'
-var PageUrl = 'Candidate.html'
-document.title = 'Candidate';
+var PageUrl = '4_Candidate.html'
+document.title = '4_Candidate';
 
 if (top.location != self.location)
 {
