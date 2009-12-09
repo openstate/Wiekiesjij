@@ -1,8 +1,8 @@
 
-var PageName = 'add 1 - invite info';
-var PageId = 'pf11f0cc87b8747269a524c6b244e3890'
-var PageUrl = 'add_1_-_invite_info.html'
-document.title = 'add 1 - invite info';
+var PageName = '4_4 - education';
+var PageId = 'p63a9402e052b4db68b33133505781ce9'
+var PageUrl = '4_4_-_education.html'
+document.title = '4_4 - education';
 
 if (top.location != self.location)
 {
@@ -42,16 +42,10 @@ function OnLoad() {
 
 }
 
-var u71 = document.getElementById('u71');
-gv_vAlignTable['u71'] = 'top';
 var u20 = document.getElementById('u20');
 
-var u64 = document.getElementById('u64');
-gv_vAlignTable['u64'] = 'top';
 var u51 = document.getElementById('u51');
 gv_vAlignTable['u51'] = 'top';
-var u70 = document.getElementById('u70');
-gv_vAlignTable['u70'] = 'top';
 var u36 = document.getElementById('u36');
 
 var u31 = document.getElementById('u31');
@@ -60,50 +54,36 @@ var u45 = document.getElementById('u45');
 gv_vAlignTable['u45'] = 'center';
 var u11 = document.getElementById('u11');
 gv_vAlignTable['u11'] = 'center';
-var u76 = document.getElementById('u76');
-gv_vAlignTable['u76'] = 'top';
 var u27 = document.getElementById('u27');
 gv_vAlignTable['u27'] = 'center';
 var u6 = document.getElementById('u6');
 
-var u67 = document.getElementById('u67');
-
 var u4 = document.getElementById('u4');
 
-var u73 = document.getElementById('u73');
-gv_vAlignTable['u73'] = 'top';
 var u2 = document.getElementById('u2');
 
 var u10 = document.getElementById('u10');
 
 var u0 = document.getElementById('u0');
 
-var u69 = document.getElementById('u69');
-
 var u26 = document.getElementById('u26');
 
 var u49 = document.getElementById('u49');
 gv_vAlignTable['u49'] = 'center';
-var u63 = document.getElementById('u63');
-
 var u35 = document.getElementById('u35');
 gv_vAlignTable['u35'] = 'center';
 var u29 = document.getElementById('u29');
 gv_vAlignTable['u29'] = 'center';
 var u54 = document.getElementById('u54');
-
+gv_vAlignTable['u54'] = 'top';
 var u8 = document.getElementById('u8');
 
 var u34 = document.getElementById('u34');
 
-var u68 = document.getElementById('u68');
-gv_vAlignTable['u68'] = 'top';
 var u14 = document.getElementById('u14');
 
 var u48 = document.getElementById('u48');
 
-var u72 = document.getElementById('u72');
-gv_vAlignTable['u72'] = 'top';
 var u28 = document.getElementById('u28');
 
 var u44 = document.getElementById('u44');
@@ -116,12 +96,8 @@ var u22 = document.getElementById('u22');
 
 var u52 = document.getElementById('u52');
 gv_vAlignTable['u52'] = 'top';
-var u66 = document.getElementById('u66');
-gv_vAlignTable['u66'] = 'top';
 var u13 = document.getElementById('u13');
 gv_vAlignTable['u13'] = 'center';
-var u75 = document.getElementById('u75');
-gv_vAlignTable['u75'] = 'top';
 var u47 = document.getElementById('u47');
 gv_vAlignTable['u47'] = 'center';
 var u12 = document.getElementById('u12');
@@ -147,17 +123,44 @@ gv_vAlignTable['u5'] = 'center';
 var u15 = document.getElementById('u15');
 gv_vAlignTable['u15'] = 'center';
 var u56 = document.getElementById('u56');
-gv_vAlignTable['u56'] = 'center';
+gv_vAlignTable['u56'] = 'top';
 var u3 = document.getElementById('u3');
 gv_vAlignTable['u3'] = 'center';
-var u65 = document.getElementById('u65');
-
 var u1 = document.getElementById('u1');
 gv_vAlignTable['u1'] = 'center';
 var u25 = document.getElementById('u25');
 gv_vAlignTable['u25'] = 'center';
 var u59 = document.getElementById('u59');
-gv_vAlignTable['u59'] = 'center';
+
+u59.style.cursor = 'pointer';
+if (bIE) u59.attachEvent("onclick", u59Click);
+else u59.addEventListener("click", u59Click, true);
+InsertAfterBegin(document.body, "<DIV class='intcases' id='u59LinksClick'></DIV>")
+var u59LinksClick = document.getElementById('u59LinksClick');
+function u59Click(e) 
+{
+
+	ToggleLinks(e, 'u59LinksClick');
+}
+
+InsertBeforeEnd(u59LinksClick, "<div class='intcaselink' onmouseout='SuppressBubble(event)' onclick='u59Clicku1f1671297ad946e380aa11f57e1fcf77(event)'>if no filled in political experience</div>");
+function u59Clicku1f1671297ad946e380aa11f57e1fcf77(e)
+{
+
+	self.location.href="4_5_-_political_exp_-_add.html" + GetQuerystring();
+
+	ToggleLinks(e, 'u59LinksClick');
+}
+
+InsertBeforeEnd(u59LinksClick, "<div class='intcaselink' onmouseout='SuppressBubble(event)' onclick='u59Clickub73ebdee649a4338a5e02a1e8ba1e512(event)'>if 1 filled in political experience</div>");
+function u59Clickub73ebdee649a4338a5e02a1e8ba1e512(e)
+{
+
+	self.location.href="4_5_-_political_exp.html" + GetQuerystring();
+
+	ToggleLinks(e, 'u59LinksClick');
+}
+
 var u43 = document.getElementById('u43');
 gv_vAlignTable['u43'] = 'center';
 var u16 = document.getElementById('u16');
@@ -170,38 +173,36 @@ var u9 = document.getElementById('u9');
 gv_vAlignTable['u9'] = 'center';
 var u30 = document.getElementById('u30');
 
-var u74 = document.getElementById('u74');
-
 var u60 = document.getElementById('u60');
-gv_vAlignTable['u60'] = 'top';
+gv_vAlignTable['u60'] = 'center';
 var u24 = document.getElementById('u24');
 
 var u46 = document.getElementById('u46');
 
 var u55 = document.getElementById('u55');
-
-u55.style.cursor = 'pointer';
-if (bIE) u55.attachEvent("onclick", Clicku55);
-else u55.addEventListener("click", Clicku55, true);
-function Clicku55(e)
-{
-
-if (true) {
-
-	self.location.href="Resources/reload.html#" + encodeURI(PageUrl + GetQuerystring());
-
-}
-
-}
-
+gv_vAlignTable['u55'] = 'top';
 var u38 = document.getElementById('u38');
 
 var u61 = document.getElementById('u61');
 
+u61.style.cursor = 'pointer';
+if (bIE) u61.attachEvent("onclick", Clicku61);
+else u61.addEventListener("click", Clicku61, true);
+function Clicku61(e)
+{
+
+if (true) {
+
+	self.location.href="4_3_-_registration.html" + GetQuerystring();
+
+}
+
+}
+
 var u18 = document.getElementById('u18');
 
 var u62 = document.getElementById('u62');
-gv_vAlignTable['u62'] = 'top';
+gv_vAlignTable['u62'] = 'center';
 var u32 = document.getElementById('u32');
 
 var u42 = document.getElementById('u42');
@@ -218,10 +219,10 @@ function Clicku58(e)
 
 if (true) {
 
-	self.location.href="3_Party_overview.html" + GetQuerystring();
+	self.location.href="4_4_-_education_-_add.html" + GetQuerystring();
 
 }
 
 }
-
+gv_vAlignTable['u58'] = 'top';
 if (window.OnLoad) OnLoad();

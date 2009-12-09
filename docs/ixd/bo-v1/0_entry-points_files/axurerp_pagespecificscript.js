@@ -42,38 +42,8 @@ function OnLoad() {
 
 }
 
-var u2 = document.getElementById('u2');
-
-u2.style.cursor = 'pointer';
-if (bIE) u2.attachEvent("onclick", Clicku2);
-else u2.addEventListener("click", Clicku2, true);
-function Clicku2(e)
-{
-
-if (true) {
-
-	self.location.href="Party_contact_home.html" + GetQuerystring();
-
-}
-
-}
-gv_vAlignTable['u2'] = 'top';
-var u1 = document.getElementById('u1');
-
-u1.style.cursor = 'pointer';
-if (bIE) u1.attachEvent("onclick", Clicku1);
-else u1.addEventListener("click", Clicku1, true);
-function Clicku1(e)
-{
-
-if (true) {
-
-	self.location.href="Council_admin_home.html" + GetQuerystring();
-
-}
-
-}
-gv_vAlignTable['u1'] = 'top';
+var u5 = document.getElementById('u5');
+gv_vAlignTable['u5'] = 'top';
 var u0 = document.getElementById('u0');
 
 u0.style.cursor = 'pointer';
@@ -90,10 +60,58 @@ if (true) {
 
 }
 gv_vAlignTable['u0'] = 'top';
-var u5 = document.getElementById('u5');
-gv_vAlignTable['u5'] = 'top';
-var u4 = document.getElementById('u4');
-gv_vAlignTable['u4'] = 'top';
 var u3 = document.getElementById('u3');
 gv_vAlignTable['u3'] = 'top';
+var u6 = document.getElementById('u6');
+
+u6.style.cursor = 'pointer';
+if (bIE) u6.attachEvent("onclick", Clicku6);
+else u6.addEventListener("click", Clicku6, true);
+function Clicku6(e)
+{
+
+if (true) {
+
+	self.location.href="4_2_-_welcome.html" + GetQuerystring();
+
+}
+
+}
+gv_vAlignTable['u6'] = 'top';
+var u1 = document.getElementById('u1');
+
+u1.style.cursor = 'pointer';
+if (bIE) u1.attachEvent("onclick", Clicku1);
+else u1.addEventListener("click", Clicku1, true);
+function Clicku1(e)
+{
+
+if (true) {
+
+	self.location.href="Council_admin_home.html" + GetQuerystring();
+
+}
+
+}
+gv_vAlignTable['u1'] = 'top';
+var u4 = document.getElementById('u4');
+gv_vAlignTable['u4'] = 'top';
+var u7 = document.getElementById('u7');
+gv_vAlignTable['u7'] = 'top';
+var u2 = document.getElementById('u2');
+
+u2.style.cursor = 'pointer';
+if (bIE) u2.attachEvent("onclick", Clicku2);
+else u2.addEventListener("click", Clicku2, true);
+function Clicku2(e)
+{
+
+if (true) {
+
+	self.location.href="Party_contact_home.html" + GetQuerystring();
+
+}
+
+}
+gv_vAlignTable['u2'] = 'top';
 if (window.OnLoad) OnLoad();
