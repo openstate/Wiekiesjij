@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('backoffice.views',
     url(r'^$', 'election_event',name='backoffice.election_event'),
     url(r'^add/$', 'add_election_instance', name='backoffice.add_election_instance'),
-    url(r'^setup/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/$', 'election_setup', name='backoffice.election_setup'),
+    url(r'^setup/(?P<election_instance_id>\d+)/((?P<user_id>\d+)/)?$', 'election_setup', name='backoffice.election_setup'),
     url(r'^setup/done$', 'election_setup_done', name='backoffice.election_setup_done'),
     
     url(r'^election_instance/(?P<id>\d+)/$', 'election_instance_view', name='backoffice.election_instance_view'),

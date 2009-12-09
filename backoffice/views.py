@@ -81,7 +81,7 @@ def wizard_view(request, wizard_type):
         
     return wizard()(request)
 
-def election_setup(request, election_instance_id, user_id):
+def election_setup(request, election_instance_id, user_id=None):
     '''
     Election setup wizard.
     @param int election_instance_id
@@ -89,6 +89,9 @@ def election_setup(request, election_instance_id, user_id):
 
     Both parameters are required. It's obvious what they mean.
     '''
+    if not user_id:
+        user_id = request.user.id
+
     return ElectionSetupWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
 
 def election_setup_done(request):
