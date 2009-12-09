@@ -289,16 +289,19 @@ class DatePicker(forms.widgets.TextInput):
                 datePicker.attr('name', datePicker.attr('name') + '_original')
 
                 // Making another element for the time picking
-                var timePickerField = jQuery('<input type="text" value="" id="#%(id)s_time" maxlength="5" />');
-
+                var timePickerField = jQuery('<input type="text" class="time-picker" value="" id="#%(id)s_time" maxlength="5" />');
+                
                 // Adding the elements
                 datePicker.after(timePickerField);
                 datePicker.after(datePickerField);
 
+                //timePickerField.jtimepicker();
+
                 // Copying the value of time to the time element
                 datePicker.attr('value', originalDateValue);
                 timePickerField.attr('value', originalTimeValue);
-
+                datePickerField.attr('value', originalDateTimeValue);
+                
                 datePicker.datepicker({dateFormat: $.datepicker.W3C});
 
                 datePicker.change(function() {
@@ -313,11 +316,11 @@ class DatePicker(forms.widgets.TextInput):
 
     class Media:
         js = (
-            'static/utils/javascripts/jquery-ui-1.7.2.custom.min.js',
+            #'static/utils/javascripts/jquery.jtimepicker.js',
         )
         css = {
             'screen': (
-                #static/utils/css/colorpicker.css',
+                #'static/utils/css/style.css',
             ),
         }
 
