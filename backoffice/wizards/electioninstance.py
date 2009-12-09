@@ -16,8 +16,8 @@ from elections.models import ElectionInstance, Council, ElectionEvent
 from invitations.models import Invitation
 
 #TODO: remove these, use the get_profile_forms function instead
-from political_profiles.models import ChanceryProfile
-from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
+#from political_profiles.models import ChanceryProfile
+#from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -195,6 +195,15 @@ class ElectionSetupWizard(MultiPathFormWizard):
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = self.user.profile
+        except Exception, e:
+            raise e
+
+        '''
+        Loading forms and models from other applications.
+        '''
+        try:
+            ChanceryProfileForm = get_profile_forms('council_admin', 'edit')[0]
+            ChanceryContactInformationForm = get_profile_forms('council_admin', 'contact_information')[0]
         except Exception, e:
             raise e
 

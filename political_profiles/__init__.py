@@ -31,6 +31,7 @@ def get_profile_forms(for_function, type):
             'create': [ChanceryProfileForm],
             'edit': [ChanceryProfileForm],
             'invite': [InitialChanceryProfileForm],
+            'contact_information': [ChanceryContactInformationForm]
             }
     contact_form_map = {
             'create': [ContactProfileForm],
