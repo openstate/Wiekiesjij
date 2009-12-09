@@ -5,7 +5,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import AddressField
-from django.contrib.admin import widgets
 
 from elections.models import Party
 
@@ -120,7 +119,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        self.fields['start_date'].widget = widgets.AdminDateWidget()
+        #self.fields['start_date'].widget = widgets.AdminDateWidget()
 
     class Meta:
         model = ElectionInstance
