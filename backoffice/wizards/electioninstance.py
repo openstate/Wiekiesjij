@@ -266,8 +266,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
         scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
 
         template = 'backoffice/wizard/election_setup/base.html',
-
-        super(ElectionSetupWizard, self).__init__(scenario_tree, template)
+        super(self.__class__, self).__init__(scenario_tree, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
@@ -328,7 +327,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
 
         except Exception, e:
-            transaction.commit()#transaction.rollback()
+            transaction.rollback()
             raise e
         else:
             transaction.commit()
