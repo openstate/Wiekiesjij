@@ -2,3 +2,4 @@ dev.db
 *.pyc
 nbproject*
 pip-log.txt
+media/media/contact/*
