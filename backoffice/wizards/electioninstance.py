@@ -75,6 +75,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 name=self.ei_data['name'],
                 council=council,
                 election_event=ee,
+                num_lists=self.ei_data['num_lists'],
                 start_date=datetime.datetime.now(),
                 end_date=datetime.datetime.now(),
                 wizard_start_date=datetime.datetime.now(),
@@ -145,7 +146,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
 
         
             ei = ElectionInstance.objects.get(pk=self.election_instance_id)
-        
+            ei.num_lists=self.ei_data['num_lists']
             ei.name=self.ei_data['name']
             ei.save()
         

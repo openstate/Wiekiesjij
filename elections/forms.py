@@ -110,7 +110,7 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'region', 'level', 'modules')
+        fields = ('name', 'region', 'level', 'num_lists', 'modules')
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
@@ -131,7 +131,7 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
                             widget=forms.widgets.CheckboxSelectMultiple)
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'modules')
+        fields = ('name', 'num_lists', 'modules')
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''

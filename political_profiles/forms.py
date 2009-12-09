@@ -129,7 +129,7 @@ class InitialContactProfileForm(BetterModelForm, TemplateForm):
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
-        super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
+        super(InitialContactProfileForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices[1:])
     
     class Meta:
