@@ -21,7 +21,11 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_instance/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='backoffice.election_party_create'),
     url(r'^election_party/(?P<id>\d+)/$', 'election_party_view', name='backoffice.election_party_view'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
+
     url(r'^csv_candidates_1/$', 'csv_import_candidates_step1', name='backoffice.csv_candidates_step1'),
+    url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', {'error': 'false'}, name='backoffice.csv_candidates_step2'),
+    url(r'^csv_candidates_2/(?P<error>[-\w]+)/$', 'csv_import_candidates_step2', name='backoffice.csv_candidates_step2'),
+    url(r'^csv_candidates_3/$', 'csv_import_candidates_step3', name='backoffice.csv_candidates_step3'),
 
     url(r'^welcome/$', 'politician_welcome', name='backoffice.politician_welcome'),
     url(r'^welcome/(?P<user_id>\d+)/$', 'politician_profile_setup', name='backoffice.politician_profile_setup'),
@@ -44,12 +48,10 @@ urlpatterns += patterns('backoffice.views',
 
     url(r'^welcome/(?P<user_id>\d+)/links/$', 'politician_profile_link', name='backoffice.politician_profile_link'),
     url(r'^welcome/(?P<user_id>\d+)/links/add/$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard'),
-
-
-    url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', name='backoffice.csv_candidates_step2'),
     
     #TODO: Debug views remove at some point 
 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'wizard_view', name='backoffice.show_wizard'),
     url(r'^(?P<form_type>[-\w]+)/$', 'form_view', name='backoffice.show_forms'),
-)
+
+    )

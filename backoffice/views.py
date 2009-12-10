@@ -8,7 +8,7 @@ import datetime
 import time
 import csv
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -180,7 +180,7 @@ def council_edit(request, id):
 def csv_import_candidates_step1(request):
     return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
 
-def csv_import_candidates_step2(request):
+def csv_import_candidates_step2(request, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -190,16 +190,71 @@ def csv_import_candidates_step2(request):
 
             for chunk in file.chunks():
                 destination.write(chunk)
-
             destination.close()
             request.session['csv_filename'] = filename
-
-            candidates = functions.get_candidates_from_csv(request.session)
+            return redirect('backoffice.csv_candidates_step3')
+            
     else:
         form = CsvUploadForm()
 
     forms = dict({'csv_upload': form})
-    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms,}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error}, context_instance=RequestContext(request))
+
+@transaction.commit_manually
+def csv_import_candidates_step3(request):
+    try:
+        candidates = functions.get_candidates_from_csv(request.session)
+    except:
+        return redirect('backoffice.csv_candidates_step2', error='true')
+
+    if(request.POST):
+        form = CsvConfirmForm(request.POST)
+        if form.is_valid():
+            for candidate in candidates:
+                try:
+                    #Store data
+                    tmp_data = {
+                        'first_name': candidate['first_name'],
+                        'middle_name': candidate['middle_name'],
+                        'last_name': candidate['last_name'],
+                        'initials': candidate['initials'],
+                        'email': candidate['email'],
+                        'gender': candidate['gender'],
+                    }
+                    candidate_obj = create_profile('candidate', tmp_data)
+
+                    #Link candidate to party
+                    candidacy = Candidacy(
+                        election_party_instance = get_object_or_404(ElectionInstanceParty, party=1), #TODO: Make party dynamic
+                        candidate = candidate_obj.user,
+                        position = candidate['position'],
+                    )
+                    candidacy.save()
+
+                    #Create invitation
+                    templates = profile_invite_email_templates('candidate')
+                    Invitation.create(
+                        user_from = request.user,
+                        user_to = candidate_obj.user,
+                        view = '',
+                        text = 'Invitation text',
+                        subject = 'Invitation',
+                        html_template = templates['html'],
+                        plain_template = templates['plain'],
+                    )
+
+                except Exception:
+                    transaction.rollback()
+                    raise
+                else:
+                    transaction.commit()
+
+            os.remove(settings.settings.TMP_ROOT + '/' + request.session['csv_filename'])
+    else:
+        form = CsvConfirmForm()
+
+    forms = dict({'csv_confirm': form})
+    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms}, context_instance=RequestContext(request))
 
 def council_edit(request, election_instance_id, user_id):
     '''

@@ -241,4 +241,4 @@ class CsvConfirmForm(BetterForm, TemplateForm):
     CsvConfirm admin
     '''
 
-    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct [etcetcetc]')
+    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL.')

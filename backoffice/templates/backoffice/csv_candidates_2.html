@@ -7,7 +7,13 @@
     <br />
     {% trans "You can upload your CSV file here." %}
 </p>
-
+{% ifequal error "true" %}
+    <p class="error">
+        {% trans "The CSV file you have submitted, can not be handled by the system." %}
+        <br />
+        {% trans "Please check your file and try again." %}
+    </p>
+{% endifequal %}
 <form method="POST" enctype="multipart/form-data" action="">
     {% for form in forms.values %}
         {{ form.as_template }}
