@@ -230,6 +230,20 @@ class Candidacy(models.Model):
     def questions_incomplete(self):
         return len(self.election_party_instance.instance.questions) - len(self.answers)
 
+    def move_up(self):
+        '''
+        Changes the position of the current item with position of the previous one.
+        '''
+
+        pass
+
+    def move_down(self):
+        '''
+        Changes the position of the current item with position of the next one.
+        '''
+
+        pass
+
 class ElectionInstanceParty(models.Model):
     """
         A link between the party, the election instance and the candidates
@@ -258,3 +272,17 @@ class ElectionInstanceParty(models.Model):
 
     def __unicode__(self):
         return self.election_instance.council.name + " - " + self.party.name
+
+    def move_up(self):
+        '''
+        Changes the position of the current item with position of the previous one.
+        '''
+
+        pass
+
+    def move_down(self):
+        '''
+        Changes the position of the current item with position of the next one.
+        '''
+
+        pass
