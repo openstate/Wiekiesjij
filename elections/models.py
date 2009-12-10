@@ -146,12 +146,16 @@ class ElectionInstance(models.Model):
         try:
             party = Party(name=party_name)
             party.save(force_insert=True)
-            party_instance = ElectionInstanceParty(election_instance=self.id,
-                                                   party=party.id,
+            party_instance = ElectionInstanceParty(election_instance=self,
+                                                   party=party,
                                                    list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
                                                    position=position)
+            party_instance.save(force_insert=True)
+            party_instance.position = party_instance.id
+            party_instance.save()
             return party_instance
-        except:
+        except Exception, e:
+            print e
             return False
     
 class ElectionInstanceQuestion(models.Model):
