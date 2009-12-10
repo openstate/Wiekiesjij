@@ -234,19 +234,43 @@ class Candidacy(models.Model):
     def questions_incomplete(self):
         return len(self.election_party_instance.instance.questions) - len(self.answers)
 
-    def move_up(self):
-        '''
-        Changes the position of the current item with position of the previous one.
-        '''
-
-        pass
-
     def move_down(self):
         '''
-        Changes the position of the current item with position of the next one.
-        '''
+        Changes the position of the current item with position of the previous one.
+        Returns changed posotion of the current element on success or boolean False on failure.
+        @return int
 
-        pass
+        Works!
+        '''
+        previous = self.__class__.objects.filter(position__lt=self.position).order_by('-position')[:1]
+        if not previous:
+            return False
+        else:
+            previous = previous[0]
+            current_position = self.position
+            self.position = previous.position
+            previous.position = current_position
+            self.save()
+            previous.save()
+            return self.position
+
+    def move_up(self):
+        '''
+        Changes the position of the current item with position of the next one.
+        Returns changed posotion of the current element on success or boolean False on failure.
+        @return int
+        '''
+        next = self.__class__.objects.filter(position__gt=self.position).order_by('position')[:1]
+        if not next:
+            return False
+        else:
+            next = next[0]
+            current_position = self.position
+            self.position = next.position
+            next.position = current_position
+            self.save()
+            next.save()
+            return self.position
 
 class ElectionInstanceParty(models.Model):
     """
@@ -277,16 +301,40 @@ class ElectionInstanceParty(models.Model):
     def __unicode__(self):
         return self.election_instance.council.name + " - " + self.party.name
 
-    def move_up(self):
-        '''
-        Changes the position of the current item with position of the previous one.
-        '''
-
-        pass
-
     def move_down(self):
         '''
-        Changes the position of the current item with position of the next one.
-        '''
+        Changes the position of the current item with position of the previous one.
+        Returns changed posotion of the current element on success or boolean False on failure.
+        @return int
 
-        pass
+        Works!
+        '''
+        previous = self.__class__.objects.filter(position__lt=self.position).order_by('-position')[:1]
+        if not previous:
+            return False
+        else:
+            previous = previous[0]
+            current_position = self.position
+            self.position = previous.position
+            previous.position = current_position
+            self.save()
+            previous.save()
+            return self.position
+
+    def move_up(self):
+        '''
+        Changes the position of the current item with position of the next one.
+        Returns changed posotion of the current element on success or boolean False on failure.
+        @return int
+        '''
+        next = self.__class__.objects.filter(position__gt=self.position).order_by('position')[:1]
+        if not next:
+            return False
+        else:
+            next = next[0]
+            current_position = self.position
+            self.position = next.position
+            next.position = current_position
+            self.save()
+            next.save()
+            return self.position
