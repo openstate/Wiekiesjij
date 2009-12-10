@@ -1,8 +1,4 @@
 import csv
-import string
-from django.utils.importlib import import_module
-from django.core.exceptions import ImproperlyConfigured
-
 from django.conf import settings
 
 def get_candidates_from_csv(session):

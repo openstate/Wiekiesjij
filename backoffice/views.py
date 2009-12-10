@@ -186,7 +186,7 @@ def csv_import_candidates_step2(request, error = False):
         if form.is_valid():
             file = form.files['file']
             filename = str(time.time()) + '.csv' #about 1000 unique filenames per second?
-            destination = open(settings.settings.TMP_ROOT + '/' + filename, 'wb+')
+            destination = open(settings.TMP_ROOT + '/' + filename, 'wb+')
 
             for chunk in file.chunks():
                 destination.write(chunk)
@@ -249,7 +249,7 @@ def csv_import_candidates_step3(request):
                 else:
                     transaction.commit()
 
-            os.remove(settings.settings.TMP_ROOT + '/' + request.session['csv_filename'])
+            os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
     else:
         form = CsvConfirmForm()
 
