@@ -22,6 +22,7 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_party/(?P<id>\d+)/$', 'election_party_view', name='backoffice.election_party_view'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
     url(r'^csv_candidates_1/$', 'csv_import_candidates_step1', name='backoffice.csv_candidates_step1'),
+    url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', name='backoffice.csv_candidates_step2'),
     
     #TODO: Debug views remove at some point 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'wizard_view', name='backoffice.show_wizard'),

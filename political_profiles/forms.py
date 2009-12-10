@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from form_utils.forms import BetterModelForm
+from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField, AddressField
@@ -201,17 +201,20 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
         model = PoliticalExperience
         exclude = ('politician')
 
-class CsvUploadForm(BetterModelForm, TemplateForm):
+class CsvUploadForm(BetterForm, TemplateForm):
     '''
     CsvUpload admin
     '''
 
     file = forms.FileField(required = True)
 
-class CsvConfirmForm(BetterModelForm, TemplateForm):
+    def clean_file(self):
+        if not self.cleaned_data['file'].content_type == 'text/csv':
+            raise forms.ValidationError('The file you tried to submit is not a CSV file')
+    
+class CsvConfirmForm(BetterForm, TemplateForm):
     '''
     CsvConfirm admin
     '''
 
     confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct [etcetcetc]')
-

@@ -18,6 +18,6 @@
 
 <div class="buttons">
     <a href="#">{% trans "Cancel" %}</a>
-    <a class="button" href="#">{% trans "Proceed to uploading a filled in template" %}</a>
+    <a class="button" href="{% url backoffice.csv_candidates_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
 </div>
 {% endblock content %}

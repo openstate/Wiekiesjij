@@ -1,8 +1,12 @@
+import os.path
+import os
 #!/usr/env python
 #-*- coding: utf-8 -*-
 #
-#Copyright 2009 Accepté. All Rights Reserved.
+#Copyright 2009 Accepte. All Rights Reserved.
 import datetime
+import time
+import csv
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -13,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
+from political_profiles import functions
 from utils.multipathform import MultiPathFormWizard, Step
 from backoffice.decorators import staff_required, council_admin_required
 
@@ -118,3 +123,41 @@ def council_edit(request, id):
 
 def csv_import_candidates_step1(request):
     return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
+
+def csv_import_candidates_step2(request):
+    if(request.FILES or request.POST):
+        form = CsvUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.files['file']
+            filename = str(time.time()) + '.csv' #about 1000 unique filenames per second?
+            destination = open(settings.settings.TMP_ROOT + '/' + filename, 'wb+')
+
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+            destination.close()
+            request.session['csv_filename'] = filename
+
+            candidates = functions.get_candidates_from_csv(request.session)
+    else:
+        form = CsvUploadForm()
+
+    forms = dict({'csv_upload': form})
+    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms,}, context_instance=RequestContext(request))
+
+def council_edit(request, election_instance_id, user_id):
+    '''
+    Council edit wizard.
+    @param int election_instance_id
+    @param int user_id
+
+    Both parameters are required. It's obvious what they mean.
+    '''
+    return CouncilEditWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
+
+def council_edit_done(request):
+    '''
+    Council edit wizard success page.
+    '''
+    return render_to_response('backoffice/wizard/council/edit/done.html',
+                              context_instance=RequestContext(request))
