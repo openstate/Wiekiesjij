@@ -96,16 +96,16 @@ class ElectionInstance(models.Model):
     start_date      = models.DateTimeField(_('Start Date'))
     end_date        = models.DateTimeField(_('End Date'))
     wizard_start_date = models.DateTimeField(_('Wizard start date'))
-    num_lists       = models.PositiveIntegerField(_('Number of lists'))
+    num_lists       = models.PositiveIntegerField(_('Number of lists'), null=True, blank=True)
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
-    modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'))
+    modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'), null=True, blank=True)
 
     def __unicode__(self):
         return self.council.name
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
-
+        
     def party_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
         list.update(dict(map(lambda x: (x.position, x), self.electioninstanceparty_set.all())))
@@ -150,12 +150,8 @@ class ElectionInstance(models.Model):
                                                    party=party.id,
                                                    list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
                                                    position=position)
-            print 'Ccccccccc'
-            #party_instance.save(force_insert=True)
-            print 'Aaaaaaaaaaaaaaaaa: '; print party_instance
             return party_instance
         except:
-            print 'Bbbbbbbbbbbb'
             return False
     
 class ElectionInstanceQuestion(models.Model):

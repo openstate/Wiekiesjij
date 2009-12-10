@@ -140,7 +140,7 @@ class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
     """
-    gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS, help_text=_("Please choose your gender."))
+    gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS)
     telephone	= models.CharField(_('Phone Number'), max_length=255)
     workingdays = models.CharField(_('Working Days'), max_length=255)
     street      = models.CharField(_('Street'), max_length=40)

@@ -8,15 +8,16 @@ class Command(BaseCommand):
     help = 'Used to send pending invitations'
     
     def handle(self, *args, **options):
+        #get at max 50 rows from the database
         invitations = Invitation.objects.filter(accepted=False, send_on=None).order_by('created')[:50]
-        
-        #First mark them al as busy being send (to prevent duplication)
-        invitations.update(send_on=datetime.datetime.min)
-        for invitation in invitations:
-            invitation.send()
-            invitation.send_on = datetime.datetime.now
-            invitation.save()
-    
-        print "Done sending invitations"
-        
-        
+        invitations_temp = list(invitations)
+        #stores ids in a variable from invitations
+        invitation_ids = invitations.values_list('id', flat=True)
+
+        #updates all rows with the selected id's in the _database_
+        Invitation.objects.filter(id__in=invitation_ids).update(send_on=datetime.datetime.min)
+
+        for invite in invitations_temp:
+            invite.send()
+            invite.send_on = datetime.datetime.now()
+            invite.save()

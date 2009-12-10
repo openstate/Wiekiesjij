@@ -8,7 +8,7 @@ class BlockwrapNode(template.Node):
     """
         Wraps the nodelist using the given template and kwargs
     """
-    def __init__(self, nodelist, template_name, extra_args):
+    def __init__(self, nodelist, template_name=None, extra_args={}):
         self.nodelist = nodelist
         self.kwargs = extra_args
         self.template_name = template_name
@@ -17,8 +17,11 @@ class BlockwrapNode(template.Node):
         kwargs = dict([(smart_str(k,'ascii'), v.resolve(context))
                        for k, v in self.kwargs.items()])
 
-        template_name = self.template_name.resolve(context)
-        
+        if self.template_name is None:
+            template_name = 'default'
+        else:
+            template_name = self.template_name.resolve(context)
+
         # if someone added a content variable to the kwargs, tough luck
         kwargs['content'] = self.nodelist.render(context)
 
@@ -55,9 +58,8 @@ def blockwrap(parser, token):
     """
     tokens = token.split_contents()
     kwargs = {}
-    template_name = 'default'
-
-    if len(tokens) > 2:
+    template_name = None
+    if len(tokens) >= 2:
         bits = iter(tokens[1:])
         for bit in bits:
             if '=' in bit:

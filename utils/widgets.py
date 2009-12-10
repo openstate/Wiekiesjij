@@ -49,9 +49,8 @@ class AddressWidget(forms.widgets.MultiWidget):
         super(AddressWidget, self).__init__(*args, **kwargs)
     
     def decompress(self, value):
-        if value:
-            matches = value.match("^(.+) (\d+.*) (\d+.*) (.+)$", value)
-            return [matches.group(1), matches.group(2), matches.group(3), matches.group(4)]
+        if value and isinstance(value, dict):
+            return [value.get('street'), value.get('number'), value.get('postalcode'), value.get('city')]
         else:
             return [None, None, None, None]
         
@@ -90,19 +89,19 @@ class NameWidget(forms.widgets.MultiWidget):
         <div class="fields">
             <table>
                 <tr>
-                    <td>%(first_name_label)s</td>
                     <td>%(last_name_label)s</td>
-                </tr>
-                <tr>
-                    <td>%(first_name_field)s</td>
-                    <td>%(last_name_field)s</td>
-                <tr>
-                    <td>&nbsp;</td>
                     <td>%(middle_name_label)s</td>
                 </tr>
                 <tr>
-                    <td>&nbsp;</td>
+                    <td>%(last_name_field)s</td>
                     <td>%(middle_name_field)s</td>
+                <tr>
+                    <td>%(first_name_label)s</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>%(first_name_field)s</td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
         </div>
@@ -120,8 +119,8 @@ class NameWidget(forms.widgets.MultiWidget):
         super(NameWidget, self).__init__(*args, **kwargs)
         
     def decompress(self, value):
-        if value:
-            return value.split(' ', 3)
+        if value and isinstance(value, dict):
+            return [value.get('first_name'), value.get('lastname'), value.get('middle_name')]
         else:
             return [None, None, None] 
         
@@ -244,5 +243,94 @@ class ColorPicker(forms.widgets.TextInput):
     def render(self, *args, **kwargs):
         html_id = kwargs.get('attrs', {}).get('id', '')
         result = super(ColorPicker, self).render(*args, **kwargs)
+
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id))
+
+class DatePicker(forms.widgets.TextInput):
+    """
+    Date Picker, based on jQuery UI.
+    """
+    TEMPLATE = """
+        <!-- Following div could need CSS -->
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                date_obj = new Date();
+                date_obj_hours = date_obj.getHours();
+                date_obj_mins = date_obj.getMinutes();
+
+                if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
+                date_obj_am_pm = '';
+                date_obj_time = date_obj_hours + ':' + date_obj_mins;
+
+                // Getting the element
+                var datePicker = jQuery('#%(id)s');
+
+                // Making another hidden element for date
+                var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
+
+                // Giving it the same name as our element
+                datePickerField.attr('name', datePicker.attr('name'));
+
+                // Saving the original date time value
+                originalDateTimeValue = datePicker.attr('value');
+
+                // Splitting the original date time value to get date and time separately
+                originalDateTimeSplit = originalDateTimeValue.split(' ', 2);
+                try {
+                    originalDateValue = originalDateTimeSplit[0];
+                    originalTimeValue = originalDateTimeSplit[1];
+                } catch (err) {
+                    originalDateValue = '';
+                    originalTimeValue = '';
+                }
+
+                // Changing the name of the original field
+                datePicker.attr('name', datePicker.attr('name') + '_original')
+
+                // Making another element for the time picking
+                var timePickerField = jQuery('<input type="text" class="time-picker" value="" id="#%(id)s_time" maxlength="8" />');
+                
+                // Adding the elements
+                datePicker.after(timePickerField);
+                datePicker.after(datePickerField);
+
+                // Copying the value of time to the time element
+                datePicker.attr('value', originalDateValue);
+                timePickerField.attr('value', originalTimeValue);
+                datePickerField.attr('value', originalDateTimeValue);
+                
+                // Making the date picker
+                datePicker.datepicker({dateFormat: $.datepicker.W3C});
+
+                // We need to update two fields on date picker update
+                datePicker.change(function() {
+                    datePickerField.attr('value', datePicker.attr('value') + ' ' + timePickerField.attr('value'));
+                    //datePickerField.attr('value', datePicker.attr('value') + ' ' + date_obj_time);
+                    //timePickerField.attr('value', date_obj_time);
+                });
+
+                timePickerField.change(function() {
+                    datePickerField.attr('value', datePicker.attr('value') + ' ' + timePickerField.attr('value'));
+                });
+            });
+        </script>
+    """
+
+    class Media:
+        js = (
+            #'static/utils/javascripts/jquery.jtimepicker.js',
+        )
+        css = {
+            'screen': (
+                #'static/utils/css/style.css',
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def render(self, *args, **kwargs):
+        html_id = kwargs.get('attrs', {}).get('id', '')
+        result = super(self.__class__, self).render(*args, **kwargs)
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))

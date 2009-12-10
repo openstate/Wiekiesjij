@@ -1,4 +1,8 @@
 dev.db
 *.pyc
 nbproject*
-pip-log.txt  
+pip-log.txt
+media/media/contact/*
+migrate.sh
+runserver.sh
+syncdb.sh

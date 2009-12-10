@@ -51,6 +51,7 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
         super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
     
@@ -129,8 +130,8 @@ class InitialContactProfileForm(BetterModelForm, TemplateForm):
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
-        super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices[1:])
+        super(InitialContactProfileForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
     
     class Meta:
         model = ChanceryProfile
@@ -199,3 +200,18 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     class Meta:
         model = PoliticalExperience
         exclude = ('politician')
+
+class CsvUploadForm(BetterModelForm, TemplateForm):
+    '''
+    CsvUpload admin
+    '''
+
+    file = forms.FileField(required = True)
+
+class CsvConfirmForm(BetterModelForm, TemplateForm):
+    '''
+    CsvConfirm admin
+    '''
+
+    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct [etcetcetc]')
+

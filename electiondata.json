@@ -1,0 +1,24 @@
+[
+  {
+    "pk": 1, 
+    "model": "elections.electionevent", 
+    "fields": {
+      "name": "ElevtionEvent", 
+      "level": "iets", 
+      "candidate_due_period": 30, 
+      "desciption": null, 
+      "profile_due_period": 7, 
+      "question_due_period": 7, 
+      "party_due_period": 33, 
+      "parent_region": "Nederland"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "elections.electioninstancemodule", 
+    "fields": {
+      "name": "SMS Module", 
+      "slug": "SMS"
+    }
+  }
+]

@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db import transaction
 
 from utils.multipathform import Step, MultiPathFormWizard
 
@@ -16,7 +17,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         step1_forms = dict(
             initial_ep=InitialElectionPartyForm,
         )
-        step1_forms['initial_ep'].set_num_lists(instance.num_lists)
+        self.position = position
         idx = 0;
         for profile_form in get_profile_forms('party_admin', 'invite'):
             step1_forms.update({'invite_contact_%s' % idx : profile_form})
@@ -33,33 +34,64 @@ class AddElectionPartyWizard(MultiPathFormWizard):
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
         
+    @transaction.commit_manually
     def done(self, request, form_dict):
         # This needs to be easier !?!
-        for path, forms in form_dict.iteritems():
-            for name, form in forms.iteritems():
-                if name == 'initial_ep':
-                    #create election instance 
-                    self.ep_data = form.cleaned_data
-                else:
-                    if not hasattr(self, 'invite_data'):
-                        self.invite_data = {}
-                    self.invite_data.update(form.cleaned_data)
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'initial_ep':
+                        #create election instance
+                        self.ep_data = form.cleaned_data
+                    else:
+                        if not hasattr(self, 'profile_data'):
+                            self.profile_data = {}
+                        cleaned_data = form.cleaned_data
+                        for key, value in cleaned_data['name'].iteritems():
+                            cleaned_data[key] = value
+                        del cleaned_data['name']
+                        self.profile_data.update(cleaned_data)
 
-        party = Party.objects.create(
-            region = self.election_instance.council.region,
-            level = self.election_instance.council.level,
-            name = self.ep_data['name'],
-            abbreviation = self.ep_data['abbreviation'])
-        
-        eip = ElectionInstanceParty.objects.create(
-            party=party,
-            election_instance=self.election_instance,
-            position=self.ep_data['position'],
-            list_length=10)
-        
-        #Invite party admin
-        
-        return HttpResponseRedirect("%sthankyou/" % (request.path))
+            party = Party.objects.create(
+                region = self.election_instance.council.region,
+                level = self.election_instance.council.level,
+                name = self.ep_data['name'],
+                abbreviation = self.ep_data['abbreviation'])
+
+            eip = ElectionInstanceParty.objects.create(
+                party=party,
+                election_instance=self.election_instance,
+                position=self.ep_data['position'],
+                list_length=10)
+
+            #Create the profile
+            profile = create_profile('party_admin', self.profile_data)
+            #Link the profile to the council
+            council.chanceries.add(profile.user)
+
+            ei.modules.clear()
+            ei.modules = self.ei_data['modules']
+
+            #Create the invitation
+            templates = profile_invite_email_templates('party_admin')
+            Invitation.create(
+                user_from=request.user,
+                user_to=profile.user,
+                view='',
+                text='Invitation text',
+                subject='Invitation',
+                html_template=templates['html'],
+                plain_template=templates['plain'],
+                )
+
+        except Exception:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
+
+        return redirect('backoffice.election_instance_view', id=ei.id)
+
 
 class ElectionPartySetupWizard(MultiPathFormWizard):
     def __init__(self, eip, *args, **kwargs):

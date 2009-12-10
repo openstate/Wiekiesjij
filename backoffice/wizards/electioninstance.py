@@ -8,16 +8,12 @@ from django.core.urlresolvers import reverse
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
+from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
 from elections.forms import InitialElectionInstanceForm, EditElectionInstanceForm
 from elections.forms import ElectionInstanceForm, ElectionInstanceSelectPartiesForm
 from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm
 from elections.models import ElectionInstance, Council, ElectionEvent
 from invitations.models import Invitation
-
-#TODO: remove these, use the get_profile_forms function instead
-#from political_profiles.models import ChanceryProfile
-#from political_profiles.forms import ChanceryProfileForm, ChanceryContactInformationForm
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -79,6 +75,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 name=self.ei_data['name'],
                 council=council,
                 election_event=ee,
+                num_lists=self.ei_data['num_lists'],
                 start_date=datetime.datetime.now(),
                 end_date=datetime.datetime.now(),
                 wizard_start_date=datetime.datetime.now(),
@@ -111,7 +108,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         
         if request.POST.get('next', 'overview') == 'overview':
             return redirect('backoffice.election_event')
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('backoffice.edit_council', id=ei.id)
 
 class EditElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -149,7 +146,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
 
         
             ei = ElectionInstance.objects.get(pk=self.election_instance_id)
-        
+            ei.num_lists=self.ei_data['num_lists']
             ei.name=self.ei_data['name']
             ei.save()
         
@@ -195,6 +192,9 @@ class ElectionSetupWizard(MultiPathFormWizard):
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = self.user.profile
+            ChanceryProfileClass = get_profile_model('council_admin')
+            if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
+                raise Exception
         except Exception, e:
             raise e
 
@@ -208,50 +208,66 @@ class ElectionSetupWizard(MultiPathFormWizard):
             raise e
 
         '''
-        TODO for step "chancery_registration". Prepopulate form data with information stored in model in case if
-        chancery already exists.
+        TODO for checkboxes we need to populate the data properly, because now it doesn't happen.
         '''
+        step1_forms = {}
+        step1_initial = {}
+         # Get the form(s) for chancery profile and add them to step1_forms
+        idx = 0
+        for profile_form in get_profile_forms('council_admin', 'edit'):
+            step1_forms.update({'chancery_registration%s' % idx : profile_form})
+            step1_initial.update({'chancery_registration%s' % idx : self.chancery_profile})
+            idx += 1
+
+        step5_forms = {}
+        step5_initial = {}
+         # Get the form(s) for chancery profile and add them to step5_forms
+        idx = 0
+        for profile_form in get_profile_forms('council_admin', 'contact_information'):
+            step5_forms.update({'chancery_contact_information%s' % idx : profile_form})
+            step5_initial.update({'chancery_contact_information%s' % idx : self.chancery_profile})
+            idx += 1
+
         # Updates ChanceryProfile
         step1 = Step('chancery_registration',
-                     forms={'chancery_registration': ChanceryProfileForm},
+                     forms=step1_forms,
                      template='backoffice/wizard/election_setup/step1.html',
-                     initial=self.chancery_profile.__dict__)
+                     initial=step1_initial)
         # Updates ElectionInstance
         step2 = Step('election_details',
                      forms={'election_details': ElectionInstanceForm},
                      template='backoffice/wizard/election_setup/step2.html',
-                     initial=self.election_instance.__dict__)
+                     initial={'election_details': self.election_instance})
         # Updates Council
         step3 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/election_setup/step3.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_contact_information': self.election_instance.council})
         # Updates Council
         step4 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/election_setup/step4.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_additional_information': self.election_instance.council})
         # Updates ChanceryProfile
         step5 = Step('chancery_contact_information',
-                     forms={'chancery_contact_information': ChanceryContactInformationForm},
+                     forms=step5_forms,
                      template='backoffice/wizard/election_setup/step5.html',
-                     initial=self.chancery_profile.__dict__)
+                     initial=step5_initial)
         # Updates Council
         step6 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
-                     initial=self.election_instance.council.__dict__)
+                     initial={'council_styling_setup': self.election_instance.council})
         # Updates ElectionInstance
         step7 = Step('election_select_parties',
                      forms={'election_select_parties': ElectionInstanceSelectPartiesForm},
                      template='backoffice/wizard/election_setup/step7.html',
-                     initial=self.election_instance.__dict__)
+                     initial={'election_select_parties': self.election_instance.parties.all()})
 
         scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
 
         template = 'backoffice/wizard/election_setup/base.html',
-
-        super(ElectionSetupWizard, self).__init__(scenario_tree, template)
+        super(self.__class__, self).__init__(scenario_tree, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
@@ -312,7 +328,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
             map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
 
         except Exception, e:
-            transaction.commit()#transaction.rollback()
+            transaction.rollback()
             raise e
         else:
             transaction.commit()

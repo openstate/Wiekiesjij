@@ -20,7 +20,7 @@ class Invitation(models.Model):
     plain_template  = models.CharField(_('Plain text template'), max_length=255, help_text=_('Plain text template to use for the invitation email'))
     
     accepted        = models.BooleanField(_('Is Accepted?'), default=False)
-    send_on         = models.DateTimeField(_('Email send'), blank=True, null=True) #Is the invitation send or not
+    send_on         = models.DateTimeField(_('Email send'), blank=True, null=True, default=None) #Is the invitation send or not
     
     created         = models.DateTimeField(_('Created'), auto_now_add=True)
     updated         = models.DateTimeField(_('Updated'), auto_now=True)
@@ -37,7 +37,7 @@ class Invitation(models.Model):
             'info@wiekiesjij.eu', 
             self.user_to.email, 
             {'invitation': self},
-            {'html': html_template, 'plain': plain_template}
+            {'html': self.html_template, 'plain': self.plain_template}
         )
         
     @classmethod
@@ -65,5 +65,6 @@ class Invitation(models.Model):
             plain_template = plain_template,
             hash = cls.generate_hash()
         )
+        
 
 

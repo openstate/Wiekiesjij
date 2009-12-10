@@ -89,6 +89,7 @@ class Migration:
             ('start_date', orm['elections.ElectionInstance:start_date']),
             ('end_date', orm['elections.ElectionInstance:end_date']),
             ('wizard_start_date', orm['elections.ElectionInstance:wizard_start_date']),
+            ('num_lists', orm['elections.ElectionInstance:num_lists']),
             ('website', orm['elections.ElectionInstance:website']),
         ))
         db.send_create_signal('elections', ['ElectionInstance'])
@@ -264,6 +265,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modules': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.ElectionInstanceModule']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'num_lists': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
             'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),
             'start_date': ('django.db.models.fields.DateTimeField', [], {}),

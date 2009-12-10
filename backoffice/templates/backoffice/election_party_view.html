@@ -1,70 +1,68 @@
 {% extends 'backoffice/base.html' %}
-{% load i18n %}
-{% block extrahead %}
-<style type="text/css">
-div.item { border: 1px solid black; padding: 10px; margin-bottom: 10px; position: relative; }
-div.index { float: left; }
-.warning { color: red; }
-div.main_content { width: 60%; float: left; }
-div.sidebar { width: 30%; float: right; }
-br.clear { clear: both; }
-strong { display: block; padding-top: 5px; }
-strong a { font-weight: normal; }
-</style>
-{% endblock %}
+{% load i18n utils_tags %}
+
+{% block breadcrumbs %}
+	{{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
+{% endblock breadcrumbs %}
+
 {% block content %}
-{{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
-
-<h1>{{ eip.party.name }} <span>({{ eip.party.abbreviation }})</h1>
-<div class="main_content">
-<ul>
-{% if eip.party.profile_incomplete %}<li>{% trans 'You did not completely fill in the party profile.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
-{% if not eip.party.contacts.count %}<li>{% trans 'You did not assign a party contact yet.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
-</ul>
-
-<h2>Candidate list</h2>
-
-<div><a href="#">{% trans 'Add new candidate' %}</a> <a href="#">{% trans 'Batch add candidates' %}</a></div>
-{% for index, can in eip.candidate_dict.items %}
-<div class="item">
-	<div class="index">{{ index }}</div>
-	{% if can %}
-	<div class="main_content">
-	<img src="{{ can.candidate.profile.picture }}" />
-	<h3><a href="#">{{ eip.candidate.profile.full_name }}</a></h3>
+	<h1>{{ eip.party.name }} <span>({{ eip.party.abbreviation }})</h1>
 	<ul>
-	{% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
-	{% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
-	{% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
+		{% if eip.party.profile_incomplete %}<li>{% trans 'You did not completely fill in the party profile.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+		{% if not eip.party.contacts.count %}<li>{% trans 'You did not assign a party contact yet.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+	</ul>
+
+	<h2>Candidate list</h2>
+
+	<div><a href="#">{% trans 'Batch add candidates' %}</a></div>
+	{% for index, can in eip.candidate_dict.items %}
+	<div class="item">
+		<div class="index">{{ index }}</div>
+		{% if can %}
+			<div class="main_content">
+				<img src="{{ can.candidate.profile.picture }}" />
+				<h3><a href="#">{{ eip.candidate.profile.full_name }}</a></h3>
+				<ul>
+					{% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
+					{% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
+					{% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
+				</ul>
+			</div>
+			<div class="sidebar"><a href="#">{% trans 'View candidate profile' %} &gt;</a></div>
+			<div class="sidebar"><a href="#">{% trans 'Remove candidate' %}</a></div>
+			<br class="clear" />
+		{% else %}
+			<h3><a href="#">{% trans 'Invite politician' %}</a></h3>
+		{% endif %}
 	</div>
-	<div class="sidebar"><a href="#">{% trans 'View candidate profile' %} &gt;</a></div>
-	<div class="sidebar"><a href="#">{% trans 'Remove candidate' %}</a></div>
-	<br class="clear" />
+	{% endfor %}
+	<div> <a href="#">{% trans 'Batch add candidates' %}</a></div>
+{% endblock content %}
+
+
+{% block sidebar %}
+	{% blockwrap %}
+		<strong>{% trans 'Party profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
+	{% endblockwrap %}
+	
+	{% blockwrap %}
+		{% trans 'Website' %}: <a href="{{ eip.party.website }}">{{ eip.party.website }}</a><br />
+		{% trans 'Slogan' %}: {{ eip.party.slogan }}<br />
+		{% trans 'Telephone' %}: {{ eip.party.telephone }}<br />
+		{% trans 'E-mail' %}: <a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a><br />
+		{% if eip.party.profile_incomplete %}<a href="#">{% trans 'Complete profile' %} &gt;</a>{% endif %}
+	{% endblockwrap %}
+	
+	{% blockwrap %}
+	<strong>{% trans 'Party contacts' %}</strong>
+	{% if eip.party.contacts.all %}
+		{% for contact in eip.party.contacts.all %}
+			{{ contact.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
+		{% endfor %}
+		<a href="#">{% trans 'Add a party contact' %}</a>
 	{% else %}
-	<h3><a href="#">{% trans 'Invite politician' %}</a></h3>
+		<em>{% trans 'You did not assign a party contact yet' %}</em><br />
+		<a href="#">{% trans 'Invite a party contact now' %} &gt;</a>
 	{% endif %}
-</div>
-{% endfor %}
-<div><a href="#">{% trans 'Add new candidate' %}</a> <a href="#">{% trans 'Batch add candidates' %}</a></div>
-</div>
-<div class="sidebar">
-<strong>{% trans 'Party profile' %}: <a href="#">{% trans 'edit' %}</a></strong>
-{% trans 'Website' %}: <a href="{{ eip.party.website }}">{{ eip.party.website }}</a><br />
-{% trans 'Slogan' %}: {{ eip.party.slogan }}<br />
-{% trans 'Telephone' %}: {{ eip.party.telephone }}<br />
-{% trans 'E-mail' %}: <a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a><br />
-{% if eip.party.profile_incomplete %}<a href="#">{% trans 'Complete profile' %} &gt;</a>{% endif %}
-</div>
-<div class="sidebar">
-<strong>{% trans 'Party contacts' %}</strong>
-{% if eip.party.contacts.all %}
-{% for contact in eip.party.contacts.all %}
-{{ contact.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
-{% endfor %}
-<a href="#">{% trans 'Add a party contact' %}</a>
-{% else %}
-<em>{% trans 'You did not assign a party contact yet' %}</em><br />
-<a href="#">{% trans 'Invite a party contact now' %} &gt;</a>
-{% endif %}
-</div>
-{% endblock %}
+	{% endblockwrap %}
+{% endblock sidebar %}

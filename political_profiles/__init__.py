@@ -1,7 +1,7 @@
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
-from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm
-
+from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm, ChanceryContactInformationForm
+from political_profiles.forms import InitialContactProfileForm
 from django.contrib.auth.models import User
 
 
@@ -36,7 +36,7 @@ def get_profile_forms(for_function, type):
     contact_form_map = {
             'create': [ContactProfileForm],
             'edit': [ContactProfileForm],
-            'invite': [ContactProfileForm],
+            'invite': [InitialContactProfileForm],
             }
 
     if model_map[for_function] == PoliticianProfile:
