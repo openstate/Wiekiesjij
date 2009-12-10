@@ -10,7 +10,8 @@ def move_down(instance, field):
     '''
     value = getattr(instance, field, '')
     if not value:
-        raise Exception
+        return False
+        #raise Exception
 
     kwargs = {field + '__lt': value}
 
@@ -34,7 +35,8 @@ def move_up(instance, field):
     '''
     value = getattr(instance, field, '')
     if not value:
-        raise Exception
+        return False
+        #raise Exception
 
     kwargs = {field + '__gt': value}
     
