@@ -24,8 +24,7 @@ def accept(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        #TODO: Redirect to a page
-        raise Http404('Invitation does not exist')
+        return redirect(reverse('invitations.notexist'))
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -54,8 +53,7 @@ def existing(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        #TODO: Redirect to a page
-        raise Http404('Invitation does not exist')
+        return redirect(reverse('invitations.notexist'))
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
