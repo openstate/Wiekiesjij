@@ -248,18 +248,34 @@ class ColorPicker(forms.widgets.TextInput):
 
 class DatePicker(forms.widgets.TextInput):
     """
-    Date Picker, based on jQuery UI.
+    Date Picker, based on jQuery UI and "jquery.jtimepicker.js".
+    It uses jQuery UI dor date picking and jTimePicker class for date picking.
+    
+    Example of usage:
+        class MyForm(forms.Form):
+            my_date_time = forms.DateTimeField(max_length=50)
+
+            def __init__(self, *args, **kwargs):
+                super(self.__class__, self).__init__(*args, **kwargs)
+                self.fields['my_date_time'].widget = DatePicker()
+        
     """
     TEMPLATE = """
-        <!-- Following div could need CSS -->
         <script type="text/javascript">
+        <!--
             jQuery(document).ready(function(){
+
+                function getDateTimeValue(dateSel, hoursSel, minutesSel, secondsSel) {
+                    return dateSel.attr('value') + ' ' + hoursSel.attr('value') + ':' + minutesSel.attr('value') + ':' + secondsSel.attr('value');
+                }
+
                 date_obj = new Date();
                 date_obj_hours = date_obj.getHours();
                 date_obj_mins = date_obj.getMinutes();
 
-                if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
-                date_obj_am_pm = '';
+                if (date_obj_mins < 10) {
+                    date_obj_mins = "0" + date_obj_mins;
+                }
                 date_obj_time = date_obj_hours + ':' + date_obj_mins;
 
                 // Getting the element
@@ -279,16 +295,23 @@ class DatePicker(forms.widgets.TextInput):
                 try {
                     originalDateValue = originalDateTimeSplit[0];
                     originalTimeValue = originalDateTimeSplit[1];
+                    originalTimeValueSplit = originalTimeValue.split(':', 3);
+                    originalTimeValueHours = originalTimeValueSplit[0];
+                    originalTimeValueMinutes = originalTimeValueSplit[1];
+                    originalTimeValueSeconds = originalTimeValueSplit[2];
                 } catch (err) {
                     originalDateValue = '';
                     originalTimeValue = '';
+                    originalTimeValueHours = 0;
+                    originalTimeValueMinutes = 0;
+                    originalTimeValueSeconds = 0;
                 }
 
                 // Changing the name of the original field
-                datePicker.attr('name', datePicker.attr('name') + '_original')
+                datePicker.attr('name', datePicker.attr('name') + '_original');
 
-                // Making another element for the time picking
-                var timePickerField = jQuery('<input type="text" class="time-picker" value="" id="#%(id)s_time" maxlength="8" />');
+                // Making another div container for the time picking
+                var timePickerField = jQuery('<div class="time-picker" id="#%(id)s_time"></div>');
                 
                 // Adding the elements
                 datePicker.after(timePickerField);
@@ -296,33 +319,52 @@ class DatePicker(forms.widgets.TextInput):
 
                 // Copying the value of time to the time element
                 datePicker.attr('value', originalDateValue);
-                timePickerField.attr('value', originalTimeValue);
                 datePickerField.attr('value', originalDateTimeValue);
                 
                 // Making the date picker
                 datePicker.datepicker({dateFormat: $.datepicker.W3C});
 
-                // We need to update two fields on date picker update
+                // Making the time picker
+                timePickerField.jtimepicker({'hourDefaultValue': originalTimeValueHours,
+                                             'minDefaultValue': originalTimeValueMinutes,
+                                             'secDefaultValue': originalTimeValueSeconds});
+
+                // Time picker elements
+                timePickerFieldHours = jQuery('select.hourcombo');
+                timePickerFieldMinutes = jQuery('select.mincombo');
+                timePickerFieldSeconds = jQuery('select.seccombo');
+
+                // Updating the full date and time value on date picker change
                 datePicker.change(function() {
-                    datePickerField.attr('value', datePicker.attr('value') + ' ' + timePickerField.attr('value'));
-                    //datePickerField.attr('value', datePicker.attr('value') + ' ' + date_obj_time);
-                    //timePickerField.attr('value', date_obj_time);
+                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
                 });
 
-                timePickerField.change(function() {
-                    datePickerField.attr('value', datePicker.attr('value') + ' ' + timePickerField.attr('value'));
+                // Updating the full date and time value on time picker change
+                timePickerFieldHours.change(function() {
+                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+                });
+
+                // Updating the full date and time value on time picker change
+                timePickerFieldMinutes.change(function() {
+                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+                });
+
+                // Updating the full date and time value on time picker change
+                timePickerFieldSeconds.change(function() {
+                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
                 });
             });
+        -->
         </script>
     """
 
     class Media:
         js = (
-            #'static/utils/javascripts/jquery.jtimepicker.js',
+            'static/utils/javascripts/jquery.jtimepicker.js',
         )
         css = {
             'screen': (
-                #'static/utils/css/style.css',
+                'static/utils/css/jquery.timepicker.css',
             ),
         }
 
