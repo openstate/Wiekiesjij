@@ -25,9 +25,10 @@ from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, E
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
+from backoffice.wizards import *
 from political_profiles.forms import *
 from elections.forms import *
-from backoffice.wizards import *
+
 
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
@@ -106,12 +107,67 @@ def election_setup_done(request):
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
 
+def politician_welcome(request):
+    return render_to_response('backoffice/wizard/politician_profile/welcome.html',
+                              context_instance=RequestContext(request))
+
 def politician_profile_setup(request, user_id):
     return PoliticianProfileWizard(user_id=user_id)(request)
 
-def politician_profile_setup_done(request):
+def politician_profile_setup_done(request, user_id):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
+                              {'user_id': user_id},
                               context_instance=RequestContext(request))
+
+def politician_profile_interest(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/interest.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_interest_wizard(request, user_id):
+    return PoliticianProfileInterestWizard(user_id=user_id)(request)
+
+def politician_profile_work(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/work.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_work_wizard(request, user_id):
+    return PoliticianProfileWorkWizard(user_id=user_id)(request)
+
+
+def politician_profile_political(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/political.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_political_wizard(request, user_id):
+    return PoliticianProfilePoliticalWizard(user_id=user_id)(request)
+
+def politician_profile_education(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/education.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_education_wizard(request, user_id):
+    return PoliticianProfileEducationWizard(user_id=user_id)(request)
+
+def politician_profile_appearance(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/appearances.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_appearance_wizard(request, user_id):
+    return PoliticianProfileAppearanceWizard(user_id=user_id)(request)
+
+
+def politician_profile_link(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/links.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_link_wizard(request, user_id):
+    return PoliticianProfileLinkWizard(user_id=user_id)(request)
 
 def council_edit(request, id):
     '''

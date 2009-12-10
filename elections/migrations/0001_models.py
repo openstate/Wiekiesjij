@@ -263,7 +263,7 @@ class Migration:
             'election_event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionEvent']"}),
             'end_date': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modules': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.ElectionInstanceModule']"}),
+            'modules': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.ElectionInstanceModule']", 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'num_lists': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),

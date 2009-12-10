@@ -40,6 +40,8 @@ class WorkExperienceSector(models.Model):
     """
     sector      = models.CharField(_('Sector'), max_length=255)
 
+    def __unicode__(self):
+        return self.sector
 
 class PoliticalExperienceType(models.Model):
     """
@@ -47,12 +49,18 @@ class PoliticalExperienceType(models.Model):
     """
     type      = models.CharField(_('Type'), max_length=255)
 
+    def __unicode__(self):
+        return self.type
+
 class EducationLevel(models.Model):
     """
             Different Sectors that people could have worked in.
     """
-    level      = models.CharField(_('Level'), max_length=255)
 
+    level      = models.CharField(_('Level'), max_length=255)
+    def __unicode__(self):
+        return self.user.level
+    
 # Profiles
 class Profile(models.Model):
     """

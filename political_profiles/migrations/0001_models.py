@@ -285,7 +285,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
-            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '7'}),
             'street': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),

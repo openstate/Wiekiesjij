@@ -22,9 +22,34 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_party/(?P<id>\d+)/$', 'election_party_view', name='backoffice.election_party_view'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
     url(r'^csv_candidates_1/$', 'csv_import_candidates_step1', name='backoffice.csv_candidates_step1'),
+
+    url(r'^welcome/$', 'politician_welcome', name='backoffice.politician_welcome'),
+    url(r'^welcome/(?P<user_id>\d+)/$', 'politician_profile_setup', name='backoffice.politician_profile_setup'),
+    url(r'^welcome/(?P<user_id>\d+)/done$', 'politician_profile_setup_done', name='backoffice.politician_profile_setup_done'),
+
+    url(r'^welcome/(?P<user_id>\d+)/work$', 'politician_profile_work', name='backoffice.politician_profile_work'),
+    url(r'^welcome/(?P<user_id>\d+)/work/add/$', 'politician_profile_work_wizard', name='backoffice.politician_profile_work_wizard'),
+
+    url(r'^welcome/(?P<user_id>\d+)/political$', 'politician_profile_political', name='backoffice.politician_profile_political'),
+    url(r'^welcome/(?P<user_id>\d+)/political/add/$', 'politician_profile_political_wizard', name='backoffice.politician_profile_political_wizard'),
+
+    url(r'^welcome/(?P<user_id>\d+)/interest/$', 'politician_profile_interest', name='backoffice.politician_profile_interest'),
+    url(r'^welcome/(?P<user_id>\d+)/interest/add/$', 'politician_profile_interest_wizard', name='backoffice.politician_profile_interest_wizard'),
+
+    url(r'^welcome/(?P<user_id>\d+)/appearance/$', 'politician_profile_appearance', name='backoffice.politician_profile_appearance'),
+    url(r'^welcome/(?P<user_id>\d+)/appearance/add/$', 'politician_profile_appearance_wizard', name='backoffice.politician_profile_appearance_wizard'),
+
+    url(r'^welcome/(?P<user_id>\d+)/education/$', 'politician_profile_education', name='backoffice.politician_profile_education'),
+    url(r'^welcome/(?P<user_id>\d+)/education/add/$', 'politician_profile_education_wizard', name='backoffice.politician_profile_education_wizard'),
+
+    url(r'^welcome/(?P<user_id>\d+)/links/$', 'politician_profile_link', name='backoffice.politician_profile_link'),
+    url(r'^welcome/(?P<user_id>\d+)/links/add/$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard'),
+
+
     url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', name='backoffice.csv_candidates_step2'),
     
     #TODO: Debug views remove at some point 
+
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'wizard_view', name='backoffice.show_wizard'),
     url(r'^(?P<form_type>[-\w]+)/$', 'form_view', name='backoffice.show_forms'),
 )

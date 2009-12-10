@@ -189,9 +189,9 @@ class InterestForm(BetterModelForm, TemplateForm):
         model = Interest
         exclude = ('politician')
 
-class AppearenceForm(BetterModelForm, TemplateForm):
+class AppearanceForm(BetterModelForm, TemplateForm):
     '''
-    Appearence admin
+    Appearance admin
     '''
 
     class Meta:

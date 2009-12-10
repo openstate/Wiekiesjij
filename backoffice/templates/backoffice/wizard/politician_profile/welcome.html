@@ -1,0 +1,12 @@
+{% extends 'backoffice/wizard/addelection/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans 'Welcome' %} {{ politician.name }}</h1>
+
+<p>{% trans "You've been invited to create a profile for WieKiesJij? for the" %} {{ election_event.name }}<p>
+<h2>{%trans 'What is WieKiesJij?' %} </h2>
+
+<a href="{% url backoffice.politician_profile_setup '1' %}">{% trans "Click here to start the registration wizard" %}</a>
+<a href="{% url backoffice.politician_profile_setup '1' %}">{% trans "I want to login with an existing account >" %}</a>
+
+{% endblock content %}
