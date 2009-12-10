@@ -39,7 +39,7 @@ def move_up(instance, field):
         #raise Exception
 
     kwargs = {field + '__gt': value}
-    
+
     next = instance.__class__.objects.filter(**kwargs).order_by(field)[:1]
     if not next:
         return False
