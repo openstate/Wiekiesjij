@@ -107,32 +107,17 @@ var u84 = document.getElementById('u84');
 var u52 = document.getElementById('u52');
 
 u52.style.cursor = 'pointer';
-if (bIE) u52.attachEvent("onclick", u52Click);
-else u52.addEventListener("click", u52Click, true);
-InsertAfterBegin(document.body, "<DIV class='intcases' id='u52LinksClick'></DIV>")
-var u52LinksClick = document.getElementById('u52LinksClick');
-function u52Click(e) 
+if (bIE) u52.attachEvent("onclick", Clicku52);
+else u52.addEventListener("click", Clicku52, true);
+function Clicku52(e)
 {
 
-	ToggleLinks(e, 'u52LinksClick');
+if (true) {
+
+	self.location.href="4_3_-_more_info.html" + GetQuerystring();
+
 }
 
-InsertBeforeEnd(u52LinksClick, "<div class='intcaselink' onmouseout='SuppressBubble(event)' onclick='u52Clickufd8c6a385a2449f998143606d8dd50ce(event)'>No education filled in yet</div>");
-function u52Clickufd8c6a385a2449f998143606d8dd50ce(e)
-{
-
-	self.location.href="4_4_-_education_-_add.html" + GetQuerystring();
-
-	ToggleLinks(e, 'u52LinksClick');
-}
-
-InsertBeforeEnd(u52LinksClick, "<div class='intcaselink' onmouseout='SuppressBubble(event)' onclick='u52Clicku0fff49954acb4d07805d46d2e95abb7b(event)'>Already 1 education filled in</div>");
-function u52Clicku0fff49954acb4d07805d46d2e95abb7b(e)
-{
-
-	self.location.href="4_4_-_education.html" + GetQuerystring();
-
-	ToggleLinks(e, 'u52LinksClick');
 }
 
 var u90 = document.getElementById('u90');

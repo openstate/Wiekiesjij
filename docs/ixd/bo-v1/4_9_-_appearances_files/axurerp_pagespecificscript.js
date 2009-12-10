@@ -70,8 +70,6 @@ var u26 = document.getElementById('u26');
 
 var u49 = document.getElementById('u49');
 gv_vAlignTable['u49'] = 'center';
-var u63 = document.getElementById('u63');
-gv_vAlignTable['u63'] = 'top';
 var u35 = document.getElementById('u35');
 gv_vAlignTable['u35'] = 'center';
 var u29 = document.getElementById('u29');
@@ -86,7 +84,7 @@ function Clicku54(e)
 
 if (true) {
 
-	self.location.href="4_7_-_social_networking.html" + GetQuerystring();
+	self.location.href="4_8_-_links.html" + GetQuerystring();
 
 }
 
@@ -137,6 +135,20 @@ gv_vAlignTable['u41'] = 'center';
 var u53 = document.getElementById('u53');
 gv_vAlignTable['u53'] = 'center';
 var u57 = document.getElementById('u57');
+
+u57.style.cursor = 'pointer';
+if (bIE) u57.attachEvent("onclick", Clicku57);
+else u57.addEventListener("click", Clicku57, true);
+function Clicku57(e)
+{
+
+if (true) {
+
+	self.location.href="4_8_-_add_a_link.html" + GetQuerystring();
+
+}
+
+}
 gv_vAlignTable['u57'] = 'top';
 var u21 = document.getElementById('u21');
 gv_vAlignTable['u21'] = 'center';
@@ -153,7 +165,7 @@ gv_vAlignTable['u5'] = 'center';
 var u15 = document.getElementById('u15');
 gv_vAlignTable['u15'] = 'center';
 var u56 = document.getElementById('u56');
-
+gv_vAlignTable['u56'] = 'top';
 var u3 = document.getElementById('u3');
 gv_vAlignTable['u3'] = 'center';
 var u1 = document.getElementById('u1');
@@ -174,8 +186,6 @@ var u9 = document.getElementById('u9');
 gv_vAlignTable['u9'] = 'center';
 var u30 = document.getElementById('u30');
 
-var u60 = document.getElementById('u60');
-
 var u24 = document.getElementById('u24');
 
 var u46 = document.getElementById('u46');
@@ -184,11 +194,7 @@ var u55 = document.getElementById('u55');
 gv_vAlignTable['u55'] = 'center';
 var u38 = document.getElementById('u38');
 
-var u61 = document.getElementById('u61');
-gv_vAlignTable['u61'] = 'top';
 var u18 = document.getElementById('u18');
-
-var u62 = document.getElementById('u62');
 
 var u32 = document.getElementById('u32');
 
@@ -197,5 +203,5 @@ var u42 = document.getElementById('u42');
 var u23 = document.getElementById('u23');
 gv_vAlignTable['u23'] = 'center';
 var u58 = document.getElementById('u58');
-
+gv_vAlignTable['u58'] = 'top';
 if (window.OnLoad) OnLoad();
