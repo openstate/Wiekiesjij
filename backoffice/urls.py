@@ -14,7 +14,7 @@ urlpatterns += patterns('backoffice.views',
     url(r'^add/$', 'add_election_instance', name='backoffice.add_election_instance'),
     url(r'^setup/(?P<election_instance_id>\d+)/((?P<user_id>\d+)/)?$', 'election_setup', name='backoffice.election_setup'),
     url(r'^setup/done$', 'election_setup_done', name='backoffice.election_setup_done'),
-    
+
     url(r'^election_instance/(?P<id>\d+)/$', 'election_instance_view', name='backoffice.election_instance_view'),
     url(r'^election_instance/(?P<id>\d+)/edit/$', 'edit_election_instance', name='backoffice.edit_election_instance'),
     url(r'^election_instance/(?P<id>\d+)/edit_council/$', 'council_edit', name='backoffice.edit_council'),

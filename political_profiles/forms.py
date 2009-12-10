@@ -147,6 +147,30 @@ class ContactProfileForm(BetterModelForm, TemplateForm):
         exclude = ('user')
 
 
+class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
+    '''
+    ContactProfile admin for editing contact information. Chapter 3.1.5 of interaction design.
+    '''
+    DAYS =  (('Monday',_('Monday')),
+             ('Tuesday', _('Tuesday')),
+             ('Wednesday', _('Wednesday')),
+             ('Thursday', _('Thursday')),
+             ('Friday', _('Friday')),
+             ('Saturday', _('Saturday')),
+             ('Sunday', _('Sunday')),
+            )
+
+    name = NameField(label=_('Name'))
+    
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
+
+    class Meta:
+        model = ContactProfile
+        fields = ('name', 'gender', 'telephone', 'workingdays', 'picture')
+
+
 class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin
