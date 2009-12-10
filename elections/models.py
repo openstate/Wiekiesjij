@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from elections import settings
 import datetime
+from utils.functions import move_up, move_down
 
 from django.contrib.auth.models import User
 
@@ -236,41 +237,15 @@ class Candidacy(models.Model):
 
     def move_down(self):
         '''
-        Changes the position of the current item with position of the previous one.
-        Returns changed posotion of the current element on success or boolean False on failure.
-        @return int
-
-        Works!
+        Changes the position value with next row
         '''
-        previous = self.__class__.objects.filter(position__lt=self.position).order_by('-position')[:1]
-        if not previous:
-            return False
-        else:
-            previous = previous[0]
-            current_position = self.position
-            self.position = previous.position
-            previous.position = current_position
-            self.save()
-            previous.save()
-            return self.position
+        return move_down(self, 'position')
 
     def move_up(self):
         '''
-        Changes the position of the current item with position of the next one.
-        Returns changed posotion of the current element on success or boolean False on failure.
-        @return int
+        Changes the position value with previous row
         '''
-        next = self.__class__.objects.filter(position__gt=self.position).order_by('position')[:1]
-        if not next:
-            return False
-        else:
-            next = next[0]
-            current_position = self.position
-            self.position = next.position
-            next.position = current_position
-            self.save()
-            next.save()
-            return self.position
+        return move_up(self, 'position')
 
 class ElectionInstanceParty(models.Model):
     """
@@ -303,38 +278,12 @@ class ElectionInstanceParty(models.Model):
 
     def move_down(self):
         '''
-        Changes the position of the current item with position of the previous one.
-        Returns changed posotion of the current element on success or boolean False on failure.
-        @return int
-
-        Works!
+        Changes the position value with next row
         '''
-        previous = self.__class__.objects.filter(position__lt=self.position).order_by('-position')[:1]
-        if not previous:
-            return False
-        else:
-            previous = previous[0]
-            current_position = self.position
-            self.position = previous.position
-            previous.position = current_position
-            self.save()
-            previous.save()
-            return self.position
+        return move_down(self, 'position')
 
     def move_up(self):
         '''
-        Changes the position of the current item with position of the next one.
-        Returns changed posotion of the current element on success or boolean False on failure.
-        @return int
+        Changes the position value with previous row
         '''
-        next = self.__class__.objects.filter(position__gt=self.position).order_by('position')[:1]
-        if not next:
-            return False
-        else:
-            next = next[0]
-            current_position = self.position
-            self.position = next.position
-            next.position = current_position
-            self.save()
-            next.save()
-            return self.position
+        return move_up(self, 'position')
