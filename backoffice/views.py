@@ -221,7 +221,9 @@ def csv_import_candidates_step3(request):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
-        os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
+        path = settings.TMP_ROOT + '/'
+        if not os.path.isdir(path):
+            os.remove(path + request.session['csv_candidate_filename'])
         request.session['csv_candidate_filename'] = ''
         return redirect('backoffice.csv_candidates_step2', error='true')
 
@@ -305,7 +307,9 @@ def csv_import_parties_step3(request):
     try:
         parties = functions.get_parties_from_csv(request.session)
     except:
-        os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
+        path = settings.TMP_ROOT + '/'
+        if not os.path.isdir(path):
+            os.remove(path + request.session['csv_party_filename'])
         request.session['csv_party_filename'] = ''
         return redirect('backoffice.csv_parties_step2', error='true')
 
@@ -323,7 +327,6 @@ def csv_import_parties_step3(request):
                     )
                     party_obj.save()
 
-                    import ipdb; ipdb.set_trace()
                     eip_obj = ElectionInstanceParty(
                         election_instance = get_object_or_404(ElectionInstance, id=1), #TODO
                         party = party_obj,
