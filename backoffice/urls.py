@@ -27,6 +27,11 @@ urlpatterns += patterns('backoffice.views',
     url(r'^csv_candidates_2/(?P<error>[-\w]+)/$', 'csv_import_candidates_step2', name='backoffice.csv_candidates_step2'),
     url(r'^csv_candidates_3/$', 'csv_import_candidates_step3', name='backoffice.csv_candidates_step3'),
 
+    url(r'^csv_parties_1/$', 'csv_import_parties_step1', name='backoffice.csv_parties_step1'),
+    url(r'^csv_parties_2/$', 'csv_import_parties_step2', {'error': 'false'}, name='backoffice.csv_parties_step2'),
+    url(r'^csv_parties_2/(?P<error>[-\w]+)/$', 'csv_import_parties_step2', name='backoffice.csv_parties_step2'),
+    url(r'^csv_parties_3/$', 'csv_import_parties_step3', name='backoffice.csv_parties_step3'),
+
     url(r'^welcome/$', 'politician_welcome', name='backoffice.politician_welcome'),
     url(r'^welcome/(?P<user_id>\d+)/$', 'politician_profile_setup', name='backoffice.politician_profile_setup'),
     url(r'^welcome/(?P<user_id>\d+)/done$', 'politician_profile_setup_done', name='backoffice.politician_profile_setup_done'),

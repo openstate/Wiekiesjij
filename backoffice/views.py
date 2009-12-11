@@ -192,7 +192,7 @@ def csv_import_candidates_step2(request, error = False):
             for chunk in file.chunks():
                 destination.write(chunk)
             destination.close()
-            request.session['csv_filename'] = filename
+            request.session['csv_candidate_filename'] = filename
             return redirect('backoffice.csv_candidates_step3')
             
     else:
@@ -206,7 +206,8 @@ def csv_import_candidates_step3(request):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
-        os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
+        os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
+        request.session['csv_candidate_filename'] = ''
         return redirect('backoffice.csv_candidates_step2', error='true')
 
     if(request.POST):
@@ -251,13 +252,72 @@ def csv_import_candidates_step3(request):
                 else:
                     transaction.commit()
 
-            os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
+            os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
+            request.session['csv_candidate_filename'] = ''
             return redirect('backoffice.election_party_view', args=1) #TODO: Make party dynamic
     else:
         form = CsvConfirmForm()
 
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms}, context_instance=RequestContext(request))
+
+def csv_import_parties_step1(request):
+    return render_to_response('backoffice/csv_parties_1.html', context_instance=RequestContext(request))
+
+def csv_import_parties_step2(request, error = False):
+    if(request.FILES or request.POST):
+        form = CsvUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            #Save file in tmp dir
+            file = form.files['file']
+            filename = str(time.time()) + '.csv' #about 1000 unique filenames per second?
+            destination = open(settings.TMP_ROOT + '/' + filename, 'wb+')
+
+            for chunk in file.chunks():
+                destination.write(chunk)
+            destination.close()
+            request.session['csv_party_filename'] = filename
+            return redirect('backoffice.csv_parties_step3')
+
+    else:
+        form = CsvUploadForm()
+
+    forms = dict({'csv_upload': form})
+    return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error}, context_instance=RequestContext(request))
+
+@transaction.commit_manually
+def csv_import_parties_step3(request):
+    try:
+        parties = functions.get_parties_from_csv(request.session)
+    except:
+        os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
+        request.session['csv_party_filename'] = ''
+        return redirect('backoffice.csv_parties_step2', error='true')
+
+    if(request.POST):
+        form = CsvConfirmForm(request.POST)
+        if form.is_valid():
+            for party in parties:
+                try:
+                    #Store data
+                    return 0
+
+                    #Create invitation
+
+                except Exception:
+                    transaction.rollback()
+                    raise
+                else:
+                    transaction.commit()
+
+            os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
+            request.session['csv_party_filename'] = ''
+            return redirect('backoffice.election_party_view', args=1) #TODO: Make party dynamic
+    else:
+        form = CsvConfirmForm()
+
+    forms = dict({'csv_confirm': form})
+    return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms}, context_instance=RequestContext(request))
 
 def council_edit(request, election_instance_id, user_id):
     '''
