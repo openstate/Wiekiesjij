@@ -20,7 +20,7 @@
         jtimepicker: function(options) {
             
             var defaults = {
-                clockIcon: 'images/icon_clock_2.gif',
+                clockIcon: '../img/jQuery_UI/icon_clock_2.gif',
                 orientation: 'horizontal',
                 // set hours
                 hourCombo: 'hourcombo',

@@ -508,3 +508,12 @@
 		div.events {
 			min-height:600px;
 			}
+			
+		.time-picker select.combo {
+			margin:5px 5px 0 0;
+			width:150px;
+			}
+			
+			.time-picker select.seccombo {
+				margin-right:0;
+			}

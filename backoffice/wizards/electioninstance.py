@@ -15,6 +15,11 @@ from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContact
 from elections.models import ElectionInstance, Council, ElectionEvent
 from invitations.models import Invitation
 
+
+from utils.graphformwizard import GraphFormWizard
+from utils.graphformwizard import Step as GStep
+
+
 class AddElectionInstanceWizard(MultiPathFormWizard):
     """
         Wizard for adding an election instance and council
@@ -164,9 +169,14 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
             return redirect('backoffice.election_event')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
-        
+
+
+#class ElectionSetupWizard(GraphFormWizard):
+    
+
+
 #TODO: use profile_form function for the forms !
-class ElectionSetupWizard(MultiPathFormWizard):
+class ElectionSetupWizard2(MultiPathFormWizard):
     """
     Steps 2.1.5 - 2.6 of interaction design.
 
