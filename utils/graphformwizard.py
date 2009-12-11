@@ -146,7 +146,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.forms import Form
+from django.forms import Form, BaseForm
 from django.core.files.uploadedfile import UploadedFile
 
 # used to store session data
@@ -248,7 +248,8 @@ class Step(object):
             In latter case you will be able to define prefixes and initial values.
         """
         for (name, form) in forms.iteritems():
-            if isinstance(form, Form):
+            import ipdb; ipdb.set_trace()
+            if issubclass(form, BaseForm):
                 self.form(name = name, cls = form)
 
             elif isinstance(form, dict):
@@ -631,7 +632,7 @@ class CleanStep(object):
 
             retforms[name] = self.new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
-            retdata[name] = retforms[name].cleaned_data
+            retdata[name] = getattr(retforms[name], 'cleaned_data', {})
 
         return (valid, retforms, retdata)
         
