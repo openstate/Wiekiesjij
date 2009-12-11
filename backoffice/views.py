@@ -34,6 +34,18 @@ def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
+def election_instance_shrink(request, id):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    instance.num_lists -= 1
+    instance.save()
+    return redirect('backoffice.election_instance_view', id=id)
+
+def election_instance_grow(request, id):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    instance.num_lists += 1
+    instance.save()
+    return redirect('backoffice.election_instance_view', id=id)
+
 def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
@@ -47,6 +59,39 @@ def election_party_edit(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     wizard = ElectionPartySetupWizard(eip)
     return wizard(request)
+
+def election_party_up(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.move_up()
+    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+
+def election_party_down(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.move_down()
+    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+
+def election_party_shrink(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.list_length -= 1
+    eip.save()
+    return redirect('backoffice.election_party_view', id=id)
+
+def election_party_grow(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.list_length += 1
+    eip.save()
+    return redirect('backoffice.election_party_view', id=id)
+
+def candidate_up(request, id):
+    can = get_object_or_404(Candidacy, pk=id)
+    can.move_up()
+    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+
+def candidate_down(request, id):
+    can = get_object_or_404(Candidacy, pk=id)
+    can.move_down()
+    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+
 
 #@login_required
 def election_event(request):

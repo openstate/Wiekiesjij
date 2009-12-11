@@ -20,6 +20,8 @@
 <div class="item">
 	<div class="index">{% trans 'List' %} {{ index }}</div>
 	{% if eip %}
+		{% ifnotequal index 1 %}<div class="up"><a href="{% url backoffice.election_party_up eip.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
+		{% ifnotequal index instance.num_lists %}<div class="down"><a href="{% url backoffice.election_party_down eip.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
 		<div class="main_content">
 			<img src="{{ eip.party.logo }}" />
 			<h3><a href="{% url backoffice.election_party_view eip.id %}">{{ eip.party.name }}</a> ({{ eip.party.abbreviation }})</h3>
@@ -40,10 +42,12 @@
 		<div class="sidebar"><a href="#">{% trans 'Edit party profile' %}</a><br /><a href="#">{% trans 'Remove party' %}</a></div>
 	{% else %}
 		<h3><a href="{% url backoffice.election_party_create instance.id index %}">{% trans 'Add a party' %}</a></h3>
+		{% ifequal index instance.num_lists %}<div class="sidebar"><a href="{% url backoffice.election_instance_shrink instance.id %}">{% trans 'Remove this slot' %}</a></div>{% endifequal %}
 	{% endif %}
 	<br class="clear" />
 </div>
 {% endfor %}
+<div><a href="{% url backoffice.election_instance_grow instance.id %}">{% trans 'Add a party slot' %}</a></div>
 <div><a href="#">{% trans 'Batch add parties' %}</a></div>
 {% endblock content %}
 

@@ -19,8 +19,18 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_instance/(?P<id>\d+)/edit/$', 'edit_election_instance', name='backoffice.edit_election_instance'),
     url(r'^election_instance/(?P<id>\d+)/edit_council/$', 'council_edit', name='backoffice.edit_council'),
     url(r'^election_instance/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='backoffice.election_party_create'),
+    url(r'^election_instance/(?P<id>\d+)/shrink/$', 'election_instance_shrink', name='backoffice.election_instance_shrink'),
+    url(r'^election_instance/(?P<id>\d+)/grow/$', 'election_instance_grow', name='backoffice.election_instance_grow'),
+
     url(r'^election_party/(?P<id>\d+)/$', 'election_party_view', name='backoffice.election_party_view'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
+    url(r'^election_party/(?P<id>\d+)/up/$', 'election_party_up', name='backoffice.election_party_up'),
+    url(r'^election_party/(?P<id>\d+)/down/$', 'election_party_down', name='backoffice.election_party_down'),
+    url(r'^election_party/(?P<id>\d+)/shrink/$', 'election_party_shrink', name='backoffice.election_party_shrink'),
+    url(r'^election_party/(?P<id>\d+)/grow/$', 'election_party_grow', name='backoffice.election_party_grow'),
+
+    url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='backoffice.candidate_up'),
+    url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='backoffice.candidate_down'),
 
     url(r'^csv_candidates_1/$', 'csv_import_candidates_step1', name='backoffice.csv_candidates_step1'),
     url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', {'error': 'false'}, name='backoffice.csv_candidates_step2'),

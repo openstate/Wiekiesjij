@@ -239,13 +239,13 @@ class Candidacy(models.Model):
         '''
         Changes the position value with next row
         '''
-        return move_down(self, 'position')
+        return move_down(self, 'position', self.election_party_instance.list_length)
 
     def move_up(self):
         '''
         Changes the position value with previous row
         '''
-        return move_up(self, 'position')
+        return move_up(self, 'position', 1)
 
 class ElectionInstanceParty(models.Model):
     """
@@ -280,10 +280,10 @@ class ElectionInstanceParty(models.Model):
         '''
         Changes the position value with next row
         '''
-        return move_down(self, 'position')
+        return move_down(self, 'position', self.election_instance.num_lists)
 
     def move_up(self):
         '''
         Changes the position value with previous row
         '''
-        return move_up(self, 'position')
+        return move_up(self, 'position', 1)
