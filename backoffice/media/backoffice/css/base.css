@@ -62,9 +62,10 @@
 		input,
 		textarea,
 		select {
-			border: 1px solid #ccc;
-			padding: 8px 5px;
+			border:1px solid #aaa;
+			padding:5px;
 			width:448px;
+			font-size:1.2em;
 			}
 		select {
 			width:460px;
@@ -73,7 +74,7 @@
 			height:100px;
 			}
 		.radioselect input,
-		.checkboxinput input {
+		.checkboxselectmultiple input {
 			border:0;
 			padding:0;
 			width:auto;
@@ -101,7 +102,18 @@
 			}
 
 			div.help {
-				font-size:12px;
+				text-align:right;
+				}
+		
+			p.error {
+				color:#ed2227;
+				}
+				
+			div.error input,
+			div.error select,
+			div.error textarea {
+				border-color:#ed2227;
+				background:#fee;
 				}
 		
 		/* 	Multi-fields
@@ -114,14 +126,14 @@
 		
 		/* 	checkbox
 			----------------------------------------------------------------------------------------- */
-			div.checkboxinput {
+			div.checkboxselectmultiple {
 			
 				}
-				div.checkboxinput label {
+				div.checkboxselectmultiple label {
 					margin:0 0 0 10px;
 					font-weight:normal;
 					}
-				div.checkboxinput input {
+				div.checkboxselectmultiple input {
 					margin: 2px 5px 0 0;
 					display:block;
 					float:left;
@@ -134,6 +146,7 @@
 				}
 				div.radioselect label {
 					font-weight:normal;
+					margin-bottom:5px;
 					}
 				div.radioselect input {
 					margin: 2px 5px 0 0;
@@ -359,7 +372,6 @@
 			border-style:solid;
 			border-width:1px 6px 6px 1px;
 			position:relative;
-			background:#fff url(../img/lijst3.png) 10px 10px no-repeat;
 			min-height:55px;
 			overflow:hidden;_zoom:1;
 			clear:both;
@@ -379,6 +391,7 @@
 				padding:10px 0;
 				line-height:1.3em;
 				text-align:center;
+				background:#fff url(../img/lijst3.png) 0 0 no-repeat;
 				}	
 				div.party span.list strong {
 					display:block;

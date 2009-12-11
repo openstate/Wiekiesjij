@@ -91,7 +91,7 @@ class NameWidget(forms.widgets.MultiWidget):
 			%(last_name_field)s
 		</div>
 		<div class="middle-name text field">
-			<label for="middle-name">%(middle_name_label)s</label>
+			<label for="middle-name">%(middle_name_label)s <span class="optional">optional</span></label>
 			%(middle_name_field)s
 		</div>
 		<div class="first-name text field">

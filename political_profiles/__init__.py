@@ -1,8 +1,13 @@
+from django.db import transaction
+from django.contrib.auth.models import User
+
 from political_profiles.models import PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 from political_profiles.forms import PoliticianProfileForm, ChanceryProfileForm, ContactProfileForm
 from political_profiles.forms import InitialChanceryProfileForm, InitialPoliticianProfileForm, ChanceryContactInformationForm
 from political_profiles.forms import InitialContactProfileForm
-from django.contrib.auth.models import User
+
+
+
 
 
 model_map = {
@@ -119,3 +124,49 @@ def create_profile(for_function, data):
     else:
         raise RuntimeError('%s is unknown' % for_function)
     return profile
+   
+@transaction.commit_on_success # Will rollback on any exception
+def replace_user(original_user, new_user, delete_original=True):
+    """
+        Replace the original_user with the new user
+        Delete the original_user
+    """
+    #one to one/ many to one relations
+    related_fields = original_user._meta.get_all_related_objects()
+    for related in related_fields:
+        accessor = related.get_accessor_name()
+        
+        #Skip profile relations
+        if accessor.endswith('profile'):
+            continue
+
+        relation = getattr(original_user, accessor)
+        
+        if relation is None:
+            continue
+            
+        for obj in relation.all():
+            setattr(obj, related.field.name, new_user)
+            obj.save()
+           
+    #Many to many
+    related_fields = original_user._meta.get_all_related_many_to_many_objects()
+    for related in related_fields:
+        accessor = related.get_accessor_name()
+
+        relation = getattr(original_user, accessor)
+
+        if relation is None:
+            continue
+
+        for obj in relation.all():
+            manager = getattr(obj, related.field.name)
+            manager.remove(original_user)
+            manager.add(new_user)
+            obj.save()
+           
+    
+    #Delete original
+    if delete_original:
+        original_user.delete()
+    

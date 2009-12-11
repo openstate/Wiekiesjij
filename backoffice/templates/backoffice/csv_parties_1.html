@@ -1,0 +1,23 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<p>
+    {% trans "The following wizard allows you to add multiple parties at once." %}
+    {% trans "To add the parties, you have to upload a so called CSV file, like the example below." %}
+    {% trans "CSV files can be created and editted with programs like Microsoft Excel or with your favorite text editor." %}
+    <br />
+    {% trans "In the template you can download form this page, the middle_name and party_abbreviation field can be empty." %}
+</p>
+<p>
+    <img src="{{ STATIC_URL }}utils/images/par_csv.png" alt="Example CSV file">
+</p>
+<p>
+    <a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="button">Download this template</a>
+</p>
+
+<div class="buttons">
+    <a href="#">{% trans "Cancel" %}</a>
+    <a class="button" href="{% url backoffice.csv_parties_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
+</div>
+{% endblock content %}

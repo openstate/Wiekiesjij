@@ -44,3 +44,11 @@ def profile_invite_email_templates(for_function):
         Returns a dict with a plain and a hhtml key pointing to the template files to use
     """
     return get_profile_app().profile_invite_email_templates(for_function)
+    
+    
+def replace_user(original_user, new_user, delete_original=True):
+    """
+        Function to replace the original_user with the new_user
+        Handles all the related profile stuff too
+    """
+    return get_profile_app().replace_user(original_user, new_user, delete_original)

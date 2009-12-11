@@ -1,6 +1,10 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n form_tags %}
 
+{% block extrahead %}
+	{{ form.media }}
+{% endblock extrahead %}
+
 {% block content %}
 	<form action="{% url backoffice.login %}" method="post" accept-charset="utf-8">
 		<input type="hidden" name="next" value="{{ next }}" />
