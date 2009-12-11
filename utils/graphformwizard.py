@@ -178,7 +178,7 @@ class Step(object):
         self.template = template
         self.extra_context = extra_context
         self.name = name
-        self.forms = {}
+        self._forms = {}
         self.fields = kwargs
 
         #invariant: not more than one of (next, merge, branches) is not empty
@@ -226,10 +226,10 @@ class Step(object):
         """
         prefix = u'%s_%s_%s' % (self.name, name, prefix) if prefix is not None else  u'%s_%s' % (self.name, name)
 
-        if name in self.forms:
+        if name in self._forms:
             raise ImproperlyConfigured("%s: form or data named '%s' is already defined" % (self.name, name))
 
-        self.forms[name] = (cls, prefix, initial)
+        self._forms[name] = (cls, prefix, initial)
         return self
 
 
@@ -409,7 +409,7 @@ class CleanStep(object):
 
     def __init__(self, step, ctx, cycle):
         self.name = step.name
-        self.forms = step.forms
+        self.forms = step._forms
         self.template = step.template
         self.extra_context = step.extra_context
         self._fields = step.fields
@@ -629,7 +629,7 @@ class CleanStep(object):
             if files is not None:
                 args[1].update(files)
 
-            retforms[name] = new_form(form, prefix, initial, *args)
+            retforms[name] = self.new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
             retdata[name] = retforms[name].cleaned_data
 
@@ -1792,7 +1792,7 @@ class GraphFormWizard(object):
             @return HttpResponse or raise exception
         """
         validurl = self.build_path(validpath)
-        return HttpResponseRedirect(reverse(url_step[0], args = url_stbep[1], kwargs=dict(url_step[2], path = self.compress_path(validurl))))
+        return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(validurl))))
     
 
 #================- Override by subclasses -======================
