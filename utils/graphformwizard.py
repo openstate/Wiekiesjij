@@ -596,6 +596,24 @@ class CleanStep(object):
 
         return None
 
+    def new_form(cls, form, prefix, initial = None, *args, **kwargs):
+        # model form
+        if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
+            init = 'instance'
+        # management form
+        elif hasattr(form, 'management_form'):
+            init = 'queryset'
+        # normal form (initialized from dictionary)
+        else:
+            init = 'initial'
+
+        kwargs.update({
+                init: initial,
+                'prefix' : prefix
+                })
+
+        return form(*args, **kwargs)
+        
 
     def get_forms(self, stepdata, post = None, files = None):
         """Re-instantiates forms"""
@@ -604,21 +622,6 @@ class CleanStep(object):
         retdata = {}
         valid = True
         for (name, (form, prefix, initial)) in self.forms.iteritems():
-            # model form
-            if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
-                init = 'instance'
-            # management form
-            elif hasattr(form, 'management_form'):
-                init = 'queryset'
-            # normal form (initialized from dictionary)
-            else:
-                init = 'initial'
-
-            kwargs = {
-                init: initial,
-                'prefix' : prefix
-            }
-
             args = stepdata.get(name, ({}, {}))
             if post is not None:
                 args[0].update(post)
@@ -626,7 +629,7 @@ class CleanStep(object):
             if files is not None:
                 args[1].update(files)
 
-            retforms[name] = form(*args, **kwargs)
+            retforms[name] = new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
             retdata[name] = retforms[name].cleaned_data
 
@@ -841,7 +844,7 @@ class GraphFormWizard(object):
         curstep = step_path[-1][0]
         # handle light weigth actions
         if action is not None and action not in self.built_in_actions and action in self.fast_actions:
-            return self.wizard_fast_action(request, action, curstep, step_path, *args, **kwargs)
+            return self.wizard_fast_action(request, action, curstep, step_path, url_step, url_action, *args, **kwargs)
 
         # restore data
         (data, meta) = self.restore_data(request, *args, **kwargs)
@@ -867,7 +870,7 @@ class GraphFormWizard(object):
 
         # if some action should be invoked instead of default (fill -> next)
         if action is not None and action not in self.built_in_actions:
-            ret = self.wizard_action(request, action, meta, curstep, step_context, step_path, wizard_data, data, *args, **kwargs)
+            ret = self.wizard_action(request, action, meta, curstep, step_context, step_path, wizard_data, data, url_step, url_action, *args, **kwargs)
             self.save_data(request, data, meta, *args, **kwargs)
             return ret
 
@@ -920,6 +923,7 @@ class GraphFormWizard(object):
 
         template = curstep.template or curstep.cycle.template or self.template
         context = {
+            'forms': lastforms,
             'steps': tpldata,           # complete steps info as returned by fetch_template_data()
             'curstep' : tplcurstep,     # part of steps, for current step only
             'meta_data': meta,          # current meta
@@ -1792,7 +1796,7 @@ class GraphFormWizard(object):
     
 
 #================- Override by subclasses -======================
-    def wizard_fast_action(self, request, action, step, step_path, *args, **kwargs):
+    def wizard_fast_action(self, request, action, step, step_path, url_step, url_action, *args, **kwargs):
         """
             Handle GET action quickly. By default raises 404.
 
@@ -1824,7 +1828,7 @@ class GraphFormWizard(object):
         raise Http404
 
 
-    def wizard_action(self, request, action, meta, step, step_context, step_path, wizard_data, raw_data, *args, **kwargs):
+    def wizard_action(self, request, action, meta, step, step_context, step_path, wizard_data, raw_data, url_step, url_action, *args, **kwargs):
         """
             Invoked on each unrecognized action. By default raises 404.
 
