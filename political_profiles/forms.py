@@ -9,22 +9,23 @@ from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField, AddressField
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
-class PoliticianProfileForm(BetterModelForm, TemplateForm):
+GENDERS = (
+        ('Male',_('Male')),
+        ('Female', _('Female')),
+        )
+
+class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-
-    def __init__(self, *args, **kwargs):
-        super(PoliticianProfileForm, self).__init__(*args, **kwargs)
-        #self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field='first_name')
-        self.fields['introduction'].widget = forms.Textarea()
-        self.fields['motivation'].widget = forms.Textarea()
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
-
-    class Meta:
-        model = PoliticianProfile
-        exclude = ('user', 'level', 'picture' )
-
+    name            = NameField(label=_('Name'))
+    initials        = forms.CharField(label=_('Initials'))
+    dateofbirth     = forms.DateField(label=_('Date Of Birth'))
+    introduction    = forms.CharField(label=_('introduction'), widget=forms.Textarea() )
+    motivation      = forms.CharField(label=_('motivation'), widget=forms.Textarea())
+    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    picture         = forms.ImageField(label=_('Picture'), required=False)
+    movie           = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'))
 
 class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
     '''

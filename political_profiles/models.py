@@ -9,30 +9,7 @@ GENDERS = (
         ('Male',_('Male')),
         ('Female', _('Female')),
         )
-EDUCATION_LEVEL_CHOICES = (
-        ('edu1', _('SMS Module')),
-        ('edu2', _('SMS Module')),
-        ('edu3', _('SMS Module')),
-        ('edu4', _('SMS Module')),
-        ('edu5', _('SMS Module')),
-        ('edu6', _('SMS Module')),
-    )
-POLITICAL_TYPE_CHOICES = (
-        ('pol1', _('SMS Module')),
-        ('pol2', _('SMS Module')),
-        ('pol3', _('SMS Module')),
-        ('pol4', _('SMS Module')),
-        ('pol5', _('SMS Module')),
-        ('pol6', _('SMS Module')),
-    )
-WORK_SECTOR_CHOICES = (
-        ('work1', _('SMS Module')),
-        ('work2', _('SMS Module')),
-        ('work3', _('SMS Module')),
-        ('work4', _('SMS Module')),
-        ('work5', _('SMS Module')),
-        ('work6', _('SMS Module')),
-    )
+
 
 class WorkExperienceSector(models.Model):
     """
@@ -45,7 +22,7 @@ class WorkExperienceSector(models.Model):
 
 class PoliticalExperienceType(models.Model):
     """
-            Different Sectors that people could have worked in.
+            Different Types of Political Experience Areas.
     """
     type      = models.CharField(_('Type'), max_length=255)
 
@@ -54,7 +31,7 @@ class PoliticalExperienceType(models.Model):
 
 class EducationLevel(models.Model):
     """
-            Different Sectors that people could have worked in.
+            Different Levels that people could have been educated at.
     """
 
     level      = models.CharField(_('Level'), max_length=255)
@@ -102,7 +79,7 @@ class PoliticianProfile(Profile):
     introduction    = models.CharField(_('Introduction'), max_length=2550, null=True, blank=True)
     motivation      = models.CharField(_('Motivation'), max_length=2550, null=True, blank=True)
     #hobby = models.CharField(_('Hobbies'), max_length=255)
-	#charity = models.CharField(_('Favourite Charities'), max_length=255)
+    #charity = models.CharField(_('Favourite Charities'), max_length=255)
     #pets =  models.CharField(_('Pets'), max_length=255)
     #fanclubs = models.CharField(_('Fan Clubs'), max_length=255)
     #goals		Refrence
@@ -131,10 +108,11 @@ class ChanceryProfile(Profile):
                                    help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-
     picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
-    description = models.CharField(_('Description'), max_length=255, null=True, blank=True,
-                                   help_text=_("A short description of the council"))
+    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
+                null=True, blank=True)
+
+
 
     def __unicode__(self):
         return self.user.username
@@ -174,7 +152,7 @@ class ContactProfile(Profile):
 
 class Link(models.Model):
     """
-        A class to hold a link to the politician
+        A class to hold links the politician has
     """
     name        = models.CharField(_('Name'), max_length=255)
     url         = models.CharField(_('URL'), max_length=255)
@@ -198,7 +176,7 @@ class Interest(models.Model):
 
 class Appearence(models.Model):
     """
-        A class to hold an aperance (where they attended somthing) of the politician
+        A class to hold an appearance (where they attended somthing) of the politician
     """
     name        = models.CharField(_('Affiliated Organisation Name'), max_length=255)
     location	= models.CharField(_('Location'), max_length=255)
@@ -208,7 +186,7 @@ class Appearence(models.Model):
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
-        verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appeariences')
+        verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appearances')
 
 class WorkExperience(models.Model):
     """
@@ -219,7 +197,7 @@ class WorkExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'))
     enddate         = models.DateField(_('End Date'))
-    current         = models.BooleanField(_('Currently employed'), default=False)
+    current         = models.BooleanField(_('Currently Employed'), default=False)
     description     = models.CharField(_('Description'), max_length=2550)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
