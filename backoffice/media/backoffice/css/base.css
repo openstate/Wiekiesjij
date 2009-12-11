@@ -407,8 +407,17 @@
 				font-weight:bold;
 				color:#000;
 				}	
+			div.item .delete {
+				position:absolute;
+				right:10px;
+				bottom:10px;
+				background:url(../img/delete.png) right 5px no-repeat;
+				padding-left:10px;
+				font-weight:bold;
+				color:#ed2227;
+				}
 				
-			div.item .add-party {
+			div.item .add-item {
 				color:#000;
 				}
 			
@@ -422,7 +431,7 @@
 			
 				
 			.message-list {
-				clear:both;
+				/*clear:both;*/
 				/*background:#fee;*//*#FFF9CE;*/
 				padding-left:65px;
 				}
