@@ -86,25 +86,18 @@ class NameWidget(forms.widgets.MultiWidget):
         Widget to fill out a name
     """
     TEMPLATE = """
-        <div class="fields">
-            <table>
-                <tr>
-                    <td>%(last_name_label)s</td>
-                    <td>%(middle_name_label)s</td>
-                </tr>
-                <tr>
-                    <td>%(last_name_field)s</td>
-                    <td>%(middle_name_field)s</td>
-                <tr>
-                    <td>%(first_name_label)s</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>%(first_name_field)s</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-        </div>
+        <div class="last-name text field">
+			<label for="last-name">%(last_name_label)s</label>
+			%(last_name_field)s
+		</div>
+		<div class="middle-name text field">
+			<label for="middle-name">%(middle_name_label)s</label>
+			%(middle_name_field)s
+		</div>
+		<div class="first-name text field">
+			<label for="first-name">%(first_name_label)s</label>
+			%(first_name_field)s
+		</div>
     """
     
     def __init__(self, *args, **kwargs):

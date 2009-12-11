@@ -6,19 +6,23 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block content %}
-	<form method="POST" action="">
-		<input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
-		{% block forms %}
-			{% for form in forms.values %}
-				{{ form.as_template }}
-			{% endfor %}
-		{% endblock forms %}
-		{{ previous_fields|safe }}
-		{% block buttons %}
-			<div class="buttons">
-				<button type="submit">{% trans "Next" %}</button>
-			</div>
-		{% endblock buttons %}
-	</form>
-{% endblock content %}
+{% block cols %}
+	<div class="col size1of2">
+        <div class="mod wizard">
+            <form method="POST" action="">
+                <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+                {% block forms %}
+                    {% for form in forms.values %}
+                        {{ form.as_template }}
+                    {% endfor %}
+                {% endblock forms %}
+                {{ previous_fields|safe }}
+                {% block buttons %}
+                    <div class="form-submit">
+                        <button type="submit">{% trans "Next" %}</button>
+                    </div>
+                {% endblock buttons %}
+            </form>
+        </div>
+   	</div>
+{% endblock cols %}

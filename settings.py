@@ -149,7 +149,7 @@ ELECTIONS_ELECTION_EVENT_ID = 1
 
 
 
-if DEBUG:
+if False:
     
     #debug_toolbar
     MIDDLEWARE_CLASSES += (

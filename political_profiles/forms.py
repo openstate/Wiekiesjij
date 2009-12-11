@@ -52,7 +52,7 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     email = forms.EmailField(_('Email'))
     
     def __init__(self, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
     
