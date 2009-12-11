@@ -146,7 +146,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.forms import Form
+from django.forms import BaseForm
 from django.core.files.uploadedfile import UploadedFile
 
 # used to store session data
@@ -248,7 +248,7 @@ class Step(object):
             In latter case you will be able to define prefixes and initial values.
         """
         for (name, form) in forms.iteritems():
-            if isinstance(form, Form):
+            if isinstance(form, BaseForm):
                 self.form(name = name, cls = form)
 
             elif isinstance(form, dict):
@@ -1600,7 +1600,7 @@ class GraphFormWizard(object):
 
             else: # normal step
                 for (formname, formdata) in forms.iteritems():
-                    if isinstance(formdata, Form):
+                    if isinstance(formdata, BaseForm):
                         # only validated forms will give their data
                         forms[formname] = (formdata.cleaned_data or {}, {})
 
@@ -1616,7 +1616,7 @@ class GraphFormWizard(object):
 
                             #else: is file suddenly removed from temporary dir?
 
-                        if isinstance(frms, Form):
+                        if isinstance(frms, BaseForm):
                             forms[formname] = (frms.cleaned_data or {}, fls)
                         else:
                             forms[formname] = (frms, fls)
