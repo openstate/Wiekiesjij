@@ -1,8 +1,9 @@
-from django.http import Http404
 from django.contrib.auth import login
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
-from django.core.urlresolvers import reverse
+
+
+from elections.functions import replace_user
 from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm
 
@@ -11,7 +12,7 @@ def index(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        return redirect(reverse('invitations.notexist'))
+        return redirect('invitations.notexist')
     
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -24,7 +25,7 @@ def accept(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        return redirect(reverse('invitations.notexist'))
+        return redirect('invitations.notexist')
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -53,7 +54,7 @@ def existing(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        return redirect(reverse('invitations.notexist'))
+        return redirect('invitations.notexist')
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -63,7 +64,9 @@ def existing(request, hash):
         form = ExistingUserForm(profile_class=invitation.user_to.profile.__class__.__name__, data=request.POST)
         if form.is_valid():
             login(request, form.user) #login the user
-            #TODO: replace the user in the invitation user_to with this one and also update all relations, profile app should handle this?
+            
+            #Replace the user
+            replace_user(invitation.user_to, form.user)
             
             invitation.accepted = True
             invitation.save()
@@ -78,4 +81,5 @@ def fake(request):
     return render_to_response('invitations/fake.html', {}, context_instance=RequestContext(request))
 
 def notexist(request):
+    
     return render_to_response('invitations/notexist.html', {}, context_instance=RequestContext(request))
