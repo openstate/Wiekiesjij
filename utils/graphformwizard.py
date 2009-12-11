@@ -248,8 +248,7 @@ class Step(object):
             In latter case you will be able to define prefixes and initial values.
         """
         for (name, form) in forms.iteritems():
-            import ipdb; ipdb.set_trace()
-            if issubclass(form, BaseForm):
+            if isinstance(form, BaseForm):
                 self.form(name = name, cls = form)
 
             elif isinstance(form, dict):
@@ -1601,9 +1600,9 @@ class GraphFormWizard(object):
 
             else: # normal step
                 for (formname, formdata) in forms.iteritems():
-                    if isinstance(formdata, Form):
+                    if isinstance(formdata, BaseForm):
                         # only validated forms will give their data
-                        forms[formname] = (formdata.cleaned_data or {}, {})
+                        forms[formname] = (getattr(formdata, 'cleaned_data', {}), {})
 
                     elif isinstance(formdata, dict): # form data was given as dict
                         forms[formname] = (formdata, {})
@@ -1617,8 +1616,8 @@ class GraphFormWizard(object):
 
                             #else: is file suddenly removed from temporary dir?
 
-                        if isinstance(frms, Form):
-                            forms[formname] = (frms.cleaned_data or {}, fls)
+                        if isinstance(frms, BaseForm):
+                            forms[formname] = (getattr(frms, 'cleaned_data', {}), fls)
                         else:
                             forms[formname] = (frms, fls)
 
