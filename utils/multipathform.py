@@ -232,7 +232,7 @@ class MultiPathFormWizard(object):
                 # OK, wizard is completed, revalidate forms
                 ret = {}
                 for i, forms in enumerate(forms_path):
-                    if not all([form.is_valid() for (nm, form) in forms.iteritems()]):
+                    if not all([form.is_valid() for (_, form) in forms.iteritems()]):
                         return self.render_revalidation_failure(request, current_path[:i+1], forms_path[:i+1], str_path[:i])
                     else:
                         ret[current_path[i].name] = forms
