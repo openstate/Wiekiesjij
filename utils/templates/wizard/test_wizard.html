@@ -1,0 +1,29 @@
+<style type="text/css">
+    .current {
+        font-weight: bold;
+    }
+</style>
+
+<ul>
+{% for type, info in steps %}
+
+    {% ifequal type "step" %}
+        {# this is a plain step. info: is_on_path, is_current, is_valid, urls, step #}
+        <li><a href="{{info.urls.goto}}" class="{%if info.is_current %}current{% endif %}" info.is>{{info.step.title|default:info.step.name}}</a></li>
+    {% endifequal %}
+
+    {% ifequal type "branch" %}
+        <li><span>[{{info|length}}]...</span></li>
+    {% endifequal %}
+    
+{% endfor %}
+</ul>
+
+
+<h1>{{curstep.step.title|default:curstep.step.name}}</h1>
+
+{% for form in curstep.forms.itervalues %}
+<h2>Form</h2>
+{{form.as_p %}
+{% endfor %}
+
