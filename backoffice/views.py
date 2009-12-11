@@ -315,9 +315,46 @@ def csv_import_parties_step3(request):
             for party in parties:
                 try:
                     #Store data
-                    return 0
+                    party_obj = Party(
+                        region = 1, #TODO
+                        level = 1, #TODO
+                        name = party['name'],
+                        abbreviation = party['abbreviation'],
+                    )
+                    party_obj.save()
+
+                    import ipdb; ipdb.set_trace()
+                    eip_obj = ElectionInstanceParty(
+                        election_instance = get_object_or_404(ElectionInstance, id=1), #TODO
+                        party = party_obj,
+                        position = party['list'],
+                        list_length = 10, #TODO
+                    )
+                    eip_obj.save()
+
+                    tmp_data = {
+                        'first_name': party['contact_first_name'],
+                        'middle_name': party['contact_middle_name'],
+                        'last_name': party['contact_last_name'],
+                        'email': party['contact_email'],
+                        'gender': party['contact_gender'],
+                    }
+                    contact = create_profile('party_admin', tmp_data)
+
+                    party_obj.contacts.add(contact.user)
+                    party_obj.save()
 
                     #Create invitation
+                    templates = profile_invite_email_templates('party_admin')
+                    Invitation.create(
+                        user_from = request.user,
+                        user_to = contact.user,
+                        view = '',
+                        text = 'Invitation text',
+                        subject = 'Invitation',
+                        html_template = templates['html'],
+                        plain_template = templates['plain'],
+                    )
 
                 except Exception:
                     transaction.rollback()
