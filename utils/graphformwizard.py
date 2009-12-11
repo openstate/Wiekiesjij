@@ -233,6 +233,34 @@ class Step(object):
         return self
 
 
+    def forms(self, forms):
+        """
+            Same as .form(), but allows you to add multiple forms in one go.
+
+            The forms should be a dict { 'form_name' : FormClass } or
+            {'form_name' : {
+               'cls': FormClass,
+               'prefix': prefix,
+               'initial': initial_value
+               }
+            }
+
+            In latter case you will be able to define prefixes and initial values.
+        """
+        for (name, form) in forms.iteritems():
+            if isinstance(form, Form):
+                self.form(name = name, cls = form)
+
+            elif isinstance(form, dict):
+                self.form(name = name, **form)
+
+            else:
+                raise ImproperlyConfigured("%s: FormClass or dict is epxected, got: %s" % (self.name, form))
+
+        return self
+
+
+
     def data(self, **kwargs):
         """
             Add static data. This data will be available as step.field's
@@ -937,27 +965,6 @@ class GraphFormWizard(object):
         return render_to_response(template, context, context_instance = RequestContext(request))
 
 
-# data structure for templates
-# (CleanStep, {forms}, {step_url: goto, reset}, is_current, is_on_path) -- single step in the path
-# [ (), (), {}, (), None] -- path of the scenario to the end or to the branch:
-#   () -- single step in scenario order
-#   {} -- cycle (cycle head)
-#   None -- indicates that last step is not final, we stopped at the branch
-# {
-#   'current': 0  -- current cycle index
-#   'head': CleanStep -- cycle head
-#   'current_path': (url, [ () ... ]) -- path at current index. url is cycle URL
-#   'cycles': [ (url, valid, [ () ...]), (), ...] -- the cycles with corresponding URL's
-# }
-# URL can be directly used to navigate (for cycle we navigate to the head) or
-# to cancel things (cancel cycle -- deletes it, cancel step - reloads it)
-#
-# Current step (CleanStep, filled forms) are defined in template. Compare with
-# current_step to highlight current step.
-#
-# Note: URL's of the unreachable path's (not filled/validated) will be None, you
-# can not bypass validation anyway.
-
     def fetch_template_data(self, step_path, wizard_data, data, url_step, url_action):
         """Re-arranges steps in the structure usable for templates"""
         # tplpath: [ ("step", step_info), (menu, menu_list), ..., ("branch", branch_info) ]
@@ -1637,7 +1644,8 @@ class GraphFormWizard(object):
             if settings.WIZARD_TIMEOUT:
                 filter.update(date__gte = datetime.datetime.now() - settings.WIZARD_TIMEOUT)
 
-            filter.update(  user = request.user,
+            user = request.user if not request.user.is_anonymous() else None
+            filter.update(  user = user,
                             wizard_class = self.__class__.__name__,
                             wizard_name = self.name,
                             complete = False,
@@ -1646,7 +1654,8 @@ class GraphFormWizard(object):
         try:
             sess = GraphFormWizardSession.objects.filter(**filter).order_by('-date')[0]
         except Exception:
-            sess = GraphFormWizardSession.objects.create(user = request.user,
+            user = request.user if not request.user.is_anonymous() else None
+            sess = GraphFormWizardSession.objects.create(user = user,
                                                         wizard_class = self.__class__.__name__,
                                                         wizard_name = self.name,
                                                         content = '',
@@ -1707,8 +1716,9 @@ class GraphFormWizard(object):
             sess.meta = meta
             sess.save()
         except:
+            user = request.user if not request.user.is_anonymous() else None
             sess = GraphFormWizardSession.objects.create(
-                        user = request.user,
+                        user = user,
                         wizard_class = self.__class__.__name__,
                         wizard_name = self.name,
                         content = content,

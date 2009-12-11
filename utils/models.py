@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class GraphFormWizardSession(models.Model):
     """Used to store the wizard's data"""
-    user          = models.ForeignKey(User, verbose_name=_('User'))
+    user          = models.ForeignKey(User, verbose_name=_('User'), null = True)
     date          = models.DateTimeField(_('Last access'), auto_now = True)
     wizard_class  = models.CharField(_('Wizards class name'), max_length=255)
     wizard_name   = models.CharField(_('Wizards instance name'), max_length=255, null=True, blank = True)
