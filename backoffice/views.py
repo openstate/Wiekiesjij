@@ -128,8 +128,8 @@ def politician_profile_interest(request, user_id):
                               {'user_id': user_id, 'interests': interests,},
                               context_instance=RequestContext(request))
 
-def politician_profile_interest_wizard(request, user_id):
-    return PoliticianProfileInterestWizard(user_id=user_id)(request)
+def politician_profile_interest_wizard(request, user_id, interest_id=None):
+    return PoliticianProfileInterestWizard(user_id=user_id, interest_id=interest_id)(request)
 
 def politician_profile_work(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -138,8 +138,8 @@ def politician_profile_work(request, user_id):
                               {'user_id': user_id, 'work': work,},
                               context_instance=RequestContext(request))
 
-def politician_profile_work_wizard(request, user_id):
-    return PoliticianProfileWorkWizard(user_id=user_id)(request)
+def politician_profile_work_wizard(request, user_id, work_id=None):
+    return PoliticianProfileWorkWizard(user_id=user_id, work_id=work_id)(request)
 
 
 def politician_profile_political(request, user_id):
@@ -149,8 +149,8 @@ def politician_profile_political(request, user_id):
                               {'user_id': user_id, 'political': political,},
                               context_instance=RequestContext(request))
 
-def politician_profile_political_wizard(request, user_id):
-    return PoliticianProfilePoliticalWizard(user_id=user_id)(request)
+def politician_profile_political_wizard(request, user_id, political_id=None):
+    return PoliticianProfilePoliticalWizard(user_id=user_id, political_id=political_id)(request)
 
 def politician_profile_education(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -159,8 +159,8 @@ def politician_profile_education(request, user_id):
                               {'user_id': user_id, 'education': education,},
                               context_instance=RequestContext(request))
 
-def politician_profile_education_wizard(request, user_id):
-    return PoliticianProfileEducationWizard(user_id=user_id)(request)
+def politician_profile_education_wizard(request, user_id, education_id=None):
+    return PoliticianProfileEducationWizard(user_id=user_id, education_id=education_id)(request)
 
 def politician_profile_appearance(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -169,8 +169,8 @@ def politician_profile_appearance(request, user_id):
                               {'user_id': user_id, 'appearances': appearances,},
                               context_instance=RequestContext(request))
 
-def politician_profile_appearance_wizard(request, user_id):
-    return PoliticianProfileAppearanceWizard(user_id=user_id)(request)
+def politician_profile_appearance_wizard(request, user_id, appearance_id=None):
+    return PoliticianProfileAppearanceWizard(user_id=user_id, appearance_id=appearance_id)(request)
 
 
 def politician_profile_link(request, user_id):
@@ -181,8 +181,8 @@ def politician_profile_link(request, user_id):
                               {'user_id': user_id, 'links': links},
                               context_instance=RequestContext(request))
 
-def politician_profile_link_wizard(request, user_id):
-    return PoliticianProfileLinkWizard(user_id=user_id)(request)
+def politician_profile_link_wizard(request, user_id, link_id=None):
+    return PoliticianProfileLinkWizard(user_id=user_id, link_id=link_id)(request)
 
 def council_edit(request, id):
     '''
