@@ -3,28 +3,29 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from form_utils.forms import BetterModelForm
+from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField, AddressField
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
-class PoliticianProfileForm(BetterModelForm, TemplateForm):
+GENDERS = (
+        ('Male',_('Male')),
+        ('Female', _('Female')),
+        )
+
+class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-
-    def __init__(self, *args, **kwargs):
-        super(PoliticianProfileForm, self).__init__(*args, **kwargs)
-        #self.fields['first_name'].widget = AutoCompleter(model = PoliticianProfile, field='first_name')
-        self.fields['introduction'].widget = forms.Textarea()
-        self.fields['motivation'].widget = forms.Textarea()
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
-
-    class Meta:
-        model = PoliticianProfile
-        exclude = ('user', 'level', 'picture' )
-
+    name            = NameField(label=_('Name'))
+    initials        = forms.CharField(label=_('Initials'))
+    dateofbirth     = forms.DateField(label=_('Date Of Birth'))
+    introduction    = forms.CharField(label=_('introduction'), widget=forms.Textarea() )
+    motivation      = forms.CharField(label=_('motivation'), widget=forms.Textarea())
+    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    picture         = forms.ImageField(label=_('Picture'), required=False)
+    movie           = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'))
 
 class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
     '''
@@ -147,6 +148,30 @@ class ContactProfileForm(BetterModelForm, TemplateForm):
         exclude = ('user')
 
 
+class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
+    '''
+    ContactProfile admin for editing contact information. Chapter 3.1.5 of interaction design.
+    '''
+    DAYS =  (('Monday',_('Monday')),
+             ('Tuesday', _('Tuesday')),
+             ('Wednesday', _('Wednesday')),
+             ('Thursday', _('Thursday')),
+             ('Friday', _('Friday')),
+             ('Saturday', _('Saturday')),
+             ('Sunday', _('Sunday')),
+            )
+
+    name = NameField(label=_('Name'))
+    
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
+
+    class Meta:
+        model = ContactProfile
+        fields = ('name', 'gender', 'telephone', 'workingdays', 'picture')
+
+
 class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin
@@ -165,9 +190,9 @@ class InterestForm(BetterModelForm, TemplateForm):
         model = Interest
         exclude = ('politician')
 
-class AppearenceForm(BetterModelForm, TemplateForm):
+class AppearanceForm(BetterModelForm, TemplateForm):
     '''
-    Appearence admin
+    Appearance admin
     '''
 
     class Meta:
@@ -201,17 +226,20 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
         model = PoliticalExperience
         exclude = ('politician')
 
-class CsvUploadForm(BetterModelForm, TemplateForm):
+class CsvUploadForm(BetterForm, TemplateForm):
     '''
     CsvUpload admin
     '''
 
     file = forms.FileField(required = True)
 
-class CsvConfirmForm(BetterModelForm, TemplateForm):
+    def clean_file(self):
+        if not self.cleaned_data['file'].content_type == 'text/csv':
+            raise forms.ValidationError('The file you tried to submit is not a CSV file')
+    
+class CsvConfirmForm(BetterForm, TemplateForm):
     '''
     CsvConfirm admin
     '''
 
-    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct [etcetcetc]')
-
+    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL.')

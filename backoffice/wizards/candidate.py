@@ -8,11 +8,217 @@ from utils.multipathform import Step, MultiPathFormWizard
 from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
 
-#TODO: Use the get_profile_forms method and remove these
-#from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearenceForm, WorkExperienceForm
-#from political_profiles.forms import EducationForm, PoliticalExperienceForm
+
+from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
+from political_profiles.forms import EducationForm, PoliticalExperienceForm
 
 from invitations.models import Invitation
+
+class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles Appearances
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(appearance=AppearanceForm,)
+        step1 = Step('candidate_edit_appearance',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileAppearanceWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'appearance':
+                        self.candidate_appearance_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_appearance', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles Work
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(political=PoliticalExperienceForm,)
+        step1 = Step('candidate_edit_political',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfilePoliticalWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'political':
+                        self.candidate_political_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_political', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+class PoliticianProfileWorkWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles Work
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(work=WorkExperienceForm,)
+        step1 = Step('candidate_edit_work',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileWorkWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'work':
+                        self.candidate_work_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_work', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+class PoliticianProfileInterestWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles links
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(interest=InterestForm,)
+        step1 = Step('candidate_edit_link',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileInterestWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'interest':
+                        self.candidate_interest_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_interest', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+class PoliticianProfileEducationWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles links
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(education=EducationForm,)
+        step1 = Step('candidate_edit_education',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileEducationWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'link':
+                        self.candidate_education_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_education', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+
+class PoliticianProfileLinkWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles links
+    """
+    def __init__(self, *args, **kwargs):
+        step1_forms = dict(link=LinkForm,)
+        step1 = Step('candidate_edit_link',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',)
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileLinkWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'link':
+                        self.candidate_link_data = form.cleaned_data
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect(reverse('backoffice.politician_profile_link', kwargs={'user_id':1}))
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
 
 class PoliticianProfileWizard(MultiPathFormWizard):
     """
@@ -33,41 +239,16 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         """
 
         step1_forms = dict(initial_candidate = PoliticianProfileForm,)
-        step2_forms = dict(link=LinkForm,)
-        step3_forms = dict(intrest=InterestForm,)
-        step4_forms = dict(appearence=AppearenceForm,)
-        step5_forms = dict(work= WorkExperienceForm,)
-        step6_forms = dict(education=EducationForm,)
-        step7_forms = dict(political=PoliticalExperienceForm,)
+
 
         step1 = Step('candidate_edit',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/step1.html',)
-        step2 = Step('link',
-                    forms=step2_forms,
-                    template='backoffice/wizard/politician_profile/step2.html',)
-        step3 = Step('interest',
-                    forms=step3_forms,
-                     template='backoffice/wizard/politician_profile/step3.html',)
-        step4 = Step('appearance',
-                    forms=step4_forms,
-                    template='backoffice/wizard/politician_profile/step4.html',)
-        step5 = Step('work',
-                    forms=step5_forms,
-                    template='backoffice/wizard/politician_profile/step5.html',)
-        step6 = Step('education',
-                    forms=step6_forms,
-                    template='backoffice/wizard/politician_profile/step6.html',)
-        step7 = Step('political',
-                    forms=step7_forms,
-                    template='backoffice/wizard/politician_profile/step7.html',)
 
-        scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
-
+        scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
 
         template = 'backoffice/wizard/politician_profile/base.html',
-
         super(PoliticianProfileWizard, self).__init__(scenario_tree, template)
 
 
@@ -79,28 +260,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if name == 'initial_candidate':
-                        self.candidate_data = form.cleaned_data
-                    elif name == 'link':
+                    if name == 'link':
                         self.link = form.cleaned_data
-                    elif name == 'intrest':
-                        self.intrest = form.cleaned_data
-                    elif name == 'appearence':
-                        self.appearence = form.cleaned_data
-                    elif name == 'work':
-                        self.work = form.cleaned_data
-                    elif name == 'political':
-                        self.political = form.cleaned_data
-                    elif name == 'education':
-                        self.education = form.cleaned_data
-
-
-
-            #Get the polictician profile
-            #politician = PoliticalProfile.objects.get(user_id=self.user.id)
-            #print politician
-
-
         except Exception, e:
             transaction.rollback()
             raise e
@@ -108,7 +269,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('backoffice.profile_complete')
+            return redirect(reverse('backoffice.politician_profile_link', kwargs={'user_id':1}))
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
         

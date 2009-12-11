@@ -53,6 +53,9 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = PROJECT_DIR('media/static')
 STATIC_URL = '/media/static/'
 
+#Directory for temporary files
+TMP_ROOT = PROJECT_DIR('tmp')
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '1-r)jw8q4x*ci!j9(mchfn&^a3ez&9p5ab6#@6s++t!t%sei=t'
 

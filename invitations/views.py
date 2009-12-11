@@ -2,7 +2,7 @@ from django.http import Http404
 from django.contrib.auth import login
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
-
+from django.core.urlresolvers import reverse
 from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm
 
@@ -11,9 +11,8 @@ def index(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        #TODO: Redirect to a page
-        raise Http404('Invitation does not exist')
-        
+        return redirect(reverse('invitations.notexist'))
+    
     if invitation.accepted:
         #TODO: Redirect to view from invitation
         return redirect('invitations.fake')
@@ -25,8 +24,7 @@ def accept(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        #TODO: Redirect to a page
-        raise Http404('Invitation does not exist')
+        return redirect(reverse('invitations.notexist'))
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -55,8 +53,7 @@ def existing(request, hash):
     try:
         invitation = Invitation.objects.get(hash=hash)
     except Invitation.DoesNotExist:
-        #TODO: Redirect to a page
-        raise Http404('Invitation does not exist')
+        return redirect(reverse('invitations.notexist'))
         
     if invitation.accepted:
         #TODO: Redirect to view from invitation
@@ -79,3 +76,6 @@ def existing(request, hash):
 
 def fake(request):
     return render_to_response('invitations/fake.html', {}, context_instance=RequestContext(request))
+
+def notexist(request):
+    return render_to_response('invitations/notexist.html', {}, context_instance=RequestContext(request))

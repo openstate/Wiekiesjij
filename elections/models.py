@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from elections import settings
 import datetime
+from utils.functions import move_up, move_down
 
 from django.contrib.auth.models import User
 
@@ -146,12 +147,16 @@ class ElectionInstance(models.Model):
         try:
             party = Party(name=party_name)
             party.save(force_insert=True)
-            party_instance = ElectionInstanceParty(election_instance=self.id,
-                                                   party=party.id,
+            party_instance = ElectionInstanceParty(election_instance=self,
+                                                   party=party,
                                                    list_length=settings.ELECTION_INSTANCE_PARTY_LIST_LENGTH_INITIAL,
                                                    position=position)
+            party_instance.save(force_insert=True)
+            party_instance.position = party_instance.id
+            party_instance.save()
             return party_instance
-        except:
+        except Exception, e:
+            print e
             return False
     
 class ElectionInstanceQuestion(models.Model):
@@ -230,6 +235,18 @@ class Candidacy(models.Model):
     def questions_incomplete(self):
         return len(self.election_party_instance.instance.questions) - len(self.answers)
 
+    def move_down(self):
+        '''
+        Changes the position value with next row
+        '''
+        return move_down(self, 'position')
+
+    def move_up(self):
+        '''
+        Changes the position value with previous row
+        '''
+        return move_up(self, 'position')
+
 class ElectionInstanceParty(models.Model):
     """
         A link between the party, the election instance and the candidates
@@ -258,3 +275,15 @@ class ElectionInstanceParty(models.Model):
 
     def __unicode__(self):
         return self.election_instance.council.name + " - " + self.party.name
+
+    def move_down(self):
+        '''
+        Changes the position value with next row
+        '''
+        return move_down(self, 'position')
+
+    def move_up(self):
+        '''
+        Changes the position value with previous row
+        '''
+        return move_up(self, 'position')

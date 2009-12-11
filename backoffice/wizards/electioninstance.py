@@ -242,7 +242,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
         step3 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/election_setup/step3.html',
-                     initial={'council_contact_information': self.election_instance.council})
+                     initial={'council_contact_information': self.election_instance.council.__dict__})
         # Updates Council
         step4 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
@@ -277,7 +277,7 @@ class ElectionSetupWizard(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if name in ('chancery_registration', 'chancery_contact_information'):
+                    if 'chancery_registration' in name or 'chancery_contact_information' in name:
                         # Updates the ChanceryProfile with data from step 1 or 5.
                         if not hasattr(self, 'chancery_profile_data'):
                             self.chancery_profile_data = {}

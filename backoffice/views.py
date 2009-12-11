@@ -1,10 +1,14 @@
+import os.path
+import os
 #!/usr/env python
 #-*- coding: utf-8 -*-
 #
-#Copyright 2009 Accepté. All Rights Reserved.
+#Copyright 2009 Accepte. All Rights Reserved.
 import datetime
+import time
+import csv
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -13,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
+from political_profiles import functions
 from utils.multipathform import MultiPathFormWizard, Step
 from backoffice.decorators import staff_required, council_admin_required
 
@@ -20,9 +25,10 @@ from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, E
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
+from backoffice.wizards import *
 from political_profiles.forms import *
 from elections.forms import *
-from backoffice.wizards import *
+
 
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
@@ -101,12 +107,67 @@ def election_setup_done(request):
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
 
+def politician_welcome(request):
+    return render_to_response('backoffice/wizard/politician_profile/welcome.html',
+                              context_instance=RequestContext(request))
+
 def politician_profile_setup(request, user_id):
     return PoliticianProfileWizard(user_id=user_id)(request)
 
-def politician_profile_setup_done(request):
+def politician_profile_setup_done(request, user_id):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
+                              {'user_id': user_id},
                               context_instance=RequestContext(request))
+
+def politician_profile_interest(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/interest.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_interest_wizard(request, user_id):
+    return PoliticianProfileInterestWizard(user_id=user_id)(request)
+
+def politician_profile_work(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/work.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_work_wizard(request, user_id):
+    return PoliticianProfileWorkWizard(user_id=user_id)(request)
+
+
+def politician_profile_political(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/political.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_political_wizard(request, user_id):
+    return PoliticianProfilePoliticalWizard(user_id=user_id)(request)
+
+def politician_profile_education(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/education.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_education_wizard(request, user_id):
+    return PoliticianProfileEducationWizard(user_id=user_id)(request)
+
+def politician_profile_appearance(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/appearances.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_appearance_wizard(request, user_id):
+    return PoliticianProfileAppearanceWizard(user_id=user_id)(request)
+
+
+def politician_profile_link(request, user_id):
+    return render_to_response('backoffice/wizard/politician_profile/links.html',
+                              {'user_id': user_id},
+                              context_instance=RequestContext(request))
+
+def politician_profile_link_wizard(request, user_id):
+    return PoliticianProfileLinkWizard(user_id=user_id)(request)
 
 def council_edit(request, id):
     '''
@@ -118,3 +179,96 @@ def council_edit(request, id):
 
 def csv_import_candidates_step1(request):
     return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
+
+def csv_import_candidates_step2(request, error = False):
+    if(request.FILES or request.POST):
+        form = CsvUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.files['file']
+            filename = str(time.time()) + '.csv' #about 1000 unique filenames per second?
+            destination = open(settings.TMP_ROOT + '/' + filename, 'wb+')
+
+            for chunk in file.chunks():
+                destination.write(chunk)
+            destination.close()
+            request.session['csv_filename'] = filename
+            return redirect('backoffice.csv_candidates_step3')
+            
+    else:
+        form = CsvUploadForm()
+
+    forms = dict({'csv_upload': form})
+    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error}, context_instance=RequestContext(request))
+
+@transaction.commit_manually
+def csv_import_candidates_step3(request):
+    try:
+        candidates = functions.get_candidates_from_csv(request.session)
+    except:
+        return redirect('backoffice.csv_candidates_step2', error='true')
+
+    if(request.POST):
+        form = CsvConfirmForm(request.POST)
+        if form.is_valid():
+            for candidate in candidates:
+                try:
+                    #Store data
+                    tmp_data = {
+                        'first_name': candidate['first_name'],
+                        'middle_name': candidate['middle_name'],
+                        'last_name': candidate['last_name'],
+                        'initials': candidate['initials'],
+                        'email': candidate['email'],
+                        'gender': candidate['gender'],
+                    }
+                    candidate_obj = create_profile('candidate', tmp_data)
+
+                    #Link candidate to party
+                    candidacy = Candidacy(
+                        election_party_instance = get_object_or_404(ElectionInstanceParty, party=1), #TODO: Make party dynamic
+                        candidate = candidate_obj.user,
+                        position = candidate['position'],
+                    )
+                    candidacy.save()
+
+                    #Create invitation
+                    templates = profile_invite_email_templates('candidate')
+                    Invitation.create(
+                        user_from = request.user,
+                        user_to = candidate_obj.user,
+                        view = '',
+                        text = 'Invitation text',
+                        subject = 'Invitation',
+                        html_template = templates['html'],
+                        plain_template = templates['plain'],
+                    )
+
+                except Exception:
+                    transaction.rollback()
+                    raise
+                else:
+                    transaction.commit()
+
+            os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
+    else:
+        form = CsvConfirmForm()
+
+    forms = dict({'csv_confirm': form})
+    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms}, context_instance=RequestContext(request))
+
+def council_edit(request, election_instance_id, user_id):
+    '''
+    Council edit wizard.
+    @param int election_instance_id
+    @param int user_id
+
+    Both parameters are required. It's obvious what they mean.
+    '''
+    return CouncilEditWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
+
+def council_edit_done(request):
+    '''
+    Council edit wizard success page.
+    '''
+    return render_to_response('backoffice/wizard/council/edit/done.html',
+                              context_instance=RequestContext(request))

@@ -3,6 +3,7 @@ dev.db
 nbproject*
 pip-log.txt
 media/media/contact/*
+tmp/*
 migrate.sh
 runserver.sh
 syncdb.sh

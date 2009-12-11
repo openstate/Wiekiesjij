@@ -9,30 +9,7 @@ GENDERS = (
         ('Male',_('Male')),
         ('Female', _('Female')),
         )
-EDUCATION_LEVEL_CHOICES = (
-        ('edu1', _('SMS Module')),
-        ('edu2', _('SMS Module')),
-        ('edu3', _('SMS Module')),
-        ('edu4', _('SMS Module')),
-        ('edu5', _('SMS Module')),
-        ('edu6', _('SMS Module')),
-    )
-POLITICAL_TYPE_CHOICES = (
-        ('pol1', _('SMS Module')),
-        ('pol2', _('SMS Module')),
-        ('pol3', _('SMS Module')),
-        ('pol4', _('SMS Module')),
-        ('pol5', _('SMS Module')),
-        ('pol6', _('SMS Module')),
-    )
-WORK_SECTOR_CHOICES = (
-        ('work1', _('SMS Module')),
-        ('work2', _('SMS Module')),
-        ('work3', _('SMS Module')),
-        ('work4', _('SMS Module')),
-        ('work5', _('SMS Module')),
-        ('work6', _('SMS Module')),
-    )
+
 
 class WorkExperienceSector(models.Model):
     """
@@ -40,19 +17,27 @@ class WorkExperienceSector(models.Model):
     """
     sector      = models.CharField(_('Sector'), max_length=255)
 
+    def __unicode__(self):
+        return self.sector
 
 class PoliticalExperienceType(models.Model):
     """
-            Different Sectors that people could have worked in.
+            Different Types of Political Experience Areas.
     """
     type      = models.CharField(_('Type'), max_length=255)
 
+    def __unicode__(self):
+        return self.type
+
 class EducationLevel(models.Model):
     """
-            Different Sectors that people could have worked in.
+            Different Levels that people could have been educated at.
     """
-    level      = models.CharField(_('Level'), max_length=255)
 
+    level      = models.CharField(_('Level'), max_length=255)
+    def __unicode__(self):
+        return self.user.level
+    
 # Profiles
 class Profile(models.Model):
     """
@@ -60,7 +45,7 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(User, related_name="%(class)s", unique=True, verbose_name=_('User'))
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
-    middle_name = models.CharField(_('Middle name'), blank=True, max_length=80)
+    middle_name = models.CharField(_('Middle name'), null=True, blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
 
     class Meta:
@@ -84,15 +69,17 @@ class PoliticianProfile(Profile):
     """
         A profile for a politician
     """
-    initials        = models.CharField(_('Initials'), max_length=15)
-    gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS , help_text=_("Please choose your gender."), default='Male')
+    initials        = models.CharField(_('Initials'), max_length=15, blank=True, null=True)
+    gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS, default='Male',
+                                       help_text=_("Please choose your gender."))
     dateofbirth     = models.DateField(_('Date Of Birth'), null=True, blank=True)
     picture         = models.ImageField(_('Picture'), upload_to='media/politician')
-    movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, help_text=_('Link to YouTube video'))
-    introduction    = models.CharField(_('Introduction'), max_length=2550)
-    motivation      = models.CharField(_('Motivation'), max_length=2550)
+    movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
+                                      help_text=_('Link to YouTube video'))
+    introduction    = models.CharField(_('Introduction'), max_length=2550, null=True, blank=True)
+    motivation      = models.CharField(_('Motivation'), max_length=2550, null=True, blank=True)
     #hobby = models.CharField(_('Hobbies'), max_length=255)
-	#charity = models.CharField(_('Favourite Charities'), max_length=255)
+    #charity = models.CharField(_('Favourite Charities'), max_length=255)
     #pets =  models.CharField(_('Pets'), max_length=255)
     #fanclubs = models.CharField(_('Fan Clubs'), max_length=255)
     #goals		Refrence
@@ -112,20 +99,20 @@ class ChanceryProfile(Profile):
     """
         A profile for a chancery
     """
-    gender      = models.CharField(_('Gender'), max_length=25,choices=GENDERS)
-    telephone	= models.CharField(_('Phone Number'), max_length=255)
-    workingdays = models.CharField(_('Working Days'), max_length=255)
-    street      = models.CharField(_('Street'), max_length=40)
-    house_num   = models.CharField(_('House Number'), max_length=5)
-    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
-    town        = models.CharField(_('Town/City'), max_length=30)
+    gender      = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
+    telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
+    workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)
+    street      = models.CharField(_('Street'), max_length=40, null=True, blank=True)
+    house_num   = models.CharField(_('House Number'), max_length=5, null=True, blank=True)
+    postcode  	= models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
+                                   help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town        = models.CharField(_('Town/City'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
-
     picture     = models.ImageField(_('Picture'), upload_to='media/chancery')
-
-
     description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of the council"),
                 null=True, blank=True)
+
+
 
     def __unicode__(self):
         return self.user.username
@@ -140,19 +127,18 @@ class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
     """
-    gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS)
-    telephone	= models.CharField(_('Phone Number'), max_length=255)
-    workingdays = models.CharField(_('Working Days'), max_length=255)
-    street      = models.CharField(_('Street'), max_length=40)
-    house_num   = models.CharField(_('House Number'), max_length=5)
-    postcode  	= models.CharField(_('Postcode'), max_length=7, help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
-    town        = models.CharField(_('Town/City'), max_length=30)
+    gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
+    telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
+    workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)
+    street      = models.CharField(_('Street'), max_length=40, null=True, blank=True)
+    house_num   = models.CharField(_('House Number'), max_length=5, null=True, blank=True)
+    postcode  	= models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
+                                   help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
+    town        = models.CharField(_('Town/City'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
     picture     = models.ImageField(_('Picture'), upload_to='media/contact', null=True, blank=True)
-    width       = models.PositiveIntegerField(editable=False, default=0, null=True)
-    height      = models.PositiveIntegerField(editable=False, default=0, null=True)
-    description = models.CharField(_('Description'), max_length=255, help_text=_("A short description of yourself"),
-                                   null=True, blank=True)
+    description = models.CharField(_('Description'), max_length=255, null=True, blank=True,
+                                   help_text=_("A short description of yourself"))
 
     def __unicode__(self):
         return self.user.username
@@ -166,7 +152,7 @@ class ContactProfile(Profile):
 
 class Link(models.Model):
     """
-        A class to hold a link to the politician
+        A class to hold links the politician has
     """
     name        = models.CharField(_('Name'), max_length=255)
     url         = models.CharField(_('URL'), max_length=255)
@@ -190,7 +176,7 @@ class Interest(models.Model):
 
 class Appearence(models.Model):
     """
-        A class to hold an aperance (where they attended somthing) of the politician
+        A class to hold an appearance (where they attended somthing) of the politician
     """
     name        = models.CharField(_('Affiliated Organisation Name'), max_length=255)
     location	= models.CharField(_('Location'), max_length=255)
@@ -200,7 +186,7 @@ class Appearence(models.Model):
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 
     class Meta:
-        verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appeariences')
+        verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appearances')
 
 class WorkExperience(models.Model):
     """
@@ -211,7 +197,7 @@ class WorkExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'))
     enddate         = models.DateField(_('End Date'))
-    current         = models.BooleanField(_('Currently employed'), default=False)
+    current         = models.BooleanField(_('Currently Employed'), default=False)
     description     = models.CharField(_('Description'), max_length=2550)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
 

@@ -2,5 +2,40 @@
 {% load i18n %}
 
 {% block content %}
-    
+
+<table>
+    <tr>
+        <th>{% trans "Position" %}</th>
+        <th>{% trans "First name" %}</th>
+        <th>{% trans "Middle name" %}</th>
+        <th>{% trans "Last name" %}</th>
+        <th>{% trans "Initials" %}</th>
+        <th>{% trans "Email" %}</th>
+        <th>{% trans "Gender" %}</th>
+    </tr>
+    {% for candidate in candidates %}
+        <tr>
+            <td>{{ candidate.position }}</td>
+            <td>{{ candidate.first_name }}</td>
+            <td>{{ candidate.middle_name }}</td>
+            <td>{{ candidate.last_name }}</td>
+            <td>{{ candidate.initials }}</td>
+            <td>{{ candidate.email }}</td>
+            <td>{{ candidate.gender }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<form method="POST" enctype="multipart/form-data" action="">
+    {% for form in forms.values %}
+        {{ form.as_template }}
+    {% endfor %}
+
+    <div class="buttons">
+        <a href="#">{% trans "Cancel" %}</a>
+        <input type="submit" name="submit" value="{% trans "Invite these candidates" %}">
+        <div class="note">{% trans 'Note:  invitations will not be sent right now. This will happen on [date].' %}</div>
+    </div>
+
+</form>
 {% endblock content %}
