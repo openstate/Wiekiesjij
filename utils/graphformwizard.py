@@ -146,7 +146,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.forms import BaseForm
+from django.forms import Form, BaseForm
 from django.core.files.uploadedfile import UploadedFile
 
 # used to store session data
@@ -631,7 +631,7 @@ class CleanStep(object):
 
             retforms[name] = self.new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
-            retdata[name] = retforms[name].cleaned_data
+            retdata[name] = getattr(retforms[name], 'cleaned_data', {})
 
         return (valid, retforms, retdata)
         
@@ -1602,7 +1602,7 @@ class GraphFormWizard(object):
                 for (formname, formdata) in forms.iteritems():
                     if isinstance(formdata, BaseForm):
                         # only validated forms will give their data
-                        forms[formname] = (formdata.cleaned_data or {}, {})
+                        forms[formname] = (getattr(formdata, 'cleaned_data', {}), {})
 
                     elif isinstance(formdata, dict): # form data was given as dict
                         forms[formname] = (formdata, {})
@@ -1617,7 +1617,7 @@ class GraphFormWizard(object):
                             #else: is file suddenly removed from temporary dir?
 
                         if isinstance(frms, BaseForm):
-                            forms[formname] = (frms.cleaned_data or {}, fls)
+                            forms[formname] = (getattr(frms, 'cleaned_data', {}), fls)
                         else:
                             forms[formname] = (frms, fls)
 
