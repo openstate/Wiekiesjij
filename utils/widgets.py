@@ -120,7 +120,7 @@ class NameWidget(forms.widgets.MultiWidget):
         
     def decompress(self, value):
         if value and isinstance(value, dict):
-            return [value.get('first_name'), value.get('lastname'), value.get('middle_name')]
+            return [value.get('first_name'), value.get('last_name'), value.get('middle_name')]
         else:
             return [None, None, None] 
         

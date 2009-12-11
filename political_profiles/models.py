@@ -36,7 +36,7 @@ class EducationLevel(models.Model):
 
     level      = models.CharField(_('Level'), max_length=255)
     def __unicode__(self):
-        return self.user.level
+        return self.level
     
 # Profiles
 class Profile(models.Model):
@@ -73,7 +73,7 @@ class PoliticianProfile(Profile):
     gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS, default='Male',
                                        help_text=_("Please choose your gender."))
     dateofbirth     = models.DateField(_('Date Of Birth'), null=True, blank=True)
-    picture         = models.ImageField(_('Picture'), upload_to='media/politician')
+    picture         = models.ImageField(_('Picture'), upload_to='media/politician', null=True, blank=True)
     movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
                                       help_text=_('Link to YouTube video'))
     introduction    = models.CharField(_('Introduction'), max_length=2550, null=True, blank=True)
@@ -157,7 +157,7 @@ class Link(models.Model):
     name        = models.CharField(_('Name'), max_length=255)
     url         = models.CharField(_('URL'), max_length=255)
     description	= models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    politician  = models.ForeignKey(PoliticianProfile, related_name=_('links'), verbose_name=_('Politician') )
 
     class Meta:
         verbose_name, verbose_name_plural = _('Link'), _('Links')
@@ -169,7 +169,7 @@ class Interest(models.Model):
     organization    = models.CharField(_('Organisation Name'), max_length=255)
     url             = models.CharField(_('URL'), max_length=255)
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name=_('interests'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Intrest'), _('Intrests')
@@ -182,8 +182,8 @@ class Appearence(models.Model):
     location	= models.CharField(_('Location'), max_length=255)
     url         = models.CharField(_('URL'), max_length=255)
     description = models.CharField(_('Description'), max_length=2550)
-    datetime    = models.DateTimeField(_('Date and Time of Appearance'))
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    datetime    = models.DateTimeField(_('Date and Time of Appearance'), null=True, blank=True)
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name=_('appearances'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appearances')
@@ -193,13 +193,13 @@ class WorkExperience(models.Model):
         A class to hold work experience
     """
     company_name 	= models.CharField(_('Company Name'), max_length=255)
-    sector          = models.ForeignKey(WorkExperienceSector, verbose_name=_('sector'))
+    sector          = models.ForeignKey(WorkExperienceSector, verbose_name=_('sector'), null=True, blank=True)
     position        = models.CharField(_('Position'), max_length=255)
-    startdate       = models.DateField(_('Start Date'))
-    enddate         = models.DateField(_('End Date'))
+    startdate       = models.DateField(_('Start Date'), null=True, blank=True)
+    enddate         = models.DateField(_('End Date'), null=True, blank=True)
     current         = models.BooleanField(_('Currently Employed'), default=False)
     description     = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name=_('work'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Work experience'), _('Work experience')
@@ -209,12 +209,12 @@ class Education(models.Model):
         A period of education
     """
     institute   = models.CharField(_('Institute Name'), max_length=255)
-    level       = models.ForeignKey(EducationLevel, verbose_name=_('level'))
+    level       = models.ForeignKey(EducationLevel, verbose_name=_('level'), null=True, blank=True)
     field       = models.CharField(_('Field'), max_length=255)
-    startdate   = models.DateField(_('Start Date'))
-    enddate     = models.DateField(_('End Date'))
+    startdate   = models.DateField(_('Start Date'), null=True, blank=True)
+    enddate     = models.DateField(_('End Date'), null=True, blank=True)
     description = models.CharField(_('Description'), max_length=2550)
-    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
+    politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name=_('education'))
 
     class Meta:
         verbose_name, verbose_name_plural = _('Education'), _('Education')
@@ -224,13 +224,13 @@ class PoliticalExperience(models.Model):
         Experience in the political world
     """
     organisation    = models.CharField(_('Organisation'), max_length=255)
-    type  = models.ForeignKey(PoliticalExperienceType, verbose_name=_('type'))
+    type  = models.ForeignKey(PoliticalExperienceType, verbose_name=_('type'), null=True, blank=True)
     position        = models.CharField(_('Position'), max_length=255)
-    startdate       = models.DateField(_('Start Date'))
-    enddate         = models.DateField(_('End Date'))
+    startdate       = models.DateField(_('Start Date'), null=True, blank=True)
+    enddate         = models.DateField(_('End Date'), null=True, blank=True)
     description     = models.CharField(_('Description'), max_length=2550)
-    politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'))
-    tags            = TagField()
+    politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name=_('political'))
+    #tags            = TagField()
     class Meta:
         verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')
 

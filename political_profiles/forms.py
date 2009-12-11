@@ -14,12 +14,14 @@ GENDERS = (
         ('Female', _('Female')),
         )
 
+
 class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
     name            = NameField(label=_('Name'))
     initials        = forms.CharField(label=_('Initials'))
+    email           = forms.EmailField(label=_('E-Mail'))
     dateofbirth     = forms.DateField(label=_('Date Of Birth'))
     introduction    = forms.CharField(label=_('introduction'), widget=forms.Textarea() )
     motivation      = forms.CharField(label=_('motivation'), widget=forms.Textarea())
