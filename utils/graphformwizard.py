@@ -1945,3 +1945,8 @@ class TestWizard(GraphFormWizard):
 
     def __init__(self, name = None, template = None):
         super(type(self), self).__init__(name, template)
+
+
+    def done(self, request, wizard_data, meta, *args, **kwargs):
+        print wizard_data
+        pass
