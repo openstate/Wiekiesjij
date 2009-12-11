@@ -55,5 +55,5 @@ A filter which exptect to be applied to a form field.
 It will return 'required' or 'optional' depending on if the field is required or not
 
 ---- with_class ----
-A filter which exptect to be applied to a form field.
+A filter which expect to be applied to a form field.
 Used the get_class and get_required_class methods to add the results as css classes to the field.

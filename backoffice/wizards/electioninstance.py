@@ -135,7 +135,6 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         )
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/editelection/base.html',
-        #import ipdb; ipdb.set_trace()
         super(EditElectionInstanceWizard, self).__init__(step1, template, *args, **kwargs)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):

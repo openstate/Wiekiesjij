@@ -1,0 +1,28 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<p>
+    {% trans "The following wizard allows you to add multiple parties at once." %}
+    <br />
+    {% trans "You can upload your CSV file here." %}
+</p>
+{% ifequal error "true" %}
+    <p class="error">
+        {% trans "The CSV file you have submitted, can not be handled by the system." %}
+        <br />
+        {% trans "Please check your file and try again." %}
+    </p>
+{% endifequal %}
+<form method="POST" enctype="multipart/form-data" action="">
+    {% for form in forms.values %}
+        {{ form.as_template }}
+    {% endfor %}
+
+    <div class="buttons">
+        <a href="#">{% trans "Cancel" %}</a>
+        <input type="submit" value="{% trans "Proceed to uploading a filled in template" %}">
+    </div>
+
+</form>
+{% endblock content %}
