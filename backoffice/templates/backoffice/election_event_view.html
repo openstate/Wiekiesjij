@@ -6,19 +6,20 @@
 {% block back-link %}{% endblock back-link %}
 
 {% block breadcrumbs %}
-	<li><a href="#">Wie Kies Jij?</a></li>
+	<li><a href="/">Wie Kies Jij?</a></li>
 {% endblock breadcrumbs %}
 
 {% block content %}
-	<div class="mod party-list">
+	<div class="mod overview instances">
     	<div class="hd">
-            <h2>The following parties are taking part in this election:</h2>
+            <h2>{% trans "This election has the following instances:" %}</h2>
         </div>
         <div class="bd">
             <a href="{% url backoffice.add_election_instance %}">{% trans "Add Election Instance" %}</a>
             {#}<a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
-          	<div class="party">
+          	
             {% for ei in election_instances  %}
+            <div class="item">
                 {% blockwrap template='electioninstance' %}
                     <h3>{{ ei.name }}</h3>
                     <a href="{% url backoffice.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
@@ -26,7 +27,8 @@
                     	<li><a href="{% url backoffice.edit_election_instance id=ei.id %}">{% trans "Edit settings" %}</a></li>
                     </ul>
                 {% endblockwrap %}
-            {% endfor %}
             </div>
+            {% endfor %}
+            
     </div>
 {% endblock content %}

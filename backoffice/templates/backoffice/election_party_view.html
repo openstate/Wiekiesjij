@@ -1,6 +1,10 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n utils_tags %}
 
+{% block title %}{{ instance.council.region }}{% endblock title %}
+{% block page-title %}{{ instance.council.region }}{% endblock page-title %}
+{% block back-link %}<a href="">Back to {{ instance.election_event.name }}</a>{% endblock back-link %}
+
 {% block breadcrumbs %}
 	{{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
 {% endblock breadcrumbs %}

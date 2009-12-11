@@ -356,13 +356,13 @@
 	/*	.partylist
 		**************************************************************************************************************/
 		
-		div.party-list .btn {
+		div.overview .btn {
 			float:right;
 			background:#dbdbdb;
 			padding:5px;
 			}
 		
-		div.party {
+		div.item {
 			padding:10px;
 			margin:20px 0;
 			background:#fff;
@@ -376,11 +376,11 @@
 			overflow:hidden;_zoom:1;
 			clear:both;
 			}
-			div.party h3 {
+			div.item h3 {
 				margin:0 0 .1em;
 				position:relative;
 				}
-			div.party span.list {
+			div.item span.list {
 				float:left;
 				text-transform:uppercase;
 				color:#777;
@@ -393,12 +393,12 @@
 				text-align:center;
 				background:#fff url(../img/lijst3.png) 0 0 no-repeat;
 				}	
-				div.party span.list strong {
+				div.item span.list strong {
 					display:block;
 					font-size:24px;
 					font-weight:bold;
 					}
-			div.party .manage {
+			div.item .manage {
 				position:absolute;
 				right:10px;
 				top:10px;
@@ -408,11 +408,11 @@
 				color:#000;
 				}	
 				
-			div.party .add-party {
+			div.item .add-party {
 				color:#000;
 				}
 			
-			div.party ul.quicklinks {
+			div.item ul.quicklinks {
 				float:right;
 				font-size:.8em;
 				text-align:right;
