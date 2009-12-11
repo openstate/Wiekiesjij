@@ -148,6 +148,12 @@ ELECTIONS_ELECTION_EVENT_ID = 1
 
 
 
+# Wizard specific settings
+WIZARD_TIMEOUT = False
+WIZARD_KEEP_DATA = False
+WIZARD_UPLOAD_TEMP_DIR = "/home/sardar/PythonProjects/Accepte/wksj/bzrrepos/working/tmp"
+
+
 
 if False:
     

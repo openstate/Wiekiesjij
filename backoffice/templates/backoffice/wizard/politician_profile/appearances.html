@@ -4,10 +4,15 @@
 <h1>{% trans 'What events have you appeared at?' %}</h1>
 
 <p>{% trans "Visitors of the website can see an overview of the events you appeared at " %}<p>
+<h2>{%trans 'Events have you appeared' %} </h2>
+{% for appearance in appearances %}
+    <p>{{ appearance.name }}: {{ appearance.url }}: {{ appearance.description }}</p>
+{% empty %}
+    <p>{%trans 'You have no appearances defined yet' %} </p>
+{% endfor %}
 
-<h2>{%trans 'You have no appearances defined yet' %} </h2>
-<a href="{% url backoffice.politician_profile_link '1' %}">{% trans "< Previous " %}</a>
-<a href="{% url backoffice.politician_profile_appearance_wizard '1' %}">{% trans "Click here to add a Appearance" %}</a>
-<a href="{% url backoffice.politician_profile_education '1' %}">{% trans "Next >" %}</a>
+<a href="{% url backoffice.politician_profile_link user_id %}">{% trans "< Previous " %}</a>
+<a href="{% url backoffice.politician_profile_appearance_wizard user_id %}">{% trans "Click here to add an appearance" %}</a>
+<a href="{% url backoffice.politician_profile_education user_id %}">{% trans "Next >" %}</a>
 
 {% endblock content %}
