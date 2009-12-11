@@ -184,6 +184,7 @@ def csv_import_candidates_step2(request, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
+            #Save file in tmp dir
             file = form.files['file']
             filename = str(time.time()) + '.csv' #about 1000 unique filenames per second?
             destination = open(settings.TMP_ROOT + '/' + filename, 'wb+')
@@ -205,6 +206,7 @@ def csv_import_candidates_step3(request):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
+        os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
         return redirect('backoffice.csv_candidates_step2', error='true')
 
     if(request.POST):
@@ -250,6 +252,7 @@ def csv_import_candidates_step3(request):
                     transaction.commit()
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_filename'])
+            return redirect('backoffice.election_party_view', args=1) #TODO: Make party dynamic
     else:
         form = CsvConfirmForm()
 
