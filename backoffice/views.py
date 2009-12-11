@@ -34,6 +34,18 @@ def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
+def election_instance_shrink(request, id):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    instance.num_lists -= 1
+    instance.save()
+    return redirect('backoffice.election_instance_view', id=id)
+
+def election_instance_grow(request, id):
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    instance.num_lists += 1
+    instance.save()
+    return redirect('backoffice.election_instance_view', id=id)
+
 def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
@@ -47,6 +59,39 @@ def election_party_edit(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     wizard = ElectionPartySetupWizard(eip)
     return wizard(request)
+
+def election_party_up(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.move_up()
+    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+
+def election_party_down(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.move_down()
+    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+
+def election_party_shrink(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.list_length -= 1
+    eip.save()
+    return redirect('backoffice.election_party_view', id=id)
+
+def election_party_grow(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    eip.list_length += 1
+    eip.save()
+    return redirect('backoffice.election_party_view', id=id)
+
+def candidate_up(request, id):
+    can = get_object_or_404(Candidacy, pk=id)
+    can.move_up()
+    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+
+def candidate_down(request, id):
+    can = get_object_or_404(Candidacy, pk=id)
+    can.move_down()
+    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+
 
 #@login_required
 def election_event(request):
@@ -128,8 +173,8 @@ def politician_profile_interest(request, user_id):
                               {'user_id': user_id, 'interests': interests,},
                               context_instance=RequestContext(request))
 
-def politician_profile_interest_wizard(request, user_id):
-    return PoliticianProfileInterestWizard(user_id=user_id)(request)
+def politician_profile_interest_wizard(request, user_id, interest_id=None):
+    return PoliticianProfileInterestWizard(user_id=user_id, interest_id=interest_id)(request)
 
 def politician_profile_work(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -138,8 +183,8 @@ def politician_profile_work(request, user_id):
                               {'user_id': user_id, 'work': work,},
                               context_instance=RequestContext(request))
 
-def politician_profile_work_wizard(request, user_id):
-    return PoliticianProfileWorkWizard(user_id=user_id)(request)
+def politician_profile_work_wizard(request, user_id, work_id=None):
+    return PoliticianProfileWorkWizard(user_id=user_id, work_id=work_id)(request)
 
 
 def politician_profile_political(request, user_id):
@@ -149,8 +194,8 @@ def politician_profile_political(request, user_id):
                               {'user_id': user_id, 'political': political,},
                               context_instance=RequestContext(request))
 
-def politician_profile_political_wizard(request, user_id):
-    return PoliticianProfilePoliticalWizard(user_id=user_id)(request)
+def politician_profile_political_wizard(request, user_id, political_id=None):
+    return PoliticianProfilePoliticalWizard(user_id=user_id, political_id=political_id)(request)
 
 def politician_profile_education(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -159,8 +204,8 @@ def politician_profile_education(request, user_id):
                               {'user_id': user_id, 'education': education,},
                               context_instance=RequestContext(request))
 
-def politician_profile_education_wizard(request, user_id):
-    return PoliticianProfileEducationWizard(user_id=user_id)(request)
+def politician_profile_education_wizard(request, user_id, education_id=None):
+    return PoliticianProfileEducationWizard(user_id=user_id, education_id=education_id)(request)
 
 def politician_profile_appearance(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -169,8 +214,8 @@ def politician_profile_appearance(request, user_id):
                               {'user_id': user_id, 'appearances': appearances,},
                               context_instance=RequestContext(request))
 
-def politician_profile_appearance_wizard(request, user_id):
-    return PoliticianProfileAppearanceWizard(user_id=user_id)(request)
+def politician_profile_appearance_wizard(request, user_id, appearance_id=None):
+    return PoliticianProfileAppearanceWizard(user_id=user_id, appearance_id=appearance_id)(request)
 
 
 def politician_profile_link(request, user_id):
@@ -181,8 +226,8 @@ def politician_profile_link(request, user_id):
                               {'user_id': user_id, 'links': links},
                               context_instance=RequestContext(request))
 
-def politician_profile_link_wizard(request, user_id):
-    return PoliticianProfileLinkWizard(user_id=user_id)(request)
+def politician_profile_link_wizard(request, user_id, link_id=None):
+    return PoliticianProfileLinkWizard(user_id=user_id, link_id=link_id)(request)
 
 def council_edit(request, id):
     '''
@@ -221,7 +266,9 @@ def csv_import_candidates_step3(request):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
-        os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
+        path = settings.TMP_ROOT + '/'
+        if not os.path.isdir(path):
+            os.remove(path + request.session['csv_candidate_filename'])
         request.session['csv_candidate_filename'] = ''
         return redirect('backoffice.csv_candidates_step2', error='true')
 
@@ -305,7 +352,9 @@ def csv_import_parties_step3(request):
     try:
         parties = functions.get_parties_from_csv(request.session)
     except:
-        os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
+        path = settings.TMP_ROOT + '/'
+        if not os.path.isdir(path):
+            os.remove(path + request.session['csv_party_filename'])
         request.session['csv_party_filename'] = ''
         return redirect('backoffice.csv_parties_step2', error='true')
 
@@ -315,9 +364,45 @@ def csv_import_parties_step3(request):
             for party in parties:
                 try:
                     #Store data
-                    return 0
+                    party_obj = Party(
+                        region = 1, #TODO
+                        level = 1, #TODO
+                        name = party['name'],
+                        abbreviation = party['abbreviation'],
+                    )
+                    party_obj.save()
+
+                    eip_obj = ElectionInstanceParty(
+                        election_instance = get_object_or_404(ElectionInstance, id=1), #TODO
+                        party = party_obj,
+                        position = party['list'],
+                        list_length = 10, #TODO
+                    )
+                    eip_obj.save()
+
+                    tmp_data = {
+                        'first_name': party['contact_first_name'],
+                        'middle_name': party['contact_middle_name'],
+                        'last_name': party['contact_last_name'],
+                        'email': party['contact_email'],
+                        'gender': party['contact_gender'],
+                    }
+                    contact = create_profile('party_admin', tmp_data)
+
+                    party_obj.contacts.add(contact.user)
+                    party_obj.save()
 
                     #Create invitation
+                    templates = profile_invite_email_templates('party_admin')
+                    Invitation.create(
+                        user_from = request.user,
+                        user_to = contact.user,
+                        view = '',
+                        text = 'Invitation text',
+                        subject = 'Invitation',
+                        html_template = templates['html'],
+                        plain_template = templates['plain'],
+                    )
 
                 except Exception:
                     transaction.rollback()

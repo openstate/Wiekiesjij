@@ -19,9 +19,11 @@
 	<div class="item">
 		<div class="index">{{ index }}</div>
 		{% if can %}
+			{% ifnotequal index 1 %}<div class="up"><a href="{% url backoffice.candidate_up can.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
+			{% ifnotequal index eip.list_length %}<div class="down"><a href="{% url backoffice.candidate_down can.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
 			<div class="main_content">
 				<img src="{{ can.candidate.profile.picture }}" />
-				<h3><a href="#">{{ eip.candidate.profile.full_name }}</a></h3>
+				<h3><a href="#">{{ can.candidate.profile.full_name }}</a></h3>
 				<ul>
 					{% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
 					{% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
@@ -33,9 +35,11 @@
 			<br class="clear" />
 		{% else %}
 			<h3><a href="#">{% trans 'Invite politician' %}</a></h3>
+			{% ifequal index eip.list_length %}<div class="sidebar"><a href="{% url backoffice.election_party_shrink eip.id %}">{% trans 'Remove this slot' %}</a></div>{% endifequal %}
 		{% endif %}
 	</div>
 	{% endfor %}
+	<div><a href="{% url backoffice.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
 	<div> <a href="#">{% trans 'Batch add candidates' %}</a></div>
 {% endblock content %}
 

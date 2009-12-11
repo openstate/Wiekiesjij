@@ -629,7 +629,7 @@ class CleanStep(object):
             if files is not None:
                 args[1].update(files)
 
-            retforms[name] = new_form(form, prefix, initial, *args)
+            retforms[name] = self.new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
             retdata[name] = retforms[name].cleaned_data
 
@@ -1792,7 +1792,7 @@ class GraphFormWizard(object):
             @return HttpResponse or raise exception
         """
         validurl = self.build_path(validpath)
-        return HttpResponseRedirect(reverse(url_step[0], args = url_stbep[1], kwargs=dict(url_step[2], path = self.compress_path(validurl))))
+        return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(validurl))))
     
 
 #================- Override by subclasses -======================

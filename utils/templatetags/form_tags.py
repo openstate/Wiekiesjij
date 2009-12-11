@@ -49,6 +49,7 @@ class IfMultiFieldNode(template.Node):
         'AddressWidget',
         'NameWidget',
         'RadioSelect',
+		'CheckboxSelectMultiple',
     )
     
     def __init__(self, field, nodelist_true, nodelist_false):

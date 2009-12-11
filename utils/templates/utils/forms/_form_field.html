@@ -3,9 +3,9 @@
 {% if field.is_hidden %}
 	{{ field }}
 {% else %}
-<div id="field-{{ field.auto_id }}" class="field {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
+<div id="field-{{ field.auto_id }}" class="field {% ifmultifield field %}multi-field{% endifmultifield %} {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
 	{% ifmultifield field %}
-		<p class="{{ field|get_required_class }}">{{ field.label.title }}</p>
+		<p class="label {{ field|get_required_class }}">{{ field.label.title }}</p>
 	{% else %}
 		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label.title }}</label>
 	{% endifmultifield %}

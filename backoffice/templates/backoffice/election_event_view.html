@@ -1,13 +1,32 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n utils_tags %}
+
+{% block title %}Election Event Name{% endblock title %}
+{% block page-title %}Election Event Name{% endblock page-title %}
+{% block back-link %}{% endblock back-link %}
+
+{% block breadcrumbs %}
+	<li><a href="#">Wie Kies Jij?</a></li>
+{% endblock breadcrumbs %}
+
 {% block content %}
-	<a href="{% url backoffice.add_election_instance %}">{% trans "Add Election Instance" %}</a>
-	{#}<a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
-	
-	{% for ei in election_instances  %}
-		{% blockwrap template='electioninstance' %}
-			<h1><a href="{% url backoffice.election_instance_view id=ei.id %}">{{ ei.name }}</a></h1>
-			<p><a href="{% url backoffice.edit_election_instance id=ei.id %}">{% trans "Edit" %}</a></p>
-		{% endblockwrap %}
-	{% endfor %}
+	<div class="mod party-list">
+    	<div class="hd">
+            <h2>The following parties are taking part in this election:</h2>
+        </div>
+        <div class="bd">
+            <a href="{% url backoffice.add_election_instance %}">{% trans "Add Election Instance" %}</a>
+            {#}<a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
+          	<div class="party">
+            {% for ei in election_instances  %}
+                {% blockwrap template='electioninstance' %}
+                    <h3>{{ ei.name }}</h3>
+                    <a href="{% url backoffice.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
+                    <ul class="quicklinks">
+                    	<li><a href="{% url backoffice.edit_election_instance id=ei.id %}">{% trans "Edit settings" %}</a></li>
+                    </ul>
+                {% endblockwrap %}
+            {% endfor %}
+            </div>
+    </div>
 {% endblock content %}

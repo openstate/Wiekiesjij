@@ -22,15 +22,21 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.appearance_id = kwargs['appearance_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
-            
+            self.user = User.objects.get(pk=self.user_id)
+            if self.appearance_id:
+                self.appearance = self.user.profile.appearances.get(pk=self.appearance_id)
+            else:
+                self.appearance = None
+
         except Exception, e:
             raise e
         step1_forms = dict(appearance=AppearanceForm,)
         step1 = Step('candidate_edit_appearance',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'appearance': self.appearance })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -46,10 +52,12 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
                 for name, form in forms.iteritems():
                     if name == 'appearance':
                         self.candidate_appearance_data = form.cleaned_data
-
-            appearance = self.user.profile.appearances.create(
-            politician=self.user.profile,
-            )
+            if self.appearance_id:
+                appearance = self.appearance
+            else:
+                appearance = self.user.profile.appearances.create(
+                    politician=self.user.profile,
+                )
 
             for (key, value) in self.candidate_appearance_data.items():
                 setattr(appearance, key, value)
@@ -73,15 +81,21 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.political_id = kwargs['political_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
+            self.user = User.objects.get(pk=self.user_id)
+            if self.political_id:
+                self.political = self.user.profile.political.get(pk=self.political_id)
+            else:
+                self.political = None
             
         except Exception, e:
             raise e
         step1_forms = dict(political=PoliticalExperienceForm,)
         step1 = Step('candidate_edit_political',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'political': self.political })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -98,9 +112,13 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
                     if name == 'political':
                         self.candidate_political_data = form.cleaned_data
 
-            political = self.user.profile.political.create(
-            politician=self.user.profile,
-            )
+            if self.political_id:
+                political = self.political
+            else:
+                political = self.user.profile.political.create(
+                    politician=self.user.profile,
+                )
+
 
             for (key, value) in self.candidate_political_data.items():
                 setattr(political, key, value)
@@ -124,15 +142,21 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.work_id = kwargs['work_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
+            self.user = User.objects.get(pk=self.user_id)
+            if self.work_id:
+                self.work = self.user.profile.work.get(pk=self.work_id)
+            else:
+                self.work = None
             
         except Exception, e:
             raise e
         step1_forms = dict(work=WorkExperienceForm,)
         step1 = Step('candidate_edit_work',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'work': self.work })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -149,9 +173,13 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
                     if name == 'work':
                         self.candidate_work_data = form.cleaned_data
 
-            work = self.user.profile.work.create(
-            politician = self.user.profile,
-            )
+            if self.work_id:
+                work = self.work
+            else:
+                work = self.user.profile.work.create(
+                    politician=self.user.profile,
+                )
+
 
             for (key, value) in self.candidate_work_data.items():
                 setattr(work, key, value)
@@ -175,15 +203,21 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.interest_id = kwargs['interest_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
+            self.user = User.objects.get(pk=self.user_id)
+            if self.interest_id:
+                self.interest = self.user.profile.interests.get(pk=self.interest_id)
+            else:
+                self.interest = None
             
         except Exception, e:
             raise e
         step1_forms = dict(interest=InterestForm,)
         step1 = Step('candidate_edit_interest',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'interest': self.interest })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -200,9 +234,13 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
                     if name == 'interest':
                         self.candidate_interest_data = form.cleaned_data
 
-            interest = self.user.profile.interests.create(
-            politician = self.user.profile,
-            )
+            if self.interest_id:
+                interest = self.interest
+            else:
+                interest = self.user.profile.interests.create(
+                    politician=self.user.profile,
+                )
+
 
             for (key, value) in self.candidate_interest_data.items():
                 setattr(interest, key, value)
@@ -226,8 +264,13 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.education_id = kwargs['education_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
+            self.user = User.objects.get(pk=self.user_id)
+            if self.education_id:
+                self.education = self.user.profile.education.get(pk=self.education_id)
+            else:
+                self.education = None
             
         except Exception, e:
             raise e
@@ -235,7 +278,8 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         step1_forms = dict(education=EducationForm,)
         step1 = Step('candidate_edit_education',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'education': self.education })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -252,9 +296,13 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
                     if name == 'education':
                         self.candidate_education_data = form.cleaned_data
 
-            education = self.user.profile.education.create(
-            politician = self.user.profile,
-            )
+            if self.education_id:
+                education = self.education
+            else:
+                education = self.user.profile.education.create(
+                    politician=self.user.profile,
+                )
+
 
             for (key, value) in self.candidate_education_data.items():
                 setattr(education, key, value)
@@ -279,8 +327,13 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
+            self.link_id = kwargs['link_id']
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(id=self.user_id)
+            self.user = User.objects.get(pk=self.user_id)
+            if self.link_id:
+                self.link = self.user.profile.links.get(pk=self.link_id)
+            else:
+                self.link = None
             
         except Exception, e:
             raise e
@@ -288,7 +341,8 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         step1_forms = dict(link=LinkForm,)
         step1 = Step('candidate_edit_link',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',)
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'link': self.link })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -305,9 +359,13 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
                     if name == 'link':
                         self.candidate_link_data = form.cleaned_data
 
-            link = self.user.profile.links.create(
-            politician=self.user.profile,
-            )
+            if self.link_id:
+                link = self.link
+            else:
+                link = self.user.profile.links.create(
+                    politician=self.user.profile,
+                )
+
 
             for (key, value) in self.candidate_link_data.items():
                 setattr(link, key, value)
