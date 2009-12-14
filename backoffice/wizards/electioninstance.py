@@ -278,7 +278,7 @@ class ElectionSetupWizard(GraphFormWizard):
 
 
 #TODO: use profile_form function for the forms !
-class ElectionSetupWizard(MultiPathFormWizard):
+class ElectionSetupWizard2(MultiPathFormWizard):
     """
     Steps 2.1.5 - 2.6 of interaction design.
 

@@ -146,7 +146,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.forms import Form, BaseForm
+from django.forms import BaseForm
 from django.core.files.uploadedfile import UploadedFile
 
 # used to store session data
@@ -617,23 +617,28 @@ class CleanStep(object):
         return None
         
 
-    def get_forms(self, stepdata, post = None, files = None):
+    def get_forms(self, stepdata, post = None, files = None, posted = True):
         """Re-instantiates forms"""
         #(valid, stepforms, cleandata)
         retforms = {}
         retdata = {}
         valid = True
         for (name, (form, prefix, initial)) in self.forms.iteritems():
-            args = stepdata.get(name, ({}, {}))
-            if post is not None:
-                args[0].update(post)
+            if posted:
+                args = stepdata.get(name, ({}, {}))
+                if post is not None:
+                    args[0].update(post)
 
-            if files is not None:
-                args[1].update(files)
+                if files is not None:
+                    args[1].update(files)
 
-            retforms[name] = Step.new_form(form, prefix, initial, *args)
-            valid = valid and retforms[name].is_valid()
-            retdata[name] = getattr(retforms[name], 'cleaned_data', {})
+                retforms[name] = Step.new_form(form, prefix, initial, *args)
+                valid = valid and retforms[name].is_valid()
+                retdata[name] = getattr(retforms[name], 'cleaned_data', {})
+            else:
+                retforms[name] = Step.new_form(form, prefix, initial)
+                valid = False
+                retdata[name] = {}
 
         return (valid, retforms, retdata)
         
@@ -866,7 +871,7 @@ class GraphFormWizard(object):
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = url)))
 
         # OK, now we need re-validated data along the path
-        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, files)
+        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, (files, request.method == 'POST' or action == 'post'))
         if not valid: # validpath is prefix of step_path
             return self.revalidation_failed_response(request, validpath, step_path, url_step = url_step, url_action = url_action, *args, **kwargs)
 
@@ -946,27 +951,6 @@ class GraphFormWizard(object):
 
         if curstep.extra_context is not None:
             context.update(curstep.extra_context)
-
-
-         # at this step we have: meta, curstep, step_context, step_path, wizard_data, data
-        #print context
-        #self.save_data(request, data, meta, *args, **kwargs)
-
-        #from django.http import HttpResponse
-        #return HttpResponse("""
-#<html>
-#<head></head>
-#<body>
-#<h1>Files</h1>
-#
-#<form action="" method="POST" enctype="multipart/form-data">
-#    <input type="file" name="test_file">
-#    <input type="submit" value="Send">
-#</form>
-#
-#</body>
-#</html>
-#        """)
 
         return render_to_response(template, context, context_instance = RequestContext(request))
 
@@ -1227,7 +1211,7 @@ class GraphFormWizard(object):
         # end of while
         
 
-    def refetch_path(self, step_path, data, post, files):
+    def refetch_path(self, step_path, data, post, files, posted):
         """Restores steps and forms along the path from the data."""
         if len(step_path) == 0:
             step_path.append((self.clean_scenario, 0))
@@ -1297,7 +1281,8 @@ class GraphFormWizard(object):
                 respath.pop()
                 
             if step is target:
-                (last_valid, stepforms, cleandata) = step.get_forms(stepdata, post, files)
+                (last_valid, stepforms, cleandata) = step.get_forms(stepdata, post, files, posted)
+
                 if last_valid: # store back in session
                     ctx[step.name] = cleandata
                     step_context[step.name] = stepforms
