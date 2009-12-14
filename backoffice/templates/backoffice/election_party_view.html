@@ -3,7 +3,7 @@
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
 {% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
-{% block back-link %}<a href="#" class="back">Back to {{ instance.election_event.name }}</a>{% endblock back-link %}
+{% block back-link %}<a href="#" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>{% endblock back-link %}
 
 {% block breadcrumbs %}
 	<li><a href="#">{{ instance.election_event.name }}</a></li>
@@ -19,7 +19,7 @@
    	</div>
 
 	<div class="mod overview candidates">
-        <h2>Candidate in this party:</h2>
+        <h2>{% trans 'Candidate in this party' %}:</h2>
 		<a href="#">{% trans 'Batch add candidates' %}</a>
         
         {% for index, can in eip.candidate_dict.items %}
