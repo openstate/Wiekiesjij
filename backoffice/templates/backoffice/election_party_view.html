@@ -1,42 +1,56 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n utils_tags %}
 
+{% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
+{% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
+{% block back-link %}<a href="#" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>{% endblock back-link %}
+
 {% block breadcrumbs %}
-	{{ instance.election_event.name }} &gt; <a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a> &gt;
+	<li><a href="#">{{ instance.election_event.name }}</a></li>
+    <li><a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
 {% endblock breadcrumbs %}
 
 {% block content %}
-	<h1>{{ eip.party.name }} <span>({{ eip.party.abbreviation }})</h1>
-	<ul>
-		{% if eip.party.profile_incomplete %}<li>{% trans 'You did not completely fill in the party profile.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
-		{% if not eip.party.contacts.count %}<li>{% trans 'You did not assign a party contact yet.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
-	</ul>
+	<div class="mod messages">
+        <ul class="message-list">
+            {% if eip.party.profile_incomplete %}<li>{% trans 'You did not completely fill in the party profile.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+            {% if not eip.party.contacts.count %}<li>{% trans 'You did not assign a party contact yet.' %} <a href="#">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
+        </ul>
+   	</div>
 
-	<h2>Candidate list</h2>
-
-	<div><a href="#">{% trans 'Batch add candidates' %}</a></div>
-	{% for index, can in eip.candidate_dict.items %}
-	<div class="item">
-		<div class="index">{{ index }}</div>
-		{% if can %}
-			<div class="main_content">
-				<img src="{{ can.candidate.profile.picture }}" />
-				<h3><a href="#">{{ eip.candidate.profile.full_name }}</a></h3>
-				<ul>
-					{% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
-					{% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
-					{% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
-				</ul>
-			</div>
-			<div class="sidebar"><a href="#">{% trans 'View candidate profile' %} &gt;</a></div>
-			<div class="sidebar"><a href="#">{% trans 'Remove candidate' %}</a></div>
-			<br class="clear" />
-		{% else %}
-			<h3><a href="#">{% trans 'Invite politician' %}</a></h3>
-		{% endif %}
-	</div>
-	{% endfor %}
-	<div> <a href="#">{% trans 'Batch add candidates' %}</a></div>
+	<div class="mod overview candidates">
+        <h2>{% trans 'Candidate in this party' %}:</h2>
+		<a href="#">{% trans 'Batch add candidates' %}</a>
+        
+        {% for index, can in eip.candidate_dict.items %}
+        <div class="item">
+            <span class="list"><strong>{{ index }}</strong></span>
+            {% if can %}
+                {% ifnotequal index 1 %}<div class="up"><a href="{% url backoffice.candidate_up can.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
+                {% ifnotequal index eip.list_length %}<div class="down"><a href="{% url backoffice.candidate_down can.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
+                <div class="main_content">
+                    <img src="{{ can.candidate.profile.picture }}" />
+                    <h3><a href="#">{{ can.candidate.profile.full_name }}</a></h3>
+                    <ul>
+                        {% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="warning"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
+                        {% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
+                        {% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="warning"{% endif %}>{% trans 'Candidate did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
+                    </ul>
+                </div>
+                <div class="sidebar"><a href="#">{% trans 'View candidate profile' %} &gt;</a></div>
+                <div class="sidebar"><a href="#">{% trans 'Remove candidate' %}</a></div>
+                <br class="clear" />
+            {% else %}
+                <h3><a href="#" class="add-item">{% trans 'Invite politician' %}</a></h3>
+                {% ifequal index eip.list_length %}
+                	<a href="{% url backoffice.election_party_shrink eip.id %}" class="delete">{% trans 'Remove this slot' %}</a>
+              	{% endifequal %}
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div><a href="{% url backoffice.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
+        <div> <a href="#">{% trans 'Batch add candidates' %}</a></div>
+  	</div>
 {% endblock content %}
 
 

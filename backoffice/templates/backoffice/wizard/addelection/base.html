@@ -1,2 +1,11 @@
 {% extends 'backoffice/wizard/base.html' %}
-{% block title %}AddElectionWizard{% endblock title %}
+{% load i18n %}
+
+{% block title %}{% trans "Create a new Instance" %}{% endblock title %}
+{% block page-title %}{% trans "Create a new Instance" %}{% endblock page-title %}
+{% block back-link %}{% endblock back-link %}
+
+{% block breadcrumbs %}
+	<li><a href="/">{% trans 'Wie Kies Jij?' %}</a></li>
+    <li><a href="/backoffice">{% trans 'Election Event Name' %}</a></li>
+{% endblock breadcrumbs %}

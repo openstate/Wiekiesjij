@@ -86,25 +86,18 @@ class NameWidget(forms.widgets.MultiWidget):
         Widget to fill out a name
     """
     TEMPLATE = """
-        <div class="fields">
-            <table>
-                <tr>
-                    <td>%(last_name_label)s</td>
-                    <td>%(middle_name_label)s</td>
-                </tr>
-                <tr>
-                    <td>%(last_name_field)s</td>
-                    <td>%(middle_name_field)s</td>
-                <tr>
-                    <td>%(first_name_label)s</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>%(first_name_field)s</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-        </div>
+        <div class="last-name text field">
+			<label for="last-name">%(last_name_label)s</label>
+			%(last_name_field)s
+		</div>
+		<div class="middle-name text field">
+			<label for="middle-name">%(middle_name_label)s <span class="optional">optional</span></label>
+			%(middle_name_field)s
+		</div>
+		<div class="first-name text field">
+			<label for="first-name">%(first_name_label)s</label>
+			%(first_name_field)s
+		</div>
     """
     
     def __init__(self, *args, **kwargs):
@@ -222,6 +215,7 @@ class ColorPicker(forms.widgets.TextInput):
 
             jQuery(document).ready(function(){
                 $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
+                $('#%(id)s').addClass("colorpicker_field");
             });
 
         </script>
@@ -264,11 +258,6 @@ class DatePicker(forms.widgets.TextInput):
         <script type="text/javascript">
         <!--
             jQuery(document).ready(function(){
-
-                function getDateTimeValue(dateSel, hoursSel, minutesSel, secondsSel) {
-                    return dateSel.attr('value') + ' ' + hoursSel.attr('value') + ':' + minutesSel.attr('value') + ':' + secondsSel.attr('value');
-                }
-
                 date_obj = new Date();
                 date_obj_hours = date_obj.getHours();
                 date_obj_mins = date_obj.getMinutes();

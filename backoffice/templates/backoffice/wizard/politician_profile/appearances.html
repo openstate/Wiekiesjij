@@ -1,12 +1,13 @@
 {% extends 'backoffice/wizard/addelection/base.html' %}
 {% load i18n %}
+
 {% block content %}
 <h1>{% trans 'What events have you appeared at?' %}</h1>
 
 <p>{% trans "Visitors of the website can see an overview of the events you appeared at " %}<p>
 <h2>{%trans 'Events have you appeared' %} </h2>
 {% for appearance in appearances %}
-    <p>{{ appearance.name }}: {{ appearance.url }}: {{ appearance.description }}</p>
+    <p><a href="{% url backoffice.politician_profile_appearance_wizard_edit user_id appearance.id %}">{{ appearance.name }}</a>: {{ appearance.url }}: {{ appearance.description }}</p>
 {% empty %}
     <p>{%trans 'You have no appearances defined yet' %} </p>
 {% endfor %}

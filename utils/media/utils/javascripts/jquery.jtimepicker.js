@@ -20,7 +20,7 @@
         jtimepicker: function(options) {
             
             var defaults = {
-                clockIcon: 'images/icon_clock_2.gif',
+                clockIcon: '../img/jQuery_UI/icon_clock_2.gif',
                 orientation: 'horizontal',
                 // set hours
                 hourCombo: 'hourcombo',
@@ -138,3 +138,7 @@
 
 
 })(jQuery);
+
+function getDateTimeValue(dateSel, hoursSel, minutesSel, secondsSel) {
+    return dateSel.attr('value') + ' ' + hoursSel.attr('value') + ':' + minutesSel.attr('value') + ':' + secondsSel.attr('value');
+}

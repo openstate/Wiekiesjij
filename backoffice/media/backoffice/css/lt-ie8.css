@@ -1,0 +1,14 @@
+/* 	Specific styling for Internet Explorer 6 & 7
+	*************************************************************************************************/
+
+div.checkbox label input {
+	margin-top:-1px;
+	}
+	
+div.form-submit button.prev {
+	padding:0 5px 0 25px;
+	}
+	
+div.form-submit button.next {
+	padding:0 25px 0 5px;
+	}

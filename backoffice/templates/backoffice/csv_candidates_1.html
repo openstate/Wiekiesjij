@@ -10,14 +10,14 @@
     {% trans "In the template you can download form this page, only the middle_name field can be empty." %}
 </p>
 <p>
-    <img src="{{ STATIC_URL }}utils/images/pol_csv.png" alt="Example CSV file">
+    <img src="{{ STATIC_URL }}utils/images/pol_csv.png" alt="{% trans 'Example CSV file' %}">
 </p>
 <p>
-    <a href="{{ STATIC_URL }}utils/other/pol_csv.csv" class="button">Download this template</a>
+    <a href="{{ STATIC_URL }}utils/other/pol_csv.csv" class="btn">{% trans 'Download this template' %}</a>
 </p>
 
 <div class="buttons">
     <a href="#">{% trans "Cancel" %}</a>
-    <a class="button" href="{% url backoffice.csv_candidates_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
+    <a class="btn" href="{% url backoffice.csv_candidates_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
 </div>
 {% endblock content %}

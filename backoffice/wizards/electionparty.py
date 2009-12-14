@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.shortcuts import redirect
 
 from utils.multipathform import Step, MultiPathFormWizard
 

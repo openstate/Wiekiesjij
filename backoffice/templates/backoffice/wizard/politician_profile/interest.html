@@ -6,7 +6,7 @@
 <p>{% trans "Visitors of the website can see an overview of your interests " %}<p>
 <h2>{%trans 'Interests' %} </h2>
 {% for interest in interests %}
-    <p>{{ interest.name }}: {{ interest.url }}: {{ interest.description }}</p>
+    <p><a href="{% url backoffice.politician_profile_interest_wizard_edit user_id interest.id %}">{{ interest.name }}</a>: {{ interest.url }}: {{ interest.description }}</p>
 {% empty %}
     <p>{%trans 'You have no interests entered yet' %} </p>
 {% endfor %}

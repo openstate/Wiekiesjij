@@ -6,7 +6,7 @@
 <p>{% trans "Visitors of the website can see an overview of the education you have " %}<p>
 <h2>{%trans 'Education' %} </h2>
 {% for education_instance in education %}
-    <p>{{ education_instance.name }}: {{ education_instance.url }}: {{ education_instance.description }}</p>
+    <p><a href="{% url backoffice.politician_profile_education_wizard_edit user_id education_instance.id %}">{{ education_instance.name }}</a>: {{ education_instance.url }}: {{ education_instance.description }}</p>
 {% empty %}
     <p>{%trans 'You have no education entered yet' %} </p>
 {% endfor %}

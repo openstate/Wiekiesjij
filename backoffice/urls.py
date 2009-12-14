@@ -19,8 +19,18 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election_instance/(?P<id>\d+)/edit/$', 'edit_election_instance', name='backoffice.edit_election_instance'),
     url(r'^election_instance/(?P<id>\d+)/edit_council/$', 'council_edit', name='backoffice.edit_council'),
     url(r'^election_instance/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='backoffice.election_party_create'),
+    url(r'^election_instance/(?P<id>\d+)/shrink/$', 'election_instance_shrink', name='backoffice.election_instance_shrink'),
+    url(r'^election_instance/(?P<id>\d+)/grow/$', 'election_instance_grow', name='backoffice.election_instance_grow'),
+
     url(r'^election_party/(?P<id>\d+)/$', 'election_party_view', name='backoffice.election_party_view'),
     url(r'^election_party/(?P<id>\d+)/edit/$', 'election_party_edit', name='backoffice.election_party_edit'),
+    url(r'^election_party/(?P<id>\d+)/up/$', 'election_party_up', name='backoffice.election_party_up'),
+    url(r'^election_party/(?P<id>\d+)/down/$', 'election_party_down', name='backoffice.election_party_down'),
+    url(r'^election_party/(?P<id>\d+)/shrink/$', 'election_party_shrink', name='backoffice.election_party_shrink'),
+    url(r'^election_party/(?P<id>\d+)/grow/$', 'election_party_grow', name='backoffice.election_party_grow'),
+
+    url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='backoffice.candidate_up'),
+    url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='backoffice.candidate_down'),
 
     url(r'^csv_candidates_1/$', 'csv_import_candidates_step1', name='backoffice.csv_candidates_step1'),
     url(r'^csv_candidates_2/$', 'csv_import_candidates_step2', {'error': 'false'}, name='backoffice.csv_candidates_step2'),
@@ -41,19 +51,24 @@ urlpatterns += patterns('backoffice.views',
 
     url(r'^welcome/(?P<user_id>\d+)/political$', 'politician_profile_political', name='backoffice.politician_profile_political'),
     url(r'^welcome/(?P<user_id>\d+)/political/add/$', 'politician_profile_political_wizard', name='backoffice.politician_profile_political_wizard'),
+    url(r'^welcome/(?P<user_id>\d+)/political/edit/(?P<political_id>\d+)$', 'politician_profile_political_wizard', name='backoffice.politician_profile_political_wizard_edit'),
 
     url(r'^welcome/(?P<user_id>\d+)/interest/$', 'politician_profile_interest', name='backoffice.politician_profile_interest'),
     url(r'^welcome/(?P<user_id>\d+)/interest/add/$', 'politician_profile_interest_wizard', name='backoffice.politician_profile_interest_wizard'),
+    url(r'^welcome/(?P<user_id>\d+)/interest/edit/(?P<interest_id>\d+)$', 'politician_profile_interest_wizard', name='backoffice.politician_profile_interest_wizard_edit'),
 
     url(r'^welcome/(?P<user_id>\d+)/appearance/$', 'politician_profile_appearance', name='backoffice.politician_profile_appearance'),
     url(r'^welcome/(?P<user_id>\d+)/appearance/add/$', 'politician_profile_appearance_wizard', name='backoffice.politician_profile_appearance_wizard'),
+    url(r'^welcome/(?P<user_id>\d+)/appearance/edit/(?P<appearance_id>\d+)$', 'politician_profile_appearance_wizard', name='backoffice.politician_profile_appearance_wizard_edit'),
 
     url(r'^welcome/(?P<user_id>\d+)/education/$', 'politician_profile_education', name='backoffice.politician_profile_education'),
     url(r'^welcome/(?P<user_id>\d+)/education/add/$', 'politician_profile_education_wizard', name='backoffice.politician_profile_education_wizard'),
+    url(r'^welcome/(?P<user_id>\d+)/education/edit/(?P<education_id>\d+)$', 'politician_profile_education_wizard', name='backoffice.politician_profile_education_wizard_edit'),
 
     url(r'^welcome/(?P<user_id>\d+)/links/$', 'politician_profile_link', name='backoffice.politician_profile_link'),
     url(r'^welcome/(?P<user_id>\d+)/links/add/$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard'),
-    
+    url(r'^welcome/(?P<user_id>\d+)/links/edit/(?P<link_id>\d+)$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard_edit'),
+
     #TODO: Debug views remove at some point 
 
     url(r'^wizard/(?P<wizard_type>[-\w]+)/$', 'wizard_view', name='backoffice.show_wizard'),
