@@ -61,8 +61,9 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
         model = ChanceryProfile
         fieldsets = (
                         ('main', {
-                            'fields': ('name','email', 'gender' ), 
-                            'classes': ('invite',)
+                            'fields': ('name','email','gender'), 
+							'legend': '',
+                            'classes': ('sub-form','invite')
                         }
                     ),
                 )
@@ -144,7 +145,15 @@ class InitialContactProfileForm(BetterModelForm, TemplateForm):
     
     class Meta:
         model = ChanceryProfile
-        fields = ('name','email', 'gender' )
+        fieldsets = (
+                        ('main', {
+                            'fields': ('name','email','gender'), 
+							'legend': 'Invite the administrative contact for this party:',
+							'description': 'This contact will be invited to complete further setup for this party.',
+                            'classes': ('sub-form','invite')
+                        }
+                    ),
+                )
 
 class ContactProfileForm(BetterModelForm, TemplateForm):
     '''

@@ -22,9 +22,8 @@
 </div>
 
 <div class="mod overview parties">
-    <h2>{% trans 'The following parties are taking part in this election' %}:</h2>
-
-        <a href="#" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
+	<a href="#" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
+    <h2>{% trans 'All parties for this election' %}:</h2>
 
     {% for index, eip in instance.party_dict.items %}
     <div class="item">
@@ -70,33 +69,38 @@
 {% block sidebar %}
 	{% blockwrap %}
 		<h3>{% trans 'Taking place on' %}:</h3>
-        <p>{{ instance.start_date|date:"D j F Y" }} <a href="#" class="edit">{% trans 'edit' %}</a> </p>
+        <a href="#" class="edit">{% trans 'edit' %}</a> 
+        <p>{{ instance.start_date|date:"D j F Y" }}</p>
 	{% endblockwrap %}
 
 	{% blockwrap %}
-		<strong>{% trans 'Council profile' %}: <a href="{% url backoffice.edit_council id=instance.id %}">{% trans 'edit' %}</a></strong>
-		{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a><br />
-		{% trans 'Description' %}: {{ instance.council.description }}<br />
-		{% trans 'E-mail' %}: <a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a><br />
-		{% if instance.council.profile_incomplete %}<a href="#">{% trans 'Complete profile' %} &gt;</a>{% endif %}
+        <h3>{% trans 'This council' %}</h3>
+        <a href="{% url backoffice.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>
+        <ul>
+        	<li>{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a></li>
+			<li>{% trans 'Description' %}: {{ instance.council.description }}</li>
+			<li>{% trans 'E-mail' %}: <a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a></li>
+     	</ul>
+		{% if instance.council.profile_incomplete %}<a href="#" class="act">{% trans "View complete profile" %}</a>{% endif %}
 	{% endblockwrap %}
 
 	{% blockwrap %}
-		<strong>{% trans 'Chancellery' %} <a href="#">{% trans 'edit' %}</a></strong>
-		{% if instance.council.chanceries.count %}
+		<h3>{% trans 'The Chancellery' %}</h3> 
+        <a href="#" class="edit">{% trans 'edit' %}</a>
+		{% if not instance.council.chanceries.count %}
 			{% for chancery in instance.council.chanceries.all %}
 				{{ chancery.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
 			{% endfor %}
-			<a href="#">{% trans 'Add a chancellery' %}</a>
+			{#<a href="#" class="add">{% trans 'Add a chancellery' %}</a>
 		{% else %}
-			<em>{% trans 'You did not assign a chancellery yet' %}</em><br />
-			<a href="#">{% trans 'Invite a chancellery now' %} &gt;</a>
+			<p>{% trans 'You did not assign a chancellery yet.' %}
+				<a href="#" class="act">{% trans 'Invite a chancellery now' %}</a></p>
 		{% endif %}
 	{% endblockwrap %}
 
 	{% blockwrap %}
-		<strong>{% trans 'Styling' %} <a href="#">{% trans 'edit' %}</a></strong>
+		<h3>{% trans 'Styling' %}</h3>
+        <a href="#" class="edit">{% trans 'edit' %}</a>
 		{#<img src="{ % url 'style.preview' instance.id % }" />#}
-		<a href="#">{% trans 'Customize styling' %} &gt;</a>
 	{% endblockwrap %}
 {% endblock sidebar%}

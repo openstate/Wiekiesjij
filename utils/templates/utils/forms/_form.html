@@ -13,9 +13,11 @@
 		{% for fieldset in form.fieldsets %}
 			<fieldset class="{% if fieldset.classes %}{{ fieldset.classes }}{% else %}default{% endif %}">
 			{% if fieldset.legend %}
-				<legend>{{ fieldset.legend }}</legend>
+				<h3>{{ fieldset.legend }}</h3>
 			{% endif %}
-				
+			{% if fieldset.description %}
+				<p class="description">{{ fieldset.description }}</p>
+			{% endif %}
 			{% block fields %}
 				{% for field in fieldset %}
 				    {% include field_template %}
