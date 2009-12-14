@@ -459,3 +459,10 @@ def council_edit_done(request):
     '''
     return render_to_response('backoffice/wizard/council/edit/done.html',
                               context_instance=RequestContext(request))
+
+
+def test_question_forms(request):
+    return QuestionTestWizard()(request)
+
+def answer_add(request):
+    return AnswerAddWizard()(request)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from questions.settings import QUESTION_TYPE_CHOICES, QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING
 
 
 class Question(models.Model):
@@ -7,17 +8,12 @@ class Question(models.Model):
         A question, has a simple title and a description
         The question type determines how the question is displayed
     """
-    QUESTION_TYPE_MULTIPLECHOICE = 'C'
-    QUESTION_TYPE_MULTIPLEANSWER = 'A'
-    QUESTION_TYPE_BOOLEAN = 'B'
-    QUESTION_TYPE_RATING = 'R'
+    QUESTION_TYPE_MULTIPLECHOICE = QUESTION_TYPE_MULTIPLECHOICE
+    QUESTION_TYPE_MULTIPLEANSWER = QUESTION_TYPE_MULTIPLEANSWER
+    QUESTION_TYPE_BOOLEAN = QUESTION_TYPE_BOOLEAN
+    QUESTION_TYPE_RATING = QUESTION_TYPE_RATING
     
-    QUESTION_TYPE_CHOICES = (
-        (QUESTION_TYPE_MULTIPLEANSWER, 'Multiple answers'),
-        (QUESTION_TYPE_BOOLEAN, 'Boolean (yes/no, agree/disagree)'),
-        (QUESTION_TYPE_MULTIPLECHOICE, 'Multiple choice'),
-        (QUESTION_TYPE_RATING, 'Rating'),
-    )
+    QUESTION_TYPE_CHOICES = QUESTION_TYPE_CHOICES
     
     title           = models.CharField(_('Title'), max_length=255)
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
@@ -74,4 +70,4 @@ class Answer(models.Model):
             return self.value
 
     def __unicode__(self):
-        return self.question
+        return self.question.title + ' - ' + self.value
