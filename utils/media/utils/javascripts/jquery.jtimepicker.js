@@ -138,3 +138,7 @@
 
 
 })(jQuery);
+
+function getDateTimeValue(dateSel, hoursSel, minutesSel, secondsSel) {
+    return dateSel.attr('value') + ' ' + hoursSel.attr('value') + ':' + minutesSel.attr('value') + ':' + secondsSel.attr('value');
+}
