@@ -4,7 +4,7 @@ from django.contrib import admin
 import backoffice.urls
 
 
-from utils.graphformwizard import TestWizard
+#from utils.graphformwizard import TestWizard
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
 
 

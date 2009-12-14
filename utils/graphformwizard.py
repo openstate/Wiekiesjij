@@ -142,12 +142,13 @@ import tempfile
 import os
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, QueryDict
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.forms import BaseForm
 from django.core.files.uploadedfile import UploadedFile
+from django.utils.datastructures import MultiValueDict
 
 # used to store session data
 from utils.models import GraphFormWizardSession
@@ -402,7 +403,19 @@ class Step(object):
         self._cycle_end = True
         return self
 
+
     def new_form(cls, form, prefix = None, initial = None, *args, **kwargs):
+        """
+            Creates new form with initial data properly given.
+
+            Form classes instances take initial data differently. Model forms
+            expect @instance (but can take @initial dict too). Management form
+            takes @queryset. This method selecst correct argument name for given
+            form type.
+
+            @return Form
+        """
+        
         # model form
         if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
             init = 'instance'
@@ -421,6 +434,7 @@ class Step(object):
         return form(*args, **kwargs)
 
     new_form = classmethod(new_form)
+    
 
 
 
@@ -617,28 +631,53 @@ class CleanStep(object):
         return None
         
 
-    def get_forms(self, stepdata, post = None, files = None, posted = True):
+    def get_forms(self, initial = None, post = None, files = None):
         """Re-instantiates forms"""
-        #(valid, stepforms, cleandata)
-        retforms = {}
-        retdata = {}
-        valid = True
-        for (name, (form, prefix, initial)) in self.forms.iteritems():
-            if posted:
-                args = stepdata.get(name, ({}, {}))
-                if post is not None:
-                    args[0].update(post)
-
-                if files is not None:
-                    args[1].update(files)
-
-                retforms[name] = Step.new_form(form, prefix, initial, *args)
-                valid = valid and retforms[name].is_valid()
-                retdata[name] = getattr(retforms[name], 'cleaned_data', {})
+        retforms = {}       # forms (name => Form)
+        retdata = {}        # cleaned_data (name => dict) or None if not all forms are validated
+        valid = True        # all forms are validated
+        for (name, (form, prefix, intl)) in self.forms.iteritems():
+            kwargs = {
+                'prefix': prefix,
+            }
+            
+            # model form
+            itl = initial.get(name, None) if initial is not None else None
+            if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
+                kwargs.update(instance = intl)
+                if itl is not None:
+                    kwargs.update(initial = itl)
+            # management form
+            elif hasattr(form, 'management_form'):
+                kwargs.update(queryset = intl)
+                if itl is not None:
+                    kwargs.update(initial = itl)
+            # normal form (initialized from dictionary)
             else:
-                retforms[name] = Step.new_form(form, prefix, initial)
-                valid = False
-                retdata[name] = {}
+                init = {}
+                if intl is not None:
+                    init.update(intl)
+                    
+                if itl is not None:
+                    init.update(itl)
+
+                kwargs.update(initial = init)
+            
+            if post is None: # initial data only
+                retforms[name] = form(**kwargs)
+
+            elif not isinstance(post, QueryDict): # post from session
+                formpost = {}
+                for key, value in post.get(name, {}).iteritems():
+                    formpost['%s-%s' % (prefix, key)] = value
+                retforms[name] = form(formpost, files, **kwargs)
+
+            else: # real post, same for all forms
+                retforms[name] = form(post, files, **kwargs)
+            
+            valid = valid and retforms[name].is_valid()
+            retdata[name] = getattr(retforms[name], 'cleaned_data', {})
+        # end for
 
         return (valid, retforms, retdata)
         
@@ -856,9 +895,6 @@ class GraphFormWizard(object):
         # restore data
         (data, meta) = self.restore_data(request, *args, **kwargs)
 
-        # fix post
-        post = dict([(key, value) for (key, value) in request.POST.iteritems()]);
-
         # handle files, move, replace links
         files = self.handle_files(request, *args, **kwargs)
 
@@ -874,7 +910,7 @@ class GraphFormWizard(object):
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = url)))
 
         # OK, now we need re-validated data along the path
-        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, post, files, (request.method == 'POST' or action == 'post'))
+        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, files, (request.method == 'POST' or action == 'post'))
         if not valid: # validpath is prefix of step_path
             return self.revalidation_failed_response(request, validpath, step_path, url_step = url_step, url_action = url_action, *args, **kwargs)
 
@@ -883,7 +919,6 @@ class GraphFormWizard(object):
             ret = self.wizard_action(request, action, meta, curstep, step_context, step_path, wizard_data, data, url_step, url_action, *args, **kwargs)
             self.save_data(request, data, meta, *args, **kwargs)
             return ret
-
         
         # OK, perform default action
         if last_valid and (request.method == 'POST' or action == 'post'):
@@ -915,12 +950,14 @@ class GraphFormWizard(object):
                         nextstep = curstep.default
                 else:
                     nextstep = curstep.next
-
+                
                 # we have next step, now branch
                 step_path.append((nextstep, 0))
                 url = self.build_path(step_path)
                 self.save_data(request, data, meta, *args, **kwargs)
+                
                 return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(url))))
+            
 
         # current step doesn't accept the data or it is not a POST/post request
         # we are going to render the page. fetch steps up to next visible branch
@@ -1056,8 +1093,8 @@ class GraphFormWizard(object):
             urls['goto'] = reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(self.build_path(urlpath))))
             urls['reset'] = reverse(url_action[0], args = url_action[1], kwargs=dict(url_action[2], action = "reset", path = self.compress_path(self.build_path(urlpath))))
 
-            stepdata = curdata.get(nextstep.name, {})
-            (valid, _, _) = nextstep.get_forms(stepdata)
+            (cldata, fls) = curdata.get(nextstep.name, ({}, None))
+            (valid, _, _) = nextstep.get_forms(post = cldata, files = fls)
 
             tplpath.append(("step", {
                 'is_on_path': False,
@@ -1171,8 +1208,11 @@ class GraphFormWizard(object):
 
                 cycldat = [ self._fetch_cycle(step, pt, cyctx) for (pt, cyctx) in cycles ]
                 ret[step.name] = [ cc for (val, cc) in cycldat if val]
-                
-                if len(ret[step.name]) < 1: # nested cycle contains no complete cycles, we are not complete too
+
+                # nested cycle contains no complete cycles, we are not complete too
+                # we can have a default branch to another step ommiting this cycle
+                # but then it should be taken explicitly in the path hint
+                if len(ret[step.name]) < 1:
                     return (False, None)
 
                 # next from the cycle
@@ -1184,13 +1224,13 @@ class GraphFormWizard(object):
                 continue
                 
 
-            stepdata = cyctx.get(step.name, {})
-            (valid, stepforms, cleandata) = step.get_forms(stepdata)
+            (cldata, fls) = cyctx.get(step.name, ({}, None))
+            (valid, stepforms, cleandata) = step.get_forms(post = cldata, files = fls)
             if not valid:
                 # forget about it, cycle is not valid
                 return (False, None)
 
-            ret[step.name] = stepforms
+            ret[step.name] = (cleandata, fls)
 
             if step.is_tail() or step.is_final():
                 return (True, ret)
@@ -1273,7 +1313,7 @@ class GraphFormWizard(object):
             # end if head
 
             if step.name not in ctx:
-                stepdata = {}
+                stepdata = ({}, None)
                 ctx[step.name] = stepdata
 
             else:
@@ -1282,13 +1322,18 @@ class GraphFormWizard(object):
             path.append(step.name)
             if len(respath) > 0:
                 respath.pop()
-                
-            if step is target:
-                (last_valid, stepforms, cleandata) = step.get_forms(stepdata, post, files, posted)
 
-                if last_valid: # store back in session
-                    ctx[step.name] = cleandata
-                    step_context[step.name] = stepforms
+            (cldata, fls) = stepdata
+            if step is target:
+                if posted: # POST request, may replace session data
+                    (last_valid, stepforms, cleandata) = step.get_forms(post = post, files = files)
+                    
+                else:
+                    (last_valid, stepforms, cleandata) = step.get_forms(initial = cldata)
+
+                if posted and last_valid: # store back in session
+                    ctx[step.name] = (cleandata, files)  # replace session data and files
+                    step_context[step.name] = (stepforms, files)
 
                 lastforms = stepforms
 
@@ -1303,9 +1348,9 @@ class GraphFormWizard(object):
                         path.append(rnm)
 
             else:
-                (valid, stepforms, cleandata) = step.get_forms(stepdata)
+                (valid, stepforms, cleandata) = step.get_forms(post = cldata, files = fls)
                 if valid:
-                    step_context[step.name] = stepforms
+                    step_context[step.name] = (cleandata, fls)
                 
             if step.is_tail() and step is not target:
                 path = pathstack.pop()
@@ -1318,11 +1363,6 @@ class GraphFormWizard(object):
                 
             validpath.append((step, cycle))
         #end of for
-
-        print valid
-        print last_valid
-        print wizard_data
-        print data
         
         return (valid, last_valid, wizard_data, step_context, validpath, lastforms)
 
@@ -1527,32 +1567,39 @@ class GraphFormWizard(object):
 
 #==========- Handles session data. override to provide different storage =======
     def handle_files(self, request, *args, **kwargs):
-        ret = {}
-        for (name, file) in request.FILES.iteritems():
-            # [FIXME: exception can be raised, we don't want to simply loos it
-            # (with the file) so allow Http500 and logging of this error]
-            if settings.WIZARD_UPLOAD_TEMP_DIR:
-                (dst, dstpath) = tempfile.mkstemp(suffix = '.upload', dir = settings.WIZARD_UPLOAD_TEMP_DIR)
-            else:
-                (dst, dstpath) = tempfile.mkstemp(suffix = '.upload')
+        ret = MultiValueDict()
+        for (name, files) in request.FILES.iterlists():
+            ls = []
+            for file in files:
+                # [FIXME: exception can be raised, we don't want to simply loos it
+                # (with the file) so allow Http500 and logging of this error]
+                if getattr(settings, 'WIZARD_UPLOAD_TEMP_DIR', None):
+                    (dst, dstpath) = tempfile.mkstemp(suffix = '.upload', dir = settings.WIZARD_UPLOAD_TEMP_DIR)
+                else:
+                    (dst, dstpath) = tempfile.mkstemp(suffix = '.upload')
 
-            dstfile = open(dstpath, "wb")
-            for chunk in file.chunks():
-                dstfile.write(chunk)
+                dstfile = open(dstpath, "wb")
+                for chunk in file.chunks():
+                    dstfile.write(chunk)
 
-            dstfile.close()
-            os.close(dst)
+                dstfile.close()
+                os.close(dst)
 
-            ret[name] = SessionUploadedFile(dstpath, dstfile, file.content_type, file.size, file.charset)
+                ls.append(SessionUploadedFile(dstpath, dstfile, file.content_type, file.size, file.charset))
+            # end for
+            ret.setlist(name, ls)
+        # end for
 
         return ret
     
 
-    def _filter_data(self, dat):
+    def _filter_data(self, data):
         """Filters data before/after session save/restore."""
         # The data can be:
-        #   { name => {form dict} }
-        #   { name => [ ([path], {cycle step dicts}) ] }
+        #   { name : ({form_name : Form or dict}, {files}) } -- step dict (cannonical)
+        #   { name : {form_name : Form or dict} } 
+        #   { name => [ ([path], {cycle step dicts}) ] } -- cycle (cannonical)
+        #   { name => [ {cycle step dicts} ] }
         #
         # We keep cycle path to know the branches that were taken. The subclass,
         # however, will not get this info in wizard_data and will probably not
@@ -1560,67 +1607,87 @@ class GraphFormWizard(object):
         #   { name => [ {cycle step dicts} ] }
         #
         # We have to restore it to correct form using "first branch" method.
-        # The form dicts are:
-        #   { form_name => ({data}, {files}) }
+        # Resulting structure will always be in cannonical form.
         #
-        # The content can be in forms if the user has build it may be:
-        #   { form_name => FormObject }
-        #
-        # We have to convert it to:
-        #   { form_name => ({cleaned data}, {}) }
-        #
-        if isinstance(dat, tuple):
-            (path, dat) = dat
-        else:
-            path = []
 
-        for (stepname, forms) in dat.items():
-            step = self.steps.get(stepname, None)
-            if step is None: # ignore unknown data
-                del dat[stepname]
-                continue
+        def fltr(dat, head):
+            if isinstance(dat, tuple): # cycle with path hint
+                (path, dat) = dat
+            else:  # can be a cycle without a hint
+                path = []
 
-            if isinstance(forms, list):  # the step is a nested cycle
-                if not step.is_head():  # this is not a cycle, ignore garbage list
+            for (stepname, stepdata) in dat.items():
+                step = self.steps.get(stepname, None)
+                if step is None: # ignore unknown data
                     del dat[stepname]
                     continue
 
-                # filter each cycle
-                cycles = [ self._filter_data(subdat) for subdat in forms]
+                if isinstance(stepdata, list):  # the step is a nested cycle
+                    if not step.is_head():  # this is not a cycle, ignore garbage list
+                        del dat[stepname]
+                        continue
+
+                    # filter each cycle
+                    cycles = [ fltr(subdat, step) for subdat in stepdata]
+                    # filter cycles which contain no data at all
+                    cycles = [ (pt, ctx) for (pt, ctx) in cycles if len(ctx) > 0 ]
+                    if len(cycles) > 0: # there is some valid data
+                        dat[stepname] = cycles
+                    else:
+                        # drop empty cycle list
+                        del dat[stepname]
+
+                else: # normal step
+                    if step is not head and step.is_head():
+                        # it should be a list, drop inconsistent data
+                        del dat[stepname]
+                        continue
+
+                    if isinstance(stepdata, tuple): # both form data and files specified
+                        (forms, files) = stepdata
+                        for (fk, fd) in files.items():
+                            if isinstance(SessionUploadedFile, fd) and fd.failed:
+                                del files[fk]
+
+                            # else: unknown file specified in data, ignore, probably
+                            # subclass knows what it is doing.
+
+                    else:
+                        forms = stepdata
+                        files = None
+
+                    for (formname, formdata) in forms.iteritems():
+                        if isinstance(formdata, BaseForm):
+                            # only validated forms will give their data
+                            forms[formname] = getattr(formdata, 'cleaned_data', None)
+
+                    # end for
+                    dat[stepname] = (forms, files)
+
+            # end for
+            return (path, dat)
+        # end of fltr()
+
+        rootdat = data.get(self.clean_scenario.name, None)
+        if rootdat is not None:
+            if self.clean_scenario.is_head():
+                if not isinstance(rootdat, list): # discard inconsistent data
+                    return {}
+
+                cycles = [ fltr(subdat, self.clean_scenario) for subdat in rootdat]
                 cycles = [ (pt, ctx) for (pt, ctx) in cycles if len(ctx) > 0 ]
-                if len(cycles) > 0: # there is some valid data
-                    dat[stepname] = cycles
+                return { self.clean_scenario.name: cycles } if len(cycles) > 0 else {}
+
+            else:
+                # discard inconsistent data
+                if isinstance(rootdat, list):
+                    return {}
+
                 else:
-                    del dat[stepname]
+                    (pt, data) = fltr(data, self.clean_scenario)
+                    return data
 
-            else: # normal step
-                for (formname, formdata) in forms.iteritems():
-                    if isinstance(formdata, BaseForm):
-                        # only validated forms will give their data
-                        forms[formname] = (getattr(formdata, 'cleaned_data', {}), {})
-
-                    elif isinstance(formdata, dict): # form data was given as dict
-                        forms[formname] = (formdata, {})
-
-                    else: #correct (formdata, files) format. check files
-                        (frms, files) = formdata
-                        fls = {}
-                        for (fk, fd) in files.iteritems():
-                            if not fd.failed:
-                                fls[fk] = fd
-
-                            #else: is file suddenly removed from temporary dir?
-
-                        if isinstance(frms, BaseForm):
-                            forms[formname] = (getattr(frms, 'cleaned_data', {}), fls)
-                        else:
-                            forms[formname] = (frms, fls)
-
-                # end for
-                dat[stepname] = forms
-
-        # end for
-        return (path, dat)
+        return {}
         
 
     def restore_data(self, request, *args, **kwargs):
@@ -1662,7 +1729,6 @@ class GraphFormWizard(object):
                                                         complete = False
                                                        )
 
-
         if sess.content == '':
             data = {}
         else:
@@ -1670,7 +1736,7 @@ class GraphFormWizard(object):
                 data = cPickle.loads(str(sess.content))
 
                 # we have to check if files are still alive
-                (pt, data) = self._filter_data(data)
+                data = self._filter_data(data)
                 
             except Exception:
                 # data is tinkered, should not happen, throw it away
@@ -1704,16 +1770,16 @@ class GraphFormWizard(object):
         key = "%s_%s" % (type(self).__name__, self.name or '')
         ses_id = request.session.get(key, None)
 
-        (pt, data) = self._filter_data(data)
+        data = self._filter_data(data)
         content = cPickle.dumps(data)
         meta = cPickle.dumps(meta or {})
 
         try:
-
             sess = GraphFormWizardSession.objects.get(id = ses_id, complete = False)
             sess.content = content
             sess.meta = meta
             sess.save()
+            
         except:
             user = request.user if not request.user.is_anonymous() else None
             sess = GraphFormWizardSession.objects.create(
@@ -1803,8 +1869,7 @@ class GraphFormWizard(object):
 
             If you want to edit the existing data, then you should implement
             an (usually "fast") action that may accept arguments and should
-            load all of the data as described in done() method. You don't need
-            to re-create the forms, use plain dict's instead. When data is
+            load all of the data as described in done() method. When data is
             reconstructed call self.save_data(data, meta, *args, **kwargs)
             to store the data in the session. The meta argument is any dict you
             want to make available in other actions and done() or None if you
@@ -1835,8 +1900,8 @@ class GraphFormWizard(object):
 
             The @raw_data is similar to @wizard_data, but:
                 - may contain data of different branches that are not on current path
-                - data is stored as simple dict, not in forms
                 - data may contain extra meta data (used by the wizard itself)
+                - the structure may change with future releases of this wizard
 
             The @raw_data is thus the session data, that is persistent between
             requests. Often you don't need it unless you want to edit some
@@ -1875,7 +1940,11 @@ class GraphFormWizard(object):
             you will get in done() method, but limited to current cycle only.
             So if you are sitting in a cycle which has a branch and you want to
             lookup in some previous step, then simply:
-              - step_context['step name']['form or data name']['fields...']
+              - step_context['step name'][0]['form or data name']['fields...']
+
+            Note: step_context['step name'] is a tuple containing cleaned_data
+            of all forms within the step and the request.FILES as it was when
+            step was processed. Reffer to done() method for more info.
 
             The @wizard_data is a structure similar to one you will get in done(),
             but contains the data up to current step only. So you can access
@@ -1903,25 +1972,40 @@ class GraphFormWizard(object):
 
             The @wizard_data contains all forms and data properly validated.
             It is a map of:
-                { step_name : forms_and_data } -- "sequence" of steps
-            or  { step_name => [ { sequence of steps} ] } -- cycle
+                { step_name : ({forms_cleaned_data}, {files}) } -- "sequence" of steps
+            or  { step_name : [ { sequence of steps} ] } -- cycle
 
-            So to access forms of specific step use:
-                wizard_data['step name']['form_or_data_name']['fields...']
+            The steps_cleaned_data is the data obtained from all forms:
+                forms_cleaned_data = { form_name : corresponding_form.cleaned_data }
 
-            If your scenario contains multiple branches, then you can test which
-            branch was taken by looking up the step name of the branch in the
-            @wizard_data (data of other branches will not be set in @wizard_data).
+            The files is a MultiValueDict as got from request.FILES when step was
+            validated. To instantiate and bind your final form use followin code:
+                (forms, files) = wizard_data['step name']
+                form = MyForm(forms['my_form_name'], files)
+
+            Note: the reason you get files in a separated dict is that you can
+            not retrieve files from form.cleaned_data. The files dict contains
+            *all* files received when step was processed.
+
+            Note: if you want to recreate @wizard_data (edit mode), then you
+            should skip the files, simply create { step_name: { form_name : form_data } }.
+            If you do define the files, then there is a high chance everything
+            will fail since forms expect UploadedFile objects.
+
+            Note: if your scenario contains multiple branches, then you can test
+            which branch was taken by looking up the step name of the branch in
+            the @wizard_data. The @wizard_data will contain the data of strictly
+            one branch.
 
             If step is part of a cycle, then:
                 for my_iteration in wizard_data['head step name']:
-                    my_iteration['step name']['form_or_data_name']['fields...']
+                    (cleaned_data, files) = my_iteration['step name']
 
             The 'head step name' is the name of the step on which cycle was
             opened. There is always only one head in a cycle. There can be many
             nested cycles, each is a nested list of dicts.
 
-            Note: before this method is called the wizard's session was destroyed.
+            Note: before this method is called, the wizard's session was destroyed.
             You should manually re-save wizard_data if you want to re-enter the
             wizard in the same state (why? don't put scenario logic in done()).
 
@@ -1934,28 +2018,3 @@ class GraphFormWizard(object):
         """
         raise NotImplementedError("Your %s class has not defined a done() method, which is required." % self.__class__.__name__)
 
-
-
-class TestWizard(GraphFormWizard):
-
-    scenario = Step("initial", title = "title test") \
-                .next('step1') \
-                .branch( \
-                    Step('step2').cycle() \
-                    .next('step3').end() \
-                    .next('step4') \
-                 ) \
-                .branch( \
-                    Step('step2b') \
-                    .merge('step4'), \
-                    True \
-                )
-
-
-    def __init__(self, name = None, template = None):
-        super(type(self), self).__init__(name, template)
-
-
-    def done(self, request, wizard_data, meta, *args, **kwargs):
-        print wizard_data
-        pass
