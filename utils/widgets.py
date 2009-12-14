@@ -257,11 +257,6 @@ class DatePicker(forms.widgets.TextInput):
         <script type="text/javascript">
         <!--
             jQuery(document).ready(function(){
-
-                function getDateTimeValue(dateSel, hoursSel, minutesSel, secondsSel) {
-                    return dateSel.attr('value') + ' ' + hoursSel.attr('value') + ':' + minutesSel.attr('value') + ':' + secondsSel.attr('value');
-                }
-
                 date_obj = new Date();
                 date_obj_hours = date_obj.getHours();
                 date_obj_mins = date_obj.getMinutes();
