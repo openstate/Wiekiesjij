@@ -883,9 +883,12 @@ class GraphFormWizard(object):
         # current path in scenario
         (step_path, valid) = self.parse_path(self.uncompress_path(path))
         if not valid: # did scenario change? werid, redirect to the first step
+            import ipdb; ipdb.set_trace()
+            
             url = self.build_path(step_path)
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(url))))
 
+        #import ipdb; ipdb.set_trace()
         
         curstep = step_path[-1][0]
         # handle light weigth actions
@@ -912,6 +915,8 @@ class GraphFormWizard(object):
         # OK, now we need re-validated data along the path
         (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, files, (request.method == 'POST' or action == 'post'))
         if not valid: # validpath is prefix of step_path
+            import ipdb; ipdb.set_trace()
+            
             return self.revalidation_failed_response(request, validpath, step_path, url_step = url_step, url_action = url_action, *args, **kwargs)
 
         # if some action should be invoked instead of default (fill -> next)
@@ -1325,7 +1330,11 @@ class GraphFormWizard(object):
 
             (cldata, fls) = stepdata
             if step is target:
+                if step.name == 'council_contact_information':
+                    import ipdb; ipdb.set_trace()
+
                 if posted: # POST request, may replace session data
+                    #import ipdb; ipdb.set_trace()
                     (last_valid, stepforms, cleandata) = step.get_forms(post = post, files = files)
                     
                 else:
@@ -1351,17 +1360,19 @@ class GraphFormWizard(object):
                 (valid, stepforms, cleandata) = step.get_forms(post = cldata, files = fls)
                 if valid:
                     step_context[step.name] = (cleandata, fls)
+
+                else:
+                    import ipdb; ipdb.set_trace()
                 
             if step.is_tail() and step is not target:
                 path = pathstack.pop()
                 respath = respathstack.pop()
                 ctx = ctxstack.pop()
                 step_context = wizctxstack.pop()
-                
+
+            validpath.append((step, cycle))
             if not valid: # current step is not validated, break here    
                 break
-                
-            validpath.append((step, cycle))
         #end of for
         
         return (valid, last_valid, wizard_data, step_context, validpath, lastforms)

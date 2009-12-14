@@ -183,11 +183,11 @@ class ElectionSetupWizard(GraphFormWizard):
     scenario = GStep("chancery_registration", title = "Welcome Chancellery!") \
                 .forms(dict( [ ('chancery_registration%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'edit'))] )) \
                 .next('election_details') \
-                .form('election_details', ElectionInstanceForm) \
+                .form('election_details1', ElectionInstanceForm) \
                 .next('council_contact_information') \
-                .form('council_contact_information', CouncilContactInformationForm) \
+                .form('council_contact_information1', CouncilContactInformationForm) \
                 .next('council_additional_information') \
-                .form('council_additional_information', CouncilForm) \
+                .form('council_additional_information1', CouncilForm) \
                 .next('chancery_contact_information') \
                 .forms(dict( [ ('chancery_contact_information%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'contact_information'))] )) \
                 .next('council_styling_setup') \
