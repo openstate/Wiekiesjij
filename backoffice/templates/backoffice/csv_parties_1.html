@@ -17,6 +17,6 @@
 </div>
 <div class="form-submit">
     <a class="btn primary next" href="{% url backoffice.csv_parties_step2 ei_id %}">{% trans "Proceed to uploading a filled in template" %}</a>
-    <a href="#" class="cancel">{% trans "Cancel" %}</a>
+    <a href="{% url backoffice.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
 </div>
 {% endblock content %}

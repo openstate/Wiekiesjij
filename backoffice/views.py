@@ -436,7 +436,7 @@ def csv_import_parties_step3(request, ei_id):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
             request.session['csv_party_filename'] = ''
-            return redirect('backoffice.election_region_view', region)
+            return redirect('backoffice.election_instance_view', id=ei_id)
     else:
         form = CsvConfirmForm()
 
