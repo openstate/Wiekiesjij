@@ -20,7 +20,7 @@
     {% endfor %}
 
     <div class="form-submit">
-        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url backoffice.election_party_view ep_id %}" class="cancel">{% trans "Cancel" %}</a>
         <input class="primary next" type="submit" value="{% trans "Proceed to uploading a filled in template" %}">
     </div>
 

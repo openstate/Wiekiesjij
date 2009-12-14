@@ -256,10 +256,10 @@ def council_edit(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance=instance)(request)
 
-def csv_import_candidates_step1(request):
-    return render_to_response('backoffice/csv_candidates_1.html', context_instance=RequestContext(request))
+def csv_import_candidates_step1(request, ep_id):
+    return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id}, context_instance=RequestContext(request))
 
-def csv_import_candidates_step2(request, error = False):
+def csv_import_candidates_step2(request, ep_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -272,16 +272,16 @@ def csv_import_candidates_step2(request, error = False):
                 destination.write(chunk)
             destination.close()
             request.session['csv_candidate_filename'] = filename
-            return redirect('backoffice.csv_candidates_step3')
+            return redirect('backoffice.csv_candidates_step3', ep_id)
             
     else:
         form = CsvUploadForm()
 
     forms = dict({'csv_upload': form})
-    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
 @transaction.commit_manually
-def csv_import_candidates_step3(request):
+def csv_import_candidates_step3(request, ep_id):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
@@ -289,7 +289,7 @@ def csv_import_candidates_step3(request):
         if not os.path.isdir(path):
             os.remove(path + request.session['csv_candidate_filename'])
         request.session['csv_candidate_filename'] = ''
-        return redirect('backoffice.csv_candidates_step2', error='true')
+        return redirect('backoffice.csv_candidates_step2', ep_id=ep_id, error='true')
 
     if(request.POST):
         form = CsvConfirmForm(request.POST)
@@ -309,13 +309,13 @@ def csv_import_candidates_step3(request):
 
                     #Link candidate to party
                     candidacy = Candidacy(
-                        election_party_instance = get_object_or_404(ElectionInstanceParty, party=1), #TODO: Make party dynamic
+                        election_party_instance = get_object_or_404(ElectionInstanceParty, party=ep_id),
                         candidate = candidate_obj.user,
                         position = candidate['position'],
                     )
                     candidacy.save()
 
-                    #Create invitation
+                    #Create invitation TODO: view and text etc.
                     templates = profile_invite_email_templates('candidate')
                     Invitation.create(
                         user_from = request.user,
@@ -335,17 +335,17 @@ def csv_import_candidates_step3(request):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
             request.session['csv_candidate_filename'] = ''
-            return redirect('backoffice.election_party_view', args=1) #TODO: Make party dynamic
+            return redirect('backoffice.election_party_view', id=ep_id)
     else:
         form = CsvConfirmForm()
 
     forms = dict({'csv_confirm': form})
-    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
-def csv_import_parties_step1(request):
-    return render_to_response('backoffice/csv_parties_1.html', context_instance=RequestContext(request))
+def csv_import_parties_step1(request, ei_id):
+    return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id}, context_instance=RequestContext(request))
 
-def csv_import_parties_step2(request, error = False):
+def csv_import_parties_step2(request, ei_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -358,16 +358,16 @@ def csv_import_parties_step2(request, error = False):
                 destination.write(chunk)
             destination.close()
             request.session['csv_party_filename'] = filename
-            return redirect('backoffice.csv_parties_step3')
+            return redirect('backoffice.csv_parties_step3', ei_id = ei_id)
 
     else:
         form = CsvUploadForm()
 
     forms = dict({'csv_upload': form})
-    return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
 @transaction.commit_manually
-def csv_import_parties_step3(request):
+def csv_import_parties_step3(request, ei_id):
     try:
         parties = functions.get_parties_from_csv(request.session)
     except:
@@ -375,32 +375,32 @@ def csv_import_parties_step3(request):
         if not os.path.isdir(path):
             os.remove(path + request.session['csv_party_filename'])
         request.session['csv_party_filename'] = ''
-        return redirect('backoffice.csv_parties_step2', error='true')
+        return redirect('backoffice.csv_parties_step2', ei_id = ei_id, error='true')
 
     if(request.POST):
         form = CsvConfirmForm(request.POST)
         if form.is_valid():
-            ei_id = 1 #TODO
-            region_id = 1 #TODO Maybe these ID's can be obtained through ElectionInstance or so
-            level_id =1 #TODO
-            length_of_list = 10 #TODO
+            ei_obj = get_object_or_404(ElectionInstance, id=ei_id)
+            council = ei_obj.council
+            region = council.region
+            level = council.level
 
             for party in parties:
                 try:
                     #Store data
                     party_obj = Party(
-                        region = region_id,
-                        level = level_id,
+                        region = region,
+                        level = level,
                         name = party['name'],
                         abbreviation = party['abbreviation'],
                     )
                     party_obj.save()
 
                     eip_obj = ElectionInstanceParty(
-                        election_instance = get_object_or_404(ElectionInstance, id=ei_id),
+                        election_instance = ei_obj,
                         party = party_obj,
                         position = party['list'],
-                        list_length = length_of_list,
+                        list_length = 10, #TODO, maybe add in CSV
                     )
                     eip_obj.save()
 
@@ -436,12 +436,12 @@ def csv_import_parties_step3(request):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
             request.session['csv_party_filename'] = ''
-            return redirect('backoffice.election_region_view', args=region_id)
+            return redirect('backoffice.election_region_view', region)
     else:
         form = CsvConfirmForm()
 
     forms = dict({'csv_confirm': form})
-    return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
 def council_edit(request, election_instance_id, user_id):
     '''
