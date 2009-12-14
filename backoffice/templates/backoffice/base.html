@@ -22,31 +22,41 @@
 <body>
 	<div id="container">
         <div id="header">
-        <p class="wkj">Wie Kies Jij ?</p>
-        <ul class="nav-breadcrumbs">
-		{% block breadcrumbs %}
-            <li><a href="#">Breadcrumb</a></li>
-            <li><a href="#">Path</a></li>
-            <li><a href="#">To</a></li>
-		{% endblock breadcrumbs %}
-        </ul>
-    	<h1>{% block page-title %}Page Title{% endblock page-title %}</h1>
-		{% block back-link %}<a href="#" class="back">Back to ...</a>{% endblock back-link %}
+        
+            <p class="wkj">Wie Kies Jij ?</p>
+            
+            <ul class="nav-breadcrumbs">
+            {% block breadcrumbs %}
+                <li><a href="#">Breadcrumb</a></li>
+                <li><a href="#">Path</a></li>
+                <li><a href="#">To</a></li>
+            {% endblock breadcrumbs %}
+            </ul>
+            
+            <h1>{% block page-title %}Page Title{% endblock page-title %}</h1>
+            
+            {% block back-link %}<a href="#" class="back">Back to ...</a>{% endblock back-link %}
+            
         </div>
-
+        
+		{% block wizard-steps %}{% endblock wizard-steps %}
+        
         <div id="content" class="line">
+        
        	{% block cols %}
         	<div class="col size3of4">
             {% block content %}
             
             {% endblock content %}
             </div>
-            <div class="col size1of4">
+            
+            <div class="col size1of4 sidebar">
             {% block sidebar %}
             
             {% endblock sidebar %}
             </div>
   		{% endblock cols %}
+        
         </div>
 
   	</div>

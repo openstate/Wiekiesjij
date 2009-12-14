@@ -1,5 +1,12 @@
 {% extends 'backoffice/wizard/base.html' %}
 {% load i18n %}
 
-{% block title %}{% 'Add an election party instance' %}{% endblock title %}
-{% block page-title %}{% 'Add an election party instance' %}{% endblock page-title %}
+{% block title %}{% trans "Add a new party" %}{% endblock title %}
+{% block page-title %}{% trans "Add a new party" %}{% endblock page-title %}
+{% block back-link %}{% endblock back-link %}
+
+{% block breadcrumbs %}
+	<li><a href="/">Wie Kies Jij?</a></li>
+    <li><a href="/backoffice">Election Event Name</a></li>
+    <li><a href="/backoffice/election_instance/1">Election Instance Name</a></li>
+{% endblock breadcrumbs %}

@@ -6,23 +6,37 @@
 	{% endfor %}
 {% endblock extrahead %}
 
+{% block wizard-steps %}
+    <ul id="wizardSteps">
+        <li><a href="#" class="history"><span class="number">1</span>Registration</a></li>
+        <li><a href="#" class="history"><span class="number">2</span>Election</a></li>
+        <li><a href="#" class="active"><span class="number">3</span>Council blaat babbel</a></li>
+        <li class="last"><span class="future"><span class="number">4</span>Chancellery</span></li>
+    </ul>
+{% endblock wizard-steps %}
+
 {% block cols %}
 	<div class="col size1of2">
         <div class="mod wizard">
-            <form method="POST" action="">
-                <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
-                {% block forms %}
-                    {% for form in forms.values %}
-                        {{ form.as_template }}
-                    {% endfor %}
-                {% endblock forms %}
-                {{ previous_fields|safe }}
-                {% block buttons %}
-                    <div class="form-submit">
-                        <button type="submit">{% trans "Next" %}</button>
-                    </div>
-                {% endblock buttons %}
-            </form>
+        	<div class="hd">
+            	<h2>Step Title</h2>
+            </div>
+        	<div class="bd">
+                <form method="post" action="">
+                    <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+                    {% block forms %}
+                        {% for form in forms.values %}
+                            {{ form.as_template }}
+                        {% endfor %}
+                    {% endblock forms %}
+                    {{ previous_fields|safe }}
+                    {% block buttons %}
+                        <div class="form-submit">
+                            <button type="submit">{% trans "Next" %}</button>
+                        </div>
+                    {% endblock buttons %}
+                </form>
+           	</div>
         </div>
    	</div>
 {% endblock cols %}

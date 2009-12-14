@@ -1,8 +1,9 @@
-{% extends 'backoffice/wizard/addelection/base.html' %}
+{% extends 'backoffice/wizard/addelectionparty/base.html' %}
 {% load i18n %}
 
 {% block buttons %}
-	<div class="buttons">
-		<button type="submit">{% trans 'Finish' %}</button>
-	</div>
+	<div class="form-submit">
+		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip party setup" %}</button>
+		<button type="submit" name="next" value="next" class="next">{% trans "Start party setup" %}</button>
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
 {% endblock buttons %}

@@ -12,3 +12,8 @@ div.form-submit button.prev {
 div.form-submit button.next {
 	padding:0 25px 0 5px;
 	}
+
+.nav-breadcrumbs li {
+	_zoom:1;
+	margin-right:5px;
+	}
