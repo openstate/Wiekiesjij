@@ -18,6 +18,8 @@ from invitations.models import Invitation
 
 from utils.graphformwizard import GraphFormWizard
 from utils.graphformwizard import Step as GStep
+from django.http import Http404, HttpResponseRedirect
+
 
 
 class AddElectionInstanceWizard(MultiPathFormWizard):
@@ -171,12 +173,112 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         
 
 
-#class ElectionSetupWizard(GraphFormWizard):
+
+
+class ElectionSetupWizard(GraphFormWizard):
+
+    fast_actions = frozenset(['init'])
+
+    # wizard scenario
+    scenario = GStep("chancery_registration", title = "Welcome Chancellery!") \
+                .forms(dict( [ ('chancery_registration%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'edit'))] )) \
+                .next('election_details') \
+                .form('election_details', ElectionInstanceForm) \
+                .next('council_contact_information') \
+                .form('council_contact_information', CouncilContactInformationForm) \
+                .next('council_additional_information') \
+                .form('council_additional_information', CouncilForm) \
+                .next('chancery_contact_information') \
+                .forms(dict( [ ('chancery_contact_information%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'contact_information'))] )) \
+                .next('council_styling_setup') \
+                .form('council_styling_setup', CouncilStylingSetupForm) \
+                .next('election_select_parties') \
+                .form('election_select_parties', ElectionInstanceSelectPartiesForm)
+
+
+    def __init__(self, name = None, template = 'backoffice/wizard/election_setup/base.html'):
+        super(type(self), self).__init__(name, template)
+
+
+    def done(self, request, wizard_data, meta, *args, **kwargs):
+        print wizard_data
+        return None
+
+
+    def wizard_fast_action(self, request, action, step, step_path, url_step, url_action, *args, **kwargs):
+        """Loads correct models"""
+
+        if action == "init":
+            if 'election_instance_id' not in kwargs:
+                raise
+
+            user_id = kwargs['user_id'] if 'user_id' in kwargs else request.user.id
+            election_instance_id = kwargs['election_instance_id']
+
+            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
+            election_instance = get_object_or_404(ElectionInstance, id = election_instance_id)
+            user = get_object_or_404(User, id = user_id)
+
+            ChanceryProfileClass = get_profile_model('council_admin')
+            if user.profile.__class__ is not ChanceryProfileClass:
+                raise HttpResponseForbidden("Wrong user profile")
+
+            # reload data
+            data = {}
+
+            # step 1 data
+            stepdata = {}
+            for (idx, profile_form) in enumerate(get_profile_forms('council_admin', 'edit')):
+                form = GStep.new_form(form = profile_form, initial = user.profile)
+                stepdata['chancery_registration%s' % idx] = getattr(form, 'cleaned_data', {})
+            
+            data['chancery_registration'] = stepdata
+
+            # step 2 data
+            form = GStep.new_form(form = ElectionInstanceForm, initial = election_instance)
+            data['election_details'] = {'election_details' : getattr(form, 'cleaned_data', {})}
+
+            # step 3 data
+            form = GStep.new_form(form = CouncilContactInformationForm, initial = election_instance.council.__dict__)
+            data['council_contact_information'] = {'council_contact_information': getattr(form, 'cleaned_data', {})}
+            
+            # step 4 data
+            form = GStep.new_form(form = CouncilForm, initial = election_instance.council)
+            data['council_additional_information'] = {'council_additional_information': getattr(form, 'cleaned_data', {})}
+
+            # step 5 data
+            stepdata = {}
+            for (idx, profile_form) in enumerate(get_profile_forms('council_admin', 'contact_information')):
+                form = GStep.new_form(form = profile_form, initial = user.profile)
+                stepdata['chancery_contact_information%s' % idx] = getattr(form, 'cleaned_data', {})
+
+            data['chancery_contact_information'] = stepdata
+
+            # step 6 data
+            form = GStep.new_form(form = CouncilStylingSetupForm, initial = election_instance.council)
+            data['council_styling_setup'] = {'council_styling_setup': getattr(form, 'cleaned_data', {})}
+
+            # step 7 data
+            form = GStep.new_form(form = ElectionInstanceSelectPartiesForm, initial = election_instance.parties.all())
+            data['election_select_parties'] = {'election_select_parties': getattr(form, 'cleaned_data', {})}
+
+            # store instances, we will use it in done()
+            meta = {
+                'user_id': user.id,
+                'election_instance_id': election_instance.id,
+            }
+            # store data
+            self.save_data(request, data, meta, *args, **kwargs)
+
+            return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = '')))
+
+        # end of init
+        raise Http404
     
 
 
 #TODO: use profile_form function for the forms !
-class ElectionSetupWizard(MultiPathFormWizard):
+class ElectionSetupWizard2(MultiPathFormWizard):
     """
     Steps 2.1.5 - 2.6 of interaction design.
 

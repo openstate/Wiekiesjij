@@ -856,6 +856,9 @@ class GraphFormWizard(object):
         # restore data
         (data, meta) = self.restore_data(request, *args, **kwargs)
 
+        # fix post
+        post = dict([(key, value) for (key, value) in request.POST.iteritems()]);
+
         # handle files, move, replace links
         files = self.handle_files(request, *args, **kwargs)
 
@@ -871,7 +874,7 @@ class GraphFormWizard(object):
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = url)))
 
         # OK, now we need re-validated data along the path
-        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, files, (request.method == 'POST' or action == 'post'))
+        (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, post, files, (request.method == 'POST' or action == 'post'))
         if not valid: # validpath is prefix of step_path
             return self.revalidation_failed_response(request, validpath, step_path, url_step = url_step, url_action = url_action, *args, **kwargs)
 
