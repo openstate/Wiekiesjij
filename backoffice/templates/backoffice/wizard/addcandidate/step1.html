@@ -1,9 +1,9 @@
 {% extends 'backoffice/wizard/addcandidate/base.html' %}
 {% load i18n %}
 {% block buttons %}
-	<div class="buttons">
-            <a href="{% url backoffice.election_party_view 1 %}">{% trans 'Cancel' %}</a>
-            <button type="submit" name="invite" value="invite">{% trans 'Invite' %}</button>
+	<div class="form-submit">
+            <a href="{% url backoffice.election_party_view 1 %}" class="cancel">{% trans 'Cancel' %}</a>
+            <button class="primary next" type="submit" name="invite" value="invite">{% trans 'Invite' %}</button>
             {# <!-- <button type="submit" name="invite_another" value="invite_another">{% trans 'Invite & add another candidate' %}</button> --> #}
             <div class="note">{% trans 'Note:  invitations will not be sent right now. This will happen on [date].' %}</div>
 	</div>

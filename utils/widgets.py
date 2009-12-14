@@ -215,7 +215,7 @@ class ColorPicker(forms.widgets.TextInput):
 
             jQuery(document).ready(function(){
                 $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
-                $('#%(id)s').addClass("colorpicker_field");
+                $('#%(id)s').addClass("colorpicker_inputfield");
             });
 
         </script>

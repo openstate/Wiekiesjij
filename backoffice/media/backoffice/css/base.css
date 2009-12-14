@@ -622,3 +622,13 @@
 			.time-picker select.seccombo {
 				margin-right:0;
 			}
+			
+			input.colorpicker_inputfield {
+				width:79px;
+			}
+			
+			.cp_preview {
+				float:left;
+				margin:-26px 0 0 65px;
+				position:relative;
+			}

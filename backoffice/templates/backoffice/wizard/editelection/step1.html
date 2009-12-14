@@ -1,9 +1,9 @@
 {% extends 'backoffice/wizard/editelection/base.html' %}
 {% load i18n %}
 {% block buttons %}
-	<div class="buttons">
-		<a href="{% url backoffice.election_event %}">{% trans "Cancel" %}</a>
-		<button type="submit" name="next" value="next">{% trans "Go to council wizard" %} &gt;</button>
-		<button type="submit" class="default" name="next" value="overview">{% trans "Return to overview" %} &gt;</button>
+	<div class="form-submit">
+		<a href="{% url backoffice.election_event %}" class="cancel">{% trans "Cancel" %}</a>
+		<button type="submit" class="primary next" name="next" value="next">{% trans "Go to council wizard" %} &gt;</button>
+		<button type="submit" class="back" name="back" value="overview">{% trans "Return to overview" %} &gt;</button>
 	</div>
 {% endblock buttons %}

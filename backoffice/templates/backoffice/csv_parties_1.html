@@ -16,8 +16,8 @@
     <a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="btn">Download this template</a>
 </p>
 
-<div class="buttons">
-    <a href="#">{% trans "Cancel" %}</a>
-    <a class="btn" href="{% url backoffice.csv_parties_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
+<div class="form-submit">
+    <a href="#" class="cancel">{% trans "Cancel" %}</a>
+    <a class="btn primary next" href="{% url backoffice.csv_parties_step2 %}">{% trans "Proceed to uploading a filled in template" %}</a>
 </div>
 {% endblock content %}

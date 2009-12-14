@@ -6,9 +6,9 @@
 	{{ invitation.text }}
 	
 	
-	<div class="buttons">
+	<div class="form-submit">
 		<form method="get" action="{% url invitations.accept hash=invitation.hash %}">
-		<button type="submit">{% trans "Accept invitation" %}</button>
+		<button class="primary next" type="submit">{% trans "Accept invitation" %}</button>
 		</form>
 		<form method="get" action="{% url invitations.existing hash=invitation.hash %}">
 		<button type="submit">{% trans "I already have an account" %}</button>
