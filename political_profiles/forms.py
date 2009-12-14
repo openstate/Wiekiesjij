@@ -59,7 +59,14 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
     
     class Meta:
         model = ChanceryProfile
-        fields = ('name','email', 'gender' )
+        fieldsets = (
+                        ('main', {
+                            'fields': ('name','email', 'gender' ), 
+                            'classes': ('invite',)
+                        }
+                    ),
+                )
+        
         
         
 class ChanceryProfileForm(BetterModelForm, TemplateForm):
