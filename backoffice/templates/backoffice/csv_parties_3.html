@@ -2,43 +2,44 @@
 {% load i18n %}
 
 {% block content %}
-
-<table>
-    <tr>
-        <th>{% trans "List" %}</th>
-        <th>{% trans "Name" %}</th>
-        <th>{% trans "Abbreviation" %}</th>
-        <th>{% trans "Contacts' first name" %}</th>
-        <th>{% trans "Contacts' middle name" %}</th>
-        <th>{% trans "Contacts' last name" %}</th>
-        <th>{% trans "Contacts' email" %}</th>
-        <th>{% trans "Contacts' gender" %}</th>
-
-    </tr>
-    {% for party in parties %}
+<div class="mod">
+    <table>
         <tr>
-            <td>{{ party.list }}</td>
-            <td>{{ party.name }}</td>
-            <td>{{ party.abbreviation }}</td>
-            <td>{{ party.contact_first_name }}</td>
-            <td>{{ party.contact_middle_name }}</td>
-            <td>{{ party.contact_last_name }}</td>
-            <td>{{ party.contact_email }}</td>
-            <td>{{ party.contact_gender }}</td>
+            <th>{% trans "List" %}</th>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Abbreviation" %}</th>
+            <th>{% trans "Contacts' first name" %}</th>
+            <th>{% trans "Contacts' middle name" %}</th>
+            <th>{% trans "Contacts' last name" %}</th>
+            <th>{% trans "Contacts' email" %}</th>
+            <th>{% trans "Contacts' gender" %}</th>
+    
         </tr>
-    {% endfor %}
-</table>
-
-<form method="POST" enctype="multipart/form-data" action="">
-    {% for form in forms.values %}
-        {{ form.as_template }}
-    {% endfor %}
-
-    <div class="form-submit">
-        <a href="{% url backoffice.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
-        <input class="primary nest" type="submit" name="submit" value="{% trans "Create these parties" %}">
-        <div class="note">{% trans 'Note:  invitations will not be sent right now. This will happen on [date].' %}</div>
-    </div>
-
-</form>
+        {% for party in parties %}
+            <tr>
+                <td>{{ party.list }}</td>
+                <td>{{ party.name }}</td>
+                <td>{{ party.abbreviation }}</td>
+                <td>{{ party.contact_first_name }}</td>
+                <td>{{ party.contact_middle_name }}</td>
+                <td>{{ party.contact_last_name }}</td>
+                <td>{{ party.contact_email }}</td>
+                <td>{{ party.contact_gender }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% for form in forms.values %}
+            {{ form.as_template }}
+        {% endfor %}
+    
+        <div class="form-submit">
+            <a href="{% url backoffice.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
+            <input class="primary nest" type="submit" name="submit" value="{% trans "Create these parties" %}">
+            <div class="note">{% trans 'Note:  invitations will not be sent right now. This will happen on [date].' %}</div>
+        </div>
+    
+    </form>
+</div>
 {% endblock content %}

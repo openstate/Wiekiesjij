@@ -1,6 +1,7 @@
 {% extends 'invitations/base.html' %}
 {% load i18n %}
 {% block content %}
+<div class="mod">
 	<form action="" method="post" accept-charset="utf-8">
 		{{ form.as_template }}
 
@@ -8,4 +9,5 @@
 			<button class="primary next" type="submit">{% trans "Submit" %}</button>
 		</div>
 	</form>
+</div>
 {% endblock content %}

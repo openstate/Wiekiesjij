@@ -66,8 +66,8 @@
 		a.btn {
 			background-color:#ccc;
 			padding:5px;
-                        display:block;
-                        float:left;
+            display:block;
+            float:left;
 			margin:0 0 .5em;
 			text-decoration:none;
 			border:2px solid #ccc;
@@ -275,8 +275,8 @@
 			div.form-submit {
 				overflow:hidden;_zoom:1;
 				margin-top:10px;
-                                position:relative;
-                                clear:both;
+                position:relative;
+                clear:both;
 				}
 				div.form-submit a {
 					float: right;
@@ -291,8 +291,8 @@
 				div.form-submit a.cancel {
 					background: url(../img/cancel.png) no-repeat 0px 5px;
 					padding:0 0 0 20px;
-                                        line-height:25px;
-                                        float:none;
+                    line-height:25px;
+                    float:none;
 					}	
 				div.form-submit button {
 					float: right;
@@ -306,31 +306,44 @@
 					padding:5px;
 					border:2px solid #ccc;
 					}
+					
 					div.form-submit button:hover {
 						background-color:#b9b9b9;
 						}
-				div.form-submit button.primary {
+						
+				div.form-submit button.primary,
+				div.form-submit a.primary {
 					border-color:#666;
 					font-weight:bold;
 					}
 			
 				div.form-submit button.prev,
-                                div.form-submit a.prev {
+                div.form-submit a.prev {
 					background: #ccc url(../img/prev.png) no-repeat 5px 5px;
 					padding-left: 20px;
 					}
+					
+					div.form-submit a.prev {
+					 	padding-left:25px;
+					 }
+					
 					div.form-submit button.prev:hover,
-                                        div.form-submit a.prev:hover {
+                    div.form-submit a.prev:hover {
 						background: #b9b9b9 url(../img/prev.png) no-repeat 5px 5px;
 						}
 			
 				div.form-submit button.next,
-                                div.form-submit a.next {
+                div.form-submit a.next {
 					background: #ccc url(../img/next.png) no-repeat right;
 					padding-right:20px;
 					}
+					
+					 div.form-submit a.next {
+					 	padding-right:25px;
+					 }
+					
 					div.form-submit button.next:hover,
-                                        div.form-submit a.next:hover {
+                    div.form-submit a.next:hover {
 						background: #b9b9b9 url(../img/next.png) no-repeat right;
 						}
 		
@@ -676,7 +689,10 @@
 		div.events {
 			min-height:600px;
 			}
-			
+
+/*	Utils (Colorpicker & Datepicker)
+		**************************************************************************************************************/
+
 		.time-picker select.combo {
 			margin:5px 5px 0 0;
 			width:150px;

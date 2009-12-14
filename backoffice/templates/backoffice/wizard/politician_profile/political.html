@@ -1,18 +1,19 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
 {% block content %}
-<h1>{% trans 'What political experience have you under your belt?' %}</h1>
-
-<p>{% trans "Visitors of the website can see an overview of the political experience have you under your belt" %}<p>
-<h2>{%trans 'Political Experience' %} </h2>
-
-{% for political_experience in political %}
-    <p><a href="{% url backoffice.politician_profile_political_wizard_edit election_instance_id user_id political_experience.id %}">{{ political_experience.name }}</a>: {{ political_experience.url }}: {{ political_experience.description }}</p>
-{% empty %}
-    <p>{%trans 'You have no political experience entered yet' %} </p>
-{% endfor %}
-<a href="{% url backoffice.politician_profile_education election_instance_id user_id %}">{% trans "< Previous " %}</a>
-<a href="{% url backoffice.politician_profile_political_wizard election_instance_id user_id %}">{% trans "Click here to add political experience" %}</a>
-<a href="{% url backoffice.politician_profile_work election_instance_id user_id %}">{% trans "Next >" %}</a>
-
+<div class="mod">
+    <h1>{% trans 'What political experience have you under your belt?' %}</h1>
+    
+    <p>{% trans "Visitors of the website can see an overview of the political experience have you under your belt" %}</p>
+    <h2>{%trans 'Political Experience' %} </h2>
+    
+    {% for political_experience in political %}
+        <p><a href="{% url backoffice.politician_profile_political_wizard_edit election_instance_id user_id political_experience.id %}">{{ political_experience.name }}</a>: {{ political_experience.url }}: {{ political_experience.description }}</p>
+    {% empty %}
+        <p>{%trans 'You have no political experience entered yet' %} </p>
+    {% endfor %}
+   <a href="{% url backoffice.politician_profile_education election_instance_id user_id %}">{% trans "< Previous " %}</a>
+    <a href="{% url backoffice.politician_profile_political_wizard election_instance_id user_id %}">{% trans "Click here to add political experience" %}</a>
+    <a href="{% url backoffice.politician_profile_work election_instance_id user_id %}">{% trans "Next >" %}</a>
+</div>
 {% endblock content %}

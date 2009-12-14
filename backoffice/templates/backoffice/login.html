@@ -6,6 +6,7 @@
 {% endblock extrahead %}
 
 {% block content %}
+<div class="mod">
 	<form action="{% url backoffice.login %}" method="post" accept-charset="utf-8">
 		<input type="hidden" name="next" value="{{ next }}" />
 		
@@ -45,4 +46,5 @@
 			<button class="primary next" type="submit">{% trans "Login" %}</button>
 		</div>
 	</form>
+</div>
 {% endblock content %}

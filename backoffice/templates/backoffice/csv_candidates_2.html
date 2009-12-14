@@ -2,27 +2,31 @@
 {% load i18n %}
 
 {% block content %}
-<p>
-    {% trans "The following wizard allows you to add multiple candidates at once." %}
-    <br />
-    {% trans "You can upload your CSV file here." %}
-</p>
-{% ifequal error "true" %}
-    <p class="error">
-        {% trans "The CSV file you have submitted, can not be handled by the system." %}
-        <br />
-        {% trans "Please check your file and try again." %}
+<div class="mod">
+    <p>
+        {% trans "The following wizard allows you to add multiple candidates at once." %}
+        </p>
+        <p>
+        {% trans "You can upload your CSV file here." %}
     </p>
-{% endifequal %}
-<form method="POST" enctype="multipart/form-data" action="">
-    {% for form in forms.values %}
-        {{ form.as_template }}
-    {% endfor %}
-
-    <div class="form-submit">
-        <a href="{% url backoffice.election_party_view ep_id %}" class="cancel">{% trans "Cancel" %}</a>
-        <input class="primary next" type="submit" value="{% trans "Proceed to uploading a filled in template" %}">
-    </div>
-
-</form>
+    {% ifequal error "true" %}
+        <p class="error">
+            {% trans "The CSV file you have submitted, can not be handled by the system." %}
+        </p>
+        <p>
+            {% trans "Please check your file and try again." %}
+        </p>
+    {% endifequal %}
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% for form in forms.values %}
+            {{ form.as_template }}
+        {% endfor %}
+    
+        <div class="form-submit">
+            <a href="{% url backoffice.election_party_view ep_id %}" class="cancel">{% trans "Cancel" %}</a>
+            <input class="primary next" type="submit" value="{% trans "Proceed to uploading a filled in template" %}">
+        </div>
+    
+    </form>
+</div>
 {% endblock content %}

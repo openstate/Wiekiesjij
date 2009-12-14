@@ -1,6 +1,7 @@
 {% extends 'invitations/base.html' %}
 {% load i18n %}
 {% block content %}
+<div class="mod">
 	<p>Welkom {{ invitation.user.profile.full_name }},</p>
 	
 	{{ invitation.text }}
@@ -14,4 +15,5 @@
 		<button type="submit">{% trans "I already have an account" %}</button>
 		</form>
 	</div>
+</div>
 {% endblock content %}

@@ -1,17 +1,18 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
 {% block content %}
-<h1>{% trans 'What education have you?' %}</h1>
-
-<p>{% trans "Visitors of the website can see an overview of the education you have " %}<p>
-<h2>{%trans 'Education' %} </h2>
-{% for education_instance in education %}
+<div class="mod">
+    <h1>{% trans 'What education have you?' %}</h1>
+    
+    <p>{% trans "Visitors of the website can see an overview of the education you have " %}<p>
+    <h2>{%trans 'Education' %} </h2>
+    {% for education_instance in education %}
     <p><a href="{% url backoffice.politician_profile_education_wizard_edit election_instance_id user_id education_instance.id %}">{{ education_instance.name }}</a>: {{ education_instance.url }}: {{ education_instance.description }}</p>
-{% empty %}
-    <p>{%trans 'You have no education entered yet' %} </p>
-{% endfor %}
-<a href="{% url backoffice.politician_profile_appearance election_instance_id user_id %}">{% trans "< Previous " %}</a>
-<a href="{% url backoffice.politician_profile_education_wizard election_instance_id user_id %}">{% trans "Click here to add education" %}</a>
-<a href="{% url backoffice.politician_profile_political election_instance_id user_id %}">{% trans "Next >" %}</a>
-
+    {% empty %}
+        <p>{%trans 'You have no education entered yet' %} </p>
+    {% endfor %}
+    <a href="{% url backoffice.politician_profile_appearance election_instance_id user_id %}">{% trans "< Previous " %}</a>
+    <a href="{% url backoffice.politician_profile_education_wizard election_instance_id user_id %}">{% trans "Click here to add education" %}</a>
+    <a href="{% url backoffice.politician_profile_political election_instance_id user_id %}">{% trans "Next >" %}</a>
+</p>
 {% endblock content %}

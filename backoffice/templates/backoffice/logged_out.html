@@ -1,6 +1,8 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
 {% block content %}
+<div class="mod">
 	<p>{% trans "You have been logged out" %}</p>
 	<a href="{% url backoffice.login %}">{% trans "Click here to login again" %}</a>
+</div>
 {% endblock content %}
