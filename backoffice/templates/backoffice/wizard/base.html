@@ -19,9 +19,15 @@
 	<div class="col size1of2">
 
         <div class="mod wizard">
+            {% block step-header %}
         	<div class="hd">
-            	<h2>Step Title</h2>
+            	<h2>Step title</h2>
             </div>
+            {% endblock step-header %}
+            
+            {% block help-message %}
+            {% endblock help-message %}
+
         	<div class="bd">
                 <form method="post" action="">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
@@ -31,6 +37,7 @@
                         {% endfor %}
                     {% endblock forms %}
                     {{ previous_fields|safe }}
+                    
                     {% block buttons %}
                         <div class="form-submit">
                             <button type="submit">{% trans "Next" %}</button>

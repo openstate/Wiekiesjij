@@ -1,8 +1,7 @@
 {% extends 'backoffice/wizard/addelection/base.html' %}
 {% load i18n %}
 
-{% block buttons %}
-	<div class="form-submit">
-		<button class="primary next" type="submit">{% trans 'Finish' %}</button>
-	</div>
-{% endblock buttons %}
+{% block help-message %}
+<p>You're almost ready to setup the parties which will take part in this election.</p>
+<p>To speed things up, you can quickly add some of the parties already in our system.</p>
+{% endblock help-message %}

@@ -930,7 +930,9 @@ class GraphFormWizard(object):
         tplcurstep = {
             'step': curstep,
             'valid': last_valid,
-            'forms': lastforms
+            'forms': lastforms,
+            'back_url': reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(self.build_path(step_path[0:-1])))) if curstep is not self.clean_scenario else None,
+            'reset_url': reverse(url_action[0], args = url_action[1], kwargs=dict(url_action[2], action = 'reset', path = self.compress_path(self.build_path(step_path))))
         }
 
         template = curstep.template or curstep.cycle.template or self.template
@@ -994,6 +996,7 @@ class GraphFormWizard(object):
         urlheads = []
 
         # along the path, build menu data
+        totval = True
         for (step, cycle) in step_path:
             urls = {}       # URL links
             urlpath.append((step, cycle))   # used to build path to prev steps
@@ -1028,6 +1031,7 @@ class GraphFormWizard(object):
             urls['reset'] = reverse(url_action[0], args = url_action[1], kwargs=dict(url_action[2], action = "reset", path = self.compress_path(self.build_path(urlpath))))
 
             curdat = curwiz.get(step.name, None)
+            totval = totval and (curdat is not None)
             tplpath.append(("step", {
                 'is_on_path': True,
                 'is_current': step is tgt,
@@ -1045,6 +1049,7 @@ class GraphFormWizard(object):
         # step is the last step on step_path, curdata - current context
         # curdatastack - stacked context
         nextstep = step.get_straight_branch()
+        nextinvalid = totval
         while nextstep is not None:
             urls = {}       # URL links
             urlpath.append((nextstep, 0))   # used to build path to prev steps
@@ -1055,16 +1060,22 @@ class GraphFormWizard(object):
                 curdata = cycles[0][1] if len(cycles) > 0 else {}
             # end is head
 
-            urls['goto'] = reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(self.build_path(urlpath))))
+            (cldata, fls) = curdata.get(nextstep.name, (None, None))
+            (valid, _, _) = nextstep.get_forms(cldata, fls)
+            totval = totval and valid
+
+            if totval or nextinvalid:
+                urls['goto'] = reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(self.build_path(urlpath))))
+                
             urls['reset'] = reverse(url_action[0], args = url_action[1], kwargs=dict(url_action[2], action = "reset", path = self.compress_path(self.build_path(urlpath))))
 
-            (cldata, fls) = curdata.get(nextstep.name, ({}, None))
-            (valid, _, _) = nextstep.get_forms(post = cldata, files = fls)
-
+            if not totval:
+                nextinvalid = False
+            
             tplpath.append(("step", {
                 'is_on_path': False,
                 'is_current': False,
-                'is_valid': valid,
+                'is_valid': valid,  # we are not valid if previous steps are not valid
                 'urls': urls,
                 'step': nextstep}))
 
@@ -1290,6 +1301,8 @@ class GraphFormWizard(object):
                 (last_valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
                 if posted and last_valid: # store back in session
                     ctx[step.name] = (sespost, sesfiles)  # replace session data and files
+
+                if last_valid:
                     step_context[step.name] = (cleandata, sesfiles)
 
                 lastforms = stepforms

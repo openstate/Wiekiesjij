@@ -1,5 +1,46 @@
 {% extends 'backoffice/wizard/base.html' %}
 {% load i18n %}
 
+{% block wizard-steps %}
+    <ul id="wizardSteps">
+        {% for type, stepinfo in steps %}
+            {% ifequal type "step" %}
+                {% if stepinfo.is_on_path %}
+                    <li><a href="{{ stepinfo.urls.goto }}" class="{% if stepinfo.is_current %}active{% else %}history{% endif %}"><span class="number">{{forloop.counter}}</span>{{stepinfo.step.title}}</a></li>
+                {% else %}
+                    {% if stepinfo.urls.goto %}
+                        {# step is valid, user went back #}
+                        <li><a href="{{ stepinfo.urls.goto }}" class="future"><span class="number">{{forloop.counter}}</span>{{stepinfo.step.title}}</a></li>
+                    {% else %}
+                        <li class="last"><span class="future"><span class="number">{{forloop.counter}}</span>{{stepinfo.step.title}}</span></li>
+                    {% endif %}
+                {% endif %}
+            {% endifequal %}
+        {% endfor %}
+    </ul>
+{% endblock wizard-steps %}
+
+
+{% block step-header %}
+<div class="hd">
+    <h2>{{curstep.step.header}}</h2>
+</div>
+{% endblock step-header %}
+
+{% block help-message %}
+<p>{{curstep.step.help}}</p>
+{% endblock help-message %}
+
 {% block title %}{% trans 'Add an election instance' %}{% endblock title %}
 {% block page-title %}{% trans 'Add an election instance' %}{% endblock page-title %}
+
+{% block buttons %}
+	<div class="form-submit">
+        {% if curstep.back_url %}
+            <a href="{{curstep.back_url}}" style="padding: 10px; background-color: #eee;">{% trans "Back" %}</a>
+        {% endif %}
+        <a href="{{curstep.reset_url}}" style="padding: 10px; background-color: #eee;">{% trans "Reset" %}</a>
+
+		<button class="primary next" type="submit">{{curstep.step.next_button|default:"Next"}}</button>
+	</div>
+{% endblock buttons %}
