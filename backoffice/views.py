@@ -4,24 +4,18 @@ import os
 #-*- coding: utf-8 -*-
 #
 #Copyright 2009 Accepte. All Rights Reserved.
-import datetime
+
 import time
-import csv
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext, ugettext_lazy as _
 from django.template.context import RequestContext
-from django.contrib.auth.decorators import login_required
-
 from elections.settings import ELECTION_EVENT_ID
-from elections.models import ElectionEvent, ElectionInstance, ElectionInstanceParty
+from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
 from utils.multipathform import MultiPathFormWizard, Step
-from backoffice.decorators import staff_required, council_admin_required
-
+from backoffice.decorators import staff_required
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
+
 # Even though your IDE (or your brains) might say this is an unused import,
 # please do not remove the following Form imports
 # FIXME: Remove import * once the test functions can be removed !
@@ -111,7 +105,6 @@ def edit_election_instance(request, id):
     return wizard(request)
 
 
-#TODO: This can probably be neater. I don't see why we would need step_args for example.
 def form_view(request, form_type):
     try:
         formslist = dict(
@@ -361,22 +354,27 @@ def csv_import_parties_step3(request):
     if(request.POST):
         form = CsvConfirmForm(request.POST)
         if form.is_valid():
+            ei_id = 1 #TODO
+            region_id = 1 #TODO Maybe these ID's can be obtained through ElectionInstance or so
+            level_id =1 #TODO
+            length_of_list = 10 #TODO
+
             for party in parties:
                 try:
                     #Store data
                     party_obj = Party(
-                        region = 1, #TODO
-                        level = 1, #TODO
+                        region = region_id,
+                        level = level_id,
                         name = party['name'],
                         abbreviation = party['abbreviation'],
                     )
                     party_obj.save()
 
                     eip_obj = ElectionInstanceParty(
-                        election_instance = get_object_or_404(ElectionInstance, id=1), #TODO
+                        election_instance = get_object_or_404(ElectionInstance, id=ei_id),
                         party = party_obj,
                         position = party['list'],
-                        list_length = 10, #TODO
+                        list_length = length_of_list,
                     )
                     eip_obj.save()
 
@@ -412,7 +410,7 @@ def csv_import_parties_step3(request):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
             request.session['csv_party_filename'] = ''
-            return redirect('backoffice.election_party_view', args=1) #TODO: Make party dynamic
+            return redirect('backoffice.election_region_view', args=region_id)
     else:
         form = CsvConfirmForm()
 

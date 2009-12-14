@@ -1,5 +1,4 @@
 from django.db import transaction
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.models import User

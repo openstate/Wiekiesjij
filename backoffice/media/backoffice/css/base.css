@@ -60,6 +60,8 @@
 		a.btn {
 			background-color:#ccc;
 			padding:5px;
+                        display:block;
+                        float:left;
 			margin:0 0 .5em;
 			text-decoration:none;
 			border:2px solid #ccc;
@@ -235,16 +237,24 @@
 			div.form-submit {
 				overflow:hidden;_zoom:1;
 				margin-top:10px;
+                                position:relative;
+                                clear:both;
 				}
 				div.form-submit a {
-					float: left;
+					float: right;
 					color:#000;
 					display:block;
-					line-height:25px;
 					}
+
+                                div.form-submit a.btn {
+                                    margin-left:10px;
+                                }
+
 				div.form-submit a.cancel {
 					background: url(../img/cancel.png) no-repeat 0px 5px;
 					padding:0 0 0 20px;
+                                        line-height:25px;
+                                        float:none;
 					}	
 				div.form-submit button {
 					float: right;
@@ -266,19 +276,23 @@
 					font-weight:bold;
 					}
 			
-				div.form-submit button.prev {
+				div.form-submit button.prev,
+                                div.form-submit a.prev {
 					background: #ccc url(../img/prev.png) no-repeat 5px 5px;
 					padding-left: 20px;
 					}
-					div.form-submit button.prev:hover {
+					div.form-submit button.prev:hover,
+                                        div.form-submit a.prev:hover {
 						background: #b9b9b9 url(../img/prev.png) no-repeat 5px 5px;
 						}
 			
-				div.form-submit button.next {
+				div.form-submit button.next,
+                                div.form-submit a.next {
 					background: #ccc url(../img/next.png) no-repeat right;
 					padding-right:20px;
 					}
-					div.form-submit button.next:hover {
+					div.form-submit button.next:hover,
+                                        div.form-submit a.next:hover {
 						background: #b9b9b9 url(../img/next.png) no-repeat right;
 						}
 		
