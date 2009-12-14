@@ -248,7 +248,7 @@ class Step(object):
             In latter case you will be able to define prefixes and initial values.
         """
         for (name, form) in forms.iteritems():
-            if isinstance(form, BaseForm):
+            if issubclass(form, BaseForm):
                 self.form(name = name, cls = form)
 
             elif isinstance(form, dict):
@@ -401,6 +401,26 @@ class Step(object):
 
         self._cycle_end = True
         return self
+
+    def new_form(cls, form, prefix = None, initial = None, *args, **kwargs):
+        # model form
+        if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
+            init = 'instance'
+        # management form
+        elif hasattr(form, 'management_form'):
+            init = 'queryset'
+        # normal form (initialized from dictionary)
+        else:
+            init = 'initial'
+
+        kwargs.update({
+                init: initial,
+                'prefix' : prefix
+                })
+
+        return form(*args, **kwargs)
+
+    new_form = classmethod(new_form)
 
 
 
@@ -595,24 +615,6 @@ class CleanStep(object):
                 return cand[0]
 
         return None
-
-    def new_form(cls, form, prefix, initial = None, *args, **kwargs):
-        # model form
-        if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
-            init = 'instance'
-        # management form
-        elif hasattr(form, 'management_form'):
-            init = 'queryset'
-        # normal form (initialized from dictionary)
-        else:
-            init = 'initial'
-
-        kwargs.update({
-                init: initial,
-                'prefix' : prefix
-                })
-
-        return form(*args, **kwargs)
         
 
     def get_forms(self, stepdata, post = None, files = None):
@@ -629,7 +631,7 @@ class CleanStep(object):
             if files is not None:
                 args[1].update(files)
 
-            retforms[name] = self.new_form(form, prefix, initial, *args)
+            retforms[name] = Step.new_form(form, prefix, initial, *args)
             valid = valid and retforms[name].is_valid()
             retdata[name] = getattr(retforms[name], 'cleaned_data', {})
 
@@ -1328,6 +1330,11 @@ class GraphFormWizard(object):
                 
             validpath.append((step, cycle))
         #end of for
+
+        print valid
+        print last_valid
+        print wizard_data
+        print data
         
         return (valid, last_valid, wizard_data, step_context, validpath, lastforms)
 
