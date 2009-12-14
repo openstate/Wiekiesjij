@@ -183,11 +183,11 @@ class ElectionSetupWizard(GraphFormWizard):
     scenario = GStep("chancery_registration", title = "Welcome Chancellery!") \
                 .forms(dict( [ ('chancery_registration%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'edit'))] )) \
                 .next('election_details') \
-                .form('election_details', ElectionInstanceForm) \
+                .form('election_details1', ElectionInstanceForm) \
                 .next('council_contact_information') \
-                .form('council_contact_information', CouncilContactInformationForm) \
+                .form('council_contact_information1', CouncilContactInformationForm) \
                 .next('council_additional_information') \
-                .form('council_additional_information', CouncilForm) \
+                .form('council_additional_information1', CouncilForm) \
                 .next('chancery_contact_information') \
                 .forms(dict( [ ('chancery_contact_information%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'contact_information'))] )) \
                 .next('council_styling_setup') \
@@ -225,6 +225,15 @@ class ElectionSetupWizard(GraphFormWizard):
 
             # reload data
             data = {}
+
+#<QueryDict: {u'': [u'[(chancery_registration, 0), (election_details, 0), (council_contact_information, 0)]'], u'council_contact_information_council_contact_information1-address_2': [u'9714XE'], u'council_contact_information_council_contact_information1-address_3': [u'dsdfsq'], u'council_contact_information_council_contact_information1-address_0': [u'fdsfsd'], u'council_contact_information_council_contact_information1-address_1': [u'12'], u'council_contact_information_council_contact_information1-name': [u'fgdsfds'], u'council_contact_information_council_contact_information1-website': [u'http://www.google.nl/']}>
+#ipdb> data
+#{'council_contact_information': ({'council_contact_information1': {'website': u'http://www.google.nl/', 'name': u'fgdsfds', 'address': {'postalcode': '9714XE', 'city': u'dsdfsq', 'street': u'fdsfsd', 'number': u'12'}}}, <MultiValueDict: {}>), 'election_details': ({'election_details1': {'website': u'http://www.google.nl/', 'start_date': datetime.datetime(2009, 12, 14, 17, 15, 15)}}, <MultiValueDict: {}>), 'chancery_registration': ({'chancery_registration0': {'first_name': u'sardar', 'last_name': u'', 'middle_name': u'srdsfasd', 'gender': u'Male', 'telephone': u'', 'workingdays': [u'Monday', u'Wednesday', u'Thursday']}}, <MultiValueDict: {}>)}
+#ipdb> c
+
+# {'council_styling_setup': ({'council_styling_setup': {'another_color': u'413cc9', 'background_color': u'b06cb0', 'foreground_color': u'a64ca6'}}, <MultiValueDict: {}>), 'council_contact_information': ({'council_contact_information1': {'website': u'http://google.com/', 'name': u'pipko', 'address': {'postalcode': '9745PM', 'city': u'FDSFSDFDS', 'street': u'fsdfsd', 'number': u'9745'}}}, <MultiValueDict: {}>), 'chancery_contact_information': ({'chancery_contact_information0': {'website': u'http://goolge.com/', 'town': u'Gro', 'street': u'fdsfdsfsd', 'house_num': u'34', 'postcode': u'5609 PM'}}, <MultiValueDict: {}>), 'election_select_parties': ({'election_select_parties': {'parties': [u'SP', u'PVV', u'CU']}}, <MultiValueDict: {}>), 'election_details': ({'election_details1': {'website': u'http://google.com/', 'start_date': datetime.datetime(2009, 12, 9, 14, 30, 45)}}, <MultiValueDict: {}>), 'chancery_registration': ({'chancery_registration0': {'first_name': u'sardar', 'last_name': u'', 'middle_name': u'', 'gender': u'Male', 'telephone': u'', 'workingdays': [u'Monday', u'Tuesday']}}, <MultiValueDict: {}>), 'council_additional_information': ({'council_additional_information1': {'picture': None, 'history': u'bla bla bla', 'seats': 30}}, <MultiValueDict: {}>)}
+
+
 
             # step 1 data
             stepdata = {}

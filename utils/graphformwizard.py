@@ -142,7 +142,7 @@ import tempfile
 import os
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, HttpResponseRedirect, QueryDict
+from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -631,56 +631,19 @@ class CleanStep(object):
         return None
         
 
-    def get_forms(self, initial = None, post = None, files = None):
+    def get_forms(self, post = None, files = None):
         """Re-instantiates forms"""
         retforms = {}       # forms (name => Form)
         retdata = {}        # cleaned_data (name => dict) or None if not all forms are validated
         valid = True        # all forms are validated
-        for (name, (form, prefix, intl)) in self.forms.iteritems():
-            kwargs = {
-                'prefix': prefix,
-            }
-            
-            # model form
-            itl = initial.get(name, None) if initial is not None else None
-            if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
-                kwargs.update(instance = intl)
-                if itl is not None:
-                    kwargs.update(initial = itl)
-            # management form
-            elif hasattr(form, 'management_form'):
-                kwargs.update(queryset = intl)
-                if itl is not None:
-                    kwargs.update(initial = itl)
-            # normal form (initialized from dictionary)
-            else:
-                init = {}
-                if intl is not None:
-                    init.update(intl)
-                    
-                if itl is not None:
-                    init.update(itl)
-
-                kwargs.update(initial = init)
-            
-            if post is None: # initial data only
-                retforms[name] = form(**kwargs)
-
-            elif not isinstance(post, QueryDict): # post from session
-                formpost = {}
-                for key, value in post.get(name, {}).iteritems():
-                    formpost['%s-%s' % (prefix, key)] = value
-                retforms[name] = form(formpost, files, **kwargs)
-
-            else: # real post, same for all forms
-                retforms[name] = form(post, files, **kwargs)
-            
-            valid = valid and retforms[name].is_valid()
-            retdata[name] = getattr(retforms[name], 'cleaned_data', {})
+        for (name, (form, prefix, initial)) in self.forms.iteritems():
+            fr = Step.new_form(form, prefix, initial, post, files)
+            valid = valid and fr.is_valid()
+            retforms[name] = fr
+            retdata[name] = getattr(fr, 'cleaned_data', None)
         # end for
 
         return (valid, retforms, retdata)
-        
 
     def __getattribute__(self, name):
         """Access to additional fiels (eg. title)"""
@@ -886,8 +849,10 @@ class GraphFormWizard(object):
             url = self.build_path(step_path)
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(url))))
 
-        
+
+        # last step on the path - current step
         curstep = step_path[-1][0]
+        
         # handle light weigth actions
         if action is not None and action not in self.built_in_actions and action in self.fast_actions:
             return self.wizard_fast_action(request, action, curstep, step_path, url_step, url_action, *args, **kwargs)
@@ -1222,10 +1187,10 @@ class GraphFormWizard(object):
 
                 # otherwise proceed with next
                 continue
-                
+            # end if is_head()
 
-            (cldata, fls) = cyctx.get(step.name, ({}, None))
-            (valid, stepforms, cleandata) = step.get_forms(post = cldata, files = fls)
+            (sespost, sesfiles) = cyctx.get(step.name, (None, None))
+            (valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
             if not valid:
                 # forget about it, cycle is not valid
                 return (False, None)
@@ -1312,28 +1277,20 @@ class GraphFormWizard(object):
 
             # end if head
 
-            if step.name not in ctx:
-                stepdata = ({}, None)
-                ctx[step.name] = stepdata
-
-            else:
-                stepdata = ctx[step.name]
-
             path.append(step.name)
             if len(respath) > 0:
                 respath.pop()
 
-            (cldata, fls) = stepdata
+            (sespost, sesfiles) = ctx.get(step.name, (None, None))
             if step is target:
                 if posted: # POST request, may replace session data
-                    (last_valid, stepforms, cleandata) = step.get_forms(post = post, files = files)
-                    
-                else:
-                    (last_valid, stepforms, cleandata) = step.get_forms(initial = cldata)
+                    sespost = post
+                    sesfiles = files
 
+                (last_valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
                 if posted and last_valid: # store back in session
-                    ctx[step.name] = (cleandata, files)  # replace session data and files
-                    step_context[step.name] = (stepforms, files)
+                    ctx[step.name] = (sespost, sesfiles)  # replace session data and files
+                    step_context[step.name] = (cleandata, sesfiles)
 
                 lastforms = stepforms
 
@@ -1348,20 +1305,19 @@ class GraphFormWizard(object):
                         path.append(rnm)
 
             else:
-                (valid, stepforms, cleandata) = step.get_forms(post = cldata, files = fls)
+                (valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
                 if valid:
-                    step_context[step.name] = (cleandata, fls)
+                    step_context[step.name] = (cleandata, sesfiles)
                 
             if step.is_tail() and step is not target:
                 path = pathstack.pop()
                 respath = respathstack.pop()
                 ctx = ctxstack.pop()
                 step_context = wizctxstack.pop()
-                
+
+            validpath.append((step, cycle))
             if not valid: # current step is not validated, break here    
                 break
-                
-            validpath.append((step, cycle))
         #end of for
         
         return (valid, last_valid, wizard_data, step_context, validpath, lastforms)
@@ -1596,21 +1552,18 @@ class GraphFormWizard(object):
     def _filter_data(self, data):
         """Filters data before/after session save/restore."""
         # The data can be:
-        #   { name : ({form_name : Form or dict}, {files}) } -- step dict (cannonical)
-        #   { name : {form_name : Form or dict} } 
+        #   { name : (MultiValueDict, MultiValueDict) } -- POST and FILES of a step (cannonical)
+        #   { name : ({form_name : Form or dict}, {files}) } -- subclass given dict with files
+        #   { name : {form_name : Form or dict} }   -- without files
+        #
         #   { name => [ ([path], {cycle step dicts}) ] } -- cycle (cannonical)
-        #   { name => [ {cycle step dicts} ] }
+        #   { name => [ {cycle step dicts} ] }      -- subclass given cycle
         #
-        # We keep cycle path to know the branches that were taken. The subclass,
-        # however, will not get this info in wizard_data and will probably not
-        # restore it when editing, so cycle data becomes:
-        #   { name => [ {cycle step dicts} ] }
-        #
-        # We have to restore it to correct form using "first branch" method.
-        # Resulting structure will always be in cannonical form.
+        # The cannonical form is the data the wizard works with. Other structures
+        # are the possibilities to recreate the data by the subclass (edit mode).
         #
 
-        def fltr(dat, head):
+        def fltr(dat, head): # single cycle filter
             if isinstance(dat, tuple): # cycle with path hint
                 (path, dat) = dat
             else:  # can be a cycle without a hint
@@ -1644,7 +1597,7 @@ class GraphFormWizard(object):
                         continue
 
                     if isinstance(stepdata, tuple): # both form data and files specified
-                        (forms, files) = stepdata
+                        (post, files) = stepdata
                         for (fk, fd) in files.items():
                             if isinstance(SessionUploadedFile, fd) and fd.failed:
                                 del files[fk]
@@ -1653,16 +1606,32 @@ class GraphFormWizard(object):
                             # subclass knows what it is doing.
 
                     else:
-                        forms = stepdata
+                        post = stepdata
                         files = None
 
-                    for (formname, formdata) in forms.iteritems():
-                        if isinstance(formdata, BaseForm):
-                            # only validated forms will give their data
-                            forms[formname] = getattr(formdata, 'cleaned_data', None)
+                    if not isinstance(post, MultiValueDict):
+                        # OK, this is user specified data
+                        # we have to recreate prefixes
+                        # [FIXME: this is highly unreliable!!! ]
+                        retpost = MultiValueDict()
+                        for (formname, formdata) in post.iteritems():
+                            if isinstance(formdata, BaseForm):
+                                # only validated forms will give their data
+                                formdata = getattr(formdata, 'cleaned_data', {})
+
+                            for (key, val) in formdata.iteritems():
+                                pref = "%s_%s-%s" % (step.name, formname, key)
+
+                                # [FIXME: if you have that multi-valued field, then you
+                                # have to re-create correct names by yourself
+                                # because I don't know you r naming convention]
+                                retpost[pref] = val
+                                
+                        # end for
+                        post = retpost
 
                     # end for
-                    dat[stepname] = (forms, files)
+                    dat[stepname] = (post, files)
 
             # end for
             return (path, dat)
