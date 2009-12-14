@@ -1,4 +1,4 @@
-{% extends 'backoffice/wizard/addelection/base.html' %}
+{% extends 'backoffice/base.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -7,13 +7,13 @@
 <p>{% trans "Visitors of the website can see an overview of the events you appeared at " %}<p>
 <h2>{%trans 'Events have you appeared' %} </h2>
 {% for appearance in appearances %}
-    <p><a href="{% url backoffice.politician_profile_appearance_wizard_edit user_id appearance.id %}">{{ appearance.name }}</a>: {{ appearance.url }}: {{ appearance.description }}</p>
+    <p><a href="{% url backoffice.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}">{{ appearance.name }}</a>: {{ appearance.url }}: {{ appearance.description }}</p>
 {% empty %}
     <p>{%trans 'You have no appearances defined yet' %} </p>
 {% endfor %}
 
-<a href="{% url backoffice.politician_profile_link user_id %}">{% trans "< Previous " %}</a>
-<a href="{% url backoffice.politician_profile_appearance_wizard user_id %}">{% trans "Click here to add an appearance" %}</a>
-<a href="{% url backoffice.politician_profile_education user_id %}">{% trans "Next >" %}</a>
+<a href="{% url backoffice.politician_profile_link election_instance_id user_id %}">{% trans "< Previous " %}</a>
+<a href="{% url backoffice.politician_profile_appearance_wizard election_instance_id user_id %}">{% trans "Click here to add an appearance" %}</a>
+<a href="{% url backoffice.politician_profile_education election_instance_id user_id %}">{% trans "Next >" %}</a>
 
 {% endblock content %}

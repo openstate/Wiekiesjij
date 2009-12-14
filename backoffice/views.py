@@ -144,83 +144,109 @@ def election_setup_done(request):
     '''
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
-
-def politician_welcome(request):
-    user_id = 2
+@login_required
+def politician_welcome(request, election_instance_id):
+    user_id = request.user.id
+    election_instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
     return render_to_response('backoffice/wizard/politician_profile/welcome.html',
-                              {'user_id': user_id},
+                              {'user_id': user_id,
+                              'politician': request.user.profile,
+                              'election_instance': election_instance,
+                              'election_instance_id': election_instance_id,
+                              },
                               context_instance=RequestContext(request))
 
-def politician_profile_setup(request, user_id):
-    return PoliticianProfileWizard(user_id=user_id)(request)
+@login_required
+def politician_profile_setup(request, election_instance_id, user_id):
+    return PoliticianProfileWizard(user_id=user_id, election_instance_id=election_instance_id)(request)
 
-def politician_profile_setup_done(request, user_id):
+@login_required
+def politician_profile_setup_done(request, election_instance_id, user_id):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
-                              {'user_id': user_id},
+                              {'user_id': user_id,
+                              'election_instance_id': election_instance_id,
+                              },
                               context_instance=RequestContext(request))
 
-def politician_profile_interest(request, user_id):
+@login_required
+def politician_profile_interest(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     interests = user.profile.interests.all()
     return render_to_response('backoffice/wizard/politician_profile/interest.html',
-                              {'user_id': user_id, 'interests': interests,},
+                              {'user_id': user_id, 'interests': interests,
+                              'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-def politician_profile_interest_wizard(request, user_id, interest_id=None):
-    return PoliticianProfileInterestWizard(user_id=user_id, interest_id=interest_id)(request)
+@login_required
+def politician_profile_interest_wizard(request, election_instance_id, user_id, interest_id=None):
+    return PoliticianProfileInterestWizard(user_id=user_id, election_instance_id=election_instance_id, interest_id=interest_id)(request)
 
-def politician_profile_work(request, user_id):
+@login_required
+def politician_profile_work(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     work = user.profile.work.all()
     return render_to_response('backoffice/wizard/politician_profile/work.html',
-                              {'user_id': user_id, 'work': work,},
+                              {'user_id': user_id, 'work': work,
+                              'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-def politician_profile_work_wizard(request, user_id, work_id=None):
-    return PoliticianProfileWorkWizard(user_id=user_id, work_id=work_id)(request)
+@login_required
+def politician_profile_work_wizard(request, election_instance_id, user_id, work_experience_id=None):
+    return PoliticianProfileWorkWizard(user_id=user_id, election_instance_id=election_instance_id, work_id=work_experience_id)(request)
 
-
-def politician_profile_political(request, user_id):
+@login_required
+def politician_profile_political(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     political = user.profile.political.all()
     return render_to_response('backoffice/wizard/politician_profile/political.html',
-                              {'user_id': user_id, 'political': political,},
+                              {'user_id': user_id, 'political': political,
+                              'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-def politician_profile_political_wizard(request, user_id, political_id=None):
-    return PoliticianProfilePoliticalWizard(user_id=user_id, political_id=political_id)(request)
+@login_required
+def politician_profile_political_wizard(request, election_instance_id, user_id, political_id=None):
+    return PoliticianProfilePoliticalWizard(user_id=user_id, election_instance_id=election_instance_id, political_id=political_id)(request)
 
-def politician_profile_education(request, user_id):
+@login_required
+def politician_profile_education(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     education = user.profile.education.all()
     return render_to_response('backoffice/wizard/politician_profile/education.html',
-                              {'user_id': user_id, 'education': education,},
+                              {'user_id': user_id, 'education': education,
+                              'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-def politician_profile_education_wizard(request, user_id, education_id=None):
-    return PoliticianProfileEducationWizard(user_id=user_id, education_id=education_id)(request)
+@login_required
+def politician_profile_education_wizard(request, election_instance_id, user_id, education_id=None):
+    return PoliticianProfileEducationWizard(user_id=user_id, election_instance_id=election_instance_id, education_id=education_id)(request)
 
-def politician_profile_appearance(request, user_id):
+@login_required
+def politician_profile_appearance(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     appearances = user.profile.appearances.all()
     return render_to_response('backoffice/wizard/politician_profile/appearances.html',
-                              {'user_id': user_id, 'appearances': appearances,},
+                              {'user_id': user_id, 'appearances': appearances,
+                              'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-def politician_profile_appearance_wizard(request, user_id, appearance_id=None):
-    return PoliticianProfileAppearanceWizard(user_id=user_id, appearance_id=appearance_id)(request)
+@login_required
+def politician_profile_appearance_wizard(request, election_instance_id, user_id, appearance_id=None):
+    return PoliticianProfileAppearanceWizard(user_id=user_id, election_instance_id=election_instance_id, appearance_id=appearance_id)(request)
 
-
-def politician_profile_link(request, user_id):
+@login_required
+def politician_profile_link(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     links = user.profile.links.all()
     print user_id
     return render_to_response('backoffice/wizard/politician_profile/links.html',
-                              {'user_id': user_id, 'links': links},
+                              {'user_id': user_id, 'links': links,
+                              'election_instance_id': election_instance_id,
+                              },
                               context_instance=RequestContext(request))
 
-def politician_profile_link_wizard(request, user_id, link_id=None):
-    return PoliticianProfileLinkWizard(user_id=user_id, link_id=link_id)(request)
+@login_required
+def politician_profile_link_wizard(request, election_instance_id, user_id, link_id=None):
+    return PoliticianProfileLinkWizard(user_id=user_id, election_instance_id=election_instance_id, link_id=link_id)(request)
 
 def council_edit(request, id):
     '''
