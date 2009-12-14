@@ -13,7 +13,7 @@ from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
 from utils.multipathform import MultiPathFormWizard, Step
-from backoffice.decorators import staff_required
+from backoffice.decorators import staff_required, candidate_required
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
 
 # Even though your IDE (or your brains) might say this is an unused import,
@@ -144,7 +144,7 @@ def election_setup_done(request):
     '''
     return render_to_response('backoffice/wizard/election_setup/done.html',
                               context_instance=RequestContext(request))
-@login_required
+@candidate_required
 def politician_welcome(request, election_instance_id):
     user_id = request.user.id
     election_instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
@@ -156,11 +156,11 @@ def politician_welcome(request, election_instance_id):
                               },
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_setup(request, election_instance_id, user_id):
     return PoliticianProfileWizard(user_id=user_id, election_instance_id=election_instance_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_setup_done(request, election_instance_id, user_id):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
                               {'user_id': user_id,
@@ -168,7 +168,7 @@ def politician_profile_setup_done(request, election_instance_id, user_id):
                               },
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_interest(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     interests = user.profile.interests.all()
@@ -177,11 +177,11 @@ def politician_profile_interest(request, election_instance_id, user_id):
                               'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_interest_wizard(request, election_instance_id, user_id, interest_id=None):
     return PoliticianProfileInterestWizard(user_id=user_id, election_instance_id=election_instance_id, interest_id=interest_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_work(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     work = user.profile.work.all()
@@ -190,11 +190,11 @@ def politician_profile_work(request, election_instance_id, user_id):
                               'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_work_wizard(request, election_instance_id, user_id, work_experience_id=None):
     return PoliticianProfileWorkWizard(user_id=user_id, election_instance_id=election_instance_id, work_id=work_experience_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_political(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     political = user.profile.political.all()
@@ -203,11 +203,11 @@ def politician_profile_political(request, election_instance_id, user_id):
                               'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_political_wizard(request, election_instance_id, user_id, political_id=None):
     return PoliticianProfilePoliticalWizard(user_id=user_id, election_instance_id=election_instance_id, political_id=political_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_education(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     education = user.profile.education.all()
@@ -216,11 +216,11 @@ def politician_profile_education(request, election_instance_id, user_id):
                               'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_education_wizard(request, election_instance_id, user_id, education_id=None):
     return PoliticianProfileEducationWizard(user_id=user_id, election_instance_id=election_instance_id, education_id=education_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_appearance(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     appearances = user.profile.appearances.all()
@@ -229,11 +229,11 @@ def politician_profile_appearance(request, election_instance_id, user_id):
                               'election_instance_id': election_instance_id,},
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_appearance_wizard(request, election_instance_id, user_id, appearance_id=None):
     return PoliticianProfileAppearanceWizard(user_id=user_id, election_instance_id=election_instance_id, appearance_id=appearance_id)(request)
 
-@login_required
+@candidate_required
 def politician_profile_link(request, election_instance_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     links = user.profile.links.all()
@@ -244,7 +244,7 @@ def politician_profile_link(request, election_instance_id, user_id):
                               },
                               context_instance=RequestContext(request))
 
-@login_required
+@candidate_required
 def politician_profile_link_wizard(request, election_instance_id, user_id, link_id=None):
     return PoliticianProfileLinkWizard(user_id=user_id, election_instance_id=election_instance_id, link_id=link_id)(request)
 
