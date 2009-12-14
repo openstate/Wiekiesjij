@@ -155,7 +155,7 @@ WIZARD_UPLOAD_TEMP_DIR = "/home/sardar/PythonProjects/Accepte/wksj/bzrrepos/work
 
 
 
-if False:
+if DEBUG:
     
     #debug_toolbar
     MIDDLEWARE_CLASSES += (

@@ -248,7 +248,6 @@ class Step(object):
             In latter case you will be able to define prefixes and initial values.
         """
         for (name, form) in forms.iteritems():
-            import ipdb; ipdb.set_trace()
             if issubclass(form, BaseForm):
                 self.form(name = name, cls = form)
 
