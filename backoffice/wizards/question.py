@@ -7,10 +7,10 @@ from django.shortcuts import redirect, get_object_or_404
 from utils.multipathform import Step, MultiPathFormWizard
 
 from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
-from questions.forms import AnswerForm, AnswerSelectQuestionForm, AnswerChooseAnswerQuestionForm
+from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
 
-from elections.models import ElectionInstance
+from elections.models import ElectionInstance, ElectionInstanceQuestionAnswer
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
 
 class AnswerQuestion(MultiPathFormWizard):
@@ -31,7 +31,7 @@ class AnswerQuestion(MultiPathFormWizard):
         steps_tree = list()
         for question in questions:
             step = Step(str(question.id),
-                     forms={str(question.id): AnswerChooseAnswerQuestionForm},
+                     forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/council/edit/step1.html',
                      initial={'some_var': ''},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})

@@ -23,7 +23,7 @@ from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, Ans
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
 from django.contrib.auth.models import User
-from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
+from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
 
 def election_instance_view(request, id):

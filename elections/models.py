@@ -175,7 +175,17 @@ class ElectionInstanceQuestion(models.Model):
     
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
-    
+
+class ElectionInstanceQuestionAnswer(models.Model):
+    election_instance_question = models.ForeignKey(ElectionInstanceQuestion, verbose_name=_('Election Instance Question'))
+    answer = models.CharField(_('Answer'), null=True, blank=True, max_length=255)
+
+    def __unicode__(self):
+        return self.election_instance_question + ' - ' + self.answer
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Election Instance Question Answer'), _('Election Instance Question Answers')
+
 class Party(models.Model):
     """
         A party within an election instance

@@ -12,14 +12,7 @@ from utils.forms import TemplateForm
 from questions.models import Question, Answer
 from questions.settings import QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING, QUESTION_TYPE_CHOICES
 
-class AnswerForm(BetterModelForm, TemplateForm):
-    pass
-
-    class Meta:
-        model = Answer
-
-
-class AnswerSelectQuestionForm(BetterModelForm, TemplateForm):
+class SelectQuestionForm(BetterModelForm, TemplateForm):
     '''
     Step 1 - we first select a question, then fill the answer.
 
@@ -39,13 +32,13 @@ class AnswerSelectQuestionForm(BetterModelForm, TemplateForm):
         fields = ('question',)
 
 
-class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
+class AnswerQuestionForm(BetterModelForm, TemplateForm):
     '''
         Form which displays an possible answers, coupled to the question given. It makes sure the answer has the
         right widget, which depends on the question type.
     '''
     def __init__(self, question_instance_id, *args, **kwargs):
-        super(AnswerChooseAnswerQuestionForm, self).__init__(*args, **kwargs)
+        super(AnswerQuestionForm, self).__init__(*args, **kwargs)
 
         question_types = dict(QUESTION_TYPE_CHOICES)
 
