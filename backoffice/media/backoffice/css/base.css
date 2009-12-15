@@ -29,7 +29,7 @@
 			font-size:1.8em;
 			font-weight:normal;
 			line-height:1.2;
-			margin:1em 0 .5em;
+			margin:0 0 .5em;
 			color:#777;
 			}
 			.wizard h2 {
@@ -488,6 +488,7 @@
 			border-style:solid;
 			border-color:#FFD016;
 			border-width:1px 0 1px 0;
+			margin-bottom:2em;
 			}
 			div.messages h2 {
 				margin:0;
@@ -566,10 +567,8 @@
 			padding:10px;
 			margin:20px 0;
 			background:#fff;
-			border-color:#e0e0e0;
-			border-top-color:#d0d0d0;
-			border-left-color:#d0d0d0;
 			border-style:solid;
+			border-color:#d0d0d0 #ccc #ccc #d0d0d0;
 			border-width:1px 6px 6px 1px;
 			position:relative;
 			min-height:55px;
@@ -583,7 +582,7 @@
 			div.item span.list {
 				float:left;
 				text-transform:uppercase;
-				color:#777;
+				color:#aaa;
 				display:block;
 				width:55px;
 				height:35px;
@@ -591,7 +590,7 @@
 				padding:10px 0;
 				line-height:1.3em;
 				text-align:center;
-				background:#fff url(../img/lijst3.png) 0 0 no-repeat;
+				background:#fff url(../img/lijst.png) 0 0 no-repeat;
 				}	
 				div.item span.list strong {
 					display:block;
@@ -722,7 +721,58 @@
 			min-height:600px;
 			}
 
-/*	Utils (Colorpicker & Datepicker)
+	/*	Sidebar
+		**************************************************************************************************************/
+
+		.sidebar .mod {
+			background:#e0e0e0;
+			padding:10px;
+			border-style:solid;
+			border-color:#ccc;
+			border-width:1px 6px 6px 1px;
+			}
+		.sidebar a.edit {
+			right:10px;
+			top:5px;
+			}
+		
+		
+		.sidebar div.user-contact {
+			background:#fff;
+			padding:10px;
+			border:none;
+			}
+			div.user-contact p {
+				margin:0;
+				}
+			div.user-contact a.edit {
+				right:10px;
+				top:10px;
+				}
+
+		.sidebar .start-btn {
+			padding:0;
+			border:none;
+			}
+			.start-btn a.btn {
+				width:193px;
+				margin:0;
+				background:#ccc;
+				border-style:solid;
+				border-color:#aaa;
+				padding:10px;
+				border-width:1px 6px 6px 1px;
+				color:#000;
+				}
+				.start-btn a.btn:hover {
+					background:#666;
+					border-color:#000;
+					color:#fff;
+					}
+
+
+
+	/*	Utils (Colorpicker & Datepicker)
 		**************************************************************************************************************/
 
 		.time-picker select.combo {

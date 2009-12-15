@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang='en-us' xmlns='http://www.w3.org/1999/xhtml'>
@@ -52,6 +53,15 @@
             </div>
             
             <div class="col size1of4 sidebar">
+            	<div class="mod user-contact">
+                    <div class="bd">
+                        <h3>{% trans "We can reach you on" %}:</h3>
+                        <a href="#" class="edit">{% trans "edit" %}</a>
+                        <p>(06) 66 666 666<br />
+                            <a href="#">f.lastname@party.nl</a><br />
+                            (on Mon, Tue, Wed or Thu)</p>
+                    </div>
+                </div>
             {% block sidebar %}
             
             {% endblock sidebar %}
