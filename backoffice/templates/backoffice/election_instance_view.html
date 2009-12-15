@@ -22,7 +22,7 @@
 </div>
 
 <div class="mod overview parties">
-	<a href="{% url backoffice.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
+	<a href="{% url bo.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
     <h2>{% trans 'All parties for this election' %}:</h2>
 
     {% for index, eip in instance.party_dict.items %}
@@ -32,7 +32,7 @@
         {% if eip %}                
 
             <h3>{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>)</h3>
-            <a href="{% url backoffice.election_party_view eip.id %}" class="manage">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Manage this party' %}{% endif %}</a>
+            <a href="{% url bo.election_party_view eip.id %}" class="manage">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Manage this party' %}{% endif %}</a>
             <ul class="quicklinks">
             	<li><a href="#">{% trans 'Edit party profile' %}</a><br /><a href="#">{% trans 'Remove party' %}</a></li>
            	</ul>
@@ -50,17 +50,17 @@
                     <li{% if instance.invite_overdue %} class="overdue"{% endif %}>There are no candidates defined for this party ({% if instance.invite_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.invite_deadline }}) <a href="#" class="act">{% trans 'Do it now' %}</a></li>
                 {% endif %}
             </ul>
-            {% ifnotequal index 1 %}<div class="up"><a href="{% url backoffice.election_party_up eip.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
-            {% ifnotequal index instance.num_lists %}<div class="down"><a href="{% url backoffice.election_party_down eip.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
+            {% ifnotequal index 1 %}<div class="up"><a href="{% url bo.election_party_up eip.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
+            {% ifnotequal index instance.num_lists %}<div class="down"><a href="{% url bo.election_party_down eip.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
 
         {% else %}
-            <h3><a href="{% url backoffice.election_party_create instance.id index %}" class="add-item">{% trans 'Define party for this list' %}</a></h3>
-		{% ifequal index instance.num_lists %}<div class="sidebar"><a href="{% url backoffice.election_instance_shrink instance.id %}" class="delete">{% trans 'Remove this list' %}</a></div>{% endifequal %}
+            <h3><a href="{% url bo.election_party_create instance.id index %}" class="add-item">{% trans 'Define party for this list' %}</a></h3>
+		{% ifequal index instance.num_lists %}<div class="sidebar"><a href="{% url bo.election_instance_shrink instance.id %}" class="delete">{% trans 'Remove this list' %}</a></div>{% endifequal %}
         {% endif %}
     </div>
     {% endfor %}
 	<div class="item add-slot">
-   		<a href="{% url backoffice.election_instance_grow instance.id %}" class="add">{% trans "Add new position" %}</a>
+   		<a href="{% url bo.election_instance_grow instance.id %}" class="add">{% trans "Add new position" %}</a>
     </div>
 </div>
 
@@ -75,7 +75,7 @@
 
 	{% blockwrap %}
         <h3>{% trans 'This council' %}</h3>
-        <a href="{% url backoffice.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>
+        <a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>
         <ul>
         	<li>{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a></li>
 			<li>{% trans 'Description' %}: {{ instance.council.description }}</li>

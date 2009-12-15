@@ -1,3 +1,4 @@
+from copy import Error
 import os.path
 import os
 #!/usr/env python
@@ -14,14 +15,7 @@ from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
 from utils.multipathform import MultiPathFormWizard, Step
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
-
-# Even though your IDE (or your brains) might say this is an unused import,
-# please do not remove the following Form imports
-# FIXME: Remove import * once the test functions can be removed !
-from backoffice.wizards import *
-from political_profiles.forms import *
-from elections.forms import *
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
 
 # TODO: remove import when no longer test version
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
@@ -35,13 +29,13 @@ def election_instance_shrink(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     instance.num_lists -= 1
     instance.save()
-    return redirect('backoffice.election_instance_view', id=id)
+    return redirect('bo.election_instance_view', id=id)
 
 def election_instance_grow(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     instance.num_lists += 1
     instance.save()
-    return redirect('backoffice.election_instance_view', id=id)
+    return redirect('bo.election_instance_view', id=id)
 
 def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
@@ -60,34 +54,34 @@ def election_party_edit(request, id):
 def election_party_up(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()
-    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+    return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
 def election_party_down(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_down()
-    return redirect('backoffice.election_instance_view', id=eip.election_instance.id)
+    return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
 def election_party_shrink(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.list_length -= 1
     eip.save()
-    return redirect('backoffice.election_party_view', id=id)
+    return redirect('bo.election_party_view', id=id)
 
 def election_party_grow(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.list_length += 1
     eip.save()
-    return redirect('backoffice.election_party_view', id=id)
+    return redirect('bo.election_party_view', id=id)
 
 def candidate_up(request, id):
     can = get_object_or_404(Candidacy, pk=id)
     can.move_up()
-    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+    return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
 def candidate_down(request, id):
     can = get_object_or_404(Candidacy, pk=id)
     can.move_down()
-    return redirect('backoffice.election_party_view', id=can.election_party_instance.id)
+    return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
 
 #@login_required
@@ -106,27 +100,6 @@ def add_election_instance(request):
 def edit_election_instance(request, id):
     wizard = EditElectionInstanceWizard(id)
     return wizard(request)
-
-
-def form_view(request, form_type):
-    try:
-        formslist = dict(
-            generic_form = globals()[form_type],
-        )
-    except KeyError:
-        raise NameError('%s is not an existing form\nHave you checked your imports?' % (form_type))
-
-    steps = Step('add_election_instance', forms=formslist, template='backoffice/wizard/step1.html')
-    generic_form = MultiPathFormWizard(steps)
-    return generic_form(request)
-
-def wizard_view(request, wizard_type):
-    try:
-        wizard = globals()[wizard_type]
-    except KeyError:
-        raise NameError('%s is not an existing wizard\nHave you checked your imports?' % (wizard_type))
-        
-    return wizard()(request)
 
 def election_setup(request, election_instance_id, user_id=None):
     '''
@@ -268,7 +241,7 @@ def csv_import_candidates_step2(request, ep_id, error = False):
                 destination.write(chunk)
             destination.close()
             request.session['csv_candidate_filename'] = filename
-            return redirect('backoffice.csv_candidates_step3', ep_id)
+            return redirect('bo.csv_candidates_step3', ep_id)
             
     else:
         form = CsvUploadForm()
@@ -285,7 +258,7 @@ def csv_import_candidates_step3(request, ep_id):
         if not os.path.isdir(path):
             os.remove(path + request.session['csv_candidate_filename'])
         request.session['csv_candidate_filename'] = ''
-        return redirect('backoffice.csv_candidates_step2', ep_id=ep_id, error='true')
+        return redirect('bo.csv_candidates_step2', ep_id=ep_id, error='true')
 
     if(request.POST):
         form = CsvConfirmForm(request.POST)
@@ -331,7 +304,7 @@ def csv_import_candidates_step3(request, ep_id):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
             request.session['csv_candidate_filename'] = ''
-            return redirect('backoffice.election_party_view', id=ep_id)
+            return redirect('bo.election_party_view', id=ep_id)
     else:
         form = CsvConfirmForm()
 
@@ -354,7 +327,7 @@ def csv_import_parties_step2(request, ei_id, error = False):
                 destination.write(chunk)
             destination.close()
             request.session['csv_party_filename'] = filename
-            return redirect('backoffice.csv_parties_step3', ei_id = ei_id)
+            return redirect('bo.csv_parties_step3', ei_id = ei_id)
 
     else:
         form = CsvUploadForm()
@@ -371,7 +344,7 @@ def csv_import_parties_step3(request, ei_id):
         if not os.path.isdir(path):
             os.remove(path + request.session['csv_party_filename'])
         request.session['csv_party_filename'] = ''
-        return redirect('backoffice.csv_parties_step2', ei_id = ei_id, error='true')
+        return redirect('bo.csv_parties_step2', ei_id = ei_id, error='true')
 
     if(request.POST):
         form = CsvConfirmForm(request.POST)
@@ -432,7 +405,7 @@ def csv_import_parties_step3(request, ei_id):
 
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_party_filename'])
             request.session['csv_party_filename'] = ''
-            return redirect('backoffice.election_instance_view', id=ei_id)
+            return redirect('bo.election_instance_view', id=ei_id)
     else:
         form = CsvConfirmForm()
 
@@ -471,5 +444,9 @@ def answer_add_select_question(request):
 def answer_add_choose_answer(request, question_instance_id):
     question_instance = Question.objects.get(id=question_instance_id)
     form = AnswerChooseAnswerQuestionForm(question_instance=question_instance)
+    
     return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form, 'question': question_instance},
                               context_instance=RequestContext(request))
+
+def candidate_add(request, eip_id, pos):
+    return AddCandidateWizard(eip_id, pos)(request)

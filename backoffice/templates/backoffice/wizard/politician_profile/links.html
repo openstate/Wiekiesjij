@@ -7,13 +7,13 @@
     
     <h2>{%trans 'Current Links' %} </h2>
     {% for link in links %}
-         <p><a href="{% url backoffice.politician_profile_link_wizard_edit election_instance_id user_id link.id %}">{{ link.name }}</a>: {{ link.url }}: {{ link.description }}</p>
+         <p><a href="{% url bo.politician_profile_link_wizard_edit election_instance_id user_id link.id %}">{{ link.name }}</a>: {{ link.url }}: {{ link.description }}</p>
     {% empty %}
         <p>{%trans 'You have no links defined yet' %} </p>
     {% endfor %}
     
-    <a href="{% url backoffice.politician_profile_setup election_instance_id user_id %}">{% trans "< Previous " %}</a>
-    <a href="{% url backoffice.politician_profile_link_wizard election_instance_id user_id %}">{% trans "Click here to add a link" %}</a>
-    <a href="{% url backoffice.politician_profile_appearance election_instance_id user_id %}">{% trans "Next >" %}</a>
+    <a href="{% url bo.politician_profile_setup election_instance_id user_id %}">{% trans "< Previous " %}</a>
+    <a href="{% url bo.politician_profile_link_wizard election_instance_id user_id %}">{% trans "Click here to add a link" %}</a>
+    <a href="{% url bo.politician_profile_appearance election_instance_id user_id %}">{% trans "Next >" %}</a>
 </div>
 {% endblock content %}

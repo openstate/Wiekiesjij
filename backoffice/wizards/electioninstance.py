@@ -115,8 +115,8 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             transaction.commit()
         
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('backoffice.election_event')
-        return redirect('backoffice.edit_council', id=ei.id)
+            return redirect('bo.election_event')
+        return redirect('bo.edit_council', id=ei.id)
 
 class EditElectionInstanceWizard(MultiPathFormWizard):
     """
@@ -169,7 +169,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
             transaction.commit()
         
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('backoffice.election_event')
+            return redirect('bo.election_event')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
 
@@ -472,5 +472,5 @@ class ElectionSetupWizard2(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.election_setup_done'))
+            return redirect('bo.election_setup_done')
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')

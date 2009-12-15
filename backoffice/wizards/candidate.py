@@ -70,7 +70,7 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_appearance', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
+            return redirect('bo.politician_profile_appearance', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
@@ -132,7 +132,7 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_political', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, }))
+            return redirect('bo.politician_profile_political', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileWorkWizard(MultiPathFormWizard):
@@ -194,7 +194,7 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_work', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
+            return redirect('bo.politician_profile_work', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileInterestWizard(MultiPathFormWizard):
@@ -256,7 +256,7 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_interest', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, }))
+            return redirect('bo.politician_profile_interest', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileEducationWizard(MultiPathFormWizard):
@@ -319,7 +319,7 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_education', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
+            return redirect('bo.politician_profile_education', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 
@@ -383,7 +383,7 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, }))
+            return redirect('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 
@@ -451,7 +451,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('backoffice.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
+            return redirect('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
         
@@ -529,4 +529,4 @@ class AddCandidateWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('backoffice.election_party_view', args=self.election_instance_party_id)
+        return redirect('bo.election_party_view', args=self.election_instance_party_id)

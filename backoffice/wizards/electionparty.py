@@ -91,7 +91,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('backoffice.election_instance_view', id=ei.id)
+        return redirect('bo.election_instance_view', id=ei.id)
 
 
 class ElectionPartySetupWizard(MultiPathFormWizard):
@@ -153,5 +153,5 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
         self.eip.list_length = int(data['list_length'])
         self.eip.save()
 
-        return HttpResponseRedirect(reverse('backoffice.election_instance_view', args=[self.eip.election_instance.id]))
+        return redirect('bo.election_instance_view', args=[self.eip.election_instance.id])
 

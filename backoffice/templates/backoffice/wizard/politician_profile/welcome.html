@@ -7,6 +7,6 @@
     <p>{% trans "You've been invited to create a profile for WieKiesJij? for the" %} {{ election_event.name }}</p>
     <h2>{%trans 'What is WieKiesJij?' %} </h2>
     
-    <a href="{% url backoffice.politician_profile_setup election_instance_id user_id %}">{% trans "Click here to start the registration wizard" %}</a>
+    <a href="{% url bo.politician_profile_setup election_instance_id user_id %}">{% trans "Click here to start the registration wizard" %}</a>
 </div>
 {% endblock content %}

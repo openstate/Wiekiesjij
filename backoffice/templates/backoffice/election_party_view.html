@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
 	<li><a href="#">{{ instance.election_event.name }}</a></li>
-    <li><a href="{% url backoffice.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
 {% endblock breadcrumbs %}
 
 {% block content %}
@@ -20,14 +20,14 @@
 
 	<div class="mod overview candidates">
         <h2>{% trans 'Candidates in this party' %}:</h2>
-		<a href="{% url backoffice.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a>
+		<a href="{% url bo.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a>
         
         {% for index, can in eip.candidate_dict.items %}
         <div class="item">
             <span class="list"><strong>{{ index }}</strong></span>
             {% if can %}
-                {% ifnotequal index 1 %}<div class="up"><a href="{% url backoffice.candidate_up can.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
-                {% ifnotequal index eip.list_length %}<div class="down"><a href="{% url backoffice.candidate_down can.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
+                {% ifnotequal index 1 %}<div class="up"><a href="{% url bo.candidate_up can.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
+                {% ifnotequal index eip.list_length %}<div class="down"><a href="{% url bo.candidate_down can.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
                 <div class="main_content">
                     <img src="{{ can.candidate.profile.picture }}" />
                     <h3><a href="#">{{ can.candidate.profile.full_name }}</a></h3>
@@ -43,13 +43,13 @@
             {% else %}
                 <h3><a href="#" class="add-item">{% trans 'Invite politician' %}</a></h3>
                 {% ifequal index eip.list_length %}
-                	<a href="{% url backoffice.election_party_shrink eip.id %}" class="delete">{% trans 'Remove this slot' %}</a>
+                	<a href="{% url bo.election_party_shrink eip.id %}" class="delete">{% trans 'Remove this slot' %}</a>
               	{% endifequal %}
             {% endif %}
         </div>
         {% endfor %}
-        <div><a href="{% url backoffice.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
-        <div> <a href="{% url backoffice.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a></div>
+        <div><a href="{% url bo.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
+        <div> <a href="{% url bo.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a></div>
   	</div>
 {% endblock content %}
 

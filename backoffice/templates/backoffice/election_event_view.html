@@ -15,16 +15,16 @@
             <h2>{% trans "This election has the following instances:" %}</h2>
         </div>
         <div class="bd">
-            <a href="{% url backoffice.add_election_instance %}">{% trans "Add Election Instance" %}</a>
-            {#}<a href="{% url backoffice.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
+            <a href="{% url bo.add_election_instance %}">{% trans "Add Election Instance" %}</a>
+            {#}<a href="{% url bo.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
           	
             {% for ei in election_instances  %}
             <div class="item">
                 {% blockwrap template='electioninstance' %}
                     <h3>{{ ei.name }}</h3>
-                    <a href="{% url backoffice.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
+                    <a href="{% url bo.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
                     <ul class="quicklinks">
-                    	<li><a href="{% url backoffice.edit_election_instance id=ei.id %}">{% trans "Edit settings" %}</a></li>
+                    	<li><a href="{% url bo.edit_election_instance id=ei.id %}">{% trans "Edit settings" %}</a></li>
                     </ul>
                 {% endblockwrap %}
             </div>

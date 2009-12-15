@@ -85,4 +85,4 @@ class CouncilEditWizard(MultiPathFormWizard):
             transaction.commit()
 
         
-        return redirect('backoffice.election_instance_view', id=self.election_instance.id)
+        return redirect('bo.election_instance_view', id=self.election_instance.id)
