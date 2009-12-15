@@ -39,8 +39,9 @@ class AnswerQuestion(MultiPathFormWizard):
             '''
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
-                     template='backoffice/wizard/council/edit/step1.html',
+                     template='backoffice/wizard/question/answer_add/step.html',
                      initial={'some_var': ''},
+                     extra_context={'question_title': question.title},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
 
@@ -84,7 +85,7 @@ class AnswerQuestion(MultiPathFormWizard):
         else:
             transaction.commit()
             
-        return redirect(reverse(''))
+        return redirect('bo.answer_question_done')
 
 
 

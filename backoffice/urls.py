@@ -77,4 +77,5 @@ urlpatterns += patterns('backoffice.views',
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/links/edit/(?P<link_id>\d+)$', 'politician_profile_link_wizard', name='bo.politician_profile_link_wizard_edit'),
 
     url(r'^answer-question/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/$', 'answer_question', name='bo.answer_question'),
+    url(r'^answer-question/done/$', 'answer_question_done', name='bo.answer_question_done'),
     )
