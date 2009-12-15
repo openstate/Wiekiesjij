@@ -88,13 +88,15 @@
 			background-repeat:no-repeat;
 			padding-left:24px;
 			}
-		a.edit {
-			font-size:.8em;
-			font-weight:bold;
-			color:#ed2227;
+
+		.sidebar a.edit {
 			position:absolute;
 			top:0;
 			right:0;
+			font-size:.8em;
+			font-weight:bold;
+			color:#ed2227;
+			padding-top:.3em;
 			}
 		strong {
 			font-weight:bold;
@@ -102,6 +104,20 @@
 		em {
 			font-style:italic;
 			}
+			
+		dl {
+			overflow:hidden;_zoom:1;
+			
+			margin:1em 0;
+			}
+			dt {
+				font-size:11px;
+				padding-right:.5em;
+				font-weight:bold;
+				}
+			dd {
+				margin-bottom:.5em;
+				}
 
 /* 	Form styling
 	*************************************************************************************************/
@@ -258,8 +274,8 @@
 					}
 					
 			.invite {
-				background-image:url(../img/add.png);
-				background-position:10px 10px;
+				background-image:url(../img/invite.png);
+				background-position:10px 14px;
 				background-repeat:no-repeat;
 				}
 				.invite h3,
@@ -401,7 +417,7 @@
 		
 		#container {
 			width:960px;
-			margin:20px auto;
+			margin:10px auto 20px;
 			}
 			
 		
@@ -425,11 +441,22 @@
 		
 		#header {
 			margin:0 10px 10px;
-			padding:10px 0 .5em;
-			overflow:hidden;
+			padding:20px 0 .5em;
+			overflow:hidden;_zoom:1;
 			border-bottom:4px solid #e0e0e0;
+			position:relative;
 			}
 			
+		.user-info {
+			position:absolute;
+			right:0;
+			top:0;
+			font-size:.8em;
+			color:#aaa;
+			}
+			.user-info a {
+				color:#aaa;
+				}
 			
 		.nav-breadcrumbs {
 			

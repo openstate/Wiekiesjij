@@ -3,7 +3,7 @@
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
 {% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
-{% block back-link %}<a href="#" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>{% endblock back-link %}
+{% block back-link %}<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.council.region }}</a>{% endblock back-link %}
 
 {% block breadcrumbs %}
 	<li><a href="#">{{ instance.election_event.name }}</a></li>
@@ -19,9 +19,9 @@
    	</div>
 
 	<div class="mod overview candidates">
-        <h2>{% trans 'Candidates in this party' %}:</h2>
-		<a href="{% url bo.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a>
         
+		<a href="{% url bo.csv_candidates_step1 eip.id %}" class="add-batch btn">{% trans "Import multiple candidates via Excel / CSV" %}</a>
+        <h2>{% trans 'Candidates for this party' %}:</h2>
         {% for index, can in eip.candidate_dict.items %}
         <div class="item">
             <span class="list"><strong>{{ index }}</strong></span>
@@ -43,40 +43,72 @@
             {% else %}
                 <h3><a href="{% url bo.election_party_add_candidate eip.id index %}" class="add-item">{% trans 'Invite politician' %}</a></h3>
                 {% ifequal index eip.list_length %}
-                	<a href="{% url bo.election_party_shrink eip.id %}" class="delete">{% trans 'Remove this slot' %}</a>
+                	<a href="{% url bo.election_party_shrink eip.id %}" class="delete">{% trans 'Remove this position' %}</a>
               	{% endifequal %}
             {% endif %}
         </div>
         {% endfor %}
-        <div><a href="{% url bo.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
-        <div> <a href="{% url bo.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a></div>
+        <div class="item add-slot">
+        	<a href="{% url bo.election_party_grow eip.id %}" class="add">{% trans 'Add a new position to this list' %}</a>
+       	</div>
   	</div>
 {% endblock content %}
 
 
 {% block sidebar %}
 	{% blockwrap %}
-		<strong>{% trans 'Party profile' %}: <a href="{% url bo.election_party_edit eip.id %}">{% trans 'edit' %}</a></strong>
+    	<h3>{% trans "We can reach you on" %}:</h3>
+        <a href="#" class="edit">{% trans "edit" %}</a>
+        <p>(06) 66 666 666<br />
+        	<a href="#">f.lastname@party.nl</a><br />
+            (on Mon, Tue, Wed or Thu)</p>
+    {% endblockwrap %}
+    
+    {% blockwrap %}
+		<h3>{% trans "This party" %}</h3> 
+        <a href="#" class="edit">{% trans "edit" %}</a>
+        <dl>
+        	<dt>{% trans 'Logo' %}:</dt>
+            	<dd>[logo img]</dd>
+            <dt>{% trans 'Slogan' %}:</dt>
+            	<dd>{{ eip.party.slogan|default:"&ndash;" }}</dd>
+           	<dt>{% trans 'Current number of seats' %}:</dt>
+            	<dd>20</dd>
+        </dl>
+  	{% endblockwrap %}
+    
+    {% blockwrap %}
+    	<h3>{% trans "Contact information" %}</h3> 
+        <a href="#" class="edit">{% trans "edit" %}</a>
+        <dl>
+        	<dt>{% trans "Name" %}:</dt>
+            	<dd>{{ eip.party.name|default:"&ndash;" }} {% if eip.party.abbreviation %}({{ eip.party.abbreviation }}){% endif %}</dd>
+           	<dt>{% trans "Address" %}:</dt>
+            	<dd>Streetname 12<br />9999 AA  Cityname</dd>
+           	<dt>{% trans 'Telephone' %}:</dt>
+            	<dd>{{ eip.party.telephone|default:"&ndash;" }}</dd>
+           	<dt>{% trans 'E-mail' %}:</dt>
+            	<dd>{% if eip.party.email %}<a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a>{%else%}&ndash;{%endif%}</dd>
+           	<dt>{% trans 'Website' %}:</dt>
+            	<dd>{% if eip.party.website %}<a href="{{ eip.party.website }}">{{ eip.party.website }}</a>{%else%}&ndash;{%endif%}</dd>
+      	</dl>
 	{% endblockwrap %}
-	
+    
 	{% blockwrap %}
-		{% trans 'Website' %}: <a href="{{ eip.party.website }}">{{ eip.party.website }}</a><br />
-		{% trans 'Slogan' %}: {{ eip.party.slogan }}<br />
-		{% trans 'Telephone' %}: {{ eip.party.telephone }}<br />
-		{% trans 'E-mail' %}: <a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a><br />
-		{% if eip.party.profile_incomplete %}<a href="{% url bo.election_party_edit eip.id %}">{% trans 'Complete profile' %} &gt;</a>{% endif %}
-	{% endblockwrap %}
-	
-	{% blockwrap %}
-	<strong>{% trans 'Party contacts' %}</strong>
-	{% if eip.party.contacts.all %}
-		{% for contact in eip.party.contacts.all %}
-			{{ contact.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
-		{% endfor %}
-		<a href="#">{% trans 'Add a party contact' %}</a>
-	{% else %}
-		<em>{% trans 'You did not assign a party contact yet' %}</em><br />
-		<a href="#">{% trans 'Invite a party contact now' %} &gt;</a>
-	{% endif %}
-	{% endblockwrap %}
+    	<h3>{% trans "Party description" %}</h3> 
+        <a href="#" class="edit">{% trans "edit" %}</a>
+        <dl>
+        	<dt>Description</dt>
+            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
+                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
+       		<dt>History</dt>
+            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
+                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
+       		<dt>Manifesto</dt>
+            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
+                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
+       			<dd><a href="#">{% trans "Link to manifesto" %}</a></dd>
+        </dl>
+    {% endblockwrap %}
+
 {% endblock sidebar %}
