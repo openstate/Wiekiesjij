@@ -54,7 +54,7 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
             if QUESTION_TYPE_MULTIPLEANSWER == question_instance.question_type:
                 self.fields['value'].widget = widgets.CheckboxSelectMultiple(choices=choices)
             elif QUESTION_TYPE_MULTIPLECHOICE == question_instance.question_type:
-                self.fields['value'].widget = widgets.CheckboxInput(choices=choices)
+                self.fields['value'].widget = widgets.RadioSelect(choices=choices)
             elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
                 self.fields['value'].widget = widgets.NullBooleanSelect()
             else:
