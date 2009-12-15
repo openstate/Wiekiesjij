@@ -22,7 +22,7 @@
 </div>
 
 <div class="mod overview parties">
-	<a href="#" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
+	<a href="{% url backoffice.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties' %}</a>
     <h2>{% trans 'All parties for this election' %}:</h2>
 
     {% for index, eip in instance.party_dict.items %}

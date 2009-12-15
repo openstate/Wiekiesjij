@@ -19,8 +19,8 @@
    	</div>
 
 	<div class="mod overview candidates">
-        <h2>{% trans 'Candidate in this party' %}:</h2>
-		<a href="#">{% trans 'Batch add candidates' %}</a>
+        <h2>{% trans 'Candidates in this party' %}:</h2>
+		<a href="{% url backoffice.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a>
         
         {% for index, can in eip.candidate_dict.items %}
         <div class="item">
@@ -49,7 +49,7 @@
         </div>
         {% endfor %}
         <div><a href="{% url backoffice.election_party_grow eip.id %}">{% trans 'Add a candidate slot' %}</a></div>
-        <div> <a href="#">{% trans 'Batch add candidates' %}</a></div>
+        <div> <a href="{% url backoffice.csv_candidates_step1 eip.id %}">{% trans 'Batch add candidates' %}</a></div>
   	</div>
 {% endblock content %}
 
