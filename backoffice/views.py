@@ -437,9 +437,17 @@ def council_edit_done(request):
     return render_to_response('backoffice/wizard/council/edit/done.html',
                               context_instance=RequestContext(request))
 
-
-def test_question_forms(request):
-    return QuestionTestWizard()(request)
-
 def answer_question(request, election_instance_id=None, user_id=None):
+    '''
+        AnswerQuestion - wizard.
+        @param int election_instance_id - ElectionInstance id
+        @param int user_id User (Candidate=PoliticalProfile) id
+    '''
     return AnswerQuestion(election_instance_id=election_instance_id, user_id=user_id)(request)
+
+def answer_question_done(request):
+    '''
+        answer_question thanks page.
+    '''
+    return render_to_response('backoffice/wizard/question/answer_add/done.html',
+                              context_instance=RequestContext(request))

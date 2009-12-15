@@ -10,7 +10,7 @@ from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoic
 from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
 
-from elections.models import ElectionInstance, ElectionInstanceQuestionAnswer
+from elections.models import ElectionInstance, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
 
 class AnswerQuestion(MultiPathFormWizard):
@@ -62,14 +62,21 @@ class AnswerQuestion(MultiPathFormWizard):
     def done(self, request, form_dict):
         try:
             for path, forms in form_dict.iteritems():
-                for name, form in forms.iteritems():
+                for question_id, form in forms.iteritems():
                     '''
-                    Name is here equal to the question.id
+                    question_id is here equal to the question.id
                     form.cleaned_data.items() is posted data
                     self.user_id is user who answers
                     self.election_instance election instance it belongs to
                     So we simply have all the data needed to save it. The only question is where do we save it.
                     '''
+                    #import ipdb; ipdb.set_trace()
+                    eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question_id)
+                    eiqa = ElectionInstanceQuestionAnswer(election_instance_question=eiq, candidate=self.user,
+                                                          answer_value=map(lambda x: x[1], form.cleaned_data.items())[0])
+                    eiqa.save()
+                    print 'eiq: ', eiq
+                    
                     print 'form.cleaned_data.items(): ', form.cleaned_data.items()
         except Exception, e:
             transaction.rollback()
