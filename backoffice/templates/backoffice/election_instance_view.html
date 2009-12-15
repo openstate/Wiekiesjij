@@ -67,40 +67,89 @@
 {% endblock content %}
 
 {% block sidebar %}
+
 	{% blockwrap %}
-		<h3>{% trans 'Taking place on' %}:</h3>
+    	<a href="#" class="btn next">Start the wizard</a>
+    {% endblockwrap %}
+    
+    {% blockwrap %}
+    	<h3>{% trans "We can reach you on" %}:</h3>
+    	<a href="#" class="edit">{% trans "edit" %}</a>
+    	<p>(06) 66 666 666<br />
+        	<a href="#">f.lastname@party.nl</a><br />
+            (on Mon, Tue, Wed or Thu)</p>
+    {% endblockwrap %}
+    
+	{% blockwrap %}
+		<h3>{% trans 'This election' %}:</h3>
         <a href="#" class="edit">{% trans 'edit' %}</a> 
-        <p>{{ instance.start_date|date:"D j F Y" }}</p>
+        <dl>
+        	<dt>{% trans "Is taking place on" %}</dt>
+            	<dd>{{ instance.start_date|date:"D j F Y" }}</dd>
+          	<dt>{% trans "Website" %}</dt>
+            	<dd>{{ instance.website|default:"&ndash;" }}</dd>
+        </dl>
 	{% endblockwrap %}
 
 	{% blockwrap %}
-        <h3>{% trans 'This council' %}</h3>
-        <a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>
-        <ul>
-        	<li>{% trans 'Website' %}: <a href="{{ instance.council.website }}">{{ instance.council.website }}</a></li>
-			<li>{% trans 'Description' %}: {{ instance.council.description }}</li>
-			<li>{% trans 'E-mail' %}: <a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a></li>
-     	</ul>
-		{% if instance.council.profile_incomplete %}<a href="#" class="act">{% trans "View complete profile" %}</a>{% endif %}
+        <h3>{% trans 'The council' %}</h3>
+        <a href="#" class="edit">{% trans 'edit' %}</a>
+        <dl>
+        	<dt>{% trans "Name" %}</dt>
+            	<dd>{{ instance.council.name }}</dd>
+           	<dt>{% trans "Address" %}</dt>
+            	<dd>Streetname 12<br />9999 AA  Cityname</dd>
+          	<dt>{% trans 'E-mail' %}</dt>
+            	<dd>{% if instance.council.email %}<a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a>{% else %}&ndash;{% endif %}</dd>
+            <dt>{% trans 'Website' %}</dt>
+            	<dd>{% if instance.council.website %}<a href="{{ instance.council.website }}">{{ instance.council.website }}</a>{% else %}&ndash;{% endif %}</dd>
+        </dl>
 	{% endblockwrap %}
-
+	
+    {% blockwrap %}
+    	<h3>{% trans 'More council info' %}</h3>
+        <a href="#" class="edit">{% trans 'edit' %}</a>
+        <dl>
+        	<dt>{% trans "Picture" %}</dt>
+            	<dd>[image here]</dd>
+            <dt>{% trans "Number of seats" %}</dt>
+            	<dd>20</dd>
+        	<dt>{% trans 'Description' %}</dt>
+            	<dd>{{ instance.council.description|truncatewords_html:20|default:"&ndash;" }}</dd>
+        </dl>
+    {% endblockwrap %}
+    
+    {% blockwrap %}
+    	<h3>{% trans 'The Chancellery' %}</h3> 
+        <a href="#" class="edit">{% trans 'edit' %}</a>
+        <dl>
+        	<dt>{% trans "Address" %}</dt>
+            	<dd>Same as council.</dd>
+           	<dt>{% trans "Website" %}</dt>
+            	<dd>{{ instance.chancellery.website|default:"&ndash;" }}</dd>
+        </dl>
+    {% endblockwrap %}
+    
+    {% blockwrap %}
+		<h3>{% trans 'Styling' %}</h3>
+        <a href="#" class="edit">{% trans 'edit' %}</a>
+		{#<img src="{ % url 'style.preview' instance.id % }" />#}
+	{% endblockwrap %}
+    
+    
+    {% comment %}
 	{% blockwrap %}
 		<h3>{% trans 'The Chancellery' %}</h3> 
         <a href="#" class="edit">{% trans 'edit' %}</a>
-		{% if not instance.council.chanceries.count %}
+		{% if instance.council.chanceries.count %}
 			{% for chancery in instance.council.chanceries.all %}
 				{{ chancery.profile.full_name }} <a href="#">{% trans 'edit' %}</a> <a href="#">{% trans 'delete' %}</a><br />
 			{% endfor %}
-			{#<a href="#" class="add">{% trans 'Add a chancellery' %}</a>
 		{% else %}
 			<p>{% trans 'You did not assign a chancellery yet.' %}
 				<a href="#" class="act">{% trans 'Invite a chancellery now' %}</a></p>
 		{% endif %}
 	{% endblockwrap %}
-
-	{% blockwrap %}
-		<h3>{% trans 'Styling' %}</h3>
-        <a href="#" class="edit">{% trans 'edit' %}</a>
-		{#<img src="{ % url 'style.preview' instance.id % }" />#}
-	{% endblockwrap %}
+	{% endcomment %}
+	
 {% endblock sidebar%}
