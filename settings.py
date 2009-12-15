@@ -4,6 +4,7 @@ PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replac
 _ = lambda a: a
 
 DEBUG = True
+DEBUG_TOOLBAR = DEBUG
 TEMPLATE_DEBUG = DEBUG
 TEMPLATE_COMMENTS = True
 ADMINS = (
@@ -156,21 +157,21 @@ WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
 
 
 
-#if DEBUG:
+if DEBUG and DEBUG_TOOLBAR:
     
     #debug_toolbar
-    #MIDDLEWARE_CLASSES += (
-    #    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    #)
+    MIDDLEWARE_CLASSES += (
+       'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
     
-    #INTERNAL_IPS = ('127.0.0.1',)
+    INTERNAL_IPS = ('127.0.0.1',)
     
-    #INSTALLED_APPS += (
-    #    'debug_toolbar',
-    #)
+    INSTALLED_APPS += (
+       'debug_toolbar',
+    )
     
-    #DEBUG_TOOLBAR_CONFIG = {
-    #    'INTERCEPT_REDIRECTS': False,
-    #}
+    DEBUG_TOOLBAR_CONFIG = {
+       'INTERCEPT_REDIRECTS': False,
+    }
         
     #end debug_toolbar

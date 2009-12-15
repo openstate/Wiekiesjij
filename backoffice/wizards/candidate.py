@@ -70,7 +70,7 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_appearance', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
+            return redirect('bo.politician_profile_appearance', user_id=self.user_id, election_instance_id=self.election_instance_id)
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfilePoliticalWizard(MultiPathFormWizard):

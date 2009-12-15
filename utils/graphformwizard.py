@@ -1623,13 +1623,13 @@ class GraphFormWizard(object):
 
                     if isinstance(stepdata, tuple): # both form data and files specified
                         (post, files) = stepdata
-                        for (fk, fd) in files.items():
-                            if isinstance(fd, SessionUploadedFile) and fd.failed:
-                                del files[fk]
+                        if files is not None:
+                            for (fk, fd) in files.items():
+                                if isinstance(fd, SessionUploadedFile) and fd.failed:
+                                    del files[fk]
 
-                            # else: unknown file specified in data, ignore, probably
-                            # subclass knows what it is doing.
-
+                                # else: unknown file specified in data, ignore, probably
+                                # subclass knows what it is doing.
                     else:
                         post = stepdata
                         files = None
@@ -1741,7 +1741,7 @@ class GraphFormWizard(object):
             meta = {}
         else:
             try:
-                meta = cPickle.loads(sess.meta)
+                meta = cPickle.loads(str(sess.meta))
 
             except:
                 #[FIXME: logic failure can go unnoticed here...]

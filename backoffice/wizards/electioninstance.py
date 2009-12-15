@@ -256,11 +256,18 @@ class ElectionSetupWizard(GraphFormWizard):
             # step 1 data
             stepdata = {}
             for (idx, profile_form) in enumerate(get_profile_forms('council_admin', 'edit')):
-                form = GStep.new_form(form = profile_form, initial = user.profile)
-                stepdata['chancery_registration%s' % idx] = getattr(form, 'cleaned_data', {})
-            
-            data['chancery_registration'] = stepdata
-
+                if idx == 0:            
+                    data.update({'chancery_registration': {'chancery_registration%d' % idx: {
+                        'name': {
+                            'first_name': user.profile.first_name,
+                            'last_name': user.profile.last_name,
+                            'middle_name': user.profile.middle_name,
+                        },
+                        'gender': user.profile.gender,
+                        'telephone': user.profile.telephone or '',
+                        'workingdays': user.profile.workingdays or '',
+                    }}})
+                    
             # step 2 data
             form = GStep.new_form(form = ElectionInstanceForm, initial = election_instance)
             data['election_details'] = {'election_details' : getattr(form, 'cleaned_data', {})}
@@ -297,7 +304,7 @@ class ElectionSetupWizard(GraphFormWizard):
             # store data
             self.save_data(request, data, meta, *args, **kwargs)
 
-            return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = '')))
+            return redirect(url_step[0], *url_step[1], **dict(url_step[2], path = ''))
 
         # end of init
         raise Http404

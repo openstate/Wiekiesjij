@@ -15,7 +15,7 @@ from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard
 
 # TODO: remove import when no longer test version
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
@@ -114,7 +114,7 @@ def election_setup(request, election_instance_id, user_id=None):
     if not user_id:
         user_id = request.user.id
 
-    return ElectionSetupWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
+    return ElectionSetupWizard2(election_instance_id=election_instance_id, user_id=user_id)(request)
 
 def election_setup_done(request):
     '''

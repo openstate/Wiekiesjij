@@ -67,7 +67,7 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
         
         
         
-class ChanceryProfileForm(BetterModelForm, TemplateForm):
+class ChanceryProfileForm(BetterForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
@@ -81,27 +81,13 @@ class ChanceryProfileForm(BetterModelForm, TemplateForm):
              ('Sunday', _('Sunday')),
             )
     #address = AddressField(label=_('Chancery Address'))
-    #name = NameField(label=_('Name'))
-
-    def __init__(self, *args, **kwargs):
-        super(ChanceryProfileForm, self).__init__(*args, **kwargs)
-        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
+    name = NameField(label=_('Name'))
+    gender = forms.CharField(_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    telephone = forms.CharField(_('Telepgone'))
+    workingdays = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=DAYS, required=False)
 
     class Meta:
-        model = ChanceryProfile
-        #fields = ('name', 'gender', 'telephone', 'workingdays',) # 'picture' is temporary excluded
-        fields = ('first_name', 'middle_name', 'last_name', 'gender', 'telephone', 'workingdays',)
-        #exclude = ('user', 'street', 'house_num', 'postcode', 'town', 'website', 'description', 'picture')
-    '''
-    def clean_address(self):
-        """
-            Puts the subfields of the address multivaluefield into separate fields
-        """
-        fields = ['street', 'number', 'postalcode', 'city']
-        for key in fields:
-            self.cleaned_data[key] = self.cleaned_data['address'].split(' ')[fields.index(key)]
-        return self.cleaned_data['address']
-    '''
+        fields = ('name', 'gender', 'telephone', 'workingdays',)
 
 class ChanceryContactInformationForm(BetterModelForm, TemplateForm):
     '''
