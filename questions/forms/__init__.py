@@ -51,7 +51,15 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
 
         if question_instance.question_type in question_types:
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
-            self.fields['value'].widget = widgets.CheckboxSelectMultiple(choices=choices)
+            if QUESTION_TYPE_MULTIPLEANSWER == question_instance.question_type:
+                self.fields['value'].widget = widgets.CheckboxSelectMultiple(choices=choices)
+            elif QUESTION_TYPE_MULTIPLECHOICE == question_instance.question_type:
+                self.fields['value'].widget = widgets.CheckboxInput(choices=choices)
+            elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
+                self.fields['value'].widget = widgets.NullBooleanSelect()
+            else:
+                pass
+
         else:
             pass #TODO raise error
 

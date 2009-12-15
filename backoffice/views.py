@@ -478,5 +478,5 @@ def answer_add_select_question(request):
 def answer_add_choose_answer(request, question_instance_id):
     question_instance = Question.objects.get(id=question_instance_id)
     form = AnswerChooseAnswerQuestionForm(question_instance=question_instance)
-    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form},
+    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form, 'question': question_instance},
                               context_instance=RequestContext(request))
