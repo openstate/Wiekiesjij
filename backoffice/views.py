@@ -12,16 +12,17 @@ from django.db import transaction
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from elections.settings import ELECTION_EVENT_ID
-from elections.models import ElectionInstance, ElectionInstanceParty, Party
+from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
 from elections.functions import create_profile, profile_invite_email_templates
 from invitations.models import Invitation
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard, AnswerQuestion
+from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, ElectionSetupWizard
+from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard, 
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
 from django.contrib.auth.models import User
-
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
 from questions.models import Question
 

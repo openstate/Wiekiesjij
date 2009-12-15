@@ -153,5 +153,5 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
         self.eip.list_length = int(data['list_length'])
         self.eip.save()
 
-        return redirect('bo.election_instance_view', args=[self.eip.election_instance.id])
+        return redirect('bo.election_instance_view', self.eip.election_instance.id)
 
