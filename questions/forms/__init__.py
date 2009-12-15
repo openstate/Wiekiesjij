@@ -9,6 +9,7 @@ from utils.forms import TemplateForm
 
 # TODO make better imports
 from questions.models import Question, Answer
+from questions.settings import QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING, QUESTION_TYPE_CHOICES
 
 class AnswerForm(BetterModelForm, TemplateForm):
     pass
@@ -41,6 +42,18 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
     '''
     Step 2 (see sescription of AnswerSelectQuestionForm).
     '''
+    #answer = forms.
+    def __init__(self, question_instance=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        # Add here?
+
+        question_types = dict(QUESTION_TYPE_CHOICES)
+
+        if question_instance.question_type in question_types:
+            choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
+            self.fields['value'].widget = widgets.CheckboxSelectMultiple(choices=choices)
+        else:
+            pass #TODO raise error
 
     class Meta:
         model = Answer

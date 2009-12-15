@@ -69,6 +69,8 @@ urlpatterns += patterns('backoffice.views',
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/links/add/$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard'),
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/links/edit/(?P<link_id>\d+)$', 'politician_profile_link_wizard', name='backoffice.politician_profile_link_wizard_edit'),
 
+    url(r'^answer/add-answer-select-question$', 'answer_add_select_question', name='backoffice.answer_add_select_question'),
+    url(r'^answer/add-answer-choose-answer/(?P<question_instance_id>\d+)/$', 'answer_add_choose_answer', name='backoffice.answer_add_choose_answer'),
     url(r'^answer/add$', 'answer_add', name='backoffice.answer_add'),
     
     #TODO: Debug views remove at some point 

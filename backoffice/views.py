@@ -23,6 +23,9 @@ from backoffice.wizards import *
 from political_profiles.forms import *
 from elections.forms import *
 
+# TODO: remove import when no longer test version
+from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
+from questions.models import Question
 
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
@@ -466,3 +469,14 @@ def test_question_forms(request):
 
 def answer_add(request):
     return AnswerAddWizard()(request)
+
+def answer_add_select_question(request):
+    form = AnswerSelectQuestionForm()
+    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form},
+                              context_instance=RequestContext(request))
+
+def answer_add_choose_answer(request, question_instance_id):
+    question_instance = Question.objects.get(id=question_instance_id)
+    form = AnswerChooseAnswerQuestionForm(question_instance=question_instance)
+    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form},
+                              context_instance=RequestContext(request))
