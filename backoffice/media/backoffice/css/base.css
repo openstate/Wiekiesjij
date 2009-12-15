@@ -76,6 +76,11 @@
 			a.btn:hover {
 				background-color:#b9b9b9;
 				}
+			.sidebar a.btn {
+				width:186px;
+				font-weight:bold;
+				text-transform:uppercase;
+				}
 		a.add {
 			background-image:url(../img/add.png);
 			background-position:4px center;
@@ -334,7 +339,7 @@
 					}
 			
 				div.form-submit button.prev,
-                div.form-submit a.prev {
+                a.prev {
 					background: #ccc url(../img/prev.png) no-repeat 5px 5px;
 					padding-left: 20px;
 					}
@@ -344,22 +349,22 @@
 					 }
 					
 					div.form-submit button.prev:hover,
-                    div.form-submit a.prev:hover {
+                    a.prev:hover {
 						background: #b9b9b9 url(../img/prev.png) no-repeat 5px 5px;
 						}
 			
 				div.form-submit button.next,
-                div.form-submit a.next {
+                a.next {
 					background: #ccc url(../img/next.png) no-repeat right;
-					padding-right:20px;
+					padding-right:25px;
 					}
 					
-					 div.form-submit a.next {
+					 a.next {
 					 	padding-right:25px;
 					 }
 					
 					div.form-submit button.next:hover,
-                    div.form-submit a.next:hover {
+                    a.next:hover {
 						background: #b9b9b9 url(../img/next.png) no-repeat right;
 						}
 		
