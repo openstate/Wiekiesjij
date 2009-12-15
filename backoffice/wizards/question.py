@@ -37,10 +37,15 @@ class AnswerQuestion(MultiPathFormWizard):
             Also, since we store the answers as text fields (this one is still questionable - how shall we store the
             answers) we will need to bring them into a proper form before passing to the initials.
             '''
+            eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question.id)
+            eiqa = ElectionInstanceQuestionAnswer.objects.get(election_instance_question=eiq, candidate=self.user)
+            step_initial_values = '' if not eiqa else eiqa.answer_value
+            print 'question.title: ', question.title
+            print 'step_initial_values: ', step_initial_values
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/question/answer_add/step.html',
-                     initial={'some_var': ''},
+                     initial={'????' + str(question.id): {'value': step_initial_values}}, # TODO: Fix this = load the data!
                      extra_context={'question_title': question.title},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
@@ -66,19 +71,15 @@ class AnswerQuestion(MultiPathFormWizard):
                 for question_id, form in forms.iteritems():
                     '''
                     question_id is here equal to the question.id
-                    form.cleaned_data.items() is posted data
+                    form.cleaned_data.items() is posted data of the step
                     self.user_id is user who answers
                     self.election_instance election instance it belongs to
-                    So we simply have all the data needed to save it. The only question is where do we save it.
+                    So we simply have all the data needed to save it.
                     '''
-                    #import ipdb; ipdb.set_trace()
                     eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question_id)
                     eiqa = ElectionInstanceQuestionAnswer(election_instance_question=eiq, candidate=self.user,
                                                           answer_value=map(lambda x: x[1], form.cleaned_data.items())[0])
                     eiqa.save()
-                    print 'eiq: ', eiq
-                    
-                    print 'form.cleaned_data.items(): ', form.cleaned_data.items()
         except Exception, e:
             transaction.rollback()
             raise e
