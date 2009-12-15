@@ -1,10 +1,11 @@
-<div id="header">
-     <p class="wkj">Wie Kies Jij ?</p>
-    
-    <h1>500 - Iterne error ofzo</h1>
-</div>
- <div id="content" class="line">
-    <div class="mod">
-        <p>blaat, babbel informatie</p>
-    </div>
- </div>
+{% extends 'base_error.html' %}
+
+{% block title %}500 - Internal server error | {{ block.super }}{% endblock title %}
+
+{% block error_title %}500 - Er is een fout opgetreden{% endblock error_title %}
+
+{% block error_message %}
+	Er is een fout opgetreden, de beheerders zijn hiervan op de hoogte gesteld.<br/>
+	<br/>
+	Onze excuses voor het ongemak.
+{% endblock error_message %}

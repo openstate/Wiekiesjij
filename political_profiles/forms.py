@@ -7,6 +7,7 @@ from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField, AddressField
+from political_profiles.models import GENDERS
 from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
 GENDERS = (
@@ -45,20 +46,16 @@ class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
         model = PoliticianProfile
         fields = ('name', 'email', 'gender' )
 
-class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
+class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
     
     name = NameField(label=_('Name'))
     email = forms.EmailField(_('Email'))
-    
-    def __init__(self, *args, **kwargs):
-        super(InitialChanceryProfileForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
-    
+    gender = forms.CharField(_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+        
     class Meta:
-        model = ChanceryProfile
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
