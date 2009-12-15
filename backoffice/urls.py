@@ -29,7 +29,6 @@ urlpatterns += patterns('backoffice.views',
     url(r'^party/(?P<id>\d+)/down/$', 'election_party_down', name='bo.election_party_down'),
     url(r'^party/(?P<id>\d+)/shrink/$', 'election_party_shrink', name='bo.election_party_shrink'),
     url(r'^party/(?P<id>\d+)/grow/$', 'election_party_grow', name='bo.election_party_grow'),
-
     url(r'^party/(?P<id>\d+)/add_candidate/(?P<pos>\d+)/$', 'election_party_add_candidate', name='bo.election_party_add_candidate'),
 
     url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='bo.candidate_up'),
