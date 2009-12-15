@@ -105,7 +105,7 @@ class ElectionInstance(models.Model):
         return self.council.name
 
     class Meta:
-        verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')    
+        verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')
         
     def party_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
@@ -255,6 +255,9 @@ class ElectionInstanceParty(models.Model):
     party = models.ForeignKey(Party, verbose_name=_('Party'))
     position = models.PositiveIntegerField(_('Party Position'))
     list_length = models.PositiveIntegerField(_('List length'))
+
+    class Meta:
+        unique_together = ('election_instance', 'position')
 
     def candidate_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.list_length+1)))

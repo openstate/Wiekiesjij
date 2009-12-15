@@ -12,15 +12,17 @@ from django.db import transaction
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from elections.settings import ELECTION_EVENT_ID
-from elections.models import ElectionInstance, ElectionInstanceParty
+from elections.models import ElectionInstance, ElectionInstanceParty, Party
+from elections.functions import create_profile, profile_invite_email_templates
+from invitations.models import Invitation
 from political_profiles import functions
+from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
+from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
 from django.contrib.auth.models import User
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard
 
-
-# TODO: remove import when no longer test version
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
 from questions.models import Question
 

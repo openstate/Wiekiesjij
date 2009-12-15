@@ -31,10 +31,14 @@
 
         {% if eip %}                
 
-            <h3>{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>)</h3>
+            <h3>{{ eip.party.name }} {% if eip.party.abbreviation %} 
+                    (<abbr  title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>)
+
+            {% endif %}</h3>
             <a href="{% url bo.election_party_view eip.id %}" class="manage">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Manage this party' %}{% endif %}</a>
             <ul class="quicklinks">
-            	<li><a href="#">{% trans 'Edit party profile' %}</a><br /><a href="#">{% trans 'Remove party' %}</a></li>
+            	<li><a href="{% url bo.election_party_edit eip.id %}">{% trans 'Edit party profile' %}</a><br />
+                    <a href="#">{% trans 'Remove party' %}</a></li>
            	</ul>
             {% if eip.party.logo %}<img src="{{ eip.party.logo }}" alt=" " />{% endif %}
             
@@ -42,12 +46,12 @@
             <ul class="message-list">
                 {% if eip.party.profile_incomplete %}<li class="overdue">{% trans 'You have not finished filling in the party profile' %} <a href="#" class="act">{% trans 'Fill in now' %}</a></li>{% endif %}
                 {% if eip.candidates_invited %}
-                    {% if eip.candidates_notinvited %}<li{% if instance.candidate_overdue %} class="overdue"{% endif %}>{{ eip.candidates_notinvited }} {{ eip.candidates_notinvited|pluralize:_('candidate,candidates') }} {% trans 'not invited yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }}) <a href="#" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
+                    {% if eip.candidates_notinvited %}<li{% if instance.candidate_overdue %} class="overdue"{% endif %}>{{ eip.candidates_notinvited }} {{ eip.candidates_notinvited|pluralize:_('candidate,candidates') }} {% trans 'not invited yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }}) <a href="{% url bo.election_party_view eip.id %}" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
                     {% if eip.candidates_notresponded %}<li>{{ eip.candidates_notresponded }} {{ eip.candidates_notresponded|pluralize:_('candidate,candidates') }} {% trans 'have not responded yet' %}</li>{% endif %}
                     {% if eip.candidates_profile_incomplete %}<li{% if instance.profile_overdue %} class="overdue"{% endif %}>{{ eip.candidates_profile_incomplete }} {{ eip.candidates_profile_incomplete|pluralize:_('candidate,candidates') }} {% trans 'did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
                     {% if eip.candidates_questions_incomplete %}<li{% if instance.questions_overdue %} class="overdue"{% endif %}>{{ eip.candidates_questions_incomplete }} {{ eip.candidates_questions_incomplete|pluralize:_('candidate,candidates') }} {% trans 'did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
                 {% else %}
-                    <li{% if instance.invite_overdue %} class="overdue"{% endif %}>There are no candidates defined for this party ({% if instance.invite_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.invite_deadline }}) <a href="#" class="act">{% trans 'Do it now' %}</a></li>
+                    <li{% if instance.invite_overdue %} class="overdue"{% endif %}>There are no candidates defined for this party ({% if instance.invite_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.invite_deadline }}) <a href="{% url bo.election_party_view eip.id %}" class="act">{% trans 'Do it now' %}</a></li>
                 {% endif %}
             </ul>
             {% ifnotequal index 1 %}<div class="up"><a href="{% url bo.election_party_up eip.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}

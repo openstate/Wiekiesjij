@@ -18,7 +18,7 @@ def move_down(instance, field, limit):
     kwargs = {field + '__gt': value}
 
     try:
-        next = instance.__class__.objects.filter(**kwargs).order_by('-' + field)[0]
+        next = instance.__class__.objects.filter(**kwargs).order_by(field)[0]
     except IndexError:
         next = None
     if not next or getattr(next, field) > value + 1:
@@ -27,7 +27,8 @@ def move_down(instance, field, limit):
         return getattr(instance, field)
     else:
         current_position = getattr(instance, field)
-        setattr(instance, field, getattr(next, field))
+        next_position = getattr(next, field)
+        setattr(instance, field, next_position)
         setattr(next, field, current_position)
         instance.save()
         next.save()
@@ -49,7 +50,7 @@ def move_up(instance, field, limit):
     kwargs = {field + '__lt': value}
 
     try:
-        previous = instance.__class__.objects.filter(**kwargs).order_by(field)[0]
+        previous = instance.__class__.objects.filter(**kwargs).order_by('-' + field)[0]
     except IndexError:
         previous = None
     if not previous or getattr(previous, field) < value - 1:
@@ -58,7 +59,8 @@ def move_up(instance, field, limit):
         return getattr(instance, field)
     else:
         current_position = getattr(instance, field)
-        setattr(instance, field, getattr(previous, field))
+        previous_position = getattr(previous, field)
+        setattr(instance, field, previous_position)
         setattr(previous, field, current_position)
         instance.save()
         previous.save()
