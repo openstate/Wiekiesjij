@@ -49,6 +49,10 @@ class Step(object):
 
             # optional extra content, will be passed to step template
             extra_context = dict(),
+            
+            form_kwargs = dict( #kwargs to pass to the form on contrsuction
+                form_name = {'question_id': 10}
+            )
 
             # specific template for this step, optional
             template = 'foo/bar.html'
@@ -59,6 +63,7 @@ class Step(object):
         self.forms = kwargs.get('forms')
         self.prefixes = kwargs.get('prefixes', {})
         self.initial = kwargs.get('initial', {})
+        self.form_kwargs = kwargs.get('form_kwargs', {})
         self.template = kwargs.get('template')
         self.extra_context = kwargs.get('extra_context', {})
         
@@ -117,7 +122,7 @@ class Step(object):
         args = (data, files)
 
         for name, form in self.forms.iteritems():
-            kwargs = dict()
+            kwargs = self.get_form_kwargs(name)
             # model form
             if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
                 init = 'instance'
@@ -136,7 +141,9 @@ class Step(object):
             forms.update({name : form(*args, **kwargs)})
 
         return forms
-
+    
+    def get_form_kwargs(self, form_name):
+        return self.form_kwargs.get(form_name, {})
 
     def get_prefix(self, form_name):
         """Returns the prefix for a form"""
