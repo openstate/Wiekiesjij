@@ -58,6 +58,9 @@ class AnswerQuestion(MultiPathFormWizard):
                 for name, form in forms.iteritems():
                     # Name is here equal to the question.id
                     # form.cleaned_data.items() is posted data
+                    # self.user_id is user who answers
+                    # self.election_instance election instance it belongs to
+                    # So we simply have all the data needed to save it. The only question is where do we save it.
                     print 'form.cleaned_data.items(): ', form.cleaned_data.items()
         except Exception, e:
             transaction.rollback()
