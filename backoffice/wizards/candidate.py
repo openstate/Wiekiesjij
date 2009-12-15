@@ -3,15 +3,95 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.models import User
 from utils.multipathform import Step, MultiPathFormWizard
-
+from utils.graphformwizard import GraphFormWizard
+from utils.graphformwizard import Step as GStep
 from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
-
+from django.utils.translation import ugettext_lazy as _
 
 from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
 from political_profiles.forms import EducationForm, PoliticalExperienceForm
 
 from invitations.models import Invitation
+
+class PoliticianProfileAppearanceWizard1(GraphFormWizard):
+
+    # init action reloads the data
+    fast_actions = frozenset(['init'])
+    # wizard scenario
+    scenario = GStep("appearance_wizard", header = _("Enter your Appearances"), title = _("Appearances")) \
+                .forms(dict(appearance=AppearanceForm,)) \
+                .data(help = _("You can add/edit appearances.")) \
+                .data(next_button = _("Add/Edit")) \
+              
+
+
+    def __init__(self, name = None, template = 'backoffice/wizard/election_setup/base.html'):
+        super(type(self), self).__init__(name, template)
+
+
+    def done(self, request, wizard_data, meta, *args, **kwargs):
+        # OK, I'm to tired to finish this thing
+        # The wizard data contains dicts with all the data
+        # meta contains user_id and election_instance_id
+        # we should save the data here and redirecto "done" location
+        print wizard_data
+        print meta
+        return
+        #return redirect(reverse('backoffice.politician_profile_appearance', kwargs={'user_id': meta.user_id, 'election_instance_id': meta.election_instance_id }))
+
+
+    def wizard_fast_action(self, request, action, step, step_path, url_step, url_action, *args, **kwargs):
+        """Loads correct models"""
+
+        if action == "init":
+            if 'election_instance_id' not in kwargs:
+                raise
+            if 'user_id' not in kwargs:
+                raise
+            if 'appearance_id' not in kwargs:
+                appearance_id = None
+            else:
+                appearance_id = kwargs['appearance_id']
+            user_id = kwargs['user_id']
+            election_instance_id = kwargs['election_instance_id']
+   
+
+            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
+            election_instance = get_object_or_404(ElectionInstance, id = election_instance_id)
+            user = get_object_or_404(User, id = user_id)
+            if appearance_id:
+                appearance = get_object_or_404(Appearance, pk = appearance_id)
+            else:
+                appearance = None
+
+            PoliticianProfileClass = get_profile_model('council_admin')
+            if user.profile.__class__ is not PoliticianProfileClass:
+                raise HttpResponseForbidden("Wrong user profile")
+
+            # reload data
+            data = {}
+            # [FIXME: adress field should be prefixed in data, automatic prefixing will not work]
+            # will be fixed later
+
+            form = GStep.new_form(form = AppearanceForm, initial = appearance)
+            data['appearance'] = {'appearance' : getattr(form, 'cleaned_data', {})}
+            import ipdb; ipdb.set_trace()
+            # store instances, we will use it in done()
+            meta = {
+                'user_id': user.id,
+                'election_instance_id': election_instance.id,
+            }
+            # store data
+            self.save_data(request, data, meta, *args, **kwargs)
+
+            return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = '')))
+
+        # end of init
+        raise Http404
+
+
+
 
 class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
     """
@@ -451,7 +531,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
+            return redirect(reverse('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
         

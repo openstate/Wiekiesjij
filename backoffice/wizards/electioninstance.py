@@ -18,7 +18,7 @@ from invitations.models import Invitation
 
 from utils.graphformwizard import GraphFormWizard
 from utils.graphformwizard import Step as GStep
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext_lazy as _
 
 

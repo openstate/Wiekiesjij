@@ -13,8 +13,10 @@
         <p>{%trans 'You have no appearances defined yet' %} </p>
     {% endfor %}
     
+
     <a href="{% url bo.politician_profile_link election_instance_id user_id %}">{% trans "< Previous " %}</a>
     <a href="{% url bo.politician_profile_appearance_wizard election_instance_id user_id %}">{% trans "Click here to add an appearance" %}</a>
     <a href="{% url bo.politician_profile_education election_instance_id user_id %}">{% trans "Next >" %}</a>
+
 </div>
 {% endblock content %}

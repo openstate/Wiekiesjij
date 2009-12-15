@@ -8,7 +8,8 @@ from utils.forms import TemplateForm
 from utils.widgets import AutoCompleter, ColorPicker
 from utils.fields import NameField, AddressField
 from political_profiles.models import GENDERS
-from political_profiles.models import PoliticalExperience, Education, WorkExperience, Link, Interest, Appearence, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
+from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
+from political_profiles.models import Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
 
 GENDERS = (
         ('Male',_('Male')),
@@ -172,20 +173,81 @@ class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
         fields = ('name', 'gender', 'telephone', 'workingdays', 'picture')
 
 
+class LinkFormNew(BetterForm, TemplateForm):
+    '''
+    Link admin
+    '''
+    name        = forms.CharField(label=_('Name'))
+    url         = forms.URLField(label=_('URL'))
+    description	= forms.CharField(label=_('Description'), widget=forms.Textarea())
+
+
+class InterestFormNew(BetterForm, TemplateForm):
+    '''
+    Interest admin
+    '''
+    organization    = forms.CharField(label=_('Organisation Name'))
+    url             = forms.URLField(label=_('URL'))
+    description     = forms.CharField(label=_('Description'), widget=forms.Textarea())
+
+class AppearanceFormNew(BetterForm, TemplateForm):
+    '''
+    Appearance admin
+    '''
+    name        = forms.CharField(label=_('Affiliated Organisation Name'))
+    location	= forms.CharField(label=_('Location'))
+    url         = forms.URLField(label=_('URL'))
+    description = forms.CharField(label=_('Description'), widget=forms.Textarea())
+    datetime    = forms.DateTimeField(label=_('Date and Time of Appearance'))
+
+
+class WorkExperienceFormNew(BetterForm, TemplateForm):
+    '''
+    WorkExperience admin
+    '''
+    company_name    = forms.CharField(label=_('Company Name'))
+    sector          = forms.ModelChoiceField(queryset=WorkExperienceSector.objects, label=_('sector'))
+    position        = forms.CharField(label=_('Position'))
+    startdate       = forms.DateField(label=_('Start Date'))
+    enddate         = forms.DateField(label=_('End Date'))
+    current         = forms.BooleanField(label=_('Currently Employed'))
+    description     = forms.CharField(label=_('Description'), widget=forms.Textarea() )
+
+class EducationFormNew(BetterForm, TemplateForm):
+    '''
+    Education admin
+    '''
+    institute   = forms.CharField(label=_('Institute Name'))
+    level       = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('level'))
+    field       = forms.CharField(label=_('Field'))
+    startdate   = forms.DateField(label=_('Start Date'))
+    enddate     = forms.DateField(label=_('End Date'))
+    description = forms.CharField(label=_('Description'), widget=forms.Textarea())
+
+class PoliticalExperienceFormNew(BetterForm, TemplateForm):
+    '''
+    PoliticalExperience admin
+    '''
+    organisation    = forms.CharField(label=_('Organisation'))
+    type            = forms.ModelChoiceField(queryset=PoliticalExperienceType.objects, label=_('type'))
+    position        = forms.CharField(label=_('Position'))
+    startdate       = forms.DateField(label=_('Start Date'))
+    enddate         = forms.DateField(label=_('End Date'))
+    description     = forms.CharField(label=_('Description'), widget=forms.Textarea())
+
 class LinkForm(BetterModelForm, TemplateForm):
     '''
     Link admin
     '''
-
     class Meta:
         model = Link
         exclude = ('politician')
+
 
 class InterestForm(BetterModelForm, TemplateForm):
     '''
     Interest admin
     '''
-
     class Meta:
         model = Interest
         exclude = ('politician')
@@ -194,16 +256,15 @@ class AppearanceForm(BetterModelForm, TemplateForm):
     '''
     Appearance admin
     '''
-
     class Meta:
-        model = Appearence
+        model = Appearance
         exclude = ('politician')
+
 
 class WorkExperienceForm(BetterModelForm, TemplateForm):
     '''
     WorkExperience admin
     '''
-
     class Meta:
         model = WorkExperience
         exclude = ('politician')
@@ -212,7 +273,6 @@ class EducationForm(BetterModelForm, TemplateForm):
     '''
     Education admin
     '''
-
     class Meta:
         model = Education
         exclude = ('politician')
@@ -221,7 +281,6 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     '''
     PoliticalExperience admin
     '''
-
     class Meta:
         model = PoliticalExperience
         exclude = ('politician')

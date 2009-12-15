@@ -15,7 +15,10 @@ from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
 from backoffice.decorators import staff_required, candidate_required
+from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
+from django.contrib.auth.models import User
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard
+
 
 # TODO: remove import when no longer test version
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
@@ -210,6 +213,7 @@ def politician_profile_appearance(request, election_instance_id, user_id):
 @candidate_required
 def politician_profile_appearance_wizard(request, election_instance_id, user_id, appearance_id=None):
     return PoliticianProfileAppearanceWizard(user_id=user_id, election_instance_id=election_instance_id, appearance_id=appearance_id)(request)
+    #return PoliticianProfileAppearanceWizard()(request, *args, **kwargs)
 
 @candidate_required
 def politician_profile_link(request, election_instance_id, user_id):

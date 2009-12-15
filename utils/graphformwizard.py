@@ -1761,6 +1761,8 @@ class GraphFormWizard(object):
             @param args positional arguments provided from urls.py
             @param kwargs keyword arguments provided from urls.py
         """
+        print 'meta'
+        print meta
         key = "%s_%s" % (type(self).__name__, self.name or '')
         ses_id = request.session.get(key, None)
         

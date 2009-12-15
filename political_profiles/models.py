@@ -174,7 +174,7 @@ class Interest(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Intrest'), _('Intrests')
 
-class Appearence(models.Model):
+class Appearance(models.Model):
     """
         A class to hold an appearance (where they attended somthing) of the politician
     """

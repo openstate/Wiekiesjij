@@ -11,6 +11,9 @@ urlpatterns = patterns('',
 
 
 urlpatterns += patterns('backoffice.views',
+
+
+
     url(r'^$', 'election_event',name='bo.election_event'),
     url(r'^add/$', 'add_election_instance', name='bo.add_election_instance'),
     url(r'^setup/(?P<election_instance_id>\d+)/((?P<user_id>\d+)/)?$', 'election_setup', name='bo.election_setup'),
@@ -61,6 +64,8 @@ urlpatterns += patterns('backoffice.views',
 
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/appearance/$', 'politician_profile_appearance', name='bo.politician_profile_appearance'),
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/appearance/add/$', 'politician_profile_appearance_wizard', name='bo.politician_profile_appearance_wizard'),
+    #url(r'^welcome/appearance/(?P<path>[a-z0-9:]*)$','politician_profile_appearance_wizard', {'path':''}, name='bo.politician_profile_appearance_wizard'),
+    #url(r'^welcome/appearance/(?P<action>init)/(?P<election_instance_id>\d+)/((?P<user_id>\d+)/)?$', 'politician_profile_appearance_wizard', {'path':''}, name='bo.politician_profile_appearance_wizard.init'),
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/appearance/edit/(?P<appearance_id>\d+)$', 'politician_profile_appearance_wizard', name='bo.politician_profile_appearance_wizard_edit'),
 
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/education/$', 'politician_profile_education', name='bo.politician_profile_education'),
@@ -74,5 +79,6 @@ urlpatterns += patterns('backoffice.views',
     url(r'^answer/add-answer-select-question$', 'answer_add_select_question', name='bo.answer_add_select_question'),
     url(r'^answer/add-answer-choose-answer/(?P<question_instance_id>\d+)/$', 'answer_add_choose_answer', name='bo.answer_add_choose_answer'),
     url(r'^answer/add$', 'answer_add', name='bo.answer_add'),
+
 
     )
