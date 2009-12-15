@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.forms import widgets
-from utils.widgets import RadioRating
+from utils.widgets import RadioRating, RadioBoolean
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
@@ -61,7 +61,7 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
             elif QUESTION_TYPE_MULTIPLECHOICE == question_instance.question_type:
                 self.fields['value'].widget = widgets.RadioSelect(choices=choices)
             elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
-                self.fields['value'].widget = widgets.NullBooleanSelect()
+                self.fields['value'].widget = RadioBoolean() #widgets.NullBooleanSelect()
             elif QUESTION_TYPE_RATING == question_instance.question_type:
                 self.fields['value'].widget = RadioRating()
             else:

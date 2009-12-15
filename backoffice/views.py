@@ -20,7 +20,7 @@ from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 from backoffice.decorators import staff_required, candidate_required
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, ElectionSetupWizard
 from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard, 
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
 from django.contrib.auth.models import User
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm

@@ -376,3 +376,12 @@ class RadioRating(RadioSelect):
         # Creating a list of values from 1 to 10
         choices = map(lambda x: (x, x), range(1, 11))
         return self.get_renderer(name, value, attrs, choices).render()
+
+class RadioBoolean(RadioSelect):
+    '''
+        Boolean widget widget based on RadioSelect widget.
+    '''
+    def render(self, name, value, attrs=None, choices=()):
+        # Creating a list of values from 1 to 10
+        choices = (('', _('Unknown')), (True, _('Yes')), (False, _('No')))
+        return self.get_renderer(name, value, attrs, choices).render()
