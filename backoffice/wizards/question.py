@@ -9,6 +9,7 @@ from utils.multipathform import Step, MultiPathFormWizard
 from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
 from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
+from questions.settings import QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING, QUESTION_TYPE_CHOICES
 
 from elections.models import ElectionInstance, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
@@ -40,6 +41,14 @@ class AnswerQuestion(MultiPathFormWizard):
             eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question.id)
             eiqa = ElectionInstanceQuestionAnswer.objects.get(election_instance_question=eiq, candidate=self.user)
             step_initial_values = '' if not eiqa else eiqa.answer_value
+
+            if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                '''
+                TODO: Here we need to split the values of step_initial_values and pass a list to to the multiple
+                answers widget.
+                '''
+                pass
+
             print 'question.title: ', question.title
             print 'step_initial_values: ', step_initial_values
             step = Step(str(question.id),
