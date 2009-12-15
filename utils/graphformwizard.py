@@ -749,14 +749,14 @@ class SessionUploadedFile(UploadedFile):
     def temporary_file_path(self):
         """ Returns the full path of this file. """
         return self.moved_path
-
+        
     def __getstate__(self):
         """Pickle support, store links"""
         if self.failed:  # should not happen. If file is failed, then it should be removed
             return False
 
         try: # close handler
-            self.close()
+            self.file.close()
         except:
             pass
         
@@ -771,15 +771,27 @@ class SessionUploadedFile(UploadedFile):
         """Pickle support, restore state"""
         if dat is not False:  # check if file still exists
             try:
-                file = open(dat['path'], "rb+")
-                # become alive
+                file = open(dat['path'], "a+b") #a+b, w would truncate the file !
                 self.__init__(dat['path'], file, dat['content_type'], dat['size'], dat['charset'])
                 return
             except:
                 pass
 
         self.failed = True
-
+    
+    def seek(self, num):
+        return self.file.seek(num)
+        
+    def close(self):
+        try:
+            return self.file.close()
+        except OSError, e:
+            if e.errno != 2:
+                # Means the file was moved or deleted before the tempfile
+                # could unlink it.  Still sets self.file.close_called and
+                # calls self.file.file.close() before the exception
+                raise
+                
 
 class GraphFormWizard(object):
     """Advanced form wizard."""
@@ -1546,12 +1558,12 @@ class GraphFormWizard(object):
                     (dst, dstpath) = tempfile.mkstemp(suffix = '.upload', dir = settings.WIZARD_UPLOAD_TEMP_DIR)
                 else:
                     (dst, dstpath) = tempfile.mkstemp(suffix = '.upload')
-
-                dstfile = open(dstpath, "wb")
+                    
+                dstfile = open(dstpath, "w+b")
                 for chunk in file.chunks():
                     dstfile.write(chunk)
-
-                dstfile.close()
+                
+                dstfile.flush() #Don't close the file, django expects an uploaded file to be open !
                 os.close(dst)
 
                 ls.append(SessionUploadedFile(dstpath, dstfile, file.content_type, file.size, file.charset))
@@ -1612,7 +1624,7 @@ class GraphFormWizard(object):
                     if isinstance(stepdata, tuple): # both form data and files specified
                         (post, files) = stepdata
                         for (fk, fd) in files.items():
-                            if isinstance(SessionUploadedFile, fd) and fd.failed:
+                            if isinstance(fd, SessionUploadedFile) and fd.failed:
                                 del files[fk]
 
                             # else: unknown file specified in data, ignore, probably
@@ -1716,7 +1728,7 @@ class GraphFormWizard(object):
         else:
             try:
                 data = cPickle.loads(str(sess.content))
-
+                
                 # we have to check if files are still alive
                 data = self._filter_data(data)
                 
@@ -1751,8 +1763,9 @@ class GraphFormWizard(object):
         """
         key = "%s_%s" % (type(self).__name__, self.name or '')
         ses_id = request.session.get(key, None)
-
+        
         data = self._filter_data(data)
+        
         content = cPickle.dumps(data)
         meta = cPickle.dumps(meta or {})
 

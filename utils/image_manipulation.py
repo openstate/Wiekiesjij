@@ -9,7 +9,7 @@ def replace_colors(image, red=(255, 0, 0), green=(0, 255, 0), blue=(0, 0, 255)):
     channels = image.split()
     
     #Looping through all the pixels
-    for point in [(x,y) for x in range(im.size[0]) for y in range(im.size[1])]:
+    for point in [(x,y) for x in range(image.size[0]) for y in range(image.size[1])]:
         #percentages of colors
         rp = channels[0].getpixel(point) / 255.0
         gp = channels[1].getpixel(point) / 255.0

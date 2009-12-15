@@ -1,6 +1,7 @@
 import os
-from django.utils.translation import ugettext, ugettext_lazy as _
 PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
+
+_ = lambda a: a
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -151,7 +152,7 @@ ELECTIONS_ELECTION_EVENT_ID = 1
 # Wizard specific settings
 WIZARD_TIMEOUT = False
 WIZARD_KEEP_DATA = False
-WIZARD_UPLOAD_TEMP_DIR = "/home/sardar/PythonProjects/Accepte/wksj/bzrrepos/working/tmp"
+WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
 
 
 

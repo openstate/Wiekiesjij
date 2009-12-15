@@ -1,7 +1,6 @@
 """
 Holds fields
 """
-import re
 from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import CharField, RegexField
 from django.forms.fields import MultiValueField, EMPTY_VALUES

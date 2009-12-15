@@ -62,8 +62,8 @@ class InitialChanceryProfileForm(BetterModelForm, TemplateForm):
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-							'legend': '',
-                            'classes': ('sub-form','invite')
+							'legend': 'Invite',
+                            'classes': ('sub-form','invite',)
                         }
                     ),
                 )

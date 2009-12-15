@@ -21,7 +21,7 @@
         <div class="mod wizard">
             {% block step-header %}
         	<div class="hd">
-            	<h2>Step title</h2>
+				<h2>{% block step_title %}Step Title{% endblock step_title %}</h2>
             </div>
             {% endblock step-header %}
             
@@ -29,7 +29,7 @@
             {% endblock help-message %}
 
         	<div class="bd">
-                <form method="post" action="">
+                <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
                     {% block forms %}
                         {% for form in forms.values %}

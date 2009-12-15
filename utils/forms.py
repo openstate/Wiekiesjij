@@ -1,4 +1,3 @@
-from django import forms
 from django.template import loader, Context
 
 class TemplateForm(object):

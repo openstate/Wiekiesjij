@@ -20,7 +20,6 @@ class Command(NoArgsCommand):
                         print '%s(%i): at: %s: Reason: %s' % (python_file, line_no, line, e.__str__())
     
     def directory_py_files(self, parent_directory):
-        import os
         directory_generator = os.walk(parent_directory)
         directory_info = directory_generator.next()
         for file in directory_info[2]:
@@ -31,5 +30,4 @@ class Command(NoArgsCommand):
                 self.directory_py_files('%s/%s' % (parent_directory, directory))
             
     def handle_noargs(self, **options):
-        from django.conf import settings
         self.directory_py_files(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))

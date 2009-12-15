@@ -1,17 +1,9 @@
-import datetime
-
 from django.db import transaction
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 
 from utils.multipathform import Step, MultiPathFormWizard
 
-from elections import settings
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
-from elections.forms import InitialElectionInstanceForm, EditElectionInstanceForm
-from elections.forms import ElectionInstanceForm, ElectionInstanceSelectPartiesForm
 from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm
-from elections.models import ElectionInstance, Council, ElectionEvent
 
 class CouncilEditWizard(MultiPathFormWizard):
     """

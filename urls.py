@@ -1,11 +1,9 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url, include
 from django.conf import settings
 from django.contrib import admin
-import backoffice.urls
 
 
-#from utils.graphformwizard import TestWizard
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard
+from backoffice.wizards import ElectionSetupWizard
 
 
 

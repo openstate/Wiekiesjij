@@ -1,7 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader, Context
-from django.conf import settings
 
 def _render_content(context, template):
     '''

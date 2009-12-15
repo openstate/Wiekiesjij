@@ -251,13 +251,6 @@ def politician_profile_link(request, election_instance_id, user_id):
 def politician_profile_link_wizard(request, election_instance_id, user_id, link_id=None):
     return PoliticianProfileLinkWizard(user_id=user_id, election_instance_id=election_instance_id, link_id=link_id)(request)
 
-def council_edit(request, id):
-    '''
-    Council edit wizard.
-    @param int id election_instance_id
-    '''
-    instance = get_object_or_404(ElectionInstance, pk=id)
-    return CouncilEditWizard(election_instance=instance)(request)
 
 def csv_import_candidates_step1(request, ep_id):
     return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id}, context_instance=RequestContext(request))

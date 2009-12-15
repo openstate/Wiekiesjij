@@ -1,6 +1,15 @@
 {% extends 'backoffice/wizard/addelection/base.html' %}
 {% load i18n %}
 
+{% block step_title %}{{ step_title }}{% endblock step_title %}
+
+
+{% block wizard-steps %}
+	<ul id="wizardSteps">
+        <li class="last"><a href="#" class="history"><span class="number">1</span>{{ step_title }}</a></li>
+    </ul>
+{% endblock wizard-steps %}
+
 {% block buttons %}
 	<div class="form-submit">
 		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip Council setup" %}</button>

@@ -2,12 +2,13 @@
 #-*- coding: utf-8 -*-
 #
 #Copyright 2009 Accepté. All Rights Reserved.
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'backoffice/login.html'}, name='backoffice.login'),
    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'backoffice/logged_out.html'}, name='backoffice.logout'),
 )
+
 
 urlpatterns += patterns('backoffice.views',
     url(r'^$', 'election_event',name='backoffice.election_event'),
