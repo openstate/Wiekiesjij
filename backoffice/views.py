@@ -1,4 +1,3 @@
-from copy import Error
 import os.path
 import os
 #!/usr/env python
@@ -7,6 +6,7 @@ import os
 #Copyright 2009 Accepte. All Rights Reserved.
 
 import time
+from django.db import transaction
 from django.conf import settings
 from django.db import transaction
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -14,7 +14,6 @@ from django.template.context import RequestContext
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty
 from political_profiles import functions
-from utils.multipathform import MultiPathFormWizard, Step
 from backoffice.decorators import staff_required, candidate_required
 from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
 
@@ -84,6 +83,8 @@ def candidate_down(request, id):
     can.move_down()
     return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
+def election_party_add_candidate(request, id, pos):
+    return AddCandidateWizard(id, pos)(request)
 
 #@login_required
 def election_event(request):
@@ -448,6 +449,3 @@ def answer_add_choose_answer(request, question_instance_id):
     
     return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form, 'question': question_instance},
                               context_instance=RequestContext(request))
-
-def candidate_add(request, eip_id, pos):
-    return AddCandidateWizard(eip_id, pos)(request)
