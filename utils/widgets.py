@@ -377,6 +377,7 @@ class RadioRating(RadioSelect):
         choices = map(lambda x: (x, x), range(1, 11))
         return self.get_renderer(name, value, attrs, choices).render()
 
+
 class RadioBoolean(RadioSelect):
     '''
         Boolean widget widget based on RadioSelect widget.

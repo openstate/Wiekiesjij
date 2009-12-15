@@ -158,7 +158,7 @@ class ElectionInstance(models.Model):
         except Exception, e:
             print e
             return False
-    
+
 class ElectionInstanceQuestion(models.Model):
     """
         Links a election instance to a question
@@ -177,14 +177,20 @@ class ElectionInstanceQuestion(models.Model):
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
 
 class ElectionInstanceQuestionAnswer(models.Model):
+    '''
+        Answer to the given question. Containst actual value to the question.
+    '''
     election_instance_question = models.ForeignKey(ElectionInstanceQuestion, verbose_name=_('Election Instance Question'))
-    answer = models.CharField(_('Answer'), null=True, blank=True, max_length=255)
+    candidate = models.ForeignKey(User, limit_choices_to=settings.POLITICIAN_LIMITATION, verbose_name=_('Candidate'))
+    answer_value = models.CharField(_('Answer'), null=True, blank=True, max_length=255)
 
     def __unicode__(self):
-        return self.election_instance_question + ' - ' + self.answer
+        return self.election_instance_question.election_instance.council.name + \
+               ' - ' + self.election_instance_question.question.title + ' - ' + str(self.answer_value)
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question Answer'), _('Election Instance Question Answers')
+        unique_together = (('election_instance_question', 'candidate'))
 
 class Party(models.Model):
     """

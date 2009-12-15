@@ -443,15 +443,3 @@ def test_question_forms(request):
 
 def answer_question(request, election_instance_id=None, user_id=None):
     return AnswerQuestion(election_instance_id=election_instance_id, user_id=user_id)(request)
-
-def answer_add_select_question(request):
-    form = AnswerSelectQuestionForm()
-    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form},
-                              context_instance=RequestContext(request))
-
-def answer_add_choose_answer(request, question_instance_id):
-    question_instance = Question.objects.get(id=question_instance_id)
-    form = AnswerChooseAnswerQuestionForm(question_instance_id=question_instance_id)
-    
-    return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form, 'question': question_instance},
-                              context_instance=RequestContext(request))

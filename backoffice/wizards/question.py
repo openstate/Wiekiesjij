@@ -30,6 +30,13 @@ class AnswerQuestion(MultiPathFormWizard):
 
         steps_tree = list()
         for question in questions:
+            '''
+            TODO: On each step we shall perform a check to see if step was previously filled in. In case if it was -
+            we need to populate the form with existing values and make sure the values are updated (vs. inserted).
+            It might make sence to move this to a new wizard, but I'm not sure about it yet.
+            Also, since we store the answers as text fields (this one is still questionable - how shall we store the
+            answers) we will need to bring them into a proper form before passing to the initials.
+            '''
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/council/edit/step1.html',
@@ -56,11 +63,13 @@ class AnswerQuestion(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    # Name is here equal to the question.id
-                    # form.cleaned_data.items() is posted data
-                    # self.user_id is user who answers
-                    # self.election_instance election instance it belongs to
-                    # So we simply have all the data needed to save it. The only question is where do we save it.
+                    '''
+                    Name is here equal to the question.id
+                    form.cleaned_data.items() is posted data
+                    self.user_id is user who answers
+                    self.election_instance election instance it belongs to
+                    So we simply have all the data needed to save it. The only question is where do we save it.
+                    '''
                     print 'form.cleaned_data.items(): ', form.cleaned_data.items()
         except Exception, e:
             transaction.rollback()
