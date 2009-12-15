@@ -30,15 +30,14 @@ class AnswerQuestion(MultiPathFormWizard):
 
         steps_tree = list()
         for question in questions:
-            step = Step('answer_question_' + str(question.id),
-                     forms={'answer_question_' + str(question.id): AnswerChooseAnswerQuestionForm},
+            step = Step(str(question.id),
+                     forms={str(question.id): AnswerChooseAnswerQuestionForm},
                      template='backoffice/wizard/council/edit/step1.html',
-                     initial={'answer_add': ''},
-                     form_kwargs={'answer_question_' + str(question.id): {'question_instance_id': question.id}})
+                     initial={'some_var': ''},
+                     form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
 
         scenario_tree = None
-        #steps_tree.reverse()
 
         for step in steps_tree:
             if None == scenario_tree:
@@ -52,9 +51,21 @@ class AnswerQuestion(MultiPathFormWizard):
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
 
+    @transaction.commit_manually
     def done(self, request, form_dict):
-        print 'Here!!!'
-        return redirect('')
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    # Name is here equal to the question.id
+                    # form.cleaned_data.items() is posted data
+                    print 'form.cleaned_data.items(): ', form.cleaned_data.items()
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+            
+        return redirect(reverse(''))
 
 
 

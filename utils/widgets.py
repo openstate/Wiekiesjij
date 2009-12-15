@@ -369,5 +369,10 @@ class DatePicker(forms.widgets.TextInput):
 
 
 class RadioRating(RadioSelect):
-    def render(self, *args, **kwargs):
-        return super(choices=(), *args, **kwargs)
+    '''
+        Rating widget based on RadioSelect widget. Displays values from 1 to 10.
+    '''
+    def render(self, name, value, attrs=None, choices=()):
+        # Creating a list of values from 1 to 10
+        choices = map(lambda x: (x, x), range(1, 11))
+        return self.get_renderer(name, value, attrs, choices).render()

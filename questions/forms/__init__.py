@@ -41,18 +41,15 @@ class AnswerSelectQuestionForm(BetterModelForm, TemplateForm):
 
 class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
     '''
-    Step 2 (see sescription of AnswerSelectQuestionForm).
+        Form which displays an possible answers, coupled to the question given. It makes sure the answer has the
+        right widget, which depends on the question type.
     '''
-    #answer = forms.
     def __init__(self, question_instance_id, *args, **kwargs):
         super(AnswerChooseAnswerQuestionForm, self).__init__(*args, **kwargs)
-        # Add here?
 
         question_types = dict(QUESTION_TYPE_CHOICES)
 
         question_instance = Question.objects.get(id=question_instance_id)
-
-        print 'question_instance!!!!!!!!!!!!!!!!: ', question_instance
 
         if not question_instance:
             return
@@ -68,7 +65,7 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
             elif QUESTION_TYPE_RATING == question_instance.question_type:
                 self.fields['value'].widget = RadioRating()
             else:
-                pass
+                pass #TODO raise error
 
         else:
             pass #TODO raise error
