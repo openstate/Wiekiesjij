@@ -171,7 +171,7 @@ class ElectionInstanceQuestion(models.Model):
     locked              = models.BooleanField(_('Locked'), default=False)
 
     def __unicode__(self):
-        return self.election_instance.council
+        return self.election_instance.council.name + ' - ' + self.question.title
     
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')

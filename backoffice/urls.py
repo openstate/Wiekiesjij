@@ -78,7 +78,5 @@ urlpatterns += patterns('backoffice.views',
 
     url(r'^answer/add-answer-select-question$', 'answer_add_select_question', name='bo.answer_add_select_question'),
     url(r'^answer/add-answer-choose-answer/(?P<question_instance_id>\d+)/$', 'answer_add_choose_answer', name='bo.answer_add_choose_answer'),
-    url(r'^answer/add$', 'answer_add', name='bo.answer_add'),
-
-
+    url(r'^answer-question/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/$', 'answer_question', name='bo.answer_question'),
     )

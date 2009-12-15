@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.forms import widgets
+from utils.widgets import RadioRating
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
@@ -43,11 +44,18 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
     Step 2 (see sescription of AnswerSelectQuestionForm).
     '''
     #answer = forms.
-    def __init__(self, question_instance=None, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
+    def __init__(self, question_instance_id, *args, **kwargs):
+        super(AnswerChooseAnswerQuestionForm, self).__init__(*args, **kwargs)
         # Add here?
 
         question_types = dict(QUESTION_TYPE_CHOICES)
+
+        question_instance = Question.objects.get(id=question_instance_id)
+
+        print 'question_instance!!!!!!!!!!!!!!!!: ', question_instance
+
+        if not question_instance:
+            return
 
         if question_instance.question_type in question_types:
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
@@ -57,6 +65,8 @@ class AnswerChooseAnswerQuestionForm(BetterModelForm, TemplateForm):
                 self.fields['value'].widget = widgets.RadioSelect(choices=choices)
             elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
                 self.fields['value'].widget = widgets.NullBooleanSelect()
+            elif QUESTION_TYPE_RATING == question_instance.question_type:
+                self.fields['value'].widget = RadioRating()
             else:
                 pass
 

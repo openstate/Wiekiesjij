@@ -18,10 +18,9 @@ from invitations.models import Invitation
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, EditElectionInstanceWizard, AddCandidateWizard
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard, AnswerQuestion
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
 from django.contrib.auth.models import User
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard, AddCandidateWizard
 
 from questions.forms import AnswerChooseAnswerQuestionForm, AnswerSelectQuestionForm
 from questions.models import Question
@@ -441,8 +440,8 @@ def council_edit_done(request):
 def test_question_forms(request):
     return QuestionTestWizard()(request)
 
-def answer_add(request):
-    return AnswerAddWizard()(request)
+def answer_question(request, election_instance_id=None, user_id=None):
+    return AnswerQuestion(election_instance_id=election_instance_id, user_id=user_id)(request)
 
 def answer_add_select_question(request):
     form = AnswerSelectQuestionForm()
@@ -451,7 +450,7 @@ def answer_add_select_question(request):
 
 def answer_add_choose_answer(request, question_instance_id):
     question_instance = Question.objects.get(id=question_instance_id)
-    form = AnswerChooseAnswerQuestionForm(question_instance=question_instance)
+    form = AnswerChooseAnswerQuestionForm(question_instance_id=question_instance_id)
     
     return render_to_response('backoffice/wizard/question/answer_add.html', {'form': form, 'question': question_instance},
                               context_instance=RequestContext(request))

@@ -5,6 +5,7 @@ import re
 from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.forms.widgets import RadioSelect
 
             
 class AddressWidget(forms.widgets.MultiWidget):
@@ -365,3 +366,8 @@ class DatePicker(forms.widgets.TextInput):
         result = super(self.__class__, self).render(*args, **kwargs)
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
+
+
+class RadioRating(RadioSelect):
+    def render(self, *args, **kwargs):
+        return super(choices=(), *args, **kwargs)

@@ -119,7 +119,6 @@ class Step(object):
         """Returns all defined forms, populated with data"""
         
         forms = dict()
-        args = (data, files)
 
         for name, form in self.forms.iteritems():
             kwargs = self.get_form_kwargs(name)
@@ -135,10 +134,13 @@ class Step(object):
 
             kwargs.update({
                 init : self.initial.get(name),
-                'prefix' : self.get_prefix(name)
+                'prefix' : self.get_prefix(name),
+                'data': data,
+                'files': files,
             })
 
-            forms.update({name : form(*args, **kwargs)})
+            f = form(**kwargs)
+            forms.update({name : f})
 
         return forms
     
