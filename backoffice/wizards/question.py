@@ -84,6 +84,8 @@ class AnswerQuestion(MultiPathFormWizard):
                     self.user_id is user who answers
                     self.election_instance election instance it belongs to
                     So we simply have all the data needed to save it.
+                    TODO: Here we need to see, if the value is string like "[u'2', u'3', u'4']" we need to split it
+                    into 2, 3, 4 instead.
                     '''
                     eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question_id)
                     eiqa = ElectionInstanceQuestionAnswer(election_instance_question=eiq, candidate=self.user,
