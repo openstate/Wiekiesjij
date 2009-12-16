@@ -341,6 +341,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)
             self.chancery_profile = self.user.profile
+            import ipdb; ipdb.set_trace()
             ChanceryProfileClass = get_profile_model('council_admin')
             if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
                 raise Exception

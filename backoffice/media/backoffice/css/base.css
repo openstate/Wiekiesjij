@@ -496,9 +496,11 @@
 				}	
 					
 			.cp_preview {
-				float:left;
-				margin:-26px 0 0 65px;
+				margin:0 0 20px 0;
 				position:relative;
+                                top:-27px;
+                                left:64px;
+                                border: 1px solid #AAAAAA;
 				}
 		
 	/*	generic styling

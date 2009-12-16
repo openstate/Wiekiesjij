@@ -46,7 +46,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-                            'legend': 'Invite',
+                            'legend': _('Invite'),
                             'classes': ('sub-form','invite',)
                         }
                     ),
@@ -81,8 +81,8 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-							'legend': 'Invite the administrative contact for this council:',
-							'description': 'This contact will be invited to complete further setup for this council.',
+							'legend': _('Invite the administrative contact for this council:'),
+							'description': _('This contact will be invited to complete further setup for this council.'),
                             'classes': ('sub-form','invite',)
                         }
                     ),
@@ -151,8 +151,8 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-                            'legend': 'Invite the administrative contact for this party:',
-                            'description': 'This contact will be invited to complete further setup for this party.',
+                            'legend': _('Invite the administrative contact for this party:'),
+                            'description': _('This contact will be invited to complete further setup for this party.'),
                             'classes': ('sub-form','invite')
                         }
                     ),
@@ -370,11 +370,11 @@ class CsvUploadForm(BetterForm, TemplateForm):
 
     def clean_file(self):
         if not self.cleaned_data['file'].content_type == 'text/csv':
-            raise forms.ValidationError('The file you tried to submit is not a CSV file')
+            raise forms.ValidationError(_('The file you tried to submit is not a CSV file'))
     
 class CsvConfirmForm(BetterForm, TemplateForm):
     '''
     CsvConfirm admin
     '''
 
-    confirm = forms.BooleanField(required = True, help_text='I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL.')
+    confirm = forms.BooleanField(required = True, help_text=_('I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL.'))
