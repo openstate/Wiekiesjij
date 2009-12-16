@@ -1,13 +1,12 @@
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.shortcuts import redirect
 
 from utils.multipathform import Step, MultiPathFormWizard
 
+from invitations.models import Invitation
 
 from elections.forms import InitialElectionPartyForm, ElectionPartyContactForm, ElectionPartyAdditionalForm, ElectionPartyDescriptionForm
-from elections.functions import get_profile_forms
+from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
 
 from elections.models import Party, ElectionInstanceParty
 
@@ -26,7 +25,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         step1 = Step('electionparty', 
             forms=step1_forms,
             template='backoffice/wizard/addelectionparty/step1.html',
-            initial={'initial_ep': {'position': position}}
+            initial={'initial_ep': {'position': position}},
         )
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/addelectionparty/base.html',
@@ -37,7 +36,6 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         
     @transaction.commit_manually
     def done(self, request, form_dict):
-        # This needs to be easier !?!
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
@@ -67,11 +65,8 @@ class AddElectionPartyWizard(MultiPathFormWizard):
 
             #Create the profile
             profile = create_profile('party_admin', self.profile_data)
-            #Link the profile to the council
-            council.chanceries.add(profile.user)
-
-            ei.modules.clear()
-            ei.modules = self.ei_data['modules']
+            #Link the profile to the party
+            party.contacts.add(profile.user)
 
             #Create the invitation
             templates = profile_invite_email_templates('party_admin')
@@ -90,8 +85,10 @@ class AddElectionPartyWizard(MultiPathFormWizard):
             raise
         else:
             transaction.commit()
-
-        return redirect('bo.election_instance_view', id=ei.id)
+        
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect('bo.election_instance_view', id=self.election_instance.id)
+        return redirect('bo.election_party_edit', id=eip.id)
 
 
 class ElectionPartySetupWizard(MultiPathFormWizard):
@@ -135,6 +132,7 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
         for path, forms in form_dict.iteritems():
             for name, form in forms.iteritems():
                 data.update(form.cleaned_data)
+                
         self.eip.party.name = data['name']
         self.eip.party.abbreviation = data['abbreviation']
         self.eip.party.address_street = data['address']['street']
@@ -145,8 +143,8 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
         self.eip.party.email = data['email']
         self.eip.party.website = data['website']
         self.eip.party.slogan = data['slogan']
+        self.eip.party.num_seats = data['num_seats']
         #self.eip.party.logo = data['logo']
-        #num_seats??
         self.eip.party.description = data['description']
         self.eip.party.history = data['history']
         self.eip.party.manifesto = data['manifesto']

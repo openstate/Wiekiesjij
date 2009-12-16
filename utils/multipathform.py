@@ -209,11 +209,12 @@ class MultiPathFormWizard(object):
         # Process the current step. If it's valid, go to next step or done()
         cur_step = current_path[-1]
         if request.method == 'POST':
+            
             # the last step may take files as parameter
             forms = cur_step.get_forms(request.POST, request.FILES)
         else:
             forms = cur_step.get_forms()
-
+            
         valid = True
         for name, form in forms.iteritems():
             valid &= form.is_valid()

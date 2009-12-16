@@ -64,8 +64,8 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     
     name = NameField(label=_('Name'))
-    email = forms.EmailField(_('Email'))
-    gender = forms.CharField(_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    email = forms.EmailField(label=_('Email'))
+    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
         
     class Meta:
         fieldsets = (
@@ -116,16 +116,12 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
         model = ChanceryProfile
         fields = ('house_num', 'street', 'postcode', 'town', 'website', 'description')
 
-class InitialContactProfileForm(BetterModelForm, TemplateForm):
+class InitialContactProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
-    email = forms.EmailField(_('Email'))
-    
-    def __init__(self, *args, **kwargs):
-        super(InitialContactProfileForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
-    
+    email = forms.EmailField(label=_('Email'))
+    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+        
     class Meta:
-        model = ChanceryProfile
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
@@ -163,7 +159,7 @@ class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
     
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        self.fields['workingdays'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
+        self.fields['workingdays'] = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=self.DAYS,)
 
     class Meta:
         model = ContactProfile
