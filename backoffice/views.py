@@ -398,7 +398,10 @@ def csv_import_candidates_step3(request, ep_id):
                         'email': candidate['email'],
                         'gender': candidate['gender'],
                     }
-                    candidate_obj = create_profile('candidate', tmp_data)
+                    created, candidate_obj = create_profile('candidate', tmp_data)
+
+                    if candidate_obj is None:
+                        continue
 
                     #Link candidate to party
                     candidacy = Candidacy(
@@ -484,6 +487,18 @@ def csv_import_parties_step3(request, ei_id):
             for party in parties:
                 try:
                     #Store data
+
+                    tmp_data = {
+                        'first_name': party['contact_first_name'],
+                        'middle_name': party['contact_middle_name'],
+                        'last_name': party['contact_last_name'],
+                        'email': party['contact_email'],
+                        'gender': party['contact_gender'],
+                    }
+                    created, contact = create_profile('party_admin', tmp_data)
+                    if contact is None:
+                        continue
+                        
                     party_obj = Party(
                         region = region,
                         level = level,
@@ -499,15 +514,6 @@ def csv_import_parties_step3(request, ei_id):
                         list_length = 10, #TODO, maybe add in CSV
                     )
                     eip_obj.save()
-
-                    tmp_data = {
-                        'first_name': party['contact_first_name'],
-                        'middle_name': party['contact_middle_name'],
-                        'last_name': party['contact_last_name'],
-                        'email': party['contact_email'],
-                        'gender': party['contact_gender'],
-                    }
-                    contact = create_profile('party_admin', tmp_data)
 
                     party_obj.contacts.add(contact.user)
                     party_obj.save()

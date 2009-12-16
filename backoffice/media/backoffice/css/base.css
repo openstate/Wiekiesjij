@@ -370,7 +370,7 @@
 					padding-right:25px;
 					}
 					
-					 a.next {
+					 a.next, div.form-submit a.next {
 					 	padding-right:25px;
 					 }
 					
