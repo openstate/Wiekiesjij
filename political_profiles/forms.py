@@ -122,7 +122,7 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
 class InitialContactProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
     email = forms.EmailField(label=_('Email'), help_text=_('The invitation will be sent to this address.'))
-	gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
 	
     class Meta:
         fieldsets = (
