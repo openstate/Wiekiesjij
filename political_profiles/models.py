@@ -54,21 +54,37 @@ class Profile(models.Model):
     
     def full_name(self):
         return ' '.join(filter(lambda x: x, (self.first_name, self.middle_name, self.last_name)))
+        
+        
+    def save(self, *args, **kwargs):
+        """
+            Update the user's first_name and last_name as needed.
+        """
+        super(Profile, self).save(*args, **kwargs)
+        if self.user.get_full_name() != self.full_name():
+            self.user.first_name = self.first_name
+            self.user.last_name = ' '.join(filter(lambda x: x, (self.middle_name, self.last_name)))
+            self.user.save()
     
 class VisitorProfile(Profile):
     """
         A profile for visitors of the website when they "register"
     """
+    type = 'visitor'
+    
     def __unicode__(self):
         return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Visitor Profile'), _('Visitor Profiles')
+            
     
 class PoliticianProfile(Profile):
     """
         A profile for a politician
     """
+    type = 'candidate'
+    
     initials        = models.CharField(_('Initials'), max_length=15, blank=True, null=True)
     gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS, default='Male',
                                        help_text=_("Please choose your gender."))
@@ -99,6 +115,8 @@ class ChanceryProfile(Profile):
     """
         A profile for a chancery
     """
+    type = 'council_admin'
+    
     gender      = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
     telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
     workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)
@@ -127,6 +145,8 @@ class ContactProfile(Profile):
     """
         A profile for a contact (for a party)
     """
+    type = 'party_admin'
+    
     gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
     telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
     workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)

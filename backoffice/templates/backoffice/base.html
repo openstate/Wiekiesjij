@@ -25,7 +25,17 @@
         <div id="header">
         
             <p class="wkj">Wie Kies Jij ?</p>
-        	<p class="user-info">You are logged in as <a href="#"><!-- link to user reg info --><strong>Mr. F. Lastname</strong></a>. <a href="#">Logout</a></p>
+			{% if user.is_authenticated %}
+				<p class="user-info">{% trans "You are logged in as" %} 
+					{% if user.profile %}
+						<a href="{% url bo.profile %}"><!-- link to user reg info --><strong>{{ user.get_full_name|default:'NN' }}</strong></a>			
+					{% else %}
+						<strong>{{ user.get_full_name|default:'NN' }}</strong>
+					{% endif %}. <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
+			{% else %}
+				<p class="user-info">{% trans "You are not logged in" %}. <a href="{% url bo.login %}">{% trans "Login" %}</a></p>
+			{% endif %}
+        	
             
             <ul class="nav-breadcrumbs">
             {% block breadcrumbs %}

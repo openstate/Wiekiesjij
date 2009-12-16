@@ -52,3 +52,11 @@ def replace_user(original_user, new_user, delete_original=True):
         Handles all the related profile stuff too
     """
     return get_profile_app().replace_user(original_user, new_user, delete_original)
+    
+    
+def get_profile_template(for_function, type):
+    """
+        Get the template to use to display a certain profile
+        Returns False if not found
+    """
+    return get_profile_app().get_profile_template(for_function, type)

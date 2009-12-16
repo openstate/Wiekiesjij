@@ -1,28 +1,33 @@
-import os.path
-import os
 #!/usr/env python
 #-*- coding: utf-8 -*-
 #
 #Copyright 2009 Accepte. All Rights Reserved.
 
+import os
 import time
+
 from django.db import transaction
 from django.conf import settings
-from django.db import transaction
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
+from django.contrib.auth.models import User
+
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
-from elections.functions import create_profile, profile_invite_email_templates
+from elections.functions import create_profile, profile_invite_email_templates, get_profile_template
+
 from invitations.models import Invitation
+
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
+
 from backoffice.decorators import staff_required, candidate_required
-from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, ElectionSetupWizard
+from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
+from backoffice.wizards import PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
+from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
 from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard, ElectionSetupWizard2, EditElectionInstanceWizard
-from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard
-from django.contrib.auth.models import User
+from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
+
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
 
@@ -451,3 +456,12 @@ def answer_question_done(request):
     '''
     return render_to_response('backoffice/wizard/question/answer_add/done.html',
                               context_instance=RequestContext(request))
+
+def view_profile(request):
+    """
+        View a user profile
+    """
+    if request.user.profile:
+        return render_to_response(get_profile_template(request.user.profile.type), {}, context_instance=RequestContext(request))
+    return redirect('/')
+    

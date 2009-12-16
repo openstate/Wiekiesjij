@@ -124,6 +124,27 @@ def create_profile(for_function, data):
     else:
         raise RuntimeError('%s is unknown' % for_function)
     return profile
+    
+def get_profile_template(for_function, type):
+    """
+        Get the template for displaying certain profile information
+        Returns False if no template is found
+    """
+    TEMPLATES = {
+        'candidate': {
+            'backoffice_profile': 'political_profiles/view/backoffice_profile/candidate.html',
+        },
+        'council_admin': {
+            'backoffice_profile': 'political_profiles/view/backoffice_profile/council_admin.html',
+        },
+        'party_admin': {
+            'backoffice_profile': 'political_profiles/view/backoffice_profile/party_admin.html',
+        },
+        'visitor': {
+            'backoffice_profile': 'political_profiles/view/backoffice_profile/visitor.html',
+        },
+    }
+    return TEMPLATES.get(for_function,{}).get(type, False)
    
 @transaction.commit_on_success # Will rollback on any exception
 def replace_user(original_user, new_user, delete_original=True):
