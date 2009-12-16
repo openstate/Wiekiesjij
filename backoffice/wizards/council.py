@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 
 from utils.multipathform import Step, MultiPathFormWizard
 
-from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm
+from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm, ElectionInstanceForm
 
 class CouncilEditWizard(MultiPathFormWizard):
     """
@@ -25,7 +25,11 @@ class CouncilEditWizard(MultiPathFormWizard):
         self.election_instance = election_instance
 
         # Updates Council contact information
-        step1 = Step('council_contact_information',
+        step1 = Step('election_details',
+                     forms={'election_details': ElectionInstanceForm},
+                     template='backoffice/wizard/election_setup/step2.html',
+                     initial={'election_details': self.election_instance})
+        step2 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/council/edit/step1.html',
                      initial={'council_contact_information': {'name': self.election_instance.council.name,
@@ -36,17 +40,17 @@ class CouncilEditWizard(MultiPathFormWizard):
                                                                            },
                                                                 'website': self.election_instance.council.website,}})
         # Updates Council additional information
-        step2 = Step('council_additional_information',
+        step3 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/council/edit/step2.html',
                      initial={'council_additional_information': self.election_instance.council})
         # Updates Council styling setup
-        step3 = Step('council_styling_setup',
+        step4 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/council/edit/step3.html',
                      initial={'council_styling_setup': self.election_instance.council})
 
-        scenario_tree = step1.next(step2.next(step3))
+        scenario_tree = step1.next(step2.next(step3.next(step4)))
 
         template = 'backoffice/wizard/council/edit/base.html',
 
@@ -66,6 +70,11 @@ class CouncilEditWizard(MultiPathFormWizard):
                             self.council_data = {}
                         # We merge two dictinaries, letting the form data to overwrite the existing data
                         self.council_data.update(form.cleaned_data)
+                    elif name in ('election_details'):
+                        if not hasattr(self, 'election_details_data'):
+                            self.election_details_data = {}
+                        # We merge two dictinaries, letting the form data to overwrite the existing data
+                        self.election_details_data.update(form.cleaned_data)
                         
             # Here we need to update the Council
             for (key, value) in self.council_data.items():
@@ -77,7 +86,12 @@ class CouncilEditWizard(MultiPathFormWizard):
                 else:
                     setattr(self.election_instance.council, key, value)
 
+            # Here we need to update the ElectionInstance
+            for (key, value) in self.election_details_data.items():
+                setattr(self.election_instance, key, value)
+
             self.election_instance.council.save(force_update=True) # Updating the Council
+            self.election_instance.save(force_update=True) # Updating the ElectionInstance
         except Exception:
             transaction.rollback()
             raise

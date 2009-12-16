@@ -73,7 +73,7 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
     '''
     Council information form (used in 2. Election overview)
     '''
-    
+
     name = forms.CharField(label=_('Name'))
     address = AddressField(label=_('Address'))
     website = forms.URLField()

@@ -22,7 +22,7 @@ urlpatterns += patterns('backoffice.views',
 
     url(r'^election/(?P<id>\d+)/$', 'election_instance_view', name='bo.election_instance_view'),
     url(r'^election/(?P<id>\d+)/edit/$', 'edit_election_instance', name='bo.edit_election_instance'),
-    url(r'^election/(?P<id>\d+)/edit_council/$', 'council_edit', name='bo.edit_council'),
+    url(r'^election/(?P<id>\d+)/edit-council/$', 'council_edit', name='bo.edit_council'),
     url(r'^election/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='bo.election_party_create'),
     url(r'^election/(?P<id>\d+)/shrink/$', 'election_instance_shrink', name='bo.election_instance_shrink'),
     url(r'^election/(?P<id>\d+)/grow/$', 'election_instance_grow', name='bo.election_instance_grow'),
