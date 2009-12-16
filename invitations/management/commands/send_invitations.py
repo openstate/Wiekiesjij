@@ -1,15 +1,17 @@
 import datetime
 
-from django.core.management import BaseCommand
+from django.core.management.base import LabelCommand
 
 from invitations.models import Invitation
  
-class Command(BaseCommand):
+class Command(LabelCommand):
     help = 'Used to send pending invitations'
+    args = "[profile_type]"
+    label = 'profile_type'
     
-    def handle(self, *args, **options):
+    def handle_label(self, profile_type, *args, **options):
         #get at max 50 rows from the database
-        invitations = Invitation.objects.filter(accepted=False, send_on=None).order_by('created')[:50]
+        invitations = Invitation.objects.filter(type=profile_type, accepted=False, send_on=None).order_by('created')[:50]
         invitations_temp = list(invitations)
         #stores ids in a variable from invitations
         invitation_ids = invitations.values_list('id', flat=True)
@@ -19,5 +21,7 @@ class Command(BaseCommand):
 
         for invite in invitations_temp:
             invite.send()
-            invite.send_on = datetime.datetime.now()
+            #invite.send_on = datetime.datetime.now()
             invite.save()
+            
+        print "Done"

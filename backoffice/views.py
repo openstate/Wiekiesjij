@@ -29,8 +29,10 @@ from backoffice.decorators import contact_required, staff_required, candidate_re
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
-from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
+
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
+
+from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
 
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
@@ -66,7 +68,7 @@ def election_party_create(request, id, position):
 
 def election_party_edit(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
-    wizard = ElectionPartySetupWizard(eip)
+    wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
 
 def election_party_up(request, id):

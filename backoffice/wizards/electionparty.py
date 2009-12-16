@@ -93,7 +93,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         return redirect('bo.election_party_edit', id=eip.id)
 
 
-class ElectionPartySetupWizard(MultiPathFormWizard):
+class ElectionPartyEditWizard(MultiPathFormWizard):
     def __init__(self, eip, *args, **kwargs):
         self.eip = eip
 
@@ -124,7 +124,7 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
                     initial={'election_party_description_form': initial},
                     template='backoffice/wizard/setupelectionparty/step3.html',)
         template = 'backoffice/wizard/election_party_setup/base.html',
-        super(ElectionPartySetupWizard, self).__init__(step1.next(step2.next(step3)), template, *args, **kwargs)
+        super(ElectionPartyEditWizard, self).__init__(step1.next(step2.next(step3)), template, *args, **kwargs)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
