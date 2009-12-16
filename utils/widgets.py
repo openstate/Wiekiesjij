@@ -220,7 +220,7 @@ class ColorPicker(forms.widgets.TextInput):
                     return false;
                 },
                 onBeforeShow: function () {
-                    $($('#%(id)s')).ColorPickerSetColor($('#%(id)s').value);
+                    $(this).ColorPickerSetColor($('#%(id)s').val());
                 },
                 onChange: function (hsb, hex, rgb) {
                     $('#%(id)s_preview').css('backgroundColor', '#' + hex);
@@ -228,12 +228,12 @@ class ColorPicker(forms.widgets.TextInput):
                 }
 
             })
-            .bind('keyup', function(){
-                $(this).ColorPickerSetColor(this.value);
+            .bind('click', function(){
+                $(this).ColorPickerSetColor($('#%(id)s').value);
             });
 
             jQuery(document).ready(function(){
-                $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
+                $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s').val());
                 $('#%(id)s').addClass("colorpicker_inputfield");
             });
 
