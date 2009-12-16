@@ -2,6 +2,10 @@
 {% load i18n %}
 
 {% block buttons %}
+	<p class="desc">This contact will be invited to complete further setup for this party. If you want, you can skip the rest of the steps for fillng in this party.</p>
+
+	<p class="label">Do you want to skip the party setup for this party?
+    
 	<div class="form-submit">
 		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip party setup" %}</button>
 		<button type="submit" name="next" value="next" class="next">{% trans "Start party setup" %}</button>
