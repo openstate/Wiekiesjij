@@ -37,6 +37,8 @@ from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, Answ
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
 
+# TODO: write descriptions to functions
+
 @contact_required
 def party_contact_wizard(request, user_id, eip_id):
     return PartyContactWizard(user_id=user_id, eip_id=eip_id)(request)
@@ -75,13 +77,13 @@ def election_party_edit(request, id):
     wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
 
-@party_admin_required
+@council_admin_required
 def election_party_up(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
-@party_admin_required
+@council_admin_required
 def election_party_down(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_down()
@@ -117,7 +119,7 @@ def candidate_down(request, id):
 def election_party_add_candidate(request, id, pos):
     return AddCandidateWizard(id, pos)(request)
 
-@candidate_required
+@staff_required
 def election_event(request):
     election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
     return render_to_response('backoffice/election_event_view.html', {'election_instances': election_instances,},
@@ -438,11 +440,11 @@ def csv_import_candidates_step3(request, ep_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 def csv_import_parties_step1(request, ei_id):
     return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
@@ -464,7 +466,7 @@ def csv_import_parties_step2(request, ei_id, error = False):
     forms = dict({'csv_upload': form})
     return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
     try:
@@ -557,7 +559,7 @@ def council_edit(request, id):
     election_instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance)(request)
 
-
+@candidate_required
 def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
         AnswerQuestion - wizard.
@@ -566,6 +568,7 @@ def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
+@candidate_required
 def answer_question_done(request):
     '''
         answer_question thanks page.
