@@ -60,7 +60,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
         email = self.cleaned_data['email']
         try:
            user = User.objects.get(username=email)
-           if not user.profile or user.profile.type != 'council_admin':
+           if not user.profile or user.profile.type != 'candidate':
                del self.cleaned_data['email']
                raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
         except User.DoesNotExist:
@@ -158,6 +158,7 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
                         }
                     ),
                 )
+                
     def clean_email(self):
         """
            We have to check of the user exists and if it's the propper type of user
@@ -165,7 +166,7 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
         email = self.cleaned_data['email']
         try:
            user = User.objects.get(username=email)
-           if not user.profile or user.profile.type != 'council_admin':
+           if not user.profile or user.profile.type != 'party_admin':
                del self.cleaned_data['email']
                raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
         except User.DoesNotExist:

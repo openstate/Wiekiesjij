@@ -166,7 +166,7 @@ class PartyForm(BetterModelForm, TemplateForm):
         model = Party
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
+    name = forms.CharField(label=_('Party'))
     abbreviation = forms.CharField(label=_('Abbreviation'))
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
