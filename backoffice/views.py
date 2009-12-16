@@ -45,12 +45,14 @@ def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
+@council_admin_required
 def election_instance_shrink(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     instance.num_lists -= 1
     instance.save()
     return redirect('bo.election_instance_view', id=id)
 
+@council_admin_required
 def election_instance_grow(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     instance.num_lists += 1
@@ -61,54 +63,61 @@ def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
 
+@council_admin_required
 def election_party_create(request, id, position):
     instance = get_object_or_404(ElectionInstance, pk=id)
     wizard = AddElectionPartyWizard(instance, position)
     return wizard(request)
 
+@party_admin_required
 def election_party_edit(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
 
+@party_admin_required
 def election_party_up(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
+@party_admin_required
 def election_party_down(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_down()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
+@party_admin_required
 def election_party_shrink(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.list_length -= 1
     eip.save()
     return redirect('bo.election_party_view', id=id)
 
+@party_admin_required
 def election_party_grow(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.list_length += 1
     eip.save()
     return redirect('bo.election_party_view', id=id)
 
+@party_admin_required
 def candidate_up(request, id):
     can = get_object_or_404(Candidacy, pk=id)
     can.move_up()
     return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
+@party_admin_required
 def candidate_down(request, id):
     can = get_object_or_404(Candidacy, pk=id)
     can.move_down()
     return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
+@party_admin_required
 def election_party_add_candidate(request, id, pos):
     return AddCandidateWizard(id, pos)(request)
 
 @candidate_required
-@party_admin_required
-@council_admin_required
 def election_event(request):
     election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
     return render_to_response('backoffice/election_event_view.html', {'election_instances': election_instances,},
@@ -337,9 +346,11 @@ def politician_profile_connection_delete(request, connection_id, election_instan
 def politician_profile_connection_wizard(request, election_instance_id, user_id, connection_id=None):
     return PoliticianProfileConnectionWizard(user_id=user_id, election_instance_id=election_instance_id, connection_id=connection_id)(request)
 
+@party_admin_required
 def csv_import_candidates_step1(request, ep_id):
     return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id}, context_instance=RequestContext(request))
 
+@party_admin_required
 def csv_import_candidates_step2(request, ep_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
@@ -361,6 +372,7 @@ def csv_import_candidates_step2(request, ep_id, error = False):
     forms = dict({'csv_upload': form})
     return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
+@party_admin_required
 @transaction.commit_manually
 def csv_import_candidates_step3(request, ep_id):
     try:
@@ -423,9 +435,11 @@ def csv_import_candidates_step3(request, ep_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
+@party_admin_required
 def csv_import_parties_step1(request, ei_id):
     return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id}, context_instance=RequestContext(request))
 
+@party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
@@ -447,6 +461,7 @@ def csv_import_parties_step2(request, ei_id, error = False):
     forms = dict({'csv_upload': form})
     return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
+@party_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
     try:
@@ -524,6 +539,7 @@ def csv_import_parties_step3(request, ei_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
+@council_admin_required
 def council_edit(request, id):
     '''
     Council edit wizard.
@@ -534,6 +550,7 @@ def council_edit(request, id):
     '''
     election_instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance)(request)
+
 
 def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
@@ -557,4 +574,3 @@ def view_profile(request):
     if request.user.profile:
         return render_to_response(get_profile_template(request.user.profile.type, 'backoffice_profile'), {}, context_instance=RequestContext(request))
     return redirect('/')
-    
