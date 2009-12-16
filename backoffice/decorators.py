@@ -38,7 +38,7 @@ def party_admin_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME)
     """
     ProfileClass = get_profile_model('party_admin')
     actual_decorator = user_passes_test(
-        lambda u: (u.is_authenticated() and (u.is_staff (u.profile is not None and isinstance(u.profile, ProfileClass)))),
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and isinstance(u.profile, ProfileClass)))),
         redirect_field_name=redirect_field_name
     )
     if function:
@@ -54,7 +54,7 @@ def candidate_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
 
     ProfileClass = get_profile_model('candidate')
     actual_decorator = user_passes_test(
-        lambda u: (u.is_authenticated() and (u.is_staff (u.profile is not None and isinstance(u.profile, ProfileClass)))),
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and isinstance(u.profile, ProfileClass)))),
         redirect_field_name=redirect_field_name
     )
     if function:
