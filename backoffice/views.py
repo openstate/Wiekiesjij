@@ -11,6 +11,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from elections.settings import ELECTION_EVENT_ID
@@ -22,7 +23,7 @@ from invitations.models import Invitation
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 
-from backoffice.decorators import staff_required, candidate_required, council_admin_required
+from backoffice.decorators import staff_required, candidate_required, council_admin_required, party_admin_required
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
@@ -97,7 +98,9 @@ def candidate_down(request, id):
 def election_party_add_candidate(request, id, pos):
     return AddCandidateWizard(id, pos)(request)
 
-#@login_required
+#@candidate_required
+#@party_admin_required
+#@council_admin_required
 def election_event(request):
     election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
     return render_to_response('backoffice/election_event_view.html', {'election_instances': election_instances,},
