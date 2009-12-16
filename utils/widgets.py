@@ -266,6 +266,10 @@ class DateTimePicker(forms.widgets.TextInput):
                 // Getting the element
                 var datePicker = jQuery('#%(id)s');
 
+                datePickerLabel = datePicker.prev('label');
+                datePicker.wrap('<div class="dp-wrap"></div>');
+                datePicker.before(datePickerLabel);
+
                 // Making another hidden element for date
                 var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
 
@@ -321,6 +325,10 @@ class DateTimePicker(forms.widgets.TextInput):
                 timePickerFieldSeconds = jQuery('select.seccombo');
                 timePickerFieldSeconds.hide();
 
+                timePickerFieldHours.wrap('<div class="hours-wrap">');
+                timePickerFieldMinutes.wrap('<div class="minutes-wrap">');
+                timePickerFieldSeconds.wrap('<div class="seconds-wrap">');
+
                 timePickerFieldHours.before(jQuery('<label>%(hours_label)s</label>'));
                 timePickerFieldMinutes.before(jQuery('<label>%(minutes_label)s</label>'));
                 //timePickerFieldSeconds.before(jQuery('<label>%(seconds_label)s</label>'));
@@ -344,6 +352,8 @@ class DateTimePicker(forms.widgets.TextInput):
                 timePickerFieldSeconds.change(function() {
                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
                 });
+
+                //datePicker.wrap('<div class="dp-wrap">');
             });
         -->
         </script>
@@ -352,6 +362,7 @@ class DateTimePicker(forms.widgets.TextInput):
     class Media:
         js = (
             'static/utils/javascripts/jquery.jtimepicker.js',
+            'static/utils/javascripts/jquery.dump.js',
         )
         css = {
             'screen': (
