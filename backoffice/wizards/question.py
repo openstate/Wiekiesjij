@@ -16,6 +16,12 @@ from elections.models import ElectionInstance, ElectionInstanceParty, ElectionIn
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
 
 class AnswerQuestion(MultiPathFormWizard):
+    '''
+        AnswerQuestion Wizard.
+        Expects two extra obligatory params
+        @param int election_instance_party_id - ElectionInstanceParty instance
+        @param int user_id - User instance (to couple to Candidate)
+    '''
     def __init__(self, *args, **kwargs):
         self.user_id, self.election_instance_party_id = kwargs['user_id'], kwargs['election_instance_party_id']
         self.election_instance_party = ElectionInstanceParty.objects.get(id=self.election_instance_party_id)
@@ -24,53 +30,44 @@ class AnswerQuestion(MultiPathFormWizard):
 
         self.candidate_profile = self.user.profile
 
+        # Candidacy to whom the answers are coupled.
         self.candidacy = Candidacy.objects.get(election_party_instance=self.election_instance_party,
                                                candidate=self.user)
 
         candidate_question_answers = self.candidacy.answers.all()
         candidate_question_answers = map(lambda x: (x.id, x.question_id), candidate_question_answers)
-        print 'candidate_question_answers: ', candidate_question_answers
 
         CandidateProfileClass = get_profile_model('candidate')
         if CandidateProfileClass.__name__ != self.user.profile.__class__.__name__:
             raise Exception
 
+        # Getting all the questions applicable
         questions = self.election_instance_party.election_instance.questions.all()
 
-        steps_tree = list()
-        for question in questions:
-            '''
-            TODO: On each step we shall perform a check to see if step was previously filled in. In case if it was -
-            we need to populate the form with existing values and make sure the values are updated (vs. inserted).
-            It might make sence to move this to a new wizard, but I'm not sure about it yet.
-            Also, since we store the answers as text fields (this one is still questionable - how shall we store the
-            answers) we will need to bring them into a proper form before passing to the initials.
-            '''
-            try:
-                # I do it with filter, but it could be done with get as well. Just to make sure we always have something loaded
-                # even if there are some duplicated records.
-                # TODO: change to get later.
+        steps_tree = []
 
+        # Looping through the questions
+        for question in questions:
+            try:
                 # Here we need to get the answer given for the step
-                #answer = Answer.objects.get(question=question, id='') # TODO
                 question_answers = []
                 for answer_id, question_id in candidate_question_answers:
-                    #print 'answer_id: ', answer_id
-                    #print 'question_id: ', question_id
                     if question_id == question.id:
-                        question_answers.append(answer_id)
+                        # I realise that it's kind of stupid loop, 'cause I could use simply filter on the initial list
+                        # TODO: rewrite when have time, but it works so as well, although it could be done nicer.
+                        # In case of multiple answers we make a list of those.
+                        if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                            question_answers.append(answer_id)
+                        else:
+                            question_answers = answer_id
             except Exception, e:
                 # Otherwise we shall specify an initial value for it
                 question_answers = ''
 
-            # If question type is multiple answers, we need to create a list from string.
-            if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
-                pass#question_answers = ','.join(question_answers)
-
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/question/answer_add/step.html',
-                     initial={'__' + str(question.id): question_answers}, # TODO: Fix this = load the data!
+                     initial={str(question.id): {'value': question_answers}}, # TODO: Fix this = load the data!
                      extra_context={'question_title': question.title, 'initial': question_answers},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)

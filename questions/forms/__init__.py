@@ -32,7 +32,8 @@ class SelectQuestionForm(BetterModelForm, TemplateForm):
         fields = ('question',)
 
 
-class AnswerQuestionForm(BetterModelForm, TemplateForm):
+class AnswerQuestionForm(BetterForm, TemplateForm):
+    value = forms.CharField(_('Value'))
     '''
         Form which displays an possible answers, coupled to the question given. It makes sure the answer has the
         right widget, which depends on the question type.
@@ -64,6 +65,6 @@ class AnswerQuestionForm(BetterModelForm, TemplateForm):
             pass #TODO raise error
 
     class Meta:
-        model = Answer
+        #model = Answer
         fields = ('value',)
 
