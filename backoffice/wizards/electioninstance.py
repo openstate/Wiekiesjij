@@ -361,7 +361,16 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         idx = 0
         for profile_form in get_profile_forms('council_admin', 'edit'):
             step1_forms.update({'chancery_registration%s' % idx : profile_form})
-            step1_initial.update({'chancery_registration%s' % idx : self.chancery_profile})
+            step1_initial.update({'chancery_registration%s' % idx : {
+                'name': {
+                    'first_name': self.chancery_profile.first_name,
+                    'middle_name': self.chancery_profile.middle_name,
+                    'last_name': self.chancery_profile.last_name,
+                },
+                'gender': self.chancery_profile.gender,
+                'telephone': self.chancery_profile.telephone,
+                'workingdays': self.chancery_profile.workingdays.split(','),
+            }})
             idx += 1
 
         step5_forms = {}
@@ -370,7 +379,15 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         idx = 0
         for profile_form in get_profile_forms('council_admin', 'contact_information'):
             step5_forms.update({'chancery_contact_information%s' % idx : profile_form})
-            step5_initial.update({'chancery_contact_information%s' % idx : self.chancery_profile})
+            step5_initial.update({'chancery_contact_information%s' % idx : {
+                'website': self.chancery_profile.website,
+                'address': {
+                    'street': self.chancery_profile.street,
+                    'number': self.chancery_profile.house_num,
+                    'postalcode': self.chancery_profile.postcode,
+                    'city': self.chancery_profile.town,
+                }
+            }})
             idx += 1
 
         # Updates ChanceryProfile
@@ -387,7 +404,16 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         step3 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/election_setup/step3.html',
-                     initial={'council_contact_information': self.election_instance.council.__dict__})
+                     initial={'council_contact_information': {
+                        'name': self.election_instance.council.name,
+                        'address': {
+                            'street': self.election_instance.council.street,
+                            'number': self.election_instance.council.house_num,
+                            'postalcode': self.election_instance.council.postcode,
+                            'city': self.election_instance.council.town,
+                        },
+                        'website': self.election_instance.council.website,
+                     }})
         # Updates Council
         step4 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
@@ -419,38 +445,49 @@ class ElectionSetupWizard2(MultiPathFormWizard):
 
     @transaction.commit_manually
     def done(self, request, form_dict):
+        self.chancery_profile_data = {}
+        self.council_data = {}
+        self.election_instance_data = {}
+        self.election_instance_parties_data = {}
+        
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if 'chancery_registration' in name or 'chancery_contact_information' in name:
-                        # Updates the ChanceryProfile with data from step 1 or 5.
-                        if not hasattr(self, 'chancery_profile_data'):
-                            self.chancery_profile_data = {}
-                        # We merge two dictinaries, letting the form data to overwrite the existing data
-                        self.chancery_profile_data = dict(self.chancery_profile_data.items() + form.cleaned_data.items())
-                    elif name in ('council_contact_information', 'council_additional_information', 'council_styling_setup'):
-                        # Updates the Council with data from step 3, 4 or 6.
-                        if not hasattr(self, 'council_data'):
-                            self.council_data = {}
-                        # We merge two dictinaries, letting the form data to overwrite the existing data
-                        self.council_data = dict(self.council_data.items() + form.cleaned_data.items())
+                    if name == 'chancery_registration0':          
+                        self.chancery_profile_data.update({
+                            'first_name': form.cleaned_data['name']['first_name'],
+                            'middle_name': form.cleaned_data['name']['middle_name'],
+                            'last_name': form.cleaned_data['name']['last_name'],
+                            'gender': form.cleaned_data['gender'],
+                            'workingdays': form.cleaned_data['workingdays'],
+                            'telephone': form.cleaned_data['telephone']
+                        })
+                    elif  name == 'chancery_contact_information0':
+                        self.chancery_profile_data.update({
+                            'street': form.cleaned_data['address']['street'],
+                            'house_num': form.cleaned_data['address']['number'],
+                            'postcode': form.cleaned_data['address']['postalcode'],
+                            'town': form.cleaned_data['address']['city'],
+                            'website': form.cleaned_data['website']
+                        })
+                    elif name == 'council_contact_information':
+                        self.council_data.update({
+                            'name': form.cleaned_data['name'],
+                            'street': form.cleaned_data['address']['street'],
+                            'house_num': form.cleaned_data['address']['number'],
+                            'postcode': form.cleaned_data['address']['postalcode'],
+                            'town': form.cleaned_data['address']['city'],
+                            'website': form.cleaned_data['website']
+                        })
+                    elif name in ('council_additional_information', 'council_styling_setup'):
+                        self.council_data.update(form.cleaned_data)
                     elif name in ('election_details',):
-                        # Updates the Election Instance from step 2
-                        if not hasattr(self, 'election_instance_data'):
-                            self.election_instance_data = {}
-                        # We merge two dictinaries, letting the form data to overwrite the existing data
-                        self.election_instance_data = dict(self.election_instance_data.items() + form.cleaned_data.items())
+                        self.election_instance_data.update(form.cleaned_data)
                     elif name in ('election_select_parties',):
-                        # Updates the Election Instance from step 7.
-                        if not hasattr(self, 'election_instance_parties_data'):
-                            self.election_instance_parties_data = {}
-                        # We merge two dictinaries, letting the form data to overwrite the existing data
-                        self.election_instance_parties_data = dict(self.election_instance_parties_data.items() + form.cleaned_data.items())
-                    else:
-                        pass # TODO: throw an error
-
-            self.chancery_profile_data['workingdays'] = ','.join(map(lambda x: str(x), self.chancery_profile_data['workingdays']))
-
+                        self.election_instance_parties_data.update(form.cleaned_data)
+                    
+            self.chancery_profile_data.update({'workingdays': ','.join(map(lambda x: str(x), self.chancery_profile_data.get('workingdays', [])))})
+            
             # Here we need to update the ChanceryProfile
             for (key, value) in self.chancery_profile_data.items():
                 setattr(self.chancery_profile, key, value)
@@ -474,10 +511,10 @@ class ElectionSetupWizard2(MultiPathFormWizard):
 
         except Exception, e:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.election_setup_done')
+            return redirect('bo.election_instance_view', id=self.election_instance.pk)
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')

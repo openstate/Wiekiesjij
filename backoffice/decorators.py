@@ -24,7 +24,7 @@ def council_admin_required(function=None, redirect_field_name=REDIRECT_FIELD_NAM
     """
     ProfileClass = get_profile_model('council_admin')
     actual_decorator = user_passes_test(
-        lambda u: (u.is_staff or (u.profile is not None and isinstance(u.profile, ProfileClass))),
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and isinstance(u.profile, ProfileClass)))),
         redirect_field_name=redirect_field_name
     )
     if function:
