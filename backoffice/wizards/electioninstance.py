@@ -89,7 +89,8 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 wizard_start_date=datetime.datetime.now(),
             )
             #Create the profile
-            profile = create_profile('council_admin', self.profile_data)
+            created, profile = create_profile('council_admin', self.profile_data)
+            
             #Link the profile to the council
             council.chanceries.add(profile.user)
             
@@ -98,6 +99,9 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             
             #Create the invitation
             templates = profile_invite_email_templates('council_admin')
+            
+            #TODO: Change invitation text based on created or not
+            
             Invitation.create(
                 user_from=request.user, 
                 user_to=profile.user,

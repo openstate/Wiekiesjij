@@ -1,27 +1,19 @@
 import datetime
 from django import forms
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.forms.extras.widgets import SelectDateWidget
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
 
-from utils.widgets import AutoCompleter, ColorPicker, DatePicker
-
-from utils.widgets import AutoCompleter, ColorPicker, DatePicker, DateTimePicker
+from utils.widgets import DateTimePicker
 
 from utils.fields import NameField, AddressField
 
 from political_profiles.models import GENDERS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
-from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile 
-from django.forms.extras.widgets import SelectDateWidget 
-
-GENDERS = (
-        ('Male',_('Male')),
-        ('Female', _('Female')),
-        )
+from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
 
 class PoliticianProfileForm(BetterForm, TemplateForm):
@@ -42,21 +34,38 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
        
 
-class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
+class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
     name = NameField(label=_('Name'))
     email = forms.EmailField(_('Email'))
-
-    def __init__(self, *args, **kwargs):
-        super(InitialPoliticianProfileForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.widgets.RadioSelect(choices=self.fields['gender'].choices)
-        self.fields['email'].help_text = 'Invitation will be sent to this address'
+    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     
     class Meta:
-        model = PoliticianProfile
-        fields = ('name', 'email', 'gender' )
+        fieldsets = (
+                        ('main', {
+                            'fields': ('name','email','gender'), 
+                            'legend': 'Invite',
+                            'classes': ('sub-form','invite',)
+                        }
+                    ),
+                )
+        
+    
+    def clean_email(self):
+        """
+           We have to check of the user exists and if it's the propper type of user
+        """
+        email = self.cleaned_data['email']
+        try:
+           user = User.objects.get(username=email)
+           if not user.profile or user.profile.type != 'council_admin':
+               del self.cleaned_data['email']
+               raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
+        except User.DoesNotExist:
+           pass
+        return self.cleaned_data['email']
 
 class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
@@ -78,6 +87,21 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
                         }
                     ),
                 )
+
+    def clean_email(self):
+        """
+            We have to check of the user exists and if it's the propper type of user
+        """
+        email = self.cleaned_data['email']
+        try:
+            user = User.objects.get(username=email)
+            if not user.profile or user.profile.type != 'council_admin':
+                del self.cleaned_data['email']
+                raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
+        except User.DoesNotExist:
+            pass
+        return self.cleaned_data['email']
+        
         
         
         
@@ -128,12 +152,25 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-							'legend': 'Invite the administrative contact for this party:',
-							'description': 'This contact will be invited to complete further setup for this party.',
+                            'legend': 'Invite the administrative contact for this party:',
+                            'description': 'This contact will be invited to complete further setup for this party.',
                             'classes': ('sub-form','invite')
                         }
                     ),
                 )
+    def clean_email(self):
+        """
+           We have to check of the user exists and if it's the propper type of user
+        """
+        email = self.cleaned_data['email']
+        try:
+           user = User.objects.get(username=email)
+           if not user.profile or user.profile.type != 'council_admin':
+               del self.cleaned_data['email']
+               raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
+        except User.DoesNotExist:
+           pass
+        return self.cleaned_data['email']
 
 class ContactProfileForm(BetterModelForm, TemplateForm):
     '''
@@ -175,7 +212,7 @@ class LinkFormNew(BetterForm, TemplateForm):
     '''
     name        = forms.CharField(label=_('Name'))
     url         = forms.URLField(label=_('URL'))
-    description	= forms.CharField(label=_('Description'), widget=forms.Textarea())
+    description = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
 
 class InterestFormNew(BetterForm, TemplateForm):
@@ -191,7 +228,7 @@ class AppearanceFormNew(BetterForm, TemplateForm):
     Appearance admin
     '''
     name        = forms.CharField(label=_('Affiliated Organisation Name'))
-    location	= forms.CharField(label=_('Location'))
+    location    = forms.CharField(label=_('Location'))
     url         = forms.URLField(label=_('URL'))
     description = forms.CharField(label=_('Description'), widget=forms.Textarea())
     datetime    = forms.DateTimeField(label=_('Date and Time of Appearance'), widget=DateTimePicker())

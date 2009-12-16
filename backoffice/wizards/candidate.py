@@ -643,7 +643,7 @@ class AddCandidateWizard(MultiPathFormWizard):
                 'email': self.form_data['email'],
                 'gender': self.form_data['gender'],
             }
-            self.candidate = create_profile('candidate', tmp_data)
+            created, self.candidate = create_profile('candidate', tmp_data)
 
             #Link candidate to party
             candidacy = Candidacy(
@@ -655,6 +655,9 @@ class AddCandidateWizard(MultiPathFormWizard):
 
             #Create invitation
             templates = profile_invite_email_templates('candidate')
+            
+            #TODO: change invitation text based on created
+            
             Invitation.create(
                 user_from = request.user,
                 user_to = self.candidate.user,

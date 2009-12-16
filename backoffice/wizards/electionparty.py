@@ -64,12 +64,14 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                 list_length=10)
 
             #Create the profile
-            profile = create_profile('party_admin', self.profile_data)
+            created, profile = create_profile('party_admin', self.profile_data)
             #Link the profile to the party
             party.contacts.add(profile.user)
 
             #Create the invitation
             templates = profile_invite_email_templates('party_admin')
+            
+            #TODO: change invitation text based on created
             Invitation.create(
                 user_from=request.user,
                 user_to=profile.user,

@@ -109,21 +109,34 @@ def create_profile(for_function, data):
         Create and return a profile object (with a linked user)
         Assumes data contains at least an email key
     """
-    user = User.objects.create(username=data['email'], email=data['email'], is_active=False)
-    #unset the email
-    del data['email']
-    data['user'] = user
-    if for_function == 'candidate':
-        profile = PoliticianProfile.objects.create(**data)
-    elif for_function == 'council_admin':
-        profile = ChanceryProfile.objects.create(**data)
-    elif for_function == 'party_admin':
-        profile = ContactProfile.objects.create(**data)
-    elif for_function == 'visitor':
-        profile = VisitorProfile.objects.create(**data)
+    created = False
+    try:
+        user = User.objects.get(username=data['email'])
+        if user.profile is None or user.profile.type != for_function:
+            return (False, None)
+    except User.DoesNotExist:
+        created = True
+        user = User.objects.create(
+            username=data['email'],
+            email=data['email'],
+            is_active=False)
+    
+    if created:
+        del data['email']
+        data['user'] = user
+        if for_function == 'candidate':
+            profile = PoliticianProfile.objects.create(**data)
+        elif for_function == 'council_admin':
+            profile = ChanceryProfile.objects.create(**data)
+        elif for_function == 'party_admin':
+            profile = ContactProfile.objects.create(**data)
+        elif for_function == 'visitor':
+            profile = VisitorProfile.objects.create(**data)
+        else:
+            raise RuntimeError('%s is unknown' % for_function)
     else:
-        raise RuntimeError('%s is unknown' % for_function)
-    return profile
+        profile = user.profile
+    return (created, profile)
     
 def get_profile_template(for_function, type):
     """
