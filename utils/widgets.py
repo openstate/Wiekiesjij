@@ -241,9 +241,9 @@ class ColorPicker(forms.widgets.TextInput):
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
 
-class DatePicker(forms.widgets.TextInput):
+class DateTimePicker(forms.widgets.TextInput):
     """
-    Date Picker, based on jQuery UI and "jquery.jtimepicker.js".
+    DateTime Picker, based on jQuery UI and "jquery.jtimepicker.js".
     It uses jQuery UI dor date picking and jTimePicker class for date picking.
     
     Example of usage:
@@ -252,7 +252,7 @@ class DatePicker(forms.widgets.TextInput):
 
             def __init__(self, *args, **kwargs):
                 super(self.__class__, self).__init__(*args, **kwargs)
-                self.fields['my_date_time'].widget = DatePicker()
+                self.fields['my_date_time'].widget = DateTimePicker()
         
     """
     TEMPLATE = """
@@ -357,6 +357,41 @@ class DatePicker(forms.widgets.TextInput):
                 'static/utils/css/jquery.timepicker.css',
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def render(self, *args, **kwargs):
+        html_id = kwargs.get('attrs', {}).get('id', '')
+        result = super(self.__class__, self).render(*args, **kwargs)
+
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id))
+
+
+class DatePicker(forms.widgets.TextInput):
+    """
+    Date Picker, based on jQuery UI.
+    It uses jQuery UI dor date picking.
+
+    Example of usage:
+        class MyForm(forms.Form):
+            my_date_time = forms.DateTimeField(max_length=50)
+
+            def __init__(self, *args, **kwargs):
+                super(self.__class__, self).__init__(*args, **kwargs)
+                self.fields['my_date_time'].widget = DatePicker()
+
+    """
+    TEMPLATE = """
+        <script type="text/javascript">
+        <!--
+            jQuery(document).ready(function(){
+                // Making the date picker
+                jQuery('#%(id)s').datepicker({dateFormat: $.datepicker.W3C});
+            });
+        -->
+        </script>
+    """
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)

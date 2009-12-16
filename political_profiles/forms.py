@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
-from utils.widgets import AutoCompleter, ColorPicker
+from utils.widgets import AutoCompleter, ColorPicker, DatePicker, DateTimePicker
 from utils.fields import NameField, AddressField
 from political_profiles.models import GENDERS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
@@ -30,6 +30,10 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     picture         = forms.ImageField(label=_('Picture'), required=False)
     movie           = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'))
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.fields['dateofbirth'].widget = DatePicker()
 
 class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
     '''

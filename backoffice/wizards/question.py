@@ -38,9 +38,12 @@ class AnswerQuestion(MultiPathFormWizard):
             Also, since we store the answers as text fields (this one is still questionable - how shall we store the
             answers) we will need to bring them into a proper form before passing to the initials.
             '''
-            eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question.id)
-            eiqa = ElectionInstanceQuestionAnswer.objects.get(election_instance_question=eiq, candidate=self.user)
-            step_initial_values = '' if not eiqa else eiqa.answer_value
+            try:
+                eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question.id)
+                eiqa = ElectionInstanceQuestionAnswer.objects.get(election_instance_question=eiq, candidate=self.user)
+                step_initial_values = eiqa.answer_value
+            except Exception, e:
+                step_initial_values = ''
 
             if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
                 '''
@@ -87,9 +90,17 @@ class AnswerQuestion(MultiPathFormWizard):
                     TODO: Here we need to see, if the value is string like "[u'2', u'3', u'4']" we need to split it
                     into 2, 3, 4 instead.
                     '''
+                    question = Question.objects.get(id=question_id)
+                    answer_value = map(lambda x: x[1], form.cleaned_data.items())[0]
+                    print 'answer_value: ', answer_value
+                    print 'type(answer_value): ', type(answer_value)
+                    if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                        answer_value = map(lambda x: [None, x][x.isdigit()], answer_value)
+                        print 'answer_value: ', answer_value
+
                     eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question_id)
                     eiqa = ElectionInstanceQuestionAnswer(election_instance_question=eiq, candidate=self.user,
-                                                          answer_value=map(lambda x: x[1], form.cleaned_data.items())[0])
+                                                          answer_value=answer_value)
                     eiqa.save()
         except Exception, e:
             transaction.rollback()
@@ -97,7 +108,7 @@ class AnswerQuestion(MultiPathFormWizard):
         else:
             transaction.commit()
             
-        return redirect('bo.answer_question_done')
+        #return redirect('bo.answer_question_done')
 
 
 
