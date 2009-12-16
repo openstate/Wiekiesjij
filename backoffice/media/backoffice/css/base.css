@@ -492,15 +492,16 @@
 			----------------------------------------------------------------------------------------- */
 			
 			input.colorpicker_inputfield {
-				width:79px;
+				width:80px;
+				padding-right:25px;
 				}	
 					
 			.cp_preview {
-				margin:0 0 20px 0;
+				margin:0;
 				position:relative;
-                                top:-27px;
-                                left:64px;
-                                border: 1px solid #AAAAAA;
+				top:-27px;
+				left:85px;
+				border: 1px solid #AAAAAA;
 				}
 		
 	/*	generic styling

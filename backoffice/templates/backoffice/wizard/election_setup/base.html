@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block title %}{% trans 'Add an election instance' %}{% endblock title %}
-{% block page-title %}{% trans 'Add an election instance' %}{% endblock page-title %}
+{% block page-title %}{% trans 'Election setup' %}{% endblock page-title %}
 {% block breadcrumbs %}<li><a href="#">[Election Event Name]</a>{% endblock breadcrumbs %}
 {% block back-link %}{% endblock back-link %}
 
@@ -10,11 +10,9 @@
 	<ul id="wizardSteps">
     	{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
         {% block step2 %}<li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
-        <li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>
-        <li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>
-        <li><span class="future"><span class="number">5</span>{% trans "The Chancellery" %}</span></li>
-        <li><span class="future"><span class="number">6</span>{% trans "Styling" %}</span></li>
-        <li class="last"><span class="future"><span class="number">7</span>{% trans "Import parties" %}</span></li>
+        {% block step3 %}<li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>{% endblock step3 %}
+        {% block step4 %}<li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>{% endblock step4 %}
+        {% block step5 %}<li><span class="future"><span class="number">5</span>{% trans "Styling" %}</span></li>{% endblock step5 %}
     </ul>
 
 	{% comment %}

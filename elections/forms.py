@@ -62,6 +62,8 @@ class CouncilForm(BetterModelForm, TemplateForm):
     ChanceryProfile admin
     '''
     
+    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('How many seats does the council hold?'))
+	
     def __init__(self, *args, **kwargs):
         super(CouncilForm, self).__init__(*args, **kwargs)
         self.fields['history'].widget = forms.widgets.Textarea()
@@ -75,9 +77,10 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
     Council information form (used in 2. Election overview)
     '''
 
-    name = forms.CharField(label=_('Name'))
-    address = AddressField(label=_('Address'))
-    website = forms.URLField(label=_('Website'), required=False)
+    name = forms.CharField(label=_('Name'), help_text=_('Specify the name of your council here.'))
+    address = AddressField(label=_('Address of the Council'))
+    website = forms.URLField(label=_('Website of the Council'), required=False)
+
 
     class Meta:
         fields = ('name', 'address', 'website',)
@@ -92,6 +95,8 @@ class CouncilStylingSetupForm(BetterModelForm, TemplateForm):
         self.fields['background_color'].widget = ColorPicker()
         self.fields['foreground_color'].widget = ColorPicker()
         self.fields['another_color'].widget = ColorPicker()
+	
+	background_color = forms.CharField(label=_('Background color'), required=False, help_text=_('blah'))
 
     class Meta:
         model = Council
@@ -131,8 +136,9 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
 
     start_date = forms.DateTimeField(label=_('When does this election take place?'), help_text=_('[Date] is the default date for [Election Event Name].'))
-    website = forms.URLField(label=_('Election Website'), initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'), required=False)
-    num_lists = forms.IntegerField(label=_('Number of parties in this election.'), help_text=_('How many parties are taking part in this election?'))
+    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
+    num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
+
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
