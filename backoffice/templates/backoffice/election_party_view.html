@@ -3,11 +3,19 @@
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
 {% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
-{% block back-link %}<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.council.region }}</a>{% endblock back-link %}
+{% block back-link %}
+{% ifprofile 'council_admin' %}
+<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.council.region }}</a>
+{% endifprofile %}
+{% endblock back-link %}
 
 {% block breadcrumbs %}
-	<li><a href="#">{{ instance.election_event.name }}</a></li>
+{% if user.is_staff %}
+	<li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
+{% endif %}
+{% ifprofile 'council_admin' %}
     <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+{% endifprofile %}
 {% endblock breadcrumbs %}
 
 {% block content %}
