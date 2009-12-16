@@ -77,7 +77,7 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
 
     name = forms.CharField(label=_('Name'))
     address = AddressField(label=_('Address'))
-    website = forms.URLField()
+    website = forms.URLField(label=_('Website'), required=False)
 
     class Meta:
         fields = ('name', 'address', 'website',)
@@ -131,7 +131,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
 
     start_date = forms.DateTimeField(label=_('When does this election take place?'), help_text=_('[Date] is the default date for [Election Event Name].'))
-    website = forms.URLField(label=_('Election Website'), initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
+    website = forms.URLField(label=_('Election Website'), initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'), required=False)
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), help_text=_('How many parties are taking part in this election?'))
 
     def __init__(self, *args, **kwargs):
