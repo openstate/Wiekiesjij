@@ -59,40 +59,32 @@
 	
     <div class="mod start-btn">
     	<div class="bd">
-    	<a href="#" class="btn start">Start setup wizard<br />for this party</a>
+    	<a href="{% url bo.election_party_edit eip.id %}" class="btn start">Start setup wizard<br />for this party</a>
         </div>
     </div>
     
-	{% blockwrap %}
-    	<h3>{% trans "We can reach you on" %}:</h3>
-        <a href="#" class="edit">{% trans "edit" %}</a>
-        <p>{{ eip.party.telephone }}<br />
-            <a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a><br />
-
-            (on Mon, Tue, Wed or Thu)</p>
-    {% endblockwrap %}
-    
     {% blockwrap %}
 		<h3>{% trans "This party" %}</h3> 
-        <a href="#" class="edit">{% trans "edit" %}</a>
+        <a href="{% url bo.election_party_edit eip.id %}" class="edit">{% trans "edit" %}</a>
         <dl>
-        	<dt>{% trans 'Logo' %}:</dt>
-            	<dd>[logo img]</dd>
+            <dt>{% trans 'Logo' %}:</dt>
+            <dd>[logo img]</dd>
             <dt>{% trans 'Slogan' %}:</dt>
-            	<dd>{{ eip.party.slogan|default:"&ndash;" }}</dd>
-           	<dt>{% trans 'Current number of seats' %}:</dt>
-            	<dd>20</dd>
+            <dd>{{ eip.party.slogan|default:"&ndash;" }}</dd>
+            <dt>{% trans 'Current number of seats' %}:</dt>
+            <dd>###</dd>
         </dl>
   	{% endblockwrap %}
     
     {% blockwrap %}
     	<h3>{% trans "Contact information" %}</h3> 
-        <a href="#" class="edit">{% trans "edit" %}</a>
         <dl>
         	<dt>{% trans "Name" %}:</dt>
             	<dd>{{ eip.party.name|default:"&ndash;" }} {% if eip.party.abbreviation %}({{ eip.party.abbreviation }}){% endif %}</dd>
            	<dt>{% trans "Address" %}:</dt>
-            	<dd>Streetname 12<br />9999 AA  Cityname</dd>
+            	<dd>{{ eip.party.address_street }} {{ eip.party.address_number }}
+                    <br />{{ eip.party.address_postalcode }}  {{ eip.party.address_city }}
+                </dd>
            	<dt>{% trans 'Telephone' %}:</dt>
             	<dd>{{ eip.party.telephone|default:"&ndash;" }}</dd>
            	<dt>{% trans 'E-mail' %}:</dt>
@@ -104,18 +96,23 @@
     
 	{% blockwrap %}
     	<h3>{% trans "Party description" %}</h3> 
-        <a href="#" class="edit">{% trans "edit" %}</a>
         <dl>
-        	<dt>Description</dt>
-            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
-                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
-       		<dt>History</dt>
-            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
-                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
-       		<dt>Manifesto</dt>
-            	<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non massa ut nibh 
-                commodo interdum. Nullam et ligula non enim sit amet in risus... <a href="#">{% trans "read more" %}</a></dd>
-       			<dd><a href="#">{% trans "Link to manifesto" %}</a></dd>
+        	<dt>{% trans "Description" %}</dt>
+            	<dd>
+                    {{ eip.party.description }}<br />
+                    <a href="#">{% trans "read more" %}</a>
+                </dd>
+       		<dt>{% trans "History" %}</dt>
+            	<dd>
+                    {{ eip.party.history }}<br />
+                    <a href="#">{% trans "read more" %}</a>
+                </dd>
+       		<dt>{% trans "Manifesto" %}</dt>
+            	<dd>
+                    {{ eip.party.manifasto_summary }}<br />
+                    <a href="#">{% trans "read more" %}</a>
+                </dd>
+       		<dd><a href="{{ eip.party.manifesto }}" target="_blank">{% trans "Link to manifesto" %}</a></dd>
         </dl>
     {% endblockwrap %}
 

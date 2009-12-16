@@ -602,9 +602,9 @@ class AddCandidateWizard(MultiPathFormWizard):
         Wizard for adding a Candidate
     """
 
-    def __init__(self, *args, **kwargs):
-        self.election_instance_party_id = 1 #kwargs['election_instance_party_id']
-        self.position = 1 #kwargs['position']
+    def __init__(self, id, pos, *args, **kwargs):
+        self.election_instance_party_id = id
+        self.position = pos
 
         step1_forms = dict()
         idx = 0;
@@ -671,4 +671,4 @@ class AddCandidateWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('bo.election_party_view', args=self.election_instance_party_id)
+        return redirect('bo.election_party_view', self.election_instance_party_id)
