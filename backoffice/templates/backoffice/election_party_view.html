@@ -1,5 +1,5 @@
 {% extends 'backoffice/base.html' %}
-{% load i18n utils_tags %}
+{% load i18n utils_tags backoffice_tags %}
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
 {% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
