@@ -89,6 +89,9 @@ class AnswerQuestion(MultiPathFormWizard):
     @transaction.commit_manually
     def done(self, request, form_dict):
         try:
+            # Removing all previous answers before inserting them
+            map(lambda x: self.candidacy.answers.remove(x.id), self.candidacy.answers.all())
+
             for path, forms in form_dict.iteritems():
                 for question_id, form in forms.iteritems():
                     question = Question.objects.get(id=question_id)
