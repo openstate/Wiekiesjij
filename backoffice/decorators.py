@@ -37,7 +37,7 @@ def party_admin_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME)
     to the log-in page if necessary.
     """
     actual_decorator = user_passes_test(
-        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and 'party_admin' == u.profile.type))),
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and u.profile.type in ('party_admin', 'council_admin')))),
         redirect_field_name=redirect_field_name
     )
     if function:
@@ -51,7 +51,7 @@ def candidate_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
     to the log-in page if necessary.
     """
     actual_decorator = user_passes_test(
-        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and 'candidate' == u.profile.type))),
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and u.profile.type in ('candidate', 'party_admin', 'council_admin')))),
         redirect_field_name=redirect_field_name
     )
 
