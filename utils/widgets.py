@@ -360,6 +360,10 @@ class DateTimePicker(forms.widgets.TextInput):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
+        self.hours = _('hours')
+        self.minutes = _('minutes')
+        self.seconds = _('seconds')
+
 
     def render(self, *args, **kwargs):
         html_id = kwargs.get('attrs', {}).get('id', '')

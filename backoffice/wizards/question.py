@@ -39,26 +39,25 @@ class AnswerQuestion(MultiPathFormWizard):
             answers) we will need to bring them into a proper form before passing to the initials.
             '''
             try:
-                eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question.id)
-                eiqa = ElectionInstanceQuestionAnswer.objects.get(election_instance_question=eiq, candidate=self.user)
+                # I do it with filter, but it could be done with get as well. Just to make sure we always have something loaded
+                # even if there are some duplicated records.
+                # TODO: change to get later.
+                eiq = ElectionInstanceQuestion.objects.filter(election_instance=self.election_instance, question=question.id)[0]
+                eiqa = ElectionInstanceQuestionAnswer.objects.filter(election_instance_question=eiq, candidate=self.user)[0]
                 step_initial_values = eiqa.answer_value
             except Exception, e:
+                eiqa = None
                 step_initial_values = ''
 
+            # If question type is multiple answers, we need to create a list from string.
             if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
-                '''
-                TODO: Here we need to split the values of step_initial_values and pass a list to to the multiple
-                answers widget.
-                '''
-                pass
+                step_initial_values = step_initial_values.split(',')
 
-            print 'question.title: ', question.title
-            print 'step_initial_values: ', step_initial_values
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/question/answer_add/step.html',
-                     initial={'????' + str(question.id): {'value': step_initial_values}}, # TODO: Fix this = load the data!
-                     extra_context={'question_title': question.title},
+                     initial={str(question.id): eiqa}, # TODO: Fix this = load the data!
+                     extra_context={'question_title': question.title, 'initial': step_initial_values},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
 
@@ -91,13 +90,18 @@ class AnswerQuestion(MultiPathFormWizard):
                     into 2, 3, 4 instead.
                     '''
                     question = Question.objects.get(id=question_id)
-                    answer_value = map(lambda x: x[1], form.cleaned_data.items())[0]
-                    print 'answer_value: ', answer_value
-                    print 'type(answer_value): ', type(answer_value)
-                    if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
-                        answer_value = map(lambda x: [None, x][x.isdigit()], answer_value)
-                        print 'answer_value: ', answer_value
+                    #answer_value = map(lambda x: x[1], form.cleaned_data.items())[0]
+                    answer_value = map(lambda x: x, form.cleaned_data.items())
 
+                    # If question type is multiple answers, we need to clean the string list first.
+                    '''
+                    if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                        answer_values = []
+                        for value in answer_value:
+                            if value.isdigit():
+                                answer_values.append(value)
+                        answer_value = ','.join(map(lambda x: str(x), answer_values))
+                    '''
                     eiq = ElectionInstanceQuestion.objects.get(election_instance=self.election_instance, question=question_id)
                     eiqa = ElectionInstanceQuestionAnswer(election_instance_question=eiq, candidate=self.user,
                                                           answer_value=answer_value)
@@ -108,7 +112,7 @@ class AnswerQuestion(MultiPathFormWizard):
         else:
             transaction.commit()
             
-        #return redirect('bo.answer_question_done')
+        return redirect('bo.answer_question_done')
 
 
 
