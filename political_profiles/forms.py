@@ -64,14 +64,16 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('Email'))
+    email = forms.EmailField(label=_('Email'), help_text=_('The invitation will be sent to this address.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+
         
     class Meta:
         fieldsets = (
                         ('main', {
                             'fields': ('name','email','gender'), 
-							'legend': 'Invite',
+							'legend': 'Invite the administrative contact for this council:',
+							'description': 'This contact will be invited to complete further setup for this council.',
                             'classes': ('sub-form','invite',)
                         }
                     ),
@@ -95,6 +97,7 @@ class ChanceryProfileForm(BetterForm, TemplateForm):
     #address = AddressField(label=_('Chancery Address'))
     name = NameField(label=_('Name'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    email = forms.EmailField(label=_('Email address'))
     telephone = forms.CharField(label=_('Telephone'))
     workingdays = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple(), choices=DAYS, required=False)
 
@@ -118,9 +121,9 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
 
 class InitialContactProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('Email'))
-    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-        
+    email = forms.EmailField(label=_('Email'), help_text=_('The invitation will be sent to this address.'))
+	gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+	
     class Meta:
         fieldsets = (
                         ('main', {

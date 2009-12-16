@@ -2,18 +2,17 @@
 {% load i18n %}
 
 {% block wizard-steps %}
-	<ul id="wizardSteps">
-        <li class="last"><a href="#" class="active"><span class="number">1</span>{% trans "Create Council" %}</a></li>
-    </ul>
 {% endblock wizard-steps %}
 
-{% block step_title %}{% trans "Create Council and invite Chancery" %}{% endblock step_title %}
-
+{% block step_title %}{% trans "Create an instance &amp; invite a Chancery" %}{% endblock step_title %}
 
 {% block buttons %}
-	<div class="form-submit">
-		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip Council setup" %}</button>
+	<p>{% trans "This administrative contact can complete further setup for this election instance." %}</p>
+	<p class="label">{% trans "Do you want to skip the council setup for this council?" %}</p>
+    <div class="form-submit">
+    	<a href="{% url bo.election_event %}" class="cancel">{% trans "Cancel" %}</a>
+		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip council setup" %}</button>
 		<button type="submit" name="next" value="next" class="next">{% trans "Start council setup" %}</button>
-		<a href="{% url bo.election_event %}" class="cancel">{% trans "Cancel" %}</a>
+		
 	</div>
 {% endblock buttons %}

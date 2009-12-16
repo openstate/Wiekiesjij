@@ -1,4 +1,4 @@
-{% load form_tags %}
+{% load i18n form_tags %}
 {% block field %}
 {% if field.is_hidden %}
 	{{ field }}
@@ -8,7 +8,7 @@
     {% ifmultifield field %}
 		<p class="label {{ field|get_required_class }}">{{ field.label.title }}</p>
 	{% else %}
-		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label.title }}</label>
+		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label.title }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</label>
 	{% endifmultifield %}
     
 	{% block description %}{% endblock description %}

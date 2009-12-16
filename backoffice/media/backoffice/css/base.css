@@ -150,6 +150,9 @@
 			padding:0;
 			width:auto;
 			}
+		.small input {
+			width:50px;
+			}
 		label,
 		p.label {
 			display:block;
@@ -162,6 +165,7 @@
 		span.note {
 			font-size:0.8em;
 			color:#aaa;
+			font-weight:normal;
 			}
 
 		.description {
@@ -210,8 +214,11 @@
 			div.checkboxselectmultiple {
 			
 				}
+				div.checkboxselectmultiple ul {
+					margin-top:.5em;
+					}
 				div.checkboxselectmultiple label {
-					margin:0 0 0 10px;
+					margin-bottom:5px;
 					font-weight:normal;
 					}
 				div.checkboxselectmultiple input {
@@ -225,6 +232,9 @@
 			div.radioselect {
 			
 				}
+				div.radioselect ul {
+					margin-top:.5em;
+					}
 				div.radioselect label {
 					font-weight:normal;
 					margin-bottom:5px;
@@ -285,7 +295,7 @@
 				}
 				.invite h3,
 				.invite .description {
-					padding-left:40px;
+					padding-left:60px;
 					}
 				
 
@@ -300,9 +310,10 @@
                 clear:both;
 				}
 				div.form-submit a {
-					float: right;
+					float: left;
 					color:#000;
 					display:block;
+					padding:3px 5px;
 					}
 
                                 div.form-submit a.btn {
@@ -310,16 +321,16 @@
                                 }
 
 				div.form-submit a.cancel {
-					background: url(../img/cancel.png) no-repeat 0px 5px;
-					padding:0 0 0 20px;
+					background: url(../img/cancel.png) no-repeat 0px center;
+					padding-left:20px;
                     line-height:25px;
-                    float:none;
+                    float:left;
 					}	
 				div.form-submit button {
 					float: right;
 					border:none;
 					display:block;
-					margin-left:10px;
+					margin:0 0 10px 10px;
 					cursor: pointer;
 					background-color:#cccccc;
 					width:auto;
@@ -414,8 +425,37 @@
 						width:70px;
 						}	
 	
-	
+		/* 	.addresswidget
+			----------------------------------------------------------------------------------------- */
 		
+			div.addresswidget {
+			
+				}
+				div.street {
+					float:left;
+					}
+					div.street input {
+						width:360px;
+						}
+				div.number {
+					float:right;
+					}
+					div.number input {
+						width:60px;
+						}
+				div.postcode {
+					float:left;
+					clear:left;
+					}
+					div.postcode input {
+						width:100px;
+						}
+				div.city {
+					float:right;
+					}
+					div.city input {
+						width:320px;
+						}
 		
 	/*	generic styling
 		**************************************************************************************************************/
@@ -509,10 +549,11 @@
 			padding:0;
 			}
             #wizardSteps li {
-				background: url(../img/breadcrumb.png) no-repeat right center;
 				float:left;
+				padding:0 5px 5px 0;
+				/*background: url(../img/breadcrumb.png) no-repeat right center;
 				margin-right:5px;
-				padding:0 15px 5px 0;
+				padding:0 15px 5px 0;*/
 				}
 			#wizardSteps li.last {
 				background:none;

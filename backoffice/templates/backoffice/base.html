@@ -38,11 +38,9 @@
         	
             
             <ul class="nav-breadcrumbs">
-            {% block breadcrumbs %}
-                <li><a href="#">Breadcrumb</a></li>
-                <li><a href="#">Path</a></li>
-                <li><a href="#">To</a></li>
-            {% endblock breadcrumbs %}
+                <li><a href="/backoffice">{% trans "Wie Kies Jij?" %}</a></li>
+                {% block breadcrumbs %}
+            	{% endblock breadcrumbs %}
             </ul>
             
             <h1>{% block page-title %}Page Title{% endblock page-title %}</h1>

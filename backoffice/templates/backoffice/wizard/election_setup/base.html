@@ -2,6 +2,17 @@
 {% load i18n %}
 
 {% block wizard-steps %}
+	<ul id="wizardSteps">
+    	{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
+        <li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>
+        <li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>
+        <li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>
+        <li><span class="future"><span class="number">5</span>{% trans "The Chancellery" %}</span></li>
+        <li><span class="future"><span class="number">6</span>{% trans "Styling" %}</span></li>
+        <li class="last"><span class="future"><span class="number">7</span>{% trans "Import parties" %}</span></li>
+    </ul>
+
+	{% comment %}
     <ul id="wizardSteps">
         {% for type, stepinfo in steps %}
             {% ifequal type "step" %}
@@ -18,14 +29,17 @@
             {% endifequal %}
         {% endfor %}
     </ul>
+    {% endcomment %}
 {% endblock wizard-steps %}
 
-
+{% comment %}
 {% block step-header %}
 <div class="hd">
     <h2>{{curstep.step.header}}</h2>
 </div>
 {% endblock step-header %}
+{% endcomment %}
+
 
 {% block help-message %}
 <p>{{curstep.step.help}}</p>

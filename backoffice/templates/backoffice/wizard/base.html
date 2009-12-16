@@ -40,7 +40,8 @@
                     
                     {% block buttons %}
                         <div class="form-submit">
-                            <button type="submit">{% trans "Next" %}</button>
+                            <button type="submit" class="next primary">{% trans "Next" %}</button>
+                            <a href="#" class="cancel">{% trans "Cancel" %}</a>
                         </div>
                     {% endblock buttons %}
                 </form>

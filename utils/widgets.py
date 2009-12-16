@@ -14,28 +14,23 @@ class AddressWidget(forms.widgets.MultiWidget):
     """
     
     TEMPLATE = """
-        <div class="fields">
-            <table>
-                <tr>
-                    <td colspan="2">%(street_label)s</td>
-                    <td>%(number_label)s</td>
-                </tr>
-                <tr>
-                    <td colspan="2">%(street_field)s</td>
-                    <td>%(number_field)s</td>
-                </tr>
-                <colgroup span="1" align="left"></colgroup>
-                <colgroup span="2"></colgroup>
-                <tr>
-                    <td>%(post_label)s</td>
-                    <td colspan="2">%(city_label)s</td>
-                </tr>
-                <tr>
-                    <td>%(post_field)s</td>
-                    <td colspan="2">%(city_field)s</td>
-                </tr>
-            </table>
-        </div>"""
+		<div class="street text field">
+			<label for="street">%(street_label)s</label>
+			%(street_field)s
+		</div>
+		<div class="number text field">
+			<label for="number">%(number_label)s</label>
+			%(number_field)s
+		</div>
+		<div class="postcode text field">
+			<label for="street">%(post_label)s</label>
+			%(post_field)s
+		</div>
+		<div class="city text field">
+			<label for="street">%(city_label)s</label>
+			%(city_field)s
+		</div>
+        """
     
     def __init__(self, *args, **kwargs):
         widgets = (

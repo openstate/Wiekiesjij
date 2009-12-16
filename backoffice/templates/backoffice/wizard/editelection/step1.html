@@ -2,8 +2,10 @@
 {% load i18n %}
 {% block buttons %}
 	<div class="form-submit">
-		<a href="{% url bo.election_event %}" class="cancel">{% trans "Cancel" %}</a>
-		<button type="submit" class="primary next" name="next" value="next">{% trans "Go to council wizard" %} </button>
-		<button type="submit" class="back" name="back" value="overview">{% trans "Return to overview" %}</button>
+
+    	<a href="{% url bo.election_event %}" class="cancel">{% trans "Cancel" %}</a>
+		<button type="submit" class="primary" name="back" value="overview">{% trans "Save" %}</button>
+		<button type="submit" class="next" name="next" value="next">{% trans "Save and start council setup" %}</button>
+        
 	</div>
 {% endblock buttons %}
