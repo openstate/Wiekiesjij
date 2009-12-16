@@ -425,7 +425,7 @@ def csv_import_parties_step3(request, ei_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
-def council_edit(request, election_instance_id, user_id):
+def council_edit(request, id):
     '''
     Council edit wizard.
     @param int election_instance_id
@@ -433,14 +433,8 @@ def council_edit(request, election_instance_id, user_id):
 
     Both parameters are required. It's obvious what they mean.
     '''
-    return CouncilEditWizard(election_instance_id=election_instance_id, user_id=user_id)(request)
-
-def council_edit_done(request):
-    '''
-    Council edit wizard success page.
-    '''
-    return render_to_response('backoffice/wizard/council/edit/done.html',
-                              context_instance=RequestContext(request))
+    election_instance = get_object_or_404(ElectionInstance, pk=id)
+    return CouncilEditWizard(election_instance)(request)
 
 def answer_question(request, election_instance_id=None, user_id=None):
     '''
@@ -462,6 +456,6 @@ def view_profile(request):
         View a user profile
     """
     if request.user.profile:
-        return render_to_response(get_profile_template(request.user.profile.type), {}, context_instance=RequestContext(request))
+        return render_to_response(get_profile_template(request.user.profile.type, 'backoffice_profile'), {}, context_instance=RequestContext(request))
     return redirect('/')
     
