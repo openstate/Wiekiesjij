@@ -91,12 +91,12 @@
 
 	{% blockwrap %}
         <h3>{% trans 'The council' %}</h3>
-        <a href="#" class="edit">{% trans 'edit' %}</a>
+        <a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>
         <dl>
         	<dt>{% trans "Name" %}</dt>
             	<dd>{{ instance.council.name }}</dd>
            	<dt>{% trans "Address" %}</dt>
-            	<dd>Streetname 12<br />9999 AA  Cityname</dd>
+            	<dd>{{ instance.council.street }} {{ instance.council.house_num }}<br />{{ instance.council.postcode }}  {{ intance.council.town }}</dd>
           	<dt>{% trans 'E-mail' %}</dt>
             	<dd>{% if instance.council.email %}<a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a>{% else %}&ndash;{% endif %}</dd>
             <dt>{% trans 'Website' %}</dt>
@@ -111,9 +111,9 @@
         	<dt>{% trans "Picture" %}</dt>
             	<dd>[image here]</dd>
             <dt>{% trans "Number of seats" %}</dt>
-            	<dd>20</dd>
-        	<dt>{% trans 'Description' %}</dt>
-            	<dd>{{ instance.council.description|truncatewords_html:20|default:"&ndash;" }}</dd>
+            	<dd>{{ instance.council.seats }}</dd>
+        	<dt>{% trans 'History' %}</dt>
+            	<dd>{{ instance.council.history|linebreaks|truncatewords_html:20|default:"&ndash;" }}</dd>
         </dl>
     {% endblockwrap %}
     

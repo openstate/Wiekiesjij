@@ -60,10 +60,14 @@ class CouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
-
+    
+    def __init__(self, *args, **kwargs):
+        super(CouncilForm, self).__init__(*args, **kwargs)
+        self.fields['history'].widget = forms.widgets.Textarea()
+    
     class Meta:
         model = Council
-        fields = ('seats', 'picture', 'history' )
+        fields = ('seats', 'history', )
 
 class CouncilContactInformationForm(BetterForm, TemplateForm):
     '''

@@ -170,7 +170,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         
         if request.POST.get('next', 'overview') == 'overview':
             return redirect('bo.election_event')
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.council_edit', pk=ei.id)
         
 
 
