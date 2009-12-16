@@ -113,8 +113,8 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
-    region = forms.CharField(_('Region'), widget=AutoCompleter(model=Council, field='region'))
-    level = forms.CharField(_('Level'), widget=AutoCompleter(model=Council, field='level'))
+    region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'))
+    level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'))
 
     class Meta:
         model = ElectionInstance

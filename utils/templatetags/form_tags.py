@@ -3,6 +3,10 @@ from django import template
 register = template.Library()
 
 # Used for "converting the widgets class name to the one for css"
+field_class_converter = {
+    'integerfield': 'small',
+}
+
 class_converter = {
     'colorpicker': 'textinput',
     'autocompleter': 'textinput',
@@ -13,8 +17,14 @@ def get_class(field):
     """
         returns the class for the given field
     """
+    result = []
+    
+    field_class = field.field.__class__.__name__.lower()
+    result.append(field_class_converter.get(field_class, ''))
+        
     class_name = field.field.widget.__class__.__name__.lower()
-    return class_converter.get(class_name, class_name)
+    result.append(class_converter.get(class_name, class_name))
+    return ' '.join(filter(lambda x: x, result))
     
 @register.filter
 def get_required_class(field):
