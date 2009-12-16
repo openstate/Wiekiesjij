@@ -318,6 +318,11 @@ class DateTimePicker(forms.widgets.TextInput):
                 timePickerFieldHours = jQuery('select.hourcombo');
                 timePickerFieldMinutes = jQuery('select.mincombo');
                 timePickerFieldSeconds = jQuery('select.seccombo');
+                timePickerFieldSeconds.hide();
+
+                timePickerFieldHours.before(jQuery('<label>%(hours_label)s</label>'));
+                timePickerFieldMinutes.before(jQuery('<label>%(minutes_label)s</label>'));
+                //timePickerFieldSeconds.before(jQuery('<label>%(seconds_label)s</label>'));
 
                 // Updating the full date and time value on date picker change
                 datePicker.change(function() {
@@ -355,16 +360,15 @@ class DateTimePicker(forms.widgets.TextInput):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        self.hours = _('hours')
-        self.minutes = _('minutes')
-        self.seconds = _('seconds')
-
 
     def render(self, *args, **kwargs):
         html_id = kwargs.get('attrs', {}).get('id', '')
         result = super(self.__class__, self).render(*args, **kwargs)
 
-        return result + mark_safe(self.TEMPLATE % dict(id=html_id))
+        return result + mark_safe(self.TEMPLATE % dict(id=html_id,
+                                                       hours_label=_('Hours'),
+                                                       minutes_label=_('Minutes'),
+                                                       seconds_label=_('Seconds')))
 
 
 class DatePicker(forms.widgets.TextInput):
