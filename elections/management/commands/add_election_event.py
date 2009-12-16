@@ -7,9 +7,9 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         ee = ElectionEvent.objects.create(
-            name='ElevtionEvent',
+            name='Gemeenteraads verkiezingen 2010',
             parent_region='Nederland',
-            level='iets',
+            level='gemeenten',
             question_due_period=7,
             profile_due_period=7,
             candidate_due_period=30,

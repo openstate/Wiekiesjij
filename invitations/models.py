@@ -19,6 +19,8 @@ class Invitation(models.Model):
     html_template   = models.CharField(_('HTML template'), max_length=255, help_text=_('Html template to use for the invitation email'))
     plain_template  = models.CharField(_('Plain text template'), max_length=255, help_text=_('Plain text template to use for the invitation email'))
     
+    type            = models.CharField(_('Type of the invited user'), null=True, blank=True, max_length=255)
+    
     accepted        = models.BooleanField(_('Is Accepted?'), default=False)
     send_on         = models.DateTimeField(_('Email send'), blank=True, null=True, default=None) #Is the invitation send or not
     
@@ -58,6 +60,7 @@ class Invitation(models.Model):
         return cls.objects.create(
             user_from = user_from,
             user_to = user_to,
+            type = user_to.profile.type,
             view = view,
             text = text,
             subject = subject,

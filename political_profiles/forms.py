@@ -121,7 +121,6 @@ class ChanceryProfileForm(BetterForm, TemplateForm):
     #address = AddressField(label=_('Chancery Address'))
     name = NameField(label=_('Name'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    email = forms.EmailField(label=_('Email address'))
     telephone = forms.CharField(label=_('Telephone'))
     workingdays = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple(), choices=DAYS, required=False)
 
