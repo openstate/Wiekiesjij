@@ -59,7 +59,8 @@ class Answer(models.Model):
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'), related_name='answers',
                                     limit_choices_to={'question_type__in': (QUESTION_TYPE_MULTIPLECHOICE,
-                                                                            QUESTION_TYPE_MULTIPLEANSWER)})
+                                                                            QUESTION_TYPE_MULTIPLEANSWER,
+                                                                            QUESTION_TYPE_BOOLEAN)})
     value       = models.TextField(_('Value'))
 
     def get_value(self):

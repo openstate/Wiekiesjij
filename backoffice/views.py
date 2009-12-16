@@ -434,13 +434,13 @@ def council_edit(request, id):
     election_instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance)(request)
 
-def answer_question(request, election_instance_id=None, user_id=None):
+def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
         AnswerQuestion - wizard.
-        @param int election_instance_id - ElectionInstance id
+        @param int election_instance_party_id - ElectionInstanceParty id
         @param int user_id User (Candidate=PoliticalProfile) id
     '''
-    return AnswerQuestion(election_instance_id=election_instance_id, user_id=user_id)(request)
+    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
 def answer_question_done(request):
     '''

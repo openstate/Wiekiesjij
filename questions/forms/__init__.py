@@ -54,7 +54,7 @@ class AnswerQuestionForm(BetterModelForm, TemplateForm):
             elif QUESTION_TYPE_MULTIPLECHOICE == question_instance.question_type:
                 self.fields['value'].widget = widgets.RadioSelect(choices=choices)
             elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
-                self.fields['value'].widget = RadioBoolean() #widgets.NullBooleanSelect()
+                self.fields['value'].widget = widgets.RadioSelect(choices=choices)#RadioBoolean() #widgets.NullBooleanSelect()
             elif QUESTION_TYPE_RATING == question_instance.question_type:
                 self.fields['value'].widget = RadioRating()
             else:
