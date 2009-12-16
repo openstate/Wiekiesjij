@@ -61,7 +61,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                 party=party,
                 election_instance=self.election_instance,
                 position=self.ep_data['position'],
-                list_length=10)
+                list_length=self.ep_data['list_length'])
 
             #Create the profile
             created, profile = create_profile('party_admin', self.profile_data)
