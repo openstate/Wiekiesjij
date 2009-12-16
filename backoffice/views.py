@@ -11,6 +11,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
+from django.http import Http404
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
@@ -21,7 +22,7 @@ from invitations.models import Invitation
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 
-from backoffice.decorators import staff_required, candidate_required
+from backoffice.decorators import staff_required, candidate_required, council_admin_required
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
@@ -113,6 +114,7 @@ def edit_election_instance(request, id):
     wizard = EditElectionInstanceWizard(id)
     return wizard(request)
 
+@council_admin_required
 def election_setup(request, election_instance_id, user_id=None):
     '''
     Election setup wizard.
@@ -121,17 +123,13 @@ def election_setup(request, election_instance_id, user_id=None):
 
     Both parameters are required. It's obvious what they mean.
     '''
-    if not user_id:
+    if user_id is None:
         user_id = request.user.id
+        if not request.user.profile or request.user.profile.type != 'council_admin':
+            raise Http404('You are not the correct user')
 
     return ElectionSetupWizard2(election_instance_id=election_instance_id, user_id=user_id)(request)
 
-def election_setup_done(request):
-    '''
-    Election setup wizard success page.
-    '''
-    return render_to_response('backoffice/wizard/election_setup/done.html',
-                              context_instance=RequestContext(request))
 @candidate_required
 def politician_welcome(request, election_instance_id):
     user_id = request.user.id

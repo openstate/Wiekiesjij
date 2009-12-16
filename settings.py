@@ -83,6 +83,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'staticfiles.context_processors.static_url',
+    'elections.context_processors.election_event',
 )
 
 TEMPLATE_DIRS = (

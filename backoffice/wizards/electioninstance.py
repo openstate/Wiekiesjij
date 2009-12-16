@@ -170,7 +170,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         
         if request.POST.get('next', 'overview') == 'overview':
             return redirect('bo.election_event')
-        return redirect('bo.council_edit', pk=ei.id)
+        return redirect('bo.edit_council', id=ei.id)
         
 
 
@@ -332,7 +332,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         # Getting "user_id" and "election_instance_id" passed to the Wizard.
         try:
             self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
-
+            
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
             self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
             self.user = User.objects.get(id=self.user_id)

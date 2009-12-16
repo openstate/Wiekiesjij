@@ -3,7 +3,7 @@
 
 {% block title %}{{ instance.council.region }}{% endblock title %}
 {% block page-title %}{{ instance.council.region }}{% endblock page-title %}
-{% block back-link %}<a href="#" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>{% endblock back-link %}
+{% block back-link %}<a href="{% url bo.election_event %}" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>{% endblock back-link %}
 
 {% block breadcrumbs %}
 	<li><a href="/">{% trans 'Wie Kies Jij?' %}</a></li>
@@ -74,7 +74,12 @@
     
    	<div class="mod start-btn">
     	<div class="bd">
-    	<a href="#" class="btn start">Start setup wizard<br />for this election</a>
+		{% if user.profile %}
+			<a href="{% url bo.election_setup election_instance_id=instance.id  %}" class="btn start">Start setup wizard<br />for this election</a>
+		{% else %}
+			<a href="{% url bo.election_setup election_instance_id=instance.id  user_id=instance.council.chancery_id %}" class="btn start">Start setup wizard<br />for this election</a>
+		{% endif %}
+    	
         </div>
     </div>
     

@@ -40,6 +40,12 @@ class Council(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    @property
+    def chancery_id(self):
+        if self.chanceries.count() == 0:
+            return None
+        return self.chanceries.all()[0].pk
 
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')

@@ -109,7 +109,7 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
 
-    modules = forms.ModelMultipleChoiceField(
+    modules = forms.ModelMultipleChoiceField(required=False,
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
@@ -137,7 +137,7 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
     EditElectionInstanceForm
     """
-    modules = forms.ModelMultipleChoiceField(
+    modules = forms.ModelMultipleChoiceField(required=False,
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
