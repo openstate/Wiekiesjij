@@ -1,10 +1,15 @@
 {% extends 'backoffice/wizard/base.html' %}
 {% load i18n %}
 
+{% block title %}{% trans 'Add an election instance' %}{% endblock title %}
+{% block page-title %}{% trans 'Add an election instance' %}{% endblock page-title %}
+{% block breadcrumbs %}<li><a href="#">[Election Event Name]</a>{% endblock breadcrumbs %}
+{% block back-link %}{% endblock back-link %}
+
 {% block wizard-steps %}
 	<ul id="wizardSteps">
     	{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
-        <li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>
+        {% block step2 %}<li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
         <li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>
         <li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>
         <li><span class="future"><span class="number">5</span>{% trans "The Chancellery" %}</span></li>
@@ -40,20 +45,14 @@
 {% endblock step-header %}
 {% endcomment %}
 
-
 {% block help-message %}
 <p>{{curstep.step.help}}</p>
 {% endblock help-message %}
 
-{% block title %}{% trans 'Add an election instance' %}{% endblock title %}
-{% block page-title %}{% trans 'Add an election instance' %}{% endblock page-title %}
-
 {% block buttons %}
 	<div class="form-submit">
-        {% if curstep.back_url %}
-            <a href="{{curstep.back_url}}" style="padding: 10px; background-color: #eee;">{% trans "Back" %}</a>
-        {% endif %}
-        <a href="{{curstep.reset_url}}" style="padding: 10px; background-color: #eee;">{% trans "Reset" %}</a>
+        
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
 
 		<button class="primary next" type="submit">{{curstep.step.next_button|default:"Next"}}</button>
 	</div>

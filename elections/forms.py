@@ -130,13 +130,17 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
 
+    start_date = forms.DateTimeField(label=_('When does this election take place?'), help_text=_('[Date] is the default date for [Election Event Name].'))
+    website = forms.URLField(label=_('Election Website'), initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
+    num_lists = forms.IntegerField(label=_('Number of parties in this election.'), help_text=_('How many parties are taking part in this election?'))
+
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['start_date'].widget = DateTimePicker()
 
     class Meta:
         model = ElectionInstance
-        fields = ('website', 'start_date',)
+        fields = ('start_date', 'website', 'num_lists')
 
 class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
