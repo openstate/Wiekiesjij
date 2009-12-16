@@ -209,6 +209,29 @@ class ColorPicker(forms.widgets.TextInput):
                 $(this).ColorPickerSetColor(this.value);
             });
 
+            jQuery('#%(id)s_preview').ColorPicker({
+
+                onShow: function (colpkr) {
+                    $(colpkr).fadeIn(500);
+                    return false;
+                },
+                onHide: function (colpkr) {
+                    $(colpkr).fadeOut(500);
+                    return false;
+                },
+                onBeforeShow: function () {
+                    $($('#%(id)s')).ColorPickerSetColor($('#%(id)s').value);
+                },
+                onChange: function (hsb, hex, rgb) {
+                    $('#%(id)s_preview').css('backgroundColor', '#' + hex);
+                    $('#%(id)s').val(hex);
+                }
+
+            })
+            .bind('keyup', function(){
+                $(this).ColorPickerSetColor(this.value);
+            });
+
             jQuery(document).ready(function(){
                 $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s')[0].value);
                 $('#%(id)s').addClass("colorpicker_inputfield");

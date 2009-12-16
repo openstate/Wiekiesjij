@@ -343,7 +343,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
             self.chancery_profile = self.user.profile
             ChanceryProfileClass = get_profile_model('council_admin')
             if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
-                raise Exception
+                raise Exception(_('Wrong authorization'))
         except Exception, e:
             raise e
 
