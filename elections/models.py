@@ -200,6 +200,10 @@ class Party(models.Model):
     level   = models.CharField(_('Level'), max_length=255) #autocomplete other party levels
     name        = models.CharField(_('Name'), max_length=255)
     abbreviation = models.CharField(_('Abbreviated Name'), max_length=10)
+    address_street      = models.CharField( ('Street'), max_length=255, null=True, blank=True)
+    address_number      = models.CharField( ('Number'), max_length=255, null=True, blank=True)
+    address_postalcode  = models.CharField( ('Postalcode'), max_length=255, null=True, blank=True)
+    address_city        = models.CharField( ('City'), max_length=255, blank=True, null=True)
     website     = models.CharField(_('Parties Website'), max_length=255, null=True, blank=True)
     contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
     slogan      = models.CharField(_('Slogan'), max_length=255, null=True, blank=True)
@@ -224,6 +228,16 @@ class Party(models.Model):
     def profile_incomplete(self):
         return not self.website or not self.slogan or not self.email or not self.goals or not self.description or \
                not self.history or not self.manifasto_summary or not self. manifesto or not self.logo
+
+    @property
+    def address(self):
+        return {
+            'street': self.address_street,
+            'number': self.address_number,
+            'postalcode': self.address_postalcode,
+            'city': self.address_city,
+        }
+
 
 class Candidacy(models.Model):
     """

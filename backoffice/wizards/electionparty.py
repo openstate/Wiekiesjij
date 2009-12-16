@@ -110,6 +110,7 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
 
         initial = eip.party.__dict__
         initial.update({'list_length': eip.list_length})
+        initial.update({'address': eip.party.address})
 
         step1 = Step('election_party_contact_form',
                     forms=step1_forms,
@@ -140,6 +141,7 @@ class ElectionPartySetupWizard(MultiPathFormWizard):
         self.eip.party.address_number = data['address']['number']
         self.eip.party.address_postalcode = data['address']['postalcode']
         self.eip.party.address_city = data['address']['city']
+        self.eip.party.telephone = data['telephone']
         self.eip.party.email = data['email']
         self.eip.party.website = data['website']
         self.eip.party.slogan = data['slogan']

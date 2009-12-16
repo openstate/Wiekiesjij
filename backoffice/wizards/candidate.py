@@ -76,7 +76,7 @@ class PoliticianProfileAppearanceWizard1(GraphFormWizard):
 
             form = GStep.new_form(form = AppearanceForm, initial = appearance)
             data['appearance'] = {'appearance' : getattr(form, 'cleaned_data', {})}
-            import ipdb; ipdb.set_trace()
+
             # store instances, we will use it in done()
             meta = {
                 'user_id': user.id,

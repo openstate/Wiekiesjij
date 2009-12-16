@@ -171,7 +171,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
     abbreviation = forms.CharField(label=_('Abbreviation'))
     address = AddressField(label=_('Address'))
     email = forms.EmailField(label=_('E-mail address'))
-    phone = forms.CharField(label=_('Phone number'))
+    telephone = forms.CharField(label=_('Phone number'))
     website = forms.URLField(label=_('Party website'))
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
