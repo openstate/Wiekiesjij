@@ -434,13 +434,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
                      initial={'council_styling_setup': self.election_instance.council})
-        # Updates ElectionInstance
-        step7 = Step('election_select_parties',
-                     forms={'election_select_parties': ElectionInstanceSelectPartiesForm},
-                     template='backoffice/wizard/election_setup/step7.html',
-                     initial={'election_select_parties': self.election_instance.parties.all()})
-
-        scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6.next(step7))))))
+        scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6)))))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(self.__class__, self).__init__(scenario_tree, template)
@@ -488,8 +482,6 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                         self.council_data.update(form.cleaned_data)
                     elif name in ('election_details',):
                         self.election_instance_data.update(form.cleaned_data)
-                    elif name in ('election_select_parties',):
-                        self.election_instance_parties_data.update(form.cleaned_data)
                     
             self.chancery_profile_data.update({'workingdays': ','.join(map(lambda x: str(x), self.chancery_profile_data.get('workingdays', [])))})
             
@@ -510,9 +502,6 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                 setattr(self.election_instance, key, value)
 
             self.election_instance.save(force_update=True) # Updating the ElectionInstance
-
-            # Now we add all parties to the list
-            map(lambda x: self.election_instance.add_party(x), self.election_instance_parties_data['parties'])
 
         except Exception, e:
             transaction.rollback()

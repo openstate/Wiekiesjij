@@ -20,7 +20,8 @@ class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     Select a list of parties that are in your election from a list of hardcoded partys in the netherlands.
     '''
 
-    parties = forms.MultipleChoiceField(label=_('Parties'), widget=forms.CheckboxSelectMultiple, choices=settings.COMMON_PARTIES, required=False)
+    parties = forms.MultipleChoiceField(label=_('Parties'), widget=forms.CheckboxSelectMultiple,
+                                        choices=settings.COMMON_PARTIES, required=False)
 
     class Meta:
         fields = ('parties',)
