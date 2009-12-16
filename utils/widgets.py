@@ -240,7 +240,7 @@ class DateTimePicker(forms.widgets.TextInput):
     """
     DateTime Picker, based on jQuery UI and "jquery.jtimepicker.js".
     It uses jQuery UI dor date picking and jTimePicker class for date picking.
-    
+
     Example of usage:
         class MyForm(forms.Form):
             my_date_time = forms.DateTimeField(max_length=50)
@@ -266,9 +266,13 @@ class DateTimePicker(forms.widgets.TextInput):
                 // Getting the element
                 var datePicker = jQuery('#%(id)s');
 
-                datePickerLabel = datePicker.prev('label');
-                datePicker.wrap('<div class="dp-wrap"></div>');
-                datePicker.before(datePickerLabel);
+                //datePickerLabel = datePicker.prev('label');
+                //datePicker.wrap('<div class="dp-wrap"></div>');
+                //datePicker.before(datePickerLabel);
+
+                divDatePicker = jQuery('div#field-%(id)s');
+
+                //alert($.dump(divDatePicker));
 
                 // Making another hidden element for date
                 var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
@@ -304,7 +308,7 @@ class DateTimePicker(forms.widgets.TextInput):
                 var timePickerField = jQuery('<div class="time-picker" id="#%(id)s_time"></div>');
                 
                 // Adding the elements
-                datePicker.after(timePickerField);
+                divDatePicker.after(timePickerField);
                 datePicker.after(datePickerField);
 
                 // Copying the value of time to the time element
@@ -352,8 +356,6 @@ class DateTimePicker(forms.widgets.TextInput):
                 timePickerFieldSeconds.change(function() {
                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
                 });
-
-                //datePicker.wrap('<div class="dp-wrap">');
             });
         -->
         </script>
