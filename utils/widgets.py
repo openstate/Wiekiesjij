@@ -283,7 +283,8 @@ class DateTimePicker(forms.widgets.TextInput):
                     originalTimeValueSplit = originalTimeValue.split(':', 3);
                     originalTimeValueHours = originalTimeValueSplit[0];
                     originalTimeValueMinutes = originalTimeValueSplit[1];
-                    originalTimeValueSeconds = originalTimeValueSplit[2];
+                    originalTimeValueSeconds = parseInt(originalTimeValueSplit[2]);
+                    originalDateTimeValue = originalDateValue + ' ' + originalTimeValueHours + ':' + originalTimeValueMinutes + ':' + originalTimeValueSeconds;
                 } catch (err) {
                     originalDateValue = '';
                     originalTimeValue = '';
