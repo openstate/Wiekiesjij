@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +11,7 @@ from utils.fields import NameField, AddressField
 from political_profiles.models import GENDERS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
 from political_profiles.models import Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
+from django.forms.extras.widgets import SelectDateWidget 
 
 GENDERS = (
         ('Male',_('Male')),
@@ -33,7 +35,7 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        self.fields['dateofbirth'].widget = DatePicker()
+        self.fields['dateofbirth'].widget = SelectDateWidget(years=range(1920, datetime.date.today().year))
 
 class InitialPoliticianProfileForm(BetterModelForm, TemplateForm):
     '''
