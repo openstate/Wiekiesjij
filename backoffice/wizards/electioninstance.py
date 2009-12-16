@@ -101,7 +101,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             Invitation.create(
                 user_from=request.user, 
                 user_to=profile.user,
-                view='',
+                view=reverse('bo.election_setup', kwargs={'election_instance_id': ei.pk}),
                 text='Invitation text',
                 subject='Invitation',
                 html_template=templates['html'],
@@ -361,6 +361,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         idx = 0
         for profile_form in get_profile_forms('council_admin', 'edit'):
             step1_forms.update({'chancery_registration%s' % idx : profile_form})
+            workingdays = self.chancery_profile.workingdays or ''
             step1_initial.update({'chancery_registration%s' % idx : {
                 'name': {
                     'first_name': self.chancery_profile.first_name,
@@ -369,7 +370,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                 },
                 'gender': self.chancery_profile.gender,
                 'telephone': self.chancery_profile.telephone,
-                'workingdays': self.chancery_profile.workingdays.split(','),
+                'workingdays': workingdays.split(','),
             }})
             idx += 1
 
