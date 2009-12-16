@@ -32,7 +32,7 @@ from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppeara
 
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 
-from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
+from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion
 
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
