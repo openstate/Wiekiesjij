@@ -1,0 +1,23 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="mod">
+    <h1>{% trans 'Connections' %}</h1>
+    <p>{% trans "Visitors of the website can see an overview of the ... " %}</p>
+    
+    <h2>{%trans 'Current Connections' %} </h2>
+    {% for connection in connections %}
+        <h3><a href="{% url bo.politician_profile_connection_wizard_edit election_instance_id user_id connection.id %}">{{ connection.type }}</a></h3>
+        <p>{%trans 'Website of the connection' %}: {{ connection.url }}</p>
+        <p>{%trans 'Description of the connection' %}: {{ connection.description }}</p>
+        <p><a href="{% url bo.politician_profile_connection_delete election_instance_id user_id connection.id  %}">{% trans "Delete" %}</a></p>
+
+    {% empty %}
+        <p>{%trans 'You have no connections defined yet' %} </p>
+    {% endfor %}
+    
+    <a href="{% url bo.politician_profile_interest election_instance_id user_id %}">{% trans "< Previous " %}</a>
+    <a href="{% url bo.politician_profile_connection_wizard election_instance_id user_id %}">{% trans "Click here to add a connection" %}</a>
+    <a href="{% url bo.politician_profile_setup_done election_instance_id user_id %}">{% trans "Finish >" %}</a>
+</div>
+{% endblock content %}
