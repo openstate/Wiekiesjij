@@ -378,22 +378,22 @@ class ElectionSetupWizard2(MultiPathFormWizard):
             }})
             idx += 1
 
-        step5_forms = {}
-        step5_initial = {}
-         # Get the form(s) for chancery profile and add them to step5_forms
-        idx = 0
-        for profile_form in get_profile_forms('council_admin', 'contact_information'):
-            step5_forms.update({'chancery_contact_information%s' % idx : profile_form})
-            step5_initial.update({'chancery_contact_information%s' % idx : {
-                'website': self.chancery_profile.website,
-                'address': {
-                    'street': self.chancery_profile.street,
-                    'number': self.chancery_profile.house_num,
-                    'postalcode': self.chancery_profile.postcode,
-                    'city': self.chancery_profile.town,
-                }
-            }})
-            idx += 1
+        #FIXME:  step5_forms = {}
+        #         step5_initial = {}
+        #          # Get the form(s) for chancery profile and add them to step5_forms
+        #         idx = 0
+        #         for profile_form in get_profile_forms('council_admin', 'contact_information'):
+        #             step5_forms.update({'chancery_contact_information%s' % idx : profile_form})
+        #             step5_initial.update({'chancery_contact_information%s' % idx : {
+        #                 'website': self.chancery_profile.website,
+        #                 'address': {
+        #                     'street': self.chancery_profile.street,
+        #                     'number': self.chancery_profile.house_num,
+        #                     'postalcode': self.chancery_profile.postcode,
+        #                     'city': self.chancery_profile.town,
+        #                 }
+        #             }})
+        #             idx += 1
 
         # Updates ChanceryProfile
         step1 = Step('chancery_registration',
@@ -425,16 +425,17 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                      template='backoffice/wizard/election_setup/step4.html',
                      initial={'council_additional_information': self.election_instance.council})
         # Updates ChanceryProfile
-        step5 = Step('chancery_contact_information',
-                     forms=step5_forms,
-                     template='backoffice/wizard/election_setup/step5.html',
-                     initial=step5_initial)
+        #FIXME: step5 = Step('chancery_contact_information',
+        #                      forms=step5_forms,
+        #                      template='backoffice/wizard/election_setup/step5.html',
+        #                      initial=step5_initial)
         # Updates Council
         step6 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
                      initial={'council_styling_setup': self.election_instance.council})
-        scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6)))))
+        #FIXME: scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6)))))
+        scenario_tree = step1.next(step2.next(step3.next(step4.next(step6))))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(self.__class__, self).__init__(scenario_tree, template)
@@ -461,14 +462,14 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                             'workingdays': form.cleaned_data['workingdays'],
                             'telephone': form.cleaned_data['telephone']
                         })
-                    elif  name == 'chancery_contact_information0':
-                        self.chancery_profile_data.update({
-                            'street': form.cleaned_data['address']['street'],
-                            'house_num': form.cleaned_data['address']['number'],
-                            'postcode': form.cleaned_data['address']['postalcode'],
-                            'town': form.cleaned_data['address']['city'],
-                            'website': form.cleaned_data['website']
-                        })
+                    #FIXME elif  name == 'chancery_contact_information0':
+                    #                         self.chancery_profile_data.update({
+                    #                             'street': form.cleaned_data['address']['street'],
+                    #                             'house_num': form.cleaned_data['address']['number'],
+                    #                             'postcode': form.cleaned_data['address']['postalcode'],
+                    #                             'town': form.cleaned_data['address']['city'],
+                    #                             'website': form.cleaned_data['website']
+                    #                         })
                     elif name == 'council_contact_information':
                         self.council_data.update({
                             'name': form.cleaned_data['name'],
