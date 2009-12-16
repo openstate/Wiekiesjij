@@ -1,4 +1,4 @@
-def move_down(instance, field, limit):
+def move_down(instance, field, limit, kwargs={}):
     '''
     Changes the position of the current item with position of the next one.
     Returns changed posotion of the current element on success or boolean False on failure.
@@ -15,7 +15,7 @@ def move_down(instance, field, limit):
     if value >= limit:
         return False
 
-    kwargs = {field + '__gt': value}
+    kwargs.update({field + '__gt': value})
 
     try:
         next = instance.__class__.objects.filter(**kwargs).order_by(field)[0]
@@ -34,7 +34,7 @@ def move_down(instance, field, limit):
         next.save()
         return getattr(instance, field)
 
-def move_up(instance, field, limit):
+def move_up(instance, field, limit, kwargs={}):
     '''
     Changes the position of the current item with position of the previous one.
     Returns changed posotion of the current element on success or boolean False on failure.
@@ -47,7 +47,7 @@ def move_up(instance, field, limit):
     if value <= limit:
         return False
 
-    kwargs = {field + '__lt': value}
+    kwargs.update({field + '__lt': value})
 
     try:
         previous = instance.__class__.objects.filter(**kwargs).order_by('-' + field)[0]
