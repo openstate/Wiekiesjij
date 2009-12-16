@@ -8,7 +8,18 @@
     <h2>{%trans 'Work Experience' %} </h2>
     
     {% for work_experience in work %}
-        <p><a href="{% url bo.politician_profile_work_wizard_edit election_instance_id user_id work_experience.id %}">{{ work_experience.name }}</a>: {{ work_experience.url }}: {{ work_experience.description }}</p>
+        <h3><a href="{% url bo.politician_profile_work_wizard_edit election_instance_id user_id work_experience.id %}">{{ work_experience.company_name }} - {{ work_experience.position }}</a></h3>
+        <p>{%trans 'Company you were employed in' %}: {{work_experience.company_name  }}</p>
+        <p>{%trans 'Sector of employment' %}: {{ work_experience.sector }}</p>
+        <p>{%trans 'Position you held' %}: {{ work_experience.position }}</p>
+        <p>{%trans 'Description of your experience' %}: {{ work_experience.description }}</p>
+        {% if work_experience.current %}
+            <p>{%trans 'Worked between:' %}: {{ work_experience.startdate }} - {%trans 'Now' %}</p>
+        {% else %}
+            <p>{%trans 'Worked between:' %}: {{ work_experience.startdate }} - {{ work_experience.enddate }}</p>
+        {% endif %}
+        <p><a href="{% url bo.politician_profile_work_delete election_instance_id user_id work_experience.id  %}">{% trans "Delete" %}</a></p>
+
     {% empty %}
         <p>{%trans 'You have no work experience entered yet' %} </p>
     {% endfor %}

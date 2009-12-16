@@ -47,6 +47,23 @@ class Migration:
         ))
         db.send_create_signal('political_profiles', ['Link'])
         
+        # Adding model 'ConnectionType'
+        db.create_table('political_profiles_connectiontype', (
+            ('id', orm['political_profiles.ConnectionType:id']),
+            ('type', orm['political_profiles.ConnectionType:type']),
+        ))
+        db.send_create_signal('political_profiles', ['ConnectionType'])
+        
+        # Adding model 'Connection'
+        db.create_table('political_profiles_connection', (
+            ('id', orm['political_profiles.Connection:id']),
+            ('type', orm['political_profiles.Connection:type']),
+            ('url', orm['political_profiles.Connection:url']),
+            ('description', orm['political_profiles.Connection:description']),
+            ('politician', orm['political_profiles.Connection:politician']),
+        ))
+        db.send_create_signal('political_profiles', ['Connection'])
+        
         # Adding model 'Interest'
         db.create_table('political_profiles_interest', (
             ('id', orm['political_profiles.Interest:id']),
@@ -70,6 +87,18 @@ class Migration:
             ('type', orm['political_profiles.PoliticalExperienceType:type']),
         ))
         db.send_create_signal('political_profiles', ['PoliticalExperienceType'])
+        
+        # Adding model 'Appearance'
+        db.create_table('political_profiles_appearance', (
+            ('id', orm['political_profiles.Appearance:id']),
+            ('name', orm['political_profiles.Appearance:name']),
+            ('location', orm['political_profiles.Appearance:location']),
+            ('url', orm['political_profiles.Appearance:url']),
+            ('description', orm['political_profiles.Appearance:description']),
+            ('datetime', orm['political_profiles.Appearance:datetime']),
+            ('politician', orm['political_profiles.Appearance:politician']),
+        ))
+        db.send_create_signal('political_profiles', ['Appearance'])
         
         # Adding model 'ContactProfile'
         db.create_table('political_profiles_contactprofile', (
@@ -110,18 +139,6 @@ class Migration:
             ('level', orm['political_profiles.EducationLevel:level']),
         ))
         db.send_create_signal('political_profiles', ['EducationLevel'])
-        
-        # Adding model 'Appearence'
-        db.create_table('political_profiles_appearence', (
-            ('id', orm['political_profiles.Appearence:id']),
-            ('name', orm['political_profiles.Appearence:name']),
-            ('location', orm['political_profiles.Appearence:location']),
-            ('url', orm['political_profiles.Appearence:url']),
-            ('description', orm['political_profiles.Appearence:description']),
-            ('datetime', orm['political_profiles.Appearence:datetime']),
-            ('politician', orm['political_profiles.Appearence:politician']),
-        ))
-        db.send_create_signal('political_profiles', ['Appearence'])
         
         # Adding model 'PoliticianProfile'
         db.create_table('political_profiles_politicianprofile', (
@@ -180,6 +197,12 @@ class Migration:
         # Deleting model 'Link'
         db.delete_table('political_profiles_link')
         
+        # Deleting model 'ConnectionType'
+        db.delete_table('political_profiles_connectiontype')
+        
+        # Deleting model 'Connection'
+        db.delete_table('political_profiles_connection')
+        
         # Deleting model 'Interest'
         db.delete_table('political_profiles_interest')
         
@@ -189,6 +212,9 @@ class Migration:
         # Deleting model 'PoliticalExperienceType'
         db.delete_table('political_profiles_politicalexperiencetype')
         
+        # Deleting model 'Appearance'
+        db.delete_table('political_profiles_appearance')
+        
         # Deleting model 'ContactProfile'
         db.delete_table('political_profiles_contactprofile')
         
@@ -197,9 +223,6 @@ class Migration:
         
         # Deleting model 'EducationLevel'
         db.delete_table('political_profiles_educationlevel')
-        
-        # Deleting model 'Appearence'
-        db.delete_table('political_profiles_appearence')
         
         # Deleting model 'PoliticianProfile'
         db.delete_table('political_profiles_politicianprofile')
@@ -247,7 +270,7 @@ class Migration:
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'political_profiles.appearence': {
+        'political_profiles.appearance': {
             'datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -272,6 +295,17 @@ class Migration:
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'chanceryprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'workingdays': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
+        },
+        'political_profiles.connection': {
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'connections'", 'to': "orm['political_profiles.PoliticianProfile']"}),
+            'type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['political_profiles.ConnectionType']", 'null': 'True', 'blank': 'True'}),
+            'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        'political_profiles.connectiontype': {
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'political_profiles.contactprofile': {
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),

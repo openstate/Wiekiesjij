@@ -11,6 +11,16 @@ GENDERS = (
         )
 
 
+
+class ConnectionType(models.Model):
+    """
+            Type of connection.
+    """
+    type      = models.CharField(_('Type'), max_length=255)
+
+    def __unicode__(self):
+        return self.type
+
 class WorkExperienceSector(models.Model):
     """
             Different Sectors that people could have worked in.
@@ -181,6 +191,19 @@ class Link(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Link'), _('Links')
+
+
+class Connection(models.Model):
+    """
+        A class to hold links the politician has
+    """
+    type        = models.ForeignKey(ConnectionType, verbose_name=_('Type'), null=True, blank=True)
+    url         = models.CharField(_('URL'), max_length=255)
+    description	= models.CharField(_('Description'), max_length=2550)
+    politician  = models.ForeignKey(PoliticianProfile, related_name=_('connections'), verbose_name=_('Politician') )
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Connection'), _('Connections')
 
 class Interest(models.Model):
     """

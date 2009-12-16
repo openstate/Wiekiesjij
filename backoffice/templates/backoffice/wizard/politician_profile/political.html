@@ -8,7 +8,14 @@
     <h2>{%trans 'Political Experience' %} </h2>
     
     {% for political_experience in political %}
-        <p><a href="{% url bo.politician_profile_political_wizard_edit election_instance_id user_id political_experience.id %}">{{ political_experience.name }}</a>: {{ political_experience.url }}: {{ political_experience.description }}</p>
+        <h3><a href="{% url bo.politician_profile_political_wizard_edit election_instance_id user_id political_experience.id %}">{{ political_experience.organisation }} - {{ political_experience.position }}</a></h3>
+        <p>{%trans 'Organisation you were involved in' %}: {{political_experience.organisation }}</p>
+        <p>{%trans 'Type of experience' %}: {{ political_experience.type }}</p>
+        <p>{%trans 'Position you held' %}: {{ political_experience.position }}</p>
+        <p>{%trans 'Description of your experience' %}: {{ political_experience.description }}</p>
+        <p>{%trans 'Experience gained between:' %}: {{ political_experience.startdate }} - {{ political_experience.enddate }}</p>
+        <p><a href="{% url bo.politician_profile_political_delete election_instance_id user_id political_experience.id  %}">{% trans "Delete" %}</a></p>
+
     {% empty %}
         <p>{%trans 'You have no political experience entered yet' %} </p>
     {% endfor %}

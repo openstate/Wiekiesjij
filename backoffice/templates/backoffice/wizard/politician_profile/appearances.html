@@ -8,7 +8,13 @@
     <p>{% trans "Visitors of the website can see an overview of the events you appeared at " %}</p>
     <h2>{%trans 'Events have you appeared' %} </h2>
     {% for appearance in appearances %}
-        <p><a href="{% url bo.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}">{{ appearance.name }}</a>: {{ appearance.url }}: {{ appearance.description }}</p>
+        <h3><a href="{% url bo.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}">{{ appearance.name }}</a></h3>
+        <p>{%trans 'Website of the event you appeared at' %}: {{ appearance.url }}</p>
+        <p>{%trans 'Description of the event you appeared at' %}: {{ appearance.description }}</p>
+        <p>{%trans 'Date and Time of the event you appeared at' %}: {{ appearance.datetime }}</p>
+        <p>{%trans 'Location of the event you appeared at' %}: {{ appearance.location }}</p>
+        <p><a href="{% url bo.politician_profile_appearance_delete election_instance_id user_id appearance.id  %}">{% trans "Delete" %}</a></p>  
+           
     {% empty %}
         <p>{%trans 'You have no appearances defined yet' %} </p>
     {% endfor %}

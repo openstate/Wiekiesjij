@@ -10,7 +10,7 @@ from elections.functions import get_profile_forms, create_profile, profile_invit
 from django.utils.translation import ugettext_lazy as _
 
 from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
-from political_profiles.forms import EducationForm, PoliticalExperienceForm
+from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm
 
 from invitations.models import Invitation
 
@@ -212,7 +212,7 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_political', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
+            return redirect('bo.politician_profile_political', user_id=self.user_id, election_instance_id=self.election_instance_id )
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileWorkWizard(MultiPathFormWizard):
@@ -274,7 +274,7 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_work', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
+            return redirect('bo.politician_profile_work', user_id=self.user_id, election_instance_id=self.election_instance_id )
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileInterestWizard(MultiPathFormWizard):
@@ -336,7 +336,7 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_interest', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
+            return redirect('bo.politician_profile_interest', user_id=self.user_id, election_instance_id=self.election_instance_id )
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileEducationWizard(MultiPathFormWizard):
@@ -399,7 +399,7 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_education', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id })
+            return redirect('bo.politician_profile_education', user_id=self.user_id, election_instance_id=self.election_instance_id )
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 
@@ -463,9 +463,71 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id, })
+            return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id)
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
+class PoliticianProfileConnectionWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles links
+    """
+    def __init__(self, *args, **kwargs):
+        # Getting "user_id"
+        try:
+            self.user_id = kwargs['user_id']
+            self.connection_id = kwargs['connection_id']
+            self.election_instance_id =  kwargs['election_instance_id']
+            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
+            self.user = User.objects.get(pk=self.user_id)
+            if self.connection_id:
+                self.connection = self.user.profile.connections.get(pk=self.connection_id)
+            else:
+                self.connection = None
+
+        except Exception, e:
+            raise e
+
+        step1_forms = dict(connection=ConnectionForm,)
+        step1 = Step('candidate_edit_connection',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/step1.html',
+                    initial={'connection': self.connection })
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileConnectionWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'connection':
+                        self.candidate_connection_data = form.cleaned_data
+
+            if self.connection_id:
+                connection = self.connection
+            else:
+                connection = self.user.profile.connections.create(
+                    politician=self.user.profile,
+                )
+
+
+            for (key, value) in self.candidate_connection_data.items():
+                setattr(connection, key, value)
+            connection.save(force_update=True)
+
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
+        if request.POST.get('next', 'overview') == 'overview':
+            return redirect('bo.politician_profile_connection', user_id=self.user_id, election_instance_id=self.election_instance_id)
+        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
 
 class PoliticianProfileWizard(MultiPathFormWizard):
     """
@@ -531,7 +593,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             transaction.commit()
 
         if request.POST.get('next', 'overview') == 'overview':
-            return redirect(reverse('bo.politician_profile_link', kwargs={'user_id': self.user_id, 'election_instance_id': self.election_instance_id }))
+            return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id )
         raise NotImplementedError('Implement a redirect to the council edit wizard here.')
         
         

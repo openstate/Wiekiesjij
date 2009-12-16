@@ -15,7 +15,7 @@ from utils.fields import NameField, AddressField
 
 from political_profiles.models import GENDERS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
-from political_profiles.models import Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile
+from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, PoliticianProfile, ChanceryProfile, ContactProfile, VisitorProfile 
 from django.forms.extras.widgets import SelectDateWidget 
 
 GENDERS = (
@@ -242,6 +242,18 @@ class LinkForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Link
+        exclude = ('politician')
+
+class ConnectionForm(BetterModelForm, TemplateForm):
+    '''
+    Connection admin
+    '''
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.fields['description'].widget = forms.Textarea()
+
+    class Meta:
+        model = Connection
         exclude = ('politician')
 
 
