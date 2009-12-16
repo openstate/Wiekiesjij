@@ -58,3 +58,18 @@ def candidate_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
     if function:
         return actual_decorator(function)
     return actual_decorator
+
+def contact_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
+    """
+    Decorator for views that checks that the user is a contact, redirecting
+    to the log-in page if necessary.
+    """
+
+    ProfileClass = get_profile_model('party_admin')
+    actual_decorator = user_passes_test(
+        lambda u: (u.is_authenticated() and (u.is_staff or (u.profile is not None and isinstance(u.profile, ProfileClass)))),
+        redirect_field_name=redirect_field_name
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator

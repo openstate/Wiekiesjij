@@ -23,15 +23,21 @@ from invitations.models import Invitation
 from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 
-from backoffice.decorators import staff_required, candidate_required, council_admin_required, party_admin_required
+
+from backoffice.decorators import contact_required, staff_required, candidate_required, council_admin_required 
+
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
 from backoffice.wizards import ElectionPartySetupWizard, AddCandidateWizard, AnswerQuestion
-from backoffice.wizards import AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
+from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
+
+@contact_required
+def party_contact_wizard(request, user_id, eip_id):
+    return PartyContactWizard(user_id=user_id, eip_id=eip_id)(request)
 
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)

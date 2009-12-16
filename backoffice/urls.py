@@ -35,6 +35,8 @@ urlpatterns += patterns('backoffice.views',
     url(r'^party/(?P<id>\d+)/grow/$', 'election_party_grow', name='bo.election_party_grow'),
     url(r'^party/(?P<id>\d+)/add_candidate/(?P<pos>\d+)/$', 'election_party_add_candidate', name='bo.election_party_add_candidate'),
 
+    url(r'^partycontact/(?P<user_id>\d+)/(?P<eip_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+
     url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='bo.candidate_up'),
     url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='bo.candidate_down'),
 
@@ -47,6 +49,8 @@ urlpatterns += patterns('backoffice.views',
     url(r'^add_parties_2/(?P<ei_id>\d+)/$', 'csv_import_parties_step2', {'error': 'false'}, name='bo.csv_parties_step2'),
     url(r'^add_parties_2/(?P<ei_id>\d+)/(?P<error>[-\w]+)/$', 'csv_import_parties_step2', name='bo.csv_parties_step2'),
     url(r'^add_parties_3/(?P<ei_id>\d+)/$', 'csv_import_parties_step3', name='bo.csv_parties_step3'),
+
+
 
     url(r'^welcome/(?P<election_instance_id>\d+)/$', 'politician_welcome', name='bo.politician_welcome'),
     url(r'^welcome/(?P<election_instance_id>\d+)/(?P<user_id>\d+)/$', 'politician_profile_setup', name='bo.politician_profile_setup'),

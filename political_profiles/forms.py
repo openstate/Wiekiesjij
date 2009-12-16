@@ -15,7 +15,14 @@ from political_profiles.models import GENDERS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
-
+DAYS =  (('Monday',_('Monday')),
+             ('Tuesday', _('Tuesday')),
+             ('Wednesday', _('Wednesday')),
+             ('Thursday', _('Thursday')),
+             ('Friday', _('Friday')),
+             ('Saturday', _('Saturday')),
+             ('Sunday', _('Sunday')),
+            )
 class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
@@ -110,14 +117,7 @@ class ChanceryProfileForm(BetterForm, TemplateForm):
     ChanceryProfile admin
     '''
     
-    DAYS =  (('Monday',_('Monday')),
-             ('Tuesday', _('Tuesday')),
-             ('Wednesday', _('Wednesday')),
-             ('Thursday', _('Thursday')),
-             ('Friday', _('Friday')),
-             ('Saturday', _('Saturday')),
-             ('Sunday', _('Sunday')),
-            )
+
     #address = AddressField(label=_('Chancery Address'))
     name = NameField(label=_('Name'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
@@ -172,28 +172,30 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
            pass
         return self.cleaned_data['email']
 
-class ContactProfileForm(BetterModelForm, TemplateForm):
+class ContactProfileForm(BetterForm, TemplateForm):
     '''
     Contact Profile admin
     '''
+    name            = NameField(label=_('Name'))
+    email           = forms.EmailField(label=_('E-Mail'))
+    description      = forms.CharField(label=_('description'), widget=forms.Textarea())
+    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    #picture         = forms.ImageField(label=_('Picture'), required=False)
+    website         = forms.URLField(label=_('Website'), help_text=_('Link to your website'))
+    address         = AddressField(label=_('Address'))
+    telephone       = forms.CharField(_('Phone Number'))
+    workingdays     = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=DAYS,)
 
-    class Meta:
-        model = ContactProfile
-        exclude = ('user')
+                            
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
 
 
 class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
     '''
     ContactProfile admin for editing contact information. Chapter 3.1.5 of interaction design.
     '''
-    DAYS =  (('Monday',_('Monday')),
-             ('Tuesday', _('Tuesday')),
-             ('Wednesday', _('Wednesday')),
-             ('Thursday', _('Thursday')),
-             ('Friday', _('Friday')),
-             ('Saturday', _('Saturday')),
-             ('Sunday', _('Sunday')),
-            )
+
 
     name = NameField(label=_('Name'))
     
