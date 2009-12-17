@@ -421,7 +421,10 @@ def csv_import_candidates_step3(request, ep_id):
                         'email': candidate['email'],
                         'gender': candidate['gender'],
                     }
-                    candidate_obj = create_profile('candidate', tmp_data)
+                    created, candidate_obj = create_profile('candidate', tmp_data)
+                    
+                    if candidate_obj is None:
+                        continue
 
                     #Link candidate to party
                     candidacy = Candidacy(
