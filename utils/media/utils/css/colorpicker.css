@@ -173,6 +173,3 @@
 .colorpicker_slider {
 	background-position: bottom;
 }
-
-.colorpicker_color div, .colorpicker_color div div { behavior: url("../images/colorpicker/iepngfix.htc") }
-#colorSelector, #colorSelector div { behavior: url("../images/colorpicker/iepngfix.htc") }

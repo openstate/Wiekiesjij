@@ -324,6 +324,8 @@
 
                                 div.form-submit a.btn {
                                     margin-left:10px;
+									float:right;
+									padding:5px;
                                 }
 
 				div.form-submit a.cancel {
@@ -832,9 +834,13 @@
 			border-color:#ccc;
 			border-width:1px 6px 6px 1px;
 			}
+			
+		.sidebar .bd {
+			position:relative;
+		}
+		
 		.sidebar a.edit {
-			right:10px;
-			top:5px;
+			top:-3px;
 			}
 		
 		
@@ -876,6 +882,3 @@
 				font-style:italic;
 				text-align:center;
 				}
-					
-					
-					

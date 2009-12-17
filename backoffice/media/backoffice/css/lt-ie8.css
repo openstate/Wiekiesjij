@@ -6,11 +6,11 @@ div.checkbox label input {
 	}
 	
 div.form-submit button.prev {
-	padding:0 5px 0 25px;
+	padding:6px 5px 4px 25px;
 	}
 	
 div.form-submit button.next {
-	padding:0 25px 0 5px;
+	padding:6px 25px 4px 5px;
 	}
 
 .nav-breadcrumbs li {
