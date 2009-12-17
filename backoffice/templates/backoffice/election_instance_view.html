@@ -42,8 +42,8 @@
             {% endif %}</h3>
             <a href="{% url bo.election_party_view eip.id %}" class="manage">{% if eip.candidates_count %}{% trans 'View candidate list' %}{% else %}{% trans 'Manage this party' %}{% endif %}</a>
             <ul class="quicklinks">
-            	<li><a href="{% url bo.election_party_edit eip.id %}">{% trans 'Edit party profile' %}</a><br />
-                    <a href="#">{% trans 'Remove party' %}</a></li>
+            	<li><a href="{% url bo.election_party_edit eip.id %}">{% trans 'Edit party profile' %}</a></li>
+               	{#<li><a href="#">{% trans 'Remove party' %}</a></li>#}
            	</ul>
             {% if eip.party.logo %}<img src="{{ eip.party.logo }}" alt=" " />{% endif %}
             
@@ -59,9 +59,10 @@
                     <li{% if instance.invite_overdue %} class="overdue"{% endif %}>{% trans 'There are no candidates defined for this party' %} ({% if instance.invite_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.invite_deadline }}) <a href="{% url bo.election_party_view eip.id %}" class="act">{% trans 'Do it now' %}</a></li>
                 {% endif %}
             </ul>
-            {% ifnotequal index 1 %}<div class="up"><a href="{% url bo.election_party_up eip.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
-            {% ifnotequal index instance.num_lists %}<div class="down"><a href="{% url bo.election_party_down eip.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
-
+            <div class="move">
+                {% ifnotequal index 1 %}<a href="{% url bo.election_party_up eip.id %}" class="move-up">{% trans 'Move up' %}</a>{% endifnotequal %}
+                {% ifnotequal index instance.num_lists %}<a href="{% url bo.election_party_down eip.id %}" class="move-down">{% trans 'Move down' %}</a>{% endifnotequal %}
+			</div>
         {% else %}
             <h3><a href="{% url bo.election_party_create instance.id index %}" class="add-item">{% trans 'Define party for this list' %}</a></h3>
 		{% ifequal index instance.num_lists %}<div class="sidebar"><a href="{% url bo.election_instance_shrink instance.id %}" class="delete">{% trans 'Remove this list' %}</a></div>{% endifequal %}
@@ -71,7 +72,7 @@
             <p class="empty">{% trans "There are no parties defined yet for this election." %}</p>
     {% endfor %}
 	<div class="item add-slot">
-   		<a href="{% url bo.election_instance_grow instance.id %}" class="add">{% trans "Add new position" %}</a>
+   		<a href="{% url bo.election_instance_grow instance.id %}" class="add">{% trans "Add new party position" %}</a>
     </div>
 </div>
 

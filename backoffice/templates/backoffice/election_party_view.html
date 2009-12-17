@@ -38,20 +38,22 @@
                 {% if can.candidate.profile.picture %}<img src="{{ can.candidate.profile.picture }}" />{% endif %}
                 <h3>{{ can.candidate.profile.full_name }}</h3>
                 <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>
+                {% comment %}
                 <ul class="quicklinks">
                 	<li><a href="#">{% trans 'Remove candidate' %}</a></li>
                 </ul>
+                {% endcomment %}
                 <ul class="message-list">
                     {% if can.candidate_notresponded %}<li{% if instance.candidate_overdue %} class="overdue"{% endif %}>{% trans 'Candidate has not responded yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }})</li>{% endif %}
                     {% if can.profile_incomplete %}<li{% if instance.profile_overdue %} class="overdue"{% endif %}>{% trans 'Candidate did not fill in their profile yet' %} ({% if instance.profile_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.profile_deadline }})</li>{% endif %}
                     {% if can.questions_incomplete %}<li{% if instance.questions_overdue %} class="overdue"{% endif %}>{% trans 'Candidate did not answer the questions yet' %} ({% if instance.questions_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.questions_deadline }})</li>{% endif %}
                 </ul>
              
-                
+                <div class="move">
+                    {% ifnotequal index 1 %}<a href="{% url bo.candidate_up can.id %}" class="move-up">{% trans 'Move up' %}</a>{% endifnotequal %}
+                    {% ifnotequal index eip.list_length %}<a href="{% url bo.candidate_down can.id %}" class="move-down">{% trans 'Move down' %}</a>{% endifnotequal %}
+                </div>
                
-                {% ifnotequal index 1 %}<div class="up"><a href="{% url bo.candidate_up can.id %}">{% trans 'Move up' %}</a></div>{% endifnotequal %}
-                {% ifnotequal index eip.list_length %}<div class="down"><a href="{% url bo.candidate_down can.id %}">{% trans 'Move down' %}</a></div>{% endifnotequal %}
-
             {% else %}
                 <h3><a href="{% url bo.election_party_add_candidate eip.id index %}" class="add-item">{% trans 'Invite politician' %}</a></h3>
                 {% ifequal index eip.list_length %}

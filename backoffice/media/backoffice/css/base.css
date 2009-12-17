@@ -98,6 +98,12 @@
 			background-repeat:no-repeat;
 			padding-left:24px;
 			}
+		a.download {
+			background-image:url(../img/download.png);
+			background-position:4px center;
+			background-repeat:no-repeat;
+			padding-left:24px;
+			}
 
 		.sidebar a.edit {
 			position:absolute;
@@ -127,6 +133,15 @@
 				}
 			dd {
 				margin-bottom:.5em;
+				}
+		div.image {
+			margin:10px 0;
+			}
+			div.image img {
+				display:block;
+				margin:0 0 10px;
+				}
+			div.image em {
 				}
 
 /* 	Form styling
@@ -798,16 +813,20 @@
 					.move-up,
 					.move-down {
 						display:block;
-						width:25px;
-						height:12px;
-						text-indent:-9999em;
 						float:left;
-						}	
+						clear:both;
+						padding-left:24px;
+						color:#aaa;
+						}
+					a.move-up:hover,
+					a.move-down:hover {
+						color:#777;
+						}
 					.move-up {
-						background:url(../img/bigarrow-up-lightgrey.png) center no-repeat;
+						background:url(../img/bigarrow-up-lightgrey.png) left center no-repeat;
 						}
 					.move-down {
-						background:url(../img/bigarrow-down-lightgrey.png) center no-repeat;
+						background:url(../img/bigarrow-down-lightgrey.png) left center no-repeat;
 						}
 						
 		div.add-slot {
@@ -882,3 +901,8 @@
 				font-style:italic;
 				text-align:center;
 				}
+				
+		.btn-container {
+			overflow:hidden;_zoom:1;
+			margin:10px 0 20px;
+			}

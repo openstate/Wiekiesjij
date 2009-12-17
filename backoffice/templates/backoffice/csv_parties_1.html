@@ -1,26 +1,44 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
 
-{% block content %}
-<div class="mod">
-    <p>
-        {% trans "The following wizard allows you to add multiple parties at once." %}
-        {% trans "To add the parties, you have to upload a so called CSV file, like the example below." %}
-        {% trans "CSV files can be created and editted with programs like Microsoft Excel or with your favorite text editor." %}
-    </p>
-    <p>
-        {% trans "In the template you can download form this page, the middle_name and party_abbreviation field can be empty." %}
-        {% trans "The first three fields in a row are information for the party itself. The other information is for the party contact." %}
-    </p>
-    <p>
-        <img src="{{ STATIC_URL }}utils/images/par_csv.png" alt="Example CSV file">
-    </p>
-    <div>
-        <a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="btn next">{% trans "Download this template" %}</a>
-    </div>
-    <div class="form-submit">
-        <a class="btn primary next" href="{% url bo.csv_parties_step2 ei_id %}">{% trans "Proceed to uploading a filled in template" %}</a>
-        <a href="{% url bo.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
+{% block title %}{% trans 'Import multiple parties' %}{% endblock title %}
+{% block page-title %}{% trans 'Import multiple parties' %}{% endblock page-title %}
+{% block breadcrumbs %}
+	<li><a href="#">[Election Event Name]</a></li>
+	<li><a href="#">[Election Instance Name]</a></li>
+{% endblock breadcrumbs %}
+{% block back-link %}{% endblock back-link %}
+
+{% block cols %}
+<div class="col size1of2">
+    <div class="mod">
+		<h2>{% trans "Download the template..." %}</h2>
+        <p>
+            {% trans "The following wizard allows you to add multiple parties at once." %}
+        </p>
+        <p>
+            {% trans "To add the parties, you have to upload a so called CSV file, like the example below." %}
+            {% trans "CSV files can be created and editted with programs like Microsoft Excel or with your favorite text editor." %}
+        </p>
+        <div class="btn-container"><a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="btn download">{% trans "Download the CSV template" %}</a></div>
+        
+        <h2>...And fill it in.</h2>
+        <p>
+        	{% trans "Depending on the program you open it with, you'll see:" %}
+            {% trans "In the template the middle_name and party_abbreviation field can be empty." %}
+            {% trans "The first three fields in a row are information for the party itself. The other information is for the party contact." %}
+        </p>
+        <p>
+            <img src="{{ STATIC_URL }}utils/images/par_csv.png" alt="Example CSV file">
+            <em></em>
+        </p>
+        <div>
+            
+        </div>
+        <div class="form-submit">
+            <a class="btn primary next" href="{% url bo.csv_parties_step2 ei_id %}">{% trans "Proceed to uploading a filled in template" %}</a>
+            <a href="{% url bo.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
+        </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock cols %}
