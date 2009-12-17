@@ -11,8 +11,8 @@
 	<p class="label">{% trans "Do you want to skip the council setup for this council?" %}</p>
     <div class="form-submit">
     	<a href="{% url bo.election_event %}" class="cancel">{% trans "Cancel" %}</a>
-		<button type="submit" name="next" value="overview" class="next primary">{% trans "Skip council setup" %}</button>
-		<button type="submit" name="next" value="next" class="next">{% trans "Start council setup" %}</button>
+		<button type="submit" name="skip" class="next primary">{% trans "Skip council setup" %}</button>
+		<button type="submit" name="next" class="next">{% trans "Start council setup" %}</button>
 		
 	</div>
 {% endblock buttons %}

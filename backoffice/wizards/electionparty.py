@@ -93,8 +93,9 @@ class AddElectionPartyWizard(MultiPathFormWizard):
         else:
             transaction.commit()
         
-        if request.POST.get('next', 'overview') == 'overview':
+        if request.POST.get('skip', None) is not None:
             return redirect('bo.election_instance_view', id=self.election_instance.id)
+
         return redirect('bo.election_party_edit', id=eip.id)
 
 
