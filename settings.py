@@ -159,9 +159,8 @@ WIZARD_KEEP_DATA = False
 WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
 
 
-
 if DEBUG and DEBUG_TOOLBAR:
-    
+
     #debug_toolbar
     MIDDLEWARE_CLASSES += (
        'debug_toolbar.middleware.DebugToolbarMiddleware',

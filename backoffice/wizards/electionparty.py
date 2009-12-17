@@ -1,14 +1,18 @@
 from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
+
+from elections.forms import InitialElectionPartyForm, ElectionPartyContactForm, ElectionPartyAdditionalForm, ElectionPartyDescriptionForm
+from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
+from elections.models import Party, ElectionInstanceParty
+
+from political_profiles.forms import  ContactProfileForm
+
+from utils.exceptions import PermissionDeniedException
 from utils.multipathform import Step, MultiPathFormWizard
 
 from invitations.models import Invitation
-from django.contrib.auth.models import User
-from elections.forms import InitialElectionPartyForm, ElectionPartyContactForm, ElectionPartyAdditionalForm, ElectionPartyDescriptionForm
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
-from political_profiles.forms import  ContactProfileForm
-from elections.models import Party, ElectionInstanceParty
+
 
 
 class AddElectionPartyWizard(MultiPathFormWizard):
@@ -158,26 +162,23 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         return redirect('bo.election_instance_view', self.eip.election_instance.id)
 
 class PartyContactWizard(MultiPathFormWizard):
-    def __init__(self, eip_id=None, user_id=None, *args, **kwargs):
-        # Getting "user_id"
-        try:
-            self.eip = ElectionInstanceParty.objects.get(pk=eip_id)
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
+    def __init__(self, eip_id, user_id, *args, **kwargs):
+        self.eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
+        
+        self.user = get_object_or_404(self.eip.party.contacts, pk=user_id)
+        
+        if not self.user.profile or self.user.profile.type != 'party_admin':
+            raise PermissionDeniedException('Wrong user profile type')
             
-
-            self.user_profile_dict = {
-                'name': {'first_name': self.user.profile.first_name, 'middle_name': self.user.profile.middle_name, 'last_name': self.user.profile.last_name, },
-                'email': self.user.email,
-                'description': self.user.profile.description,
-                'gender': self.user.profile.gender,
-                #'picture': self.user.profile.picture,
-                'telephone': self.user.profile.telephone,
-                'workingdays': self.user.profile.workingdays.split(','),
-                'address':  {'street': self.user.profile.street, 'number': self.user.profile.house_num, 'postalcode': self.user.profile.postcode, 'city': self.user.profile.town},
-                'website': self.user.profile.website,
-            }
-        except Exception:
-            raise
+        workingdays = self.user.profile.workingdays or ''
+        self.user_profile_dict = {
+            'name': {'first_name': self.user.profile.first_name, 'middle_name': self.user.profile.middle_name, 'last_name': self.user.profile.last_name, },
+            'gender': self.user.profile.gender,
+            #'picture': self.user.profile.picture,
+            'telephone': self.user.profile.telephone,
+            'workingdays': workingdays.split(','),
+        }
+     
 
         step1_forms = dict(
             party_contact = ContactProfileForm
@@ -232,22 +233,15 @@ class PartyContactWizard(MultiPathFormWizard):
             self.user.profile.first_name = self.user_profile_dict['name']['first_name']
             self.user.profile.middle_name = self.user_profile_dict['name']['middle_name']
             self.user.profile.last_name =  self.user_profile_dict['name']['last_name']
-            self.user.email = self.user_profile_dict['email']
-            self.user.profile.street = self.user_profile_dict['address']['street']
-            self.user.profile.house_num = self.user_profile_dict['address']['number']
-            self.user.profile.postcode= self.user_profile_dict['address']['postalcode']
-            self.user.profile.town = self.user_profile_dict['address']['city']
-            print self.user.profile.street, self.user.profile.house_num, self.user.profile.postcode, self.user.profile.town
             self.user.profile.gender  = self.user_profile_dict['gender']
             self.user.profile.telephone = self.user_profile_dict['telephone']
             self.user.profile.workingdays = ','.join(map(lambda x: str(x), self.user_profile_dict.get('workingdays', [])))
-            self.user.profile.website = self.user_profile_dict['website']
             #self.user.profile.picture = self.user_profile_dict['email']
-            self.user.profile.description = self.user_profile_dict['description']
 
             self.user.profile.save(force_update=True) # Updating the ContactsProfile
+            
             self.user.save(force_update=True)
-            print self.user.profile.street, self.user.profile.house_num, self.user.profile.postcode, self.user.profile.town
+            
             self.eip.party.name = data['name']
             self.eip.party.abbreviation = data['abbreviation']
             self.eip.party.address_street = data['address']['street']
@@ -268,16 +262,11 @@ class PartyContactWizard(MultiPathFormWizard):
             self.eip.list_length = int(data['list_length'])
             self.eip.save()
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
-
-     
-
-
-
-        return redirect('bo.election_instance_view', self.eip.election_instance.id)
+        return redirect('bo.election_party_view', self.eip.id)
 

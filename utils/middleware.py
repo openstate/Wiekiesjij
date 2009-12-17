@@ -13,4 +13,4 @@ class PermissionDeniedMiddleware(object):
         if not isinstance(exception, PermissionDeniedException):
             return None
             
-        return HttpResponseRedirect(settings.PERMISSION_DENIED_URL)
+        return HttpResponseRedirect('%s?next=%s' % (settings.PERMISSION_DENIED_URL, request.path))

@@ -177,18 +177,9 @@ class ContactProfileForm(BetterForm, TemplateForm):
     Contact Profile admin
     '''
     name            = NameField(label=_('Name'))
-    email           = forms.EmailField(label=_('E-Mail'))
-    description     = forms.CharField(label=_('description'), widget=forms.Textarea())
-    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    #picture         = forms.ImageField(label=_('Picture'), required=False)
-    website         = forms.URLField(label=_('Website'), help_text=_('Link to your website'))
-    address         = AddressField(label=_('Address'))
     telephone       = forms.CharField(_('Phone Number'))
+    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     workingdays     = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=DAYS,)
-
-                            
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
 
 
 class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):
