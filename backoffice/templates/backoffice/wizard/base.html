@@ -8,10 +8,10 @@
 
 {% block wizard-steps %}
     <ul id="wizardSteps">
-        <li><a href="#" class="history"><span class="number">1</span>Registration</a></li>
-        <li><a href="#" class="history"><span class="number">2</span>Election</a></li>
-        <li><a href="#" class="active"><span class="number">3</span>Council blaat babbel</a></li>
-        <li class="last"><span class="future"><span class="number">4</span>Chancellery</span></li>
+        <li><a href="#" class="history"><span class="number">1</span>{% trans 'Registration' %}</a></li>
+        <li><a href="#" class="history"><span class="number">2</span>{% trans 'Election' %}</a></li>
+        <li><a href="#" class="active"><span class="number">3</span>{% trans 'Council blaat babbel' %}</a></li>
+        <li class="last"><span class="future"><span class="number">4</span>{% trans 'Chancellery' %}</span></li>
     </ul>
 {% endblock wizard-steps %}
 
@@ -21,7 +21,7 @@
         <div class="mod wizard">
             {% block step-header %}
         	<div class="hd">
-				<h2>{% block step_title %}Step Title{% endblock step_title %}</h2>
+				<h2>{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}</h2>
             </div>
             {% endblock step-header %}
             
