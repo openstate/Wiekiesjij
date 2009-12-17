@@ -686,11 +686,18 @@
 				text-align:center;
 				background:#fff url(../img/lijst.png) 0 0 no-repeat;
 				}	
+				.candidates div.item span.list {
+					height:21px;
+					padding:17px 0;
+					}
 				div.item span.list strong {
 					display:block;
 					font-size:24px;
 					font-weight:bold;
 					}
+					.candidates div.item span.list strong {
+						font-size:32px;
+						}
 			div.item .manage {
 				position:absolute;
 				right:10px;
