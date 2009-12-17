@@ -6,7 +6,11 @@
 {% block back-link %}{% endblock back-link %}
 
 {% block breadcrumbs %}
-	<li><a href="/">Wie Kies Jij?</a></li>
-    <li><a href="/backoffice">Election Event Name</a></li>
-    <li><a href="/backoffice/election_instance/1">Election Instance Name</a></li>
+    <li><a href="/backoffice">[Election Event Name]</a></li>
+    <li><a href="/backoffice/election_instance/1">[Election Instance Name]</a></li>
 {% endblock breadcrumbs %}
+
+{% block wizard-steps %}
+{% endblock wizard-steps %}
+
+{% block step_title %}{% trans "Add a new party &amp; Invite a contact" %}{% endblock step_title %}

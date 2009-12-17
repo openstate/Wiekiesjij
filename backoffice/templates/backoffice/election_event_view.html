@@ -11,7 +11,9 @@
             <h2>{% trans "This election has the following instances:" %}</h2>
         </div>
         <div class="bd">
-            <a href="{% url bo.add_election_instance %}">{% trans "Add Election Instance" %}</a>
+        	<div class="item add-slot">
+            	<a href="{% url bo.add_election_instance %}" class="add">{% trans "Add an Election Instance" %}</a>
+            </div>
             {#}<a href="{% url bo.election_setup %}">{% trans "Chancery Registration Wizard" %}</a>#}
           	
             {% for ei in election_instances  %}
@@ -24,6 +26,8 @@
                     </ul>
                 {% endblockwrap %}
             </div>
+            {% empty %}
+            <p class="empty">{% trans "There are no Election Instances defined yet for this Event." %}</p>
             {% endfor %}
       	</div>
     </div>

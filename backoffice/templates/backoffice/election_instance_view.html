@@ -67,6 +67,8 @@
 		{% ifequal index instance.num_lists %}<div class="sidebar"><a href="{% url bo.election_instance_shrink instance.id %}" class="delete">{% trans 'Remove this list' %}</a></div>{% endifequal %}
         {% endif %}
     </div>
+    {% empty %}
+            <p class="empty">{% trans "There are no parties defined yet for this election." %}</p>
     {% endfor %}
 	<div class="item add-slot">
    		<a href="{% url bo.election_instance_grow instance.id %}" class="add">{% trans "Add new position" %}</a>

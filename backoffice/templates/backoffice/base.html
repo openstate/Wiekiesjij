@@ -28,10 +28,11 @@
 			{% if user.is_authenticated %}
 				<p class="user-info">{% trans "You are logged in as" %} 
 					{% if user.profile %}
-						<a href="{% url bo.profile %}"><!-- link to user reg info --><strong>{{ user.get_full_name|default:'NN' }}</strong></a>			
+						<a href="{% url bo.profile %}"><!-- link to user reg info --><strong>{{ user.get_full_name|default:'NN' }}</strong></a> -
+                        <a href="{% url bo.profile %}"><!-- link to user reg info -->{% trans "Edit Profile" %}</a>
 					{% else %}
 						<strong>{{ user.get_full_name|default:'NN' }}</strong>
-					{% endif %}. <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
+					{% endif %} - <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
 			{% else %}
 				<p class="user-info">{% trans "You are not logged in" %}. <a href="{% url bo.login %}">{% trans "Login" %}</a></p>
 			{% endif %}
@@ -61,7 +62,8 @@
             </div>
             
             <div class="col size1of4 sidebar">
-            	<div class="mod user-contact">
+            	{% comment %}
+                <div class="mod user-contact">
                     <div class="bd">
                         <h3>{% trans "We can reach you on" %}:</h3>
                         <a href="#" class="edit">{% trans "edit" %}</a>
@@ -70,6 +72,7 @@
                             (on Mon, Tue, Wed or Thu)</p>
                     </div>
                 </div>
+                {% endcomment %}
             {% block sidebar %}
             
             {% endblock sidebar %}

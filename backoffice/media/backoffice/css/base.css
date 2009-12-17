@@ -55,6 +55,11 @@
 			line-height:1.4em;
 			margin-bottom:.5em;
 			}
+			p.empty {
+				text-align:center;
+				font-style:italic;
+				margin:20px 0;
+				}
 		
 		a {
 			color:#777;
@@ -186,8 +191,9 @@
 					}
 			
 			div.errors {
-				text-align:right;
+				text-align:left;
 				color:#ed2227;
+				clear:both;
 				}
 		
 			p.error {
