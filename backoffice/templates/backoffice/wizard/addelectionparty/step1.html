@@ -1,5 +1,7 @@
 {% extends 'backoffice/wizard/addelectionparty/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags backoffice_tags %}
+
+
 
 {% block buttons %}
 	<p class="desc">{% trans "This contact will be invited to complete further setup for this party. If you want, you can skip the rest of the steps for fillng in this party." %}</p>

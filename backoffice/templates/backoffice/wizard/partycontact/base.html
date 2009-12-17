@@ -3,3 +3,7 @@
 
 {% block title %}{% trans 'Party Contact Wizard' %}{% endblock title %}
 {% block page-title %}{% trans 'Party Contact Wizard' %}{% endblock page-title %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url bo.redirect %}">{% trans 'Party Contact Home' %}</a></li>
+{% endblock breadcrumbs %}

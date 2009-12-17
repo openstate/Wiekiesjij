@@ -28,7 +28,8 @@ class CouncilEditWizard(MultiPathFormWizard):
         step1 = Step('election_details',
                      forms={'election_details': ElectionInstanceForm},
                      template='backoffice/wizard/election_setup/step2.html',
-                     initial={'election_details': self.election_instance})
+                     initial={'election_details': self.election_instance},
+                     extra_context={'instance':self.election_instance, })
         step2 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
                      template='backoffice/wizard/council/edit/step1.html',
@@ -38,17 +39,20 @@ class CouncilEditWizard(MultiPathFormWizard):
                                                                             'postalcode': self.election_instance.council.postcode,
                                                                             'city': self.election_instance.council.town,
                                                                            },
-                                                                'website': self.election_instance.council.website,}})
+                                                                'website': self.election_instance.council.website,}},
+                     extra_context={'instance':self.election_instance, })
         # Updates Council additional information
         step3 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/council/edit/step2.html',
-                     initial={'council_additional_information': self.election_instance.council})
+                     initial={'council_additional_information': self.election_instance.council},
+                     extra_context={'instance':self.election_instance, })
         # Updates Council styling setup
         step4 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/council/edit/step3.html',
-                     initial={'council_styling_setup': self.election_instance.council})
+                     initial={'council_styling_setup': self.election_instance.council},
+                     extra_context={'instance':self.election_instance, })
 
         scenario_tree = step1.next(step2.next(step3.next(step4)))
 

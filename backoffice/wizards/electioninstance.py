@@ -130,6 +130,7 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
     
     def __init__(self, election_instance_id, *args, **kwargs):
         self.election_instance_id = election_instance_id
+        self.election_instance = get_object_or_404(ElectionInstance, id=self.election_instance_id)
         step1_forms = dict(
             editei=EditElectionInstanceForm,
         )
@@ -137,9 +138,10 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         step1 = Step('editelectioninstance',
             forms=step1_forms,
             initial=dict(
-                editei=get_object_or_404(ElectionInstance, id=self.election_instance_id)
+                editei=self.election_instance
             ),
             template='backoffice/wizard/editelection/step1.html',
+            extra_context={'instance':self.election_instance, }
         )
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/editelection/base.html',
@@ -395,12 +397,14 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         step1 = Step('chancery_registration',
                      forms=step1_forms,
                      template='backoffice/wizard/election_setup/step1.html',
-                     initial=step1_initial)
+                     initial=step1_initial,
+                     extra_context={'instance':self.election_instance, })
         # Updates ElectionInstance
         step2 = Step('election_details',
                      forms={'election_details': ElectionInstanceForm},
                      template='backoffice/wizard/election_setup/step2.html',
-                     initial={'election_details': self.election_instance})
+                     initial={'election_details': self.election_instance},
+                     extra_context={'instance':self.election_instance, })
         # Updates Council
         step3 = Step('council_contact_information',
                      forms={'council_contact_information': CouncilContactInformationForm},
@@ -414,12 +418,14 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                             'city': self.election_instance.council.town,
                         },
                         'website': self.election_instance.council.website,
-                     }})
+                     }},
+                     extra_context={'instance':self.election_instance, })
         # Updates Council
         step4 = Step('council_additional_information',
                      forms={'council_additional_information': CouncilForm},
                      template='backoffice/wizard/election_setup/step4.html',
-                     initial={'council_additional_information': self.election_instance.council})
+                     initial={'council_additional_information': self.election_instance.council},
+                     extra_context={'instance':self.election_instance, })
         # Updates ChanceryProfile
         #FIXME: step5 = Step('chancery_contact_information',
         #                      forms=step5_forms,
@@ -429,7 +435,8 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         step6 = Step('council_styling_setup',
                      forms={'council_styling_setup': CouncilStylingSetupForm},
                      template='backoffice/wizard/election_setup/step6.html',
-                     initial={'council_styling_setup': self.election_instance.council})
+                     initial={'council_styling_setup': self.election_instance.council},
+                     extra_context={'instance':self.election_instance, })
         #FIXME: scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6)))))
         scenario_tree = step1.next(step2.next(step3.next(step4.next(step6))))
 
