@@ -7,3 +7,4 @@ tmp/*
 migrate.sh
 runserver.sh
 syncdb.sh
+local_settings.py
