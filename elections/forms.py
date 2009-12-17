@@ -184,18 +184,19 @@ class InitialElectionPartyForm(BetterForm, TemplateForm):
     
     
 class ElectionPartyContactForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Party'), widget=AutoCompleter(model=Party, field='name'))
-    abbreviation = forms.CharField(label=_('Abbreviation'))
+    name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=_('What is the full name of your party?'))
+    abbreviation = forms.CharField(label=_('Abbreviated party name'), help_text=_("E.g. 'PvdA' or 'CDA'"))
     address = AddressField(label=_('Address'))
     email = forms.EmailField(label=_('E-mail address'))
     telephone = forms.CharField(label=_('Phone number'))
     website = forms.URLField(label=_('Party website'))
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
-    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0)
+    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'))
     slogan = forms.CharField(label=_('Slogan'))
     #logo = forms.FileField(_('Logo'))
-    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0)
+    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'))
+
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     description = forms.CharField(label=_('Short description'))

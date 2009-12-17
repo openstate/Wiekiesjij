@@ -2,7 +2,7 @@
 {% load i18n utils_tags backoffice_tags %}
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
-{% block page-title %}{{ eip.party.name }} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endblock page-title %}
+{% block page-title %}{{ eip.party.name }}{% if eip.party.abbreviation %} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endif %}{% endblock page-title %}
 {% block back-link %}
 {% ifprofile 'council_admin' %}
 <a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.council.region }}</a>
@@ -68,12 +68,13 @@
     <div class="mod start-btn">
     	<div class="bd">
     	<a href="{% url bo.election_party_edit eip.id %}" class="btn start">Start setup wizard<br />for this party</a>
+        <p>You can change the information below by starting the <a href="{% url bo.election_party_edit eip.id %}">setup wizard.</a></p>
         </div>
     </div>
     
     {% blockwrap %}
 		<h3>{% trans "This party" %}</h3> 
-        <a href="{% url bo.election_party_edit eip.id %}" class="edit">{% trans "edit" %}</a>
+        {#<a href="{% url bo.election_party_edit eip.id %}" class="edit">{% trans "edit" %}</a>#}
         <dl>
             <dt>{% trans 'Logo' %}:</dt>
             <dd>[logo img]</dd>

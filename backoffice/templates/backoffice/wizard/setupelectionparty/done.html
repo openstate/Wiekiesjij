@@ -1,10 +1,27 @@
-{% extends 'backoffice/wizard/addelection/base.html' %}
+{% extends 'backoffice/wizard/setupelectionparty/base.html' %}
 {% load i18n %}
+
+{% block step_title %}You're finished!{% endblock step_title %}
+
+{% block step1 %}<li><a href="#" class="history"><span class="number">1</span>{% trans "Contact information" %}</a></li>{% endblock step1 %}
+{% block step2 %}<li><a href="#" class="history"><span class="number">2</span>{% trans "Additional information" %}</a></li>{% endblock step2 %}
+{% block step3 %}<li><a href="#" class="history"><span class="number">3</span>{% trans "Description &amp; History" %}</a></li>{% endblock step3 %}
+{% block step4 %}<li><a href="#" class="active"><span class="number">4</span>{% trans "Finish" %}</a></li>{% endblock step4 %}
 
 {% block content %}
 <div class="mod">
-	<p>bla bla bedankt we zijn klaar</p>
-	
-	<p>Linkjes om verder te gaan</p>
+	<div class="hd">
+    	<h2>{% trans "You're done!" %}</h2>
+    </div>
+    <div class="bd">
+        <p>You have completed the initial setup for this party.</p>
+        <p><strong>Now you can start inviting candidates to fill in their profiles.</strong></p>
+   	</div>
 </div>
 {% endblock content %}
+
+{% block buttons %}
+	<div class="form-submit">
+		<button class="primary next" type="submit">{% trans 'Finish &amp; Start inviting candidates' %}</button>
+	</div>
+{% endblock buttons %}

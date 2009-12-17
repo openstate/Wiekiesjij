@@ -1,8 +1,14 @@
 {% extends 'backoffice/wizard/setupelectionparty/base.html' %}
 {% load i18n %}
 
+{% block step_title %}Contact information for this party{% endblock step_title %}
+
+{% block step1 %}<li><a href="#" class="active"><span class="number">1</span>{% trans "Contact information" %}</a></li>{% endblock step1 %}
+
+
 {% block buttons %}
 	<div class="form-submit">
-		<button class="primary next" type="submit">{% trans 'Next' %}</button>
+		<button class="primary next" type="submit">{% trans 'Next: Additional info' %}</button>
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}

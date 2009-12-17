@@ -1,5 +1,10 @@
 {% extends 'backoffice/wizard/base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'Edit election instance' %}{% endblock title %}
-{% block page-title %}{% trans 'Edit election instance' %}{% endblock page-title %}
+{% block title %}{% trans 'Edit election instance [Election instance]' %}{% endblock title %}
+{% block page-title %}{% trans 'Change settings for [Election instance]' %}{% endblock page-title %}
+{% block breadcrumbs %}<li><a href="#">[Election Event Name]</a></li>{% endblock breadcrumbs %}
+{% block back-link %}{% endblock back-link %}
+
+{% block wizard-steps %}
+{% endblock wizard-steps %}

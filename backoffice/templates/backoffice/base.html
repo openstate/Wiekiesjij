@@ -5,8 +5,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>WieKiesJij? - {% block title %}{% endblock title %}</title>
-   	<script src="{{ STATIC_URL }}utils/javascripts/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}utils/javascripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/libraries.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/grids.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/jquery-ui-1.7.2.custom.css" />
@@ -15,8 +13,11 @@
     <!--[if lt IE 8]>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/lt-ie8.css" />
     <![endif]-->
-
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}utils/css/base.css" />
+    
+    <script src="{{ STATIC_URL }}utils/javascripts/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}utils/javascripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+    
     {% block extrahead %}{% endblock extrahead %}
 
 </head>

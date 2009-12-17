@@ -19,7 +19,7 @@
             {% for ei in election_instances  %}
             <div class="item">
                 {% blockwrap template='electioninstance' %}
-                    <h3>{{ ei.name }}</h3>
+                    <h3>{{ ei.council.region }}</h3>
                     <a href="{% url bo.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
                     <ul class="quicklinks">
                     	<li><a href="{% url bo.edit_election_instance id=ei.id %}">{% trans "Edit settings" %}</a></li>

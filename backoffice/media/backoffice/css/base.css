@@ -503,11 +503,11 @@
 				}	
 					
 			.cp_preview {
-				margin:0;
 				position:relative;
 				top:-27px;
 				left:85px;
 				border: 1px solid #AAAAAA;
+				margin-bottom:-20px;
 				}
 		
 	/*	generic styling
@@ -847,6 +847,7 @@
 		.sidebar .start-btn {
 			padding:0;
 			border:none;
+			background:none;
 			}
 			.start-btn a.btn {
 				width:193px;
@@ -857,11 +858,17 @@
 				padding:10px;
 				border-width:1px 6px 6px 1px;
 				color:#000;
+				float:none;
 				}
 				.start-btn a.btn:hover {
 					background:#aaa;
 					border-color:#666;
 					}
+			.start-btn p {
+				margin:10px 0 2px;
+				font-style:italic;
+				text-align:center;
+				}
 					
 					
 					
