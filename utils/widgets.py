@@ -186,6 +186,7 @@ class ColorPicker(forms.widgets.TextInput):
         <!-- Following div could need CSS -->
         <div class="cp_preview" id="%(id)s_preview" style="height: 20px; width: 20px;"></div>
         <script type="text/javascript">
+            jQuery(document).ready(function() {
             jQuery('#%(id)s').ColorPicker({
 
                 onShow: function (colpkr) {
@@ -236,7 +237,7 @@ class ColorPicker(forms.widgets.TextInput):
                 $('#%(id)s_preview').css('backgroundColor', '#' + $('#%(id)s').val());
                 $('#%(id)s').addClass("colorpicker_inputfield");
             });
-
+            }); //end of document.ready
         </script>
     """
 
