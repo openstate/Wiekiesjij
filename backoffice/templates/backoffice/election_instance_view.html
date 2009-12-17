@@ -122,8 +122,8 @@
     	<h3>{% trans 'More council info' %}</h3>
         {#<a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>#}
         <dl>
-        	<dt>{% trans "Picture" %}</dt>
-            	<dd>[image here]</dd>
+            {#<dt>{% trans "Picture" %}</dt>#}
+            	{#<dd>[image here]</dd>#}
             <dt>{% trans "Number of seats" %}</dt>
             	<dd>{{ instance.council.seats }}</dd>
         	<dt>{% trans 'History' %}</dt>
@@ -144,12 +144,16 @@
     {% endblockwrap %}
     {% endcomment %}
 
-    {% blockwrap %}
-		<h3>{% trans 'Styling' %}</h3>
-        {#<a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>#}
-		{#<img src="{ % url 'style.preview' instance.id % }" />#}
-	{% endblockwrap %}
     
+        {% comment %}
+        {% blockwrap %}
+		<h3>{% trans 'Styling' %}</h3>
+            {#<a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>#}
+		{#<img src="{ % url 'style.preview' instance.id % }" />#}
+                {% endblockwrap %}
+        {% endcomment %}
+    
+
     
     {% comment %}
 	{% blockwrap %}

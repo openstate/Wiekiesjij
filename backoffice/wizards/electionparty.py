@@ -159,12 +159,15 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         self.eip.party.description = data['description']
         self.eip.party.history = data['history']
         self.eip.party.manifesto = data['manifesto']
+
+        self.eip.party.manifesto_summary = data['manifesto_summary']
         self.eip.party.save()
+
 
         self.eip.list_length = int(data['list_length'])
         self.eip.save()
 
-        return redirect('bo.election_instance_view', self.eip.election_instance.id)
+        return redirect('bo.election_party_view', self.eip.party.id)
 
 class PartyContactWizard(MultiPathFormWizard):
     def __init__(self, eip_id, user_id, *args, **kwargs):
@@ -262,6 +265,7 @@ class PartyContactWizard(MultiPathFormWizard):
             self.eip.party.description = data['description']
             self.eip.party.history = data['history']
             self.eip.party.manifesto = data['manifesto']
+            self.eip.party.manifesto_summary = data['manifesto_summary']
             self.eip.party.save()
 
             self.eip.list_length = int(data['list_length'])

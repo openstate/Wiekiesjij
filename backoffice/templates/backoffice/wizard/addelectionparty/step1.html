@@ -11,6 +11,6 @@
 	<div class="form-submit">
 		<button type="submit" name="skip" class="next primary">{% trans "Skip party setup" %}</button>
 		<button type="submit" name="next" class="next">{% trans "Start party setup" %}</button>
-        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url bo.election_instance_view instance.id %}" class="cancel">{% trans "Cancel" %}</a>
    	</div>
 {% endblock buttons %}

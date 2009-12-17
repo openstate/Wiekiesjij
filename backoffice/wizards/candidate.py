@@ -613,6 +613,7 @@ class AddCandidateWizard(MultiPathFormWizard):
     def __init__(self, id, pos, *args, **kwargs):
         self.election_instance_party_id = id
         self.position = pos
+        self.eip = get_object_or_404(ElectionInstanceParty, pk=self.election_instance_party_id)
 
         step1_forms = dict()
         idx = 0;
@@ -623,6 +624,7 @@ class AddCandidateWizard(MultiPathFormWizard):
         step1 = Step('candidate',
             forms = step1_forms,
             template = 'backoffice/wizard/addcandidate/step1.html',
+            extra_context={'instance':self.eip.election_instance, }
         )
         template = 'backoffice/wizard/addcandidate/base.html'
         super(AddCandidateWizard, self).__init__(step1, template)

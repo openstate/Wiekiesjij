@@ -420,6 +420,7 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                             'city': self.election_instance.council.town,
                         },
                         'website': self.election_instance.council.website,
+                        'email': self.election_instance.council.email,
                      }},
                      extra_context={'instance':self.election_instance, })
         # Updates Council
@@ -482,7 +483,8 @@ class ElectionSetupWizard2(MultiPathFormWizard):
                             'house_num': form.cleaned_data['address']['number'],
                             'postcode': form.cleaned_data['address']['postalcode'],
                             'town': form.cleaned_data['address']['city'],
-                            'website': form.cleaned_data['website']
+                            'website': form.cleaned_data['website'],
+                            'email': form.cleaned_data['email']
                         })
                     elif name in ('council_additional_information', 'council_styling_setup'):
                         self.council_data.update(form.cleaned_data)

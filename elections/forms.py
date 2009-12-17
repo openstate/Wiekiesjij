@@ -44,7 +44,7 @@ class InitialCouncilForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Council
-        fields = ('name', 'house_num', 'street', 'postcode', 'town', 'website' )
+        fields = ('name', 'house_num', 'street', 'postcode', 'town', 'email', 'phone', 'website' )
 
     '''
     def clean_address(self):
@@ -79,6 +79,7 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
 
     name = forms.CharField(label=_('Name'), help_text=_('Specify the name of your council here.'))
     address = AddressField(label=_('Address of the Council'))
+    email = forms.EmailField(label=_('E-Mail'))
     website = forms.URLField(label=_('Website of the Council'), required=False)
 
 
@@ -201,4 +202,6 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     description = forms.CharField(label=_('Short description'))
     history = forms.CharField(label=_('Short history'))
+    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea())
     manifesto = forms.URLField(label=_('Link to the manifesto'))
+    

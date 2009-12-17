@@ -39,7 +39,8 @@ class CouncilEditWizard(MultiPathFormWizard):
                                                                             'postalcode': self.election_instance.council.postcode,
                                                                             'city': self.election_instance.council.town,
                                                                            },
-                                                                'website': self.election_instance.council.website,}},
+                                                                'website': self.election_instance.council.website,
+                                                                'email': self.election_instance.council.email,}},
                      extra_context={'instance':self.election_instance, })
         # Updates Council additional information
         step3 = Step('council_additional_information',

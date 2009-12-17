@@ -371,10 +371,12 @@ def politician_profile_connection_wizard(request, election_instance_id, user_id,
 
 @party_admin_required
 def csv_import_candidates_step1(request, ep_id):
-    return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id}, context_instance=RequestContext(request))
+    eip = get_object_or_404(ElectionInstanceParty, pk=ep_id)
+    return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id, 'instance':eip.election_instance}, context_instance=RequestContext(request))
 
 @party_admin_required
 def csv_import_candidates_step2(request, ep_id, error = False):
+
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -391,9 +393,9 @@ def csv_import_candidates_step2(request, ep_id, error = False):
             
     else:
         form = CsvUploadForm()
-
+    eip = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     forms = dict({'csv_upload': form})
-    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error': error, 'ep_id':ep_id}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_candidates_2.html', {'forms':forms, 'error':error, 'ep_id':ep_id, 'instance':eip.election_instance }, context_instance=RequestContext(request))
 
 @party_admin_required
 @transaction.commit_manually
@@ -401,6 +403,7 @@ def csv_import_candidates_step3(request, ep_id):
     try:
         candidates = functions.get_candidates_from_csv(request.session)
     except:
+
         path = settings.TMP_ROOT + '/'
         if not os.path.isdir(path):
             os.remove(path + request.session['csv_candidate_filename'])
@@ -457,13 +460,14 @@ def csv_import_candidates_step3(request, ep_id):
             return redirect('bo.election_party_view', id=ep_id)
     else:
         form = CsvConfirmForm()
-
+    eip = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     forms = dict({'csv_confirm': form})
-    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id, 'instance':eip.election_instance}, context_instance=RequestContext(request))
 
 @party_admin_required
 def csv_import_parties_step1(request, ei_id):
-    return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id}, context_instance=RequestContext(request))
+    ei_obj = get_object_or_404(ElectionInstance, id=ei_id)
+    return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id, 'instance':ei_obj}, context_instance=RequestContext(request))
 
 @party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
@@ -483,9 +487,9 @@ def csv_import_parties_step2(request, ei_id, error = False):
 
     else:
         form = CsvUploadForm()
-
+    ei_obj = get_object_or_404(ElectionInstance, id=ei_id)
     forms = dict({'csv_upload': form})
-    return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id, 'instance':ei_obj}, context_instance=RequestContext(request))
 
 @party_admin_required
 @transaction.commit_manually
@@ -564,9 +568,9 @@ def csv_import_parties_step3(request, ei_id):
             return redirect('bo.election_instance_view', id=ei_id)
     else:
         form = CsvConfirmForm()
-
+    ei_obj = get_object_or_404(ElectionInstance, id=ei_id)
     forms = dict({'csv_confirm': form})
-    return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms, 'ei_id': ei_id}, context_instance=RequestContext(request))
+    return render_to_response('backoffice/csv_parties_3.html', {'parties':parties, 'forms':forms, 'ei_id': ei_id, 'instance':ei_obj}, context_instance=RequestContext(request))
 
 @council_admin_required
 def council_edit(request, id):

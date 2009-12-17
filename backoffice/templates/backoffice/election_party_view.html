@@ -85,12 +85,12 @@
 		<h3>{% trans "This party" %}</h3> 
         {#<a href="{% url bo.election_party_edit eip.id %}" class="edit">{% trans "edit" %}</a>#}
         <dl>
-            <dt>{% trans 'Logo' %}:</dt>
-            <dd>[logo img]</dd>
+            {#<dt>{% trans 'Logo' %}:</dt>#}
+            {#<dd>[logo img]</dd>#}
             <dt>{% trans 'Slogan' %}:</dt>
             <dd>{{ eip.party.slogan|default:"&ndash;" }}</dd>
             <dt>{% trans 'Current number of seats' %}:</dt>
-            <dd>###</dd>
+            <dd>{{ eip.party.num_seats }}</dd>
         </dl>
   	{% endblockwrap %}
     
@@ -118,17 +118,16 @@
         	<dt>{% trans "Description" %}</dt>
             	<dd>
                     {{ eip.party.description }}<br />
-                    <a href="#">{% trans "read more" %}</a>
+                    {#<a href="#">{% trans "read more" %}</a>#}
                 </dd>
        		<dt>{% trans "History" %}</dt>
             	<dd>
                     {{ eip.party.history }}<br />
-                    <a href="#">{% trans "read more" %}</a>
+                   {# <a href="#">{% trans "read more" %}</a>#}
                 </dd>
-       		<dt>{% trans "Manifesto" %}</dt>
+       		<dt>{% trans "Manifesto Summary" %}</dt>
             	<dd>
-                    {{ eip.party.manifasto_summary }}<br />
-                    <a href="#">{% trans "read more" %}</a>
+                    {{ eip.party.manifesto_summary }}<br />
                 </dd>
        		<dd><a href="{{ eip.party.manifesto }}" target="_blank">{% trans "Link to manifesto" %}</a></dd>
         </dl>

@@ -218,8 +218,8 @@ class Party(models.Model):
     goals		= models.CharField(_('Goals'), max_length=255, null=True, blank=True)
     description	= models.CharField(_('Description'), max_length=255, null=True, blank=True)
     history		= models.CharField(_('Short History'), max_length=255, null=True, blank=True)
-    manifasto_summary = models.CharField(_('Manifesto Summary'), max_length=255, null=True, blank=True)
-    manifesto   = models.CharField(_('Manifesto'), max_length=2550, null=True, blank=True)
+    manifesto_summary = models.CharField(_('Manifesto Summary'), max_length=2550, null=True, blank=True)
+    manifesto   = models.URLField(_('Manifesto'), max_length=2550, null=True, blank=True)
     logo = models.ImageField(_('Image'), upload_to='media/party', null=True, blank=True)
     num_seats = models.PositiveIntegerField(_('Number of seats'), null=True, blank=True, help_text=_('The number of seats you currently hold'))
 

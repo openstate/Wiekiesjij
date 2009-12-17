@@ -59,7 +59,7 @@
 {% block buttons %}
 	<div class="form-submit">
         
-        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url bo.election_instance_view instance.id %}" class="cancel">{% trans "Cancel" %}</a>
 
 		<button class="primary next" type="submit">{{curstep.step.next_button|default:"Next"}}</button>
 	</div>
