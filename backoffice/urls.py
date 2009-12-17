@@ -15,7 +15,8 @@ urlpatterns += patterns('backoffice.views',
 
 
 
-    url(r'^$', 'election_event',name='bo.election_event'),
+    url(r'^$', 'election_event', name='bo.election_event'),
+    url(r'^redirect/$', 'redirect_view', name='bo.redirect'),
     url(r'^add/$', 'add_election_instance', name='bo.add_election_instance'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/$', 'election_setup', name='bo.election_setup'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/(?P<user_id>\d+)/$', 'election_setup', name='bo.election_setup'),

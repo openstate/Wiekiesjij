@@ -24,7 +24,7 @@ from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 
 
-from backoffice.decorators import contact_required, staff_required, candidate_required, council_admin_required , party_admin_required
+from backoffice.decorators import log_required, contact_required, staff_required, candidate_required, council_admin_required , party_admin_required 
 
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
@@ -118,6 +118,22 @@ def candidate_down(request, id):
 @party_admin_required
 def election_party_add_candidate(request, id, pos):
     return AddCandidateWizard(id, pos)(request)
+
+@login_required
+def redirect_view(request):
+    if request.user.is_staff:
+        return redirect('bo.election_event')
+    elif request.user.profile.type == 'council_admin':
+        election_instance = request.user.councils.all()[0].election_instances.all()[0]
+        return redirect('bo.election_instance_view', id=election_instance.id )
+    elif request.user.profile.type == 'party_admin':
+        election_instance_party = request.user.parties.all()[0].election_instance_parties.all()[0]
+        return redirect('bo.election_party_view', id=election_instance_party.id)
+    else:
+        #election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
+        #return redirect('bo.election_event')
+        print 'you do not have access here'
+
 
 @staff_required
 def election_event(request):

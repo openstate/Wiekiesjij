@@ -15,7 +15,7 @@ class Council(models.Model):
     region              = models.CharField(_('Region'), max_length=255) #Autocomplete other council regions
     level               = models.CharField(_('Level'), max_length=255) #Autocomplete other council levels
     chanceries          = models.ManyToManyField(User, limit_choices_to=settings.CHANCERY_LIMITATION,
-                                          verbose_name=_('Chanceries'))
+                                          verbose_name=_('Chanceries'), related_name='councils')
     abbreviation        = models.CharField(_('Abbreviated Name'), max_length=15)
     email               = models.EmailField(_('E-Mail'))
     street              = models.CharField(_('Street'), max_length=40)
@@ -95,7 +95,7 @@ class ElectionInstance(models.Model):
     e.g. Municipality Groningen (for Election Event Municipality elections 2010)
     """
     
-    council         = models.ForeignKey(Council, verbose_name=_('Council'))
+    council         = models.ForeignKey(Council, verbose_name=_('Council'), related_name='election_instances')
     election_event  = models.ForeignKey(ElectionEvent, verbose_name=_('Election Event'))
     parties         = models.ManyToManyField('Party', verbose_name=_('Parties'), through='ElectionInstanceParty')
     questions       = models.ManyToManyField('questions.Question', through='ElectionInstanceQuestion', verbose_name=_('Questions'), null=True, blank=True)
@@ -211,7 +211,7 @@ class Party(models.Model):
     address_postalcode  = models.CharField( ('Postalcode'), max_length=255, null=True, blank=True)
     address_city        = models.CharField( ('City'), max_length=255, blank=True, null=True)
     website     = models.CharField(_('Parties Website'), max_length=255, null=True, blank=True)
-    contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'))
+    contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'), related_name=_('parties'))
     slogan      = models.CharField(_('Slogan'), max_length=255, null=True, blank=True)
     telephone	= models.CharField(_('Phone Number'), max_length=255)
     email		= models.EmailField(_('E-Mail'), null=True, blank=True)
@@ -289,7 +289,7 @@ class ElectionInstanceParty(models.Model):
         A link between the party, the election instance and the candidates
     """
     election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
-    party = models.ForeignKey(Party, verbose_name=_('Party'))
+    party = models.ForeignKey(Party, verbose_name=_('Party'), related_name=_('election_instance_parties'))
     position = models.PositiveIntegerField(_('Party Position'))
     list_length = models.PositiveIntegerField(_('List length'))
 

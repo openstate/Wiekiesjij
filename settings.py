@@ -121,7 +121,7 @@ EMAIL_FROM = 'info@wiekiesjij.eu'
 
 #login logout related
 LOGIN_URL = '/backoffice/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/backoffice/redirect/'
 
 
 try:
