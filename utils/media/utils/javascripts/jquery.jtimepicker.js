@@ -20,7 +20,7 @@
         jtimepicker: function(options) {
             
             var defaults = {
-                clockIcon: '../img/jQuery_UI/icon_clock_2.gif',
+                //clockIcon: '../img/jQuery_UI/icon_clock_2.gif',
                 orientation: 'horizontal',
                 // set hours
                 hourCombo: 'hourcombo',
@@ -66,7 +66,7 @@
                     sliderData.push({'label':o.secLabel, 'slider':o.secSlider, 'combo':o.secCombo});
                     html += $this.createCombo(o.secCombo, o.secLength, o.secInterval, o.secDefaultValue);
                 }
-                html += '<img src="' + o.clockIcon + '" class="clock" />';
+                //html += '<img src="' + o.clockIcon + '" class="clock" />';
                 html += $this.createSliderWrap(sliderData);
                 $this.html(html);
                 
