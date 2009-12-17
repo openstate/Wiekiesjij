@@ -21,7 +21,7 @@
 <div class="mod messages">
 	<h2>{% trans "Things you need to do:" %}</h2>
     <ul class="message-list">
-    {% if instance.council.profile_incomplete %}<li>{% trans 'You did not completely fill in the council profile.' %} <a href="#" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
+    {% if instance.council.profile_incomplete %}<li>{% trans 'You did not completely fill in the council profile.' %} <a href="{% url bo.edit_council instance.council.id %}" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
     {% if not instance.council.chanceries.count %}<li>{% trans 'You did not assign a chancellery yet.' %} <a href="#" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
     </ul>
 </div>
@@ -49,7 +49,7 @@
             
             <p class="candidates">{% if eip.candidates_invited %}{{ eip.list_length }} candidates ({{ eip.candidates_invited }} {% trans 'invited' %}){% else %}{% trans 'no candidates defined' %}{% endif %}</p>
             <ul class="message-list">
-                {% if eip.party.profile_incomplete %}<li class="overdue">{% trans 'You have not finished filling in the party profile' %} <a href="#" class="act">{% trans 'Fill in now' %}</a></li>{% endif %}
+                {% if eip.party.profile_incomplete %}<li class="overdue">{% trans 'You have not finished filling in the party profile' %} <a href="{% url bo.election_party_edit eip.party.id %}" class="act">{% trans 'Fill in now' %}</a></li>{% endif %}
                 {% if eip.candidates_invited %}
                     {% if eip.candidates_notinvited %}<li{% if instance.candidate_overdue %} class="overdue"{% endif %}>{{ eip.candidates_notinvited }} {{ eip.candidates_notinvited|pluralize:_('candidate,candidates') }} {% trans 'not invited yet' %} ({% if instance.candidate_overdue %}{% trans 'overdue' %}{% else %}{% trans 'due' %}{% endif %} {{ instance.candidate_deadline }}) <a href="{% url bo.election_party_view eip.id %}" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
                     {% if eip.candidates_notresponded %}<li>{{ eip.candidates_notresponded }} {{ eip.candidates_notresponded|pluralize:_('candidate,candidates') }} {% trans 'have not responded yet' %}</li>{% endif %}
