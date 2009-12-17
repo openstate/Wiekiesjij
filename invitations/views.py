@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
 
@@ -30,13 +30,16 @@ def accept(request, hash):
         return redirect(invitation.view)
         
     if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
         form = AcceptInvitationForm(data=request.POST)
         if form.is_valid():
-            user = invitation.user_to
-            
+            user = invitation.user_to   
             user.set_password(form.cleaned_data['password'])
             user.is_active = True
             user.save()
+            
+            user = authenticate(username=user.username, password=form.cleaned_data['password'])
+            login(request, user) #login the user
             
             invitation.accepted = True
             invitation.save()

@@ -16,7 +16,10 @@ urlpatterns += patterns('backoffice.views',
 
 
     url(r'^$', 'election_event', name='bo.election_event'),
+    
     url(r'^redirect/$', 'redirect_view', name='bo.redirect'),
+    url(r'^permission_denied/$', 'permission_denied', name='bo.permission_denied'),
+    
     url(r'^add/$', 'add_election_instance', name='bo.add_election_instance'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/$', 'election_setup', name='bo.election_setup'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/(?P<user_id>\d+)/$', 'election_setup', name='bo.election_setup'),
@@ -36,7 +39,8 @@ urlpatterns += patterns('backoffice.views',
     url(r'^party/(?P<id>\d+)/grow/$', 'election_party_grow', name='bo.election_party_grow'),
     url(r'^party/(?P<id>\d+)/add_candidate/(?P<pos>\d+)/$', 'election_party_add_candidate', name='bo.election_party_add_candidate'),
 
-    url(r'^partycontact/(?P<user_id>\d+)/(?P<eip_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+    url(r'^party/(?P<id>\d+)/setup/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+    url(r'^party/(?P<id>\d+)/setup/(?P<user_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
 
     url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='bo.candidate_up'),
     url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='bo.candidate_down'),

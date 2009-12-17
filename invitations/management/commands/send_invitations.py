@@ -21,7 +21,7 @@ class Command(LabelCommand):
 
         for invite in invitations_temp:
             invite.send()
-            #invite.send_on = datetime.datetime.now()
+            invite.send_on = datetime.datetime.now()
             invite.save()
             
         print "Done"

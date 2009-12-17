@@ -30,7 +30,6 @@ def send_email(subject, from_email, to, context, template):
     msg = EmailMultiAlternatives(subject, text_content, from_email, to_list)
 
     if template.has_key('html'):
-        print context
         html_content = _render_content(context, template['html'])
         msg.attach_alternative(html_content, "text/html")
 

@@ -158,12 +158,12 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         return redirect('bo.election_instance_view', self.eip.election_instance.id)
 
 class PartyContactWizard(MultiPathFormWizard):
-    def __init__(self, user_id=None, eip_id=None, *args, **kwargs):
+    def __init__(self, eip_id=None, user_id=None, *args, **kwargs):
         # Getting "user_id"
         try:
             self.eip = ElectionInstanceParty.objects.get(pk=eip_id)
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=user_id)
+            
 
             self.user_profile_dict = {
                 'name': {'first_name': self.user.profile.first_name, 'middle_name': self.user.profile.middle_name, 'last_name': self.user.profile.last_name, },
@@ -176,8 +176,8 @@ class PartyContactWizard(MultiPathFormWizard):
                 'address':  {'street': self.user.profile.street, 'number': self.user.profile.house_num, 'postalcode': self.user.profile.postcode, 'city': self.user.profile.town},
                 'website': self.user.profile.website,
             }
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
 
         step1_forms = dict(
             party_contact = ContactProfileForm

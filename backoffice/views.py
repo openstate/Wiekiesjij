@@ -24,25 +24,45 @@ from political_profiles import functions
 from political_profiles.forms import CsvUploadForm, CsvConfirmForm
 
 
-from backoffice.decorators import log_required, contact_required, staff_required, candidate_required, council_admin_required , party_admin_required 
+from backoffice.decorators import staff_required, candidate_required, council_admin_required , party_admin_required
 
 from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterestWizard, PoliticianProfileWorkWizard
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
-
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
-
 from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion
+
+from utils.exceptions import PermissionDeniedException
 
 from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
 
-# TODO: write descriptions to functions
+def permission_denied(request):
+    return render_to_response('backoffice/permission_denied.html', {'next': request.GET.get('next', None)}, context_instance=RequestContext(request))
+    
+@login_required
+def redirect_view(request):
+    if request.user.is_staff:
+        return redirect('bo.election_event')
+    elif request.user.profile.type == 'council_admin':
+        election_instance = request.user.councils.all()[0].election_instances.all()[0]
+        return redirect('bo.election_instance_view', id=election_instance.id )
+    elif request.user.profile.type == 'party_admin':
+        election_instance_party = request.user.parties.all()[0].election_instance_parties.all()[0]
+        return redirect('bo.election_party_view', id=election_instance_party.id)
+    else:
+        raise PermissionDeniedException()
 
-@contact_required
-def party_contact_wizard(request, user_id, eip_id):
-    return PartyContactWizard(user_id=user_id, eip_id=eip_id)(request)
+@party_admin_required
+def party_contact_wizard(request, id, user_id=None):
+    if user_id is None:
+        if request.user.profile is None or request.user.profile.type != 'party_admin':
+            raise PermissionDeniedException()
+        user_id = request.user.id
+        
+    return PartyContactWizard(user_id=user_id, eip_id=id)(request)
 
+@council_admin_required
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
@@ -61,6 +81,7 @@ def election_instance_grow(request, id):
     instance.save()
     return redirect('bo.election_instance_view', id=id)
 
+@party_admin_required
 def election_party_view(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
@@ -77,13 +98,13 @@ def election_party_edit(request, id):
     wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
 
-@council_admin_required
+@party_admin_required
 def election_party_up(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
-@council_admin_required
+@party_admin_required
 def election_party_down(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_down()
@@ -118,22 +139,6 @@ def candidate_down(request, id):
 @party_admin_required
 def election_party_add_candidate(request, id, pos):
     return AddCandidateWizard(id, pos)(request)
-
-@login_required
-def redirect_view(request):
-    if request.user.is_staff:
-        return redirect('bo.election_event')
-    elif request.user.profile.type == 'council_admin':
-        election_instance = request.user.councils.all()[0].election_instances.all()[0]
-        return redirect('bo.election_instance_view', id=election_instance.id )
-    elif request.user.profile.type == 'party_admin':
-        election_instance_party = request.user.parties.all()[0].election_instance_parties.all()[0]
-        return redirect('bo.election_party_view', id=election_instance_party.id)
-    else:
-        #election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
-        #return redirect('bo.election_event')
-        print 'you do not have access here'
-
 
 @staff_required
 def election_event(request):
@@ -416,10 +421,7 @@ def csv_import_candidates_step3(request, ep_id):
                         'email': candidate['email'],
                         'gender': candidate['gender'],
                     }
-                    created, candidate_obj = create_profile('candidate', tmp_data)
-
-                    if candidate_obj is None:
-                        continue
+                    candidate_obj = create_profile('candidate', tmp_data)
 
                     #Link candidate to party
                     candidacy = Candidacy(
@@ -456,11 +458,11 @@ def csv_import_candidates_step3(request, ep_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id}, context_instance=RequestContext(request))
 
-@council_admin_required
+@party_admin_required
 def csv_import_parties_step1(request, ei_id):
     return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id}, context_instance=RequestContext(request))
 
-@council_admin_required
+@party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
     if(request.FILES or request.POST):
         form = CsvUploadForm(request.POST, request.FILES)
@@ -482,7 +484,7 @@ def csv_import_parties_step2(request, ei_id, error = False):
     forms = dict({'csv_upload': form})
     return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id}, context_instance=RequestContext(request))
 
-@council_admin_required
+@party_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
     try:
@@ -505,18 +507,6 @@ def csv_import_parties_step3(request, ei_id):
             for party in parties:
                 try:
                     #Store data
-
-                    tmp_data = {
-                        'first_name': party['contact_first_name'],
-                        'middle_name': party['contact_middle_name'],
-                        'last_name': party['contact_last_name'],
-                        'email': party['contact_email'],
-                        'gender': party['contact_gender'],
-                    }
-                    created, contact = create_profile('party_admin', tmp_data)
-                    if contact is None:
-                        continue
-                        
                     party_obj = Party(
                         region = region,
                         level = level,
@@ -532,6 +522,15 @@ def csv_import_parties_step3(request, ei_id):
                         list_length = 10, #TODO, maybe add in CSV
                     )
                     eip_obj.save()
+
+                    tmp_data = {
+                        'first_name': party['contact_first_name'],
+                        'middle_name': party['contact_middle_name'],
+                        'last_name': party['contact_last_name'],
+                        'email': party['contact_email'],
+                        'gender': party['contact_gender'],
+                    }
+                    contact = create_profile('party_admin', tmp_data)
 
                     party_obj.contacts.add(contact.user)
                     party_obj.save()
@@ -575,7 +574,7 @@ def council_edit(request, id):
     election_instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance)(request)
 
-@candidate_required
+
 def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
         AnswerQuestion - wizard.
@@ -584,7 +583,6 @@ def answer_question(request, election_instance_party_id=None, user_id=None):
     '''
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-@candidate_required
 def answer_question_done(request):
     '''
         answer_question thanks page.

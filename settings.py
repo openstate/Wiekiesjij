@@ -72,6 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'utils.middleware.PermissionDeniedMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -122,6 +123,7 @@ EMAIL_FROM = 'info@wiekiesjij.eu'
 #login logout related
 LOGIN_URL = '/backoffice/login/'
 LOGIN_REDIRECT_URL = '/backoffice/redirect/'
+UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 
 
 try:
