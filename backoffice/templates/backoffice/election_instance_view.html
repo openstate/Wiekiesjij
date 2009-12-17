@@ -81,12 +81,13 @@
     
    	<div class="mod start-btn">
     	<div class="bd">
-		{% if user.profile %}
-			<a href="{% url bo.election_setup election_instance_id=instance.id  %}" class="btn start">Start setup wizard<br />for this election</a>
+		{% if user.is_staff %}
+			<a href="{% url bo.edit_election_instance id=instance.id %}" class="btn start">Start setup wizard<br />for this election</a>
+			<p>You can change the information below by starting the <a href="{% url bo.edit_election_instance id=instance.id %}">setup wizard.</a></p>
 		{% else %}
-			<a href="{% url bo.election_setup election_instance_id=instance.id  user_id=instance.council.chancery_id %}" class="btn start">Start setup wizard<br />for this election</a>
+			<a href="{% url bo.election_setup election_instance_id=instance.id  %}" class="btn start">Start setup wizard<br />for this election</a>
+			<p>You can change the information below by starting the <a href="{% url bo.election_setup election_instance_id=instance.id  %}">setup wizard.</a></p>
 		{% endif %}
-    		<p>You can change the information below by starting the <a href="{% if user.profile %}{% url bo.election_setup election_instance_id=instance.id %}{% else %}{% url bo.election_setup election_instance_id=instance.id  user_id=instance.council.chancery_id %}{% endif %}">setup wizard.</a></p>
         </div>
     </div>
     
