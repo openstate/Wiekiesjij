@@ -178,7 +178,7 @@ class ContactProfileForm(BetterForm, TemplateForm):
     '''
     name            = NameField(label=_('Name'))
     email           = forms.EmailField(label=_('E-Mail'))
-    description      = forms.CharField(label=_('description'), widget=forms.Textarea())
+    description     = forms.CharField(label=_('description'), widget=forms.Textarea())
     gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     #picture         = forms.ImageField(label=_('Picture'), required=False)
     website         = forms.URLField(label=_('Website'), help_text=_('Link to your website'))

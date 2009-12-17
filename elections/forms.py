@@ -192,7 +192,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
     website = forms.URLField(label=_('Party website'))
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
-    list_length = forms.CharField(label=_('Number of candidates in this election'))
+    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0)
     slogan = forms.CharField(label=_('Slogan'))
     #logo = forms.FileField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0)

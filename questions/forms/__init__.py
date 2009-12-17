@@ -65,6 +65,5 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
             pass #TODO raise error
 
     class Meta:
-        #model = Answer
         fields = ('value',)
 
