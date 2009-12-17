@@ -1,4 +1,3 @@
-import re
 from form_utils.forms import BetterForm, BetterModelForm
 
 from django import forms
@@ -196,17 +195,7 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.CharField(label=_('Number of candidates in this election'))
     slogan = forms.CharField(label=_('Slogan'))
     #logo = forms.FileField(_('Logo'))
-    num_seats = forms.CharField(label=_('Current number of seats'))
-
-    def clean_num_seats(self):
-        '''
-        Since we don't use modelforms we shall validate things here as well. This validates it as a positive integer.
-        '''
-        num_seats = self.cleaned_data['num_seats']
-        valid_number = re.compile('\d+')
-        if None == valid_number.match(num_seats):
-            raise forms.ValidationError(_('Should contain only digits'))
-        return self.cleaned_data['num_seats']
+    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0)
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     description = forms.CharField(label=_('Short description'))
