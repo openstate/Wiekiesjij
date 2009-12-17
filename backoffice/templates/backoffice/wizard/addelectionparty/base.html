@@ -1,13 +1,21 @@
 {% extends 'backoffice/wizard/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags backoffice_tags %}
 
 {% block title %}{% trans "Add a new party" %}{% endblock title %}
 {% block page-title %}{% trans "Add a new party" %}{% endblock page-title %}
 {% block back-link %}{% endblock back-link %}
 
 {% block breadcrumbs %}
-    <li><a href="/backoffice">[Election Event Name]</a></li>
-    <li><a href="/backoffice/election_instance/1">[Election Instance Name]</a></li>
+
+    {% if user.is_staff %}
+	<li><a href="{% url bo.election_event %}">{{ election_event.name }}</a></li>
+        <li><a href="{% url bo.election_instance_view instance.id  %}">{{ instance.council.region }}</a></li>
+    {% endif %}
+    {% ifprofile 'council_admin' %}
+	<li><a href="{% url bo.election_event %}">{{ election_event.name }}</a></li>
+        <li><a href="{% url bo.election_instance_view instance.id  %}">{{ instance.council.region }}</a></li>
+    {% endifprofile %}
+
 {% endblock breadcrumbs %}
 
 {% block wizard-steps %}
