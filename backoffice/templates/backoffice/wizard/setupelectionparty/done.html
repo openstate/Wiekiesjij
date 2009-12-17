@@ -1,7 +1,7 @@
 {% extends 'backoffice/wizard/setupelectionparty/base.html' %}
 {% load i18n %}
 
-{% block step_title %}You're finished!{% endblock step_title %}
+{% block step_title %}{% trans "You're finished!" %}{% endblock step_title %}
 
 {% block step1 %}<li><a href="#" class="history"><span class="number">1</span>{% trans "Contact information" %}</a></li>{% endblock step1 %}
 {% block step2 %}<li><a href="#" class="history"><span class="number">2</span>{% trans "Additional information" %}</a></li>{% endblock step2 %}
@@ -14,8 +14,8 @@
     	<h2>{% trans "You're done!" %}</h2>
     </div>
     <div class="bd">
-        <p>You have completed the initial setup for this party.</p>
-        <p><strong>Now you can start inviting candidates to fill in their profiles.</strong></p>
+        <p>{% trans 'You have completed the initial setup for this party.' %}</p>
+        <p><strong>{% trans 'Now you can start inviting candidates to fill in their profiles.' %}</strong></p>
    	</div>
 </div>
 {% endblock content %}
