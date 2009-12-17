@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+    ServerName wiekiesjij.eu
+    ServerAlias www.wiekiesjij.eu
+
+    ErrorLog /var/log/apache2/wiekiesjij.error.log
+
+    DocumentRoot /data/projects/wiekiesjij/media
+    Alias /media/ /data/projects/wiekiesjij/media/
+    
+    WSGIDaemonProcess wiekiesjij processes=1 threads=10
+    WSGIProcessGroup wiekiesjij
+
+    WSGIPassAuthorization On 
+    
+    WSGIScriptAlias / /data/projects/wiekiesjij/wsgi.py
+</VirtualHost>
