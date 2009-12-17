@@ -1,0 +1,12 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n utils_tags backoffice_tags %}
+
+
+{% block breadcrumbs %}
+{% if user.is_staff %}
+	<li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
+{% endif %}
+{% ifprofile 'council_admin' %}
+    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+{% endifprofile %}
+{% endblock breadcrumbs %}
