@@ -211,7 +211,7 @@ class Party(models.Model):
     address_postalcode  = models.CharField( ('Postalcode'), max_length=255, null=True, blank=True)
     address_city        = models.CharField( ('City'), max_length=255, blank=True, null=True)
     website     = models.CharField(_('Parties Website'), max_length=255, null=True, blank=True)
-    contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'), related_name=_('parties'))
+    contacts    = models.ManyToManyField(User, limit_choices_to=settings.CONTACT_LIMITATION, verbose_name=_('Contacts'), related_name='parties')
     slogan      = models.CharField(_('Slogan'), max_length=255, null=True, blank=True)
     telephone	= models.CharField(_('Phone Number'), max_length=255)
     email		= models.EmailField(_('E-Mail'), null=True, blank=True)
@@ -289,7 +289,7 @@ class ElectionInstanceParty(models.Model):
         A link between the party, the election instance and the candidates
     """
     election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
-    party = models.ForeignKey(Party, verbose_name=_('Party'), related_name=_('election_instance_parties'))
+    party = models.ForeignKey(Party, verbose_name=_('Party'), related_name='election_instance_parties')
     position = models.PositiveIntegerField(_('Party Position'))
     list_length = models.PositiveIntegerField(_('List length'))
 
