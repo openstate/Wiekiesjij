@@ -4,7 +4,10 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
+from django.utils.translation import ugettext_lazy as _
 
+from utils.exceptions import PermissionDeniedException
 from utils.multipathform import Step, MultiPathFormWizard
 
 from elections import settings
@@ -18,8 +21,6 @@ from invitations.models import Invitation
 
 from utils.graphformwizard import GraphFormWizard
 from utils.graphformwizard import Step as GStep
-from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
-from django.utils.translation import ugettext_lazy as _
 
 
 
@@ -245,8 +246,8 @@ class ElectionSetupWizard(GraphFormWizard):
             election_instance_id = kwargs['election_instance_id']
 
             # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            election_instance = get_object_or_404(ElectionInstance, id = election_instance_id)
-            user = get_object_or_404(User, id = user_id)
+            election_instance = get_object_or_404(ElectionInstance, id=election_instance_id)
+            user = get_object_or_404(User, id=user_id)
 
             ChanceryProfileClass = get_profile_model('council_admin')
             if user.profile.__class__ is not ChanceryProfileClass:
@@ -334,27 +335,22 @@ class ElectionSetupWizard2(MultiPathFormWizard):
     """
     def __init__(self, *args, **kwargs):
         # Getting "user_id" and "election_instance_id" passed to the Wizard.
-        try:
-            self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
-            
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
-            self.user = User.objects.get(id=self.user_id)
-            self.chancery_profile = self.user.profile
-            ChanceryProfileClass = get_profile_model('council_admin')
-            if ChanceryProfileClass.__name__ != self.user.profile.__class__.__name__:
-                raise Exception(_('Wrong authorization'))
-        except Exception, e:
-            raise e
-
+        self.user_id, self.election_instance_id = kwargs['user_id'], kwargs['election_instance_id']
+        
+        self.election_instance = get_object_or_404(ElectionInstance, pk=self.election_instance_id)
+        self.user = get_object_or_404(self.election_instance.council.chanceries, pk=self.user_id)
+        
+        if self.user.profile is None or self.user.profile.type != 'council_admin':
+            raise PermissionDeniedException('Wrong profile type')
+        self.chancery_profile = self.user.profile
         '''
         Loading forms and models from other applications.
         '''
         try:
             ChanceryProfileForm = get_profile_forms('council_admin', 'edit')[0]
             ChanceryContactInformationForm = get_profile_forms('council_admin', 'contact_information')[0]
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
 
         '''
         TODO for checkboxes we need to populate the data properly, because now it doesn't happen.
