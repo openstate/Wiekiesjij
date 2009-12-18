@@ -421,6 +421,7 @@ def csv_import_candidates_step3(request, ep_id):
         return redirect('bo.csv_candidates_step2', ep_id=ep_id, error='true')
 
     if(request.POST):
+        eip_obj = get_object_or_404(ElectionInstanceParty, party=ep_id)
         form = CsvConfirmForm(request.POST)
         if form.is_valid():
             for candidate in candidates:
@@ -441,7 +442,7 @@ def csv_import_candidates_step3(request, ep_id):
 
                     #Link candidate to party
                     candidacy = Candidacy(
-                        election_party_instance = get_object_or_404(ElectionInstanceParty, party=ep_id),
+                        election_party_instance = eip_obj,
                         candidate = candidate_obj.user,
                         position = candidate['position'],
                     )
@@ -458,6 +459,11 @@ def csv_import_candidates_step3(request, ep_id):
                         html_template = templates['html'],
                         plain_template = templates['plain'],
                     )
+
+                    max_pos = int(candidate['position'])
+                    if max_pos > eip_obj.list_length:
+                        eip_obj.list_length = max_pos
+                        eip_obj.save()
 
                 except Exception:
                     transaction.rollback()
@@ -566,6 +572,11 @@ def csv_import_parties_step3(request, ei_id):
                         html_template = templates['html'],
                         plain_template = templates['plain'],
                     )
+
+                    max_list = int(party['list'])
+                    if max_list > ei_obj.num_lists:
+                        ei_obj.num_lists = max_list
+                        ei_obj.save()
 
                 except Exception:
                     transaction.rollback()

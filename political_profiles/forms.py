@@ -1,4 +1,5 @@
 import datetime
+import mimetypes
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -362,10 +363,6 @@ class CsvUploadForm(BetterForm, TemplateForm):
 
     file = forms.FileField(required = True)
 
-    def clean_file(self):
-        if not self.cleaned_data['file'].content_type == 'text/csv':
-            raise forms.ValidationError(_('The file you tried to submit is not a CSV file'))
-    
 class CsvConfirmForm(BetterForm, TemplateForm):
     '''
     CsvConfirm admin
