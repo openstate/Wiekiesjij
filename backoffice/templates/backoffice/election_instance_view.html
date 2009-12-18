@@ -126,7 +126,7 @@
             {#<dt>{% trans "Picture" %}</dt>#}
             	{#<dd>[image here]</dd>#}
             <dt>{% trans "Number of seats" %}</dt>
-            	<dd>{{ instance.council.seats }}</dd>
+            	<dd>{{ instance.council.seats|default:"&ndash;" }}</dd>
         	<dt>{% trans 'History' %}</dt>
             	<dd>{{ instance.council.history|linebreaks|truncatewords_html:20|default:"&ndash;" }}</dd>
         </dl>
