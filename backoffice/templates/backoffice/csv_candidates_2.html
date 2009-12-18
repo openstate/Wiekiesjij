@@ -3,15 +3,11 @@
 
 {% block title %}{% trans 'Import multiple candidates' %}{% endblock title %}
 {% block page-title %}{% trans 'Import multiple candidates' %}{% endblock page-title %}
-{% block breadcrumbs %}
-	<li><a href="#">[Election Event Name]</a></li>
-	<li><a href="#">[Election Instance Name]</a></li>
-{% endblock breadcrumbs %}
 {% block back-link %}{% endblock back-link %}
 
 {% block content %}
 <div class="mod">
-	<h2>Select the file...</h2>
+	<h2>{% trans "Select the file..." %}</h2>
    	<p>
         {% trans "Select the CSV-file you made, by clicking on 'Browse' and selecting the file on your computer." %}
     </p>
@@ -27,7 +23,7 @@
         {% for form in forms.values %}
             {{ form.as_template }}
         {% endfor %}
-    	<h2>...And click the 'upload' button</h2>
+    	<h2>{% trans "...And click the 'upload' button" %}</h2>
         <div class="form-submit">
             <a href="{% url bo.election_party_view ep_id %}" class="cancel">{% trans "Cancel" %}</a>
             <button class="primary next" type="submit">{% trans "Upload the file" %}</button>
