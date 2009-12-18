@@ -214,7 +214,7 @@ class MultiPathFormWizard(object):
             forms = cur_step.get_forms(request.POST, request.FILES)
         else:
             forms = cur_step.get_forms()
-            
+        
         valid = True
         for name, form in forms.iteritems():
             valid &= form.is_valid()
@@ -281,7 +281,6 @@ class MultiPathFormWizard(object):
 
     def restore_previous_forms(self, request, current_path, str_path):
         """Verify hash and restore data"""
-
         path = []
         for i, step in enumerate(current_path):
             forms = step.get_forms(request.POST)

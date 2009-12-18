@@ -519,6 +519,36 @@ class DateTimePicker(forms.widgets.MultiWidget):
                 })
         return mark_safe(self.format_output(output))
     
+class HiddenDateTimePicker(DateTimePicker):
+    def __init__(self, *args, **kwargs):
+        super(HiddenDateTimePicker, self).__init__(*args, **kwargs)
+
+        self.widgets = (
+            forms.widgets.HiddenInput(),
+            forms.widgets.HiddenInput(),
+        )
+    
+    def render(self, name, value, attrs=None):
+        # value is a list of values, each corresponding to a widget
+        # in self.widgets.
+        if not isinstance(value, list):
+            value = self.decompress(value)
+        output = []
+        final_attrs = self.build_attrs(attrs)
+        id_ = final_attrs.get('id', None)
+
+        for i, widget in enumerate(self.widgets):
+            try:
+                widget_value = value[i]
+            except IndexError:
+                widget_value = None
+            if id_:
+                final_attrs = dict(final_attrs, id='%s_%s' % (id_, i))
+            if i == 1:                
+                output.append(widget.render(name + '_%s' % i, widget_value, final_attrs))
+            else:
+                output.append(widget.render(name + '_%s' % i, widget_value, final_attrs))
+        return mark_safe(self.format_output(output))
 
 class DatePicker(forms.widgets.TextInput):
     """

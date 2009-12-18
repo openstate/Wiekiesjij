@@ -4,7 +4,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from utils.widgets import AutoCompleter, ColorPicker, DatePicker, DateTimePicker
+from utils.widgets import AutoCompleter, ColorPicker, DatePicker, HiddenDateTimePicker, DateTimePicker
 from utils.fields import AddressField
 from utils.forms import TemplateForm
 
@@ -136,14 +136,13 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
 
-    start_date = forms.DateTimeField(label=_('When does this election take place?'), help_text=_('[Date] is the default date for [Election Event Name].'))
+    start_date = forms.DateTimeField(
+        label=_('When does this election take place?'), 
+        help_text=_('[Date] is the default date for [Election Event Name].'),
+        widget=DateTimePicker)
+    start_date.hidden_widget = HiddenDateTimePicker
     website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
-
-
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-        self.fields['start_date'].widget = DateTimePicker()
 
     class Meta:
         model = ElectionInstance
