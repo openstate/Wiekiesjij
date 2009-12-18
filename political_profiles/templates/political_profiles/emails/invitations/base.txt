@@ -2,5 +2,5 @@
 {% block content %}
 Geachte {{ invitation.user_to.profile.full_name }},
 
-http://localhost:8000{% url invitations.views.activate hash=invitation.hash %}
+http://79.125.22.198{% url invitations.views.activate hash=invitation.hash %}
 {% endblock content %}
