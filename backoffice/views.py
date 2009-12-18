@@ -70,13 +70,18 @@ def election_instance_view(request, id):
 @council_admin_required
 def election_instance_shrink(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
-    instance.num_lists -= 1
+    if instance.num_lists is None:
+        instance.num_lists = 0
+    else:
+        instance.num_lists -= 1
     instance.save()
     return redirect('bo.election_instance_view', id=id)
 
 @council_admin_required
 def election_instance_grow(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
+    if instance.num_lists is None:
+        instance.num_lists = 0
     instance.num_lists += 1
     instance.save()
     return redirect('bo.election_instance_view', id=id)
@@ -113,13 +118,18 @@ def election_party_down(request, id):
 @party_admin_required
 def election_party_shrink(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
-    eip.list_length -= 1
+    if eip.list_length is None:
+        eip.list_length = 0
+    else:
+        eip.list_length -= 1
     eip.save()
     return redirect('bo.election_party_view', id=id)
 
 @party_admin_required
 def election_party_grow(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    if eip.list_length is None:
+        eip.list_length = 0
     eip.list_length += 1
     eip.save()
     return redirect('bo.election_party_view', id=id)
