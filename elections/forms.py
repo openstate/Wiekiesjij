@@ -213,5 +213,5 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     description = forms.CharField(label=_('Short description'), widget = Textarea(), required = False)
     history = forms.CharField(label=_('Short history'), widget = Textarea(), required = False)
-    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea())
+    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), required = False)
     manifesto = forms.URLField(label=_('Link to the manifesto'), required = False)
