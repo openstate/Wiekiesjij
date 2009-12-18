@@ -83,12 +83,14 @@
    	<div class="mod start-btn">
     	<div class="bd">
 		{% if user.is_staff %}
-			<a href="{% url bo.edit_election_instance id=instance.id %}" class="btn start">Start setup wizard<br />for this election</a>
-			<p>You can change the information below by starting the <a href="{% url bo.edit_election_instance id=instance.id %}">setup wizard.</a></p>
+			{% url bo.edit_election_instance id=instance.id as setup_url %}
 		{% else %}
-			<a href="{% url bo.election_setup election_instance_id=instance.id  %}" class="btn start">Start setup wizard<br />for this election</a>
-			<p>You can change the information below by starting the <a href="{% url bo.election_setup election_instance_id=instance.id  %}">setup wizard.</a></p>
+		{% url bo.election_setup election_instance_id=instance.id as setup_url %}
 		{% endif %}
+		{% blocktrans with setup_url as setup_url %}
+			<a href="{{ setup_url }}" class="btn start">Start setup wizard<br />for this election</a>
+			<p>You can change the information below by starting the <a href="{{ setup_url }}">setup wizard.</a></p>
+		{% endblocktrans %}
         </div>
     </div>
     

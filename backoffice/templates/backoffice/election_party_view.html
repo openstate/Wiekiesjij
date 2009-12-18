@@ -77,7 +77,7 @@
     	<div class="bd">
     	<a href="{% url bo.election_party_edit eip.id %}" class="btn start">Start setup wizard<br />for this party</a>
         {% url bo.election_party_edit eip.id as url_election_party_edit %}
-        <p>{% blocktrans %}You can change the information below by starting the <a href="{{ url_election_party_edit }}">setup wizard.{% endblocktrans %}</a></p>
+        <p>{% blocktrans %}You can change the information below by starting the <a href="{{ url_election_party_edit }}">setup wizard.</a>{% endblocktrans %}</p>
         </div>
     </div>
     
