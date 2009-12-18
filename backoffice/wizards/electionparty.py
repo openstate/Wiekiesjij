@@ -176,7 +176,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
 class PartyContactWizard(MultiPathFormWizard):
     def __init__(self, eip_id, user_id, *args, **kwargs):
         self.eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
-        
+        self.election_instance = self.eip.election_instance
         self.user = get_object_or_404(self.eip.party.contacts, pk=user_id)
         
         if not self.user.profile or self.user.profile.type != 'party_admin':
@@ -212,19 +212,23 @@ class PartyContactWizard(MultiPathFormWizard):
         step1 = Step('party_contact',
                     forms=step1_forms,
                     template='backoffice/wizard/partycontact/step1.html',
-                    initial={'party_contact': self.user_profile_dict })
+                    initial={'party_contact': self.user_profile_dict },
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         step2 = Step('election_party_contact_form',
                     forms=step2_forms,
                     initial={'election_party_contact_form': initial},
-                    template='backoffice/wizard/partycontact/step2.html',)
+                    template='backoffice/wizard/partycontact/step2.html',
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         step3 = Step('election_party_additional_form',
                     forms=step3_forms,
                     initial={'election_party_additional_form': initial},
-                    template='backoffice/wizard/partycontact/step3.html',)
+                    template='backoffice/wizard/partycontact/step3.html',
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         step4 = Step('election_party_description_form',
                     forms=step4_forms,
                     initial={'election_party_description_form': initial},
-                    template='backoffice/wizard/partycontact/step4.html',)
+                    template='backoffice/wizard/partycontact/step4.html',
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
 
         template = 'backoffice/wizard/partycontact/base.html',
         super(PartyContactWizard, self).__init__(step1.next(step2.next(step3.next(step4))), template, *args, **kwargs)
