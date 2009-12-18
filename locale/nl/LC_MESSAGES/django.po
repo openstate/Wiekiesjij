@@ -941,15 +941,15 @@ msgstr ""
 
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:11
 msgid "Do you want to skip the council setup for this council?"
-msgstr "Wilt u het instellen van deze raad overslaan?"
+msgstr "Wilt u doorgaan met het instellen van deze raad?"
 
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:14
 msgid "Skip council setup"
-msgstr "Sla instellen van de raad over"
+msgstr "Opslaan"
 
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:15
 msgid "Start council setup"
-msgstr "Stel de raad in"
+msgstr "Opslaan en doorgaan"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/base.html:4
 #: backoffice/templates/backoffice/wizard/addelectionparty/base.html:5
