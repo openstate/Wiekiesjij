@@ -18,12 +18,15 @@
 
 
 {% block content %}
+
+{% if instance.council.profile_incomplete %}
 <div class="mod messages">
 	<h2>{% trans "Things you need to do:" %}</h2>
     <ul class="message-list">
-    {% if instance.council.profile_incomplete %}<li>{% trans 'You did not completely fill in the council profile.' %} <a href="{% url bo.edit_council instance.id %}" class="act">{% trans 'Do it now' %}</a></li>{% endif %}
+    {% if instance.council.profile_incomplete %}<li>{% trans 'You did not completely fill in the council profile.' %} <a href="{% url bo.edit_council instance.id %}" class="act">{% trans 'Do it now' %}</a></li> {% endif %}
     </ul>
 </div>
+{% endif %}
 
 <div class="mod overview parties">
 	<a href="{% url bo.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties via Excel / CSV' %}</a>

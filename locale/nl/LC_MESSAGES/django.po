@@ -514,7 +514,7 @@ msgstr "Wijzig partij profiel"
 
 #: backoffice/templates/backoffice/election_instance_view.html:49
 msgid "candidates"
-msgstr "Kandidaat"
+msgstr "kandidaten"
 
 #: backoffice/templates/backoffice/election_instance_view.html:49
 msgid "invited"

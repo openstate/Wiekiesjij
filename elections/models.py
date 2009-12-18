@@ -27,7 +27,7 @@ class Council(models.Model):
                                           blank=True)
     picture             = models.ImageField(_('Picture'), upload_to='media/council', null=True, blank=True,
                                      help_text=_("A picture that will be used when displaying council details."),)
-    desciption          = models.CharField(_('Description'), max_length=255, null=True, blank=True,
+    description          = models.CharField(_('Description'), max_length=255, null=True, blank=True,
                                            help_text=_("A short description of the council"),)
     history             = models.CharField(_('History'), max_length=255, help_text=_("A short history of the council"),
                                            null=True, blank=True)
@@ -48,7 +48,7 @@ class Council(models.Model):
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
 
     def profile_incomplete(self):
-        return not self.seats or not self.website or not self.picture or not self.description or not self.history
+        return not self.seats or not self.history
 
 class ElectionEvent(models.Model):
     """
@@ -59,7 +59,7 @@ class ElectionEvent(models.Model):
     name            = models.CharField(_('Name'), max_length=255)
     parent_region   = models.CharField(_('Parent region'), max_length=255) #autocomplete other electionevent regions
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
-    desciption  = models.CharField(_('Description'), max_length=255, null=True, blank=True)
+    description  = models.CharField(_('Description'), max_length=255, null=True, blank=True)
     question_due_period = models.PositiveIntegerField(_('Question due period')) #7
     profile_due_period = models.PositiveIntegerField(_('Profile due period')) #7
     candidate_due_period = models.PositiveIntegerField(_('Candidate due period')) #33
@@ -230,8 +230,8 @@ class Party(models.Model):
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
     def profile_incomplete(self):
-        return not self.website or not self.slogan or not self.email or not self.goals or not self.description or \
-               not self.history or not self.manifasto_summary or not self. manifesto or not self.logo
+        return not self.website or not self.slogan or not self.email or not self.description or \
+               not self.history or not self.manifasto_summary or not self. manifesto
 
     @property
     def address(self):

@@ -19,12 +19,14 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
+        {% if eip.party.profile_incomplete or not eip.party.contacts.count %}
 	<div class="mod messages">
         <ul class="message-list">
             {% if eip.party.profile_incomplete %}<li>{% trans 'You did not completely fill in the party profile.' %} <a href="{% url bo.election_party_edit eip.id %}">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
             {% if not eip.party.contacts.count %}<li>{% trans 'You did not assign a party contact yet.' %} <a href="{% url bo.party_contact_wizard eip.party.id %}">{% trans 'Do it now' %} &gt;</a></li>{% endif %}
         </ul>
    	</div>
+        {% endif %}
 
 	<div class="mod overview candidates">
         
