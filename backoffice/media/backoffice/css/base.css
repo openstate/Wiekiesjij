@@ -652,8 +652,9 @@
 				margin-right:0;
 				padding-right:0;
 				}
-				#wizardSteps li a,
-				#wizardSteps li span.future {
+				#wizardSteps li .history,
+				#wizardSteps li .active,
+				#wizardSteps li .future {
 					background:#E0E0E0;
 					display:block;
 					float:left;
@@ -664,7 +665,7 @@
 					text-decoration:none;
 					min-width:75px;
 					}
-				#wizardSteps li a.active {
+				#wizardSteps li .active {
 					background:#B9B9B9;
 					color:#000000;
 					font-weight:bold;
@@ -672,11 +673,11 @@
 				#wizardSteps li a.history:hover {
 					background:#cccccc;
 					}
-					#wizardSteps li a.active span.number,
-					#wizardSteps li a.history span.number {
+					#wizardSteps li .active span.number,
+					#wizardSteps li .history span.number {
 						color:#ED2227;
 						}
-				#wizardSteps li span.future {
+				#wizardSteps li .future {
 					background:#ECECEC;
 					color:#AAAAAA;
 					cursor:default;
