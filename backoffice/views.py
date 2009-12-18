@@ -64,7 +64,9 @@ def party_contact_wizard(request, id, user_id=None):
 
 @party_admin_required
 def party_contact_wizard_done(request, id):
-    return render_to_response('backoffice/partycontact/done.html', {'id': id}, context_instance=RequestContext(request))
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    
+    return render_to_response('backoffice/wizard/partycontact/done.html', {'eip': eip, 'instance': eip.election_instance}, context_instance=RequestContext(request))
     
     
 @council_admin_required

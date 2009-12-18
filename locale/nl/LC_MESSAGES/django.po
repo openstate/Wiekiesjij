@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-18 16:56+0100\n"
-"PO-Revision-Date: 2009-12-18 17:00+0100\n"
+"POT-Creation-Date: 2009-12-18 17:09+0100\n"
+"PO-Revision-Date: 2009-12-18 17:14+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -333,7 +333,7 @@ msgstr "E-mail"
 #: backoffice/templates/backoffice/csv_candidates_3.html:34
 #: backoffice/templates/backoffice/csv_parties_3.html:37
 msgid "Note:  invitations will not be sent right now. This will happen on [date]."
-msgstr "Opmerking: uitnodigingen worden nog niet verstuurd. Deze worden vanaf 24 december verstuurd."
+msgstr "Opmerking: Uitnodigingen worden verstuurd vanaf 24 december 2009."
 
 #: backoffice/templates/backoffice/csv_candidates_3.html:38
 msgid "Invite these candidates"
@@ -754,12 +754,12 @@ msgstr "Huidige aantal zetels"
 
 #: backoffice/templates/backoffice/election_party_view.html:104
 #: backoffice/templates/backoffice/wizard/election_setup/done.html:6
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:22
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:24
 #: backoffice/templates/backoffice/wizard/partycontact/done.html:7
 #: backoffice/templates/backoffice/wizard/partycontact/step2.html:7
 #: backoffice/templates/backoffice/wizard/partycontact/step3.html:7
 #: backoffice/templates/backoffice/wizard/partycontact/step4.html:7
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:22
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:23
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:6
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:6
 msgid "Contact information"
@@ -927,7 +927,7 @@ msgstr "Voeg een nieuwe partij toe"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/base.html:21
 msgid "Add a new party &amp; Invite a contact"
-msgstr "Een nieuwe partij voegen &amp; Contact uitnodigen"
+msgstr "Een nieuwe partij voegen <br/>&amp; een contactpersoon uitnodigen"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:7
 msgid "This contact will be invited to complete further setup for this party. If you want, you can skip the rest of the steps for fillng in this party."
@@ -939,11 +939,11 @@ msgstr "Wilt u het instellen van deze raad overslaan?"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:12
 msgid "Skip party setup"
-msgstr "Sla het instellen van de partij over"
+msgstr "Instellen van partij overslaan"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:13
 msgid "Start party setup"
-msgstr "Stel de partij in"
+msgstr "Partij instellen"
 
 #: backoffice/templates/backoffice/wizard/council/edit/base.html:5
 #: backoffice/templates/backoffice/wizard/council/edit/base.html:6
@@ -1014,7 +1014,7 @@ msgstr "Volgende: Styling"
 #: backoffice/templates/backoffice/wizard/council/edit/step4.html:16
 #: backoffice/templates/backoffice/wizard/election_setup/done.html:9
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:16
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:25
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:27
 #: backoffice/wizards/electioninstance.py:223
 msgid "Finish"
 msgstr "Afronden"
@@ -1053,21 +1053,21 @@ msgid "You're finished!"
 msgstr "U bent klaar"
 
 #: backoffice/templates/backoffice/wizard/election_setup/done.html:7
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:23
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:25
 #: backoffice/templates/backoffice/wizard/partycontact/done.html:8
 #: backoffice/templates/backoffice/wizard/partycontact/step3.html:8
 #: backoffice/templates/backoffice/wizard/partycontact/step4.html:8
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:23
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:24
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:7
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:7
 msgid "Additional information"
 msgstr "Overige informatie"
 
 #: backoffice/templates/backoffice/wizard/election_setup/done.html:8
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:24
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:26
 #: backoffice/templates/backoffice/wizard/partycontact/done.html:9
 #: backoffice/templates/backoffice/wizard/partycontact/step4.html:9
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:24
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:25
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:4
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:8
 msgid "Description &amp; History"
@@ -1122,7 +1122,7 @@ msgstr "Om dingen te versnellen, kun je hier alvast wat partijen toevoegen aan h
 msgid "Setup your party for this election"
 msgstr "Stel uw partij in voor deze verkiezing"
 
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:21
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:23
 #: backoffice/templates/backoffice/wizard/partycontact/done.html:6
 #: backoffice/templates/backoffice/wizard/partycontact/step1.html:4
 #: backoffice/templates/backoffice/wizard/partycontact/step1.html:6
@@ -1664,7 +1664,7 @@ msgstr "Wanneer vindt de verkiezing plaats?"
 
 #: elections/forms.py:145
 msgid "Election Website"
-msgstr "Website van de verkiezing"
+msgstr "Verkiezingswebsite"
 
 #: elections/forms.py:145
 msgid "If your council has a website dedicated to this election, you can specify the URL here."
@@ -1692,15 +1692,15 @@ msgstr "Modules"
 #: elections/forms.py:192
 #: elections/forms.py:199
 msgid "Full party name"
-msgstr "Volledige partij naam"
+msgstr "Volledige partijnaam"
 
 #: elections/forms.py:192
 msgid "What is the full name of the party?"
-msgstr "Wat is de volledige naam van uw partij"
+msgstr "Wat is de volledige naam van uw partij?"
 
 #: elections/forms.py:193
 msgid "Abbreviated Party Name"
-msgstr "Afkorting van partij naam"
+msgstr "Afkorting van partijnaam"
 
 #: elections/forms.py:199
 msgid "What is the full name of your party?"
@@ -2243,11 +2243,11 @@ msgstr "Selecteer als u hetzelfde adres wilt gebruiken als het adres van de raad
 
 #: political_profiles/forms.py:145
 msgid "Invite the administrative contact for this party:"
-msgstr "Nodig de administratieve contactpersoon voor deze partij uit:"
+msgstr "Nodig de administratieve contactpersoon uit:"
 
 #: political_profiles/forms.py:146
 msgid "This contact will be invited to complete further setup for this party."
-msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze partij in te voeren."
+msgstr "Deze contactpersoon zal uitgenodigd worden om verdere gegevens voor deze partij in te voeren."
 
 #: political_profiles/forms.py:198
 #: political_profiles/forms.py:207

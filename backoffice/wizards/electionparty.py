@@ -285,5 +285,5 @@ class PartyContactWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('bo.election_party_view', self.eip.id)
+        return redirect('bo.party_contact_wizard_done', self.eip.id)
 
