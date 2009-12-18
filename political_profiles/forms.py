@@ -7,7 +7,7 @@ from django.forms.extras.widgets import SelectDateWidget
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.forms import TemplateForm
 
-from utils.widgets import DateTimePicker
+from utils.widgets import DateTimePicker, HiddenDateTimePicker
 
 from utils.fields import NameField, AddressField
 
@@ -306,6 +306,7 @@ class AppearanceForm(BetterModelForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
         self.fields['datetime'].widget = DateTimePicker()
+        self.fields['datetime'].hidden_widget = HiddenDateTimePicker
 
     class Meta:
         model = Appearance
