@@ -4,6 +4,7 @@
 {% block title %}{% trans 'Add a candidate' %}{% endblock title %}
 {% block page-title %}{% trans 'Add a candidate' %}{% endblock page-title %}
 
+{% block back-link %}{% endblock back-link %}
 
 {% block breadcrumbs %}
 {% if user.is_staff %}
@@ -13,3 +14,6 @@
     <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
 {% endifprofile %}
 {% endblock breadcrumbs %}
+
+{% block wizard-steps %}
+{% endblock wizard-steps %}

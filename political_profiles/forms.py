@@ -49,16 +49,6 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
     email = forms.EmailField(_('Email'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    
-    class Meta:
-        fieldsets = (
-                        ('main', {
-                            'fields': ('name','email','gender'), 
-                            'legend': _('Invite'),
-                            'classes': ('sub-form','invite',)
-                        }
-                    ),
-                )
         
     
     def clean_email(self):

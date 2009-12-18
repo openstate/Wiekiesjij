@@ -1,5 +1,8 @@
 {% extends 'backoffice/wizard/addcandidate/base.html' %}
 {% load i18n %}
+
+{% block step_title %}{% trans "Invite a candidate for this position" %}{% endblock step_title %}
+
 {% block buttons %}
 
 	<p>{% trans 'Note:  invitations will not be sent right now. This will happen later ' %}</p>
@@ -7,7 +10,7 @@
     <div class="form-submit">
             <a href="{% url bo.election_party_view instance.id %}" class="cancel">{% trans 'Cancel' %}</a>
 
-            <button class="primary next" type="submit" name="invite" value="invite">{% trans 'Invite' %}</button>
+            <button class="primary next" type="submit" name="invite" value="invite">{% trans 'Invite this candidate' %}</button>
             {# <!-- <button type="submit" name="invite_another" value="invite_another">{% trans 'Invite & add another candidate' %}</button> --> #}
             
 	</div>

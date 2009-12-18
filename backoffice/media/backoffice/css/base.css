@@ -825,6 +825,7 @@
 				div.move {
 					clear:both;
 					overflow:hidden;_zoom:1;
+					padding-top:5px;
 					}	
 					.move-up,
 					.move-down {
