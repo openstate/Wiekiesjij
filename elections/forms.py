@@ -179,14 +179,14 @@ class PartyForm(BetterModelForm, TemplateForm):
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Full party name'), help_text=_('What is the full name of the party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=_("E.g. 'PvdA' or 'CDA'"), required=False)
+    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), required=False)
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
     
     
 class ElectionPartyContactForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=_('What is the full name of your party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated party name'), help_text=_("E.g. 'PvdA' or 'CDA'"))
+    abbreviation = forms.CharField(label=_('Abbreviated party name'), required=False)
     address = AddressField(label=_('Address'))
     email = forms.EmailField(label=_('E-mail address'))
     telephone = forms.CharField(label=_('Phone number'))
