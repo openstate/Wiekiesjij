@@ -102,8 +102,9 @@ class PoliticianProfile(Profile):
     picture         = models.ImageField(_('Picture'), upload_to='media/politician', null=True, blank=True)
     movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
                                       help_text=_('Link to YouTube video'))
-    introduction    = models.CharField(_('Introduction'), max_length=2550, null=True, blank=True)
-    motivation      = models.CharField(_('Motivation'), max_length=2550, null=True, blank=True)
+                                      
+    introduction    = models.TextField(_('Introduction'), blank=True, null=True)
+    motivation    = models.TextField(_('Motivation'), blank=True, null=True)
     #hobby = models.CharField(_('Hobbies'), max_length=255)
     #charity = models.CharField(_('Favourite Charities'), max_length=255)
     #pets =  models.CharField(_('Pets'), max_length=255)
@@ -185,8 +186,8 @@ class Link(models.Model):
         A class to hold links the politician has
     """
     name        = models.CharField(_('Name'), max_length=255)
-    url         = models.CharField(_('URL'), max_length=255)
-    description	= models.CharField(_('Description'), max_length=2550)
+    url         = models.URLField(_('URL'), verify_exists=True)
+    description	= models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, related_name='links', verbose_name=_('Politician') )
 
     class Meta:
@@ -198,8 +199,8 @@ class Connection(models.Model):
         A class to hold links the politician has
     """
     type        = models.ForeignKey(ConnectionType, verbose_name=_('Type'), null=True, blank=True)
-    url         = models.CharField(_('URL'), max_length=255)
-    description	= models.CharField(_('Description'), max_length=2550)
+    url         = models.URLField(_('URL'), verify_exists=True)
+    description	= models.TextField(_('Description'), null=True, blank=True)
     politician  = models.ForeignKey(PoliticianProfile, related_name='connections', verbose_name=_('Politician') )
 
     class Meta:
@@ -210,8 +211,8 @@ class Interest(models.Model):
         A class to hold an interest of the politician
     """
     organization    = models.CharField(_('Organisation Name'), max_length=255)
-    url             = models.CharField(_('URL'), max_length=255)
-    description     = models.CharField(_('Description'), max_length=2550)
+    url             = models.URLField(_('URL'), verify_exists=True)
+    description     = models.TextField(_('Description'), null=True, blank=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='interests')
 
     class Meta:
@@ -223,8 +224,8 @@ class Appearance(models.Model):
     """
     name        = models.CharField(_('Affiliated Organisation Name'), max_length=255)
     location	= models.CharField(_('Location'), max_length=255)
-    url         = models.CharField(_('URL'), max_length=255)
-    description = models.CharField(_('Description'), max_length=2550)
+    url         = models.URLField(_('URL'), verify_exists=True, null=True, blank=True)
+    description = models.TextField(_('Description'), null=True, blank=True)
     datetime    = models.DateTimeField(_('Date and Time of Appearance'), null=True, blank=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='appearances')
 
@@ -241,7 +242,7 @@ class WorkExperience(models.Model):
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
     enddate         = models.DateField(_('End Date'), null=True, blank=True)
     current         = models.BooleanField(_('Currently Employed'), default=False)
-    description     = models.CharField(_('Description'), max_length=2550)
+    description     = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='work')
 
     class Meta:
@@ -256,7 +257,7 @@ class Education(models.Model):
     field       = models.CharField(_('Field'), max_length=255)
     startdate   = models.DateField(_('Start Date'), null=True, blank=True)
     enddate     = models.DateField(_('End Date'), null=True, blank=True)
-    description = models.CharField(_('Description'), max_length=2550)
+    description = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='education')
 
     class Meta:
@@ -271,7 +272,7 @@ class PoliticalExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
     enddate         = models.DateField(_('End Date'), null=True, blank=True)
-    description     = models.CharField(_('Description'), max_length=2550)
+    description     = models.TextField(_('Description'), blank=True, null=True)
     politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='political')
     #tags            = TagField()
     class Meta:

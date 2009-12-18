@@ -272,12 +272,12 @@ class Migration:
         },
         'political_profiles.appearance': {
             'datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'appearances'", 'to': "orm['political_profiles.PoliticianProfile']"}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         'political_profiles.chanceryprofile': {
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
@@ -297,11 +297,11 @@ class Migration:
             'workingdays': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'political_profiles.connection': {
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'connections'", 'to': "orm['political_profiles.PoliticianProfile']"}),
             'type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['political_profiles.ConnectionType']", 'null': 'True', 'blank': 'True'}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'political_profiles.connectiontype': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -325,7 +325,7 @@ class Migration:
             'workingdays': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'political_profiles.education': {
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'enddate': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'field': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -339,21 +339,21 @@ class Migration:
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'political_profiles.interest': {
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'organization': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'interests'", 'to': "orm['political_profiles.PoliticianProfile']"}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'political_profiles.link': {
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'links'", 'to': "orm['political_profiles.PoliticianProfile']"}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'political_profiles.politicalexperience': {
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'enddate': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'organisation': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -372,10 +372,10 @@ class Migration:
             'gender': ('django.db.models.fields.CharField', [], {'default': "'Male'", 'max_length': '25'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'initials': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'introduction': ('django.db.models.fields.CharField', [], {'max_length': '2550', 'null': 'True', 'blank': 'True'}),
+            'introduction': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
-            'motivation': ('django.db.models.fields.CharField', [], {'max_length': '2550', 'null': 'True', 'blank': 'True'}),
+            'motivation': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'movie': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'politicianprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
@@ -390,7 +390,7 @@ class Migration:
         'political_profiles.workexperience': {
             'company_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'current': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '2550'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'enddate': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'work'", 'to': "orm['political_profiles.PoliticianProfile']"}),
