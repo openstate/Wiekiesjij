@@ -1,14 +1,23 @@
 {% extends 'backoffice/wizard/partycontact/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans 'Welcome' %}{% endblock step_title %}
-
 {% block step1 %}<li><span class="active"><span class="number">1</span>{% trans "Welcome" %}</span></li>{% endblock step1 %}
+
+{% block step_title %}{% trans "Welcome party contact!" %}{% endblock step_title %}
+
+{% block help-message %}
+<p>
+{% blocktrans %}
+This wizard will lead you through the process of setting up WieKiesJij? for your party. <br /><br />
+First we'll need some contact information from you.
+{% endblocktrans %}
+</p>
+{% endblock help-message %}
 
 
 {% block buttons %}
 	<div class="form-submit">
-		<button class="primary next" type="submit">{% trans 'Next: Additional info' %}</button>
+		<button class="primary next" type="submit">{% trans 'Next: Party info' %}</button>
         <a href="{% url bo.election_party_view eip.id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}

@@ -168,8 +168,8 @@ class ContactProfileForm(BetterForm, TemplateForm):
     Contact Profile admin
     '''
     name            = NameField(label=_('Name'))
-    telephone       = forms.CharField(_('Phone Number'))
-    gender          = forms.CharField(label=_('gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+    telephone       = forms.CharField(label=_('Phone Number'))
+    gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     workingdays     = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=DAYS,)
 
 
