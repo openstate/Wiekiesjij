@@ -138,11 +138,8 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
      ElectionInstance admin
     '''
-
-    tagre = re.compile('\[\[([a-zA-Z0-9_]+)\]\]')
     start_date = forms.DateTimeField(
         label=_('When does this election take place?'), 
-        help_text=_('[[def_date]] is the default date for [[ev_name]].'),
         widget=DateTimePicker)
     start_date.hidden_widget = HiddenDateTimePicker
     website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
@@ -153,12 +150,10 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
 
         if 'instance' in kwargs:
             s = kwargs['instance']
-            dc = {
-                'def_date': strdate(s.election_event.default_date),
+            self.fields['start_date'].help_text = _('%(def_date)s is the default date for %(ev_name)s.') % {
+                'def_date': s.election_event.default_date.strftime('%d-%m-%Y'),
                 'ev_name': s.election_event.name,
             }
-            (new_help, repl) = self.tagre.subn(lambda mto: dc[mto.group(1)], unicode(self.fields['start_date'].help_text))
-            self.fields['start_date'].help_text = new_help
 
 
     class Meta:
