@@ -30,7 +30,6 @@ def accept(request, hash):
         return redirect(invitation.view)
         
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
         form = AcceptInvitationForm(data=request.POST)
         if form.is_valid():
             user = invitation.user_to   
