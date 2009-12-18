@@ -204,7 +204,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
     website = forms.URLField(label=_('Party website'))
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
-    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'))
+    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'), required = False)
     slogan = forms.CharField(label=_('Slogan'), required = False)
     #logo = forms.FileField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'), required = False)

@@ -101,7 +101,7 @@ class ElectionInstance(models.Model):
     start_date      = models.DateTimeField(_('Start Date'))
     end_date        = models.DateTimeField(_('End Date'))
     wizard_start_date = models.DateTimeField(_('Wizard start date'))
-    num_lists       = models.PositiveIntegerField(_('Number of lists'), null=True, blank=True)
+    num_lists       = models.PositiveIntegerField(_('Number of lists'), default = 0)
     website         = models.URLField(_('Elections Website'), max_length=255, verify_exists=True, null=True, blank=True)
     modules         = models.ManyToManyField('ElectionInstanceModule', verbose_name=_('Modules'), null=True, blank=True)
 
@@ -231,8 +231,7 @@ class Party(models.Model):
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
     def profile_incomplete(self):
-        return not self.website or not self.slogan or not self.email or not self.description or \
-               not self.history or not self.manifasto_summary or not self. manifesto
+        return not self.website or not self.slogan or not self.email or not self.manifesto_summary
 
     @property
     def address(self):
