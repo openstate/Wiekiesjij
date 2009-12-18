@@ -104,6 +104,12 @@ def election_party_edit(request, id):
     return wizard(request)
 
 @party_admin_required
+def election_party_edit_done(request, id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    return render_to_response('backoffice/wizard/setupelectionparty/done.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
+
+
+@party_admin_required
 def election_party_up(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()

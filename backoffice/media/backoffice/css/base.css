@@ -366,7 +366,10 @@
 					div.form-submit button:hover {
 						background-color:#b9b9b9;
 						}
-						
+					div.form-submit a.button {
+					border:2px solid #ccc;
+                                        text-decoration: none;
+                                        }
 				div.form-submit button.primary,
 				div.form-submit a.primary {
 					border-color:#666;

@@ -8,7 +8,10 @@
 {% block step3 %}<li><a href="#" class="history"><span class="number">3</span>{% trans "Description &amp; History" %}</a></li>{% endblock step3 %}
 {% block step4 %}<li><a href="#" class="active"><span class="number">4</span>{% trans "Finish" %}</a></li>{% endblock step4 %}
 
+{% block cols %}
+<div class="col size1of2">
 {% block content %}
+{{ block.super }}
 <div class="mod">
 	<div class="hd">
     	<h2>{% trans "You're done!" %}</h2>
@@ -17,11 +20,16 @@
         <p>{% trans 'You have completed the initial setup for this party.' %}</p>
         <p><strong>{% trans 'Now you can start inviting candidates to fill in their profiles.' %}</strong></p>
    	</div>
+    {% block buttons %}
+	<div class="form-submit">
+          
+		<a href="{% url bo.election_party_view eip.id %}" class="primary next button" >{% trans 'Finish &amp; Start inviting candidates' %}</a>
+	</div>
+    {% endblock buttons %}
 </div>
 {% endblock content %}
 
-{% block buttons %}
-	<div class="form-submit">
-		<button class="primary next" type="submit">{% trans 'Finish &amp; Start inviting candidates' %}</button>
-	</div>
-{% endblock buttons %}
+
+
+</div>
+{% endblock cols %}

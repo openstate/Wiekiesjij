@@ -112,6 +112,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         step3_forms = dict(
             election_party_description_form=ElectionPartyDescriptionForm
         )
+        step4_forms = dict()
 
         initial = eip.party.__dict__
         initial.update({'list_length': eip.list_length})
@@ -132,6 +133,8 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
                     initial={'election_party_description_form': initial},
                     template='backoffice/wizard/setupelectionparty/step3.html',
                     extra_context={'instance':self.election_instance, 'eip':self.eip })
+
+
         template = 'backoffice/wizard/election_party_setup/base.html',
         super(ElectionPartyEditWizard, self).__init__(step1.next(step2.next(step3)), template, *args, **kwargs)
 
@@ -167,7 +170,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         self.eip.list_length = int(data['list_length'])
         self.eip.save()
 
-        return redirect('bo.election_party_view', self.eip.party.id)
+        return redirect('bo.election_party_edit_done', self.eip.party.id)
 
 class PartyContactWizard(MultiPathFormWizard):
     def __init__(self, eip_id, user_id, *args, **kwargs):

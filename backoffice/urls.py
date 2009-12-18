@@ -38,6 +38,7 @@ urlpatterns += patterns('backoffice.views',
     
     url(r'^party/(?P<id>\d+)/$', 'election_party_view', name='bo.election_party_view'),
     url(r'^party/(?P<id>\d+)/edit/$', 'election_party_edit', name='bo.election_party_edit'),
+    url(r'^party/(?P<id>\d+)/edit/done$', 'election_party_edit_done', name='bo.election_party_edit_done'),
     url(r'^party/(?P<id>\d+)/up/$', 'election_party_up', name='bo.election_party_up'),
     url(r'^party/(?P<id>\d+)/down/$', 'election_party_down', name='bo.election_party_down'),
     url(r'^party/(?P<id>\d+)/shrink/$', 'election_party_shrink', name='bo.election_party_shrink'),
