@@ -1,4 +1,4 @@
-{% extends 'backoffice/wizard/setupelectionparty/base.html' %}
+{% extends 'backoffice/wizard/election_setup/base.html' %}
 {% load i18n %}
 
 {% block step_title %}{% trans "You're finished!" %}{% endblock step_title %}
@@ -17,8 +17,8 @@
     	<h2>{% trans "You're done!" %}</h2>
     </div>
     <div class="bd">
-        <p>{% trans 'You have completed the initial setup for this party.' %}</p>
-        <p><strong>{% trans 'Now you can start inviting candidates to fill in their profiles.' %}</strong></p>
+        <p>{% trans 'You have completed the initial setup for this election.' %}</p>
+        <p><strong>{% trans 'Now you can start inviting parties to fill in their candidates and profiles.' %}</strong></p>
    	</div>
     {% block buttons %}
 	<div class="form-submit">
