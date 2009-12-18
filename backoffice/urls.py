@@ -22,6 +22,7 @@ urlpatterns += patterns('backoffice.views',
     
     #Chancery Wizard
     url(r'^election/(?P<election_instance_id>\d+)/setup/$', 'election_setup', name='bo.election_setup'),
+    url(r'^election/(?P<election_instance_id>\d+)/setup/done/$', 'election_setup_done', name='bo.election_setup_done'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/(?P<user_id>\d+)/$', 'election_setup', name='bo.election_setup'),
 
     #Staff Views
@@ -33,8 +34,9 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election/(?P<id>\d+)/grow/$', 'election_instance_grow', name='bo.election_instance_grow'),
     
     #Party Contact Wizard
-   url(r'^party/(?P<id>\d+)/setup/(?P<user_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
-   url(r'^party/(?P<id>\d+)/setup/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+    url(r'^party/(?P<id>\d+)/setup/(?P<user_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+    url(r'^party/(?P<id>\d+)/setup/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
+    url(r'^party/(?P<id>\d+)/setup/done/$', 'party_contact_wizard_done', name='bo.party_contact_wizard_done'),
     
     url(r'^party/(?P<id>\d+)/$', 'election_party_view', name='bo.election_party_view'),
     url(r'^party/(?P<id>\d+)/edit/$', 'election_party_edit', name='bo.election_party_edit'),

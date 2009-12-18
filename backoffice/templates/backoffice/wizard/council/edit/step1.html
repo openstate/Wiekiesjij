@@ -1,2 +1,15 @@
-{% extends 'backoffice/wizard/addelection/base.html' %}
+{% extends 'backoffice/wizard/council/edit/base.html' %}
 {% load i18n %}
+
+{% block step_title %}{% trans "Details about this election" %}{% endblock step_title %}
+
+{% block step1 %}<li><a href="#" class="history"><span class="number">1</span>{% trans "Registration" %}</a></li>{% endblock step1 %}
+{% block step2 %}<li><a href="#" class="active"><span class="number">2</span>{% trans "This Election" %}</a></li>{% endblock step2 %}
+
+
+{% block buttons %}
+	<div class="form-submit">
+        <a href="{% url bo.election_instance_view instance.id %}" class="cancel">{% trans "Cancel" %}</a>
+		<button class="primary next" type="submit">{% trans "Next: The Council" %}</button>
+	</div>
+{% endblock buttons %}

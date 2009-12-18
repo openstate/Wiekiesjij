@@ -189,6 +189,11 @@ def election_setup(request, election_instance_id, user_id=None):
 
     return ElectionSetupWizard2(election_instance_id=election_instance_id, user_id=user_id)(request)
 
+@council_admin_required
+def election_setup_done(request, election_instance_id):
+    election_instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
+    return render_to_response('backoffice/wizard/election_setup/done.html', {'instance': election_instance}, context_instance=RequestContext(request))
+
 @candidate_required
 def politician_welcome(request, election_instance_id):
     user_id = request.user.id

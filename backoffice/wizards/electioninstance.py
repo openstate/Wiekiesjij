@@ -176,8 +176,8 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         else:
             transaction.commit()
         
-        if request.POST.get('back', None) is not None:
-            return redirect('bo.election_event')
+        if request.POST.get('skip', None) is not None:
+            return redirect('bo.election_instance_view', id=ei.id)
         
         return redirect('bo.edit_council', id=ei.id)
         
@@ -517,7 +517,4 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None):
-            return redirect('bo.election_instance_view', id=self.election_instance.pk)
-        
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.election_setup_done', election_instance_id=self.election_instance.pk)

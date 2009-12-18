@@ -112,7 +112,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         step3_forms = dict(
             election_party_description_form=ElectionPartyDescriptionForm
         )
-        step4_forms = dict()
+      
 
         initial = eip.party.__dict__
         initial.update({'list_length': eip.list_length})
