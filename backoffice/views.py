@@ -62,6 +62,11 @@ def party_contact_wizard(request, id, user_id=None):
         
     return PartyContactWizard(user_id=user_id, eip_id=id)(request)
 
+@party_admin_required
+def party_contact_wizard_done(request, id):
+    return render_to_response('backoffice/partycontact/done.html', {'id': id}, context_instance=RequestContext(request))
+    
+    
 @council_admin_required
 def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
@@ -102,12 +107,6 @@ def election_party_edit(request, id):
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
-
-@party_admin_required
-def election_party_edit_done(request, id):
-    eip = get_object_or_404(ElectionInstanceParty, pk=id)
-    return render_to_response('backoffice/wizard/setupelectionparty/done.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
-
 
 @party_admin_required
 def election_party_up(request, id):

@@ -1,9 +1,28 @@
 {% extends 'backoffice/wizard/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags backoffice_tags %}
 
-{% block title %}{% trans 'Party Contact Wizard' %}{% endblock title %}
-{% block page-title %}{% trans 'Party Contact Wizard' %}{% endblock page-title %}
 
+{% block title %}{% trans 'Setup your party for this election' %}{% endblock title %}
+{% block page-title %}{% trans 'Setup your party for this election' %}{% endblock page-title %}
 {% block breadcrumbs %}
-    <li><a href="{% url bo.redirect %}">{% trans 'Party Contact Home' %}</a></li>
+    {% if user.is_staff %}
+            <li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
+    {% endif %}
+
+    {% ifprofile 'party_admin' %}
+        	<li><a href="{% url bo.election_party_view eip.id %}" class="cancel">{{ eip.party.name }}</a></li>
+    {% endifprofile %}
+
 {% endblock breadcrumbs %}
+{% block back-link %}{% endblock back-link %}
+
+{% block wizard-steps %}
+	<ul id="wizardSteps">
+		{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Welcome" %}</span></li>{% endblock step1 %}
+    	{% block step2 %}<li><span class="future"><span class="number">2</span>{% trans "Contact information" %}</span></li>{% endblock step2 %}
+        {% block step3 %}<li><span class="future"><span class="number">3</span>{% trans "Additional information" %}</span></li>{% endblock step3 %}
+        {% block step4 %}<li><span class="future"><span class="number">4</span>{% trans "Description &amp; History" %}</span></li>{% endblock step4 %}
+        {% block step5 %}<li><span class="future"><span class="number">5</span>{% trans "Finish" %}</span></li>{% endblock step5 %}
+    </ul>
+{% endblock wizard-steps %}
+

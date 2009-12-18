@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-18 14:36+0100\n"
-"PO-Revision-Date: 2009-12-18 15:49+0100\n"
+"POT-Creation-Date: 2009-12-18 16:56+0100\n"
+"PO-Revision-Date: 2009-12-18 17:00+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -74,24 +74,25 @@ msgid "You are not logged in"
 msgstr "U bent niet ingelogd"
 
 #: backoffice/templates/backoffice/base.html:40
-#: backoffice/templates/backoffice/login.html:45
+#: backoffice/templates/backoffice/login.html:15
+#: backoffice/templates/backoffice/login.html:51
 msgid "Login"
 msgstr "Inloggen"
 
-#: backoffice/templates/backoffice/base.html:45
+#: backoffice/templates/backoffice/base.html:46
 msgid "Wie Kies Jij?"
 msgstr "Wie Kies Jij?"
 
-#: backoffice/templates/backoffice/base.html:71
+#: backoffice/templates/backoffice/base.html:73
 msgid "We can reach you on"
 msgstr "We kunnen u bereiken op"
 
-#: backoffice/templates/backoffice/base.html:72
+#: backoffice/templates/backoffice/base.html:74
 #: backoffice/templates/backoffice/election_instance_view.html:168
 msgid "edit"
 msgstr "wijzigen"
 
-#: backoffice/templates/backoffice/base.html:88
+#: backoffice/templates/backoffice/base.html:90
 msgid "and"
 msgstr "en"
 
@@ -149,7 +150,7 @@ msgstr "Kolom"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:31
 #: backoffice/templates/backoffice/csv_candidates_3.html:8
-#: elections/models.py:258
+#: elections/models.py:257
 #: political_profiles/forms.py:227
 #: political_profiles/forms.py:250
 #: political_profiles/models.py:241
@@ -170,7 +171,7 @@ msgstr "Achternaam"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:32
 msgid "The family name of the candidate."
-msgstr "De achternaam van de kanidaat"
+msgstr "De achternaam van de kandidaat"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:33
 msgid "Middle Name (optional)"
@@ -276,6 +277,10 @@ msgstr "Volgende: Stuur het CSV bestand terug"
 #: backoffice/templates/backoffice/wizard/addcandidate/step1.html:11
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:13
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:14
+#: backoffice/templates/backoffice/wizard/council/edit/step1.html:12
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:13
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:14
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:15
 #: backoffice/templates/backoffice/wizard/editelection/step1.html:10
 #: backoffice/templates/backoffice/wizard/election_setup/base.html:62
 #: backoffice/templates/backoffice/wizard/election_setup/step1.html:21
@@ -283,6 +288,10 @@ msgstr "Volgende: Stuur het CSV bestand terug"
 #: backoffice/templates/backoffice/wizard/election_setup/step3.html:13
 #: backoffice/templates/backoffice/wizard/election_setup/step4.html:14
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:15
+#: backoffice/templates/backoffice/wizard/partycontact/step1.html:12
+#: backoffice/templates/backoffice/wizard/partycontact/step2.html:13
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:13
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:14
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:12
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:14
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:14
@@ -314,7 +323,7 @@ msgid "Middle name"
 msgstr "Tussenvoegsel"
 
 #: backoffice/templates/backoffice/csv_candidates_3.html:13
-#: backoffice/templates/backoffice/login.html:26
+#: backoffice/templates/backoffice/login.html:32
 #: political_profiles/forms.py:50
 #: political_profiles/forms.py:74
 #: political_profiles/forms.py:138
@@ -376,7 +385,7 @@ msgstr "Lijst"
 
 #: backoffice/templates/backoffice/csv_parties_3.html:9
 #: backoffice/templates/backoffice/election_instance_view.html:114
-#: backoffice/templates/backoffice/election_party_view.html:103
+#: backoffice/templates/backoffice/election_party_view.html:106
 #: elections/forms.py:83
 #: elections/models.py:14
 #: elections/models.py:60
@@ -460,8 +469,8 @@ msgstr "U heeft het raadsprofiel niet volledig ingevuld."
 #: backoffice/templates/backoffice/election_instance_view.html:26
 #: backoffice/templates/backoffice/election_instance_view.html:56
 #: backoffice/templates/backoffice/election_instance_view.html:61
-#: backoffice/templates/backoffice/election_party_view.html:25
-#: backoffice/templates/backoffice/election_party_view.html:26
+#: backoffice/templates/backoffice/election_party_view.html:28
+#: backoffice/templates/backoffice/election_party_view.html:29
 msgid "Do it now"
 msgstr "Doe dit nu"
 
@@ -520,9 +529,9 @@ msgstr "nog niet uitgenodigd"
 #: backoffice/templates/backoffice/election_instance_view.html:58
 #: backoffice/templates/backoffice/election_instance_view.html:59
 #: backoffice/templates/backoffice/election_instance_view.html:61
-#: backoffice/templates/backoffice/election_party_view.html:50
-#: backoffice/templates/backoffice/election_party_view.html:51
-#: backoffice/templates/backoffice/election_party_view.html:52
+#: backoffice/templates/backoffice/election_party_view.html:53
+#: backoffice/templates/backoffice/election_party_view.html:54
+#: backoffice/templates/backoffice/election_party_view.html:55
 msgid "overdue"
 msgstr "over tijd:"
 
@@ -530,9 +539,9 @@ msgstr "over tijd:"
 #: backoffice/templates/backoffice/election_instance_view.html:58
 #: backoffice/templates/backoffice/election_instance_view.html:59
 #: backoffice/templates/backoffice/election_instance_view.html:61
-#: backoffice/templates/backoffice/election_party_view.html:50
-#: backoffice/templates/backoffice/election_party_view.html:51
-#: backoffice/templates/backoffice/election_party_view.html:52
+#: backoffice/templates/backoffice/election_party_view.html:53
+#: backoffice/templates/backoffice/election_party_view.html:54
+#: backoffice/templates/backoffice/election_party_view.html:55
 msgid "due"
 msgstr "te doen voor:"
 
@@ -553,12 +562,12 @@ msgid "There are no candidates defined for this party"
 msgstr "Er zijn geen kandidaten voor deze partij"
 
 #: backoffice/templates/backoffice/election_instance_view.html:65
-#: backoffice/templates/backoffice/election_party_view.html:56
+#: backoffice/templates/backoffice/election_party_view.html:59
 msgid "Move up"
 msgstr "Omhoog"
 
 #: backoffice/templates/backoffice/election_instance_view.html:66
-#: backoffice/templates/backoffice/election_party_view.html:57
+#: backoffice/templates/backoffice/election_party_view.html:60
 msgid "Move down"
 msgstr "Omlaag"
 
@@ -602,7 +611,7 @@ msgstr "Vindt plaats op"
 #: backoffice/templates/backoffice/election_instance_view.html:105
 #: backoffice/templates/backoffice/election_instance_view.html:120
 #: backoffice/templates/backoffice/election_instance_view.html:145
-#: backoffice/templates/backoffice/election_party_view.html:113
+#: backoffice/templates/backoffice/election_party_view.html:116
 msgid "Website"
 msgstr "Website"
 
@@ -612,13 +621,13 @@ msgstr "De raad"
 
 #: backoffice/templates/backoffice/election_instance_view.html:116
 #: backoffice/templates/backoffice/election_instance_view.html:143
-#: backoffice/templates/backoffice/election_party_view.html:105
+#: backoffice/templates/backoffice/election_party_view.html:108
 #: elections/forms.py:201
 msgid "Address"
 msgstr "Adres"
 
 #: backoffice/templates/backoffice/election_instance_view.html:118
-#: backoffice/templates/backoffice/election_party_view.html:111
+#: backoffice/templates/backoffice/election_party_view.html:114
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -632,7 +641,7 @@ msgid "Number of seats"
 msgstr "Aantal zetels"
 
 #: backoffice/templates/backoffice/election_instance_view.html:133
-#: backoffice/templates/backoffice/election_party_view.html:126
+#: backoffice/templates/backoffice/election_party_view.html:129
 #: elections/models.py:32
 msgid "History"
 msgstr "Geschiedenis"
@@ -647,6 +656,8 @@ msgid "Same as council."
 msgstr "De raad"
 
 #: backoffice/templates/backoffice/election_instance_view.html:154
+#: backoffice/templates/backoffice/wizard/council/edit/base.html:25
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:10
 #: backoffice/templates/backoffice/wizard/election_setup/base.html:24
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:10
 #: backoffice/wizards/electioninstance.py:216
@@ -665,97 +676,105 @@ msgstr "U heeft nog geen griffie toegevoegd"
 msgid "Invite a chancellery now"
 msgstr "Nodig nu een griffie uit"
 
-#: backoffice/templates/backoffice/election_party_view.html:25
+#: backoffice/templates/backoffice/election_party_view.html:28
 msgid "You did not completely fill in the party profile."
 msgstr "U heeft het partijprofiel niet volledig ingevuld."
 
-#: backoffice/templates/backoffice/election_party_view.html:26
+#: backoffice/templates/backoffice/election_party_view.html:29
 msgid "You did not assign a party contact yet."
 msgstr "U heeft nog geen contactpersoon voor de partij toegewezen."
 
-#: backoffice/templates/backoffice/election_party_view.html:33
+#: backoffice/templates/backoffice/election_party_view.html:36
 msgid "Import multiple candidates via Excel / CSV"
 msgstr "Importeer meerdere kandidaten via Excel / CSV"
 
-#: backoffice/templates/backoffice/election_party_view.html:34
+#: backoffice/templates/backoffice/election_party_view.html:37
 msgid "Candidates for this party"
 msgstr "Kandidaten voor deze partij"
 
-#: backoffice/templates/backoffice/election_party_view.html:43
+#: backoffice/templates/backoffice/election_party_view.html:46
 msgid "Edit candidate profile"
 msgstr "Bekijk het profiel van de kandidaat"
 
-#: backoffice/templates/backoffice/election_party_view.html:46
+#: backoffice/templates/backoffice/election_party_view.html:49
 msgid "Remove candidate"
 msgstr "Verwijder kandidaat"
 
-#: backoffice/templates/backoffice/election_party_view.html:50
+#: backoffice/templates/backoffice/election_party_view.html:53
 msgid "Candidate has not responded yet"
 msgstr "Kandidaat heeft nog niet gereageerd"
 
-#: backoffice/templates/backoffice/election_party_view.html:51
+#: backoffice/templates/backoffice/election_party_view.html:54
 msgid "Candidate did not fill in their profile yet"
 msgstr "Kandidaat heeft zijn/haar profiel nog niet volledig ingevuld"
 
-#: backoffice/templates/backoffice/election_party_view.html:52
+#: backoffice/templates/backoffice/election_party_view.html:55
 msgid "Candidate did not answer the questions yet"
 msgstr "Kandidaat heeft de vragen nog niet beantwoord"
 
-#: backoffice/templates/backoffice/election_party_view.html:61
+#: backoffice/templates/backoffice/election_party_view.html:64
 msgid "Invite politician"
 msgstr "Nodig een politicus uit"
 
-#: backoffice/templates/backoffice/election_party_view.html:63
+#: backoffice/templates/backoffice/election_party_view.html:66
 msgid "Remove this position"
 msgstr "Verwijder deze positie"
 
-#: backoffice/templates/backoffice/election_party_view.html:68
+#: backoffice/templates/backoffice/election_party_view.html:71
 msgid "There are no candidates defined yet for this party."
 msgstr "Er zijn geen kandidaten voor deze partij."
 
-#: backoffice/templates/backoffice/election_party_view.html:71
+#: backoffice/templates/backoffice/election_party_view.html:74
 msgid "Add a new position to this list"
 msgstr "Voeg een nieuwe positie toe aan deze lijst"
 
-#: backoffice/templates/backoffice/election_party_view.html:83
+#: backoffice/templates/backoffice/election_party_view.html:84
+msgid "Start setup wizard<br />for this party"
+msgstr "Start setup wizard<br />voor de partij"
+
+#: backoffice/templates/backoffice/election_party_view.html:86
 #, python-format
 msgid "You can change the information below by starting the <a href=\"%(url_election_party_edit)s\">setup wizard.</a>"
 msgstr "U kunt de informatie hieronder aanpassen door de <a href=\"%(url_election_party_edit)s\">setup wizard.</a>"
 
-#: backoffice/templates/backoffice/election_party_view.html:88
+#: backoffice/templates/backoffice/election_party_view.html:91
 msgid "This party"
 msgstr "Deze partij"
 
-#: backoffice/templates/backoffice/election_party_view.html:93
+#: backoffice/templates/backoffice/election_party_view.html:96
 #: elections/forms.py:208
 #: elections/models.py:213
 msgid "Slogan"
 msgstr "Slogan"
 
-#: backoffice/templates/backoffice/election_party_view.html:95
+#: backoffice/templates/backoffice/election_party_view.html:98
 #: elections/forms.py:210
 msgid "Current number of seats"
 msgstr "Huidige aantal zetels"
 
-#: backoffice/templates/backoffice/election_party_view.html:101
+#: backoffice/templates/backoffice/election_party_view.html:104
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:6
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:22
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:7
+#: backoffice/templates/backoffice/wizard/partycontact/step2.html:7
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:7
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:7
 #: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:22
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:6
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:6
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:6
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:6
 msgid "Contact information"
 msgstr "Contactgegevens"
 
-#: backoffice/templates/backoffice/election_party_view.html:109
+#: backoffice/templates/backoffice/election_party_view.html:112
 #: political_profiles/forms.py:115
 msgid "Telephone"
 msgstr "Telefoon"
 
-#: backoffice/templates/backoffice/election_party_view.html:119
+#: backoffice/templates/backoffice/election_party_view.html:122
 msgid "Party description"
 msgstr "Partijomschrijving"
 
-#: backoffice/templates/backoffice/election_party_view.html:121
+#: backoffice/templates/backoffice/election_party_view.html:124
 #: elections/models.py:30
 #: elections/models.py:63
 #: elections/models.py:217
@@ -777,47 +796,52 @@ msgstr "Partijomschrijving"
 msgid "Description"
 msgstr "Omschrijving"
 
-#: backoffice/templates/backoffice/election_party_view.html:131
+#: backoffice/templates/backoffice/election_party_view.html:134
 #: elections/forms.py:216
 #: elections/models.py:219
 msgid "Manifesto Summary"
 msgstr "Samenvatting manifest"
 
-#: backoffice/templates/backoffice/election_party_view.html:135
+#: backoffice/templates/backoffice/election_party_view.html:138
 msgid "Link to manifesto"
 msgstr "Link naar manifest"
 
-#: backoffice/templates/backoffice/logged_out.html:5
+#: backoffice/templates/backoffice/logged_out.html:10
 msgid "You have been logged out"
 msgstr "U bent uitgelogd"
 
-#: backoffice/templates/backoffice/logged_out.html:6
+#: backoffice/templates/backoffice/logged_out.html:11
 msgid "Click here to login again"
 msgstr "Klik hier om weer in te loggen"
 
-#: backoffice/templates/backoffice/permission_denied.html:6
+#: backoffice/templates/backoffice/permission_denied.html:10
 msgid "You do not have permission to view this page"
 msgstr "U heeft geen rechten om deze pagina te bekijken"
 
-#: backoffice/templates/backoffice/permission_denied.html:10
-#: backoffice/templates/backoffice/permission_denied.html:14
+#: backoffice/templates/backoffice/permission_denied.html:13
+#: backoffice/templates/backoffice/permission_denied.html:17
 msgid "Click"
 msgstr "Klik"
 
-#: backoffice/templates/backoffice/permission_denied.html:10
-#: backoffice/templates/backoffice/permission_denied.html:14
+#: backoffice/templates/backoffice/permission_denied.html:13
+#: backoffice/templates/backoffice/permission_denied.html:17
 msgid "here"
 msgstr "hier"
 
-#: backoffice/templates/backoffice/permission_denied.html:10
+#: backoffice/templates/backoffice/permission_denied.html:13
 msgid "to automatically be redirected to a page you are allowed to view"
 msgstr "om automatisch verwezen te worden naar een pagina die je mag zien."
 
-#: backoffice/templates/backoffice/permission_denied.html:14
+#: backoffice/templates/backoffice/permission_denied.html:17
 msgid "to go to the login page"
 msgstr "om naar de login pagina te gaan"
 
 #: backoffice/templates/backoffice/wizard/base.html:11
+#: backoffice/templates/backoffice/wizard/council/edit/base.html:21
+#: backoffice/templates/backoffice/wizard/council/edit/step1.html:6
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:6
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:6
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:6
 #: backoffice/templates/backoffice/wizard/election_setup/base.html:20
 #: backoffice/templates/backoffice/wizard/election_setup/step1.html:6
 #: backoffice/templates/backoffice/wizard/election_setup/step2.html:6
@@ -847,20 +871,12 @@ msgid "Step Title"
 msgstr "!!PLACEHOLDER!!"
 
 #: backoffice/templates/backoffice/wizard/base.html:43
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:14
 #: backoffice/templates/backoffice/wizard/election_setup/step3.html:14
 #: backoffice/templates/backoffice/wizard/election_setup/step5.html:6
-#: backoffice/templates/backoffice/wizard/partycontact/step1.html:6
-#: backoffice/templates/backoffice/wizard/partycontact/step2.html:6
-#: backoffice/templates/backoffice/wizard/partycontact/step3.html:6
 #: backoffice/templates/backoffice/wizard/politician_profile/step1.html:10
 msgid "Next"
 msgstr "Volgende"
-
-#: backoffice/templates/backoffice/wizard/step1.html:11
-#: invitations/templates/invitations/accept.html:9
-#: invitations/templates/invitations/existing.html:9
-msgid "Submit"
-msgstr "Verzend"
 
 #: backoffice/templates/backoffice/wizard/addcandidate/base.html:4
 #: backoffice/templates/backoffice/wizard/addcandidate/base.html:5
@@ -931,8 +947,77 @@ msgstr "Stel de partij in"
 
 #: backoffice/templates/backoffice/wizard/council/edit/base.html:5
 #: backoffice/templates/backoffice/wizard/council/edit/base.html:6
-msgid "Edit council"
-msgstr "Wijzig de raad"
+msgid "Change council settings"
+msgstr "Raad instellingen wijzigen"
+
+#: backoffice/templates/backoffice/wizard/council/edit/base.html:22
+#: backoffice/templates/backoffice/wizard/council/edit/step1.html:7
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:7
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:7
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:7
+#: backoffice/templates/backoffice/wizard/election_setup/base.html:21
+#: backoffice/templates/backoffice/wizard/election_setup/step2.html:7
+#: backoffice/templates/backoffice/wizard/election_setup/step3.html:7
+#: backoffice/templates/backoffice/wizard/election_setup/step4.html:7
+#: backoffice/templates/backoffice/wizard/election_setup/step6.html:7
+msgid "This Election"
+msgstr "Deze verkiezing"
+
+#: backoffice/templates/backoffice/wizard/council/edit/base.html:23
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:8
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:8
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:8
+#: backoffice/templates/backoffice/wizard/election_setup/base.html:22
+#: backoffice/templates/backoffice/wizard/election_setup/step3.html:8
+#: backoffice/templates/backoffice/wizard/election_setup/step4.html:8
+#: backoffice/templates/backoffice/wizard/election_setup/step6.html:8
+msgid "The Council"
+msgstr "De raad"
+
+#: backoffice/templates/backoffice/wizard/council/edit/base.html:24
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:9
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:9
+#: backoffice/templates/backoffice/wizard/election_setup/base.html:23
+#: backoffice/templates/backoffice/wizard/election_setup/step4.html:9
+#: backoffice/templates/backoffice/wizard/election_setup/step6.html:9
+msgid "More Council"
+msgstr "Meer raad"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step1.html:4
+#: backoffice/templates/backoffice/wizard/election_setup/step2.html:4
+#: backoffice/wizards/electioninstance.py:200
+msgid "Details about this election"
+msgstr "Details over deze verkiezing"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step1.html:13
+#: backoffice/templates/backoffice/wizard/election_setup/step2.html:13
+msgid "Next: The Council"
+msgstr "Volgende: De raad"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step2.html:4
+#: backoffice/templates/backoffice/wizard/election_setup/step3.html:4
+msgid "Contact information for your council"
+msgstr "Contactinformatie voor uw raad"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:4
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:4
+#: backoffice/templates/backoffice/wizard/election_setup/step4.html:4
+#: backoffice/templates/backoffice/wizard/election_setup/step6.html:4
+msgid "More information about your council"
+msgstr "Meer informatie over uw raad"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step3.html:15
+#: backoffice/templates/backoffice/wizard/election_setup/step4.html:15
+msgid "Next: Styling"
+msgstr "Volgende: Styling"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:16
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:9
+#: backoffice/templates/backoffice/wizard/election_setup/step6.html:16
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:25
+#: backoffice/wizards/electioninstance.py:223
+msgid "Finish"
+msgstr "Afronden"
 
 #: backoffice/templates/backoffice/wizard/editelection/base.html:4
 msgid "Edit election instance "
@@ -947,6 +1032,7 @@ msgid "Change the base settings"
 msgstr "Instellingen wijzigen"
 
 #: backoffice/templates/backoffice/wizard/editelection/step1.html:8
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:13
 msgid "Save"
 msgstr "Opslaan"
 
@@ -962,26 +1048,47 @@ msgstr "Voeg een verkiezingsinstantie toe"
 msgid "Election setup"
 msgstr "Verkiezing instellen"
 
-#: backoffice/templates/backoffice/wizard/election_setup/base.html:21
-#: backoffice/templates/backoffice/wizard/election_setup/step2.html:7
-#: backoffice/templates/backoffice/wizard/election_setup/step3.html:7
-#: backoffice/templates/backoffice/wizard/election_setup/step4.html:7
-#: backoffice/templates/backoffice/wizard/election_setup/step6.html:7
-msgid "This Election"
-msgstr "Deze verkiezing"
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:4
+msgid "You're finished!"
+msgstr "U bent klaar"
 
-#: backoffice/templates/backoffice/wizard/election_setup/base.html:22
-#: backoffice/templates/backoffice/wizard/election_setup/step3.html:8
-#: backoffice/templates/backoffice/wizard/election_setup/step4.html:8
-#: backoffice/templates/backoffice/wizard/election_setup/step6.html:8
-msgid "The Council"
-msgstr "De raad"
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:7
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:23
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:8
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:8
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:8
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:23
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:7
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:7
+msgid "Additional information"
+msgstr "Overige informatie"
 
-#: backoffice/templates/backoffice/wizard/election_setup/base.html:23
-#: backoffice/templates/backoffice/wizard/election_setup/step4.html:9
-#: backoffice/templates/backoffice/wizard/election_setup/step6.html:9
-msgid "More Council"
-msgstr "Meer raad"
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:8
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:24
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:9
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:9
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:24
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:4
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:8
+msgid "Description &amp; History"
+msgstr "Beschrijving &amp; Historie"
+
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:17
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:18
+msgid "You're done!"
+msgstr "U bent klaar"
+
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:20
+msgid "You have completed the initial setup for this election."
+msgstr "U hebt de eerste instellingen voor deze verkiezing voltooit."
+
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:21
+msgid "Now you can start inviting parties to fill in their candidates and profiles."
+msgstr "Nu kunt u beginnen met het aanmaken van partijen zodat deze kandidaten kunnen uitnodigen."
+
+#: backoffice/templates/backoffice/wizard/election_setup/done.html:26
+msgid "Finish &amp; Start inviting parties"
+msgstr "Afronden &amp; Uitnodigen partijen"
 
 #: backoffice/templates/backoffice/wizard/election_setup/step1.html:4
 msgid "Welcome Chancellery"
@@ -1000,36 +1107,6 @@ msgstr ""
 msgid "Next: This Election"
 msgstr "Volgende: Deze verkiezing"
 
-#: backoffice/templates/backoffice/wizard/election_setup/step2.html:4
-#: backoffice/wizards/electioninstance.py:200
-msgid "Details about this election"
-msgstr "Details over deze verkiezing"
-
-#: backoffice/templates/backoffice/wizard/election_setup/step2.html:13
-msgid "Next: The Council"
-msgstr "Volgende: De raad"
-
-#: backoffice/templates/backoffice/wizard/election_setup/step3.html:4
-msgid "Contact information for your council"
-msgstr "Contactinformatie voor uw raad"
-
-#: backoffice/templates/backoffice/wizard/election_setup/step4.html:4
-#: backoffice/templates/backoffice/wizard/election_setup/step6.html:4
-msgid "More information about your council"
-msgstr "Meer informatie over uw raad"
-
-#: backoffice/templates/backoffice/wizard/election_setup/step4.html:15
-msgid "Next: Styling"
-msgstr "Volgende: Styling"
-
-#: backoffice/templates/backoffice/wizard/election_setup/step6.html:16
-#: backoffice/templates/backoffice/wizard/partycontact/step4.html:6
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:25
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:9
-#: backoffice/wizards/electioninstance.py:223
-msgid "Finish"
-msgstr "Afronden"
-
 #: backoffice/templates/backoffice/wizard/election_setup/step7.html:5
 msgid "You're almost ready to setup the parties which will take part in this election."
 msgstr "U bent bijna klaar om te partijen toe te voegen die deelnemen in deze verkiesing"
@@ -1038,14 +1115,68 @@ msgstr "U bent bijna klaar om te partijen toe te voegen die deelnemen in deze ve
 msgid "To speed things up, you can quickly add some of the parties already in our system."
 msgstr "Om dingen te versnellen, kun je hier alvast wat partijen toevoegen aan het systeem"
 
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:4
 #: backoffice/templates/backoffice/wizard/partycontact/base.html:5
-msgid "Party Contact Wizard"
-msgstr "Partij contact wizard"
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:6
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:5
+#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:6
+msgid "Setup your party for this election"
+msgstr "Stel uw partij in voor deze verkiezing"
 
-#: backoffice/templates/backoffice/wizard/partycontact/base.html:8
-msgid "Party Contact Home"
-msgstr "Partij contact home"
+#: backoffice/templates/backoffice/wizard/partycontact/base.html:21
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:6
+#: backoffice/templates/backoffice/wizard/partycontact/step1.html:4
+#: backoffice/templates/backoffice/wizard/partycontact/step1.html:6
+#: backoffice/templates/backoffice/wizard/partycontact/step2.html:6
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:6
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:6
+#: backoffice/templates/backoffice/wizard/politician_profile/welcome.html:5
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:6
+msgid "Welcome"
+msgstr "Welkom"
+
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:4
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:10
+msgid "Finished"
+msgstr "Afgerond"
+
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:21
+msgid "You have completed the initial setup for this party."
+msgstr "U hebt de eerste instellingen van de partij voltooid"
+
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:22
+msgid "Now you can start inviting candidates to fill in their profiles."
+msgstr "Nu kunt u beginnen met het uitnodigen van kandidaten om hun profielen in te vullen."
+
+#: backoffice/templates/backoffice/wizard/partycontact/done.html:27
+msgid "Finish &amp; Start inviting candidates"
+msgstr "Afronden &amp; Uitnodigen kandidaten"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step1.html:11
+#: backoffice/templates/backoffice/wizard/partycontact/step2.html:12
+msgid "Next: Additional info"
+msgstr "Volgende: overige informatie"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step2.html:4
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:4
+msgid "Contact information for this party"
+msgstr "Contactgegevens"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:4
+msgid "Additional information for this party"
+msgstr "Overige informatie voor deze partij"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step3.html:12
+#: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:13
+msgid "Next: Description &amp; History"
+msgstr "Volgende: Beschrijving &amp; Historie"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:4
+msgid "Description &amp; History for this party"
+msgstr "Beschrijving &amp; Historie voor deze partij"
+
+#: backoffice/templates/backoffice/wizard/partycontact/step4.html:13
+msgid "Next: Finish"
+msgstr "Volgende: Afronden"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:6
 msgid "What events have you appeared at?"
@@ -1290,10 +1421,6 @@ msgstr "U heeft nog geen politieke ervaring ingevuld"
 msgid "Click here to add political experience"
 msgstr "Klik hier om politieke ervaringen toe te voegen"
 
-#: backoffice/templates/backoffice/wizard/politician_profile/welcome.html:5
-msgid "Welcome"
-msgstr "Welkom"
-
 #: backoffice/templates/backoffice/wizard/politician_profile/welcome.html:7
 msgid "You've been invited to create a profile for WieKiesJij? for the"
 msgstr "U bent uitgenodigd om een profiel aan te maken voor WieKiesJij? voor de"
@@ -1359,64 +1486,13 @@ msgstr "Beantwoord de vragen"
 msgid "Answer the question"
 msgstr "Beantwoord de vraag"
 
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:5
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:6
-msgid "Setup your party for this election"
-msgstr "Stel uw partij in voor deze verkiezing"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:23
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:7
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:7
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:7
-msgid "Additional information"
-msgstr "Overige informatie"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/base.html:24
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:8
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:4
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:8
-msgid "Description &amp; History"
-msgstr "Beschrijving &amp; Historie"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:4
-msgid "You're finished!"
-msgstr "U bent klaar"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:17
-msgid "You're done!"
-msgstr "U bent klaar"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:20
-msgid "You have completed the initial setup for this party."
-msgstr "U hebt de eerste instellingen van de partij voltooid"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:21
-msgid "Now you can start inviting candidates to fill in their profiles."
-msgstr "Nu kunt u beginnen met het uitnodigen van kanidaten om hun profielen in te vullen."
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/done.html:26
-msgid "Finish &amp; Start inviting candidates"
-msgstr "Afronden &amp; Uitnodigen kanidaten"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:4
-msgid "Contact information for this party"
-msgstr "Contactgegevens"
-
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:11
-msgid "Next: Additional info"
-msgstr "Volgende: overige informatie"
+msgid "Next: Contact information"
+msgstr "Volgende: Contact informatie"
 
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:4
 msgid "Additional information about this party"
 msgstr "Overige informatie voor deze partij"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:13
-msgid "Next: Description &amp; History"
-msgstr "Volgende: Beschrijving &amp; Historie"
-
-#: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:13
-msgid "Next: Finish"
-msgstr "Volgende: Afronden"
 
 #: backoffice/wizards/candidate.py:22
 msgid "Enter your Appearances"
@@ -1835,7 +1911,7 @@ msgstr "Verkiezingswebsite"
 
 #: elections/models.py:112
 #: elections/models.py:171
-#: elections/models.py:289
+#: elections/models.py:288
 msgid "Election Instance"
 msgstr "Verkiezingsinstantie"
 
@@ -1916,15 +1992,15 @@ msgid "The number of seats you currently hold"
 msgstr "Het aantal zetels dat u momenteel bezit"
 
 #: elections/models.py:231
-#: elections/models.py:290
+#: elections/models.py:289
 msgid "Party"
 msgstr "Partij"
 
-#: elections/models.py:253
+#: elections/models.py:252
 msgid "Election Party Instance"
 msgstr "Verkiezing partij instantie"
 
-#: elections/models.py:257
+#: elections/models.py:256
 #: political_profiles/models.py:191
 #: political_profiles/models.py:204
 #: political_profiles/models.py:216
@@ -1935,23 +2011,23 @@ msgstr "Verkiezing partij instantie"
 msgid "Politician"
 msgstr "Politicus"
 
-#: elections/models.py:259
+#: elections/models.py:258
 msgid "Answers"
 msgstr "Antwoorden"
 
-#: elections/models.py:265
+#: elections/models.py:264
 msgid "Candidacy"
 msgstr "Kandidaatschap"
 
-#: elections/models.py:265
+#: elections/models.py:264
 msgid "Candidacies"
 msgstr "Kandidaatschappen"
 
-#: elections/models.py:291
+#: elections/models.py:290
 msgid "Party Position"
 msgstr "Partij positie"
 
-#: elections/models.py:292
+#: elections/models.py:291
 msgid "List length"
 msgstr "Lengte van de lijst"
 
@@ -2047,6 +2123,11 @@ msgstr "Gemaakt"
 #: invitations/models.py:28
 msgid "Updated"
 msgstr "Geüpdatet"
+
+#: invitations/templates/invitations/accept.html:9
+#: invitations/templates/invitations/existing.html:9
+msgid "Submit"
+msgstr "Verzend"
 
 #: invitations/templates/invitations/index.html:12
 msgid "Accept invitation"
@@ -2529,6 +2610,12 @@ msgstr "Nee"
 msgid "optional"
 msgstr "optioneel"
 
+#~ msgid "Edit council"
+#~ msgstr "Wijzig de raad"
+#~ msgid "Party Contact Wizard"
+#~ msgstr "Partij contact wizard"
+#~ msgid "Party Contact Home"
+#~ msgstr "Partij contact home"
 #~ msgid "Edit Profile"
 #~ msgstr "Wijzig Profiel"
 #~ msgid "Invite"
