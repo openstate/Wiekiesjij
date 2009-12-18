@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.shortcuts import redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 
 
 from elections.forms import InitialElectionPartyForm, ElectionPartyContactForm, ElectionPartyAdditionalForm, ElectionPartyDescriptionForm
@@ -80,7 +81,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
             Invitation.create(
                 user_from=request.user,
                 user_to=profile.user,
-                view='',
+                view=reverse('bo.party_contact_wizard', kwargs={'id': eip.pk}),
                 text='Invitation text',
                 subject='Invitation',
                 html_template=templates['html'],
