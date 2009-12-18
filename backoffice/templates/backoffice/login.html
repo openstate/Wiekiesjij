@@ -5,45 +5,52 @@
 	{{ form.media }}
 {% endblock extrahead %}
 
-{% block content %}
-<div class="mod">
-	<form action="{% url bo.login %}" method="post" accept-charset="utf-8">
-		<input type="hidden" name="next" value="{{ next }}" />
-		
-		{% if form.non_field_errors %}
-			<div class="errors">
-				{% for error in form.non_field_errors %}
-				<p class="error">{{ error }}</p>
-			 	{% endfor %}
-			</div>	
-		{% endif %}
-		
+{% block outer-breadcrumbs %}{% endblock outer-breadcrumbs %}
+{% block outer-page-title %}{% endblock outer-page-title %}
+{% block back-link %}{% endblock back-link %}
 
-		<fieldset class="default">
-			{% for field in form %}
-				{% ifequal field.name 'username' %}
-					<div id="field-{{ field.auto_id }}" class="field {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
-						<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{% trans "Email" %}</label>
-						{{ field|with_class }}
-						<div id="{{ field.auto_id }}-help" class="help">
-							{% if field.help_text %}
-								<p>{{ field.help_text }}</p>
-							{% endif %}
-							{% for error in field.errors %}
-								<p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="error">{{ error }}</p>
-							{% endfor %}
-						</div>
-					</div>
-				{% else %}
-					{% include 'utils/forms/_form_field.html' %}
-				{% endifequal %}
-				
-			{% endfor %}
-		</fieldset>
-
-		<div class="form-submit">
-			<button class="primary next" type="submit">{% trans "Login" %}</button>
-		</div>
-	</form>
+{% block cols %}
+<div class="col size1of2">
+    <div class="mod">
+        <h2>{% trans "Login" %}</h2>
+        <form action="{% url bo.login %}" method="post" accept-charset="utf-8">
+            <input type="hidden" name="next" value="{{ next }}" />
+            
+            {% if form.non_field_errors %}
+                <div class="errors">
+                    {% for error in form.non_field_errors %}
+                    <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>	
+            {% endif %}
+            
+    
+            <fieldset class="default">
+                {% for field in form %}
+                    {% ifequal field.name 'username' %}
+                        <div id="field-{{ field.auto_id }}" class="field {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
+                            <label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{% trans "Email" %}</label>
+                            {{ field|with_class }}
+                            <div id="{{ field.auto_id }}-help" class="help">
+                                {% if field.help_text %}
+                                    <p>{{ field.help_text }}</p>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {% include 'utils/forms/_form_field.html' %}
+                    {% endifequal %}
+                    
+                {% endfor %}
+            </fieldset>
+    
+            <div class="form-submit">
+                <button class="primary next" type="submit">{% trans "Login" %}</button>
+            </div>
+        </form>
+    </div>
 </div>
-{% endblock content %}
+{% endblock cols %}

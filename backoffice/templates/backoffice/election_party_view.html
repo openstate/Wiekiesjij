@@ -16,6 +16,9 @@
 {% ifprofile 'council_admin' %}
     <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
 {% endifprofile %}
+{% ifprofile 'party_admin' %}
+    <li>{{ instance.council.region }}</li>
+{% endifprofile %}
 {% endblock breadcrumbs %}
 
 {% block content %}
@@ -78,7 +81,7 @@
 	
     <div class="mod start-btn">
     	<div class="bd">
-    	<a href="{% url bo.election_party_edit eip.id %}" class="btn start">Start setup wizard<br />for this party</a>
+    	<a href="{% url bo.election_party_edit eip.id %}" class="btn start">{% blocktrans %}Start setup wizard<br />for this party{% endblocktrans %}</a>
         {% url bo.election_party_edit eip.id as url_election_party_edit %}
         <p>{% blocktrans %}You can change the information below by starting the <a href="{{ url_election_party_edit }}">setup wizard.</a>{% endblocktrans %}</p>
         </div>

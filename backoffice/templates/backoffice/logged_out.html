@@ -1,7 +1,12 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
+
+{% block outer-breadcrumbs %}{% endblock outer-breadcrumbs %}
+{% block outer-page-title %}{% endblock outer-page-title %}
+{% block back-link %}{% endblock back-link %}
+
 {% block content %}
-<div class="mod">
+<div class="mod error-message">
 	<p>{% trans "You have been logged out" %}</p>
 	<a href="{% url bo.login %}">{% trans "Click here to login again" %}</a>
 </div>
