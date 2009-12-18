@@ -525,7 +525,7 @@ msgstr "nog niet uitgenodigd"
 #: backoffice/templates/backoffice/election_party_view.html:48
 #: backoffice/templates/backoffice/election_party_view.html:49
 msgid "overdue"
-msgstr "over tijd"
+msgstr "over tijd:"
 
 #: backoffice/templates/backoffice/election_instance_view.html:54
 #: backoffice/templates/backoffice/election_instance_view.html:56
@@ -535,7 +535,7 @@ msgstr "over tijd"
 #: backoffice/templates/backoffice/election_party_view.html:48
 #: backoffice/templates/backoffice/election_party_view.html:49
 msgid "due"
-msgstr "nog te doen"
+msgstr "te doen voor:"
 
 #: backoffice/templates/backoffice/election_instance_view.html:55
 msgid "have not responded yet"
