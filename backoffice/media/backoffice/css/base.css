@@ -560,6 +560,9 @@
 			padding-bottom:10px;
 			position:relative;
 			}
+			.error-message {
+				border-bottom:none;
+				}
 			
 	/*	#header
 		**************************************************************************************************************/

@@ -40,14 +40,16 @@
 				<p class="user-info">{% trans "You are not logged in" %}. <a href="{% url bo.login %}">{% trans "Login" %}</a></p>
 			{% endif %}
         	
-            
+            {% block outer-breadcrumbs %}
             <ul class="nav-breadcrumbs">
+            	
                 <li>{% trans "Wie Kies Jij?" %}</li>
                 {% block breadcrumbs %}
             	{% endblock breadcrumbs %}
             </ul>
+             {% endblock outer-breadcrumbs %}
             
-            <h1>{% block page-title %}Page Title{% endblock page-title %}</h1>
+            {% block outer-page-title %}<h1>{% block page-title %}Page Title{% endblock page-title %}</h1>{% endblock outer-page-title %}
             
             {% block back-link %}<a href="#" class="back">Back to ...</a>{% endblock back-link %}
             

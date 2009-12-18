@@ -1,16 +1,20 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n %}
 
+{% block outer-breadcrumbs %}{% endblock outer-breadcrumbs %}
+{% block outer-page-title %}{% endblock outer-page-title %}
+{% block back-link %}{% endblock back-link %}
+
 {% block content %}
-	<p>
-	{% trans "You do not have permission to view this page" %}
-	</p>
-	{% if user.is_authenticated %}
-		<p>
-		{% trans "Click" %} <a href="{% url bo.redirect  %}">{% trans "here" %}</a> {% trans "to automatically be redirected to a page you are allowed to view" %}
-		</p>
-	{% endif %}	
-	<p>
-	{% trans "Click" %} <a href="{% url bo.login %}{% if next %}?next={{ next }}{% endif %}">{% trans "here" %}</a> {% trans "to go to the login page" %}
-	</p>
+	<div class="mod error-message">
+        <h2>{% trans "You do not have permission to view this page" %}</h2>
+        {% if user.is_authenticated %}
+            <p>
+            {% trans "Click" %} <a href="{% url bo.redirect  %}">{% trans "here" %}</a> {% trans "to automatically be redirected to a page you are allowed to view" %}
+            </p>
+        {% endif %}	
+        <p>
+        {% trans "Click" %} <a href="{% url bo.login %}{% if next %}?next={{ next }}{% endif %}">{% trans "here" %}</a> {% trans "to go to the login page" %}
+        </p>
+   	</div>
 {% endblock content %}
