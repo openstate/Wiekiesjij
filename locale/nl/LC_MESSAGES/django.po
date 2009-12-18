@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-18 11:00+0100\n"
-"PO-Revision-Date: 2009-12-18 11:03+0100\n"
+"PO-Revision-Date: 2009-12-18 11:27+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -625,7 +625,7 @@ msgstr "E-mail"
 
 #: backoffice/templates/backoffice/election_instance_view.html:124
 msgid "More council info"
-msgstr "Meer informatie over de raad"
+msgstr "Informatie over de raad"
 
 #: backoffice/templates/backoffice/election_instance_view.html:129
 #: elections/models.py:224
@@ -704,7 +704,7 @@ msgstr "Nodig een politicus uit"
 
 #: backoffice/templates/backoffice/election_party_view.html:60
 msgid "Remove this position"
-msgstr "Verwijder de ze positie"
+msgstr "Verwijder deze positie"
 
 #: backoffice/templates/backoffice/election_party_view.html:65
 msgid "There are no candidates defined yet for this party."
