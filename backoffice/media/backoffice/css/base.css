@@ -160,6 +160,7 @@
 			}
 		select {
 			width:460px;
+			padding:4px;
 			}
 		textarea {
 			height:100px;
@@ -335,6 +336,8 @@
 					color:#000;
 					display:block;
 					padding:3px 5px;
+					margin-bottom:10px;
+					line-height:26px;
 					}
 
                                 div.form-submit a.btn {
@@ -346,8 +349,6 @@
 				div.form-submit a.cancel {
 					background: url(../img/cancel.png) no-repeat 0px center;
 					padding-left:20px;
-                    line-height:25px;
-                    float:left;
 					}	
 				div.form-submit button {
 					float: right;
@@ -487,23 +488,27 @@
 			div.datetimepicker {
 				
 				}
+				.date,
 				.hours,
 				.minutes,
 				.seconds,
 				.ap_pm {
 					float:left;
+					margin-right:10px;
+					margin-top:5px;
 					}
-				.datetimepicker input {
+				.date input {
 					width:150px;
 					padding-left:24px;
 					background:url(../img/calendar.png) 4px center no-repeat;
+					cursor:pointer;
 					}
+				
 				.hours select,
 				.minutes select,
 				.seconds select,
 				.ap_pm select {
 					width:70px;
-					margin-right:10px;
 					}
 			
 			
@@ -517,6 +522,7 @@
 			input.colorpicker_inputfield {
 				width:80px;
 				padding-right:25px;
+				cursor:pointer;
 				}	
 					
 			.cp_preview {
@@ -525,6 +531,7 @@
 				left:85px;
 				border: 1px solid #AAAAAA;
 				margin-bottom:-20px;
+				cursor:pointer;
 				}
 		
 	/*	generic styling
@@ -607,6 +614,15 @@
 				padding-left:0;
 				}
 
+	/*	#footer
+		**************************************************************************************************************/
+	
+		#footer {
+			margin:20px 10px 0;
+			border-top: 4px solid #E0E0E0;
+			padding:.5em 0 0;
+			font-size:.8em;
+			}
 
 	/*	#wizard
 		**************************************************************************************************************/
