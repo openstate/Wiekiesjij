@@ -121,17 +121,17 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     initial={'election_party_contact_form': initial},
                     template='backoffice/wizard/setupelectionparty/step1.html',
-                    extra_context={'instance':self.election_instance, })
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         step2 = Step('election_party_additional_form',
                     forms=step2_forms,
                     initial={'election_party_additional_form': initial},
                     template='backoffice/wizard/setupelectionparty/step2.html',
-                    extra_context={'instance':self.election_instance, })
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         step3 = Step('election_party_description_form',
                     forms=step3_forms,
                     initial={'election_party_description_form': initial},
                     template='backoffice/wizard/setupelectionparty/step3.html',
-                    extra_context={'instance':self.election_instance, })
+                    extra_context={'instance':self.election_instance, 'eip':self.eip })
         template = 'backoffice/wizard/election_party_setup/base.html',
         super(ElectionPartyEditWizard, self).__init__(step1.next(step2.next(step3)), template, *args, **kwargs)
 

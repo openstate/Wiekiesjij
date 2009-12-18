@@ -9,6 +9,6 @@
 {% block buttons %}
 	<div class="form-submit">
 		<button class="primary next" type="submit">{% trans 'Next: Additional info' %}</button>
-        <a href="{% url bo.election_instance_view instance.id %}" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url bo.election_party_view eip.id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}
