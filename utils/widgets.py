@@ -2,6 +2,7 @@
     Widgets
 """
 import re
+import datetime
 from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -260,154 +261,413 @@ class ColorPicker(forms.widgets.TextInput):
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
 
-class DateTimePicker(forms.widgets.TextInput):
-    """
-    DateTime Picker, based on jQuery UI and "jquery.jtimepicker.js".
-    It uses jQuery UI dor date picking and jTimePicker class for date picking.
+# class DateTimePicker(forms.widgets.TextInput):
+#     """
+#     DateTime Picker, based on jQuery UI and "jquery.jtimepicker.js".
+#     It uses jQuery UI dor date picking and jTimePicker class for date picking.
+# 
+#     Example of usage:
+#         class MyForm(forms.Form):
+#             my_date_time = forms.DateTimeField(max_length=50)
+# 
+#             def __init__(self, *args, **kwargs):
+#                 super(self.__class__, self).__init__(*args, **kwargs)
+#                 self.fields['my_date_time'].widget = DateTimePicker()
+#         
+#     """
+#     TEMPLATE = """
+#         <script type="text/javascript">
+#         <!--
+#             jQuery(document).ready(function(){
+#                 date_obj = new Date();
+#                 date_obj_hours = date_obj.getHours();
+#                 date_obj_mins = date_obj.getMinutes();
+# 
+#                 if (date_obj_mins < 10) {
+#                     date_obj_mins = "0" + date_obj_mins;
+#                 }
+#                 date_obj_time = date_obj_hours + ':' + date_obj_mins;
+# 
+#                 // Getting the element
+#                 var datePicker = jQuery('#%(id)s');
+# 
+#                 //datePickerLabel = datePicker.prev('label');
+#                 //datePicker.wrap('<div class="dp-wrap"></div>');
+#                 //datePicker.before(datePickerLabel);
+# 
+#                 divDatePicker = jQuery('div#field-%(id)s');
+# 
+#                 //alert($.dump(divDatePicker));
+# 
+#                 // Making another hidden element for date
+#                 var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
+# 
+#                 // Giving it the same name as our element
+#                 datePickerField.attr('name', datePicker.attr('name'));
+# 
+#                 // Saving the original date time value
+#                 originalDateTimeValue = datePicker.attr('value');
+# 
+#                 // Splitting the original date time value to get date and time separately
+#                 originalDateTimeSplit = originalDateTimeValue.split(' ', 2);
+#                 try {
+#                     originalDateValue = originalDateTimeSplit[0];
+#                     originalTimeValue = originalDateTimeSplit[1];
+#                     originalTimeValueSplit = originalTimeValue.split(':', 3);
+#                     originalTimeValueHours = originalTimeValueSplit[0];
+#                     originalTimeValueMinutes = originalTimeValueSplit[1];
+#                     originalTimeValueSeconds = parseInt(originalTimeValueSplit[2]);
+#                     originalDateTimeValue = originalDateValue + ' ' + originalTimeValueHours + ':' + originalTimeValueMinutes + ':' + originalTimeValueSeconds;
+#                 } catch (err) {
+#                     originalDateValue = '';
+#                     originalTimeValue = '';
+#                     originalTimeValueHours = 0;
+#                     originalTimeValueMinutes = 0;
+#                     originalTimeValueSeconds = 0;
+#                 }
+# 
+#                 // Changing the name of the original field
+#                 datePicker.attr('name', datePicker.attr('name') + '_original');
+# 
+#                 // Making another div container for the time picking
+#                 var timePickerField = jQuery('<div class="time-picker" id="#%(id)s_time"></div>');
+#                 
+#                 // Adding the elements
+#                 divDatePicker.after(timePickerField);
+#                 datePicker.after(datePickerField);
+# 
+#                 // Copying the value of time to the time element
+#                 datePicker.attr('value', originalDateValue);
+#                 datePickerField.attr('value', originalDateTimeValue);
+#                 
+#                 // Making the date picker
+#                 datePicker.datepicker({dateFormat: $.datepicker.W3C});
+# 
+#                 // Making the time picker
+#                 timePickerField.jtimepicker({'hourDefaultValue': originalTimeValueHours,
+#                                              'minDefaultValue': originalTimeValueMinutes,
+#                                              'secDefaultValue': originalTimeValueSeconds});
+# 
+#                 // Time picker elements
+#                 timePickerFieldHours = jQuery('select.hourcombo');
+#                 timePickerFieldMinutes = jQuery('select.mincombo');
+#                 timePickerFieldSeconds = jQuery('select.seccombo');
+#                 timePickerFieldSeconds.hide();
+# 
+#                 timePickerFieldHours.wrap('<div class="hours-wrap">');
+#                 timePickerFieldMinutes.wrap('<div class="minutes-wrap">');
+#                 timePickerFieldSeconds.wrap('<div class="seconds-wrap">');
+# 
+#                 timePickerFieldHours.before(jQuery('<label>%(hours_label)s</label>'));
+#                 timePickerFieldMinutes.before(jQuery('<label>%(minutes_label)s</label>'));
+#                 //timePickerFieldSeconds.before(jQuery('<label>%(seconds_label)s</label>'));
+# 
+#                 // Updating the full date and time value on date picker change
+#                 datePicker.change(function() {
+#                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+#                 });
+# 
+#                 // Updating the full date and time value on time picker change
+#                 timePickerFieldHours.change(function() {
+#                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+#                 });
+# 
+#                 // Updating the full date and time value on time picker change
+#                 timePickerFieldMinutes.change(function() {
+#                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+#                 });
+# 
+#                 // Updating the full date and time value on time picker change
+#                 timePickerFieldSeconds.change(function() {
+#                     datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
+#                 });
+#             });
+#         -->
+#         </script>
+#     """
+# 
+#     class Media:
+#         js = (
+#             'static/utils/javascripts/jquery.jtimepicker.js',
+#             'static/utils/javascripts/jquery.dump.js',
+#         )
+#         css = {
+#             'screen': (
+#                 'static/utils/css/jquery.timepicker.css',
+#             ),
+#         }
+# 
+#     def __init__(self, *args, **kwargs):
+#         super(self.__class__, self).__init__(*args, **kwargs)
+# 
+#     def render(self, *args, **kwargs):
+#         html_id = kwargs.get('attrs', {}).get('id', '')
+#         result = super(self.__class__, self).render(*args, **kwargs)
+# 
+#         return result + mark_safe(self.TEMPLATE % dict(id=html_id,
+#                                                        hours_label=_('Hours'),
+#                                                        minutes_label=_('Minutes'),
+#                                                        seconds_label=_('Seconds')))
 
-    Example of usage:
-        class MyForm(forms.Form):
-            my_date_time = forms.DateTimeField(max_length=50)
 
-            def __init__(self, *args, **kwargs):
-                super(self.__class__, self).__init__(*args, **kwargs)
-                self.fields['my_date_time'].widget = DateTimePicker()
-        
+
+class SelectTimeWidget(forms.widgets.Widget):
     """
+    A Widget that splits time input into <select> elements.
+    Allows form to show as 24hr: <hour>:<minute>:<second>,
+    or as 12hr: <hour>:<minute>:<second> <am|pm> 
+    
+    Also allows user-defined increments for minutes/seconds
+    """
+    hour_field = '%s_hour'
+    minute_field = '%s_minute'
+    second_field = '%s_second' 
+    meridiem_field = '%s_meridiem'
+    twelve_hr = False # Default to 24hr.
+    
+    time_pattern = r'(\d\d?):(\d\d)(:(\d\d))? *([aApP]\.?[mM]\.?)?$' # w/ Magus's suggestions
+
+    RE_TIME = re.compile(time_pattern)
+    # The following are just more readable ways to access re.matched groups:
+    HOURS = 0
+    MINUTES = 1
+    SECONDS = 3
+    MERIDIEM = 4
+    
     TEMPLATE = """
+        <div class="%(type)s select field">
+            <label for="%(id)s">%(label)s</label>
+            %(field)s
+        </div>
+    """
+    
+    
+    def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=False, hide_seconds=True):
+        '''
+        hour_step, minute_step, second_step are optional step values for
+        for the range of values for the associated select element
+        twelve_hr: If True, forces the output to be in 12-hr format (rather than 24-hr)
+        '''
+        self.attrs = attrs or {}
+        
+        if twelve_hr:
+            self.twelve_hr = True # Do 12hr (rather than 24hr)
+            self.meridiem_val = 'a.m.' # Default to Morning (A.M.)
+        
+        if hour_step and twelve_hr:
+            self.hours = range(1,13,hour_step) 
+        elif hour_step: # 24hr, with stepping.
+            self.hours = range(0,24,hour_step)
+        elif twelve_hr: # 12hr, no stepping
+            self.hours = range(1,13)
+        else: # 24hr, no stepping
+            self.hours = range(0,24) 
+
+        if minute_step:
+            self.minutes = range(0,60,minute_step)
+        else:
+            self.minutes = range(0,60)
+
+        if second_step:
+            self.seconds = range(0,60,second_step)
+        else:
+            self.seconds = range(0,60)
+            
+        self.hide_seconds = hide_seconds
+
+    def render(self, name, value, attrs=None):
+        try: # try to get time values from a datetime.time object (value)
+            hour_val, minute_val, second_val = value.hour, value.minute, value.second
+            if self.twelve_hr:
+                if hour_val >= 12:
+                    self.meridiem_val = 'p.m.'
+                else:
+                    self.meridiem_val = 'a.m.'
+        except AttributeError:
+            hour_val = minute_val = second_val = 0
+            if isinstance(value, basestring):
+                match = self.RE_TIME.match(value)
+                if match:
+                    time_groups = match.groups();
+                    hour_val = int(time_groups[self.HOURS]) % 24 # force to range(0-24)
+                    minute_val = int(time_groups[self.MINUTES]) 
+                    if time_groups[self.SECONDS] is None:
+                        second_val = 0
+                    else:
+                        second_val = int(time_groups[self.SECONDS])
+                    
+                    # check to see if meridiem was passed in
+                    if time_groups[self.MERIDIEM] is not None:
+                        self.meridiem_val = time_groups[self.MERIDIEM]
+                    else: # otherwise, set the meridiem based on the time
+                        if self.twelve_hr:
+                            if hour_val >= 12:
+                                self.meridiem_val = 'p.m.'
+                            else:
+                                self.meridiem_val = 'a.m.'
+                        else:
+                            self.meridiem_val = None
+                    
+
+        # If we're doing a 12-hr clock, there will be a meridiem value, so make sure the
+        # hours get printed correctly
+        if self.twelve_hr and self.meridiem_val:
+            if self.meridiem_val.lower().startswith('p') and hour_val > 12 and hour_val < 24:
+                hour_val = hour_val % 12
+        elif hour_val == 0:
+            hour_val = 12
+            
+        output = []
+        if 'id' in self.attrs:
+            id_ = self.attrs['id']
+        else:
+            id_ = 'id_%s' % name
+
+        # NOTE: for times to get displayed correctly, the values MUST be converted to unicode
+        # When Select builds a list of options, it checks against Unicode values
+        hour_val = u"%.2d" % hour_val
+        minute_val = u"%.2d" % minute_val
+        second_val = u"%.2d" % second_val
+
+        hour_choices = [("%.2d"%i, "%.2d"%i) for i in self.hours]
+        local_attrs = self.build_attrs(id=self.hour_field % id_)
+        select_html = forms.widgets.Select(choices=hour_choices).render(self.hour_field % name, hour_val, local_attrs)
+        output.append(self.TEMPLATE % {
+            'label': _('Hours'),
+            'field': select_html,
+            'id': local_attrs.get('id'),
+            'type': 'hours',
+        })
+
+        minute_choices = [("%.2d"%i, "%.2d"%i) for i in self.minutes]
+        local_attrs['id'] = self.minute_field % id_
+        select_html = forms.widgets.Select(choices=minute_choices).render(self.minute_field % name, minute_val, local_attrs)
+        output.append(self.TEMPLATE % {
+            'label': _('Minutes'),
+            'field': select_html,
+            'id': local_attrs.get('id'),
+            'type': 'minutes',
+        })
+        
+        if not self.hide_seconds:
+            second_choices = [("%.2d"%i, "%.2d"%i) for i in self.seconds]
+            local_attrs['id'] = self.second_field % id_
+            select_html = forms.widgets.Select(choices=second_choices).render(self.second_field % name, second_val, local_attrs)
+            output.append(self.TEMPLATE % {
+                'label': _('Seconds'),
+                'field': select_html,
+                'id': local_attrs.get('id'),
+                'type': 'seconds',
+            })
+    
+        if self.twelve_hr:
+            #  If we were given an initial value, make sure the correct meridiem get's selected.
+            if self.meridiem_val is not None and  self.meridiem_val.startswith('p'):
+                    meridiem_choices = [('p.m.','p.m.'), ('a.m.','a.m.')]
+            else:
+                meridiem_choices = [('a.m.','a.m.'), ('p.m.','p.m.')]
+
+            local_attrs['id'] = local_attrs['id'] = self.meridiem_field % id_
+            select_html = forms.widgets.Select(choices=meridiem_choices).render(self.meridiem_field % name, self.meridiem_val, local_attrs)
+            output.append(self.TEMPLATE % {
+                'label': _('Am/Pm'),
+                'field': select_html,
+                'id': local_attrs.get('id'),
+                'type': 'ap_pm',
+            })
+
+        return mark_safe(u'\n'.join(output))
+
+    def id_for_label(self, id_):
+        return '%s_time' % id_
+    id_for_label = classmethod(id_for_label)
+
+    def value_from_datadict(self, data, files, name):
+        # if there's not h:m:s data, assume zero:
+        h = data.get(self.hour_field % name, 0) # hour
+        m = data.get(self.minute_field % name, 0) # minute 
+        s = data.get(self.second_field % name, '00') # second
+  
+
+        meridiem = data.get(self.meridiem_field % name, None)
+
+        #NOTE: if meridiem IS None, assume 24-hr
+        if meridiem is not None:
+            if meridiem.lower().startswith('p') and int(h) != 12:
+                h = (int(h)+12)%24 
+            elif meridiem.lower().startswith('a') and int(h) == 12:
+                h = 0
+        
+        if (int(h) == 0 or h) and m and s:
+            return '%s:%s:%s' % (h, m, s)
+
+        return data.get(name, None)
+
+class DateTimePicker(forms.widgets.MultiWidget):
+    """
+        This class combines SelectTimeWidget (see above)
+        and A DateInput for date selection
+        Adds jquery datepicker for extra functionality
+    """
+    
+    TEMPLATE = """
+        <div class="date text field">
+            <label for="%(id)s">%(label)s</label>
+            %(field)s
+        </div>
         <script type="text/javascript">
         <!--
             jQuery(document).ready(function(){
-                date_obj = new Date();
-                date_obj_hours = date_obj.getHours();
-                date_obj_mins = date_obj.getMinutes();
-
-                if (date_obj_mins < 10) {
-                    date_obj_mins = "0" + date_obj_mins;
-                }
-                date_obj_time = date_obj_hours + ':' + date_obj_mins;
-
-                // Getting the element
-                var datePicker = jQuery('#%(id)s');
-
-                //datePickerLabel = datePicker.prev('label');
-                //datePicker.wrap('<div class="dp-wrap"></div>');
-                //datePicker.before(datePickerLabel);
-
-                divDatePicker = jQuery('div#field-%(id)s');
-
-                //alert($.dump(divDatePicker));
-
-                // Making another hidden element for date
-                var datePickerField = jQuery('<input type="hidden" value="" id="#%(id)s_date"/>');
-
-                // Giving it the same name as our element
-                datePickerField.attr('name', datePicker.attr('name'));
-
-                // Saving the original date time value
-                originalDateTimeValue = datePicker.attr('value');
-
-                // Splitting the original date time value to get date and time separately
-                originalDateTimeSplit = originalDateTimeValue.split(' ', 2);
-                try {
-                    originalDateValue = originalDateTimeSplit[0];
-                    originalTimeValue = originalDateTimeSplit[1];
-                    originalTimeValueSplit = originalTimeValue.split(':', 3);
-                    originalTimeValueHours = originalTimeValueSplit[0];
-                    originalTimeValueMinutes = originalTimeValueSplit[1];
-                    originalTimeValueSeconds = parseInt(originalTimeValueSplit[2]);
-                    originalDateTimeValue = originalDateValue + ' ' + originalTimeValueHours + ':' + originalTimeValueMinutes + ':' + originalTimeValueSeconds;
-                } catch (err) {
-                    originalDateValue = '';
-                    originalTimeValue = '';
-                    originalTimeValueHours = 0;
-                    originalTimeValueMinutes = 0;
-                    originalTimeValueSeconds = 0;
-                }
-
-                // Changing the name of the original field
-                datePicker.attr('name', datePicker.attr('name') + '_original');
-
-                // Making another div container for the time picking
-                var timePickerField = jQuery('<div class="time-picker" id="#%(id)s_time"></div>');
-                
-                // Adding the elements
-                divDatePicker.after(timePickerField);
-                datePicker.after(datePickerField);
-
-                // Copying the value of time to the time element
-                datePicker.attr('value', originalDateValue);
-                datePickerField.attr('value', originalDateTimeValue);
-                
                 // Making the date picker
-                datePicker.datepicker({dateFormat: $.datepicker.W3C});
-
-                // Making the time picker
-                timePickerField.jtimepicker({'hourDefaultValue': originalTimeValueHours,
-                                             'minDefaultValue': originalTimeValueMinutes,
-                                             'secDefaultValue': originalTimeValueSeconds});
-
-                // Time picker elements
-                timePickerFieldHours = jQuery('select.hourcombo');
-                timePickerFieldMinutes = jQuery('select.mincombo');
-                timePickerFieldSeconds = jQuery('select.seccombo');
-                timePickerFieldSeconds.hide();
-
-                timePickerFieldHours.wrap('<div class="hours-wrap">');
-                timePickerFieldMinutes.wrap('<div class="minutes-wrap">');
-                timePickerFieldSeconds.wrap('<div class="seconds-wrap">');
-
-                timePickerFieldHours.before(jQuery('<label>%(hours_label)s</label>'));
-                timePickerFieldMinutes.before(jQuery('<label>%(minutes_label)s</label>'));
-                //timePickerFieldSeconds.before(jQuery('<label>%(seconds_label)s</label>'));
-
-                // Updating the full date and time value on date picker change
-                datePicker.change(function() {
-                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
-                });
-
-                // Updating the full date and time value on time picker change
-                timePickerFieldHours.change(function() {
-                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
-                });
-
-                // Updating the full date and time value on time picker change
-                timePickerFieldMinutes.change(function() {
-                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
-                });
-
-                // Updating the full date and time value on time picker change
-                timePickerFieldSeconds.change(function() {
-                    datePickerField.attr('value', getDateTimeValue(datePicker, timePickerFieldHours, timePickerFieldMinutes, timePickerFieldSeconds));
-                });
+                jQuery('#%(id)s').datepicker({dateFormat: $.datepicker.W3C});
             });
         -->
         </script>
     """
-
-    class Media:
-        js = (
-            'static/utils/javascripts/jquery.jtimepicker.js',
-            'static/utils/javascripts/jquery.dump.js',
+    
+    def __init__(self, attrs=None, format=None, hour_step=None, minute_step=5, second_step=None, twelve_hr=None, hide_seconds=True):
+        """
+            Parameters for widgets
+        """
+        widgets = (
+            forms.widgets.DateInput(attrs=attrs, format=format),
+            SelectTimeWidget(attrs=attrs, hour_step=hour_step, minute_step=minute_step, second_step=second_step, twelve_hr=twelve_hr, hide_seconds=hide_seconds),
         )
-        css = {
-            'screen': (
-                'static/utils/css/jquery.timepicker.css',
-            ),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-
-    def render(self, *args, **kwargs):
-        html_id = kwargs.get('attrs', {}).get('id', '')
-        result = super(self.__class__, self).render(*args, **kwargs)
-
-        return result + mark_safe(self.TEMPLATE % dict(id=html_id,
-                                                       hours_label=_('Hours'),
-                                                       minutes_label=_('Minutes'),
-                                                       seconds_label=_('Seconds')))
-
+        super(DateTimePicker, self).__init__(widgets, attrs)
+        
+        
+        
+    def decompress(self, value):
+        if value:
+            return [value.date(), value.time().replace(microsecond=0)]
+        return [None, None]
+    
+    def render(self, name, value, attrs=None):
+        # value is a list of values, each corresponding to a widget
+        # in self.widgets.
+        if not isinstance(value, list):
+            value = self.decompress(value)
+        output = []
+        final_attrs = self.build_attrs(attrs)
+        id_ = final_attrs.get('id', None)
+        
+        for i, widget in enumerate(self.widgets):
+            try:
+                widget_value = value[i]
+            except IndexError:
+                widget_value = None
+            if id_:
+                final_attrs = dict(final_attrs, id='%s_%s' % (id_, i))
+            if i == 1:                
+                output.append(widget.render(name + '_%s' % i, widget_value, final_attrs))
+            else:
+                output.append(self.TEMPLATE % {
+                    'label': _('Date'),
+                    'field': widget.render(name + '_%s' % i, widget_value, final_attrs),
+                    'id': final_attrs.get('id'),
+                })
+        return mark_safe(self.format_output(output))
+    
 
 class DatePicker(forms.widgets.TextInput):
     """

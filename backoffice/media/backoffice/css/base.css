@@ -487,8 +487,10 @@
 			div.datetimepicker {
 				
 				}
-				.hours-wrap,
-				.minutes-wrap {
+				.hours,
+				.minutes,
+				.seconds,
+				.ap_pm {
 					float:left;
 					}
 				.datetimepicker input {
@@ -496,12 +498,10 @@
 					padding-left:24px;
 					background:url(../img/calendar.png) 4px center no-repeat;
 					}
-				.time-picker {
-					overflow:hidden;_zoom:1;
-					margin-bottom:1em;
-					}
-				.hours-wrap select,
-				.minutes-wrap select {
+				.hours select,
+				.minutes select,
+				.seconds select,
+				.ap_pm select {
 					width:70px;
 					margin-right:10px;
 					}
