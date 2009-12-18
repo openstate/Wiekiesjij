@@ -55,7 +55,8 @@ class ElectionEvent(models.Model):
     A election event
     e.g. European Predisent elections 2009, Municipality elections 2010
     """
-    
+
+    default_date    = models.DateTimeField(_('Default Date'), help_text = _("Default date for all election instances"), default = datetime.datetime.now)
     name            = models.CharField(_('Name'), max_length=255)
     parent_region   = models.CharField(_('Parent region'), max_length=255) #autocomplete other electionevent regions
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
@@ -288,7 +289,7 @@ class ElectionInstanceParty(models.Model):
     election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
     party = models.ForeignKey(Party, verbose_name=_('Party'), related_name='election_instance_parties')
     position = models.PositiveIntegerField(_('Party Position'))
-    list_length = models.PositiveIntegerField(_('List length'))
+    list_length = models.PositiveIntegerField(_('List length'), default = 0)
 
     class Meta:
         unique_together = ('election_instance', 'position')

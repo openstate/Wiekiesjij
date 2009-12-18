@@ -1,3 +1,5 @@
+import re
+from django.template.defaultfilters import date as strdate
 from form_utils.forms import BetterForm, BetterModelForm
 
 from django import forms
@@ -7,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from utils.widgets import AutoCompleter, ColorPicker, DatePicker, HiddenDateTimePicker, DateTimePicker
 from utils.fields import AddressField
 from utils.forms import TemplateForm
+from django.forms.widgets import Textarea
 
 from elections.models import Party
 
@@ -136,13 +139,27 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
 
+    tagre = re.compile('\[\[([a-zA-Z0-9_]+)\]\]')
     start_date = forms.DateTimeField(
         label=_('When does this election take place?'), 
-        help_text=_('[Date] is the default date for [Election Event Name].'),
+        help_text=_('[[def_date]] is the default date for [[ev_name]].'),
         widget=DateTimePicker)
     start_date.hidden_widget = HiddenDateTimePicker
     website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        if 'instance' in kwargs:
+            s = kwargs['instance']
+            dc = {
+                'def_date': strdate(s.election_event.default_date),
+                'ev_name': s.election_event.name,
+            }
+            (new_help, repl) = self.tagre.subn(lambda mto: dc[mto.group(1)], unicode(self.fields['start_date'].help_text))
+            self.fields['start_date'].help_text = new_help
+
 
     class Meta:
         model = ElectionInstance
@@ -178,14 +195,14 @@ class PartyForm(BetterModelForm, TemplateForm):
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Full party name'), help_text=_('What is the full name of the party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated Party Name'))
-    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
+    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), required=False)
+    #list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
     
     
 class ElectionPartyContactForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=_('What is the full name of your party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated party name'))
+    abbreviation = forms.CharField(label=_('Abbreviated party name'), required=False)
     address = AddressField(label=_('Address'))
     email = forms.EmailField(label=_('E-mail address'))
     telephone = forms.CharField(label=_('Phone number'))
@@ -193,14 +210,13 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'))
-    slogan = forms.CharField(label=_('Slogan'))
+    slogan = forms.CharField(label=_('Slogan'), required = False)
     #logo = forms.FileField(_('Logo'))
-    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'))
+    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'), required = False)
 
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
-    description = forms.CharField(label=_('Short description'))
-    history = forms.CharField(label=_('Short history'))
+    description = forms.CharField(label=_('Short description'), widget = Textarea(), required = False)
+    history = forms.CharField(label=_('Short history'), widget = Textarea(), required = False)
     manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea())
-    manifesto = forms.URLField(label=_('Link to the manifesto'))
-    
+    manifesto = forms.URLField(label=_('Link to the manifesto'), required = False)
