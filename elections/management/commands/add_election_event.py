@@ -12,7 +12,7 @@ class Command(BaseCommand):
             name='Gemeenteraads verkiezingen 2010',
             parent_region='Nederland',
             level='gemeenten',
-            default_date=datetime.datetime(2010, 3, 3)
+            default_date=datetime.datetime(2010, 3, 3),
             question_due_period=7,
             profile_due_period=7,
             candidate_due_period=30,
