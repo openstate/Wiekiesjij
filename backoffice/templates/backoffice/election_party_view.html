@@ -37,8 +37,9 @@
             
                 {% if can.candidate.profile.picture %}<img src="{{ can.candidate.profile.picture }}" />{% endif %}
                 <h3>{{ can.candidate.profile.full_name }}</h3>
-                <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>
                 {% comment %}
+                <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>
+
                 <ul class="quicklinks">
                 	<li><a href="#">{% trans 'Remove candidate' %}</a></li>
                 </ul>
