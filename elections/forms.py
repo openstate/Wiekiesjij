@@ -201,7 +201,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
     address = AddressField(label=_('Address'))
     email = forms.EmailField(label=_('E-mail address'))
     telephone = forms.CharField(label=_('Phone number'))
-    website = forms.URLField(label=_('Party website'))
+    website = forms.URLField(label=_('Party website'), required=False)
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'), required = False)
