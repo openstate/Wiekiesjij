@@ -8,12 +8,6 @@ class Question(models.Model):
         A question, has a simple title and a description
         The question type determines how the question is displayed
     """
-    QUESTION_TYPE_MULTIPLECHOICE = QUESTION_TYPE_MULTIPLECHOICE
-    QUESTION_TYPE_MULTIPLEANSWER = QUESTION_TYPE_MULTIPLEANSWER
-    QUESTION_TYPE_BOOLEAN = QUESTION_TYPE_BOOLEAN
-    QUESTION_TYPE_RATING = QUESTION_TYPE_RATING
-    
-    QUESTION_TYPE_CHOICES = QUESTION_TYPE_CHOICES
     
     title           = models.CharField(_('Title'), max_length=255)
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)

@@ -33,14 +33,12 @@ class SelectQuestionForm(BetterModelForm, TemplateForm):
 
 
 class AnswerQuestionForm(BetterForm, TemplateForm):
-    value = forms.CharField(_('Value'))
     '''
         Form which displays an possible answers, coupled to the question given. It makes sure the answer has the
         right widget, which depends on the question type.
     '''
     def __init__(self, question_instance_id, *args, **kwargs):
-        super(AnswerQuestionForm, self).__init__(*args, **kwargs)
-
+        
         question_types = dict(QUESTION_TYPE_CHOICES)
 
         question_instance = Question.objects.get(id=question_instance_id)
@@ -51,19 +49,23 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
         if question_instance.question_type in question_types:
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
             if QUESTION_TYPE_MULTIPLEANSWER == question_instance.question_type:
-                self.fields['value'].widget = widgets.CheckboxSelectMultiple(choices=choices)
+                self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices)})
             elif QUESTION_TYPE_MULTIPLECHOICE == question_instance.question_type:
-                self.fields['value'].widget = widgets.RadioSelect(choices=choices)
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             elif QUESTION_TYPE_BOOLEAN == question_instance.question_type:
-                self.fields['value'].widget = widgets.RadioSelect(choices=choices)#RadioBoolean() #widgets.NullBooleanSelect()
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)}) #RadioBoolean() #widgets.NullBooleanSelect()
             elif QUESTION_TYPE_RATING == question_instance.question_type:
-                self.fields['value'].widget = RadioRating()
+                pass #self.fields['value'].widget = RadioRating()
             else:
                 pass #TODO raise error
 
         else:
             pass #TODO raise error
-
+    
+        super(AnswerQuestionForm, self).__init__(*args, **kwargs)
+        
+        
+        
     class Meta:
         fields = ('value',)
 

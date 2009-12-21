@@ -73,7 +73,6 @@ class AnswerQuestion(MultiPathFormWizard):
             steps_tree.append(step)
 
         scenario_tree = None
-
         for step in steps_tree:
             if None == scenario_tree:
                 scenario_tree = step.next()
@@ -81,7 +80,7 @@ class AnswerQuestion(MultiPathFormWizard):
                 scenario_tree = step.next(scenario_tree)
 
         template = 'backoffice/wizard/council/edit/base.html',
-        super(self.__class__, self).__init__(scenario_tree, template)
+        super(AnswerQuestion, self).__init__(scenario_tree, template)
 
     def get_next_step(self, request, next_steps, current_path, forms_path):
         return 0
@@ -95,7 +94,7 @@ class AnswerQuestion(MultiPathFormWizard):
             for path, forms in form_dict.iteritems():
                 for question_id, form in forms.iteritems():
                     question = Question.objects.get(id=question_id)
-                    answer_value = map(lambda x: x[1], form.cleaned_data.items())[0]
+                    answer_value = form.cleaned_data['value']
 
                     # If question type is multiple answers, we need to clean the string list first.
                     if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
@@ -108,9 +107,9 @@ class AnswerQuestion(MultiPathFormWizard):
                     else:
                         self.candidacy.answers.add(answer_value)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
             
