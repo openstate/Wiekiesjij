@@ -210,7 +210,7 @@ class Interest(models.Model):
     """
         A class to hold an interest of the politician
     """
-    organization    = models.CharField(_('Organisation Name'), max_length=255)
+    organisation    = models.CharField(_('Organisation Name'), max_length=255)
     url             = models.URLField(_('URL'), verify_exists=True)
     description     = models.TextField(_('Description'), null=True, blank=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='interests')
@@ -236,7 +236,7 @@ class WorkExperience(models.Model):
     """
         A class to hold work experience
     """
-    company_name 	= models.CharField(_('Company Name'), max_length=255)
+    company_name    = models.CharField(_('Company Name'), max_length=255)
     sector          = models.ForeignKey(WorkExperienceSector, verbose_name=_('sector'), null=True, blank=True)
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
@@ -257,6 +257,7 @@ class Education(models.Model):
     field       = models.CharField(_('Field'), max_length=255)
     startdate   = models.DateField(_('Start Date'), null=True, blank=True)
     enddate     = models.DateField(_('End Date'), null=True, blank=True)
+    current     = models.BooleanField(_('Currently Studying'), default=False)
     description = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='education')
 
@@ -272,6 +273,7 @@ class PoliticalExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
     enddate         = models.DateField(_('End Date'), null=True, blank=True)
+    current         = models.BooleanField(_('Still in this position'), default=False)
     description     = models.TextField(_('Description'), blank=True, null=True)
     politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='political')
     #tags            = TagField()

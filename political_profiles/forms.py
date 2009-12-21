@@ -30,7 +30,6 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     name            = NameField(label=_('Name'))
     initials        = forms.CharField(label=_('Initials'))
-    email           = forms.EmailField(label=_('E-Mail'))
     dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=SelectDateWidget(years=range(1910, datetime.date.today().year)) )
     introduction    = forms.CharField(label=_('introduction'), widget=forms.Textarea() )
     motivation      = forms.CharField(label=_('motivation'), widget=forms.Textarea())
@@ -225,8 +224,8 @@ class WorkExperienceFormNew(BetterForm, TemplateForm):
     company_name    = forms.CharField(label=_('Company Name'))
     sector          = forms.ModelChoiceField(queryset=WorkExperienceSector.objects, label=_('sector'))
     position        = forms.CharField(label=_('Position'))
-    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)) )
-    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)) )
+    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
+    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
     current         = forms.BooleanField(label=_('Currently Employed'))
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea() )
 
@@ -237,8 +236,8 @@ class EducationFormNew(BetterForm, TemplateForm):
     institute   = forms.CharField(label=_('Institute Name'))
     level       = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('level'))
     field       = forms.CharField(label=_('Field'))
-    startdate   = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)) )
-    enddate     = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)) )
+    startdate   = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
+    enddate     = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
     description = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
 class PoliticalExperienceFormNew(BetterForm, TemplateForm):
@@ -248,8 +247,8 @@ class PoliticalExperienceFormNew(BetterForm, TemplateForm):
     organisation    = forms.CharField(label=_('Organisation'))
     type            = forms.ModelChoiceField(queryset=PoliticalExperienceType.objects, label=_('type'))
     position        = forms.CharField(label=_('Position'))
-    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)) )
-    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)) )
+    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)), required=True )
+    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)), required=True )
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
 class LinkForm(BetterModelForm, TemplateForm):
@@ -311,8 +310,8 @@ class WorkExperienceForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year))
-        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year)) 
+        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
+        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
 
     class Meta:
         model = WorkExperience
@@ -325,8 +324,8 @@ class EducationForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year))
-        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year))
+        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
+        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
 
     class Meta:
         model = Education
@@ -339,8 +338,8 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year))
-        self.fields['enddate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year))
+        self.fields['startdate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year), required=True)
+        self.fields['enddate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year), required=True)
 
     class Meta:
         model = PoliticalExperience
