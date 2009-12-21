@@ -181,6 +181,18 @@ class ElectionInstanceQuestion(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
         ordering = ('position', 'question__id',)
+        
+    def move_down(self):
+        '''
+        Changes the position value with next row
+        '''
+        return move_down(self, 'position', 1000, {'election_instance': self.election_instance.id})
+
+    def move_up(self):
+        '''
+        Changes the position value with previous row
+        '''
+        return move_up(self, 'position', 1, {'election_instance': self.election_instance.id})
 
 class ElectionInstanceQuestionAnswer(models.Model):
     '''

@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from utils.functions import move_up, move_down
+
 from questions.settings import QUESTION_TYPE_CHOICES, QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING
 
 
@@ -35,7 +38,7 @@ class QuestionSet(models.Model):
         Makes reusing a set of questions easier
     """
     name        = models.CharField(_('Name'), max_length=255)
-    question    = models.ManyToManyField(Question, verbose_name=_('Questions'))
+    question    = models.ManyToManyField(Question, verbose_name=_('Questions'), through='QuestionSetQuestion')
 
     def __unicode__(self):
         return self.name
@@ -46,6 +49,28 @@ class QuestionSet(models.Model):
         
     def __unicode__(self):
         return self.name
+        
+class QuestionSetQuestion(models.Model):
+    """
+        Links a question and a set together using a position
+    """
+    question    = models.ForeignKey(Question, verbose_name=_('Question'))
+    questionset = models.ForeignKey(QuestionSet, verbose_name=_('Question set'))
+    
+    position    = models.PositiveIntegerField(_('Position'), default=0)
+    
+    def move_down(self):
+        '''
+        Changes the position value with next row
+        '''
+        return move_down(self, 'position', 1000, {'questionset': self.questionset.id})
+
+    def move_up(self):
+        '''
+        Changes the position value with previous row
+        '''
+        return move_up(self, 'position', 1, {'questionset': self.questionset.id})
+    
 
 class Answer(models.Model):
     """
