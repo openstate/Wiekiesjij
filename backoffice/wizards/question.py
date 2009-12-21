@@ -11,6 +11,7 @@ from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
 from elections.models import Candidacy
 from questions.settings import QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING, QUESTION_TYPE_CHOICES
+from questions.settings import BACKOFFICE_QUESTION_TYPES
 
 from elections.models import ElectionInstance, ElectionInstanceParty, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
@@ -42,7 +43,7 @@ class AnswerQuestion(MultiPathFormWizard):
             raise Exception
 
         # Getting all the questions applicable
-        questions = self.election_instance_party.election_instance.questions.all()
+        questions = self.election_instance_party.election_instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES)
 
         steps_tree = []
 
