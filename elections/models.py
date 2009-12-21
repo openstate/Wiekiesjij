@@ -173,12 +173,14 @@ class ElectionInstanceQuestion(models.Model):
     
      #locked means it can only be edited by admins because it's used in multiple electioninstances
     locked              = models.BooleanField(_('Locked'), default=False)
+    position            = models.PositiveIntegerField(_('Position'), default=0)
 
     def __unicode__(self):
         return self.election_instance.council.name + ' - ' + self.question.title
     
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
+        ordering = ('position', 'question__id',)
 
 class ElectionInstanceQuestionAnswer(models.Model):
     '''

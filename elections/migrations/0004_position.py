@@ -7,23 +7,15 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Adding field 'ElectionEvent.default_date'
-        db.add_column('elections_electionevent', 'default_date', orm['elections.electionevent:default_date'])
-        
-        # Changing field 'ElectionInstance.num_lists'
-        # (to signature: django.db.models.fields.PositiveIntegerField())
-        db.alter_column('elections_electioninstance', 'num_lists', orm['elections.electioninstance:num_lists'])
+        # Adding field 'ElectionInstanceQuestion.position'
+        db.add_column('elections_electioninstancequestion', 'position', orm['elections.electioninstancequestion:position'])
         
     
     
     def backwards(self, orm):
         
-        # Deleting field 'ElectionEvent.default_date'
-        db.delete_column('elections_electionevent', 'default_date')
-        
-        # Changing field 'ElectionInstance.num_lists'
-        # (to signature: django.db.models.fields.PositiveIntegerField(null=True, blank=True))
-        db.alter_column('elections_electioninstance', 'num_lists', orm['elections.electioninstance:num_lists'])
+        # Deleting field 'ElectionInstanceQuestion.position'
+        db.delete_column('elections_electioninstancequestion', 'position')
         
     
     
@@ -133,6 +125,7 @@ class Migration:
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questions.Question']"})
         },
         'elections.electioninstancequestionanswer': {
