@@ -10,10 +10,11 @@ class Question(models.Model):
     """
     
     title           = models.CharField(_('Title'), max_length=255)
+    frontend_title  = models.CharField(_('Frontend title'), max_length=255, default='')
     question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
     weight          = models.PositiveIntegerField(_('Weight'), default=1,)
     theme           = models.CharField(_('Theme'), max_length=255, blank=True, null=False, default='')
-
+    has_no_preference   = models.BooleanField(_('Has a no-preference option'), default=False)
 
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
