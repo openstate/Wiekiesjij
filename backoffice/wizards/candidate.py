@@ -149,10 +149,8 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_appearance', user_id=self.user_id, election_instance_id=self.election_instance_id)
-        
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_appearance', user_id=self.user_id, election_instance_id=self.election_instance_id)
+
 
 class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
     """
@@ -212,10 +210,9 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_political', user_id=self.user_id, election_instance_id=self.election_instance_id )
 
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_political', user_id=self.user_id, election_instance_id=self.election_instance_id )
+
 
 class PoliticianProfileWorkWizard(MultiPathFormWizard):
     """
@@ -275,10 +272,9 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_work', user_id=self.user_id, election_instance_id=self.election_instance_id )
 
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_work', user_id=self.user_id, election_instance_id=self.election_instance_id )
+
 
 class PoliticianProfileInterestWizard(MultiPathFormWizard):
     """
@@ -338,10 +334,9 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_interest', user_id=self.user_id, election_instance_id=self.election_instance_id )
 
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_interest', user_id=self.user_id, election_instance_id=self.election_instance_id )
+
 
 class PoliticianProfileEducationWizard(MultiPathFormWizard):
     """
@@ -402,10 +397,9 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_education', user_id=self.user_id, election_instance_id=self.election_instance_id )
-        
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+        return redirect('bo.politician_profile_education', user_id=self.user_id, election_instance_id=self.election_instance_id )
+
 
 
 class PoliticianProfileLinkWizard(MultiPathFormWizard):
@@ -467,10 +461,9 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id)
-        
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+
+        return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id)
+
 
 class PoliticianProfileConnectionWizard(MultiPathFormWizard):
     """
@@ -531,10 +524,9 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_connection', user_id=self.user_id, election_instance_id=self.election_instance_id)
 
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_connection', user_id=self.user_id, election_instance_id=self.election_instance_id)
+
 
 class PoliticianProfileWizard(MultiPathFormWizard):
     """
@@ -599,10 +591,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        if request.POST.get('skip', None) is not None:
-            return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id )
-        
-        raise NotImplementedError('Implement a redirect to the council edit wizard here.')
+        return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id )
+
         
         
 class AddCandidateWizard(MultiPathFormWizard):

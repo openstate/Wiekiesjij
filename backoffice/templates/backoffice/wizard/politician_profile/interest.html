@@ -7,7 +7,7 @@
     <p>{% trans "Visitors of the website can see an overview of your interests " %}<p>
     <h2>{%trans 'Interests' %} </h2>
     {% for interest in interests %}
-        <h3><a href="{% url bo.politician_profile_interest_wizard_edit election_instance_id user_id interest.id %}">{{ interest.name }}</a></h3>
+        <h3><a href="{% url bo.politician_profile_interest_wizard_edit election_instance_id user_id interest.id %}">{{ interest.organization }}</a></h3>
         <p>{%trans 'Website of the interest' %}: {{ interest.url }}</p>
         <p>{%trans 'Description of the interest' %}: {{ interest.description }}</p>
         <p><a href="{% url bo.politician_profile_interest_delete election_instance_id user_id interest.id  %}">{% trans "Delete" %}</a></p>
