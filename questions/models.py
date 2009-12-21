@@ -59,6 +59,10 @@ class QuestionSetQuestion(models.Model):
     
     position    = models.PositiveIntegerField(_('Position'), default=0)
     
+    class Meta:
+        verbose_name, verbose_name_plural = _('Question set question'), _('Question set questions')
+        ordering = ('position', 'questionset')
+        
     def move_down(self):
         '''
         Changes the position value with next row
