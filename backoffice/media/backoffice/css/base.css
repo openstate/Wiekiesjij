@@ -197,10 +197,11 @@
 		div.multi-field {
 			overflow:hidden;_zoom:1;
 			margin-bottom:1em;
+			position:relative;
 			}
 			
 			div.help {
-			
+				position:relative;
 				}
 				div.help p {
 					margin-bottom:.2em;
@@ -343,7 +344,8 @@
                                 div.form-submit a.btn {
                                     margin-left:10px;
 									float:right;
-									padding:5px;
+									padding:5px 8px;
+									line-height:18px;
                                 }
 
 				div.form-submit a.cancel {
@@ -367,9 +369,9 @@
 						background-color:#b9b9b9;
 						}
 					div.form-submit a.button {
-					border:2px solid #ccc;
-                                        text-decoration: none;
-                                        }
+						border:2px solid #ccc;
+						text-decoration: none;
+						}
 				div.form-submit button.primary,
 				div.form-submit a.primary {
 					border-color:#666;
@@ -378,22 +380,22 @@
 			
 				div.form-submit button.prev,
                 a.prev {
-					background: #ccc url(../img/prev.png) no-repeat 5px 5px;
+					background: #ccc url(../img/prev.png) no-repeat left center;
 					padding-left: 20px;
 					}
 					
 					div.form-submit a.prev {
 					 	padding-left:25px;
-					 }
+					 	}
 					
 					div.form-submit button.prev:hover,
                     a.prev:hover {
-						background: #b9b9b9 url(../img/prev.png) no-repeat 5px 5px;
+						background-color:#b9b9b9;
 						}
 			
 				div.form-submit button.next,
                 a.next {
-					background: #ccc url(../img/next.png) no-repeat right;
+					background: #ccc url(../img/next.png) no-repeat right center;
 					padding-right:25px;
 					}
 					
@@ -403,7 +405,7 @@
 					
 					div.form-submit button.next:hover,
                     a.next:hover {
-						background: #b9b9b9 url(../img/next.png) no-repeat right;
+						background-color: #b9b9b9;
 						}
 		
 		
@@ -515,7 +517,12 @@
 					}
 			
 			
-				
+			div.selectdatewidget {
+			
+				}
+				div.selectdatewidget select {
+					
+					}
 		
 				
 		
@@ -554,11 +561,15 @@
 			text-indent:-9999em;
 			background:url(../img/wkj-logo.png) 0 0 no-repeat;
 			}
+		.col {
+			overflow:hidden;_zoom:1;
+			}	
 			
 		.mod {
 			border-bottom:2px solid #ddd;
 			padding-bottom:10px;
 			position:relative;
+			overflow:hidden;_zoom:1;
 			}
 			.error-message {
 				border-bottom:none;
@@ -690,7 +701,7 @@
 					}
 
 	
-	/*	.partylist
+	/*	Overview pages
 		**************************************************************************************************************/
 		
 		div.overview .btn {
@@ -867,6 +878,43 @@
 			min-height:600px;
 			}
 
+	/*	Politician wizard
+		**************************************************************************************************************/
+		
+		.profile-item {
+			border-bottom:2px solid #ccc;
+			padding-bottom:10px;
+			margin-bottom:10px;
+			position:relative;
+			}
+			.profile-item h3,
+			.profile-item p  {
+				margin:0;
+				padding-right:90px;
+				}
+			.profile-item .url {
+				font-size:.8em;
+				color:#999;
+				}
+			.profile-item .quicklinks {
+				float:right;
+				position:absolute;
+				top:0;
+				right:0;
+				text-align:right;
+				font-size:.8em;
+				}
+			.profile-item .edit {
+				font-weight:bold;
+				}
+		
+		.intro-movie {
+			border:4px solid #e0e0e0;
+			padding:0;
+			margin-top:4em;
+			}
+	
+	
 	/*	Sidebar
 		**************************************************************************************************************/
 

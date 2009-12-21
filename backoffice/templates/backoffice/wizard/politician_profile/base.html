@@ -2,5 +2,18 @@
 
 {% load i18n %}
 
-{% block title %}{% trans 'Politician profile' %}{% endblock title %}
-{% block page-title %}{% trans 'Politician profile' %}{% endblock page-title %}
+{% block title %}[Politician Name]{% endblock title %}
+{% block page-title %}[Politician Name]{% endblock page-title %}
+{% block breadcrumbs %}{% endblock breadcrumbs %}
+{% block back-link %}{% endblock back-link %}
+
+{% block wizard-steps %}
+	<ul id="wizardSteps">
+    	{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Personal information" %}</span></li>{% endblock step1 %}
+        {% block step2 %}<li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
+        {% block step3 %}<li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>{% endblock step3 %}
+        {% block step4 %}<li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>{% endblock step4 %}
+        {% block step5 %}<li><span class="future"><span class="number">5</span>{% trans "Styling" %}</span></li>{% endblock step5 %}
+        {% block step6 %}<li><span class="future"><span class="number">6</span>{% trans "Finish" %}</span></li>{% endblock step6 %}
+    </ul>
+{% endblock wizard-steps %}

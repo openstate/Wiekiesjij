@@ -49,8 +49,22 @@
     
             <div class="form-submit">
                 <button class="primary next" type="submit">{% trans "Login" %}</button>
+                <a href="#">{% trans "Forgot password?" %}</a>
             </div>
         </form>
+    </div>
+</div>
+<div class="col size1of2">
+	<div class="mod">
+    	<h2>{% trans "Helpdesk" %}</h2>
+    	<p>
+        	{% trans "Do you have a question about the admin pages or filling in your data?" %}
+         </p>
+         <p>
+            {% trans "Contact us at" %} <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>
+            {% trans "or phone number" %} (088) 7000 125.
+        </p>
+        {# Heeft u vragen over de beheerderspagina of het invullen van de gegevens? Neemt u dan contact met ons op via 088-7000125 of support@wiekiesjij.nl' #}
     </div>
 </div>
 {% endblock cols %}

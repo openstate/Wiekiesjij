@@ -17,7 +17,7 @@
 
 {% block cols %}
 	<div class="col size1of2">
-
+	{% block content %}
         <div class="mod wizard">
             {% block step-header %}
         	<div class="hd">
@@ -46,5 +46,6 @@
                 </form>
            	</div>
         </div>
+    {% endblock content %}
    	</div>
 {% endblock cols %}
