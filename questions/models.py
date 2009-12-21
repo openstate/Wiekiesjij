@@ -14,7 +14,7 @@ class Question(models.Model):
     
     title           = models.CharField(_('Title'), max_length=255)
     frontend_title  = models.CharField(_('Frontend title'), max_length=255, default='')
-    question_type   = models.CharField(_('Type of question'), max_length=1, choices=QUESTION_TYPE_CHOICES)
+    question_type   = models.CharField(_('Type of question'), max_length=10, choices=QUESTION_TYPE_CHOICES)
     weight          = models.PositiveIntegerField(_('Weight'), default=1,)
     theme           = models.CharField(_('Theme'), max_length=255, blank=True, null=False, default='')
     has_no_preference   = models.BooleanField(_('Has a no-preference option'), default=False)
@@ -86,6 +86,21 @@ class Answer(models.Model):
                                                                             QUESTION_TYPE_MULTIPLEANSWER,
                                                                             QUESTION_TYPE_BOOLEAN)})
     value       = models.TextField(_('Value'))
+    frontoffice_value = models.TextField(_('Frontoffice value'), blank=True, null=True)
+    
+    position    = models.PositiveIntegerField(_('Position'), default=0)
+    
+    def move_down(self):
+        '''
+        Changes the position value with next row
+        '''
+        return move_down(self, 'position', 1000, {'question': self.question.id})
+
+    def move_up(self):
+        '''
+        Changes the position value with previous row
+        '''
+        return move_up(self, 'position', 1, {'question': self.question.id})
 
     def get_value(self):
         '''
@@ -95,6 +110,12 @@ class Answer(models.Model):
             return self.question.title
         else:
             return self.value
+            
+    def get_frontoffice_value(self):
+        """
+            Return self.frontoffice_value or self.value if empty
+        """
+        return self.frontoffice_value or self.value
 
     def __unicode__(self):
         return self.question.title + ' - ' + self.value
