@@ -253,7 +253,7 @@ class Candidacy(models.Model):
                                                 related_name='candidates')
     candidate                   = models.ForeignKey(User, 
                                         limit_choices_to=settings.POLITICIAN_LIMITATION, 
-                                        verbose_name=_('Politician'))
+                                        verbose_name=_('Politician'), related_name='elections')
     position                    = models.PositiveIntegerField(_('Position'))
     answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
 

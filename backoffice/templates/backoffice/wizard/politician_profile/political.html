@@ -13,7 +13,7 @@
         <p>{%trans 'Type of experience' %}: {{ political_experience.type }}</p>
         <p>{%trans 'Position you held' %}: {{ political_experience.position }}</p>
         <p>{%trans 'Description of your experience' %}: {{ political_experience.description }}</p>
-        <p>{%trans 'Experience gained between:' %}: {{ political_experience.startdate }} - {{ political_experience.enddate }}</p>
+        <p>{%trans 'Experience gained between:' %} {{ political_experience.startdate }} - {{ political_experience.enddate }}</p>
         <p><a href="{% url bo.politician_profile_political_delete election_instance_id user_id political_experience.id  %}">{% trans "Delete" %}</a></p>
 
     {% empty %}

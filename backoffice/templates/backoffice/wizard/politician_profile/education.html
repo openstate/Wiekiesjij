@@ -12,7 +12,7 @@
         <p>{%trans 'Level you stuieded at' %}: {{ education_instance.level }}</p>
         <p>{%trans 'Field you stuieded' %}: {{ education_instance.field }}</p>
         <p>{%trans 'Description of your education' %}: {{ education_instance.description }}</p>
-        <p>{%trans 'Attended between:' %}: {{ education_instance.startdate }} - {{ education_instance.enddate }}</p>
+        <p>{%trans 'Attended between:' %} {{ education_instance.startdate }} - {{ education_instance.enddate }}</p>
         <p><a href="{% url bo.politician_profile_education_delete election_instance_id user_id education_instance.id  %}">{% trans "Delete" %}</a></p>
 
     {% empty %}

@@ -16,7 +16,7 @@
         {% if work_experience.current %}
             <p>{%trans 'Worked between:' %}: {{ work_experience.startdate }} - {%trans 'Now' %}</p>
         {% else %}
-            <p>{%trans 'Worked between:' %}: {{ work_experience.startdate }} - {{ work_experience.enddate }}</p>
+            <p>{%trans 'Worked between:' %} {{ work_experience.startdate }} - {{ work_experience.enddate }}</p>
         {% endif %}
         <p><a href="{% url bo.politician_profile_work_delete election_instance_id user_id work_experience.id  %}">{% trans "Delete" %}</a></p>
 
