@@ -234,7 +234,8 @@ class Party(models.Model):
     manifesto   = models.URLField(_('Manifesto'), max_length=255, null=True, blank=True)
     logo = models.ImageField(_('Image'), upload_to='media/party', null=True, blank=True)
     num_seats = models.PositiveIntegerField(_('Number of seats'), null=True, blank=True, help_text=_('The number of seats you currently hold'))
-
+    movie        = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
+                                      help_text=_('Link to YouTube video'))
     def __unicode__(self):
         if self.abbreviation:
             return self.abbreviation
