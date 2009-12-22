@@ -57,6 +57,7 @@ class QuestionSetQuestion(models.Model):
     question    = models.ForeignKey(Question, verbose_name=_('Question'))
     questionset = models.ForeignKey(QuestionSet, verbose_name=_('Question set'))
     
+    
     position    = models.PositiveIntegerField(_('Position'), default=0)
     
     class Meta:
