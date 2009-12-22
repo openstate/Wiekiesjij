@@ -628,7 +628,10 @@ def answer_question(request, election_instance_party_id=None, user_id=None):
         @param int election_instance_party_id - ElectionInstanceParty id
         @param int user_id User (Candidate=PoliticalProfile) id
     '''
-    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
+
+    election_instance_party = request.user.elections.all()[0].election_party_instance
+
+    return AnswerQuestion(election_instance_party_id=election_instance_party.id, user_id=user_id)(request)
 
 def answer_question_done(request):
     '''

@@ -18,6 +18,6 @@
     
     <a href="{% url bo.politician_profile_interest election_instance_id user_id %}">{% trans "< Previous " %}</a>
     <a href="{% url bo.politician_profile_connection_wizard election_instance_id user_id %}">{% trans "Click here to add a connection" %}</a>
-    <a href="{% url bo.politician_profile_setup_done election_instance_id user_id %}">{% trans "Finish >" %}</a>
+    <a href="{% url bo.answer_question election_instance_id user_id %}">{% trans "Next >" %}</a>
 </div>
 {% endblock content %}

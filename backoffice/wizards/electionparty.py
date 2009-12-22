@@ -171,7 +171,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         self.eip.list_length = int(data['list_length'])
         self.eip.save()
 
-        return redirect('bo.election_party_edit', self.eip.party.id)
+        return redirect('bo.election_party_view', self.eip.party.id)
 
 class PartyContactWizard(MultiPathFormWizard):
     def __init__(self, eip_id, user_id, *args, **kwargs):
