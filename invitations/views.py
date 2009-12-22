@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
+from django.core.urlresolvers import reverse
 
 
 from elections.functions import replace_user
@@ -15,7 +16,7 @@ def index(request, hash):
         return redirect('invitations.notexist')
     
     if invitation.accepted:
-        return redirect(invitation.view)
+        return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
     
     return render_to_response('invitations/index.html', {'invitation': invitation}, context_instance=RequestContext(request))
     
@@ -27,7 +28,7 @@ def accept(request, hash):
         return redirect('invitations.notexist')
         
     if invitation.accepted:
-        return redirect(invitation.view)
+        return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
         
     if request.method == 'POST':
         form = AcceptInvitationForm(data=request.POST)
@@ -56,7 +57,7 @@ def existing(request, hash):
         return redirect('invitations.notexist')
         
     if invitation.accepted:
-        return redirect(invitation.view)
+        return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
         
     if request.method == 'POST':
         form = ExistingUserForm(profile_class=invitation.user_to.profile.__class__.__name__, data=request.POST)
