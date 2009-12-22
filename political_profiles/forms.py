@@ -46,7 +46,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     ChanceryProfile admin
     '''
     name = NameField(label=_('Name'))
-    email = forms.EmailField(_('E-mail'))
+    email = forms.EmailField(label=_('E-mail'), max_length=30)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
         
     
@@ -70,7 +70,7 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'))
+    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'), max_length=30)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
 
         
@@ -134,7 +134,7 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
 
 class InitialContactProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'))
+    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'), max_length=30)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
 	
     class Meta:
