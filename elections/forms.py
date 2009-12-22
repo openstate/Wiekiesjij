@@ -5,6 +5,7 @@ from form_utils.forms import BetterForm, BetterModelForm
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 
 from utils.widgets import AutoCompleter, ColorPicker, DatePicker, HiddenDateTimePicker, DateTimePicker
 from utils.fields import AddressField
@@ -129,10 +130,28 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your municipality.'))
     level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a municipality election, the level would be Municipality.'))
     num_lists = forms.IntegerField(label=_('Number of Parties'))
+
+    def clean_num_lists(self):
+        """
+           We have to check if the number is not already exceeded
+        """
+        num_lists = self.cleaned_data['num_lists']
+        largest_position = 0
+        ei = ElectionInstance.objects.get(name=self.cleaned_data['name'])
+        election_instance_parties = ElectionInstanceParty.objects.filter(election_instance=ei)
+        for eip in election_instance_parties:
+            if eip.position > largest_position:
+                largest_position = eip.position
+
+        if largest_position > num_lists:
+            raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
+
+        return self.cleaned_data['num_lists']
+
     
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'region', 'level', 'num_lists', 'modules')
+        fields = ('name ', 'region', 'level', 'num_lists', 'modules')
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
@@ -168,6 +187,24 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
+                            
+    def clean_num_lists(self):
+        """
+           We have to check if the number is not already exceeded
+        """
+        num_lists = self.cleaned_data['num_lists']
+        largest_position = 0
+        ei = ElectionInstance.objects.get(name=self.cleaned_data['name'])
+        election_instance_parties = ElectionInstanceParty.objects.filter(election_instance=ei)
+        for eip in election_instance_parties:
+            if eip.position > largest_position:
+                largest_position = eip.position
+
+        if largest_position > num_lists:
+            raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
+
+        return self.cleaned_data['num_lists']
+
     class Meta:
         model = ElectionInstance
         fields = ('name', 'num_lists', 'modules')
@@ -208,6 +245,33 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     slogan = forms.CharField(label=_('Slogan'), required = False)
     #logo = forms.FileField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'), required = False)
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        self.eip_id = kwargs['initial']['id']
+
+
+
+
+
+    def clean_list_length(self):
+        """
+           We have to check if the number is not already exceeded
+        """
+        list_length = self.cleaned_data['list_length']
+        largest_position = 0
+        eip = ElectionInstanceParty.objects.get(id=self.eip_id)
+        candidates = eip.candidates.all()
+        for candidate in candidates:
+            if candidate.position > largest_position:
+                largest_position = candidate.position
+
+        if largest_position > list_length:
+            raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a candidate in this position already.') % {'largest_position':largest_position, 'list_length': list_length } )
+
+        return self.cleaned_data['list_length']
+
 
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):

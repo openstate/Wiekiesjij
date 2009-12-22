@@ -128,7 +128,8 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
                     forms=step2_forms,
                     initial={'election_party_additional_form': initial},
                     template='backoffice/wizard/setupelectionparty/step2.html',
-                    extra_context={'instance':self.election_instance, 'eip':self.eip })
+                    extra_context={'instance':self.election_instance, 'eip':self.eip },
+                    )
         step3 = Step('election_party_description_form',
                     forms=step3_forms,
                     initial={'election_party_description_form': initial},
@@ -223,7 +224,8 @@ class PartyContactWizard(MultiPathFormWizard):
                     forms=step3_forms,
                     initial={'election_party_additional_form': initial},
                     template='backoffice/wizard/partycontact/step3.html',
-                    extra_context={'instance':self.election_instance, 'eip':self.eip })
+                    extra_context={'instance':self.election_instance, 'eip':self.eip },
+                    )
         step4 = Step('election_party_description_form',
                     forms=step4_forms,
                     initial={'election_party_description_form': initial},
@@ -275,7 +277,7 @@ class PartyContactWizard(MultiPathFormWizard):
             self.eip.party.manifesto = data['manifesto']
             self.eip.party.manifesto_summary = data['manifesto_summary']
             self.eip.party.save()
-
+            
             self.eip.list_length = int(data['list_length'])
             self.eip.save()
 

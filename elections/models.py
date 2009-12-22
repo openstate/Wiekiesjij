@@ -113,7 +113,7 @@ class ElectionInstance(models.Model):
         
     def party_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
-        list.update(dict(map(lambda x: (x.position, x), self.electioninstanceparty_set.all())))
+        list.update(dict(map(lambda x: (x.position, x), self.election_instance_parties.all())))
         return list
 
     def question_deadline(self):
@@ -299,7 +299,7 @@ class ElectionInstanceParty(models.Model):
     """
         A link between the party, the election instance and the candidates
     """
-    election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
+    election_instance = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'), related_name='election_instance_parties')
     party = models.ForeignKey(Party, verbose_name=_('Party'), related_name='election_instance_parties')
     position = models.PositiveIntegerField(_('Party Position'))
     list_length = models.PositiveIntegerField(_('List length'), default = 0)
