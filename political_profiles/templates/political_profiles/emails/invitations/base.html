@@ -9,7 +9,7 @@
 {% block content %}
     <p style="{% use_stylegroup 'font' %}">Geachte {{ invitation.user_to.profile.full_name }},</p>
 	
-	<p style="{% use_stylegroup 'font' %}"><a href="http://79.125.22.198{% url invitations.index hash=invitation.hash %}">http://79.125.22.198{% url invitations.views.index hash=invitation.hash %}</a>
+	<p style="{% use_stylegroup 'font' %}"><a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.views.index hash=invitation.hash %}</a>
 		
 {% endblock content %}
 </body>
