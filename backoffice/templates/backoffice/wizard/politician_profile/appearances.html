@@ -1,28 +1,32 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
 {% load i18n %}
 
 {% block content %}
-<div class="mod">
-    <h1>{% trans 'What events have you appeared at?' %}</h1>
-    
+<div class="mod wizard">
+    <h2>{% trans 'What events have you appeared at?' %}</h2>
     <p>{% trans "Visitors of the website can see an overview of the events you appeared at " %}</p>
-    <h2>{%trans 'Events have you appeared' %} </h2>
+
     {% for appearance in appearances %}
-        <h3><a href="{% url bo.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}">{{ appearance.name }}</a></h3>
-        <p>{%trans 'Website of the event you appeared at' %}: {{ appearance.url }}</p>
-        <p>{%trans 'Description of the event you appeared at' %}: {{ appearance.description }}</p>
-        <p>{%trans 'Date and Time of the event you appeared at' %}: {{ appearance.datetime }}</p>
-        <p>{%trans 'Location of the event you appeared at' %}: {{ appearance.location }}</p>
-        <p><a href="{% url bo.politician_profile_appearance_delete election_instance_id user_id appearance.id  %}">{% trans "Delete" %}</a></p>  
-           
+    <div class="profile-item appearance">
+        <h3>{{ appearance.name }}</h3>
+       	<p class="info"><strong>{% trans "Time" %}:</strong> {{ appearance.datetime|date:'D j F Y, G:i'|title }} | <strong>{% trans "Place" %}:</strong> {{ appearance.location }} | <a href="{{ appearance.url }}" class="url">{% trans "Website" %}</a></p>
+
+        
+        <p>{{ appearance.description }}</p>
+        <ul class="quicklinks">
+        	<li><a href="{% url bo.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}" class="edit">{% trans "Edit" %}</a></li>
+        	<li><a href="{% url bo.politician_profile_appearance_delete election_instance_id user_id appearance.id  %}" class="delete">{% trans "Delete" %}</a></li>  
+       	</ul>
+   	</div>
     {% empty %}
-        <p>{%trans 'You have no appearances defined yet' %} </p>
+        <p class="empty">{%trans 'You have no appearances defined yet' %} </p>
     {% endfor %}
-    
+	<a href="{% url bo.politician_profile_appearance_wizard election_instance_id user_id %}" class="add add-item">{% trans "Add a public appearance" %}</a>
 
-    <a href="{% url bo.politician_profile_link election_instance_id user_id %}">{% trans "< Previous " %}</a>
-    <a href="{% url bo.politician_profile_appearance_wizard election_instance_id user_id %}">{% trans "Click here to add an appearance" %}</a>
-    <a href="{% url bo.politician_profile_education election_instance_id user_id %}">{% trans "Next >" %}</a>
-
+	<div class="form-submit">
+        <a href="{% url bo.politician_profile_education election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
+        <a href="{% url bo.politician_profile_link election_instance_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+	</div>
 </div>
 {% endblock content %}

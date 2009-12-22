@@ -37,7 +37,7 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
         step1_forms = dict(appearance=AppearanceForm,)
         step1 = Step('candidate_edit_appearance',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/appearances-add.html',
                     initial={'appearance': self.appearance })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -96,7 +96,7 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
         step1_forms = dict(political=PoliticalExperienceForm,)
         step1 = Step('candidate_edit_political',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/political-add.html',
                     initial={'political': self.political })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -158,7 +158,7 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
         step1_forms = dict(work=WorkExperienceForm,)
         step1 = Step('candidate_edit_work',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/work-add.html',
                     initial={'work': self.work })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -220,7 +220,7 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
         step1_forms = dict(interest=InterestForm,)
         step1 = Step('candidate_edit_interest',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/interest-add.html',
                     initial={'interest': self.interest })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -283,7 +283,7 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         step1_forms = dict(education=EducationForm,)
         step1 = Step('candidate_edit_education',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/education-add.html',
                     initial={'education': self.education })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -347,7 +347,7 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         step1_forms = dict(link=LinkForm,)
         step1 = Step('candidate_edit_link',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/links-add.html',
                     initial={'link': self.link })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -410,7 +410,7 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
         step1_forms = dict(connection=ConnectionForm,)
         step1 = Step('candidate_edit_connection',
                     forms=step1_forms,
-                    template='backoffice/wizard/politician_profile/step1.html',
+                    template='backoffice/wizard/politician_profile/connections-add.html',
                     initial={'connection': self.connection })
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)

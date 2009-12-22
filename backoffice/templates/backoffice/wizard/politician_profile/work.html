@@ -1,30 +1,29 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
 {% load i18n %}
+
 {% block content %}
-<div class="mod">
-    <h1>{% trans 'What work experience have you under your belt?' %}</h1>
-    
+<div class="mod wizard">
+    <h2>{% trans 'What work experience have you under your belt?' %}</h2>
     <p>{% trans "Visitors of the website can see an overview of the work experience have you under your belt?" %}</p>
-    <h2>{%trans 'Work Experience' %} </h2>
     
     {% for work_experience in work %}
-        <h3><a href="{% url bo.politician_profile_work_wizard_edit election_instance_id user_id work_experience.id %}">{{ work_experience.company_name }} - {{ work_experience.position }}</a></h3>
-        <p>{%trans 'Company you were employed in' %}: {{work_experience.company_name  }}</p>
-        <p>{%trans 'Sector of employment' %}: {{ work_experience.sector }}</p>
-        <p>{%trans 'Position you held' %}: {{ work_experience.position }}</p>
-        <p>{%trans 'Description of your experience' %}: {{ work_experience.description }}</p>
-        {% if work_experience.current %}
-            <p>{%trans 'Worked between:' %}: {{ work_experience.startdate }} - {%trans 'Now' %}</p>
-        {% else %}
-            <p>{%trans 'Worked between:' %} {{ work_experience.startdate }} - {{ work_experience.enddate }}</p>
-        {% endif %}
-        <p><a href="{% url bo.politician_profile_work_delete election_instance_id user_id work_experience.id  %}">{% trans "Delete" %}</a></p>
-
+    <div class="profile-item work">
+        <h3>{{ work_experience.position }}</h3>
+        <p class="info">{{ work_experience.startdate|date:'M Y' }} {% trans "until" %} {% if work_experience.current %}{%trans 'Now' %}{% else %}{{ work_experience.enddate|date:'M Y' }}{% endif %} {% trans "with" %} {{ work_experience.company_name }} ({% trans "Sector" %}: {{ work_experience.sector }})</p>
+        <p>{{ work_experience.description }}</p>
+        <ul class="quicklinks">
+        	<li><a href="{% url bo.politician_profile_work_wizard_edit election_instance_id user_id work_experience.id %}" class="edit">{% trans "Edit" %}</a></li>
+       		<li><a href="{% url bo.politician_profile_work_delete election_instance_id user_id work_experience.id  %}" class="delete">{% trans "Delete" %}</a></li>
+		</ul>
+	</div>
     {% empty %}
-        <p>{%trans 'You have no work experience entered yet' %} </p>
+        <p class="empty">{%trans 'You have no work experience entered yet' %} </p>
     {% endfor %}
-   <a href="{% url bo.politician_profile_political election_instance_id user_id %}">{% trans "< Previous " %}</a>
-    <a href="{% url bo.politician_profile_work_wizard election_instance_id user_id %}">{% trans "Click here to work experience" %}</a>
-    <a href="{% url bo.politician_profile_interest election_instance_id user_id %}">{% trans "Next >" %}</a>
+    <a href="{% url bo.politician_profile_work_wizard election_instance_id user_id %}" class="add add-item">{% trans "Add new work experience" %}</a>
+    <div class="form-submit">
+    	<a href="{% url bo.politician_profile_interest election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
+   		<a href="{% url bo.politician_profile_political election_instance_id user_id %}" class="btn prev">{% trans "Previous" %}</a>
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+	</div>
 </div>
 {% endblock content %}

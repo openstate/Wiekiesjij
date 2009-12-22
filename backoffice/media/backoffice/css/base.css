@@ -882,20 +882,42 @@
 		**************************************************************************************************************/
 		
 		.profile-item {
-			border-bottom:2px solid #ccc;
+			border-bottom:1px solid #ccc;
 			padding-bottom:10px;
 			margin-bottom:10px;
 			position:relative;
 			}
+			.profile-item p {
+				margin:0;
+				}
 			.profile-item h3,
-			.profile-item p  {
+			.profile-item dl  {
 				margin:0;
 				padding-right:90px;
+				}
+			.profile-item dt {
+				float:left;
+				clear:left;
+				font-size:.8em;
+				margin:0;
+				}
+			.profile-item dd {
+				float:left;
+				font-size:.8em;
+				margin:0;
 				}
 			.profile-item .url {
 				font-size:.8em;
 				color:#999;
 				}
+			.profile-item .info {
+				font-size:.8em;
+				color:#999;
+				}
+				.profile-item .info .url {
+					font-size:1em;
+					font-weight:bold;
+					}
 			.profile-item .quicklinks {
 				float:right;
 				position:absolute;
@@ -906,6 +928,14 @@
 				}
 			.profile-item .edit {
 				font-weight:bold;
+				}
+				
+			.add-item {
+				font-size:1.1em;
+				font-weight:bold;
+				color:#ed2227;
+				margin-bottom:1em;
+				display:block;
 				}
 		
 		.intro-movie {

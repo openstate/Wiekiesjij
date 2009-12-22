@@ -1,0 +1,12 @@
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
+{% load i18n %}
+
+{% block step_title %}{% trans "Add a new appearance" %}{% endblock step_title %}
+
+
+{% block buttons %}
+	<div class="form-submit">
+		<button class="primary" type="submit">{% trans 'Add' %}</button>
+        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+	</div>
+{% endblock buttons %}
