@@ -3,10 +3,33 @@ TODO. Style.
 http://www.campaignmonitor.com/css/
 {% endcomment %}
 {% load email_tags %}
-{% stylegroup 'headertable' %}
+{% stylegroup 'contenttable' %}
 	border-collapse:collapse; 
 	border: none; 
 	width:600px;
+{% end_stylegroup %}
+{% stylegroup 'content' %}
+	font: 13px Arial, Helvetiva, sans-serif;
+	width: 440px;
+	background-color: #D9D9D9;
+	vertical-align: top;
+{% end_stylegroup %}
+{% stylegroup 'spacer' %}
+	font: 1px;
+	width: 10px;
+{% end_stylegroup %}
+{% stylegroup 'sidebar' %}
+	width: 150px;
+	background-color: #FFFFFF;
+	font: 13px Arial, Helvetiva, sans-serif;
+	vertical-align: top;
+{% end_stylegroup %}
+{% stylegroup 'sidebar-header' %}
+	font: 13px Arial, Helvetiva, sans-serif;
+	font-weight: bold;
+{% end_stylegroup %}
+{% stylegroup "font" %}
+	font: 13px Arial, Helvetiva, sans-serif;
 {% end_stylegroup %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -15,14 +38,17 @@ http://www.campaignmonitor.com/css/
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body>
-	
-	
-	<table style="{% use_stylegroup 'headertable'}" align="center">
-		<tr><td style="height:102px; padding:0; margin:0; vertical-align:top;"><img src="http://www.plattetvdiscounter.nl/site-media/images/email_header.jpg"></td></tr>
-	</table>
-	
-	{% block body_content %}
+	<table style="{% use_stylegroup 'contenttable' %}" align="center">
+		<tr><td><img src="http://{{ domain }}/media/email/email_header.png" alt="WieKiesJij" /></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td style="{% use_stylegroup 'content' %}">
+	{% block content %}
     E-mail content comes here
-    {% endblock body_content %}
+    {% endblock content %}
+	</td><td style="{% use_stylegroup 'spacer' %}">&nbsp;
+	</td><td style="{% use_stylegroup 'sidebar' %}">
+	{% block sidebar %}
+		&nbsp;
+	{% endblock sidebar %}
+	</td></tr></table>
   </body>
 </html>

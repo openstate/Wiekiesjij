@@ -1,16 +1,11 @@
+{% extends 'base_email.html' %}
 {% load email_tags i18n %}
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<body>
 
-    {% stylegroup "font" %}
-        font: 12px Arial, Helvetiva, sans-serif;
-    {% end_stylegroup %}
-{% block content %}
-    <p style="{% use_stylegroup 'font' %}">Geachte {{ invitation.user_to.profile.full_name }},</p>
-	
-	<p style="{% use_stylegroup 'font' %}"><a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.views.index hash=invitation.hash %}</a>
-		
-{% endblock content %}
-</body>
-</html>
+{% block sidebar %}
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via 088-7000125</p>
+	<br/>
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens</p>
+	<br/>
+{% endblock sidebar %}

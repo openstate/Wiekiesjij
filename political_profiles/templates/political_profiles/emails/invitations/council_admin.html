@@ -1,1 +1,26 @@
 {% extends 'political_profiles/emails/invitations/base.html' %}
+{% load i18n email_tags %}
+{% stylegroup "font" %}
+	font: 13px Arial, Helvetiva, sans-serif;
+{% end_stylegroup %}
+
+{% block content %}
+	<p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},</p>
+
+	<p style="{% use_stylegroup 'font' %}">Hartelijk dank voor uw deelname aan het project Wiekiesjij. De komende periode zullen wij volop aan de slag gaan om Wiekiesjij voor uw gemeente gereed te maken. Om dit te doen zullen wij u, de contactpersonen van de partijen en de kandidaten middels een geautomatiseerd proces uitnodigen om mee te doen.</p>
+	
+	<p style="{% use_stylegroup 'font' %}">Om te beginnen willen wij u vragen om een lijst van de contactpersonen en contactgegevens van de deelnemende politieke partijen in te vullen in Wiekiesjij. Deze contactgegevens hebben wij nodig om de politieke partijen te benaderen zodat hun kandidaten allemaal hun profielen kunnen invullen.</p>
+
+	<p style="{% use_stylegroup 'font' %}">Wanneer u op de onderstaande link drukt zult u op de beheerders pagina van Wiekiesjij voor uw gemeente terecht komen. Naast het invoeren van de contactgegevens kunt u hier ook de voortgang van het invullen van de kandidaat profielen volgen en informatie over de verkiezingen aanpassen. Het is van belang dat zo veel mogelijk kandidaten hun profiel invullen zodat bezoekers van uitputtende informatie kunnen worden voorzien. Houdt u alstublieft deze voortgang in de gaten.</p>
+
+	<p style="{% use_stylegroup 'font' %}">Vul de partij contactpersonen in via <a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.views.index hash=invitation.hash %}</a></p>
+
+	<p style="{% use_stylegroup 'font' %}">Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de lijst met contactpersonen zo spoedig mogelijk tegemoet!</p>
+
+	<p style="{% use_stylegroup 'font' %}">Met vriendelijke groet,</p>
+
+	<p style="{% use_stylegroup 'font' %}">
+	Lenneke van Mameren<br/>
+	Projectleider Wiekiesjij
+	</p>
+{% endblock content %}

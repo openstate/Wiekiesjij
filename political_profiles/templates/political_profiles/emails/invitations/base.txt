@@ -1,6 +1,5 @@
+WieKiesJij
 
-{% block content %}
-Geachte {{ invitation.user_to.profile.full_name }},
-
-http://{{ domain }}{% url invitations.index hash=invitation.hash %}
+{% block content %}  
+ 
 {% endblock content %}
