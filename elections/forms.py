@@ -131,24 +131,6 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a municipality election, the level would be Municipality.'))
     num_lists = forms.IntegerField(label=_('Number of Parties'))
 
-    def clean_num_lists(self):
-        """
-           We have to check if the number is not already exceeded
-        """
-        num_lists = self.cleaned_data['num_lists']
-        largest_position = 0
-        ei = ElectionInstance.objects.get(name=self.cleaned_data['name'])
-        election_instance_parties = ElectionInstanceParty.objects.filter(election_instance=ei)
-        for eip in election_instance_parties:
-            if eip.position > largest_position:
-                largest_position = eip.position
-
-        if largest_position > num_lists:
-            raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
-
-        return self.cleaned_data['num_lists']
-
-    
     class Meta:
         model = ElectionInstance
         fields = ('name', 'region', 'level', 'num_lists', 'modules')
@@ -163,21 +145,42 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
     start_date.hidden_widget = HiddenDateTimePicker
     website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
-
+    
+    class Meta:
+        model = ElectionInstance
+        fields = ('start_date', 'website', 'num_lists')
+        
+        
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
         if 'instance' in kwargs:
-            s = kwargs['instance']
+            self.instance = kwargs['instance']
             self.fields['start_date'].help_text = _('%(def_date)s is the default date for %(ev_name)s.') % {
-                'def_date': s.election_event.default_date.strftime('%d-%m-%Y'),
-                'ev_name': s.election_event.name,
+                'def_date': self.instance.election_event.default_date.strftime('%d-%m-%Y'),
+                'ev_name': self.instance.election_event.name,
             }
 
+    def clean_num_lists(self):
+        """
+          We have to check if the number is not already exceeded
+        """
+        # No checking for unbound form
+        if not self.instance:
+            return self.cleaned_data['num_lists']
+            
+        num_lists = self.cleaned_data['num_lists']
+        largest_position = 0
+        
+        for eip in self.instance.election_instance_parties.all():
+           if eip.position > largest_position:
+               largest_position = eip.position
 
-    class Meta:
-        model = ElectionInstance
-        fields = ('start_date', 'website', 'num_lists')
+        if largest_position > num_lists:
+           raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
+
+        return self.cleaned_data['num_lists']
+    
 
 class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
@@ -187,7 +190,12 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
                             label=_('Modules'), 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
-                            
+    
+    class Meta:
+        model = ElectionInstance
+        fields = ('name', 'num_lists', 'modules')                     
+        
+        
     def clean_num_lists(self):
         """
            We have to check if the number is not already exceeded
@@ -204,10 +212,6 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
             raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
 
         return self.cleaned_data['num_lists']
-
-    class Meta:
-        model = ElectionInstance
-        fields = ('name', 'num_lists', 'modules')
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''
