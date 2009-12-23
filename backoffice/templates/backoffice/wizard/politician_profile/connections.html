@@ -21,7 +21,7 @@
     <a href="{% url bo.politician_profile_connection_wizard election_instance_id user_id %}" class="add add-item">{% trans "Add a connection" %}</a>
     
     <div class="form-submit">
-    	<a href="{% url bo.answer_question election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
+    	<a href="{% url bo.politician_profile_setup_done election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
     	<a href="{% url bo.politician_profile_interest election_instance_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
         <a href="#" class="cancel">{% trans "Cancel" %}</a>
     </div>
