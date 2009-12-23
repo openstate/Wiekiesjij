@@ -123,8 +123,13 @@ EMAIL_FROM = 'info@wiekiesjij.eu'
 #login logout related
 LOGIN_URL = '/backoffice/login/'
 LOGIN_REDIRECT_URL = '/backoffice/redirect/'
+EMAIL_AUTH_REDIRECT = '/backoffice/redirect/'
 UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 
+AUTHENTICATION_BACKENDS = (
+    'utils.auth_backend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 try:
     from local_settings import *

@@ -1,3 +1,6 @@
+from random import seed, choice
+import string
+
 from django.db import transaction
 from django.contrib.auth.models import User
 
@@ -104,6 +107,11 @@ def profile_invite_email_templates(for_function):
     }
     return templates[for_function]
     
+def _generate_username():
+    seed()
+    chars = string.letters + string.digits
+    return ''.join([choice(chars) for i in range(29)])
+    
 def create_profile(for_function, data):
     """
         Create and return a profile object (with a linked user)
@@ -111,16 +119,26 @@ def create_profile(for_function, data):
     """
     created = False
     try:
-        user = User.objects.get(username=data['email'])
+        user = User.objects.get(email=data['email'])
         if user.profile is None or user.profile.type != for_function:
             return (False, None)
     except User.DoesNotExist:
         created = True
+        username = _generate_username()
+        while True:
+            try:
+                u = User.objects.get(username=username)
+            except User.DoesNotExist:
+                break;
+            username = _generate_username()
+            
         user = User.objects.create(
-            username=data['email'],
+            username=username,
             email=data['email'],
             is_active=False)
-    
+    except User.MultipleObjectsReturned:
+        raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
+        
     if created:
         del data['email']
         data['user'] = user

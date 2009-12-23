@@ -46,7 +46,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     ChanceryProfile admin
     '''
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), max_length=30)
+    email = forms.EmailField(label=_('E-mail'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
         
     
@@ -56,12 +56,14 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
         """
         email = self.cleaned_data['email']
         try:
-           user = User.objects.get(username=email)
+           user = User.objects.get(email=email)
            if not user.profile or user.profile.type != 'candidate':
                del self.cleaned_data['email']
                raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
         except User.DoesNotExist:
            pass
+        except User.MultipleObjectsReturned:
+            raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         return self.cleaned_data['email']
 
 class InitialChanceryProfileForm(BetterForm, TemplateForm):
@@ -70,7 +72,7 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'), max_length=30)
+    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
 
         
@@ -91,12 +93,14 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
         """
         email = self.cleaned_data['email']
         try:
-            user = User.objects.get(username=email)
+            user = User.objects.get(email=email)
             if not user.profile or user.profile.type != 'council_admin':
                 del self.cleaned_data['email']
                 raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
         except User.DoesNotExist:
             pass
+        except User.MultipleObjectsReturned:
+            raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         return self.cleaned_data['email']
         
         
@@ -134,7 +138,7 @@ class LastChanceryProfileForm(BetterModelForm, TemplateForm):
 
 class InitialContactProfileForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'), max_length=30)
+    email = forms.EmailField(label=_('E-mail'), help_text=_('The invitation will be sent to this address.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
 	
     class Meta:
@@ -154,12 +158,14 @@ class InitialContactProfileForm(BetterForm, TemplateForm):
         """
         email = self.cleaned_data['email']
         try:
-           user = User.objects.get(username=email)
+           user = User.objects.get(email=email)
            if not user.profile or user.profile.type != 'party_admin':
                del self.cleaned_data['email']
                raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
         except User.DoesNotExist:
            pass
+        except User.MultipleObjectsReturned:
+            raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         return self.cleaned_data['email']
 
 class ContactProfileForm(BetterForm, TemplateForm):
