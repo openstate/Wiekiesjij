@@ -6,7 +6,7 @@ from django.forms import widgets
 from utils.widgets import RadioRating, RadioBoolean
 
 from form_utils.forms import BetterModelForm, BetterForm
-from utils.forms import TemplateForm
+from utils.formutils import TemplateForm
 
 # TODO make better imports
 from questions.models import Question, Answer

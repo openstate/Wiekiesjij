@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import widgets
 
 from form_utils.forms import BetterModelForm, BetterForm
-from utils.forms import TemplateForm
+from utils.formutils import TemplateForm
 
 class MultipleAnswerForm(BetterForm, TemplateForm):
     answer = forms.MultipleChoiceField(widget=widgets.CheckboxSelectMultiple)

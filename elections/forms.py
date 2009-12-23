@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as __
 
 from utils.widgets import AutoCompleter, ColorPicker, DatePicker, HiddenDateTimePicker, DateTimePicker
 from utils.fields import AddressField
-from utils.forms import TemplateForm
+from utils.formutils import TemplateForm
 from django.forms.widgets import Textarea
 
 from elections.models import Party

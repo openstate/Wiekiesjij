@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 
 
 from form_utils.forms import BetterForm
-from utils.forms import TemplateForm
+from utils.formutils import TemplateForm
 
 
 class AcceptInvitationForm(BetterForm, TemplateForm):

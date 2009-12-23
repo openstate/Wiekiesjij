@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.forms.extras.widgets import SelectDateWidget
 
 from form_utils.forms import BetterModelForm, BetterForm
-from utils.forms import TemplateForm
+from utils.formutils import TemplateForm
 
 from utils.widgets import DateTimePicker, HiddenDateTimePicker
 
