@@ -1,7 +1,7 @@
 {% extends 'backoffice/wizard/council/edit/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans "More information about your council" %}{% endblock step_title %}
+{% block step_title %}{% trans "Styling instellen" %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="history"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
@@ -9,6 +9,12 @@
 {% block step4 %}<li><span class="history"><span class="number">4</span>{% trans "More Council" %}</span></li>{% endblock step4 %}
 {% block step5 %}<li><span class="active"><span class="number">5</span>{% trans "Styling" %}</span></li>{% endblock step5 %}
 
+{% block help-message %}
+<p>	{% trans "Wiekiesjij zal ook als een zogenaamde i-frame versie beschikbaar zijn." %}
+	{% trans "Dit betekend dat de vragenwizard van Wiekiesjij in uw eigen gemeentewebsite kan worden opgenomen." %}
+</p>
+<p>Om de kleuren van Wiekiesjij overeen te laten komen met uw gemeente website kunt u deze hier instellen.</p>
+{% endblock help-message %}
 
 {% block buttons %}
 	<div class="form-submit">

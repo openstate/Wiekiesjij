@@ -1,13 +1,18 @@
 {% extends 'backoffice/wizard/council/edit/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans "More information about your council" %}{% endblock step_title %}
+{% block step_title %}{% trans "De raad instellen" %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="history"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
 {% block step3 %}<li><span class="history"><span class="number">3</span>{% trans "The Council" %}</span></li>{% endblock step3 %}
 {% block step4 %}<li><span class="active"><span class="number">4</span>{% trans "More Council" %}</span></li>{% endblock step4 %}
 
+{% block help-message %}
+<p>
+	{% trans "Op deze pagina vult u de overige gegevens van de gemeenteraad in. " %}
+</p>
+{% endblock help-message %}
 
 {% block buttons %}
 	<div class="form-submit">
