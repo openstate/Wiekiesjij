@@ -35,7 +35,11 @@
                         {#<a href="{% url bo.profile %}"><!-- link to user reg info -->{% trans "Edit Profile" %}</a>#}
 					{% else %}
 						<strong>{{ user.get_full_name|default:'NN' }}</strong>
-					{% endif %} - <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
+					{% endif %} 
+					{% if user.is_staff %}
+						- <a href="{% url invitations.list %}">{% trans "Uitnodigingen" %}</a>
+					{% endif %}
+					- <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
 			{% else %}
 				<p class="user-info">{% trans "You are not logged in" %}. <a href="{% url bo.login %}">{% trans "Login" %}</a></p>
 			{% endif %}

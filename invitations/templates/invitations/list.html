@@ -1,0 +1,35 @@
+{% extends 'invitations/base.html' %}
+
+{% block content %}
+<style>
+	th {
+		font-weight: bold;
+	}
+	td {
+		padding: 5px;
+	}
+</style>
+<div class="mod">
+	<table>
+		<tr>
+			<th>E-mail</th>
+			<th>Type</th>
+			<th>Verstuurd op</td>
+			<th>Geaccepteerd?</th>
+			<th>Ga naar</th>
+		</tr>
+		{% for invitation in invs %}
+		<tr>
+			<td>{{ invitation.user_to.email }}</td>
+			<td>
+				{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}
+				{% ifequal invitation.type 'party_admin' %}Party contact{% endifequal %}
+				{% ifequal invitation.type 'candidate' %}Politicus{% endifequal %}
+			</td>
+			<td>{{ invitation.send_on }}</td>
+			<td>{% if invitation.accepted %}Ja{% else %}Nee{% endif %}</td>
+			<td><a href="{% url invitations.index hash=invitation.hash %}">Klik</a></td>
+		{% endfor %}
+	</table>
+</div>
+{% endblock content %}

@@ -19,7 +19,6 @@ urlpatterns = patterns('',
   url(r'^forgot-password/changed/$', 'django.contrib.auth.views.password_reset_complete', {
         'template_name': 'backoffice/forgot_password_changed.html'
       }, name='bo.password_changed'),
-      
 )
 
 

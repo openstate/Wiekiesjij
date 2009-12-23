@@ -118,7 +118,7 @@ EMAIL_HOST_USER = 'accepte'
 EMAIL_HOST_PASSWORD = '9712hv'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 25
-EMAIL_FROM = 'info@wiekiesjij.eu'
+EMAIL_FROM = 'info@wiekiesjij.nl'
 
 #login logout related
 LOGIN_URL = '/backoffice/login/'

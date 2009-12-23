@@ -970,7 +970,7 @@ msgstr ""
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:9
 msgid "Do you want to skip the party setup for this party?"
-msgstr "Wilt u het instellen van deze raad overslaan?"
+msgstr "Wilt u het instellen van deze partij overslaan?"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:12
 msgid "Skip party setup"

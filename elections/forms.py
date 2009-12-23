@@ -129,11 +129,10 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     name = forms.CharField(help_text=_('Insert the name of the municipality here.'))
     region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your municipality.'))
     level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a municipality election, the level would be Municipality.'))
-    num_lists = forms.IntegerField(label=_('Number of Parties'))
 
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'region', 'level', 'num_lists', 'modules')
+        fields = ('name', 'region', 'level', 'modules')
 
 class ElectionInstanceForm(BetterModelForm, TemplateForm):
     '''

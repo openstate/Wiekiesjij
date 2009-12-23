@@ -84,7 +84,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 name=self.ei_data['name'],
                 council=council,
                 election_event=ee,
-                num_lists=self.ei_data['num_lists'],
+                num_lists=1,
                 start_date=datetime.datetime.now(),
                 end_date=datetime.datetime.now(),
                 wizard_start_date=datetime.datetime.now(),
@@ -435,13 +435,14 @@ class ElectionSetupWizard2(MultiPathFormWizard):
         #                      template='backoffice/wizard/election_setup/step5.html',
         #                      initial=step5_initial)
         # Updates Council
-        step6 = Step('council_styling_setup',
-                     forms={'council_styling_setup': CouncilStylingSetupForm},
-                     template='backoffice/wizard/election_setup/step6.html',
-                     initial={'council_styling_setup': self.election_instance.council},
-                     extra_context={'instance':self.election_instance, })
+        # step6 = Step('council_styling_setup',
+        #                      forms={'council_styling_setup': CouncilStylingSetupForm},
+        #                      template='backoffice/wizard/election_setup/step6.html',
+        #                      initial={'council_styling_setup': self.election_instance.council},
+        #                      extra_context={'instance':self.election_instance, })
         #FIXME: scenario_tree = step1.next(step2.next(step3.next(step4.next(step5.next(step6)))))
-        scenario_tree = step1.next(step2.next(step3.next(step4.next(step6))))
+        #FIXME: scenario_tree = step1.next(step2.next(step3.next(step4.next(step6))))
+        scenario_tree = step1.next(step2.next(step3.next(step4)))
 
         template = 'backoffice/wizard/election_setup/base.html',
         super(self.__class__, self).__init__(scenario_tree, template)

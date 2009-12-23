@@ -3,7 +3,7 @@ from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 
-
+from backoffice.decorators import staff_required
 from elections.functions import replace_user
 from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm
@@ -81,8 +81,10 @@ def existing(request, hash):
         
     return render_to_response('invitations/existing.html', {'invitaiton': invitation, 'form': form}, context_instance=RequestContext(request))
 
-def fake(request):
-    return render_to_response('invitations/fake.html', {}, context_instance=RequestContext(request))
+@staff_required
+def list(request):
+    invitations = Invitation.objects.all()
+    return render_to_response('invitations/list.html', {'invs': invitations}, context_instance=RequestContext(request))
 
 def notexist(request):
     

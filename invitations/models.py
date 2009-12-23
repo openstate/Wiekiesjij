@@ -36,7 +36,7 @@ class Invitation(models.Model):
         """
         send_email(
             self.subject, 
-            'info@wiekiesjij.eu', 
+            'info@wiekiesjij.nl', 
             self.user_to.email, 
             {'invitation': self},
             {'html': self.html_template, 'plain': self.plain_template}
