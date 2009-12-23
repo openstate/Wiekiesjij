@@ -1,19 +1,23 @@
 {% extends 'invitations/base.html' %}
 {% load i18n %}
-{% block content %}
-<div class="mod">
-	<p>Welkom {{ invitation.user.profile.full_name }},</p>
-	
-	{{ invitation.text }}
-	
-	
-	<div class="form-submit">
-		<form method="get" action="{% url invitations.accept hash=invitation.hash %}">
-		<button class="primary next" type="submit">{% trans "Accept invitation" %}</button>
-		</form>
-		<form method="get" action="{% url invitations.existing hash=invitation.hash %}">
-		<button type="submit">{% trans "I already have an account" %}</button>
-		</form>
-	</div>
+
+{% block outer-page-title %}<h1>{% trans "Wiekiesjij gereed maken" %}</h1>{% endblock outer-page-title %}
+
+{% block cols %}
+<div class="col size1of2">
+    <div class="mod">
+        <h2>{% trans "Welkom bij Wiekiesjij" %}</h2>
+        
+        {{ invitation.text|safe }}
+        
+        <div class="form-submit">
+            <form method="get" action="{% url invitations.accept hash=invitation.hash %}">
+            <button class="primary next" type="submit">{% trans "Accept invitation" %}</button>
+            </form>
+            <form method="get" action="{% url invitations.existing hash=invitation.hash %}">
+            <button type="submit">{% trans "I already have an account" %}</button>
+            </form>
+        </div>
+    </div>
 </div>
-{% endblock content %}
+{% endblock cols %}

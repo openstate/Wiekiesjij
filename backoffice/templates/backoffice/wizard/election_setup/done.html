@@ -1,7 +1,7 @@
 {% extends 'backoffice/wizard/election_setup/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans "You're finished!" %}{% endblock step_title %}
+{% block step_title %}{% trans "Afronden" %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="history"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
@@ -17,12 +17,13 @@
 {{ block.super }}
 <div class="mod">
 	<div class="hd">
-    	<h2>{% trans "You're done!" %}</h2>
+    	<h2>{% trans "Afronden" %}</h2>
     </div>
     <div class="bd">
-        <p>{% trans 'You have completed the initial setup for this election.' %}</p>
-        <p><strong>{% trans 'Now you can start inviting parties to fill in their candidates and profiles.' %}</strong></p>
-   	</div>
+        <p>{% trans 'U hebt Wiekiesjij succesvol gereedgemaakt voor deze verkiezingen. ' %}</p>
+        <p><strong>{% trans 'U kunt nu beginnen met het aanmaken van partijen en deze uitnodigen om Wiekiesjij gereed te maken. ' %}</strong></p>
+   		<p>{% trans "Hartelijk dank voor uw moeite!" %}</p>
+    </div>
     {% block buttons %}
 	<div class="form-submit">
           

@@ -1,12 +1,18 @@
 {% extends 'backoffice/wizard/partycontact/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans 'Description &amp; History for this party' %}{% endblock step_title %}
+{% block step_title %}{% trans 'Beschrijving en historie' %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Welcome" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="history"><span class="number">2</span>{% trans "Contact information" %}</span></li>{% endblock step2 %}
 {% block step3 %}<li><span class="history"><span class="number">3</span>{% trans "Additional information" %}</span></li>{% endblock step3 %}
 {% block step4 %}<li><span class="active"><span class="number">4</span>{% trans "Description &amp; History" %}</span></li>{% endblock step4 %}
+
+{% block help-message %}
+<p>	{% trans "Op deze pagina kunt u uitgebreide informatie over uw partij kwijt." %} 
+	{% trans "Deze gegevens worden getoond op uw partijprofiel." %}
+</p>
+{% endblock help-message %}
 
 {% block buttons %}
 	<div class="form-submit">

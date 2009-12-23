@@ -107,7 +107,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 user_from=request.user, 
                 user_to=profile.user,
                 view=reverse('bo.election_setup', kwargs={'election_instance_id': ei.pk}),
-                text='Invitation text',
+                text="<p>U bent aangekomen op de beheerderpagina van Wiekiesjij. Om Wiekiesjij gereed te maken voor uw verkiezingen volgen er nu een aantal schermen waarin u informatie kunt achterlaten. Wanneer deze informatie is ingevuld zullen we overgaan tot het uitnodigen van de partijen die zullen participeren in deze verkiezingen.</p><p>We beginnen met het instellen van een wachtwoord voor Wiekiesjij door op <strong>Accepteer uitnodiging</strong> te klikken. Heeft u al eens eerder gebruik gemaakt van Wiekiesjij, drukt u dan op <strong>Ik heb al een account</strong>.</p><p>Om het gereedmaken van Wiekiesjij zo gemakkelijk mogelijk te laten verlopen hebben we een snelle start [link]handleiding[/link] beschikbaar gesteld die u kunt raadplegen.</p>",
                 subject='Invitation',
                 html_template=templates['html'],
                 plain_template=templates['plain'],

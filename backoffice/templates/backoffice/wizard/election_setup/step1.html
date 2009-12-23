@@ -1,16 +1,15 @@
 {% extends 'backoffice/wizard/election_setup/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans "Welcome Chancellery" %}{% endblock step_title %}
+{% block step_title %}{% trans "Welkom Griffier" %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="active"><span class="number">1</span>{% trans "Registration" %}</span></li>{% endblock step1 %}
-
 
 {% block help-message %}
 <p>
 {% blocktrans %}
-This wizard will lead you through the process of setting up WieKiesJij? for your council. <br /><br />
-First we'll need some contact information from you.
+	Door middel van 6 stappen zullen we u door het proces leiden waarmee Wiekiesjij gereed word gemaakt voor uw 
+    gemeente. Nadat Wiekiesjij gereed is zullen we overgaan tot het uitnodigen van de partijen. 
 {% endblocktrans %}
 </p>
 {% endblock help-message %}

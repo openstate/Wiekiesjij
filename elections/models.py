@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from elections import settings
 import datetime
 from utils.functions import move_up, move_down
@@ -29,7 +30,7 @@ class Council(models.Model):
                                      help_text=_("A picture that will be used when displaying council details."),)
     description          = models.CharField(_('Description'), max_length=255, null=True, blank=True,
                                            help_text=_("A short description of the council"),)
-    history             = models.CharField(_('History'), max_length=255, help_text=_("A short history of the council"),
+    history             = models.CharField(_('History'), max_length=255, help_text=__("Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."),
                                            null=True, blank=True)
     background_color   = models.CharField(_('Background color'), max_length=6, null=True, blank=True)
     foreground_color   = models.CharField(_('Foreground color'), max_length=6, null=True, blank=True)

@@ -10,13 +10,13 @@ http://www.campaignmonitor.com/css/
 {% end_stylegroup %}
 {% stylegroup 'content' %}
 	font: 13px Arial, Helvetiva, sans-serif;
-	width: 440px;
-	background-color: #D9D9D9;
+	width: 430px;
+	background-color: #FFFFFF;
 	vertical-align: top;
 {% end_stylegroup %}
 {% stylegroup 'spacer' %}
 	font: 1px;
-	width: 10px;
+	width: 20px;
 {% end_stylegroup %}
 {% stylegroup 'sidebar' %}
 	width: 150px;
@@ -40,15 +40,15 @@ http://www.campaignmonitor.com/css/
   <body>
 	<table style="{% use_stylegroup 'contenttable' %}" align="center">
 		<tr><td><img src="http://{{ domain }}/media/email/email_header.png" alt="WieKiesJij" /></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-	<tr><td style="{% use_stylegroup 'content' %}">
-	{% block content %}
-    E-mail content comes here
-    {% endblock content %}
-	</td><td style="{% use_stylegroup 'spacer' %}">&nbsp;
-	</td><td style="{% use_stylegroup 'sidebar' %}">
-	{% block sidebar %}
-		&nbsp;
-	{% endblock sidebar %}
-	</td></tr></table>
+		<tr><td style="{% use_stylegroup 'content' %}">
+            {% block content %}
+            E-mail content comes here
+            {% endblock content %}
+			</td><td style="{% use_stylegroup 'spacer' %}">&nbsp;
+			</td><td style="{% use_stylegroup 'sidebar' %}">
+            {% block sidebar %}
+                &nbsp;
+            {% endblock sidebar %}
+			</td></tr></table>
   </body>
 </html>

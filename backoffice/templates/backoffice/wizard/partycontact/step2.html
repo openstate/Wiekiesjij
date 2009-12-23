@@ -1,10 +1,14 @@
 {% extends 'backoffice/wizard/partycontact/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans 'Contact information for this party' %}{% endblock step_title %}
+{% block step_title %}{% trans 'Contactgegevens' %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Welcome" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="active"><span class="number">2</span>{% trans "Contact information" %}</span></li>{% endblock step2 %}
+
+{% block help-message %}
+<p>{% trans "Op deze pagina vult u de basisgegevens voor uw partij in. " %}</p>
+{% endblock help-message %}
 
 
 {% block buttons %}

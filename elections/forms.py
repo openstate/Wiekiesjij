@@ -66,7 +66,7 @@ class CouncilForm(BetterModelForm, TemplateForm):
     ChanceryProfile admin
     '''
     
-    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('How many seats does the council hold?'))
+    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=__('Wat is het huidige aantal zetels in uw gemeenteraad.'))
 	
     def __init__(self, *args, **kwargs):
         super(CouncilForm, self).__init__(*args, **kwargs)
@@ -81,10 +81,10 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
     Council information form (used in 2. Election overview)
     '''
 
-    name = forms.CharField(label=_('Name'), help_text=_('Specify the name of your council here.'))
-    address = AddressField(label=_('Address of the Council'))
-    email = forms.EmailField(label=_('E-Mail'))
-    website = forms.URLField(label=_('Website of the Council'), required=False)
+    name = forms.CharField(label=_('Name'), help_text=__('Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen).'))
+    address = AddressField(label=_('Address of the Council'), help_text=__('Vul hier uw contactinformatie in.'))
+    email = forms.EmailField(label=_('E-Mail'), help_text=__('Vul hier het algemene email adres van de gemeenteraad in.'))
+    website = forms.URLField(label=_('Website of the Council'), help_text=__('Vul hier de permanente website van de raad in.'), required=False)
 
 
     class Meta:
@@ -143,7 +143,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
         label=_('When does this election take place?'), 
         widget=DateTimePicker)
     start_date.hidden_widget = HiddenDateTimePicker
-    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('If your council has a website dedicated to this election, you can specify the URL here.'))
+    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=__('Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
     
     class Meta:
@@ -156,7 +156,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
 
         if 'instance' in kwargs:
             self.instance = kwargs['instance']
-            self.fields['start_date'].help_text = _('%(def_date)s is the default date for %(ev_name)s.') % {
+            self.fields['start_date'].help_text = __('Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s.') % {
                 'def_date': self.instance.election_event.default_date.strftime('%d-%m-%Y'),
                 'ev_name': self.instance.election_event.name,
             }
@@ -230,25 +230,25 @@ class PartyForm(BetterModelForm, TemplateForm):
         model = Party
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), help_text=_('What is the full name of the party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), required=True)
+    name = forms.CharField(label=_('Full party name'), help_text=__('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
+    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=__('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True)
     #list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
     
     
 class ElectionPartyContactForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=_('What is the full name of your party?'))
-    abbreviation = forms.CharField(label=_('Abbreviated party name'), required=True)
-    address = AddressField(label=_('Address'))
-    email = forms.EmailField(label=_('E-mail address'))
-    telephone = forms.CharField(label=_('Phone number'))
-    website = forms.URLField(label=_('Party website'), required=False)
+    name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=__('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
+    abbreviation = forms.CharField(label=_('Abbreviated party name'), help_text=__('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True)
+    address = AddressField(label=_('Address'), help_text=__('Vul hier uw contactinformatie in (b.v. adres van campagne team).'))
+    email = forms.EmailField(label=_('E-mail address'), help_text=__('Vul hier het email adres in waarmee u met Wiekiesjij wenst te corresponderen.'))
+    telephone = forms.CharField(label=_('Phone number'), help_text=__('Vul hier het telefoonnummer van uw campagneteam in.'))
+    website = forms.URLField(label=_('Party website'), help_text=__('Vul hier de website van uw partij in.'), required=False)
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
-    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('How many candidates are representing this party in this election?'), required = False)
-    slogan = forms.CharField(label=_('Slogan'), required = False)
+    list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in.'), required = False)
+    slogan = forms.CharField(label=_('Slogan'), help_text=__('Vul hier uw verkiezingsslogan in. '), required = False)
     #logo = forms.FileField(_('Logo'))
-    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('How many seats does your party currently have in this council?'), required = False)
+    num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -279,7 +279,7 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
 
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
-    description = forms.CharField(label=_('Short description'), widget = Textarea(), required = False)
-    history = forms.CharField(label=_('Short history'), widget = Textarea(), required = False)
-    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), required = False)
-    manifesto = forms.URLField(label=_('Link to the manifesto'), required = False)
+    description = forms.CharField(label=_('Short description'), widget = Textarea(), help_text=__('Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent.'), required = False)
+    history = forms.CharField(label=_('Short history'), widget = Textarea(), help_text=__('Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. '), required = False)
+    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), help_text=__('Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat. '), required = False)
+    manifesto = forms.URLField(label=_('Link to the manifesto'), help_text=__('Vul hier een link in naar uw verkiezingsprogramma. Dit mag een website of PDF document zijn. '), required = False)

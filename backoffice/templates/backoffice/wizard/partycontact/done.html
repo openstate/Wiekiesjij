@@ -1,7 +1,7 @@
 {% extends 'backoffice/wizard/partycontact/base.html' %}
 {% load i18n %}
 
-{% block step_title %}{% trans 'Finished' %}{% endblock step_title %}
+{% block step_title %}{% trans 'Afgerond' %}{% endblock step_title %}
 
 {% block step1 %}<li><span class="history"><span class="number">1</span>{% trans "Welcome" %}</span></li>{% endblock step1 %}
 {% block step2 %}<li><span class="history"><span class="number">2</span>{% trans "Contact information" %}</span></li>{% endblock step2 %}
@@ -15,11 +15,12 @@
 {{ block.super }}
 <div class="mod">
 	<div class="hd">
-    	<h2>{% trans "You're done!" %}</h2>
+    	<h2>{% trans "Afgerond" %}</h2>
     </div>
     <div class="bd">
-        <p>{% trans 'You have completed the initial setup for this party.' %}</p>
-        <p><strong>{% trans 'Now you can start inviting candidates to fill in their profiles.' %}</strong></p>
+        <p>{% trans 'U hebt Wiekiesjij succesvol gereedgemaakt voor deze verkiezingen. ' %}</p>
+        <p><strong>{% trans 'U kunt nu beginnen met het aanmaken van kandidaten en deze uitnodigen om op Wiekiesjij hun profiel in te vullen. ' %}</strong></p>
+   		<p>{% trans "Hartelijk dank voor uw moeite!" %}</p>
    	</div>
     {% block buttons %}
 	<div class="form-submit">
