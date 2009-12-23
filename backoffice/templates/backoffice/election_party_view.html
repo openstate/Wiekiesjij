@@ -136,7 +136,10 @@
             	<dd>
                     {{ eip.party.manifesto_summary }}<br />
                 </dd>
-       		<dd><a href="{{ eip.party.manifesto }}" target="_blank">{% trans "Link to manifesto" %}</a></dd>
+			{% if eup.party.manifesto %}
+			<dd><a href="{{ eip.party.manifesto }}" target="_blank">{% trans "Link to manifesto" %}</a></dd>	
+			{% endif %}
+  
         </dl>
     {% endblockwrap %}
 

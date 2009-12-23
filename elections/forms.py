@@ -151,14 +151,17 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
         
         
     def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-
         if 'instance' in kwargs:
             self.instance = kwargs['instance']
+            self.instance.start_date = self.instance.election_event.default_date
+            
+        super(self.__class__, self).__init__(*args, **kwargs)
+        if 'instance' in kwargs:
             self.fields['start_date'].help_text = __('Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s.') % {
                 'def_date': self.instance.election_event.default_date.strftime('%d-%m-%Y'),
                 'ev_name': self.instance.election_event.name,
             }
+            
 
     def clean_num_lists(self):
         """

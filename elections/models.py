@@ -28,9 +28,9 @@ class Council(models.Model):
                                           blank=True)
     picture             = models.ImageField(_('Picture'), upload_to='media/council', null=True, blank=True,
                                      help_text=_("A picture that will be used when displaying council details."),)
-    description          = models.CharField(_('Description'), max_length=255, null=True, blank=True,
+    description          = models.TextField(_('Description'), null=True, blank=True,
                                            help_text=_("A short description of the council"),)
-    history             = models.CharField(_('History'), max_length=255, help_text=__("Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."),
+    history             = models.TextField(_('History'), help_text=__("Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."),
                                            null=True, blank=True)
     background_color   = models.CharField(_('Background color'), max_length=6, null=True, blank=True)
     foreground_color   = models.CharField(_('Foreground color'), max_length=6, null=True, blank=True)

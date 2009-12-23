@@ -1,0 +1,14 @@
+{% extends 'backoffice/base.html' %}
+
+{% load i18n %}
+
+{% block outer-breadcrumbs %}{% endblock outer-breadcrumbs %}
+{% block outer-page-title %}{% endblock outer-page-title %}
+{% block back-link %}{% endblock back-link %}
+{% block title %}{{ flatpage.title }}{% endblock title %}
+{% block content %}
+	<div class="mod">
+        <h2>{{ flatpage.title }}</h2>
+        {{ flatpage.content }}
+   	</div>
+{% endblock content %}

@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
@@ -38,6 +38,8 @@ from questions.forms import AnswerQuestionForm, SelectQuestionForm
 from questions.models import Question
 
 def permission_denied(request):
+    if not request.user.is_authenticated():
+        return redirect('bo.login')
     return render_to_response('backoffice/permission_denied.html', {'next': request.GET.get('next', None)}, context_instance=RequestContext(request))
     
 @login_required
