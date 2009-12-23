@@ -13,7 +13,7 @@ from utils.widgets import DateTimePicker, HiddenDateTimePicker
 
 from utils.fields import NameField, AddressField
 
-from political_profiles.models import CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS 
+from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
@@ -32,8 +32,8 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     name            = NameField(label=_('Name'))
     initials        = forms.CharField(label=_('Initials'))
     dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=SelectDateWidget(years=range(1910, datetime.date.today().year)) )
-    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea() )
-    motivation      = forms.CharField(label=_('Motivation'), widget=forms.Textarea())
+    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
+    motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     #picture         = forms.ImageField(label=_('Picture'), required=False)
     movie           = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'))
@@ -52,7 +52,7 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     num_children    = forms.IntegerField(_('Number of Children'))
     life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
     church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
-    smoker          = forms.BooleanField(label=_('Do you Smoke?'), required=True)
+    smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, 'Yes'), (2, 'No')]) )
     diet            = forms.ChoiceField(label=_('Diet'),choices=DIET)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):

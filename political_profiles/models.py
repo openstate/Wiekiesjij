@@ -107,6 +107,15 @@ MARITAL_STATUS = (
         ('Civil Partenership', _('Civil Partenership')),
         ('Other', _('Other')),
         )
+MOTIVATION = (
+        ('A Better World',_('A Better World')),
+        ('A stronger and better Netherlands', _('A stronger and better Netherlands')),
+        ('A stronger and better Europe', _('A stronger and better Europe')),
+        ('A powerful party', _('A powerful party')),
+        ('Personal development', _('Personal development')),
+        ('No motivation', _('No motivation')),
+
+        )
 
 class ConnectionType(models.Model):
     """
@@ -200,7 +209,7 @@ class PoliticianProfile(Profile):
                                       help_text=_('Link to YouTube video'))
                                       
     introduction    = models.TextField(_('Introduction'), blank=True, null=True)
-    motivation      = models.TextField(_('Motivation'), blank=True, null=True)
+    motivation      = models.CharField(_('Motivation'), max_length=45, choices=MOTIVATION, blank=True, null=True)
 
     marital_status  = models.CharField(_('Marital Status'), max_length=25, choices=MARITAL_STATUS, blank=True, null=True)
     num_children    = models.PositiveIntegerField(_('Number of Children'), max_length=3, null=True, blank=True)
