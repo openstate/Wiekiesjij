@@ -16,6 +16,73 @@ Just like django.contrib.formtools.wizard.FormWizard you can use GraphFormWizard
 sub-classes directly in your urls.py.
 
 
+== Scenario ==
+A wizard is nothing more than a graph of pages (templates) with corresponding
+sets of forms for each page. The steps are arranged in a constrained graph. Most
+simple graph is a sequence [step1..stepN]. More complicated graphs may contain:
+ - cyles -- the user can repeat a subpath
+ - branches and merges -- depending on some logic wizard takes one of the branches
+
+The branches allow switching the wizard behavior based on prior choices made by
+the user. There is no restriction on complexity of the the branching/merging,
+but always keep in mind the usability. The wizard can tell the user how many
+steps are there up to the next branch, the user may loose the sense of size of
+the wizard if there are to many branches (boring long wizards are nasty).
+
+The cycle allows the user to step back and repeat the sub-path. The GUI controls
+will be shown to the user to control the cycle. The user can switch to one of
+the sub-paths in the cycle, cancel a cycle etc.
+
+There are limitations in the wizard's logic:
+ - merge is not a go-to, wizard prevents implicit cycles
+ - the cycle starts from the single step (head) and all exiting branches (tails)
+   within the cycle must meet in the same step.
+ - nested cycles are strictly distinct
+
+
+== Validation ==
+The wizard collects POST and FILES data on each step and stores them in the
+session. The path to current step is specified in the URL. By default the wizard
+tries to validate all steps along that path using the data stored in the session,
+it will redirect to the first invalid step encountered along the path if any.
+
+The current step is handled a bit differently:
+  - session POST data is used as initial data
+  - actual POST, FILES are used to validate the step if request is POST/GET[?post]
+
+Obviously, the new step will never be validated if request is not POST/GET[?post].
+Once the user POST the data, it will be stored in the session if step is valid.
+If user returns to the step, then the stored data will be shown to the user.
+If you like to validate current step on plain GET such that validation errors
+will be shown if there is any data in the session (editing mode), then you may
+declare this behavior using @always_validate option (per step or for the whole
+wizard).
+
+
+== Actions and GET/AJAX handlers ==
+Each wizard's page is assumed to be POST'ed in order to proceed to the next page.
+Sometimes you want to introduce simple GET links to:
+  - perform AJAX calls specific to a step
+  - perform some general logic (enable something, help etc)
+
+The wizard recognizes actions as simple names appended to wizard's URL. Some of
+the actions are reserverd (eg. post, cancel, reset). All others will be
+redirected to wizard_action() method that can be overriden by the subclass.
+By default wizard_action() raises 404 error.
+
+The wizard expects current path in the scenario specified in the URL. This allows
+you to build persistent URL's to steps (providing you have valid data in your session).
+The path is a sequence of [a-z] letters representing branches, it will be
+compressed by RLE. So, if your scenario is a sequence [step1..step6], then your
+step5 will have the URL path "a5", which will be internally expanded to "AAAAA".
+The path may contain more information, like the selection of the concrete cycle.
+
+If you are on the step "/a3b:2a" and you want to perform AJAX call, then your URL
+will become "/a3b:2a/my_action". By GET'ing this URL the wizard will redirect the
+call to wizard_action('my_action', ...), there from you can build your step
+specific response.
+
+
 == Edit data ==
 In most cases to create and edit object you will use different wizards, since
 editing is usually a simpler process. For example, to create a new book you can
@@ -33,77 +100,45 @@ iterating (cycled) from initial up to the final step explicitly. Of course you
 may use "create" wizard to edit everything, but this approach may suffer from
 usability issues.
 
-To edit the data you will have to define a view that will:
+To edit the data you will have to define a view/action that will:
   - load all models and the data needed by the scenario
-  - re-create dict/list structures ad described by done() method
-  - call YourWizardSubclass.save_data(data) -- this will save the data in the session
+  - re-create dict/list structures ad described by save_initial_data() method
+  - call wizard.save_initial_data(data) -- this will save the data in the session
   - redirect to the wizard's initial or any other step
+
+The save_initial_data() method converts all data to POST format, so it will
+look like you have almost finished the wizard, but jumped back to the first step.
 
 The drawback is that your data needs to be decoupled from the model instances
 you use and stored separatedly as dict objects. Another problem is that wizard
-returns validated data along the path user has taken in the scenario. If complex
-branching is used, then it is the responsibility of the subclass to determine
-how data was changed and how the changes should be handled.
+returns validated data along the path the user has taken in the scenario.
+If cycles are used, then it is the responsibility of the subclass to find out
+which cycles have changed and which are new (usually you will replace all old
+data with all new data). The wizard ensures the resulting data will be sampled
+along the taken scenario path only, so you may check by which branch was taken
+by simple step_name lookup.
 
 
-== Scenario ==
-A wizard is nothing more than a graph of pages (templates) with corresponding
-sets of forms for each page. The steps are arranged in a constrained graph. Most
-simple graph is a sequence [step1..stepN]. More complicated graphs contain:
- - cyles -- the user can repeat a subpath
- - branches and merges -- depending on some logic wizard takes one of the branches
-
-The branches allow switching the wizard behavior based on prior choices made by
-the user. There is no restriction on complexity of the the branching/merging,
-but always keep in mind the usability. The wizard can tell the user how many
-steps are there up to the next branch, the user may loose the sense of size of
-the wizard (boring long wizards are nasty) if there are to many branches.
-
-The cycle allows the user to step back and repeat the sub-path. The GUI controls
-will be shown to the user to control the cycle. The user can switch to one of
-the sub-paths in the cycle, cancel a cycle etc.
-
-There are limitations in the wizard's logic:
- - merge is not a go-to, graph implicit cyclicity check is used to prevent inproper use
- - sub-paths in different cycles can not be merged together
- - nested cycles are strictly distinct, same limitations as to neigboring cycles.
- - all outgoing branches from a cycle should meet in the same step of outer cycle/context
-
-
-== Actions and GET/AJAX handlers ==
-Each wizard's page is assumed to be POST'ed in order to proceed to the next page.
-Sometimes you want to introduce simple GET links to:
-  - perform AJAX calls specific to a step
-  - perform some general logic (repeat/cancel cycle, enable something, help etc)
-
-The wizard recognizes actions as simple names appended to wizard's URL. Some of
-the actions are reserverd (eg. post, cancel). All others will be redirected to
-wizard_action() method that can be overriden by the subclass. By default
-wizard_action() raises 404 error.
-
-The wizard expects current path in the scenario specified in the URL. This allows
-you to build persistent URL's to steps (providing you have valid data in your session).
-The wizard will always try to reconstruct-revalidate the whole path, on mismatch
-the user will be redirected to the last valid step. The path is a sequence of
-[a-z] letters representing branches, it will be compressed by RLE. So, if your
-scenario is a sequence [step1..step6], then your step5 will have the URL path "a5",
-which will be internally expanded to "AAAAA". The path may contain more information,
-like the selection of the concrete cycle.
-
-If you are on the step "/a3b:2a" and you want to perform AJAX call, then your URL
-will become "/a3b:2a/my_action". By GET'ing this URL the wizard will redirect the
-call to wizard_action('my_action', ...), there from you can build your step
-specific response.
+=== Boring internals ===
+Wizard stores pickled MultiValueDict's as session data, this is what POST is
+for each step. The data structure you will get in done() method is a plain dict
+with cleaned_data, this can be a totally different kind of object.
+The save_initial_data() method converts cleaned_data dicts to POST form assuming
+the rules of django.forms.widgets.{Widget, MultiWidget} classes. If you don't
+derrive your widgets from these classes (why? whole form handling will break),
+then wizard will probably fail. After calling the save_initial_data() the session
+will look like the user has completed the wizard, but jumped to the initial step
+instead of finishing it.
 
 
 == URL's ==
 This wizard may be used as a view. The URL patterns are expected to be:
   - 'wizard.step' - "/(?P<path>[a-z0-9:]*)$"
-    Navigate to the step. If POST request is made, then step will be validated
-    and wizard will proceed to the next step (redirects to next step URL).
+    Navigate to the step/process POST request.
 
   - 'wizard.action' - "/(?P<path>[a-z0-9:]*)/(?P<action>[a-zA-Z][a-zA-Z0-9_]*)$"
-    The same as the URL above, but specifies action label (used for GET/AJAX queries).
+    The same as the URL above, but specifies action label used by the wizard for
+    default actions.
 
   - you may specify more urls containing "action" pattern. If action is provided,
     then wizard will redirect all *args, **kwargs to wizard_action(). So you
@@ -111,8 +146,9 @@ This wizard may be used as a view. The URL patterns are expected to be:
     "/(?P<path>[a-z0-9:]*)/(?P<action>calendar)/(?P<year>[0-9]+)/(?P<month>[0-9]+)/(?P<day>[0-9]+)$"
 
 
-In general, if POST request is sent, then result should be a redirect to reflect
-path change in URL.
+You may override default 'wizard.step' and 'wizard.action' URL names in the
+wizard constructor (hardcoded by the subclass) or specify them in urls.py, the
+second method takes precedence.
 
 
 == Config ==
@@ -148,7 +184,10 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.forms import BaseForm
 from django.core.files.uploadedfile import UploadedFile
-from django.utils.datastructures import MultiValueDict
+from django.utils.datastructures import MultiValueDict, SortedDict
+from django.db.models import Model
+from django.db.models.query import QuerySet
+from django.forms.widgets import MultiWidget
 
 # used to store session data
 from utils.models import GraphFormWizardSession
@@ -167,30 +206,32 @@ class Step(object):
     """
 
     
-    def __init__(self, name, template = None, extra_context = None, **kwargs):
+    def __init__(self, name, template = None, extra_context = None, always_validate = False, **kwargs):
         """
             Create new empty step.
 
             @param name unique name of the step
             @param template step specific template
             @param extra_context extra data, will be available in template
-            @param kwargs additional arguments that will be available as fields (eg. title etc)
+            @param always_validate validate this step from initial data
+            @param kwargs additional arguments that will be available as fields (eg. title)
         """
-        self.template = template
-        self.extra_context = extra_context
-        self.name = name
-        self._forms = {}
-        self.fields = kwargs
+        self._template = template
+        self._extra_context = extra_context
+        self._name = name
+        self._forms = SortedDict()
+        self._always_validate = always_validate
+        self._fields = kwargs
 
         #invariant: not more than one of (next, merge, branches) is not empty
-        # yes, only branche() is enough, but we want make constrained declarations
+        # yes, only branch() is enough, but we want make constrained declarations
         # to minimize errors. Step.next() -- means there is only one branch - next.
         # Step.branch() means there could be more than one branch. This simple
         # check prevents hidden bugs in scenario's.
         self._next = None
         self._merge = None
         self._branches = []
-        self.initial = self  # used to find initial step in branches
+        self._initial = self  # used to find initial step in branches
         # marks the cycle
         self._cycle_start = False
         self._cycle_template = None
@@ -198,39 +239,23 @@ class Step(object):
         self._cycle_end = False
         
 
-    def form(self, name, cls, prefix = None, initial = None):
+    def form(self, name, cls, kwargs = None):
         """
             Add form to the step.
 
             There can be as many forms as you like. How the forms will be
-            rendered is up to the template. Default template will render the
-            forms in order they were added.
-
-            Initial value is the static value used by all wizard in "new/create"
-            mode. Different kinds of forms require different initial value.
-            Normal form uses initial(dictionary), management_form expects the
-            query set as initial parameter and model form requires model instance.
-
-            Warning: if initial value is given for the model form, then you will
-            always edit that model instance when calling form.save(), this is
-            probably not what you want to do.
-
-            Note: prefix is used by the form to distinguish its data in request.POST
-            If you have multiple instances of the same form class, then unique
-            prefix is mandatory.
+            rendered is up to the template. Default template will render all
+            forms in the order they were added.
 
             @param name unique within the step name of the form
             @param cls the form class
-            @param prefix the form prefix, step name will be appended to it
-            @param initial initial static object/value (not for editing mode)
+            @param kwargs will be passed to form constructor with **kwargs
             @return self
         """
-        prefix = u'%s_%s_%s' % (self.name, name, prefix) if prefix is not None else  u'%s_%s' % (self.name, name)
-
         if name in self._forms:
-            raise ImproperlyConfigured("%s: form or data named '%s' is already defined" % (self.name, name))
+            raise ImproperlyConfigured("%s: form or data named '%s' is already defined" % (self._name, name))
 
-        self._forms[name] = (cls, prefix, initial)
+        self._forms[name] = (cls, kwargs)
         return self
 
 
@@ -241,43 +266,50 @@ class Step(object):
             The forms should be a dict { 'form_name' : FormClass } or
             {'form_name' : {
                'cls': FormClass,
-               'prefix': prefix,
                'initial': initial_value
+               'kwinitial': dict_initial_value
                }
             }
 
-            In latter case you will be able to define prefixes and initial values.
+            Warning: the forms will be added in forms.iteritems() order, this
+            can be some random order depending on your dict implementation.
+            The .form() method maintains the order.
+
+            @param forms dict with forms
+            @return self
         """
         for (name, form) in forms.iteritems():
-            if issubclass(form, BaseForm):
+            if isinstance(form, type): #is a form class
                 self.form(name = name, cls = form)
 
-            elif isinstance(form, dict):
+            elif isinstance(form, dict): # all parameters
                 self.form(name = name, **form)
 
             else:
-                raise ImproperlyConfigured("%s: FormClass or dict is epxected, got: %s" % (self.name, form))
+                raise ImproperlyConfigured("%s: FormClass or dict is epxected, got: %s" % (self._name, form))
 
         return self
 
 
 
-    def data(self, **kwargs):
+    def field(self, **kwargs):
         """
             Add static data. This data will be available as step.field's
 
             Example:
                 .data(title = "my title")
 
+            Will be later available as step.fields.title.
+            
             Note: you can also specify fields in the constructor.
             
             @return self
         """
-        self.fields.update(kwargs)
+        self._fields.update(kwargs)
         return self
     
 
-    def next(self, name, template = None, extra_context = None, **kwargs):
+    def next(self, name, **kwargs):
         """
             Create and attach new step.
 
@@ -290,11 +322,11 @@ class Step(object):
 
         # impossible if only chained operations are used (no variables)
         if self._next is not None:
-            raise ImproperlyConfigured("%s: next step is already defined: '%s', rejecting new '%s', use branch for multiple next branches" % (self.name, self._next.name, name))
+            raise ImproperlyConfigured("%s: next step is already defined: '%s', rejecting new '%s', use branch for multiple next branches" % (self._name, self._next._name, name))
 
         # later we will check if name is unique
-        nstep = Step(name, template, extra_context, **kwargs)
-        nstep.initial = self.initial
+        nstep = Step(name, **kwargs)
+        nstep._initial = self._initial
         self._next = nstep
         return nstep
 
@@ -310,6 +342,9 @@ class Step(object):
             If guard == True, then default branch will be created (equivalent to
             next() call). There can be only one default (unguarded) branch. The
             default branch will be used if all other branches are rejected.
+
+            Note: if you specify default branch, then wizard will take that
+            branch when rendering future steps.
             
             The @step can be given as Step object or as a string reference (name).
             If the step is given by name, then the branch acts as guarded merge.
@@ -324,7 +359,7 @@ class Step(object):
             @return self
         """
         if not callable(guard) and guard is not True and guard is not None:
-            raise ImproperlyConfigured("%s: the guard should be callable, True or None" % self.name)
+            raise ImproperlyConfigured("%s: the guard should be callable, True or None" % self._name)
 
         # branch accpets new Step, which may be chained further. to access the
         # first step we use dirty hack: step.initial
@@ -353,10 +388,10 @@ class Step(object):
         """
         # impossible if only chained operations are used (no variables)
         if self._merge is not None:
-            raise ImproperlyConfigured("%s: merge is already defined: '%s', rejecting new '%s', use branch for multiple merges" % (self.name, self._merge, stepname))
+            raise ImproperlyConfigured("%s: merge is already defined: '%s', rejecting new '%s', use branch for multiple merges" % (self._name, self._merge, stepname))
 
         if isinstance(stepname, Step):
-            raise ImproperlyConfigured("%s: you should merge to the step by name (you merge to existing path). If you have the step object (%s), then you should continue with your branch with branch() call" % (self.name, stepname.name))
+            raise ImproperlyConfigured("%s: you should merge to the step by name (you merge to existing path). If you have the step object (%s), then you should continue with your branch with branch() call" % (self._name, stepname._name))
 
         self._merge = stepname
         return self
@@ -377,7 +412,7 @@ class Step(object):
 
         # defined here in order to not loose double start_cycle() call, harder to find bug
         if self._cycle_start:
-            raise ImproperlyConfigured("%s: cycle is already started, you can not start multiple cycles from the same step" % self.name)
+            raise ImproperlyConfigured("%s: cycle is already started, you can not start multiple cycles from the same step" % self._name)
 
         self._cycle_start = True
         self._cycle_template = template
@@ -398,7 +433,7 @@ class Step(object):
 
         # defined here in order to not loose double end_cycle() call, harder to find bug
         if self._cycle_end:
-            raise ImproperlyConfigured("%s: cycle is already closed, you can not close multiple cycles from the same step" % self.name)
+            raise ImproperlyConfigured("%s: cycle is already closed, you can not close multiple cycles from the same step" % self._name)
 
         self._cycle_end = True
         return self
@@ -411,17 +446,17 @@ class Step(object):
             Form classes instances take initial data differently. Model forms
             expect @instance (but can take @initial dict too). Management form
             takes @queryset. This method selecst correct argument name for given
-            form type.
+            form and initial type.
 
             @return Form
         """
-        
+
         # model form
         if hasattr(form, 'Meta') and hasattr(form.Meta, 'model'):
-            init = 'instance'
+            init = 'instance' if isinstance(initial, Model) else 'initial'
         # management form
         elif hasattr(form, 'management_form'):
-            init = 'queryset'
+            init = 'queryset' if isinstance(initial, QuerySet) else 'initial'
         # normal form (initialized from dictionary)
         else:
             init = 'initial'
@@ -441,12 +476,14 @@ class Step(object):
 class CleanStep(object):
     """Cleaned step. Properly validated scenario step."""
 
-    def __init__(self, step, ctx, cycle):
-        self.name = step.name
+    def __init__(self, wizard, step, ctx, cycle):
+        self.wizard = wizard
+        self.name = step._name
         self.forms = step._forms
-        self.template = step.template
-        self.extra_context = step.extra_context
-        self._fields = step.fields
+        self.template = step._template
+        self.extra_context = step._extra_context
+        self.fields = step._fields
+        self.always_validate = step._always_validate
         self.next = None
         self.default = None
         self._head = False
@@ -455,7 +492,7 @@ class CleanStep(object):
 
         # names are unique
         if self.name in ctx:
-            raise ImproperlyConfigured("%s: name '%s' is not unique" % (step.name, step.name))
+            raise ImproperlyConfigured("%s: name '%s' is not unique" % (self.name, self.name))
         ctx[self.name] = self
 
         # start cycle (head)
@@ -495,7 +532,7 @@ class CleanStep(object):
         # simple next step case
         if step._next is not None:
             if isinstance(step._next, Step):
-                self.next = CleanStep(step._next, ctx, cycle)
+                self.next = CleanStep(self.wizard, step._next, ctx, cycle)
             else:
                 self.next = step._next   # will be resolved later
         elif step._merge is not None:    # merge case, will be resolved later
@@ -504,7 +541,7 @@ class CleanStep(object):
             self.next = {}
             for i, (ch, gr) in enumerate(step._branches):
                 if isinstance(ch, Step):
-                    ch = CleanStep(ch, ctx, cycle)
+                    ch = CleanStep(self.wizard, ch, ctx, cycle)
 
                 if gr is True:
                     if self.default is not None:
@@ -529,7 +566,7 @@ class CleanStep(object):
             for (key, (ch, gr)) in self.next.items():
                 if not isinstance(ch, CleanStep):
                     chstep = (self.cycle.get(ch), gr)
-                    if ch is None:
+                    if chstep is None:
                         raise ImproperlyConfigured("%s: branch-merge with '%s', step is not found" % (self.name, ch))
                     
                     self.next[key] = chstep
@@ -538,7 +575,11 @@ class CleanStep(object):
 
             if self.default is not None:
                 if not isinstance(self.default, CleanStep):
-                    self.default = self.cycle.get(self.default)
+                    chstep = self.cycle.get(self.default)
+                    if chstep is None:
+                        raise ImproperlyConfigured("%s: default branch-merge with '%s', step is not found" % (self.name, self.default))
+
+                    self.default = chstep
                 else:
                     self.default.resolve()
 
@@ -571,6 +612,18 @@ class CleanStep(object):
         self._mark = False
 
 
+    def count_branches(self):
+        """Returns number of outgoing branches"""
+        if self.next is None:
+            return 0
+
+        if not isinstance(self.next, dict):
+            return 1
+
+
+        return len(self.next) + (1 if self.default is not None else 0)
+
+
     def is_final(self):
         """True if this step is final (no next)"""
         return self.next is None
@@ -586,12 +639,11 @@ class CleanStep(object):
 
     def get_straight_branch(self):
         """
-            Returns None if this steps contains multiple branches (or guarded)
-            or is final
+            Returns None if this step is final or this step has no default branch.
         """
         if self.next is not None:
             if isinstance(self.next, dict):
-                if len(self.next) == 0 and self.default is not None:
+                if self.default is not None:
                     return self.default
 
             else:
@@ -607,12 +659,13 @@ class CleanStep(object):
                 if self.default is not None and GraphFormWizard.branch_code[len(self.next)] == letter:
                     return self.default
                 
-                return self.next.get(letter, None)[0]
+                return self.next.get(letter, (None, None))[0]
 
             elif letter == 'A':
                 return self.next
 
         return None
+
 
     def encode_branch(self, step):
         """Returns encoding letter for given CleanStep"""
@@ -620,42 +673,73 @@ class CleanStep(object):
             return 'A' if step is self.next else None
 
         else:
-            cand = [l for (l, (s, _)) in self.next.iteritems() if s is step]
-            if len(cand) < 1 and step is self.default:
-                cand.append(GraphFormWizard.branch_code[len(self.next)])
+            if step is self.default:
+                return GraphFormWizard.branch_code[len(self.next)]
 
-            assert len(cand) <= 1
-            if len(cand) > 0:
-                return cand[0]
-
+            for (l, (s, _)) in self.next.iteritems():
+                if s is step:
+                    return l
+                
         return None
         
 
-    def get_forms(self, post = None, files = None):
-        """Re-instantiates forms"""
+    def get_forms(self, post = None, files = None, as_initial = False):
+        """
+            Instantiates forms of this step.
+
+            If @as_initial is True, then given post data will be used as plain
+            initial data such that resulting forms will not be bound. Otherwise
+            the form will be bound to post and files enabling validation.
+
+            @param as_initial if false False, then bind data to post and files
+            @param post the MultiValueDict with POST data
+            @param files the MultiValueDict with FILES data
+            @return (is_valid, forms, cleaned_data)
+        """
         retforms = {}       # forms (name => Form)
         retdata = {}        # cleaned_data (name => dict) or None if not all forms are validated
         valid = True        # all forms are validated
-        for (name, (form, prefix, initial)) in self.forms.iteritems():
-            fr = Step.new_form(form, prefix, initial, post, files)
-            valid = valid and fr.is_valid()
+        for (name, (form, kwargs)) in self.forms.iteritems():
+            prefix = "%s_%s_%s" % (self.wizard.name, self.name, name) # unique form prefix
+
+            # create bound form first
+            kwargs = kwargs if kwargs is not None else {}
+            fr = form(post, files, prefix = prefix, **kwargs)
+            val = fr.is_valid()
+
+            if as_initial and (post is not None or files is not None):
+                # session data is given, but we should not validate the form right now
+                # convert POST data to cleaned_data form used in initials
+                
+                inidat = {}
+                for name, field in fr.fields.iteritems():
+                    nm  = fr.add_prefix(name)  # prefixed field name, multi_widget may append additional _[0-9]
+                    # value returned by value_from_datadict does not need to be
+                    # equal to the thing we get in cleaned_data (eg. MultiWidget)
+                    # but this value can be used by all widgets as initial
+                    inidat[name] = field.widget.value_from_datadict(post, files, nm)
+
+                # recreate unbound form
+                kwargs = kwargs.copy() if kwargs is not None else {}
+                kwargs.update(initial = inidat, prefix = prefix)
+                fr = form(**kwargs)
+
+            # unbound form is always invalid
+            valid = valid and val
             retforms[name] = fr
             retdata[name] = getattr(fr, 'cleaned_data', None)
         # end for
 
         return (valid, retforms, retdata)
 
-    def __getattribute__(self, name):
-        """Access to additional fiels (eg. title)"""
-        # this will be used in templates, forget about AttributeError's
-        try:
-            return object.__getattribute__(self, name)
-        except:
-            fl = object.__getattribute__(self, '_fields')
-            return fl.get(name, None)
 
     def __repr__(self):
-        return self.name
+        return "Step: '%s', level: %d, %s" % (
+            self.name,
+            self.cycle.level,
+            "is final"  if self.next is None
+                        else ("%d branches" % self.count_branches())
+        )
 
 
 class CycleContext(object):
@@ -798,6 +882,9 @@ class GraphFormWizard(object):
 
     # subclasses should re-define static scenario
     scenario = None
+
+    # enable always_validate for all steps
+    always_validate = False
     
     # If some of your actions are lightweight, then specify them here
     # read more in wizard_fast_action()
@@ -814,14 +901,23 @@ class GraphFormWizard(object):
     built_in_actions = frozenset(['post', 'cancel', 'reset'])
 
 
-    def __init__(self, name = None, template = None):
+    def __init__(self, name = None, template = None,
+                        url_step = ('wizard.step', (), {}),
+                        url_action = ('wizard.action', (), {})):
+
         """ Construct new wizard. Usually invoked from urls.py
 
-            @param name wizard's name, required when multiple wizard instances are allowed in the session
+            Note: usually the subclasses specify default template and url schema's.
+
+            @param name wizard's name, used to adress session data and forms
             @param template default template for all steps
+            @param url_step reverse url params for step urls
+            @param url_action reverse url params for step actions
         """
         self.template = template
         self.name = name
+        self.url_step = url_step
+        self.url_action = url_action
         
         if self.scenario is None:
             raise ImproperlyConfigured("%s: subclass must define scenario" % self.name)
@@ -829,7 +925,7 @@ class GraphFormWizard(object):
         self.steps = {}                     # all steps by unique name
         self.root_cycle = CycleContext()    # root cycle, knows first and last steps
         # raises exceptions on any inconsistency
-        self.clean_scenario = CleanStep(self.scenario.initial, self.steps, self.root_cycle)
+        self.clean_scenario = CleanStep(self, self.scenario._initial, self.steps, self.root_cycle)
         self.clean_scenario.resolve()
         self.clean_scenario.check_cycle()
         self.root_cycle.check_merge()
@@ -840,8 +936,8 @@ class GraphFormWizard(object):
     # Called by the url dispatcher
     def __call__(self, request, path = '', action = None,
                         extra_context = None,
-                        url_step = ('wizard.step', (), {}),
-                        url_action = ('wizard.action', (), {}),
+                        url_step = None,
+                        url_action = None,
                         *args, **kwargs):
         """
             Handles requests (wizard is a view).
@@ -855,11 +951,13 @@ class GraphFormWizard(object):
             @return HttpResponse
         """
 
+        url_step = url_step or self.url_step
+        url_action = url_action or self.url_action
+
         # current path in scenario
         (step_path, valid) = self.parse_path(self.uncompress_path(path))
         if not valid: # did scenario change? werid, redirect to the first step
-            url = self.build_path(step_path)
-            return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = self.compress_path(url))))
+            return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = '')))
 
 
         # last step on the path - current step
@@ -872,12 +970,9 @@ class GraphFormWizard(object):
         # restore data
         (data, meta) = self.restore_data(request, *args, **kwargs)
 
-        # handle files, move, replace links
-        files = self.handle_files(request, *args, **kwargs)
-
         # cancel cycle, on steps has the same meaning as reset
-        if action == 'cancel' or action == 'reset':
-            if action == 'cancel': # delete cycle, reset step
+        if action == 'cancel' or action == 'reset' or 'reset' in request.POST or 'cancel' in request.POST:
+            if action == 'cancel' or 'cancel' in request.POST: # delete cycle, reset step
                 uppath = self.cancel_path(step_path, data)
             else:
                 uppath = self.reset_path(step_path, data)
@@ -885,6 +980,9 @@ class GraphFormWizard(object):
             self.save_data(request, data, meta, *args, **kwargs)
             url = self.compress_path(self.build_path(uppath))
             return HttpResponseRedirect(reverse(url_step[0], args = url_step[1], kwargs=dict(url_step[2], path = url)))
+
+        # handle files, move, replace links
+        files = self.handle_files(request, *args, **kwargs)
 
         # OK, now we need re-validated data along the path
         (valid, last_valid, wizard_data, step_context, validpath, lastforms) = self.refetch_path(step_path, data, request.POST, files, (request.method == 'POST' or action == 'post'))
@@ -896,13 +994,18 @@ class GraphFormWizard(object):
             ret = self.wizard_action(request, action, meta, curstep, step_context, step_path, wizard_data, data, url_step, url_action, *args, **kwargs)
             self.save_data(request, data, meta, *args, **kwargs)
             return ret
-        
+
+        # hook to catch each step tick
+        ret = self.process_step(request, meta, curstep, step_context, step_path, wizard_data, data, url_step, url_action, *args, **kwargs)
+        if ret is not None:
+            return ret
+
         # OK, perform default action
         if last_valid and (request.method == 'POST' or action == 'post'):
             # if we are done
             if curstep.is_final():
                 self.clear_data(request, *args, **kwargs)
-                return self.done(request, wizard_data, meta, *args, **kwargs)
+                return self.done(request, wizard_data, meta, url_step, url_action, *args, **kwargs)
 
             # proceed to the next step
             else:
@@ -914,7 +1017,7 @@ class GraphFormWizard(object):
                             guard = self.guard_step
 
                         # evaluate guard
-                        if guard(request, step, step_context, step_path, wizard_data):
+                        if guard(request, meta, step, step_context, step_path, wizard_data):
                             nextstep = step
                             break
                     # end for
@@ -952,12 +1055,11 @@ class GraphFormWizard(object):
             'forms': lastforms,
             'steps': tpldata,           # complete steps info as returned by fetch_template_data()
             'curstep' : tplcurstep,     # part of steps, for current step only
-            'meta_data': meta,          # current meta
+            'meta': meta,               # current meta
             'step_path' : step_path,    # [ (CleanStep, int) ]
             'wizard_step_url': url_step,     # (url_name, args, kwargs)
             'wizard_action_url': url_action, # (url_name, args, kwargs)
             'step_url_path': self.build_path(step_path),  # current step path, to specify in wizard_step_url
-            'current_step_is_valid': last_valid,    # if current is valid
             'step_context': step_context,           # allows you to lookup in previous steps
             'wizard_data': wizard_data              # allows you to lookup in all previous steps
         }
@@ -971,21 +1073,23 @@ class GraphFormWizard(object):
         if curstep.extra_context is not None:
             context.update(curstep.extra_context)
 
+
+        self.update_template_context(context, request, meta, curstep, step_context, step_path, wizard_data, url_step, url_action, *args, **kwargs)
         return render_to_response(template, context, context_instance = RequestContext(request))
 
 
     def fetch_template_data(self, step_path, wizard_data, data, url_step, url_action):
         """Re-arranges steps in the structure usable for templates"""
-        # tplpath: [ ("step", step_info), (menu, menu_list), ..., ("branch", branch_info) ]
+        # tplpath: [ ("step", step_info), ("menu", menu_list), ..., ("branch", branch_info) ]
         #
         # ("step", step_info)
-        # step_info: (is_on_path, is_current, is_valid, urls, CleanStep)
+        # step_info: (number, is_on_path, is_current, is_valid, urls, step)
         #
         # ("branch", branch_info)
-        # branch_info: {step_name: (CleanStep, goto_url)}
+        # branch_info: {step_name: (step, goto_url)}
         #
         # ("menu", menu_list)
-        # menu_list: ([ (is_complete, is_current, urls, [ (step, step), , (branch, ) ]) ])
+        # menu_list: ([ (is_complete, is_current, urls, [ ("step", stepinfo), , ("branch", ...) ]) ])
         #
         # Urls:
         #  goto: go to step, None if step is invalid (except for current step, which may be invalid)
@@ -1009,7 +1113,7 @@ class GraphFormWizard(object):
 
         # along the path, build menu data
         totval = True
-        for (step, cycle) in step_path:
+        for (idx, (step, cycle)) in enumerate(step_path):
             urls = {}       # URL links
             urlpath.append((step, cycle))   # used to build path to prev steps
             
@@ -1045,6 +1149,7 @@ class GraphFormWizard(object):
             curdat = curwiz.get(step.name, None)
             totval = totval and (curdat is not None)
             tplpath.append(("step", {
+                'number': idx+1,
                 'is_on_path': True,
                 'is_current': step is tgt,
                 'is_valid': curdat is not None,
@@ -1063,6 +1168,7 @@ class GraphFormWizard(object):
         nextstep = step.get_straight_branch()
         nextinvalid = totval
         while nextstep is not None:
+            idx = idx + 1
             urls = {}       # URL links
             urlpath.append((nextstep, 0))   # used to build path to prev steps
 
@@ -1085,6 +1191,7 @@ class GraphFormWizard(object):
                 nextinvalid = False
             
             tplpath.append(("step", {
+                'number': idx + 1,
                 'is_on_path': False,
                 'is_current': False,
                 'is_valid': valid,  # we are not valid if previous steps are not valid
@@ -1248,23 +1355,24 @@ class GraphFormWizard(object):
             step_path.append((self.clean_scenario, 0))
 
         #[FIXME: this is overcomplicated... fixme... =\ ]
-        ctx = data
-        target = step_path[-1][0]
-        last_valid = False
-        valid = True
-        validpath = []
-        wizard_data = {}
-        step_context = wizard_data
-        path = []
-        respath = []
-        pathstack = []
-        ctxstack = []
-        wizctxstack = []
-        respathstack = []
-        lastforms = None
+        ctx = data                  # current session context
+        target = step_path[-1][0]   # current step (last path step)
+        last_valid = False          # current step is valid
+        valid = True                # whole path is valid
+        validpath = []              # prefix of step_path with valid steps
+        wizard_data = {}            # the data to return in done()
+        step_context = wizard_data  # current cycle in wizard_data
+        path = []                   # current prefix of step_path
+        respath = []                # path + respath == step_path
+        pathstack = []              # stack for sub-cycles paths
+        ctxstack = []               # stack for current cycle context
+        wizctxstack = []            # stack for wizard data context
+        respathstack = []           # stack for respath
+        lastforms = None            # forms of the last step
+        
         for (cidx, (step, cycle)) in enumerate(step_path):
-            if step.is_head():
-                if step.name not in ctx:
+            if step.is_head(): # this step begins the cycle
+                if step.name not in ctx:  # step is new extend session data with cycles holder
                     cycles = []
                     ctx[step.name] = cycles
 
@@ -1272,6 +1380,7 @@ class GraphFormWizard(object):
                     cycles = ctx[step.name]
                     assert isinstance(cycles, list)
 
+                # we enter new cycle, store context
                 pathstack.append(path)
                 ctxstack.append(ctx)
                 wizctxstack.append(step_context)
@@ -1284,7 +1393,7 @@ class GraphFormWizard(object):
                     cycle = len(cycles) - 1
                     step_path[cidx] = (step, cycle)
 
-                else:
+                else: # pick existing cycle
                     (respath, ctx) = cycles[cycle]
                     respath.reverse()
                     path = []
@@ -1307,19 +1416,17 @@ class GraphFormWizard(object):
             (sespost, sesfiles) = ctx.get(step.name, (None, None))
             if step is target:
                 if posted: # POST request, may replace session data
-                    sespost = post
-                    sesfiles = files
+                    (last_valid, lastforms, cleandata) = step.get_forms(post, files)
+                    if last_valid: # store back in session
+                        ctx[step.name] = (post, files)  # replace session data and files
+                        step_context[step.name] = (cleandata, post, files)
 
-                (last_valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
-                if posted and last_valid: # store back in session
-                    ctx[step.name] = (sespost, sesfiles)  # replace session data and files
+                else: # use session data as initial
+                    (last_valid, lastforms, cleandata) = step.get_forms(sespost, sesfiles, True)
+                    if last_valid: # store back in session
+                        step_context[step.name] = (cleandata, sespost, sesfiles)
 
-                if last_valid:
-                    step_context[step.name] = (cleandata, sesfiles)
-
-                lastforms = stepforms
-
-                # we will end here, restore the rest of path hint
+                # we will end here, restore the rest of the path hint
                 # warning: this could be of different branch, we will filter it in next _fetch_cycle/refetch_path
                 respathstack.append(respath)
                 respathstack.reverse()
@@ -1330,9 +1437,9 @@ class GraphFormWizard(object):
                         path.append(rnm)
 
             else:
-                (valid, stepforms, cleandata) = step.get_forms(sespost, sesfiles)
+                (valid, _, cleandata) = step.get_forms(sespost, sesfiles)
                 if valid:
-                    step_context[step.name] = (cleandata, sesfiles)
+                    step_context[step.name] = (cleandata, sespost, sesfiles)
                 
             if step.is_tail() and step is not target:
                 path = pathstack.pop()
@@ -1341,7 +1448,7 @@ class GraphFormWizard(object):
                 step_context = wizctxstack.pop()
 
             validpath.append((step, cycle))
-            if not valid: # current step is not validated, break here    
+            if not valid: # current step is not validated, break here
                 break
         #end of for
         
@@ -1767,7 +1874,6 @@ class GraphFormWizard(object):
         ses_id = request.session.get(key, None)
         
         data = self._filter_data(data)
-        
         content = cPickle.dumps(data)
         meta = cPickle.dumps(meta or {})
 
@@ -1814,11 +1920,171 @@ class GraphFormWizard(object):
         del request.session[key]
 
 
+    def save_initial_data(self, request, wizard_data, meta = {}, *args, **kwargs):
+        """
+            Re-create session data from wizard_data as obtained in done() method.
+
+            This method expects the data in following formats:
+
+            Steps within sincle cycle:
+            {step_name : {form_name : form_instance})
+            {step_name : {form_name : dict_with_data})
+            {step_name : ({form_name : form_or_dict}, {files}) }
+
+            Step openning the cycle:
+            {step_name : [ { step_name : ...}, { step_name : ...}... ]
+
+            So the wizard_data is expected to be a simple mapping of the step
+            name to the dict containing all the values of the step forms. If
+            files are provided, then they will be returned back in done() method
+            unless overriden by actual request.FILES. In most cases you don't
+            need to specify the files since your form file/image fields will
+            automatically delete old files.
+
+            Note: this method converts wizard_data to MultiValueDict data (POST)
+            format as required by save_data().
+
+            @param request the request object
+            @param wizard_data the data to store
+            @param meta optional meta data, simple dict
+            @param args additional positional arguments for save_data()
+            @param kwargs additional named arguments form save_data()
+        """
+        def prostep(step, dat, ctx):
+            stepdata = dat.get(step.name, None)
+            if stepdata is None: # no data, nothing to convert
+                return
+            
+            (post, files) = stepdata if isinstance(stepdata, tuple) else (stepdata, None)
+
+            npost = MultiValueDict()
+            for (formname, (cls, pref, init)) in step.forms:
+                fr = cls(prefix = pref)
+
+                for (fldname, field) in fr.fields:
+                    pname = fr.add_prefix(fldname)
+                    val = getattr(post, fldname, None)
+                    # this can be plain field, multi-valued field or even multi-widget field
+
+                    # multiple different names
+                    if isinstance(field.widget, MultiWidget):
+                        if not isinstance(val, list): # compressed
+                            val = field.widget.decompress(val)
+
+                        for idx, pt in enumerate(val):
+                            npname = pname + ('_%s' % idx)
+
+                            if isinstance(pt, list):
+                                npost.setlist(npname, pt)
+                            else:
+                                npost[npname] = pt
+
+                    else: # normal widget
+                        if isinstance(val, list):
+                            npost.setlist(pname, val)
+                        else:
+                            npost[pname] = val
+
+                # end for (fields)
+            # end for (forms)
+            ctx[step.name] = (npost, files)
+        # end prostep
+
+        convdat = self.map_scenario(wizard_data, prostep)
+        self.save_data(request, convdat, meta, *args, **kwargs)
+
+
+
+    def map_scenario(self, data, process_step, enter_cycle = None, exit_cycle = None):
+        """
+            Traces whole scenario (or just a part of it) using callbacks.
+
+            Tracing the whole scenario is a routine task. This method allows you
+            to define callbacks and forget about nesting and cycles.
+
+            Callbacks.
+
+            process_step(step, dat, ctx) -- will be called for each step. The
+            dat is the current cycle in data (stepname => stepdata). ctx is the
+            current context to be returned (stepname => any_data). The function
+            should access the step data using dat[step.name] and store any results
+            in ctx[step.name]. By default all next steps will be processed.
+            The function may return step (or list of steps) to process next, thus
+            limiting the branches to be processed.
+
+            enter_cycle(step, dat, level) -- will be called for each head
+            step at each cycle. Signals the beginning of the new cycle. The level
+            is the current nesing level starting from 0. The function should return
+            the new ctx that will be used for process_step(). By default ctx is a dict.
+
+            exit_cycle(step, dat, ctx, level) -- will be called for each tail step.
+            Since there are multiple tails possible, this function can be called
+            multiple times withing the same cycle.
+
+        """
+        def trace_ctx(head, dat, ctx, level): # process cycle context
+            togo = [head]
+            
+            while togo:
+                step = togo.pop()
+
+                if step.is_head() and step is not head: #enter cycle
+                    ctxcycles = []
+                    ctx[step.name] = ctxcycles
+
+                    for cycdat in dat.get(step.name, []):
+                        ictx = enter_cycle(step, cycdat, level + 1) if enter_cycle is not None else {}
+                        ctxcycles.append(ictx)
+                        trace_ctx(step, cycdat, ictx, level + 1)
+                    # end of cycle for
+
+                    if step.cycle.outer_tail is not None:
+                        togo.append(step.cycle.outer_tail)
+
+                    continue
+                # end of is head
+
+                # [FIXME: possible endless loop here if process_step() is broken! ]
+                br = process_step(step, dat, ctx)
+                if br is False:
+                    break
+                    
+                br = step.next if br is None else br
+                if br is not None:
+                    if isinstance(br, dict):
+                        togo.extend(br.values())
+                    else:
+                        togo.append(br)
+
+                # close the tail
+                if step.is_tail():
+                    if exit_cycle is not None:
+                        exit_cycle(step, dat, ctx, level)
+
+            # end of while
+        # end of trace_ctx()
+
+        retctx = {}
+        # the first step is already a cycle
+        if self.clean_scenario.is_head():
+            ctxcycles = []
+            retctx[self.clean_scenario.name] = ctxcycles
+
+            for cycdat in data.get(self.clean_scenario.name, []):
+                ictx = {}
+                ctxcycles.append(ictx)
+                if enter_cycle is not None:
+                    enter_cycle(self.clean_scenario, cycdat, ictx, 0)
+
+                trace_ctx(self.clean_scenario, cycdat, ictx, 0)
+        else:
+            trace_ctx(self.clean_scenario, data, retctx, 0)
+
+        return retctx
+
+
 #================- Override by wizard's base classes -===========
-    def revalidation_failed_response(self, request, validpath, step_path,
-                                        url_step = ('wizard.step', (), {}),
-                                        url_action = ('wizard.action', (), {}),
-                                        *args, **kwargs):
+    def revalidation_failed_response(self, request, validpath, step_path, url_step, url_action, *args, **kwargs):
         """
             Will be called if path re-validation fails.
 
@@ -1884,7 +2150,6 @@ class GraphFormWizard(object):
         """
         raise Http404
 
-
     def wizard_action(self, request, action, meta, step, step_context, step_path, wizard_data, raw_data, url_step, url_action, *args, **kwargs):
         """
             Invoked on each unrecognized action. By default raises 404.
@@ -1921,7 +2186,63 @@ class GraphFormWizard(object):
         raise Http404
 
 
-    def guard_step(self, request, step, step_context, step_path, wizard_data):
+    def process_step(self, request, meta, step, step_context, step_path, wizard_data, raw_data, url_step, url_action, *args, **kwargs):
+        """
+            Will be called before processing current step.
+
+            This method can be used to implement special logic that checks if
+            the current environment is valid. For example your wizard should be
+            entered via some action that sets some required values in meta, then
+            you can check if the data really exist in meta here. If you don't do
+            that, then wizard will still be available to the user, but the done()
+            method will be called with valid wizard_data and possibly invalid
+            meta data.
+
+            If this method returns None, then current step will be processed
+            normally. If method returns HttpResponse, then this response will
+            be used for current request. You can also raise exceptions.
+
+            Note: in most cases you don't need this hook.
+
+            @param request request object
+            @param meta meta dictionary for actions, persistent
+            @param step current CleanStep step as requested by URL
+            @param step_context wizard_data limited to step's cycle (neighboring steps)
+            @param step_path current path as returned by parse_path
+            @param wizard_data the data from initial up to current step
+            @param raw_data data dictionary for steps, persistent
+            @param args positional arguments from urls.py
+            @param kwargs keyword arguments from urls.py
+            @return None, HttpResponse object or raise exception
+        """
+        return None
+
+
+    def update_template_context(self, context, request, meta, step, step_context, step_path, wizard_data, url_step, url_action, *args, **kwargs):
+        """
+            Will be called before rendering the template.
+
+            Subclasses may override this method to set extra data in $context.
+            Usually you will set some data in meta dict before entering the wizard,
+            then you may want to make this data available in the template. The
+            meta dict is directly available in the templates, however if some
+            extra processing is required, you can do it now.
+
+            @param context the template context to update
+            @param request request object
+            @param meta meta dictionary for actions, persistent
+            @param step current CleanStep step as requested by URL
+            @param step_context wizard_data limited to step's cycle (neighboring steps)
+            @param step_path current path as returned by parse_path
+            @param wizard_data the data from initial up to current step
+            @param args positional arguments from urls.py
+            @param kwargs keyword arguments from urls.py
+            @return None, HttpResponse object or raise exception
+        """
+        pass
+    
+
+    def guard_step(self, request, meta, step, step_context, step_path, wizard_data):
         """
             Default branching logic, used if step has no its own guard.
             If method evaluates to True, then step will be accepted.
@@ -1935,13 +2256,6 @@ class GraphFormWizard(object):
             Often you will make a decision based on choices made by the user in
             previous steps. The @step_context variable is a dict similar to one
             you will get in done() method, but limited to current cycle only.
-            So if you are sitting in a cycle which has a branch and you want to
-            lookup in some previous step, then simply:
-              - step_context['step name'][0]['form or data name']['fields...']
-
-            Note: step_context['step name'] is a tuple containing cleaned_data
-            of all forms within the step and the request.FILES as it was when
-            step was processed. Reffer to done() method for more info.
 
             The @wizard_data is a structure similar to one you will get in done(),
             but contains the data up to current step only. So you can access
@@ -1963,27 +2277,25 @@ class GraphFormWizard(object):
         return False
 
 
-    def done(self, request, wizard_data, meta, *args, **kwargs):
+    def done(self, request, wizard_data, meta, url_step, url_action, *args, **kwargs):
         """
             The wizard is done, all forms are validated.
 
             The @wizard_data contains all forms and data properly validated.
             It is a map of:
-                { step_name : ({forms_cleaned_data}, {files}) } -- "sequence" of steps
+                { step_name : ({cleaned_data}, {post}, {files}) } -- "sequence" of steps
             or  { step_name : [ { sequence of steps} ] } -- cycle
 
-            The steps_cleaned_data is the data obtained from all forms:
-                forms_cleaned_data = { form_name : corresponding_form.cleaned_data }
+            The cleaned_data is the dict containing cleaned_data of all forms:
+                cleaned_data = { form_name : corresponding_form.cleaned_data }
 
-            The files is a MultiValueDict as got from request.FILES when step was
-            validated. To instantiate and bind your final form use followin code:
-                (forms, files) = wizard_data['step name']
-                form = MyForm(forms['my_form_name'], files)
-
-            Note: the reason you get files in a separated dict is that you can
-            not retrieve files from form.cleaned_data. The files dict contains
-            *all* files received when step was processed.
-
+            The post and files are the MultiValueDict as got from request.POST
+            and request.FILES when step was processed. To instantiate and bind
+            your final forms use following code:
+                (cleaned_data, post, files) = wizard_data['step name']
+                form = MyForm(post, files, instance = my_specific_instance)
+                form.save()
+            
             Note: if you want to recreate @wizard_data (edit mode), then you
             should skip the files, simply create { step_name: { form_name : form_data } }.
             If you do define the files, then there is a high chance everything
@@ -1996,7 +2308,7 @@ class GraphFormWizard(object):
 
             If step is part of a cycle, then:
                 for my_iteration in wizard_data['head step name']:
-                    (cleaned_data, files) = my_iteration['step name']
+                    (cleaned_data, post, files) = my_iteration['step name']
 
             The 'head step name' is the name of the step on which cycle was
             opened. There is always only one head in a cycle. There can be many

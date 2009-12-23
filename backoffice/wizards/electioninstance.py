@@ -182,8 +182,6 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
         return redirect('bo.edit_council', id=ei.id)
         
 
-
-
 #[NOTE: to see this wizard in action, url: /wiz/init/1/2
 # of course you will need user 1, election instance 2
 class ElectionSetupWizard(GraphFormWizard):
@@ -194,37 +192,33 @@ class ElectionSetupWizard(GraphFormWizard):
     # wizard scenario
     scenario = GStep("chancery_registration", header = _("Welcome Chancellery!"), title = _("Registration")) \
                 .forms(dict( [ ('chancery_registration%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'edit'))] )) \
-                .data(help = _("This wizard will lead you through the process of setting up WieKiesJij? for your municipality.")) \
-                .data(next_button = _("Proceed to instance setup")) \
+                .field(help = _("This wizard will lead you through the process of setting up WieKiesJij? for your municipality.")) \
+                .field(next_button = _("Proceed to instance setup")) \
                 \
-                .next('election_details', header = _("Details about this election"), title = _("Election")) \
+                .next('election_details', header = _("Details about this election"), title = _("This Election")) \
                 .form('election_details1', ElectionInstanceForm) \
-                .data(next_button = _("Proceed to Council Setup")) \
+                .field(next_button = _("Proceed to Council Setup")) \
                 \
-                .next('council_contact_information', header = _("Council contact information"), title = _("Council")) \
+                .next('council_contact_information', header = _("Council contact information"), title = _("The Council")) \
                 .form('council_contact_information1', CouncilContactInformationForm) \
-                .data(next_button = _("Proceed")) \
+                .field(next_button = _("Proceed")) \
                 \
-                .next('council_additional_information', header = _("Council: additional information"), title = _("Council")) \
+                .next('council_additional_information', header = _("Council: additional information"), title = _("More Council")) \
                 .form('council_additional_information1', CouncilForm) \
-                .data(help = _("You can fill in this information later"), next_button = _("Proceed to Chancellery")) \
-                \
-                .next('chancery_contact_information', header = _("Chancellery contact information"), title=_("Chancellery")) \
-                .forms(dict( [ ('chancery_contact_information%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'contact_information'))] )) \
-                .data(next_button = _("Proceed to Styling")) \
+                .field(help = _("You can fill in this information later"), next_button = _("Proceed to Chancellery")) \
                 \
                 .next('council_styling_setup', header = _("Setup styling"), title=_("Styling")) \
                 .form('council_styling_setup', CouncilStylingSetupForm) \
-                .data(help = _("On this page you can setup the styling for the WieKiesJij? instance for your council.")) \
-                .data(next_button = _("Proceed to Party selection")) \
+                .field(help = _("On this page you can setup the styling for the WieKiesJij? instance for your council.")) \
+                .field(next_button = _("Proceed to Party selection")) \
                 \
                 .next('election_select_parties', template = 'backoffice/wizard/election_setup/step7.html') \
-                .data(header = _("Previous parties"), title = _("Party selection")) \
-                .data(next_button = _("Finish")) \
+                .field(header = _("Previous parties"), title = _("Finish")) \
+                .field(next_button = _("Finish")) \
                 .form('election_select_parties', ElectionInstanceSelectPartiesForm)
 
 
-    def __init__(self, name = None, template = 'backoffice/wizard/election_setup/base.html'):
+    def __init__(self, name = None, template = 'backoffice/wizard/election_setup/_base.html'):
         super(type(self), self).__init__(name, template)
 
 
