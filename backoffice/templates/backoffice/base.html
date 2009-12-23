@@ -37,7 +37,7 @@
 						<strong>{{ user.get_full_name|default:'NN' }}</strong>
 					{% endif %} 
 					{% if user.is_staff %}
-						- <a href="{% url invitations.list %}">{% trans "Uitnodigingen" %}</a>
+						- <a href="{% url invitations.list %}">{% trans "Invitations" %}</a>
 					{% endif %}
 					- <a href="{% url bo.logout %}">{% trans "Logout" %}</a></p>
 			{% else %}
