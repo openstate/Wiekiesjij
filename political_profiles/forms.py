@@ -13,7 +13,7 @@ from utils.widgets import DateTimePicker, HiddenDateTimePicker
 
 from utils.fields import NameField, AddressField
 
-from political_profiles.models import GENDERS
+from political_profiles.models import CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS 
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
@@ -40,8 +40,36 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-       
 
+
+
+class PoliticianProfileLifeForm(BetterForm, TemplateForm):
+    '''
+    PoliticianProfile admin
+    '''
+
+    marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
+    num_children    = forms.IntegerField(_('Number of Children'))
+    life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
+    church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
+    smoker          = forms.BooleanField(label=_('Do you Smoke?'), required=True)
+    diet            = forms.ChoiceField(label=_('Diet'),choices=DIET)
+
+class PoliticianProfileExtraForm(BetterForm, TemplateForm):
+    '''
+    PoliticianProfile admin
+    '''
+    fav_news        = forms.ChoiceField(label=_('Favourite Newspaper'),choices=NEWSPAPER)
+    transport       = forms.ChoiceField(label=_('What is your regular method of transport'),choices=TRANSPORT  )
+    charity         = forms.ChoiceField(label=_('What charity do you care for most?'),choices=CHARITY )
+    fav_media       = forms.ChoiceField(label=_('What is your favourite media chanel?'),choices=MEDIA )
+    fav_sport       = forms.ChoiceField(label=_('What is your favourite sport?'),choices=SPORT )
+    hobby           = forms.ChoiceField(label=_('What is your hobby'),choices=HOBBIES )
+    fav_club        = forms.ChoiceField(label=_('What is your favourite club'),choices=CLUBS  )
+    fav_pet         = forms.ChoiceField(label=_('What is your favourite pet'),choices=PETS )
+      
+#
+#
 class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     '''
     ChanceryProfile admin

@@ -247,6 +247,8 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in.'), required = False)
     slogan = forms.CharField(label=_('Slogan'), help_text=__('Vul hier uw verkiezingsslogan in. '), required = False)
+    movie  = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
+
     #logo = forms.FileField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 

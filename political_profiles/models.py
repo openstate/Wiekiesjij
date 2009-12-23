@@ -9,8 +9,104 @@ GENDERS = (
         ('Male',_('Male')),
         ('Female', _('Female')),
         )
-
-
+PETS = (
+        ('Dog',_('Dog')),
+        ('Cat', _('Cat')),
+        ('Rabbit', _('Rabbit')),
+        ('Horse', _('Horse')),
+        ('Other', _('Other')),
+        )
+HOBBIES = (
+        ('Footabll',_('Football')),
+        ('Golf', _('Golf')),
+        ('Computer Games', _('Computer Games')),
+        ('Other', _('Other')),
+        )
+CLUBS  = (
+        ('1',_('1')),
+        ('2', _('2')),
+        ('Other', _('Other')),
+        )
+SPORT  = (
+        ('Golf',_('Golf')),
+        ('Football', _('Football')),
+        ('Darts', _('Darts')),
+        ('Horse Racing', _('Horse Racing')),
+        ('Other', _('Other')),
+        )
+MEDIA  = (
+        ('NOS1',_('NOS1')),
+        ('NOS2', _('NOS2')),
+        ('NOS3',_('NOS3')),
+        ('CNN', _('CNN')),
+        ('BBC',_('BBC')),
+        ('VERONICA', _('VERONICA')),
+        ('NOS1',_('NOS1')),
+        ('NOS1', _('NOS1')),
+        ('Other', _('Other')),
+        )
+CHARITY = (
+        ('Serious Request',_('Serious Request')),
+        ('Red Cross', _('Red Cross')),
+        ('Red Cross', _('Red Cross')),
+        ('Red Cross', _('Red Cross')),
+        ('Red Cross', _('Red Cross')),
+        ('Red Cross', _('Red Cross')),
+        ('Other', _('Other')),
+        )
+TRANSPORT  = (
+        ('Train',_('Train')),
+        ('Tram',_('Tram')),
+        ('Bicycle',_('Bicycle')),
+        ('Motorbike',_('Motorbike')),
+        ('Car',_('Car')),
+        ('Other', _('Other')),
+        )
+NEWSPAPER  = (
+        ('News1',_('News1')),
+        ('News1',_('News1')),
+        ('News1',_('News1')),
+        ('News1',_('News1')),
+        ('News1',_('News1')),
+        ('News1',_('News1')),
+        ('Other', _('Other')),
+        )
+DIET  = (
+        ('Omnivore',_('Omnivore')),
+        ('vegetarian', _('vegetarian')),
+        ('Vegan', _('Vegan')),
+        ('Other', _('Other')),
+        )
+CHURCH  = (
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Church1',_('Church1')),
+        ('Other', _('Other')),
+        )
+LIFE_STANCE  = (
+        ('Deontologism',_('Deontologism')),
+        ('Eudaemonism', _('Eudaemonism')),
+        ('Hedonism', _('Hedonism')),
+        ('Humanism', _('Humanism')),
+        ('Kantism', _('Kantism')),
+        ('Nihilism', _('Nihilism')),
+        ('Buddhism', _('Buddhism')),
+        ('Christianity', _('Christianity')),
+        ('Judaism', _('Judaism')),         
+        ('Other', _('Other')),
+        )
+        
+MARITAL_STATUS = (
+        ('Married',_('Married')),
+        ('Single', _('Single')),
+        ('Commited relationship', _('Commited relationship')),
+        ('Civil Partenership', _('Civil Partenership')),
+        ('Other', _('Other')),
+        )
 
 class ConnectionType(models.Model):
     """
@@ -104,14 +200,23 @@ class PoliticianProfile(Profile):
                                       help_text=_('Link to YouTube video'))
                                       
     introduction    = models.TextField(_('Introduction'), blank=True, null=True)
-    motivation    = models.TextField(_('Motivation'), blank=True, null=True)
-    #hobby = models.CharField(_('Hobbies'), max_length=255)
-    #charity = models.CharField(_('Favourite Charities'), max_length=255)
-    #pets =  models.CharField(_('Pets'), max_length=255)
-    #fanclubs = models.CharField(_('Fan Clubs'), max_length=255)
-    #goals		Refrence
-    #Votes		Reference
-    #Expenses	Reference
+    motivation      = models.TextField(_('Motivation'), blank=True, null=True)
+
+    marital_status  = models.CharField(_('Marital Status'), max_length=25, choices=MARITAL_STATUS, blank=True, null=True)
+    num_children    = models.PositiveIntegerField(_('Number of Children'), max_length=3, null=True, blank=True)
+    life_stance     = models.CharField(_('Life Stance'), max_length=25, choices=LIFE_STANCE, blank=True, null=True)
+    church          = models.CharField(_('Church'), max_length=25, choices=CHURCH, blank=True, null=True)
+    smoker          = models.BooleanField(_('Smoker'), default=False)
+    diet            = models.CharField(_('Diet'), max_length=25, choices=DIET, blank=True, null=True)
+    fav_news        = models.CharField(_('Favourite Newspaper'), max_length=25, choices=NEWSPAPER, blank=True, null=True)
+    transport       = models.CharField(_('What is your regular method of transport'), max_length=25, choices=TRANSPORT, blank=True, null=True)
+    charity         = models.CharField(_('What charity do you care for most?'), max_length=35, choices=CHARITY, blank=True, null=True)
+    fav_media       = models.CharField(_('What is your favourite media chanel?'), max_length=25, choices=MEDIA, blank=True, null=True)
+    fav_sport       = models.CharField(_('What is your favourite sport?'), max_length=25, choices=SPORT, blank=True, null=True)
+    hobby           = models.CharField(_('What is your hobby'), max_length=25, choices=HOBBIES, blank=True, null=True)
+    fav_club        = models.CharField(_('What is your favourite club'), max_length=25, choices=CLUBS, blank=True, null=True)
+    fav_pet         = models.CharField(_('What is your favourite pet'), max_length=25, choices=PETS, blank=True, null=True)
+
 
     def profile_incomplete(self):
         return False

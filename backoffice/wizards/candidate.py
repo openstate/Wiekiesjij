@@ -9,7 +9,7 @@ from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
 from django.utils.translation import ugettext_lazy as _
 
-from political_profiles.forms import PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
+from political_profiles.forms import PoliticianProfileLifeForm, PoliticianProfileExtraForm, PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
 from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm
 
 from invitations.models import Invitation
@@ -474,18 +474,44 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                 'gender': self.user.profile.gender,
                 #'picture': self.user.profile.picture,
                 'movie': self.user.profile.movie,
+
+                'marital_status': self.user.profile.marital_status,
+                'num_children': self.user.profile.num_children,
+                'life_stance': self.user.profile.life_stance,
+                'church': self.user.profile.church,
+                'smoker': self.user.profile.smoker,
+                'diet': self.user.profile.diet,
+                'fav_news': self.user.profile.fav_news,
+                'transport': self.user.profile.transport,
+                'charity': self.user.profile.charity,
+                'fav_media': self.user.profile.fav_media,
+                'fav_sport': self.user.profile.fav_sport,
+                'hobby': self.user.profile.hobby,
+                'fav_club': self.user.profile.fav_club,
+                'fav_pet': self.user.profile.fav_pet,
+
             }
             
         except Exception, e:
             raise e
 
         step1_forms = dict(initial_candidate = PoliticianProfileForm)
+        step2_forms = dict(life_candidate = PoliticianProfileLifeForm)
+        step3_forms = dict(extra_candidate = PoliticianProfileExtraForm)
         step1 = Step('initial_candidate',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/step1.html',
                     initial={'initial_candidate': self.user_profile_dict })
+        step2 = Step('life_candidate',
+                    forms=step2_forms,
+                    template='backoffice/wizard/politician_profile/step2.html',
+                    initial={'life_candidate': self.user_profile_dict })
+        step3 = Step('extra_candidate',
+                    forms=step3_forms,
+                    template='backoffice/wizard/politician_profile/step3.html',
+                    initial={'extra_candidate': self.user_profile_dict })
                 
-        scenario_tree = step1
+        scenario_tree = step1.next(step2.next(step3))
         #default template is the base, each step can override it as needed (for buttons)
 
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -500,8 +526,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         try:
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
-                    if name == 'initial_candidate':
-                        self.user_profile_dict = form.cleaned_data
+                    #if name == 'initial_candidate':
+                    self.user_profile_dict = form.cleaned_data
 
             for (key, value) in self.user_profile_dict.items():
                 setattr(self.user.profile, key, value)
