@@ -2377,7 +2377,7 @@ msgstr "Wat is uw favoriete huisdier"
 #: political_profiles/forms.py:193
 #, python-format
 msgid "A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person"
-msgstr "Een gebruiker met het e-mailadres %(email)s bestaat al, maar heeft toegang als een ander type gebruikeru moet een ander e-mailadres gebruiken om deze persoon uit te nodigen"
+msgstr "Een gebruiker met het e-mailadres %(email)s bestaat al maar heeft toegang als een ander type gebruiker, u moet een ander e-mailadres gebruiken om deze persoon uit te nodigen"
 
 #: political_profiles/forms.py:104
 #: political_profiles/forms.py:170
