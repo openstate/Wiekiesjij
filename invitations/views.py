@@ -15,7 +15,7 @@ def index(request, hash):
     except Invitation.DoesNotExist:
         return redirect('invitations.notexist')
     
-    if invitation.accepted:
+    if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
             return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
         return redirect(invitation.view)
@@ -29,7 +29,7 @@ def accept(request, hash):
     except Invitation.DoesNotExist:
         return redirect('invitations.notexist')
         
-    if invitation.accepted:
+    if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
             return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
         return redirect(invitation.view)
@@ -60,7 +60,7 @@ def existing(request, hash):
     except Invitation.DoesNotExist:
         return redirect('invitations.notexist')
         
-    if invitation.accepted:
+    if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
             return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
         return redirect(invitation.view)
