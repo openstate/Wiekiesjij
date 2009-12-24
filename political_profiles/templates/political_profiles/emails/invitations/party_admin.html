@@ -28,3 +28,13 @@
 <p style="{% use_stylegroup 'font' %}">Lenneke van Mameren</p>
 <p style="{% use_stylegroup 'font' %}">Projectleider Wiekiesjij</p>
 {% endblock content %}
+
+
+{% block sidebar %}
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via 088-7000125</p>
+	<br/>
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de partijgegevens? <a href="http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_partijen.pdf">Download hier de handleiding</a> voor het invoeren van de contactgegevens</p>
+	<br/>
+{% endblock sidebar %}

@@ -25,3 +25,13 @@
     Projectleider Wiekiesjij
 
 {% endblock content %}
+
+
+{% block sidebar %}  
+    Helpdesk
+	Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via 088-7000125
+
+	Handleiding
+	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de partijgegevens:
+	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_partijen.pdf
+{% endblock sidebar %}

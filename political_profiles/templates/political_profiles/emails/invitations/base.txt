@@ -3,3 +3,7 @@ WieKiesJij
 {% block content %}  
  
 {% endblock content %}
+
+{% block sidebar %}  
+
+{% endblock sidebar %}
