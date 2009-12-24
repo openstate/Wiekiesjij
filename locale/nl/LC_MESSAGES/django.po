@@ -366,7 +366,7 @@ msgstr "E-mail"
 #: backoffice/templates/backoffice/csv_candidates_3.html:36
 #: backoffice/templates/backoffice/csv_parties_3.html:42
 msgid "Note:  invitations will not be sent right now. This will happen on [date]."
-msgstr "Opmerking: Uitnodigingen worden verstuurd vanaf 24 december 2009."
+msgstr "Opmerking: Uitnodigingen worden verstuurd in de loop van januari 2010."
 
 #: backoffice/templates/backoffice/csv_candidates_3.html:40
 msgid "Invite these candidates"
@@ -1009,7 +1009,7 @@ msgstr "Nodig een kandidaat uit voor deze positie"
 
 #: backoffice/templates/backoffice/wizard/addcandidate/step1.html:8
 msgid "Note:  invitations will not be sent right now. This will happen later "
-msgstr "Opmerking: uitnodigingen worden nog niet verstuurd. Deze worden vanaf 24 december verstuurd."
+msgstr "Opmerking: uitnodigingen worden nog niet verstuurd. Deze worden in de loop van januari 2010 verstuurd."
 
 #: backoffice/templates/backoffice/wizard/addcandidate/step1.html:13
 msgid "Invite this candidate"

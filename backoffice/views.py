@@ -405,7 +405,7 @@ def csv_import_candidates_step1(request, ep_id):
 @party_admin_required
 def csv_import_candidates_step2(request, ep_id, error = False):
 
-    if(request.FILES or request.POST):
+    if request.method == 'POST':
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
             #Save file in tmp dir
@@ -438,7 +438,7 @@ def csv_import_candidates_step3(request, ep_id):
         request.session['csv_candidate_filename'] = ''
         return redirect('bo.csv_candidates_step2', ep_id=ep_id, error='true')
 
-    if(request.POST):
+    if request.method == 'POST':
         eip_obj = get_object_or_404(ElectionInstanceParty, party=ep_id)
         form = CsvConfirmForm(request.POST)
         if form.is_valid():
@@ -505,7 +505,7 @@ def csv_import_parties_step1(request, ei_id):
 
 @party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
-    if(request.FILES or request.POST):
+    if request.method == 'POST':
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
             #Save file in tmp dir
@@ -537,7 +537,7 @@ def csv_import_parties_step3(request, ei_id):
         request.session['csv_party_filename'] = ''
         return redirect('bo.csv_parties_step2', ei_id = ei_id, error='true')
 
-    if(request.POST):
+    if request.method == 'POST':
         form = CsvConfirmForm(request.POST)
         if form.is_valid():
             ei_obj = get_object_or_404(ElectionInstance, id=ei_id)
