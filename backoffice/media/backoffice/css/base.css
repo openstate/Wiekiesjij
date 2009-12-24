@@ -443,14 +443,20 @@
 			
 				div.last-name {
 					float:left;
+					width:292px;
 					}
 				div.first-name {
 					clear:left;
 					float:left;
+					width:292px;
 					}
 					div.last-name input,
 					div.first-name input {
 						width:280px;
+						}
+					.sub-form div.last-name,
+					.sub-form div.first-name {
+						width:282px;
 						}
 					.sub-form div.last-name input,
 					.sub-form div.first-name input {
@@ -458,10 +464,14 @@
 						}
 				div.middle-name {
 					float:right;
+					width:152px;
 					}
 					div.middle-name input {
 						float:right;
 						width: 140px;
+						}
+					.sub-form div.middle-name {
+						width:147px;
 						}
 					.sub-form div.middle-name input {
 						width:135px;
@@ -482,12 +492,14 @@
 				}
 				div.street {
 					float:left;
+					width:372px;
 					}
 					div.street input {
 						width:360px;
 						}
 				div.number {
 					float:right;
+					width:72px;
 					}
 					div.number input {
 						width:60px;
@@ -495,12 +507,14 @@
 				div.postcode {
 					float:left;
 					clear:left;
+					width:112px;
 					}
 					div.postcode input {
 						width:100px;
 						}
 				div.city {
 					float:right;
+					width:332px;
 					}
 					div.city input {
 						width:320px;
