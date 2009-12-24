@@ -120,7 +120,12 @@
 		em {
 			font-style:italic;
 			}
-			
+		ul {
+			list-style:none;
+			}
+		li {
+			display:block;_zoom:1;
+			}
 		dl {
 			overflow:hidden;_zoom:1;
 			
@@ -268,7 +273,19 @@
 					
 			input.checkboxinput {
 				width:auto;
+				border:none;
 				}
+				
+			div.checkboxinput {
+				position:relative;
+				}
+				div.checkboxinput label {
+					font-weight:normal;
+					padding-left:20px;
+					}
+				div.checkboxinput input {
+					margin-left:-20px;
+					}
 		
 		/* 	radio
 			----------------------------------------------------------------------------------------- */
@@ -281,9 +298,11 @@
 				div.radioselect label {
 					font-weight:normal;
 					margin-bottom:5px;
+					line-height:1.2em;
 					}
 				div.radioselect input {
-					margin: 2px 5px 0 0;
+					margin:2px 5px 0 0;
+					padding:0;
 					display:block;
 					float:left;
 					}

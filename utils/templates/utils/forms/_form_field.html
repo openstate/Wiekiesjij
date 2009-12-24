@@ -4,23 +4,29 @@
 	{{ field }}
 {% else %}
 <div id="field-{{ field.auto_id }}" class="field {% ifmultifield field %}multi-field{% endifmultifield %} {{ field|get_class }} {{ field|get_required_class }} {% if field.errors %} error{% endif %}">
-	
-    {% ifmultifield field %}
-		<p class="label {{ field|get_required_class }}">{{ field.label }}</p>
+	{% ifequal field|get_class 'checkboxinput'  %}
+		<p class="label {{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</p>
+		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">
+        {{ field|with_class }}
+		{% if field.help_text %}{{ field.help_text }}</label>
+		{% endif %}
 	{% else %}
-		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</label>
-	{% endifmultifield %}
+    	{% ifmultifield field %}
+			<p class="label {{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</p>
+		{% else %}
+			<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</label>
+		{% endifmultifield %}
     
-	{% block description %}{% endblock description %}
+		{% block description %}{% endblock description %}
     
-    {% if field.help_text %}
-    <div id="{{ field.auto_id }}-help" class="help">
-		<p>{{ field.help_text }}</p>
-   	</div>
-    {% endif %}
-    
+	    {% if field.help_text %}
+	    <div id="{{ field.auto_id }}-help" class="help">
+			<p>{{ field.help_text }}</p>
+	   	</div>
+	    {% endif %}    
 	{{ field|with_class }}
-    
+    {% endifequal %}
+
    	{% if field.errors %}
     <div id="{{ field.auto_id }}-errors" class="errors">
 		{% for error in field.errors %}
