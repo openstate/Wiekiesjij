@@ -6,36 +6,55 @@
 
 {% block back-link %}{% endblock back-link %}
 
-{% block cols %}
-<div class="col size1of2">
-    <div class="mod">
-		<h2>{% trans "Download the template..." %}</h2>
-        <p>
-            {% trans "The following wizard allows you to add multiple parties at once." %}
-        </p>
-        <p>
-            {% trans "To add the parties, you have to upload a so called CSV file, like the example below." %}
-            {% trans "CSV files can be created and editted with programs like Microsoft Excel or with your favorite text editor." %}
-        </p>
-        <div class="btn-container"><a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="btn download">{% trans "Download the CSV template" %}</a></div>
-        
-        <h2>{% trans "...And fill it in." %}</h2>
-        <p>
-        	{% trans "Depending on the program you open it with, you'll see:" %}
-            {% trans "In the template the middle_name and party_abbreviation field can be empty." %}
-            {% trans "The first three fields in a row are information for the party itself. The other information is for the party contact." %}
-        </p>
-        <p>
-            <img src="{{ STATIC_URL }}utils/images/par_csv.png" alt="Example CSV file">
-            <em></em>
-        </p>
-        <div>
-            
-        </div>
-        <div class="form-submit">
-            <a class="btn primary next" href="{% url bo.csv_parties_step2 ei_id %}">{% trans "Proceed to uploading a filled in template" %}</a>
-            <a href="{% url bo.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
-        </div>
+{% block content %}
+<div class="mod">
+    <h2>{% trans "Download the template..." %}</h2>
+    <p>
+        {% trans "The following wizard allows you to add multiple parties at once." %}
+    </p>
+    <p>
+        {% trans "To add the parties, you have to upload a so called CSV file, like the example below." %}
+        {% trans "CSV files can be created and editted with programs like Microsoft Excel or with your favorite text editor." %}
+    </p>
+    <div class="btn-container"><a href="{{ STATIC_URL }}utils/other/par_csv.csv" class="btn download">{% trans "Download the CSV template" %}</a></div>
+    
+    <h2>{% trans "...And fill it in." %}</h2>
+    <p>
+        {% trans "Depending on the application you're using, you might be able to see something like the table below." %}
+        {% trans "The column headers will be missing, but they are in this order:" %} 
+    </p>
+    <ul>
+    	<li><strong>{% trans "Column" %} A - {% trans "Lijst" %}:</strong> {% trans "Dit is de lijst-positie van de partij." %}</li>
+    	<li><strong>{% trans "Column" %} B - {% trans "Volledige partijnaam" %}:</strong> {% trans "De volledige naam van de partij." %}</li>
+    	<li><strong>{% trans "Column" %} C - {% trans "Afkorting" %}:</strong> {% trans "De afkorting van de partij." %}</li>
+    	<li><strong>{% trans "Column" %} D - {% trans "Achternaam" %}:</strong> {% trans "De achternaam van de contactpersoon voor deze partij." %}</li>
+    	<li><strong>{% trans "Column" %} E - {% trans "Tussenvoegsel (optioneel)" %}:</strong> {% trans "Als de contactpersoon een tussenvoegsel heeft, vul het hier in." %}</li>
+    	<li><strong>{% trans "Column" %} F - {% trans "Voornaam" %}:</strong> {% trans "De voornaam van de contactpersoon voor deze partij." %}</li>
+    	<li><strong>{% trans "Column" %} G - {% trans "E-mailadres" %}:</strong> {% trans "Het e-mailadres waar de uitnodiging naartoe kan." %}</li>
+    	<li><strong>{% trans "Column" %} H - {% trans "Geslacht" %}:</strong> {% trans "Het geslacht van de contactpersoon. Vul 'male' of 'female' in." %}</li>
+    </ul>
+    <div class="image">
+        <img src="{{ STATIC_URL }}utils/images/par_csv.gif" alt="Example CSV file">
+        <em>{% trans "Image 1: Preview of the CSV file in Excel. Note: the file might look different in your version." %}</em>
+    </div>
+    <h3>{% trans "Seeing something else than you see in this preview? Read on..." %}</h3>
+    <p>
+    	{% trans "The file might look (entirely) different from the example above." %}
+    </p>
+    <p>
+        {% trans "If that is the case, just delete all the data from the file and start adding new data as shown above." %}<br />
+    	<em>{% trans "Be sure to save it as a CSV-file again." %}
+        	{% trans "Just clicking the 'save'-button will probably do the trick." %}</em>
+    </p>
+    <h2>{% trans "Ready?" %}</h2>
+    <p>
+    	{% trans "When you have saved the file, you can go to the next step." %}
+    </p>
+    
+    <div class="form-submit">
+        <a class="btn primary next" href="{% url bo.csv_parties_step2 ei_id %}">{% trans "Proceed to uploading a filled in template" %}</a>
+        <a href="{% url bo.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
     </div>
 </div>
-{% endblock cols %}
+
+{% endblock content %}

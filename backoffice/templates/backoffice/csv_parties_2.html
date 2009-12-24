@@ -8,16 +8,15 @@
 
 {% block content %}
 <div class="mod">
-    <p>
-        {% trans "The following wizard allows you to add multiple parties at once." %}
-    </p>
-    <p>
-        {% trans "You can upload your CSV file here." %}
+	<h2>{% trans "Select the file..." %}</h2>
+   	<p>
+        {% trans "Select the CSV-file you made, by clicking on 'Browse' and selecting the file on your computer." %}
     </p>
     {% ifequal error "true" %}
         <p class="error">
             {% trans "The CSV file you have submitted, can not be handled by the system." %}
-            <br />
+        </p>
+        <p>
             {% trans "Please check your file and try again." %}
         </p>
     {% endifequal %}
@@ -25,10 +24,10 @@
         {% for form in forms.values %}
             {{ form.as_template }}
         {% endfor %}
-    
+    	<h2>{% trans "...And click the 'upload' button" %}</h2>
         <div class="form-submit">
             <a href="{% url bo.election_instance_view ei_id %}" class="cancel">{% trans "Cancel" %}</a>
-            <button type="submit" class="primary next">{% trans "Proceed to uploading a filled in template" %}</button>
+            <button class="primary next" type="submit">{% trans "Upload the file" %}</button>
         </div>
     
     </form>
