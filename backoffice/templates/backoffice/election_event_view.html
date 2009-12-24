@@ -25,11 +25,7 @@
                     <ul class="quicklinks">
                     	<li><a href="{% url bo.edit_election_instance id=ei.id %}">{% trans "Edit base settings" %}</a></li>
                     </ul>
-					<p>{% blocktrans count ei.parties.count as counter %}
-					One party
-					{% plural %}
-					{{ counter }} parties
-					{% endblocktrans %}
+					<p>{% blocktrans count ei.parties.count as counter %}One party{% plural %}{{ counter }} parties{% endblocktrans %}
 					</p>
                 {% endblockwrap %}
             </div>

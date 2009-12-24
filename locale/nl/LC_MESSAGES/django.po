@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-24 14:49+0100\n"
-"PO-Revision-Date: 2009-12-24 14:53+0100\n"
+"POT-Creation-Date: 2009-12-24 15:37+0100\n"
+"PO-Revision-Date: 2009-12-24 15:40+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: settings.py:143
 msgid "CDA"
@@ -546,15 +547,22 @@ msgstr "Deze verkiezing heeft de volgende instanties:"
 msgid "Add an Election Instance"
 msgstr "Voeg een verkiezingsinstantie toe"
 
-#: backoffice/templates/backoffice/election_event_view.html:23
+#: backoffice/templates/backoffice/election_event_view.html:24
 msgid "Manage this instance"
 msgstr "Beheer deze instantie"
 
-#: backoffice/templates/backoffice/election_event_view.html:25
+#: backoffice/templates/backoffice/election_event_view.html:26
 msgid "Edit base settings"
 msgstr "Wijzig instellingen"
 
-#: backoffice/templates/backoffice/election_event_view.html:30
+#: backoffice/templates/backoffice/election_event_view.html:28
+#, python-format
+msgid "One party"
+msgid_plural "%(counter)s parties"
+msgstr[0] "Één partij"
+msgstr[1] "%(counter)s partijen"
+
+#: backoffice/templates/backoffice/election_event_view.html:33
 msgid "There are no Election Instances defined yet for this Event."
 msgstr "Er zijn geen verkiezinginstanties voor deze verkiezing"
 
