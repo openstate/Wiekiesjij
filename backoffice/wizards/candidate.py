@@ -609,7 +609,7 @@ class AddCandidateWizard(MultiPathFormWizard):
             Invitation.create(
                 user_from = request.user,
                 user_to = self.candidate.user,
-                view = '',
+                view = reverse('bo.politician_welcome', kwargs={'election_instance_id': self.eip.election_instance.id}),
                 text = 'Invitation text',
                 subject = 'Invitation',
                 html_template = templates['html'],

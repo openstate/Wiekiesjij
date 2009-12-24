@@ -13,6 +13,8 @@ from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
@@ -471,7 +473,7 @@ def csv_import_candidates_step3(request, ep_id):
                     Invitation.create(
                         user_from = request.user,
                         user_to = candidate_obj.user,
-                        view = '',
+                        view = reverse('bo.politician_welcome', kwargs={'election_instance_id': eip_obj.election_instance.id}),
                         text = 'Invitation text',
                         subject = 'Invitation',
                         html_template = templates['html'],
@@ -567,11 +569,11 @@ def csv_import_parties_step3(request, ei_id):
                         abbreviation = party['abbreviation'],
                     )
                     party_obj.save()
-
+                    
                     eip_obj = ElectionInstanceParty(
                         election_instance = ei_obj,
                         party = party_obj,
-                        position = party['list'],
+                        position = unicode(party['list']),
                         list_length = 10, #TODO, maybe add in CSV
                     )
                     eip_obj.save()
@@ -584,8 +586,8 @@ def csv_import_parties_step3(request, ei_id):
                     Invitation.create(
                         user_from = request.user,
                         user_to = contact.user,
-                        view = '',
-                        text = 'Invitation text',
+                        view=reverse('bo.party_contact_wizard', kwargs={'id': eip_obj.pk}),
+                        text='<p>U bent aangekomen op de beheerderpagina van Wiekiesjij. Om Wiekiesjij gereed te maken voor uw partij volgen er nu een aantal schermen waarin u informatie kunt achterlaten. Wanneer deze informatie is ingevuld zullen we overgaan tot het uitnodigen van de kandidaten van uw partij.</p><p>We beginnen met het instellen van een wachtwoord voor Wiekiesjij door op <strong>Accepteer uitnodiging</strong> te klikken. Heeft u al eens eerder gebruik gemaakt van Wiekiesjij, drukt u dan op <strong>Ik heb al een account</strong>.</p><p>Om het gereedmaken van Wiekiesjij zo gemakkelijk mogelijk te laten verlopen hebben we een snelle start [link] handleiding [/link] beschikbaar gesteld die u kunt raadplegen.</p>',
                         subject = 'Invitation',
                         html_template = templates['html'],
                         plain_template = templates['plain'],

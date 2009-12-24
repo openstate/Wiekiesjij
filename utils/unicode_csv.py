@@ -19,7 +19,7 @@ class UnicodeReader:
     which is encoded in the given encoding.
     """
 
-    def __init__(self, f, dialect='excel', encoding="utf-8", **kwds):
+    def __init__(self, f, dialect='excel', encoding="utf-8-sig", **kwds):
         f = UTF8Recoder(f, encoding)
         self.reader = csv.reader(f, dialect=dialect, **kwds)
 
