@@ -1,4 +1,4 @@
-import csv
+from utils.unicode_csv import UnicodeReader
 from django.conf import settings
 
 def get_candidates_from_csv(session):
@@ -21,7 +21,7 @@ def get_candidates_from_csv(session):
         delimiter = ';'
 
     #Open file and read it with csv this time
-    lines = csv.reader(open(settings.TMP_ROOT + '/' + session['csv_candidate_filename'] , 'rb'), delimiter=delimiter)
+    lines = UnicodeReader(open(settings.TMP_ROOT + '/' + session['csv_candidate_filename'] , 'rb'), delimiter=delimiter)
     for line in lines:
         candidate_data = dict(zip(('position', 'last_name', 'middle_name', 'first_name', 'initials', 'email', 'gender'),
             (line[0], line[1], line[2], line[3], line[4], line[5], line[6])))
@@ -50,7 +50,7 @@ def get_parties_from_csv(session):
         delimiter = ';'
 
     #Open file and read it with csv this time
-    lines = csv.reader(open(settings.TMP_ROOT + '/' + session['csv_party_filename'] , 'rb'), delimiter=delimiter)
+    lines = UnicodeReader(open(settings.TMP_ROOT + '/' + session['csv_party_filename'] , 'rb'), delimiter=delimiter)
     for line in lines:
         party_data = dict(zip(('list', 'name', 'abbreviation', 'contact_last_name',
             'contact_middle_name', 'contact_first_name', 'contact_email', 'contact_gender'),

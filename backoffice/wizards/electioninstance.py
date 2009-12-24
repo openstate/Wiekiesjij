@@ -161,7 +161,6 @@ class EditElectionInstanceWizard(MultiPathFormWizard):
 
         
             ei = ElectionInstance.objects.get(pk=self.election_instance_id)
-            ei.num_lists=self.ei_data['num_lists']
             ei.name=self.ei_data['name']
             ei.save()
         
