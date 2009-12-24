@@ -10,7 +10,7 @@
     {% endif %}
 	
 	{% ifprofile 'council_admin' %}
-		<li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+		<li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.name }}</a></li>
 	{% endifprofile %}
 	{% ifprofile 'party_admin' %}
         <li><a href="{% url bo.election_party_view eip.id %}" class="cancel">{{ eip.party.name }}</a></li>

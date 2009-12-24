@@ -5,7 +5,7 @@
 {% block page-title %}{{ eip.party.name }}{% if eip.party.abbreviation %} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endif %}{% endblock page-title %}
 {% block back-link %}
 {% ifprofile 'council_admin' %}
-<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.council.region }}</a>
+<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.name }}</a>
 {% endifprofile %}
 {% endblock back-link %}
 
@@ -16,9 +16,9 @@
 	<li>{{ instance.election_event.name }}</li>
 {% endif %}
 {% ifprofile 'council_admin' %}
-    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.name }}</a></li>
 {% else %}
-	<li>{{ instance.council.region }}</li>
+	<li>{{ instance.name }}</li>
 {% endifprofile %}
 {% endblock breadcrumbs %}
 

@@ -9,7 +9,7 @@
             <li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
     {% endif %}
     {% ifprofile 'council_admin' %}
-        <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+        <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.name }}</a></li>
     {% endifprofile %}
 {% endblock breadcrumbs %}
 

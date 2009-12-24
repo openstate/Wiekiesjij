@@ -1,8 +1,8 @@
 {% extends 'backoffice/base.html' %}
 {% load i18n utils_tags %}
 
-{% block title %}{{ instance.council.region }}{% endblock title %}
-{% block page-title %}{{ instance.council.region }}{% endblock page-title %}
+{% block title %}{{ instance.name }}{% endblock title %}
+{% block page-title %}{{ instance.name }}{% endblock page-title %}
 {% block back-link %}
 {% if user.is_staff %}
 <a href="{% url bo.election_event %}" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>

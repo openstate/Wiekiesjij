@@ -1,14 +1,14 @@
 {% extends 'backoffice/wizard/base.html' %}
 {% load i18n utils_tags backoffice_tags %}
 
-{% block title %}{% trans 'Edit election instance ' %}{{instance.council.region }}{% endblock title %}
-{% block page-title %}{% trans 'Change settings for ' %}{{ instance.council.region }}{% endblock page-title %}
+{% block title %}{% trans 'Edit election instance ' %}{{instance.name }}{% endblock title %}
+{% block page-title %}{% trans 'Change settings for ' %}{{ instance.name }}{% endblock page-title %}
 {% block breadcrumbs %}
 {% if user.is_staff %}
 	<li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
 {% endif %}
 {% ifprofile 'council_admin' %}
-    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.council.region }}</a></li>
+    <li><a href="{% url bo.election_instance_view instance.id %}">{{ instance.name }}</a></li>
 {% endifprofile %}
 {% endblock breadcrumbs %}
 {% block back-link %}{% endblock back-link %}
