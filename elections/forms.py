@@ -195,32 +195,7 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'num_lists', 'modules')                     
-        
-    def __init__(self, *args, **kwargs):
-        if 'instance' in kwargs:
-            self.instance = kwargs['instance']
-        super(EditElectionInstanceForm, self).__init__(*args, **kwargs)
-        
-    def clean_num_lists(self):
-        """
-           We have to check if the number is not already exceeded
-        """
-        # No checking for unbound form
-        if not self.instance:
-            return self.cleaned_data['num_lists']
-            
-        num_lists = self.cleaned_data['num_lists']
-        largest_position = 0
-
-        for eip in self.instance.election_instance_parties.all():
-           if eip.position > largest_position:
-               largest_position = eip.position
-
-        if largest_position > num_lists:
-           raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
-
-        return self.cleaned_data['num_lists']
+        fields = ('name', 'modules')                     
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''
