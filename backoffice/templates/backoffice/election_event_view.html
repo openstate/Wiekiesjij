@@ -20,10 +20,17 @@
             <div class="item">
                 {% blockwrap template='electioninstance' %}
                     <h3>{{ ei.name }}</h3>
+					
                     <a href="{% url bo.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
                     <ul class="quicklinks">
                     	<li><a href="{% url bo.edit_election_instance id=ei.id %}">{% trans "Edit base settings" %}</a></li>
                     </ul>
+					<p>{% blocktrans count ei.parties.count as counter %}
+					One party
+					{% plural %}
+					{{ counter }} parties
+					{% endblocktrans %}
+					</p>
                 {% endblockwrap %}
             </div>
             {% empty %}
