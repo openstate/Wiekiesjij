@@ -25,13 +25,13 @@ jQuery(document).ready(function() {
             jQuery(this.form).append(hid);
             jQuery(this).click(function() {
                 hid.removeAttr('disabled');
-                but.attr('disabled', 'disabled');
+                //but.attr('disabled', 'disabled');
                 setTimeout(function() { //if something is failed, reset input field
                     hid.attr('disabled', 'disabled');
-                    but.removeAttr('disabled');
+                    //but.removeAttr('disabled');
                 }, 3000);
 
-                this.form.submit();
+                jQuery(this).parents('form').submit();
             });
         });
     }

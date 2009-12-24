@@ -144,6 +144,20 @@
 			div.image em {
 				}
 
+	table {
+		margin-bottom:10px;
+		}	
+		th,
+		td {
+			padding:5px;
+			}
+		th {
+			font-weight:bold;
+			}
+		td {
+		
+			}
+
 /* 	Form styling
 	*************************************************************************************************/
 		
