@@ -155,7 +155,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
             self.instance = kwargs['instance']
             self.instance.start_date = self.instance.election_event.default_date
             
-        super(self.__class__, self).__init__(*args, **kwargs)
+        super(ElectionInstanceForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
             self.fields['start_date'].help_text = __('Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s.') % {
                 'def_date': self.instance.election_event.default_date.strftime('%d-%m-%Y'),
@@ -197,21 +197,28 @@ class EditElectionInstanceForm(BetterModelForm, TemplateForm):
         model = ElectionInstance
         fields = ('name', 'num_lists', 'modules')                     
         
+    def __init__(self, *args, **kwargs):
+        if 'instance' in kwargs:
+            self.instance = kwargs['instance']
+        super(EditElectionInstanceForm, self).__init__(*args, **kwargs)
         
     def clean_num_lists(self):
         """
            We have to check if the number is not already exceeded
         """
+        # No checking for unbound form
+        if not self.instance:
+            return self.cleaned_data['num_lists']
+            
         num_lists = self.cleaned_data['num_lists']
         largest_position = 0
-        ei = ElectionInstance.objects.get(name=self.cleaned_data['name'])
-        election_instance_parties = ElectionInstanceParty.objects.filter(election_instance=ei)
-        for eip in election_instance_parties:
-            if eip.position > largest_position:
-                largest_position = eip.position
+
+        for eip in self.instance.election_instance_parties.all():
+           if eip.position > largest_position:
+               largest_position = eip.position
 
         if largest_position > num_lists:
-            raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
+           raise forms.ValidationError( __('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
 
         return self.cleaned_data['num_lists']
 
