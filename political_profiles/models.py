@@ -355,7 +355,6 @@ class WorkExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
     enddate         = models.DateField(_('End Date'), null=True, blank=True)
-    current         = models.BooleanField(_('Currently Employed'), default=False)
     description     = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='work')
 
@@ -371,7 +370,6 @@ class Education(models.Model):
     field       = models.CharField(_('Field'), max_length=255)
     startdate   = models.DateField(_('Start Date'), null=True, blank=True)
     enddate     = models.DateField(_('End Date'), null=True, blank=True)
-    current     = models.BooleanField(_('Currently Studying'), default=False)
     description = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='education')
 
@@ -387,7 +385,6 @@ class PoliticalExperience(models.Model):
     position        = models.CharField(_('Position'), max_length=255)
     startdate       = models.DateField(_('Start Date'), null=True, blank=True)
     enddate         = models.DateField(_('End Date'), null=True, blank=True)
-    current         = models.BooleanField(_('Still in this position'), default=False)
     description     = models.TextField(_('Description'), blank=True, null=True)
     politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='political')
     #tags            = TagField()
