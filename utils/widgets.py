@@ -4,6 +4,7 @@
 import re
 import datetime
 from django import forms
+from django.utils.dates import MONTHS
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.forms.widgets import RadioSelect
@@ -418,7 +419,7 @@ class SelectTimeWidget(forms.widgets.Widget):
             else:
                 meridiem_choices = [('a.m.','a.m.'), ('p.m.','p.m.')]
 
-            local_attrs['id'] = local_attrs['id'] = self.meridiem_field % id_
+            local_attrs['id'] = self.meridiem_field % id_
             select_html = forms.widgets.Select(choices=meridiem_choices).render(self.meridiem_field % name, self.meridiem_val, local_attrs)
             output.append(self.TEMPLATE % {
                 'label': _('Am/Pm'),
@@ -584,6 +585,140 @@ class DatePicker(forms.widgets.TextInput):
 
         return result + mark_safe(self.TEMPLATE % dict(id=html_id))
 
+class DateSelectPicker(forms.widgets.Widget):
+    
+    """
+    A Widget that splits date input into three <select> boxes.
+
+    This also serves as an example of a Widget that has more than one HTML
+    element and hence implements value_from_datadict.
+    """
+    FULL_TEMPLATE = """
+        <div class="day field select">
+            <label for="%(day_id)s">%(day_label)s</label>
+            %(day)s
+        </div>
+        <div class="month field select">
+            <label for="%(month_id)s">%(month_label)s</label>
+            %(month)s
+        </div>
+        <div class="year field select">
+            <label for="%(year_id)s">%(year_label)s</label>
+            %(year)s
+        </div>
+    """
+    
+    DAYLESS_TEMPLATE = """
+        %(day)s
+        <div class="month field select">
+            <label for="%(month_id)s">%(month_label)s</label>
+            %(month)s
+        </div>
+        <div class="year field select">
+            <label for="%(year_id)s">%(year_label)s</label>
+            %(year)s
+        </div>
+    """
+    
+    RE_DATE = re.compile(r'(\d{4})-(\d\d?)-(\d\d?)$')
+    none_value = (0, '---')
+    month_field = '%s_month'
+    day_field = '%s_day'
+    year_field = '%s_year'
+
+    def __init__(self, attrs=None, years=None, required=True, fixed_day=None):
+        # years is an optional list/tuple of years to use in the "year" select box.
+        self.attrs = attrs or {}
+        self.required = required
+        if years:
+            self.years = years
+        else:
+            this_year = datetime.date.today().year
+            self.years = range(this_year, this_year+10)
+            
+        if type(fixed_day) == int:
+            self.fixed_day = fixed_day
+        else:
+            self.fixed_day = None
+
+    def render(self, name, value, attrs=None):
+        try:
+            year_val, month_val, day_val = value.year, value.month, value.day
+        except AttributeError:
+            year_val = month_val = day_val = None
+            if isinstance(value, basestring):
+                match = self.RE_DATE.match(value)
+                if match:
+                    year_val, month_val, day_val = [int(v) for v in match.groups()]
+
+        output = {}
+
+        if 'id' in self.attrs:
+            id_ = self.attrs['id']
+        else:
+            id_ = 'id_%s' % name
+            
+        local_attrs = self.build_attrs(id=self.day_field % id_)
+        if self.fixed_day is not None:
+            s = forms.widgets.HiddenInput()
+            hidden_html = s.render(self.day_field % name, self.fixed_day, local_attrs)
+            output.update({'day': hidden_html})
+        else:
+            day_choices = [(i, i) for i in range(1, 32)]
+            if not (self.required and value):
+                day_choices.insert(0, self.none_value)
+            s = forms.widgets.Select(choices=day_choices)
+            select_html = s.render(self.day_field % name, day_val, local_attrs)
+            output.update({'day': select_html})
+    
+        month_choices = MONTHS.items()
+        if not (self.required and value):
+            month_choices.append(self.none_value)
+        month_choices.sort()
+        local_attrs['id'] = self.month_field % id_
+        s = forms.widgets.Select(choices=month_choices)
+        select_html = s.render(self.month_field % name, month_val, local_attrs)
+        output.update({'month': select_html})
+
+        year_choices = [(i, i) for i in self.years]
+        if not (self.required and value):
+            year_choices.insert(0, self.none_value)
+        local_attrs['id'] = self.year_field % id_
+        s = forms.widgets.Select(choices=year_choices)
+        select_html = s.render(self.year_field % name, year_val, local_attrs)
+        output.update({'year': select_html})
+        
+        
+        #labels
+        output.update({
+            'day_label': _('Day'),
+            'month_label': _('Month'),
+            'year_label': _('Year'),
+        })
+        #ids
+        output.update({
+            'day_id': self.day_field % id_,
+            'month_id': self.month_field % id_,
+            'year_id': self.year_field % id_,
+        })
+        if self.fixed_day is None:
+            return mark_safe(self.FULL_TEMPLATE % output)
+        return mark_safe(self.DAYLESS_TEMPLATE % output)
+
+    def id_for_label(self, id_):
+        return '%s_month' % id_
+    id_for_label = classmethod(id_for_label)
+
+    def value_from_datadict(self, data, files, name):
+        y = data.get(self.year_field % name)
+        m = data.get(self.month_field % name)
+        d = data.get(self.day_field % name)
+        if y == m == d == "0":
+            return None
+        if y and m and d:
+            return '%s-%s-%s' % (y, m, d)
+        return data.get(name, None)
+    
 
 class RadioRating(RadioSelect):
     '''

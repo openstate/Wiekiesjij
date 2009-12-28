@@ -9,7 +9,7 @@ from django.forms.extras.widgets import SelectDateWidget
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.formutils import TemplateForm
 
-from utils.widgets import DateTimePicker, HiddenDateTimePicker
+from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
 
 from utils.fields import NameField, AddressField
 
@@ -31,7 +31,7 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     name            = NameField(label=_('Name'))
     initials        = forms.CharField(label=_('Initials'))
-    dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=SelectDateWidget(years=range(1910, datetime.date.today().year)) )
+    dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=DateSelectPicker(years=range(1910, datetime.date.today().year)) )
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
@@ -258,8 +258,8 @@ class WorkExperienceFormNew(BetterForm, TemplateForm):
     company_name    = forms.CharField(label=_('Company Name'))
     sector          = forms.ModelChoiceField(queryset=WorkExperienceSector.objects, label=_('Sector'))
     position        = forms.CharField(label=_('Position'))
-    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
-    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
+    startdate       = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(1925, datetime.date.today().year), fixed_day=1), required=True )
+    enddate         = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(1925, datetime.date.today().year), fixed_day=28), required=True )
     current         = forms.BooleanField(label=_('Currently Employed'))
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea() )
 
@@ -270,8 +270,8 @@ class EducationFormNew(BetterForm, TemplateForm):
     institute   = forms.CharField(label=_('Institute Name'))
     level       = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('Level'))
     field       = forms.CharField(label=_('Field'))
-    startdate   = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
-    enddate     = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1925, datetime.date.today().year)), required=True )
+    startdate   = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(1925, datetime.date.today().year), fixed_day=1), required=True )
+    enddate     = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(1925, datetime.date.today().year), fixed_day=28), required=True )
     description = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
 class PoliticalExperienceFormNew(BetterForm, TemplateForm):
@@ -281,8 +281,8 @@ class PoliticalExperienceFormNew(BetterForm, TemplateForm):
     organisation    = forms.CharField(label=_('Organisation'))
     type            = forms.ModelChoiceField(queryset=PoliticalExperienceType.objects, label=_('Type'))
     position        = forms.CharField(label=_('Position'))
-    startdate       = forms.DateField(label=_('Start Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)), required=True )
-    enddate         = forms.DateField(label=_('End Date'), widget=SelectDateWidget(years=range(1935, datetime.date.today().year)), required=True )
+    startdate       = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(1935, datetime.date.today().year), fixed_day=1), required=True)
+    enddate         = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(1935, datetime.date.today().year),  fixed_day=28), required=True)
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
 class LinkForm(BetterModelForm, TemplateForm):
@@ -346,8 +346,8 @@ class WorkExperienceForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
-        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
+        self.fields['startdate'].widget = DateSelectPicker(years=range(1925, datetime.date.today().year), required=True, fixed_day=1)
+        self.fields['enddate'].widget = DateSelectPicker(years=range(1925, datetime.date.today().year), required=True, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=True
         self.fields['sector'].required=True
@@ -363,8 +363,8 @@ class EducationForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
-        self.fields['enddate'].widget = SelectDateWidget(years=range(1925, datetime.date.today().year), required=True)
+        self.fields['startdate'].widget = DateSelectPicker(years=range(1925, datetime.date.today().year), required=True, fixed_day=1)
+        self.fields['enddate'].widget = DateSelectPicker(years=range(1925, datetime.date.today().year), required=True, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=True
         self.fields['level'].required=True
@@ -380,8 +380,8 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
-        self.fields['startdate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year), required=True)
-        self.fields['enddate'].widget=SelectDateWidget(years=range(1935, datetime.date.today().year), required=True)
+        self.fields['startdate'].widget=DateSelectPicker(years=range(1935, datetime.date.today().year), required=True, fixed_day=1)
+        self.fields['enddate'].widget=DateSelectPicker(years=range(1935, datetime.date.today().year), required=True, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=True
         self.fields['type'].required=True
