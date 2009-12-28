@@ -32,20 +32,16 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     name            = NameField(label=_('Name'))
     initials        = forms.CharField(label=_('Initials'))
     dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=DateSelectPicker(years=range(1910, datetime.date.today().year)) )
-    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
-    motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    #picture         = forms.ImageField(label=_('Picture'), required=False)
-    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
-
+    
 
 class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-
+    
     marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
-    num_children    = forms.IntegerField(label=_('Number of Children'))
+    num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
     life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
     church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
     smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, 'Yes'), (2, 'No')]) )
@@ -63,6 +59,15 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     hobby           = forms.ChoiceField(label=_('What is your hobby'),choices=HOBBIES )
     fav_club        = forms.ChoiceField(label=_('What is your favourite club'),choices=CLUBS  )
     fav_pet         = forms.ChoiceField(label=_('What is your favourite pet'),choices=PETS )
+
+class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
+    """
+        Political related forms
+    """
+    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
+    motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
+    #picture         = forms.ImageField(label=_('Picture'), required=False)
+    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       
 #
 #

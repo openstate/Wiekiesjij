@@ -10,7 +10,7 @@ from elections.functions import get_profile_forms, create_profile, profile_invit
 from django.utils.translation import ugettext_lazy as _
 
 from political_profiles.forms import PoliticianProfileLifeForm, PoliticianProfileExtraForm, PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
-from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm
+from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm, PoliticianProfilePoliticalForm
 
 from invitations.models import Invitation
 
@@ -461,8 +461,12 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            
+            self.election_instance = get_object_or_404(ElectionInstance, pk=self.election_instance_id)
+            self.user = get_object_or_404(self.election_instance.council.chanceries, pk=self.user_id)
+
+            if self.user.profile is None or self.user.profile.type != 'candidate':
+                raise PermissionDeniedException('Wrong profile type')
 
             self.user_profile_dict = {
                 'name': {'first_name': self.user.profile.first_name, 'middle_name': self.user.profile.middle_name, 'last_name': self.user.profile.last_name, },
@@ -498,6 +502,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         step1_forms = dict(initial_candidate = PoliticianProfileForm)
         step2_forms = dict(life_candidate = PoliticianProfileLifeForm)
         step3_forms = dict(extra_candidate = PoliticianProfileExtraForm)
+        step4_forms = dict(political_candidate = PoliticianProfilePoliticalForm)
         step1 = Step('initial_candidate',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/step1.html',
@@ -510,8 +515,12 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     forms=step3_forms,
                     template='backoffice/wizard/politician_profile/step3.html',
                     initial={'extra_candidate': self.user_profile_dict })
+        step4 = Step('political_candidate',
+                    forms=step4_forms,
+                    template='backoffice/wizard/politician_profile/step4.html',
+                    initial={'political_candidate': self.user_profile_dict })
                 
-        scenario_tree = step1.next(step2.next(step3))
+        scenario_tree = step1.next(step2.next(step3.next(step4)))
         #default template is the base, each step can override it as needed (for buttons)
 
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -531,6 +540,9 @@ class PoliticianProfileWizard(MultiPathFormWizard):
 
             for (key, value) in self.user_profile_dict.items():
                 setattr(self.user.profile, key, value)
+            if self.user.profile.num_children is None:
+                if self.user.profile.num_children = 0
+                
             self.user.profile.save(force_update=True) # Updating the PoliticianProfile
 
         except Exception, e:

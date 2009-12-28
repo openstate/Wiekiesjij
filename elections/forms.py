@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as __
 
 from utils.widgets import AutoCompleter, ColorPicker, DatePicker, HiddenDateTimePicker, DateTimePicker
-from utils.fields import AddressField
+from utils.fields import AddressField, YoutubeURLField
 from utils.formutils import TemplateForm
 from django.forms.widgets import Textarea
 
@@ -231,7 +231,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in.'), required = False)
     slogan = forms.CharField(label=_('Slogan'), help_text=__('Vul hier uw verkiezingsslogan in. '), required = False)
-    movie  = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
+    movie  = YoutubeURLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
 
     #logo = forms.FileField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
