@@ -2,7 +2,7 @@
 Holds fields
 """
 from django.utils.translation import ugettext_lazy as _
-from django.forms.fields import CharField, RegexField
+from django.forms.fields import CharField, RegexField, URLField
 from django.forms.fields import MultiValueField, EMPTY_VALUES
 from django.forms.util import ErrorList
 from django.forms import ValidationError
@@ -166,3 +166,21 @@ class NameField(PartialRequiredMultiValueField):
             'last_name': data_list[1],
         }
     
+    
+class YoutubeURLField(URLField):
+    """
+        Does an extra regex check on the url to see if it's a valid youtube url
+    """
+    default_error_messages = {
+        'invalid': _(u'Enter a valid URL.'),
+        'invalid_link': _(u'This URL appears to be a broken link.'),
+        'invalid_youtube_link': _(u'This does not appear to be an valid youtube url.'),
+    }
+    
+
+    def clean(self, value):
+        value = super(YoutubeURLField, self).clean(value)
+        regex = re.compile(r"^(http://)?(www\.)?(youtube\.com/watch\?v=)?([A-Za-z0-9\-=_]{11})")
+        match = regex.match(value)
+        if not match: 
+            raise ValidationError(self.error_messages['invalid_youtube_link'])

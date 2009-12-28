@@ -11,7 +11,7 @@ from utils.formutils import TemplateForm
 
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
 
-from utils.fields import NameField, AddressField
+from utils.fields import NameField, AddressField, YoutubeURLField
 
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
@@ -36,11 +36,7 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     #picture         = forms.ImageField(label=_('Picture'), required=False)
-    movie           = forms.URLField(label=_('Movie'), help_text=_('Link to YouTube video'))
-
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-
+    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
 
 
 class PoliticianProfileLifeForm(BetterForm, TemplateForm):
@@ -49,7 +45,7 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     '''
 
     marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
-    num_children    = forms.IntegerField(_('Number of Children'))
+    num_children    = forms.IntegerField(label=_('Number of Children'))
     life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
     church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
     smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, 'Yes'), (2, 'No')]) )

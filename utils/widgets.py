@@ -89,7 +89,7 @@ class NameWidget(forms.widgets.MultiWidget):
 			%(last_name_field)s
 		</div>
 		<div class="middle-name text field">
-			<label for="middle-name">%(middle_name_label)s <span class="optional">optional</span></label>
+			<label for="middle-name">%(middle_name_label)s <span class="optional">%(optional_text)s</span></label>
 			%(middle_name_field)s
 		</div>
 		<div class="first-name text field">
@@ -120,6 +120,8 @@ class NameWidget(forms.widgets.MultiWidget):
             first_name_label = _('First name'),
             last_name_label = _('Last name'),
             middle_name_label = _('Middle name'),
+            
+            optional_text = _('optional'),
             
             first_name_field = rendered_widgets[0],
             last_name_field = rendered_widgets[1],
