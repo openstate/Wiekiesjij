@@ -345,6 +345,7 @@ class Appearance(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Appearance'), _('Politician Appearances')
+        ordering = ('datetime',)
 
 class WorkExperience(models.Model):
     """
@@ -360,6 +361,7 @@ class WorkExperience(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Work experience'), _('Work experience')
+        ordering = ('startdate', 'enddate')
 
 class Education(models.Model):
     """
@@ -375,6 +377,7 @@ class Education(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Education'), _('Education')
+        ordering = ('startdate', 'enddate')
 
 class PoliticalExperience(models.Model):
     """
@@ -390,6 +393,7 @@ class PoliticalExperience(models.Model):
     #tags            = TagField()
     class Meta:
         verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')
+        ordering = ('startdate', 'enddate')
 
 
 
