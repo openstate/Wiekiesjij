@@ -2,6 +2,7 @@
 Holds fields
 """
 import re
+
 from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import CharField, RegexField, URLField
 from django.forms.fields import MultiValueField, EMPTY_VALUES
@@ -183,5 +184,5 @@ class YoutubeURLField(URLField):
         value = super(YoutubeURLField, self).clean(value)
         regex = re.compile(r"^(http://)?(www\.)?(youtube\.com/watch\?v=)?([A-Za-z0-9\-=_]{11})")
         match = regex.match(value)
-        if not match: 
+        if value and not match: 
             raise ValidationError(self.error_messages['invalid_youtube_link'])

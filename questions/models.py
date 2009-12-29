@@ -38,14 +38,10 @@ class QuestionSet(models.Model):
         Makes reusing a set of questions easier
     """
     name        = models.CharField(_('Name'), max_length=255)
-    question    = models.ManyToManyField(Question, verbose_name=_('Questions'), through='QuestionSetQuestion')
-
-    def __unicode__(self):
-        return self.name
+    questions   = models.ManyToManyField(Question, verbose_name=_('Questions'), through='QuestionSetQuestion')
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question set'), _('Question sets')
-        
         
     def __unicode__(self):
         return self.name

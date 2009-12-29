@@ -15,7 +15,7 @@ from elections.functions import get_profile_forms, create_profile, profile_invit
 from elections.forms import InitialElectionInstanceForm, EditElectionInstanceForm
 from elections.forms import ElectionInstanceForm, ElectionInstanceSelectPartiesForm
 from elections.forms import CouncilForm, CouncilStylingSetupForm, CouncilContactInformationForm
-from elections.models import ElectionInstance, Council, ElectionEvent
+from elections.models import ElectionInstance, Council, ElectionEvent, ElectionInstanceQuestion
 from invitations.models import Invitation
 
 
@@ -98,6 +98,19 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
             
             ei.modules.clear()
             ei.modules = self.ei_data['modules']
+            
+            
+            questionset = self.ei_data['question_set']
+            
+            if questionset:
+                for qsq in questionset.questionsetquestion_set.order_by('position'):
+                    ElectionInstanceQuestion.objects.create(
+                        election_instance = ei,
+                        position = qsq.position,
+                        question=qsq.question,
+                        locked=True,
+                    )
+                
             
             #Create the invitation
             templates = profile_invite_email_templates('council_admin')

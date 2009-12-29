@@ -43,7 +43,7 @@ class AnswerQuestion(MultiPathFormWizard):
             raise Exception
 
         # Getting all the questions applicable
-        questions = self.election_instance_party.election_instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES)
+        questions = self.election_instance_party.election_instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES).order_by('-electioninstancequestion__position')
 
         steps_tree = []
 
