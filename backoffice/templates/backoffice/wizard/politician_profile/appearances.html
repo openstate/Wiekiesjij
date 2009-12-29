@@ -14,18 +14,18 @@
         
         <p>{{ appearance.description }}</p>
         <ul class="quicklinks">
-        	<li><a href="{% url bo.politician_profile_appearance_wizard_edit election_instance_id user_id appearance.id %}" class="edit">{% trans "Edit" %}</a></li>
-        	<li><a href="{% url bo.politician_profile_appearance_delete election_instance_id user_id appearance.id  %}" class="delete">{% trans "Delete" %}</a></li>  
+        	<li><a href="{% url bo.politician_profile_appearance_wizard_edit eip_id user_id appearance.id %}" class="edit">{% trans "Edit" %}</a></li>
+        	<li><a href="{% url bo.politician_profile_appearance_delete eip_id user_id appearance.id  %}" class="delete">{% trans "Delete" %}</a></li>  
        	</ul>
    	</div>
     {% empty %}
         <p class="empty">{%trans 'You have no appearances defined yet' %} </p>
     {% endfor %}
-	<a href="{% url bo.politician_profile_appearance_wizard election_instance_id user_id %}" class="add add-item">{% trans "Add a public appearance" %}</a>
+	<a href="{% url bo.politician_profile_appearance_wizard eip_id user_id %}" class="add add-item">{% trans "Add a public appearance" %}</a>
 
 	<div class="form-submit">
-        <a href="{% url bo.politician_profile_education election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
-        <a href="{% url bo.politician_profile_link election_instance_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
+        <a href="{% url bo.politician_profile_education eip_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
+        <a href="{% url bo.politician_profile_link eip_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
         <a href="#" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 </div>

@@ -1,13 +1,10 @@
 from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
-from django.contrib.auth.models import User
 from utils.multipathform import Step, MultiPathFormWizard
-from utils.graphformwizard import GraphFormWizard
-from utils.graphformwizard import Step as GStep
 from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
-from django.utils.translation import ugettext_lazy as _
+from utils.exceptions import PermissionDeniedException
 
 from political_profiles.forms import PoliticianProfileLifeForm, PoliticianProfileExtraForm, PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
 from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm, PoliticianProfilePoliticalForm
@@ -24,16 +21,17 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.appearance_id = kwargs['appearance_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.appearance_id:
                 self.appearance = self.user.profile.appearances.get(pk=self.appearance_id)
             else:
                 self.appearance = None
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
         step1_forms = dict(appearance=AppearanceForm,)
         step1 = Step('candidate_edit_appearance',
                     forms=step1_forms,
@@ -65,13 +63,13 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
                 setattr(appearance, key, value)
             appearance.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
-        return redirect('bo.politician_profile_appearance', user_id=self.user_id, election_instance_id=self.election_instance_id)
+        return redirect('bo.politician_profile_appearance', user_id=self.user_id, eip_id=self.eip_id)
 
 
 class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
@@ -83,16 +81,17 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.political_id = kwargs['political_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.political_id:
                 self.political = self.user.profile.political.get(pk=self.political_id)
             else:
                 self.political = None
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
         step1_forms = dict(political=PoliticalExperienceForm,)
         step1 = Step('candidate_edit_political',
                     forms=step1_forms,
@@ -126,14 +125,14 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
                 setattr(political, key, value)
             political.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_political', user_id=self.user_id, election_instance_id=self.election_instance_id )
+        return redirect('bo.politician_profile_political', user_id=self.user_id, eip_id=self.eip_id )
 
 
 class PoliticianProfileWorkWizard(MultiPathFormWizard):
@@ -145,16 +144,17 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.work_id = kwargs['work_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.work_id:
                 self.work = self.user.profile.work.get(pk=self.work_id)
             else:
                 self.work = None
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
         step1_forms = dict(work=WorkExperienceForm,)
         step1 = Step('candidate_edit_work',
                     forms=step1_forms,
@@ -188,14 +188,14 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
                 setattr(work, key, value)
             work.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_work', user_id=self.user_id, election_instance_id=self.election_instance_id )
+        return redirect('bo.politician_profile_work', user_id=self.user_id, eip_id=self.eip_id )
 
 
 class PoliticianProfileInterestWizard(MultiPathFormWizard):
@@ -207,16 +207,17 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.interest_id = kwargs['interest_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.interest_id:
                 self.interest = self.user.profile.interests.get(pk=self.interest_id)
             else:
                 self.interest = None
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
         step1_forms = dict(interest=InterestForm,)
         step1 = Step('candidate_edit_interest',
                     forms=step1_forms,
@@ -250,14 +251,14 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
                 setattr(interest, key, value)
             interest.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_interest', user_id=self.user_id, election_instance_id=self.election_instance_id )
+        return redirect('bo.politician_profile_interest', user_id=self.user_id, eip_id=self.eip_id )
 
 
 class PoliticianProfileEducationWizard(MultiPathFormWizard):
@@ -269,16 +270,17 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.education_id = kwargs['education_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.education_id:
                 self.education = self.user.profile.education.get(pk=self.education_id)
             else:
                 self.education = None
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
 
         step1_forms = dict(education=EducationForm,)
         step1 = Step('candidate_edit_education',
@@ -313,14 +315,14 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
                 setattr(education, key, value)
             education.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_education', user_id=self.user_id, election_instance_id=self.election_instance_id )
+        return redirect('bo.politician_profile_education', user_id=self.user_id, eip_id=self.eip_id )
 
 
 
@@ -333,16 +335,17 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.link_id = kwargs['link_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.link_id:
                 self.link = self.user.profile.links.get(pk=self.link_id)
             else:
                 self.link = None
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
         
         step1_forms = dict(link=LinkForm,)
         step1 = Step('candidate_edit_link',
@@ -377,14 +380,14 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
                 setattr(link, key, value)
             link.save(force_update=True) 
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id)
+        return redirect('bo.politician_profile_link', user_id=self.user_id, eip_od=self.eip_id)
 
 
 class PoliticianProfileConnectionWizard(MultiPathFormWizard):
@@ -396,16 +399,17 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
         try:
             self.user_id = kwargs['user_id']
             self.connection_id = kwargs['connection_id']
-            self.election_instance_id =  kwargs['election_instance_id']
-            # Checking if user really exists and if election_instanc exists. Getting those and passing it to the wizard.
-            self.user = User.objects.get(pk=self.user_id)
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            
             if self.connection_id:
                 self.connection = self.user.profile.connections.get(pk=self.connection_id)
             else:
                 self.connection = None
 
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
 
         step1_forms = dict(connection=ConnectionForm,)
         step1 = Step('candidate_edit_connection',
@@ -440,14 +444,14 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
                 setattr(connection, key, value)
             connection.save(force_update=True)
 
-        except Exception, e:
+        except Exception:
             transaction.rollback()
-            raise e
+            raise
         else:
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_connection', user_id=self.user_id, election_instance_id=self.election_instance_id)
+        return redirect('bo.politician_profile_connection', user_id=self.user_id, eip_id=self.eip_id)
 
 
 class PoliticianProfileWizard(MultiPathFormWizard):
@@ -460,10 +464,10 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         # Getting "user_id"
         try:
             self.user_id = kwargs['user_id']
-            self.election_instance_id =  kwargs['election_instance_id']
+            self.eip_id =  kwargs['eip_id']
             
-            self.election_instance = get_object_or_404(ElectionInstance, pk=self.election_instance_id)
-            self.user = get_object_or_404(self.election_instance.council.chanceries, pk=self.user_id)
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
 
             if self.user.profile is None or self.user.profile.type != 'candidate':
                 raise PermissionDeniedException('Wrong profile type')
@@ -496,8 +500,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
 
             }
             
-        except Exception, e:
-            raise e
+        except Exception:
+            raise
 
         step1_forms = dict(initial_candidate = PoliticianProfileForm)
         step2_forms = dict(life_candidate = PoliticianProfileLifeForm)
@@ -551,7 +555,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('bo.politician_profile_link', user_id=self.user_id, election_instance_id=self.election_instance_id )
+        return redirect('bo.politician_profile_link', user_id=self.user_id, eip_id=self.eip_id )
 
         
         

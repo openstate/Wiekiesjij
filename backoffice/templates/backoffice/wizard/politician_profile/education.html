@@ -12,17 +12,17 @@
         <p class="info">{{ education_instance.startdate|date:'M Y' }} - {{ education_instance.enddate|date:'M Y' }} {% trans "at" %} {{ education_instance.institute }}</p>
         {% if education_instance.description %}<p>{{ education_instance.description }}</p>{% endif %}
         <ul class="quicklinks">
-        	<li><a href="{% url bo.politician_profile_education_wizard_edit election_instance_id user_id education_instance.id %}" class="edit">{% trans "Edit" %}</a></li>
-            <li><a href="{% url bo.politician_profile_education_delete election_instance_id user_id education_instance.id  %}" class="delete">{% trans "Delete" %}</a></li>
+        	<li><a href="{% url bo.politician_profile_education_wizard_edit eip_id user_id education_instance.id %}" class="edit">{% trans "Edit" %}</a></li>
+            <li><a href="{% url bo.politician_profile_education_delete eip_id user_id education_instance.id  %}" class="delete">{% trans "Delete" %}</a></li>
         </ul>
 	</div>
     {% empty %}
         <p class="empty">{%trans 'You have no education entered yet' %} </p>
     {% endfor %}
-    <a href="{% url bo.politician_profile_education_wizard election_instance_id user_id %}" class="add add-item">{% trans "Add education" %}</a>
+    <a href="{% url bo.politician_profile_education_wizard eip_id user_id %}" class="add add-item">{% trans "Add education" %}</a>
     <div class="form-submit">
-    	<a href="{% url bo.politician_profile_political election_instance_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
-        <a href="{% url bo.politician_profile_appearance election_instance_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
+    	<a href="{% url bo.politician_profile_political eip_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
+        <a href="{% url bo.politician_profile_appearance eip_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
         <a href="#" class="cancel">{% trans "Cancel" %}</a>
    	</div>
 </div>

@@ -5,6 +5,6 @@
 {% block content %}
 <div class="mod">
 	<p>{% trans 'Thank you for filling out your profile.' %}</p>
-        <a href="{% url bo.answer_question election_instance_id user_id %}" class="btn next primary">{% trans "You can now answer questions for this election." %}</a>
+        <a href="{% url bo.answer_question eip_id user_id %}" class="btn next primary">{% trans "You can now answer questions for this election." %}</a>
 </div>
 {% endblock content %}
