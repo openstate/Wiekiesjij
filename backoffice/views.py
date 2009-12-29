@@ -161,7 +161,7 @@ def election_party_add_candidate(request, id, pos):
 
 @staff_required
 def election_event(request):
-    election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID)
+    election_instances = ElectionInstance.objects.filter(election_event__pk=ELECTION_EVENT_ID).order_by('name')
     return render_to_response('backoffice/election_event_view.html', {'election_instances': election_instances,},
                               context_instance=RequestContext(request))
 
