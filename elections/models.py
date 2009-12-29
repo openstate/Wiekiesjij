@@ -46,6 +46,7 @@ class Council(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
+        ordering = ('name',)
 
     def profile_incomplete(self):
         return not self.seats or not self.history

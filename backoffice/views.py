@@ -406,7 +406,6 @@ def csv_import_candidates_step1(request, ep_id):
 
 @party_admin_required
 def csv_import_candidates_step2(request, ep_id, error = False):
-
     if request.method == 'POST':
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -479,18 +478,17 @@ def csv_import_candidates_step3(request, ep_id):
                         html_template = templates['html'],
                         plain_template = templates['plain'],
                     )
-
-                    max_pos = int(candidate['position'])
-                    if max_pos > eip_obj.list_length:
-                        eip_obj.list_length = max_pos
+                    
+                    position = int(candidate['position'])
+                    if position > eip_obj.list_length:
+                        eip_obj.list_length = position
                         eip_obj.save()
 
-                except Exception:
+                except:
                     transaction.rollback()
                     raise
-                else:
-                    transaction.commit()
-
+                
+            transaction.commit()
             os.remove(settings.TMP_ROOT + '/' + request.session['csv_candidate_filename'])
             request.session['csv_candidate_filename'] = ''
             return redirect('bo.election_party_view', id=ep_id)
@@ -508,6 +506,7 @@ def csv_import_parties_step1(request, ei_id):
 @party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
     if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
             #Save file in tmp dir
@@ -530,6 +529,7 @@ def csv_import_parties_step2(request, ei_id, error = False):
 @party_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
+    import ipdb; ipdb.set_trace()
     try:
         parties = functions.get_parties_from_csv(request.session)
     except:
