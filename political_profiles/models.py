@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -72,39 +74,33 @@ NEWSPAPER  = (
         ('Other', _('Other')),
         )
 DIET  = (
-        ('Omnivore',_('Omnivore')),
-        ('vegetarian', _('vegetarian')),
-        ('Vegan', _('Vegan')),
+        ('Omnivore',_('Nee')),
+        ('vegetarian', _(u'Ja, ik ben vegetariër')),
+        ('Vegan', _('Ja, ik ben veganist')),
         ('Other', _('Other')),
         )
 CHURCH  = (
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Church1',_('Church1')),
-        ('Other', _('Other')),
+        ('Roman Catholic',_('Rooms Katholiek')),
+        ('PKN',_('PKN')),
+        ('Other Protestant',_('Anders Protestant')),
+        ('Muslim',_('Moslim')),
+        ('Jew',_('Joods')),
+        ('Eastern Religion',_(u'Oosterse godsdienst (Boeddhisme,Hindoeïsme)')),
+        ('Other',_('Anders')),
+        ('No religion', _('Geen geloofsgemeenschap')),
         )
 LIFE_STANCE  = (
-        ('Deontologism',_('Deontologism')),
-        ('Eudaemonism', _('Eudaemonism')),
-        ('Hedonism', _('Hedonism')),
-        ('Humanism', _('Humanism')),
-        ('Kantism', _('Kantism')),
-        ('Nihilism', _('Nihilism')),
-        ('Buddhism', _('Buddhism')),
-        ('Christianity', _('Christianity')),
-        ('Judaism', _('Judaism')),         
-        ('Other', _('Other')),
+        ('Religious',_('Aanhanger van een religie')),
+        ('There is something there but I do not know what', _('Er bestaat wel iets, maar ik weet niet wat')),
+        ('Atheist', _('Atheist')),
+        ('Humanist', _('Humanist')),
         )
         
 MARITAL_STATUS = (
         ('Married',_('Married')),
+		('Civil Partnership', _('Geregistreerd partnerschap')),
+		('Committed relationship', _('Vaste relatie / samenwonend')),
         ('Single', _('Single')),
-        ('Commited relationship', _('Commited relationship')),
-        ('Civil Partenership', _('Civil Partenership')),
         ('Other', _('Other')),
         )
 MOTIVATION = (

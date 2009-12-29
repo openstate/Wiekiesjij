@@ -128,9 +128,11 @@
 			}
 		dl {
 			overflow:hidden;_zoom:1;
-			
 			margin:1em 0;
 			}
+			.sidebar dl {
+				margin:.5em 0 -.5em;
+				}
 			dt {
 				font-size:11px;
 				padding-right:.5em;
@@ -570,13 +572,22 @@
 					}
 			
 			
-			div.selectdatewidget {
+			div.dateselectpicker {
 			
 				}
-				div.selectdatewidget select {
-					
+				div.dateselectpicker .field {
+					float:left;
+					margin-right:15px;
 					}
-		
+				.day select {
+					width:60px;
+					}	
+				.month select {
+					width:120px;
+					}	
+				.year select {
+					width:80px;
+					}
 				
 		
 		/* 	colorpicker

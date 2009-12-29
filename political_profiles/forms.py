@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import datetime
 
 from django import forms
@@ -37,26 +39,25 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-    
     marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
     num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
-    life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
-    church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
+    life_stance     = forms.ChoiceField(label=_('Levensovertuiging'),choices=LIFE_STANCE)
+    church          = forms.ChoiceField(label=_('Geloofsgemeenschap'),choices=CHURCH)
     smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, _('Yes')), (2, _('No'))]) )
-    diet            = forms.ChoiceField(label=_('Diet'),choices=DIET)
+    diet            = forms.ChoiceField(label=_(u'Bent u vegetariër?'),choices=DIET)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-    fav_news        = forms.ChoiceField(label=_('Favourite Newspaper'),choices=NEWSPAPER)
-    transport       = forms.ChoiceField(label=_('What is your regular method of transport'),choices=TRANSPORT  )
-    charity         = forms.ChoiceField(label=_('What charity do you care for most?'),choices=CHARITY )
-    fav_media       = forms.ChoiceField(label=_('What is your favourite media chanel?'),choices=MEDIA )
-    fav_sport       = forms.ChoiceField(label=_('What is your favourite sport?'),choices=SPORT )
-    hobby           = forms.ChoiceField(label=_('What is your hobby'),choices=HOBBIES )
-    fav_club        = forms.ChoiceField(label=_('What is your favourite club'),choices=CLUBS  )
-    fav_pet         = forms.ChoiceField(label=_('What is your favourite pet'),choices=PETS )
+    fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=NEWSPAPER)
+    transport       = forms.ChoiceField(label=_('... Method of transport?'),help_text=_('What is your regular method of transport?'),choices=TRANSPORT  )
+    charity         = forms.ChoiceField(label=_('... Charity?'),help_text=_('What charity do you care for most?'),choices=CHARITY )
+    fav_media       = forms.ChoiceField(label=_('... Media channel?'),choices=MEDIA )
+    fav_sport       = forms.ChoiceField(label=_('... Sport?'),choices=SPORT )
+    hobby           = forms.ChoiceField(label=_('... Hobby?'),help_text=_('Choose your favorite hobby.'),choices=HOBBIES )
+    fav_club        = forms.ChoiceField(label=_('... Soccer Club?'),choices=CLUBS  )
+    fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=PETS )
 
 class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
