@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
 from django.core.urlresolvers import reverse
 
 
@@ -33,11 +33,6 @@ from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProf
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion
-
-from utils.exceptions import PermissionDeniedException
-
-from questions.forms import AnswerQuestionForm, SelectQuestionForm
-from questions.models import Question
 
 def permission_denied(request):
     if not request.user.is_authenticated():
@@ -245,7 +240,7 @@ def politician_profile_interest_delete(request, interest_id, eip_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     interest = user.profile.interests.get(pk=interest_id)
     interest.delete()
-    return redirect('backoffice.views.politician_profile_interest', eip_id=eid_id, user_id = user_id)
+    return redirect('backoffice.views.politician_profile_interest', eip_id=eip_id, user_id = user_id)
 
 @candidate_required
 def politician_profile_interest_wizard(request, eip_id, user_id, interest_id=None):
@@ -321,7 +316,7 @@ def politician_profile_appearance(request, eip_id, user_id):
                               context_instance=RequestContext(request))
 
 @candidate_required
-def politician_profile_appearance_delete(request, appearance_id, election_instance_id, user_id):
+def politician_profile_appearance_delete(request, appearance_id, eip_id, user_id):
     user = get_object_or_404(User, pk=user_id)
     appearance = user.profile.appearances.get(pk=appearance_id)
     appearance.delete()
@@ -351,7 +346,7 @@ def politician_profile_link_delete(request, link_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_link_wizard(request, eip_id, user_id, link_id=None):
-    return PoliticianProfileLinkWizard(user_id=user_id, eip_id=election_instance_id, link_id=link_id)(request)
+    return PoliticianProfileLinkWizard(user_id=user_id, eip_id=eip_id, link_id=link_id)(request)
 
 @candidate_required
 def politician_profile_connection(request, eip_id, user_id):
