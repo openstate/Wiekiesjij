@@ -76,7 +76,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     ChanceryProfile admin
     '''
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=__('De uitnodiging wordt verzonden naar dit adres.'), max_length=30)
+    email = forms.EmailField(label=_('E-mail'), help_text=__('De uitnodiging wordt verzonden naar dit adres.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
         
     
@@ -262,6 +262,17 @@ class WorkExperienceFormNew(BetterForm, TemplateForm):
     startdate       = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), fixed_day=1), required=True )
     enddate         = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), fixed_day=28), required=False, help_text=_('Leaving this empty will indicate it is ongoing') )
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea() )
+    
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
 
 class EducationFormNew(BetterForm, TemplateForm):
     '''
@@ -273,6 +284,18 @@ class EducationFormNew(BetterForm, TemplateForm):
     startdate   = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), fixed_day=1), required=True )
     enddate     = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), fixed_day=28), required=False, help_text=_('Leaving this empty will indicate it is ongoing') )
     description = forms.CharField(label=_('Description'), widget=forms.Textarea())
+    
+    
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
 
 class PoliticalExperienceFormNew(BetterForm, TemplateForm):
     '''
@@ -284,6 +307,18 @@ class PoliticalExperienceFormNew(BetterForm, TemplateForm):
     startdate       = forms.DateField(label=_('Start Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), fixed_day=1), required=True)
     enddate         = forms.DateField(label=_('End Date'), widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1),  fixed_day=28), required=False, help_text=_('Leaving this empty will indicate it is ongoing'))
     description     = forms.CharField(label=_('Description'), widget=forms.Textarea())
+    
+    
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
 
 class LinkForm(BetterModelForm, TemplateForm):
     '''
@@ -351,7 +386,18 @@ class WorkExperienceForm(BetterModelForm, TemplateForm):
         self.fields['startdate'].required=True
         self.fields['enddate'].required=False
         self.fields['sector'].required=True
-
+    
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+        
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
+    
     class Meta:
         model = WorkExperience
         exclude = ('politician')
@@ -372,6 +418,17 @@ class EducationForm(BetterModelForm, TemplateForm):
     class Meta:
         model = Education
         exclude = ('politician')
+        
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
 
 class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     '''
@@ -390,6 +447,17 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
     class Meta:
         model = PoliticalExperience
         exclude = ('politician')
+        
+    def clean(self):
+        startdate = self.cleaned_data.get('startdate')
+        enddate = self.cleaned_data.get('enddate')
+
+        if startdate and enddate is not None:
+            if startdate > enddate:
+                self._errors['enddate'] = ErrorList([_('End date should be after the start date')])
+                del self.cleaned_data['startdate']
+                del self.cleaned_data['enddate']
+        return self.cleaned_data
 
 class CsvUploadForm(BetterForm, TemplateForm):
     '''
