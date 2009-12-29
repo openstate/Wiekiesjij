@@ -277,7 +277,7 @@ class Command(BaseCommand):
         print "Added basic question 7"
         
         q8 = Question.objects.create(
-            title=u'U woont:',
+            title=u'Ik woon:',
             frontend_title=u'Mijn ideale kandidaat woont:',
             has_no_preference=False,
             question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
