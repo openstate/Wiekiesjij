@@ -541,7 +541,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             for (key, value) in self.user_profile_dict.items():
                 setattr(self.user.profile, key, value)
             if self.user.profile.num_children is None:
-                if self.user.profile.num_children = 0
+                self.user.profile.num_children = 0
                 
             self.user.profile.save(force_update=True) # Updating the PoliticianProfile
 
