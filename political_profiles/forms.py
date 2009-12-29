@@ -1,16 +1,14 @@
 import datetime
-import mimetypes
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as __
+from django.forms.util import ErrorList
 from django.contrib.auth.models import User
-from django.forms.extras.widgets import SelectDateWidget
 
 from form_utils.forms import BetterModelForm, BetterForm
+
 from utils.formutils import TemplateForm
-
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
-
 from utils.fields import NameField, AddressField, YoutubeURLField
 
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
@@ -76,7 +74,7 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
     ChanceryProfile admin
     '''
     name = NameField(label=_('Name'))
-    email = forms.EmailField(label=_('E-mail'), help_text=__('De uitnodiging wordt verzonden naar dit adres.'))
+    email = forms.EmailField(label=_('E-mail'), help_text=_('De uitnodiging wordt verzonden naar dit adres.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
         
     
@@ -143,10 +141,10 @@ class ChanceryProfileForm(BetterForm, TemplateForm):
     
 
     #address = AddressField(label=_('Chancery Address'))
-    name = NameField(label=_('Name'), help_text=__('Vul hier uw contactinformatie in.'))
+    name = NameField(label=_('Name'), help_text=_('Vul hier uw contactinformatie in.'))
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    telephone = forms.CharField(label=_('Telephone'), help_text=__('Vul hier uw telefoonnummer in (formaat: 010-1234567).'))
-    workingdays = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple(), choices=DAYS, help_text=__('Vul hier de dagen in wanneer wij u telefonische kunnen bereiken.'), required=False)
+    telephone = forms.CharField(label=_('Telephone'), help_text=_('Vul hier uw telefoonnummer in (formaat: 010-1234567).'))
+    workingdays = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple(), choices=DAYS, help_text=_('Vul hier de dagen in wanneer wij u telefonische kunnen bereiken.'), required=False)
 
 class ChanceryContactInformationForm(BetterForm, TemplateForm):
     '''
@@ -202,10 +200,10 @@ class ContactProfileForm(BetterForm, TemplateForm):
     '''
     Contact Profile admin
     '''
-    name            = NameField(label=_('Name'), help_text=__('Vul hier uw contactinformatie in.'))
-    telephone       = forms.CharField(label=_('Phone Number'), help_text=__('Vul hier uw telefoonnummer in (formaat: 010-1234567).'))
+    name            = NameField(label=_('Name'), help_text=_('Vul hier uw contactinformatie in.'))
+    telephone       = forms.CharField(label=_('Phone Number'), help_text=_('Vul hier uw telefoonnummer in (formaat: 010-1234567).'))
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
-    workingdays     = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=DAYS, help_text=__('Vul hier de dagen in wanneer wij u telefonische kunnen bereiken.'))
+    workingdays     = forms.MultipleChoiceField(label=_('Working days'), widget=forms.CheckboxSelectMultiple, choices=DAYS, help_text=_('Vul hier de dagen in wanneer wij u telefonische kunnen bereiken.'))
 
 
 class ContactProfileContactInformationForm(BetterModelForm, TemplateForm):

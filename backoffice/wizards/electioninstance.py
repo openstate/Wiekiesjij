@@ -6,7 +6,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as __
+from django.utils.translation import ugettext
 from utils.exceptions import PermissionDeniedException
 from utils.multipathform import Step, MultiPathFormWizard
 
@@ -73,9 +73,10 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
         
             #Get the election event
             ee = ElectionEvent.objects.get(pk=settings.ELECTION_EVENT_ID)
+            
             #Create the council
             council = Council.objects.create(
-                name=__('Council of %(name)s') % {'name': self.ei_data['name']},
+                name=ugettext('Council of %(name)s') % {'name': self.ei_data['name']},
                 region=self.ei_data['region'],
                 level=self.ei_data['level']
             )
