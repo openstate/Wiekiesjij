@@ -448,7 +448,7 @@ def csv_import_candidates_step3(request, ep_id):
                     Invitation.create(
                         user_from = request.user,
                         user_to = candidate_obj.user,
-                        view = reverse('bo.politician_welcome', kwargs={'election_instance_id': eip_obj.election_instance.id}),
+                        view = reverse('bo.politician_welcome', kwargs={'eip_id': eip_obj.id}),
                         text = 'Invitation text',
                         subject = 'Invitation',
                         html_template = templates['html'],
