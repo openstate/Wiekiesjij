@@ -42,7 +42,7 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
     life_stance     = forms.ChoiceField(label=_('Life Stance'),choices=LIFE_STANCE)
     church          = forms.ChoiceField(label=_('Church'),choices=CHURCH)
-    smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, 'Yes'), (2, 'No')]) )
+    smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[(1, _('Yes')), (2, _('No'))]) )
     diet            = forms.ChoiceField(label=_('Diet'),choices=DIET)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):
