@@ -39,7 +39,8 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/appearances-add.html',
                     initial={'appearance': self.appearance },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -101,7 +102,8 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/political-add.html',
                     initial={'political': self.political },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -166,7 +168,8 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/work-add.html',
                     initial={'work': self.work },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -231,7 +234,8 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/interest-add.html',
                     initial={'interest': self.interest },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -297,7 +301,8 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/education-add.html',
                     initial={'education': self.education },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -364,7 +369,8 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/links-add.html',
                     initial={'link': self.link },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -430,7 +436,8 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/connections-add.html',
                     initial={'connection': self.connection },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                 )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
@@ -527,25 +534,29 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/step1.html',
                     initial={'initial_candidate': self.user_profile_dict },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         step2 = Step('life_candidate',
                     forms=step2_forms,
                     template='backoffice/wizard/politician_profile/step2.html',
                     initial={'life_candidate': self.user_profile_dict },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         step3 = Step('extra_candidate',
                     forms=step3_forms,
                     template='backoffice/wizard/politician_profile/step3.html',
                     initial={'extra_candidate': self.user_profile_dict },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
         step4 = Step('political_candidate',
                     forms=step4_forms,
                     template='backoffice/wizard/politician_profile/step4.html',
                     initial={'political_candidate': self.user_profile_dict },
-                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
                     )
                 
         scenario_tree = step1.next(step2.next(step3.next(step4)))
