@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-29 16:08+0100\n"
-"PO-Revision-Date: 2009-12-29 16:18+0100\n"
+"POT-Creation-Date: 2009-12-30 13:12+0100\n"
+"PO-Revision-Date: 2009-12-30 13:12+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -430,8 +430,8 @@ msgid "De volledige naam van de partij."
 msgstr "De volledige naam van de partij."
 
 #: backoffice/templates/backoffice/csv_parties_1.html:29
-msgid "Afkorting"
-msgstr "Afkorting"
+msgid "Afkorting (optioneel)"
+msgstr "Tussenvoegsel (optioneel)"
 
 #: backoffice/templates/backoffice/csv_parties_1.html:29
 msgid "De afkorting van de partij."
@@ -1692,7 +1692,7 @@ msgstr "Politicus profiel - Vragen"
 msgid "Answer the questions"
 msgstr "Beantwoord de vragen"
 
-#: backoffice/templates/backoffice/wizard/question/answer_add/step.html:9
+#: backoffice/templates/backoffice/wizard/question/answer_add/step.html:23
 msgid "Answer the question"
 msgstr "Beantwoord de vraag"
 
@@ -2654,18 +2654,18 @@ msgstr "Bedrijfsnaam"
 #: political_profiles/forms.py:262
 #: political_profiles/forms.py:284
 #: political_profiles/forms.py:307
-#: political_profiles/forms.py:384
-#: political_profiles/forms.py:412
-#: political_profiles/forms.py:440
+#: political_profiles/forms.py:387
+#: political_profiles/forms.py:416
+#: political_profiles/forms.py:445
 msgid "Leaving this empty will indicate it is ongoing"
 msgstr "Als u dit leeglaat geeft u aan dat het nog aan de gang is."
 
 #: political_profiles/forms.py:271
 #: political_profiles/forms.py:294
 #: political_profiles/forms.py:317
-#: political_profiles/forms.py:395
-#: political_profiles/forms.py:427
-#: political_profiles/forms.py:456
+#: political_profiles/forms.py:396
+#: political_profiles/forms.py:429
+#: political_profiles/forms.py:459
 msgid "End date should be after the start date"
 msgstr "Eind datum moet na de start datum liggen"
 
@@ -2692,7 +2692,7 @@ msgstr "Organisatie"
 msgid "Type"
 msgstr "Type"
 
-#: political_profiles/forms.py:473
+#: political_profiles/forms.py:476
 msgid "I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL."
 msgstr "Ik bevestig dat deze informatie correct is. Enige problemen die optreden omdat ik verkeerde gegevens opstuur, zijn voor mijn rekening en niet voor WKJ, HNS of GL."
 
@@ -3289,6 +3289,8 @@ msgstr "Jaar"
 msgid "Unknown"
 msgstr "Onbekend"
 
+#~ msgid "Afkorting"
+#~ msgstr "Afkorting"
 #~ msgid "The council"
 #~ msgstr "De raad"
 #~ msgid "More council info"

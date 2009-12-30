@@ -33,8 +33,9 @@ def send_email(subject, from_email, to, context, template):
     context.update({'site_name': site_name, 'domain': domain})
     
     to_list = [to]
+    bcc_list = ['wietse.vanderwal+wiekiesjij_mail@accepte.nl']
     text_content = _render_content(context, template['plain'])
-    msg = EmailMultiAlternatives(subject, text_content, from_email, to_list)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, to_list, bcc_list)
 
     if template.has_key('html'):
         html_content = _render_content(context, template['html'])
