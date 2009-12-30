@@ -125,7 +125,6 @@ EMAIL_FROM = 'info@wiekiesjij.nl'
 #login logout related
 LOGIN_URL = '/backoffice/login/'
 LOGIN_REDIRECT_URL = '/backoffice/redirect/'
-EMAIL_AUTH_REDIRECT = '/backoffice/redirect/'
 UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 
 AUTHENTICATION_BACKENDS = (

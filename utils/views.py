@@ -22,8 +22,6 @@ def login(request,
     # Light security check -- make sure redirect_to isn't garbage.
     if not redirect_to or '//' in redirect_to or ' ' in redirect_to:
         redirect_to = settings.LOGIN_REDIRECT_URL
-    if settings.EMAIL_AUTH_REDIRECT and request.user.is_authenticated():
-        return HttpResponseRedirect(redirect_to)
         
     if request.method == "POST":
         form = EmailAuthForm(data = request.POST)
