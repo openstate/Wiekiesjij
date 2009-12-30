@@ -477,7 +477,6 @@ def csv_import_parties_step1(request, ei_id):
 @party_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
             #Save file in tmp dir
@@ -500,7 +499,6 @@ def csv_import_parties_step2(request, ei_id, error = False):
 @party_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
-    import ipdb; ipdb.set_trace()
     try:
         parties = functions.get_parties_from_csv(request.session)
     except:
