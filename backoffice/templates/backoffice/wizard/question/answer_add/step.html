@@ -1,9 +1,23 @@
 {% extends 'backoffice/wizard/base.html' %}
 
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block title %}{% trans 'Answer the questions' %}{% endblock title %}
 {% block page-title %}{% trans 'Answer the questions' %}{% endblock page-title %}
+
+{% block wizard-steps %}
+	<ul id="wizardSteps">
+		{% for q in questions %}
+			{% ifcompare current_question q %}
+				<li><span class="current">{{ q|add:"12" }}</span></li>
+			{% smaller %}
+				<li><span class="history">{{ q|add:"12" }}</span></li>
+			{% bigger %}
+				<li><span class="future">{{ q|add:"12" }}</span></li>
+			{% endifcompare %}
+		{% endfor %}
+    </ul>
+{% endblock wizard-steps %}
 
 {% block step_title %}
     {% trans 'Answer the question' %}: {{ question_title }}

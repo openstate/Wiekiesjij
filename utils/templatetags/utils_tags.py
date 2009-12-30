@@ -99,3 +99,68 @@ def youtube(url):
     </object>
     """ % {'video_id': video_id}
 youtube.is_safe = True # Don't escape HTML
+
+
+class CompareBlockNode(template.Node):
+    """
+        Complex comparison tags.
+        
+        Compares two values and returns the normal bit it they are equal,
+        the smaller bit if the first is smaller then the second one
+        and the bigger bit if it's bigger
+        Smaller and bigger are optional and will result in the equal block being rendered if left out
+    """
+    
+    
+    def __init__(self, value1, value2, nodelist_equal, nodelist_bigger, nodelist_smaller):
+        self.value1 = template.Variable(value1)
+        self.value2 = template.Variable(value2)
+        
+        self.nodelist_equal = nodelist_equal
+        self.nodelist_bigger = nodelist_bigger
+        self.nodelist_smaller = nodelist_smaller
+        
+
+    def render(self, context):
+        value1 = self.value1.resolve(context)
+        value2 = self.value2.resolve(context)
+        
+        if value1 < value2:
+            if self.nodelist_smaller:
+                return self.nodelist_smaller.render(context)
+        elif value1 > value2:
+            if self.nodelist_bigger:
+                return self.nodelist_bigger.render(context)
+        return self.nodelist_equal.render(context)
+        
+    @classmethod
+    def tag(cls, parser, token):
+        tokens = token.split_contents()
+
+        if len(tokens) != 3:
+            raise template.TemplateSyntaxError('{0} tag requires two values to compare'.format(tokens[0]))
+
+
+        nodelist_equal = parser.parse(('smaller', 'bigger', 'endifcompare'))    
+        token = parser.next_token()
+        
+        nodelist_smaller = None
+        nodelist_bigger = None
+        
+        if token.contents == 'smaller':
+            nodelist_smaller = parser.parse(('bigger', 'endifcompare'))
+            token2 = parser.next_token()
+        elif token.contents == 'bigger':
+            nodelist_bigger = parser.parse(('smaller', 'endifcompare'))
+            token2 = parser.next_token()
+        
+        if token2.contents == 'smaller':
+            nodelist_smaller = parser.parse(('endifcompare'))
+            token2 = parser.delete_first_token()
+        elif token2.contents == 'bigger':
+            nodelist_bigger = parser.parse(('endifcompare'))
+            token2 = parser.delete_first_token()
+
+        return cls(tokens[1], tokens[2], nodelist_equal, nodelist_bigger, nodelist_smaller)
+
+register.tag('ifcompare', CompareBlockNode.tag)

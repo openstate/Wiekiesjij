@@ -9,6 +9,8 @@ from utils.exceptions import PermissionDeniedException
 from political_profiles.forms import PoliticianProfileLifeForm, PoliticianProfileExtraForm, PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
 from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm, PoliticianProfilePoliticalForm
 
+from questions.functions import get_question_count
+
 from invitations.models import Invitation
 
 
@@ -36,7 +38,9 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_appearance',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/appearances-add.html',
-                    initial={'appearance': self.appearance })
+                    initial={'appearance': self.appearance },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -96,7 +100,9 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_political',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/political-add.html',
-                    initial={'political': self.political })
+                    initial={'political': self.political },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -159,7 +165,9 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_work',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/work-add.html',
-                    initial={'work': self.work })
+                    initial={'work': self.work },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -222,7 +230,9 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_interest',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/interest-add.html',
-                    initial={'interest': self.interest })
+                    initial={'interest': self.interest },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -286,7 +296,9 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_education',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/education-add.html',
-                    initial={'education': self.education })
+                    initial={'education': self.education },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -351,7 +363,9 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_link',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/links-add.html',
-                    initial={'link': self.link })
+                    initial={'link': self.link },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -415,7 +429,9 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
         step1 = Step('candidate_edit_connection',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/connections-add.html',
-                    initial={'connection': self.connection })
+                    initial={'connection': self.connection },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                )
         scenario_tree = step1
         #default template is the base, each step can override it as needed (for buttons)
         template = 'backoffice/wizard/politician_profile/base.html',
@@ -510,19 +526,27 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         step1 = Step('initial_candidate',
                     forms=step1_forms,
                     template='backoffice/wizard/politician_profile/step1.html',
-                    initial={'initial_candidate': self.user_profile_dict })
+                    initial={'initial_candidate': self.user_profile_dict },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         step2 = Step('life_candidate',
                     forms=step2_forms,
                     template='backoffice/wizard/politician_profile/step2.html',
-                    initial={'life_candidate': self.user_profile_dict })
+                    initial={'life_candidate': self.user_profile_dict },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         step3 = Step('extra_candidate',
                     forms=step3_forms,
                     template='backoffice/wizard/politician_profile/step3.html',
-                    initial={'extra_candidate': self.user_profile_dict })
+                    initial={'extra_candidate': self.user_profile_dict },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
         step4 = Step('political_candidate',
                     forms=step4_forms,
                     template='backoffice/wizard/politician_profile/step4.html',
-                    initial={'political_candidate': self.user_profile_dict })
+                    initial={'political_candidate': self.user_profile_dict },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party))},
+                    )
                 
         scenario_tree = step1.next(step2.next(step3.next(step4)))
         #default template is the base, each step can override it as needed (for buttons)
@@ -537,11 +561,13 @@ class PoliticianProfileWizard(MultiPathFormWizard):
     @transaction.commit_manually
     def done(self, request, form_dict):
         try:
+            self.user_profile_dict = {}
             for path, forms in form_dict.iteritems():
                 for name, form in forms.iteritems():
                     #if name == 'initial_candidate':
-                    self.user_profile_dict = form.cleaned_data
-
+                    self.user_profile_dict.update(form.cleaned_data)
+            
+            import ipdb; ipdb.set_trace()
             for (key, value) in self.user_profile_dict.items():
                 setattr(self.user.profile, key, value)
             if self.user.profile.num_children is None:
@@ -598,7 +624,8 @@ class AddCandidateWizard(MultiPathFormWizard):
                         if not hasattr(self, 'form_data'):
                             self.form_data = {}
                         self.form_data.update(form.cleaned_data)
-
+            
+            
             #Store data
             tmp_data = {
                 'first_name': self.form_data['name']['first_name'],

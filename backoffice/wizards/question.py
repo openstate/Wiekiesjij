@@ -48,6 +48,7 @@ class AnswerQuestion(MultiPathFormWizard):
         steps_tree = []
 
         # Looping through the questions
+        idx = 1;
         for question in questions:
             try:
                 # Here we need to get the answer given for the step
@@ -69,9 +70,10 @@ class AnswerQuestion(MultiPathFormWizard):
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/question/answer_add/step.html',
                      initial={str(question.id): {'value': question_answers}}, # TODO: Fix this = load the data!
-                     extra_context={'question_title': question.title, 'initial': question_answers},
+                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.title, 'initial': question_answers},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
+            idx += 1
 
         scenario_tree = None
         for step in steps_tree:

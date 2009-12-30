@@ -34,6 +34,8 @@ from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppeara
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion
 
+from questions.functions import get_question_count
+
 def permission_denied(request):
     if not request.user.is_authenticated():
         return redirect('bo.login')
@@ -211,6 +213,7 @@ def politician_welcome(request, eip_id):
                               'politician': user.profile,
                               'election_instance': election_instance_party.election_instance,
                               'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
                               },
                               context_instance=RequestContext(request))
 
@@ -223,6 +226,7 @@ def politician_profile_setup_done(request, eip_id, user_id):
     return render_to_response('backoffice/wizard/politician_profile/done.html',
                               {'user_id': user_id,
                               'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
                               },
                               context_instance=RequestContext(request))
 
@@ -232,7 +236,9 @@ def politician_profile_interest(request, eip_id, user_id):
     interests = user.profile.interests.all()
     return render_to_response('backoffice/wizard/politician_profile/interest.html',
                               {'user_id': user_id, 'interests': interests,
-                              'eip_id': eip_id,},
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
                               context_instance=RequestContext(request))
 
 @candidate_required
@@ -252,7 +258,9 @@ def politician_profile_work(request, eip_id, user_id):
     work = user.profile.work.all()
     return render_to_response('backoffice/wizard/politician_profile/work.html',
                               {'user_id': user_id, 'work': work,
-                              'eip_id': eip_id,},
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
                               context_instance=RequestContext(request))
 
 @candidate_required
@@ -272,7 +280,9 @@ def politician_profile_political(request, eip_id, user_id):
     political = user.profile.political.all()
     return render_to_response('backoffice/wizard/politician_profile/political.html',
                               {'user_id': user_id, 'political': political,
-                              'eip_id': eip_id,},
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
                               context_instance=RequestContext(request))
 
 @candidate_required
@@ -292,7 +302,9 @@ def politician_profile_education(request, eip_id, user_id):
     education = user.profile.education.all()
     return render_to_response('backoffice/wizard/politician_profile/education.html',
                               {'user_id': user_id, 'education': education,
-                              'eip_id': eip_id,},
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
                               context_instance=RequestContext(request))
 
 @candidate_required
@@ -312,7 +324,9 @@ def politician_profile_appearance(request, eip_id, user_id):
     appearances = user.profile.appearances.all()
     return render_to_response('backoffice/wizard/politician_profile/appearances.html',
                               {'user_id': user_id, 'appearances': appearances,
-                              'eip_id': eip_id,},
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
                               context_instance=RequestContext(request))
 
 @candidate_required
@@ -334,6 +348,7 @@ def politician_profile_link(request, eip_id, user_id):
     return render_to_response('backoffice/wizard/politician_profile/links.html',
                               {'user_id': user_id, 'links': links,
                               'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
                               },
                               context_instance=RequestContext(request))
 
@@ -356,6 +371,7 @@ def politician_profile_connection(request, eip_id, user_id):
     return render_to_response('backoffice/wizard/politician_profile/connections.html',
                               {'user_id': user_id, 'connections': connections,
                               'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
                               },
                               context_instance=RequestContext(request))
 
@@ -595,16 +611,13 @@ def council_edit(request, id):
     return CouncilEditWizard(election_instance)(request)
 
 
-def answer_question(request, election_instance_party_id=None, user_id=None):
+def answer_question(request, election_instance_party_id, user_id=None):
     '''
         AnswerQuestion - wizard.
         @param int election_instance_party_id - ElectionInstanceParty id
         @param int user_id User (Candidate=PoliticalProfile) id
     '''
-
-    election_instance_party = request.user.elections.all()[0].election_party_instance
-
-    return AnswerQuestion(election_instance_party_id=election_instance_party.id, user_id=user_id)(request)
+    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
 def answer_question_done(request):
     '''
