@@ -23,7 +23,7 @@ class PoliticianProfileAppearanceWizard(MultiPathFormWizard):
             self.appearance_id = kwargs['appearance_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.appearance_id:
                 self.appearance = self.user.profile.appearances.get(pk=self.appearance_id)
@@ -83,7 +83,7 @@ class PoliticianProfilePoliticalWizard(MultiPathFormWizard):
             self.political_id = kwargs['political_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.political_id:
                 self.political = self.user.profile.political.get(pk=self.political_id)
@@ -146,7 +146,7 @@ class PoliticianProfileWorkWizard(MultiPathFormWizard):
             self.work_id = kwargs['work_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.work_id:
                 self.work = self.user.profile.work.get(pk=self.work_id)
@@ -209,7 +209,7 @@ class PoliticianProfileInterestWizard(MultiPathFormWizard):
             self.interest_id = kwargs['interest_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.interest_id:
                 self.interest = self.user.profile.interests.get(pk=self.interest_id)
@@ -272,7 +272,7 @@ class PoliticianProfileEducationWizard(MultiPathFormWizard):
             self.education_id = kwargs['education_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.education_id:
                 self.education = self.user.profile.education.get(pk=self.education_id)
@@ -337,7 +337,7 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
             self.link_id = kwargs['link_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.link_id:
                 self.link = self.user.profile.links.get(pk=self.link_id)
@@ -387,7 +387,7 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
             transaction.commit()
 
 
-        return redirect('bo.politician_profile_link', user_id=self.user_id, eip_od=self.eip_id)
+        return redirect('bo.politician_profile_link', user_id=self.user_id, eip_id=self.eip_id)
 
 
 class PoliticianProfileConnectionWizard(MultiPathFormWizard):
@@ -401,7 +401,7 @@ class PoliticianProfileConnectionWizard(MultiPathFormWizard):
             self.connection_id = kwargs['connection_id']
             self.eip_id =  kwargs['eip_id']
             self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
-            self.user = get_object_or_404(self.election_instance_party.candidated, candidate__pk=self.user_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
             
             if self.connection_id:
                 self.connection = self.user.profile.connections.get(pk=self.connection_id)
