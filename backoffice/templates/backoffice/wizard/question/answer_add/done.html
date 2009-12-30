@@ -1,13 +1,33 @@
-{% extends 'backoffice/wizard/base.html' %}
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
+{% load i18n utils_tags %}
 
-{% load i18n %}
+{% block group0 %}history{% endblock %}
+{% block group1 %}history{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}history{% endblock %}
+{% block step4 %}history{% endblock %}
+{% block group2 %}history{% endblock %}
+{% block step5 %}history{% endblock %}
+{% block step6 %}history{% endblock %}
+{% block step7 %}history{% endblock %}
+{% block group3 %}history{% endblock %}
+{% block step8 %}history{% endblock %}
+{% block step9 %}history{% endblock %}
+{% block step10 %}history{% endblock %}
+{% block group4 %}history{% endblock %}
+{% block step11 %}history{% endblock %}
+{% block group5 %}history{% endblock %}
+{% block group99 %}active{% endblock %}
 
-{% block title %}{% trans 'Answer the questions' %}{% endblock title %}
-{% block page-title %}{% trans 'Answer the questions' %}{% endblock page-title %}
+{% block question-steps %}
+{% for q in questions %}
+    <li class="history{% if forloop.last %} last{% endif %}">{{ q|add:12 }}</li>
+{% endfor %}
+{% endblock question-steps %}
 
 
-{% block step-header %}
-{% block step-title %}Done!{% endblock step-title %}
-{% endblock step-header %}
+{% block step_title %}Done!{% endblock step_title %}
+
 
 {% block buttons %}{% endblock buttons %}

@@ -1,13 +1,15 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
 {% load i18n %}
 
-
-
 {% block step_title %}{% trans "What is your favorite..." %}{% endblock step_title %}
 
+{% block group1 %}active{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}active{% endblock %}
 
 {% block buttons %}
 	<div class="form-submit">
-		<button class="primary next" type="submit">{% trans 'Next' %}</button>
+		<button class="primary next" type="submit">{% trans 'Volgende stap' %}</button>
 	</div>
 {% endblock buttons %}

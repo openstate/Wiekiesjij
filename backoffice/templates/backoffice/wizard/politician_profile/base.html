@@ -8,12 +8,57 @@
 {% block back-link %}{% endblock back-link %}
 
 {% block wizard-steps %}
-	<ul id="wizardSteps">
-    	{% block step1 %}<li><span class="future"><span class="number">1</span>{% trans "Personal information" %}</span></li>{% endblock step1 %}
-        {% block step2 %}<li><span class="future"><span class="number">2</span>{% trans "This Election" %}</span></li>{% endblock step2 %}
-        {% block step3 %}<li><span class="future"><span class="number">3</span>{% trans "The Council" %}</span></li>{% endblock step3 %}
-        {% block step4 %}<li><span class="future"><span class="number">4</span>{% trans "More Council" %}</span></li>{% endblock step4 %}
-        {% block step5 %}<li><span class="future"><span class="number">5</span>{% trans "Styling" %}</span></li>{% endblock step5 %}
-        {% block step6 %}<li><span class="future"><span class="number">6</span>{% trans "Finish" %}</span></li>{% endblock step6 %}
+	<ul id="wizard-steps">
+    	<li class="{% block group0 %}history{% endblock %} no-steps">
+        	<span class="title">{% trans "Welkom" %}</span>
+        </li>
+    	<li class="{% block group1 %}future{% endblock %}">
+        	<span class="title">{% trans "Persoonlijke<br />informatie" %}</span>
+        	<ul>
+            	<li class="{% block step1 %}future{% endblock %}">1</li>
+                <li class="{% block step2 %}future{% endblock %}">2</li>
+                <li class="{% block step3 %}future{% endblock %}">3</li>
+                <li class="{% block step4 %}future{% endblock %} last">4</li>
+            </ul>
+        </li>
+        <li class="{% block group2 %}future{% endblock %}">
+        	<span class="title">{% trans "Opleiding <br />&amp; werk" %}</span>
+            <ul>
+            	<li class="{% block step5 %}future{% endblock %}">5</li>
+                <li class="{% block step6 %}future{% endblock %}">6</li>
+                <li class="{% block step7 %}future{% endblock %} last">7</li>
+            </ul>
+        </li>
+        <li class="{% block group3 %}future{% endblock %}">
+        	<span class="title">{% trans "Links <br />&amp; interesses" %}</span>
+            <ul>
+            	<li class="{% block step8 %}future{% endblock %}">8</li>
+                <li class="{% block step9 %}future{% endblock %}">9</li>
+                <li class="{% block step10 %}future{% endblock %} last">10</li>
+            </ul>
+        </li>
+        <li class="{% block group4 %}future{% endblock %}">
+        	<span class="title">Agenda<br />&nbsp;</span>
+            <ul>
+                <li class="{% block step11 %}future{% endblock %} last">11</li>
+            </ul>
+        </li>
+        {% if questions %}
+        <li class="{% block group5 %}future{% endblock %}">
+        	<span class="title">Extra vragen<br />&nbsp;</span>
+            <ul>
+            	{% block question-steps %}
+            	{% for q in questions %}
+            		<li class="future{% if forloop.last %} last{% endif %}">{{ q|add:12 }}</li>
+                {% endfor %}
+                {% endblock question-steps %}
+            </ul>
+        </li>
+        {% endif %}
+        
+    	<li class="{% block group99 %}future{% endblock %} no-steps">
+        	<span class="title">{% trans "Afgerond" %}</span>
+        </li>
+
     </ul>
 {% endblock wizard-steps %}

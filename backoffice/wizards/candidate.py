@@ -591,7 +591,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('bo.politician_profile_link', user_id=self.user_id, eip_id=self.eip_id )
+        return redirect('bo.politician_profile_education', user_id=self.user_id, eip_id=self.eip_id )
 
         
         

@@ -3,10 +3,19 @@
 
 {% block step_title %}{% trans "Add new political work experience" %}{% endblock step_title %}
 
+{% block group0 %}history{% endblock %}
+{% block group1 %}history{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}history{% endblock %}
+{% block step4 %}history{% endblock %}
+{% block group2 %}active{% endblock %}
+{% block step5 %}history{% endblock %}
+{% block step6 %}active{% endblock %}
 
 {% block buttons %}
 	<div class="form-submit">
 		<button class="primary next" type="submit">{% trans 'Save' %}</button>
-        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url bo.politician_profile_political eip_id user_id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}

@@ -1,24 +1,36 @@
-{% extends 'backoffice/wizard/base.html' %}
-
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
 {% load i18n utils_tags %}
 
-{% block title %}{% trans 'Answer the questions' %}{% endblock title %}
-{% block page-title %}{% trans 'Answer the questions' %}{% endblock page-title %}
+{% block group0 %}history{% endblock %}
+{% block group1 %}history{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}history{% endblock %}
+{% block step4 %}history{% endblock %}
+{% block group2 %}history{% endblock %}
+{% block step5 %}history{% endblock %}
+{% block step6 %}history{% endblock %}
+{% block step7 %}history{% endblock %}
+{% block group3 %}history{% endblock %}
+{% block step8 %}history{% endblock %}
+{% block step9 %}history{% endblock %}
+{% block step10 %}history{% endblock %}
+{% block group4 %}history{% endblock %}
+{% block step11 %}history{% endblock %}
+{% block group5 %}active{% endblock %}
 
-{% block wizard-steps %}
-	<ul id="wizardSteps">
-		{% for q in questions %}
-			{% ifcompare current_question q %}
-				<li><span class="current">{{ q|add:"12" }}</span></li>
-			{% smaller %}
-				<li><span class="history">{{ q|add:"12" }}</span></li>
-			{% bigger %}
-				<li><span class="future">{{ q|add:"12" }}</span></li>
-			{% endifcompare %}
-		{% endfor %}
-    </ul>
-{% endblock wizard-steps %}
+{% block question-steps %}
+    {% for q in questions %}
+		<li class="{% ifcompare current_question q %}active{% smaller %}history{% bigger %}future{% endifcompare %}{% if forloop.last %} last{% endif %}">{{ q|add:"12" }}</li>
+    {% endfor %}
+{% endblock question-steps %}
 
 {% block step_title %}
-    {% trans 'Answer the question' %}: {{ question_title }}
+    {#<span class="question-num">{% trans "Question" %} {{ current_question|add:"12" }}:</span>#} {{ question_title }}
 {% endblock step_title %}
+
+{% block buttons %}
+	<div class="form-submit">
+		<button class="primary next" type="submit">{% trans 'Volgende stap' %}</button>
+	</div>
+{% endblock buttons %}

@@ -1,6 +1,23 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
 {% load i18n %}
 
+{% block group0 %}history{% endblock %}
+{% block group1 %}history{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}history{% endblock %}
+{% block step4 %}history{% endblock %}
+{% block group2 %}history{% endblock %}
+{% block step5 %}history{% endblock %}
+{% block step6 %}history{% endblock %}
+{% block step7 %}history{% endblock %}
+{% block group3 %}history{% endblock %}
+{% block step8 %}history{% endblock %}
+{% block step9 %}history{% endblock %}
+{% block step10 %}history{% endblock %}
+{% block group4 %}active{% endblock %}
+{% block step11 %}active{% endblock %}
+
 {% block content %}
 <div class="mod wizard">
     <h2>{% trans 'What events have you appeared at?' %}</h2>
@@ -24,9 +41,7 @@
 	<a href="{% url bo.politician_profile_appearance_wizard eip_id user_id %}" class="add add-item">{% trans "Add a public appearance" %}</a>
 
 	<div class="form-submit">
-        <a href="{% url bo.politician_profile_education eip_id user_id %}" class="btn next primary">{% trans "Next" %}</a>
-        <a href="{% url bo.politician_profile_link eip_id user_id %}" class="btn prev">{% trans "Previous " %}</a>
-        <a href="#" class="cancel">{% trans "Cancel" %}</a>
+        <a href="{% url bo.politician_profile_setup_done eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
 	</div>
 </div>
 {% endblock content %}
