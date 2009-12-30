@@ -117,5 +117,5 @@ urlpatterns += patterns('backoffice.views',
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/connections/delete/(?P<connection_id>\d+)$', 'politician_profile_connection_delete', name='bo.politician_profile_connection_delete'),
 
     url(r'^welcome/answer-question/(?P<election_instance_party_id>\d+)/(?P<user_id>\d+)/$', 'answer_question', name='bo.answer_question'),
-    url(r'^welcome/answer-question/done/$', 'answer_question_done', name='bo.answer_question_done'),
+    url(r'^welcome/answer-question/(?P<election_instance_party_id>\d+)/(?P<user_id>\d+)/done/$', 'answer_question_done', name='bo.answer_question_done'),
     )

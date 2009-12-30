@@ -619,12 +619,17 @@ def answer_question(request, election_instance_party_id, user_id=None):
     '''
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-def answer_question_done(request):
+def answer_question_done(request, election_instance_party_id, user_id):
     '''
         answer_question thanks page.
     '''
-    return render_to_response('backoffice/wizard/question/answer_add/done.html',
-                              context_instance=RequestContext(request))
+    
+    return render_to_response('backoffice/wizard/question/answer_add/done.html', {
+                                'questions': range(0, get_question_count(election_instance_party_id)),
+                                'eip_id': election_instance_party_id,
+                                'user_id': user_id,
+                            }
+                            context_instance=RequestContext(request))
 
 def view_profile(request):
     """

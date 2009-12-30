@@ -116,7 +116,7 @@ class AnswerQuestion(MultiPathFormWizard):
         else:
             transaction.commit()
             
-        return redirect('bo.answer_question_done')
+        return redirect('bo.answer_question_done', election_instance_party_id=self.election_instance_party_id, user_id=self.user_id)
 
 
 
