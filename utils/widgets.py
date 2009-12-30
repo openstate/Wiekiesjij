@@ -715,6 +715,8 @@ class DateSelectPicker(forms.widgets.Widget):
         y = data.get(self.year_field % name)
         m = data.get(self.month_field % name)
         d = data.get(self.day_field % name)
+        if self.fixed_day and m == y == "0":
+            return None
         if y == m == d == "0":
             return None
         if y and m and d:

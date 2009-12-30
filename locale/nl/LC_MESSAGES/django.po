@@ -2658,7 +2658,7 @@ msgstr "Bedrijfsnaam"
 #: political_profiles/forms.py:416
 #: political_profiles/forms.py:445
 msgid "Leaving this empty will indicate it is ongoing"
-msgstr "Als u dit leeglaat geeft u aan dat het nog aan de gang is."
+msgstr "Als u dit leeg laat geeft u aan dat het nog aan de gang is."
 
 #: political_profiles/forms.py:271
 #: political_profiles/forms.py:294
