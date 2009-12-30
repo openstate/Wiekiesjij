@@ -105,7 +105,7 @@
         	<dt>{% trans "Is taking place on" %}</dt>
             	<dd>{{ instance.start_date|date:"D j F Y" }}</dd>
           	<dt>{% trans "Website" %}</dt>
-            	<dd>{{ instance.website|default:"&ndash;" }}</dd>
+                <dd>{% if instance.website %}<a href="{{ instance.website }}" target="_blank">{{ instance.website }}</a>{% else %}&ndash;{% endif %}</dd>
         </dl>
 	{% endblockwrap %}
 
@@ -118,7 +118,7 @@
           	<dt>{% trans 'E-mail' %}</dt>
             	<dd>{% if instance.council.email %}<a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a>{% else %}&ndash;{% endif %}</dd>
             <dt>{% trans 'Website' %}</dt>
-            	<dd>{% if instance.council.website %}<a href="{{ instance.council.website }}">{{ instance.council.website }}</a>{% else %}&ndash;{% endif %}</dd>
+            	<dd>{% if instance.council.website %}<a href="{{ instance.council.website }}" target="_blank">{{ instance.council.website }}</a>{% else %}&ndash;{% endif %}</dd>
         </dl>
 
         {#<a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>#}

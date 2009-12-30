@@ -267,7 +267,7 @@ msgstr "Ziet u iets anders dan in het voorbeeld. Lees verder..."
 #: backoffice/templates/backoffice/csv_candidates_1.html:41
 #: backoffice/templates/backoffice/csv_parties_1.html:42
 msgid "The file might look (entirely) different from the example above."
-msgstr "Het bestand kan het (compleet) anders uitzien dan het voorbeeld hierboven."
+msgstr "Het bestand kan er (compleet) anders uitzien dan het voorbeeld hierboven."
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:44
 #: backoffice/templates/backoffice/csv_parties_1.html:45
@@ -282,7 +282,7 @@ msgstr "Zorg ervoor dat u het bestand weer opslaat als CSV."
 #: backoffice/templates/backoffice/csv_candidates_1.html:46
 #: backoffice/templates/backoffice/csv_parties_1.html:47
 msgid "Just clicking the 'save'-button will probably do the trick."
-msgstr "Gewoon op de 'opslaan' knip klikken zal waarschijnlijk wel werken."
+msgstr "Op de 'opslaan' knop klikken is vermoedelijk voldoende."
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:48
 #: backoffice/templates/backoffice/csv_parties_1.html:49

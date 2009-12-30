@@ -9,7 +9,7 @@
     <div class="profile-item link">
         
         <h3>{{ link.name }}</h3>
-        <a href="{{ link.url }}" class="url">{{ link.url }}</a>
+        <a href="{{ link.url }}" target="_blank" class="url">{{ link.url }}</a>
         <p>{{ link.description }}</p>
         <ul class="quicklinks">
         	<li><a href="{% url bo.politician_profile_link_wizard_edit eip_id user_id link.id %}" class="edit">{% trans "Edit" %}</a></li>

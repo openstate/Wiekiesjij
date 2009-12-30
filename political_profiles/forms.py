@@ -381,9 +381,10 @@ class WorkExperienceForm(BetterModelForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
         self.fields['startdate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=True, fixed_day=1)
-        self.fields['enddate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28, help_text=_('Leaving this empty will indicate it is ongoing'))
+        self.fields['enddate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=False
+        self.fields['enddate'].help_text=_('Leaving this empty will indicate it is ongoing')
         self.fields['sector'].required=True
     
     def clean(self):
@@ -409,9 +410,10 @@ class EducationForm(BetterModelForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
         self.fields['startdate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=True, fixed_day=1)
-        self.fields['enddate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28, help_text=_('Leaving this empty will indicate it is ongoing'))
+        self.fields['enddate'].widget = DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=False
+        self.fields['enddate'].help_text=_('Leaving this empty will indicate it is ongoing')
         self.fields['level'].required=True
 
     class Meta:
@@ -437,9 +439,10 @@ class PoliticalExperienceForm(BetterModelForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.fields['description'].widget = forms.Textarea()
         self.fields['startdate'].widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=True, fixed_day=1)
-        self.fields['enddate'].widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28, help_text=_('Leaving this empty will indicate it is ongoing'))
+        self.fields['enddate'].widget=DateSelectPicker(years=range(datetime.date.today().year, 1935, -1), required=False, fixed_day=28)
         self.fields['startdate'].required=True
         self.fields['enddate'].required=False
+        self.fields['enddate'].help_text=_('Leaving this empty will indicate it is ongoing')
         self.fields['type'].required=True
 
         

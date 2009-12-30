@@ -115,7 +115,7 @@
            	<dt>{% trans 'E-mail' %}:</dt>
             	<dd>{% if eip.party.email %}<a href="mailto:{{ eip.party.email }}">{{ eip.party.email }}</a>{%else%}&ndash;{%endif%}</dd>
            	<dt>{% trans 'Website' %}:</dt>
-            	<dd>{% if eip.party.website %}<a href="{{ eip.party.website }}">{{ eip.party.website }}</a>{%else%}&ndash;{%endif%}</dd>
+            	<dd>{% if eip.party.website %}<a href="{{ eip.party.website }}" target="_blank">{{ eip.party.website }}</a>{%else%}&ndash;{%endif%}</dd>
       	</dl>
 	{% endblockwrap %}
     

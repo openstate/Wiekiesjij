@@ -10,7 +10,7 @@
     {% for interest in interests %}
     <div class="profile-item interest">
         <h3>{{ interest.organisation }}</h3>
-        <p class="info"><a href="{{ interest.url }}" class="url">{{ interest.url }}</a></p>
+        <p class="info"><a href="{{ interest.url }}" target="_blank" class="url">{{ interest.url }}</a></p>
         <p>{{ interest.description }}</p>
     	<ul class="quicklinks">
         	<li><a href="{% url bo.politician_profile_interest_wizard_edit eip_id user_id interest.id %}">{% trans "Edit" %}</a></li>

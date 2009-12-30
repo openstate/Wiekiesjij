@@ -9,7 +9,7 @@
     {% for appearance in appearances %}
     <div class="profile-item appearance">
         <h3>{{ appearance.name }}</h3>
-       	<p class="info"><strong>{% trans "Time" %}:</strong> {{ appearance.datetime|date:'D j F Y, G:i'|title }} | <strong>{% trans "Place" %}:</strong> {{ appearance.location }} | <a href="{{ appearance.url }}" class="url">{% trans "Website" %}</a></p>
+       	<p class="info"><strong>{% trans "Time" %}:</strong> {{ appearance.datetime|date:'D j F Y, G:i'|title }} | <strong>{% trans "Place" %}:</strong> {{ appearance.location }} | <a href="{{ appearance.url }}" target="_blank" class="url">{% trans "Website" %}</a></p>
 
         
         <p>{{ appearance.description }}</p>
