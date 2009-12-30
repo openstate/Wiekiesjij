@@ -51,7 +51,7 @@ def redirect_view(request):
         return redirect('bo.election_party_view', id=election_instance_party.id)
     elif request.user.profile.type == 'candidate':
         election_instance_party = request.user.elections.all()[0].election_party_instance
-        return redirect('bo.politician_welcome', election_instance_id=election_instance_party.election_instance.id)
+        return redirect('bo.politician_welcome', eip_id=election_instance_party.id)
     else:
         raise PermissionDeniedException()
 
