@@ -628,7 +628,7 @@ def answer_question_done(request, election_instance_party_id, user_id):
                                 'questions': range(0, get_question_count(election_instance_party_id)),
                                 'eip_id': election_instance_party_id,
                                 'user_id': user_id,
-                            }
+                            },
                             context_instance=RequestContext(request))
 
 def view_profile(request):
