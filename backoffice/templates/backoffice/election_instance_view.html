@@ -114,7 +114,7 @@
         {#<a href="{% url bo.edit_council id=instance.id %}" class="edit">{% trans 'edit' %}</a>#}
         <dl>
            	<dt>{% trans "Address" %}</dt>
-            	<dd>{{ instance.council.street }} {{ instance.council.house_num }}<br />{{ instance.council.postcode }}  {{ intance.council.town }}</dd>
+            	<dd>{{ instance.council.street|default:"&ndash;" }} {{ instance.council.house_num|default:"&ndash;" }}<br />{{ instance.council.postcode|default:"&ndash;" }}  {{ intance.council.town|default:"&ndash;" }}</dd>
           	<dt>{% trans 'E-mail' %}</dt>
             	<dd>{% if instance.council.email %}<a href="mailto:{{ instance.council.email }}">{{ instance.council.email }}</a>{% else %}&ndash;{% endif %}</dd>
             <dt>{% trans 'Website' %}</dt>

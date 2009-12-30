@@ -97,7 +97,7 @@
             <dt>{% trans 'Slogan' %}:</dt>
             <dd>{{ eip.party.slogan|default:"&ndash;" }}</dd>
             <dt>{% trans 'Current number of seats' %}:</dt>
-            <dd>{{ eip.party.num_seats }}</dd>
+            <dd>{{ eip.party.num_seats|default:"&ndash;" }}</dd>
         </dl>
   	{% endblockwrap %}
     
@@ -107,8 +107,8 @@
         	<dt>{% trans "Name" %}:</dt>
             	<dd>{{ eip.party.name|default:"&ndash;" }} {% if eip.party.abbreviation %}({{ eip.party.abbreviation }}){% endif %}</dd>
            	<dt>{% trans "Address" %}:</dt>
-            	<dd>{{ eip.party.address_street }} {{ eip.party.address_number }}
-                    <br />{{ eip.party.address_postalcode }}  {{ eip.party.address_city }}
+            	<dd>{{ eip.party.address_street|default:"&ndash;" }} {{ eip.party.address_number|default:"&ndash;" }}
+                    <br />{{ eip.party.address_postalcode|default:"&ndash;" }}  {{ eip.party.address_city|default:"&ndash;" }}
                 </dd>
            	<dt>{% trans 'Telephone' %}:</dt>
             	<dd>{{ eip.party.telephone|default:"&ndash;" }}</dd>
@@ -124,17 +124,17 @@
         <dl>
         	<dt>{% trans "Description" %}</dt>
             	<dd>
-                    {{ eip.party.description }}<br />
+                    {{ eip.party.description|default:"&ndash;" }}<br />
                     {#<a href="#">{% trans "read more" %}</a>#}
                 </dd>
        		<dt>{% trans "History" %}</dt>
             	<dd>
-                    {{ eip.party.history }}<br />
+                    {{ eip.party.history|default:"&ndash;" }}<br />
                    {# <a href="#">{% trans "read more" %}</a>#}
                 </dd>
        		<dt>{% trans "Manifesto Summary" %}</dt>
             	<dd>
-                    {{ eip.party.manifesto_summary }}<br />
+                    {{ eip.party.manifesto_summary|default:"&ndash;" }}<br />
                 </dd>
 			{% if eup.party.manifesto %}
 			<dd><a href="{{ eip.party.manifesto }}" target="_blank">{% trans "Link to manifesto" %}</a></dd>	
