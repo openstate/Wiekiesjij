@@ -149,7 +149,7 @@ class AutoCompleter(forms.widgets.TextInput):
     """ 
         Auto completer 
     """
-    TEMPLATE = """
+    TEMPLATE = u"""
         <script type="text/javascript">
              jQuery(document).ready(function(){
                 jQuery('#%(id)s').autocomplete("%(data)s".split(', '), {max: %(limit)d});
@@ -170,12 +170,12 @@ class AutoCompleter(forms.widgets.TextInput):
         
     def __init__(self, model, field, *args, **kwargs):
         super(AutoCompleter, self).__init__(*args, **kwargs)
-        self.items = model.objects.values_list(field, flat=True).order_by(field)
+        self.items = model.objects.values_list(field, flat=True).distinct().order_by(field)
 
 
     def render(self, *args, **kwargs):
         html_id = kwargs.get('attrs', {}).get('id', '')
-        data = ", ".join(self.items)
+        data = u", ".join(self.items)
         limit = 15
 
         result = super(AutoCompleter, self).render(*args, **kwargs)

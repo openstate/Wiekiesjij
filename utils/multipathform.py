@@ -218,7 +218,7 @@ class MultiPathFormWizard(object):
         valid = True
         for name, form in forms.iteritems():
             valid &= form.is_valid()
-
+    
         forms_path.append(forms)
         
         # current set of forms is valid, allow next step

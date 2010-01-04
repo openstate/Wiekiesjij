@@ -1927,7 +1927,7 @@ msgstr "Telefoonnummer"
 
 #: elections/forms.py:223
 msgid "Vul hier het telefoonnummer van uw campagneteam in."
-msgstr "Vul hier het email adres in waarmee u met Wiekiesjij wenst te corresponderen."
+msgstr "Vul hier het telefoonnummer van uw campagneteam in."
 
 #: elections/forms.py:224
 msgid "Party website"
