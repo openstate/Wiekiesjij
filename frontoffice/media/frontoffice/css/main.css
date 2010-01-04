@@ -1,0 +1,664 @@
+	/* 	General element styling
+*************************************************************************************************/
+	
+	html,body {
+		margin:0;
+		padding:0;
+		}
+	
+	body {
+		background:#ffffff;
+		color:#000000;
+		font-family:arial, Helvetica, sans-serif;
+		font-size:12px;
+		}
+		
+	/* 	Content elements
+		----------------------------------------------------------------------------------------- */
+	
+			h1 {
+				background:url(../img/h1Arrow.gif) left center no-repeat;
+				font-size:18px;
+				line-height:24px;
+				margin:0 0 0 10px;
+				padding-left:28px;
+				}
+			
+			a {
+				color:#000000;
+				text-decoration:underline;
+				}
+				
+				a:hover {
+					text-decoration:none;
+					}
+					
+	/* 	Tabs
+		----------------------------------------------------------------------------------------- */
+					
+			ul.tabs {
+				list-style:none;
+				overflow:hidden;
+				}
+				
+				ul.tabs li {
+					float:left;
+					}
+					
+					ul.tabs li a {
+						color:#000000;
+						display:block;
+						padding:0 10px;
+						text-decoration:none;
+						}
+						
+					ul.tabs li a:hover {
+						background:#bab9b9;
+						}
+						
+					ul.tabs li.selected a,
+					ul.tabs li.selected a:hover {
+						background:#E0E0E0;
+						}
+
+	/*	generic styling
+		**************************************************************************************************************/
+		
+		#container {
+			margin:20px auto 0;
+			width:980px;
+			}
+		
+	/*	Header
+		**************************************************************************************************************/
+
+			#header {
+				border-bottom:4px solid #e0e0e0;
+				height:95px;
+				margin:0 10px 50px;
+				overflow:hidden;
+				position:relative;
+				}
+			
+					a.branding {
+						background:url(../img/branding.gif) left top no-repeat;
+						display:block;
+						height:90px;
+						left:0;
+						position:absolute;
+						text-indent:-9999px;
+						top:0;
+						width:261px;
+						}
+						
+					#header ul.tabs {
+						top:52px;
+						height:43px;
+						overflow:hidden;
+						position:absolute;
+						right:0;
+						}
+						
+						#header ul.tabs li {
+							margin-left:2px;
+							}
+							
+							#header ul.tabs li a {
+								font-size:19px;
+								line-height:34px;
+								margin-top:7px;
+								}
+								
+							#header ul.tabs li.selected a {
+								line-height:43px;
+								margin-top:0;
+								}
+	
+	/*	Content
+	**************************************************************************************************************/
+		
+			#content {
+			
+				}
+				
+				#content col {
+					
+					}
+					
+					#content .mod {
+						background:#E0E0E0;
+						margin:10px 10px 50px 20px;
+						}
+						
+						#content .bd {
+							background:#ffffff;
+							border:1px solid #c2c2c2;
+							clear:left;
+							left:-10px;
+							padding:15px 15px 5px;
+							position:relative;
+							top:-10px;
+							}
+						
+	/* 	Tabs
+		----------------------------------------------------------------------------------------- */
+					
+					#content ul.tabs {
+						height:32px;
+						margin-left:10px;
+						}
+					
+						#content ul.tabs li {
+							margin-right:1px;
+							}
+							
+							#content ul.tabs li a {
+								font-size:18px;
+								line-height:27px;
+								margin-top:4px;
+								}
+								
+							#content ul.tabs li.selected a {
+								line-height:32px;
+								margin-top:0;
+								}
+	
+	/* 	Quick profile
+		----------------------------------------------------------------------------------------- */
+	
+							div#content div.quickProfile .container {
+								background:#FFFFFF url(../img/quickProfileBackground.gif) top left repeat-y;
+								overflow:hidden;_zoom:1;
+								margin-bottom:15px;
+								position:relative;
+								}
+								
+								div#content div.quickProfile .container img.quickProfilePicture {
+									float:left;
+									margin-right:30px;
+									width:140px;
+									}
+									
+								div#content div.quickProfile .container .quickProfileInfo {
+									float:left;
+									line-height:20px;
+									margin-right:30px;
+									width:325px;
+									}
+									
+									div#content .quickProfileInfo tr.emptyRow th,
+									div#content .quickProfileInfo tr.emptyRow td {
+										line-height:14px;
+										}
+								
+									div#content div.quickProfile .quickProfileInfo th {
+										font-weight:bold;
+										width:150px;
+										}
+										
+										div#content div.quickProfile tr.fan td {
+											text-align:center;
+											}
+											
+											div#content div.quickProfile tr.fan a {
+												color:#ed2227;
+												font-weight:bold;
+												}
+										
+										div#content div.quickProfile ul.socialNetwork {
+											list-style:none;
+											}
+										
+										div#content div.quickProfile ul.socialNetwork li {
+											float:left;
+											margin-right:5px;
+											}
+										
+											div#content div.quickProfile ul.socialNetwork li a {
+												display:block;
+												height:26px;
+												overflow:hidden;
+												width:26px;
+												}
+								
+								div#content div.quickProfile .container .popularityMeter {
+									float:left;
+									position:relative;
+									width:148px;
+									}
+								
+									
+									div#content div.quickProfile .popularityMeter .meterContainer {
+										display:block;
+										height:158px;
+										left:25px;
+										overflow:hidden;
+										position:absolute;
+										top:10px;
+										width:64px;
+										}
+										
+										div#content div.quickProfile .popularityMeter .meterActiveContainer {
+											bottom:0;_margin-bottom:-1px; /* for IE absolute bottom position bug */
+											left:0;
+											overflow:hidden;
+											position:absolute;
+											width:64px;
+											}
+										
+											div#content div.quickProfile .popularityMeter .meterActive {
+												bottom:0;
+												left:0;
+												position:absolute;
+												width:64px;
+												}
+									
+									div#content div.quickProfile .popularityMeter span.top {
+										left:95px;
+										position:absolute;
+										top:10px;
+										}
+									
+									div#content div.quickProfile .popularityMeter span.bottom {
+										left:95px;
+										position:absolute;
+										top:154px;
+										}
+									
+									div#content div.quickProfile .popularityMeter span.total {
+										display:block;
+										font-size:22px;
+										font-weight:bold;
+										left:0;
+										position:absolute;
+										text-align:center;
+										top:173px;
+										width:117px;
+										}
+										
+								div#content div.quickProfile .ballotPosition {
+									border-top:1px solid #c2c2c2;
+									margin-bottom:10px;
+									padding-top:14px;
+									}
+									
+									div#content div.quickProfile .ballotPosition a {
+										color:#ed2227;
+										font-weight:bold;
+										}
+							
+							
+								
+	/* 	MoreInfo - Favorites
+		----------------------------------------------------------------------------------------- */
+	
+								div#content div.favs table {
+									line-height:20px;
+									margin:-5px 0 0;
+									width:100%;
+									}
+									
+									div#content div.favs th,
+									div#content div.favs td {
+										border-bottom:1px solid #c2c2c2;
+										}
+									
+									div#content div.favs tr.last th,
+									div#content div.favs tr.last td {
+										border-bottom:none;
+										}
+									
+									div#content div.favs th {
+										font-weight:bold;
+										vertical-align:top;
+										width:250px;
+										}
+										
+										div#content div.favs td span.logo {
+											display:block;
+											float:left;
+											height:30px;
+											margin:5px 0;
+											overflow:hidden;
+											padding:3px 0;
+											width:211px;
+											}
+											
+											div#content div.favs td span.logo a {
+												background-position:center center;
+												background-repeat:no-repeat;
+												display:block;
+												height:30px;
+												margin-bottom:-5px;
+												overflow:hidden;
+												text-align:center;
+												text-indent:-9999px;
+												}
+											
+												div#content div.favs td span.logo a img {
+													margin:0;
+													}
+													
+	/* 	MoreInfo - Education
+		----------------------------------------------------------------------------------------- */
+	
+							div#content div.education {
+								border-bottom:1px solid #C2C2C2;
+								margin-bottom:10px;
+								padding-bottom:10px;
+								}
+							
+							div#content div.edu div.last {
+								border-bottom:none;
+								margin-bottom:0;
+								}		
+								
+								div#content div.education h2 {
+									color:#ed2227;
+									font-size:14px;
+									font-weight:bold;
+									}
+									
+									div#content div.education h2 span.institute {
+										color:#000000;
+										font-size:13px;
+										}
+											
+								div#content div.education span.smallInfo {
+									color:#777777;
+									display:block;
+									font-size:11px;
+									margin-bottom:5px;
+									}
+								
+								div#content div.education p {
+									width:420px;
+									}
+									
+	/* 	MoreInfo - Work
+		----------------------------------------------------------------------------------------- */
+	
+							div#content div.work {
+								border-bottom:1px solid #C2C2C2;
+								margin-bottom:10px;
+								padding-bottom:10px;
+								}
+							
+							div#content div.wrk div.last {
+								border-bottom:none;
+								margin-bottom:0;
+								}		
+								
+								div#content div.work h2 {
+									color:#ed2227;
+									font-size:14px;
+									font-weight:bold;
+									}
+									
+									div#content div.work h2 span.institute {
+										color:#000000;
+										font-size:13px;
+										}
+											
+								div#content div.work span.smallInfo {
+									color:#777777;
+									display:block;
+									font-size:11px;
+									margin-bottom:5px;
+									}
+								
+								div#content div.work p {
+									width:420px;
+									}
+									
+	/* 	MoreInfo - Political Experience
+		----------------------------------------------------------------------------------------- */
+	
+							div#content div.polExp {
+								border-bottom:1px solid #C2C2C2;
+								margin-bottom:10px;
+								padding-bottom:10px;
+								}
+							
+							div#content div.pol div.last {
+								border-bottom:none;
+								margin-bottom:0;
+								}		
+								
+								div#content div.polExp h2 {
+									color:#ed2227;
+									font-size:14px;
+									font-weight:bold;
+									}
+									
+									div#content div.polExp h2 span.institute {
+										color:#000000;
+										font-size:13px;
+										}
+											
+								div#content div.polExp span.smallInfo {
+									color:#777777;
+									display:block;
+									font-size:11px;
+									margin-bottom:5px;
+									}
+								
+								div#content div.polExp p {
+									width:420px;
+									}
+	
+	/* 	Tweets
+		----------------------------------------------------------------------------------------- */
+		
+							div.tweets ul {
+								margin-bottom:-10px;
+								}
+								
+								div.tweets ul li {
+									margin-bottom:20px;
+									}
+
+										div.tweets ul li a {
+											color:#ed2227;
+											}
+											
+									div.tweets ul li span.info {
+										color:#888888;
+										display:block;
+										font-size:11px;
+										margin-top:3px;
+										}
+	
+	/* 	Video
+		----------------------------------------------------------------------------------------- */
+		
+							div#content div.video .bd {
+								padding-bottom:12px;
+								}
+		
+	/* 	LooksLike
+		----------------------------------------------------------------------------------------- */
+		
+							div.looksLike ul.quickList {
+								list-style:none;
+								}
+							
+								.looksLike ul.quickList li {
+									margin-bottom:10px;
+									}
+									
+									.looksLike ul.quickList li a {
+										cursor:pointer;
+										display:block;
+										overflow:hidden;
+										text-decoration:none;
+										width:100%;
+										}
+										
+										.looksLike ul.quickList li a img {
+											border: 2px solid #ffffff;
+											float:left;
+											margin-right:10px;
+											width:50px;
+											}
+										
+										.looksLike ul.quickList li a:hover img {
+											border: 2px solid #BAB9B9;
+											}
+										
+										.looksLike ul.quickList li a span {
+											display:block;
+											float:left;
+											line-height:20px;
+											width:119px;
+											}
+										
+											.looksLike ul.quickList li a span b {
+												color:#ed2227;
+												font-size:1em;
+												}
+											
+											.looksLike ul.quickList li a:hover span b {
+												text-decoration:underline;
+												}
+						
+	/* 	Appearances
+		----------------------------------------------------------------------------------------- */
+		
+							.appearances ul.quickList {
+								list-style:none;
+								}
+								
+								.appearances ul.quickList li {
+									margin-bottom:10px;
+									}
+									
+									.appearances ul.quickList li a {
+										cursor:pointer;
+										display:block;
+										overflow:hidden;
+										text-decoration:none;
+										width:100%;
+										}
+										
+										.appearances ul.quickList li a span.date {
+											background:#E0E0E0;
+											border: 2px solid #ffffff;
+											display:block;
+											float:left;
+											height:31px;
+											margin-right:5px;
+											overflow:hidden;
+											padding:5px;
+											text-align:center;
+											width:31px;
+											}
+											
+												.appearances ul.quickList li a span.date span.day {
+													color:#ed2227;
+													font-size:18px;
+													font-weight:bold;
+													line-height:18px;
+													}
+												
+												.appearances ul.quickList li a span.date span.month {
+													font-size:10px;
+													font-weight:bold;
+													line-height:10px;
+													text-transform:uppercase;
+													}
+										
+										.appearances ul.quickList li a:hover span.date {
+											border: 2px solid #BAB9B9;
+											}
+										
+										.appearances ul.quickList li a span.info {
+											display:block;
+											float:left;
+											line-height:20px;
+											width:133px;
+											}
+										
+											.appearances ul.quickList li a span.info b {
+												color:#ed2227;
+												font-size:1em;
+												}
+											
+											.appearances ul.quickList li a:hover span.info b {
+												text-decoration:underline;
+												}
+	
+	/* 	Goals
+		----------------------------------------------------------------------------------------- */
+		
+							.goals ul.quickList {
+								list-style:none;
+								margin-bottom:-5px;
+								}
+								
+								.goals ul.quickList li {
+									color:#ed2227;
+									list-style-type:square;
+									margin:0 0 15px 15px;
+									}
+									
+									.goals ul.quickList li b {
+										color:#000000;
+										display:block;
+										font-size:1em;
+										}
+										
+									.goals ul.quickList li a {
+										color:#ed2227;
+										margin-top:2px;
+										}
+		
+	/* 	Links
+		----------------------------------------------------------------------------------------- */
+							
+							.links ul.quickList {
+								list-style:none;
+								}
+								
+								.links ul.quickList li {
+									margin-bottom:10px;
+									}
+									
+									.links ul.quickList li a {
+										color:#ed2227;
+										font-weight:bold;
+										text-decoration:none;
+										}
+
+									.links ul.quickList li a:hover {
+										text-decoration:underline;
+										}
+										
+									.links ul.quickList li p {
+										padding-left:10px;
+										}
+										
+	/*	Footer
+	**************************************************************************************************************/
+	
+			#footer {
+				border-top:2px solid #e0e0e0;
+				margin:0 10px 0;
+				padding:5px 0;
+				overflow:hidden;
+				}
+			
+				#footer ul {
+					color:#8d8d8d;
+					list-style:none;
+					overflow:hidden;
+					}
+				
+					#footer ul li {
+						float:left;
+						margin-right:4px;
+						}
+					
+						#footer ul li a {
+							color:#8d8d8d;
+							}

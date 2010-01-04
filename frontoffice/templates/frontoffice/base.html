@@ -4,16 +4,28 @@
 <html lang='en-us' xmlns='http://www.w3.org/1999/xhtml'>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}frontoffice/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}frontoffice/css/grids.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}frontoffice/css/ie67.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}frontoffice/css/libraries.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}frontoffice/css/mod.css" />
+
     <title>WieKiesJij? - {% block title %}{% endblock title %}</title>
     {% block extrahead %}{% endblock extrahead %}
 </head>
 <body>
     <div id="container">
-    <div id="header">
-        <p class="wkj">Wie Kies Jij ?</p>
+        <div id="header">
+            <a class="branding">Wie Kies Jij?</a>
+            <ul class="tabs">
+                {% block menu %}
+                {% endblock menu %}
+            </ul>
+        </div>
+
         <div id="content" class="line">
-        
-       	{% block cols %}
+
+        {% block cols %}
             <div class="col size3of4">
                 {% block content %}
 
@@ -21,18 +33,17 @@
             </div>
             <div class="col size1of4 sidebar">
             {% block sidebar %}
-            
+
             {% endblock sidebar %}
             </div>
         {% endblock cols %}
-        
+
         </div>
-		
+
         <div id="footer">
-        	<p>&copy; Copyright <a href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a> {% trans "and" %} <a href="http://getlogic.nl">Getlogic</a> 2009</p>
+                <p>&copy; Copyright <a href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a> {% trans "and" %} <a href="http://getlogic.nl">Getlogic</a> 2009</p>
         </div>
         
-    </div>
     </div>
 </body>
 </html>
