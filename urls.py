@@ -13,6 +13,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^backoffice/', include('backoffice.urls')),
+    (r'^frontoffice/', include('frontoffice.urls')),
     (r'^invitation/', include('invitations.urls')),
 
     url(r'^wiz/(?P<path>[a-z0-9:]*)$', ElectionSetupWizard('test'), name = 'wizard.step'),

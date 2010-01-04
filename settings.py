@@ -112,6 +112,7 @@ INSTALLED_APPS = (
 
     'invitations',
     'backoffice',
+    'frontoffice',
 )
 
 # Email settings
