@@ -20,7 +20,7 @@
             <th>{% trans "Contacts' gender" %}</th>
     
         </tr>
-        {% for party in parties %}
+        {% for party in parties.values %}
             <tr>
                 <td>{{ party.list }}</td>
                 <td>{{ party.name }}</td>

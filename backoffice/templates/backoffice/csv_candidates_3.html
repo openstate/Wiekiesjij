@@ -15,7 +15,7 @@
             <th>{% trans "Email" %}</th>
             <th>{% trans "Gender" %}</th>
         </tr>
-        {% for candidate in candidates %}
+        {% for candidate in candidates.values %}
             <tr>
                 <td>{{ candidate.position }}</td>
                 <td>{{ candidate.first_name }}</td>

@@ -2,8 +2,8 @@ from utils.unicode_csv import UnicodeReader
 from django.conf import settings
 from django.forms.fields import email_re
 
-def get_candidates_from_csv(session):
-    candidates = []
+def get_candidates_from_csv(session, skip_positions=[]):
+    candidates = {}
 
     #Get file from session and read it
     file = open(settings.TMP_ROOT + '/' + session['csv_candidate_filename'] , 'rb')
@@ -36,13 +36,14 @@ def get_candidates_from_csv(session):
             continue
         if candidate_data['gender'] not in ['Female', 'Male']:
             continue
-
-        candidates.append(candidate_data)
+        
+        if not int(candidate_data['position']) in skip_positions:
+            candidates.update({candidate_data['position']: candidate_data})
 
     return candidates
 
-def get_parties_from_csv(session):
-    parties = []
+def get_parties_from_csv(session, skip_lists=[]):
+    parties = {}
 
     #Get file from session and read it
     file = open(settings.TMP_ROOT + '/' + session['csv_party_filename'] , 'rb')
@@ -77,6 +78,7 @@ def get_parties_from_csv(session):
         if party_data['contact_gender'] not in ['Female', 'Male']:
             continue
                 
-        parties.append(party_data)
+        if not int(party_data['list']) in skip_lists:
+            parties.update({party_data['list']: party_data})
 
     return parties
