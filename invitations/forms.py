@@ -17,8 +17,8 @@ class AcceptInvitationForm(BetterForm, TemplateForm):
     password_again = forms.CharField(label=_('Password again'), widget=forms.widgets.PasswordInput(render_value=False))
     
     def clean(self):
-        password = self.cleaned_data['password']
-        password_again = self.cleaned_data['password_again']
+        password = self.cleaned_data.get('password')
+        password_again = self.cleaned_data.get('password_again')
         
         if password and password_again and password != password_again:
             # Assigning the error to the password_again field
