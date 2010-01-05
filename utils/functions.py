@@ -65,3 +65,22 @@ def move_up(instance, field, limit, kwargs={}):
         instance.save()
         previous.save()
         return getattr(instance, field)
+
+
+def list_unique_order_preserving(seq, idfun=None):
+    """Takes a list and returns a list with no duplicate objects in the same
+    order as it was recieved"""
+    # order preserving
+    if idfun is None:
+        def idfun(x): return x
+    seen = {}
+    result = []
+    for item in seq:
+        marker = idfun(item)
+        # in old Python versions:
+        # if seen.has_key(marker)
+        # but in new ones:
+        if marker in seen: continue
+        seen[marker] = 1
+        result.append(item)
+    return result

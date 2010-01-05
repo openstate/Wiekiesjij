@@ -25,6 +25,9 @@ DAYS =  (('Monday',_('Monday')),
              ('Saturday', _('Saturday')),
              ('Sunday', _('Sunday')),
             )
+
+
+
 class PoliticianProfileForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
