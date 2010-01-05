@@ -510,7 +510,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                 'num_children': self.user.profile.num_children,
                 'life_stance': self.user.profile.life_stance,
                 'church': self.user.profile.church,
-                'smoker': 'true' if self.user.profile.smoker else 'false',
+                'smoker': 'true' if self.user.profile.smoker == True else 'false',
                 'diet': self.user.profile.diet,
                 'fav_news': self.user.profile.fav_news,
                 'transport': self.user.profile.transport,
