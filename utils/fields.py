@@ -186,3 +186,5 @@ class YoutubeURLField(URLField):
         match = regex.match(value)
         if value and not match: 
             raise ValidationError(self.error_messages['invalid_youtube_link'])
+            
+        return value
