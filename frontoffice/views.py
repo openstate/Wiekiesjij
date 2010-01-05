@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core.urlresolvers import reverse
-from frontoffice.forms import PoliticianFilterForm
+
+#from frontoffice.forms import PoliticianFilterForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles import PoliticianProfile
 from utils.functions import list_unique_order_preserving
