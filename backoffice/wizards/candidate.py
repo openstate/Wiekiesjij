@@ -510,7 +510,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                 'num_children': self.user.profile.num_children,
                 'life_stance': self.user.profile.life_stance,
                 'church': self.user.profile.church,
-                'smoker': self.user.profile.smoker,
+                'smoker': 'true' if self.user.profile.smoker else 'false',
                 'diet': self.user.profile.diet,
                 'fav_news': self.user.profile.fav_news,
                 'transport': self.user.profile.transport,
@@ -579,6 +579,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     self.user_profile_dict.update(form.cleaned_data)
             
             for (key, value) in self.user_profile_dict.items():
+                if key == 'smoker':
+                    value = (value == 'true')
                 setattr(self.user.profile, key, value)
             if self.user.profile.num_children is None:
                 self.user.profile.num_children = 0

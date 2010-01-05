@@ -4,6 +4,7 @@ from django import template
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.template.defaultfilters import stringfilter
+from django.utils.safestring import mark_safe
 
 
 register = template.Library()
@@ -91,14 +92,13 @@ def youtube(url):
     match = regex.match(url)
     if not match: return ""
     video_id = match.group('id')
-    return """
+    return mark_safe("""
     <object width="425" height="344">
     <param name="movie" value="http://www.youtube.com/watch/v/%(video_id)s"></param>
     <param name="allowFullScreen" value="true"></param>
     <embed src="http://www.youtube.com/watch/v/%(video_id)s" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed>
     </object>
-    """ % {'video_id': video_id}
-youtube.is_safe = True # Don't escape HTML
+    """ % {'video_id': video_id})
 
 
 class CompareBlockNode(template.Node):
