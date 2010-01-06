@@ -2,7 +2,7 @@
 <ul>
     {% for tweet in posts %}
         <li>
-            <span class="tweet">{{ tweet.title }}</span>
+            <span class="tweet">{{ tweet.summary }}</span>
             <span class="info">{{ tweet.published|timesince }} {% trans 'ago' %}</span>
         </li>
     {% endfor %}
