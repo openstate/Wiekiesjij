@@ -6,35 +6,54 @@ import monthdelta
 from dateutil import relativedelta
 from utils.functions import list_unique_order_preserving
 
-def cal_political_experience_years(sender, instance, **kwargs):
+def cal_political_experience_days(sender, instance, **kwargs):
     all_months = []
+    #Get all politican political experience instances
     for experience in instance.politician.political.all():
+        # when saving a new instance it saves the object first to get and idThis makes sure that the code is only 
+        # done on instances that are fully complete.
         if experience.startdate:
+            # check if they are currently getting experience or if they have an end date
             if experience.enddate:
                 end = experience.enddate
             else:
                 end = date.today()
+            #Find out how many months that this period represents
             months = monthdelta.monthmod(experience.startdate, end)
+            # add all months in the range to a list
             for month in range(0,(months[0].months + 1)):
                 all_months.append(experience.startdate + relativedelta.relativedelta(months=+month))
+    # remove duplicates from list
     num_months = len(list_unique_order_preserving(all_months))
+    # calculate roughly how many days this is
     instance.politician.political_experience_days = num_months * (365 / 12)
+    # save politician with newly calculated number of days
     instance.politician.save()
 
 
-def cal_work_experience_years(sender, instance, **kwargs):
+def cal_work_experience_days(sender, instance, **kwargs):
+    """ calculates the amount of days experience working - roughly"""
     all_months = []
+    #Get all politican work experience instances
     for experience in instance.politician.work.all():
+        # when saving a new instance it saves the object first to get and idThis makes sure that the code is only
+        # done on instances that are fully complete.
         if experience.startdate:
+            # check if they are currently getting experience or if they have an end date
             if experience.enddate:
                 end = experience.enddate
             else:
                 end = date.today()
+            #Find out how many months that this period represents
             months = monthdelta.monthmod(experience.startdate, end)
+            # add all months in the range to a list
             for month in range(0,(months[0].months + 1)):
                 all_months.append(experience.startdate + relativedelta.relativedelta(months=+month))
+    # remove duplicates from list
     num_months = len(list_unique_order_preserving(all_months))
+    # calculate roughly how many days this is
     instance.politician.work_experience_days  = num_months * (365 / 12)
+    # save politician with newly calculated number of days
     instance.politician.save()
 
 

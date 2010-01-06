@@ -6,7 +6,7 @@ from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
-from functions import cal_work_experience_years, cal_political_experience_years
+from functions import cal_work_experience_days, cal_political_experience_days
 
 GENDERS = (
         ('Male',_('Male')),
@@ -437,7 +437,7 @@ def user_profile(u):
 User.profile = property(user_profile)
 
 
-post_save.connect(cal_political_experience_years, sender=PoliticalExperience)
-post_delete.connect(cal_political_experience_years, sender=PoliticalExperience)
-post_save.connect(cal_work_experience_years, sender=WorkExperience)
-post_delete.connect(cal_work_experience_years, sender=WorkExperience)
+post_save.connect(cal_political_experience_days, sender=PoliticalExperience)
+post_delete.connect(cal_political_experience_days, sender=PoliticalExperience)
+post_save.connect(cal_work_experience_days, sender=WorkExperience)
+post_delete.connect(cal_work_experience_days, sender=WorkExperience)
