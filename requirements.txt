@@ -3,6 +3,7 @@ django-debug-toolbar==0.8.1
 South==0.6.2
 django-extensions==0.4.1
 django-form-utils==0.1.6
+feedparser==4.1
 
 # Source installs
 -e svn+http://django-tagging.googlecode.com/svn/trunk/#egg=tagging

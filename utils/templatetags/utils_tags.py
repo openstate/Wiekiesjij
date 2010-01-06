@@ -1,6 +1,7 @@
-import re
+import re, urllib, os, time, datetime, feedparser
 
 from django import template
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.template.defaultfilters import stringfilter
@@ -99,6 +100,40 @@ def youtube(url):
     <embed src="http://www.youtube.com/watch/v/%(video_id)s" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed>
     </object>
     """ % {'video_id': video_id})
+
+@register.inclusion_tag('utils_tags/_tweets.html')
+def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
+    """
+        Reads, parses and caches RSS feed.
+        http://www.djangosnippets.org/snippets/384/
+    """
+
+    #import ipdb; ipdb.set_trace()
+    CACHE_FOLDER = settings.TMP_ROOT + '/'
+    CACHE_FILE = ''.join([CACHE_FOLDER, template.defaultfilters.slugify(feed_url), '.cache'])
+    try:
+        cache_age = os.stat(CACHE_FILE)[8]
+    except: #if file doesn't exist, make sure it gets created
+        cache_age = 0
+    #is cache expired? default 60 minutes (60*60)
+    if (cache_age + cache_expires*60 < time.time()):
+        try: #refresh cache
+            urllib.urlretrieve(feed_url,CACHE_FILE)
+        except IOError: #if downloading fails, proceed using cached file
+            pass
+    #load feed from cache
+    feed = feedparser.parse(open(CACHE_FILE))
+    posts = []
+    for i in range(posts_to_show):
+        pub_date = feed['entries'][i].updated_parsed
+        published = time.strftime("%d %b %Y %H:%M" ,pub_date)
+        posts.append({
+            'title': mark_safe(feed['entries'][i].title),
+            'summary': mark_safe(feed['entries'][i].summary),
+            'link': mark_safe(feed['entries'][i].link),
+            'published': mark_safe(published),
+        })
+    return {'posts': posts}
 
 
 class CompareBlockNode(template.Node):

@@ -1,0 +1,8 @@
+<ul>
+    {% for tweet in posts %}
+        <li>
+            <span class="tweet">{{ tweet.title }}</span>
+            <span class="info">{{ tweet.published }}</span>
+        </li>
+    {% endfor %}
+</ul>

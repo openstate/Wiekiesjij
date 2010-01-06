@@ -1,0 +1,240 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+{% load utils_tags %}
+
+{% block menu %}
+    <li><a href="#">{% trans 'Take the test' %}</a></li>
+    <li class="selected"><a href="#">{% trans 'Candidates' %}</a></li>
+    <li><a href="#">{% trans 'Statistics' %}</a></li>
+    <li><a href="#">{% trans 'Parties' %}</a></li>
+    <li><a href="#">{% trans 'Organisation' %}</a></li>
+{% endblock menu %}
+
+{% block content %}
+    <h1>{% trans 'Profile' %} {{ profile.full_name }}</h1>
+
+    <div class="mod quickProfile">
+        <div class="bd">
+            <div class="container">
+                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{{ profile.picture }}" />
+                <table class="quickProfileInfo">
+                    <tr>
+                        <th>{% trans 'Name' %}</th>
+                        <td>{{ profile.full_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Party' %}</th>
+                        <td>{{ profile.party }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Age' %}</th>
+                        <td>{{ profile.birthday }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Gender' %}</th>
+                        <td>{{ profile.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Marital status' %}</th>
+                        <td>{{ profile.get_marital_status_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Number of children' %}</th>
+                        <td>{{ profile.num_children }}</td>
+                    </tr>
+                    <tr class="emptyRow">
+                        <th>&nbsp;</th>
+                        <td></td>
+                    </tr>
+                    <tr class="fan">
+                        <td colspan="2">
+                            {% trans 'Todo' %}
+                        </td>
+                    </tr>
+                    <tr class="emptyRow">
+                        <th>&nbsp;</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Social networks' %}</th>
+                        <td>
+                            <ul class="socialNetwork">
+                                {% for connection in profile.connections.all %}
+                                <li class="{{ connection.type }}">
+                                    <a href="{{ connection.url }}">{{ connection.type }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <div class="popularityMeter">
+                    <div class="meterContainer">
+                        <img alt="" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
+                        <div class="meterActiveContainer" style="height: {{ popularity|default:0 }}%">
+                            <img class="meterActive" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
+                        </div>
+                    </div>
+                    <span class="top">100%</span>
+                    <span class="bottom">0%</span>
+                    <span class="total">{{ popularity|default:0 }}%</span>
+                </div>
+            </div>
+            <div class="ballotPosition">
+                {{ profile.first_name }} {% trans 'staat nummer' %} {{ profile.position }} {% trans 'op de verkiezingslijst van' %} {# #} {% trans 'in' %} {# #}
+            </div>
+        </div>
+    </div>
+
+    <ul class="tabs">
+        <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}><a href="#">{% trans 'Favorites and preferences' %}</a></li>
+        <li {% ifequal showtab "edu" %}class="selected"{% endifequal %}><a href="#">{% trans 'Education' %}</a></li>
+        <li {% ifequal showtab "work" %}class="selected"{% endifequal %}><a href="#">{% trans 'Work' %}</a></li>
+        <li {% ifequal showtab "exp" %}class="selected"{% endifequal %}><a href="#">{% trans 'Political experience' %}</a></li>
+    </ul>
+
+    {% ifequal showtab "favs" %}
+        <div class="mod favs">
+            <div class="bd">
+                <table>
+                    <tr>
+                        <th>{% trans 'Life stance' %}</th>
+                        <td>{{ profile.get_life_stance_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Religion' %}</th>
+                        <td>{{ profile.get_church_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Smoker' %}</th>
+                        <td>{% if profile.smoker %}{% trans 'smoker' %}{% else %}{% trans 'non-smoker' %}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Diet' %}</th>
+                        <td>{{ profile.get_diet_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'News' %}</th>
+                        <td>{{ profile.get_fav_news_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Media' %}</th>
+                        <td>{{ profile.get_fav_media_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Charities' %}</th>
+                        <td>{{ profile.get_charity_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Transport' %}</th>
+                        <td>{{ profile.get_transport_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Animal' %}</th>
+                        <td>{{ profile.get_fav_pet_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Sport' %}</th>
+                        <td>{{ profile.get_fav_sport_display }}</td>
+                    </tr>
+                    <tr class="last">
+                        <th>{% trans 'Club' %}</th>
+                        <td>{{ profile.get_fav_club_display }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    {% endifequal %}
+
+    {% ifequal showtab "edu" %}
+        <div class="mod edu">
+            <div class="bd">
+            </div>
+        </div>
+    {% endifequal %}
+
+    {% ifequal showtab "work" %}
+        <div class="mod wor">
+            <div class="bd">
+            </div>
+        </div>
+    {% endifequal %}
+
+    {% ifequal showtab "exp" %}
+        <div class="mod exp">
+            <div class="bd">
+            </div>
+        </div>
+    {% endifequal %}
+
+    <div class="col size1of3">
+        {% if twitter_url %}
+            <h1>{{ profile.first_name }}s Tweets</h1>
+            <div class="mod tweets">
+                <div class="bd">
+                    {% pull_feed twitter_url %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col size2of3">
+        <h1>{{ profile.first_name }}s video</h1>
+        <div class="mod video">
+            <div class="bd">
+                {{ profile.movie|youtube }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block sidebar %}
+    <h1>{% trans 'Political goals' %}</h1>
+    <div class="mod goals">
+        <div class="bd">
+            <ul class="quickList">
+                {# for goal in profile..all #}
+                    <li>
+                        <b>{% trans 'Todo' %}</b>
+                    </li>
+                {# endfor #}
+            </ul>
+        </div>
+    </div>
+
+    <h1>{% trans 'Appearances' %}</h1>
+    <div class="mod appearances">
+        <div class="bd">
+            <ul class="quickList">
+                {% for appearance in profile.appearances.all %}
+                    <li>
+                        <a href="{{ appearance.url }}">
+                            <span class="date">
+                                <span class="day">{{ appearance.datetime|date:"d" }}</span>
+                                <span class="month">{{ appearance.datetime|date:"M" }}</span>
+                            </span>
+                            <span class="info">
+                                <b>{{ appearance.name }}</b>
+                                {{ appearance.description }}
+                            </span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <h1>{% trans 'Links' %}</h1>
+    <div class="mod links">
+        <div class="bd">
+            <ul class="quickList">
+                {% for link in profile.links.all %}
+                    <li>
+                        <a href="{{ link.url }}">{{ link.name }}</a>
+                        <p>{{ link.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock sidebar %}
