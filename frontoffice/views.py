@@ -8,7 +8,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 
-#from frontoffice.forms import PoliticianFilterForm
+from frontoffice.forms import PoliticianFilterForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles import PoliticianProfile
 from utils.functions import list_unique_order_preserving
@@ -27,8 +27,6 @@ def politician_profile_filter(request):
         candidates = User.objects.filter(pk__in=elections_candidates)
         politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
         filtered_politicians = politicians
-        #for election_candidate in elections_candidates:
-        #    politicians.append(get_object_or_404(User, pk=election_candidate.candidate_id).profile)
 
         if form.is_valid():
             # All validation rules pass
@@ -39,21 +37,21 @@ def politician_profile_filter(request):
                 name_filter = None
                 for name in form.cleaned_data['name'].split():
                     if name_filter is None:
-                        name_filter = Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name)
+                        name_filter = (Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name))
                     else:
-                        name_filter = name_filter | Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name)
+                        name_filter = name_filter &  (Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name))
                 filtered_politicians = filtered_politicians.filter(name_filter)
             print filtered_politicians
-            if form.cleaned_data['gender'] != 'Either':
+            if form.cleaned_data['gender'] != 'Either' and form.cleaned_data['gender']:
                 filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
-
+            print filtered_politicians
             if form.cleaned_data['children'] is not None:
                 if form.cleaned_data['children'] == 1:
                     filtered_politicians = filtered_politicians.filter(num_children__gte=1)
                 else:
                     filtered_politicians = filtered_politicians.filter(num_children=0)
 
-
+            
 
 
             """ Calculate date from age - uses rough estimate of how 36 years 
@@ -68,13 +66,17 @@ def politician_profile_filter(request):
                 filtered_politicians = filtered_politicians.filter(dateofbirth__lte=date)
             if form.cleaned_data['end_age'] is not None:
                 date = datetime.datetime.now() - (year * form.cleaned_data['end_age']) - extra
-                print datetime.date.today()
+
                 filtered_politicians = filtered_politicians.filter(dateofbirth__gte=date)
 
 
             if form.cleaned_data['education']:
                 filtered_politicians = filtered_politicians.filter(education__level=form.cleaned_data['education'])
+            if form.cleaned_data['political_exp_years']:
+                filtered_politicians = filtered_politicians.filter(political_experience_days__gte=(form.cleaned_data['political_exp_years'] * 365))
+
             politicians = list_unique_order_preserving(filtered_politicians)
+ 
         else:
             politicians = []
             form = PoliticianFilterForm() # An unbound form

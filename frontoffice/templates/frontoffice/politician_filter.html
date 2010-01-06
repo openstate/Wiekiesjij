@@ -39,6 +39,7 @@
     	<h2>{% trans "Politicians" %}</h2>
         {% for politician in politicians %}
             <p>{{ politician.last_name }}</p>
+
         {% empty %}
         <p>{% trans 'No Politicians: please search or select a filter options' %}
         {% endfor %}
