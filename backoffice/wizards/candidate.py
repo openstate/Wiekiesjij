@@ -461,7 +461,6 @@ class PoliticianProfileGoalWizard(MultiPathFormWizard):
                     politician=self.user.profile,
                 )
 
-            import ipdb; ipdb.set_trace()
             for (key, value) in self.candidate_goal_data.items():
                 setattr(goal, key, value)
             goal.save(force_update=True) 
