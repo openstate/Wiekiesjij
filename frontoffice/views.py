@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles import PoliticianProfile
 from utils.functions import list_unique_order_preserving
+from django.db.models import Q
+import datetime
 
 
 
@@ -21,8 +23,8 @@ def politician_profile_filter(request):
         eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
         candidates = User.objects.filter(pk__in=elections_candidates)
-        politicians = PoliticianProfile.objects.filter(pk__in=candidates)
-
+        politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
+        filtered_politicians = politicians
         #for election_candidate in elections_candidates:
         #    politicians.append(get_object_or_404(User, pk=election_candidate.candidate_id).profile)
 
@@ -30,25 +32,49 @@ def politician_profile_filter(request):
             # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
-            filtered_candidates = []
+
             if form.cleaned_data['name']:
-
+                name_filter = None
                 for name in form.cleaned_data['name'].split():
-                    filtered_candidates.extend(politicians.filter(last_name__contains=name))
-                    filtered_candidates.extend(politicians.filter(first_name__contains=name))
-                    filtered_candidates.extend(politicians.filter(middle_name__contains=name))
+                    if name_filter is None:
+                        name_filter = Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name)
+                    else:
+                        name_filter = name_filter | Q(last_name__icontains=name) | Q(first_name__icontains=name) | Q(middle_name__icontains=name)
+                filtered_politicians = filtered_politicians.filter(name_filter)
+            print filtered_politicians
+            if form.cleaned_data['gender'] != 'Either':
+                filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
+
+            if form.cleaned_data['children'] is not None:
+                if form.cleaned_data['children'] == 1:
+                    filtered_politicians = filtered_politicians.filter(num_children__gte=1)
+                else:
+                    filtered_politicians = filtered_politicians.filter(num_children=0)
 
 
-                politicians = filtered_candidates
-                politicians = list_unique_order_preserving(filtered_candidates)
 
 
+            """ Calculate date from age - uses rough estimate of how 36 years 
+            ago - its rough because of leapyears - to compensate will add two
+            weeks to either side of age so more candidates will sho even if 
+            they are a bit older or a bit younger"""
+
+            year = datetime.timedelta(days=365)
+            extra = datetime.timedelta(days=10)
+            if form.cleaned_data['start_age'] is not None:
+                date = datetime.datetime.now() - (year * form.cleaned_data['start_age']) + extra
+                filtered_politicians = filtered_politicians.filter(dateofbirth__lte=date)
+            if form.cleaned_data['end_age'] is not None:
+                date = datetime.datetime.now() - (year * form.cleaned_data['end_age']) - extra
+                print datetime.date.today()
+                filtered_politicians = filtered_politicians.filter(dateofbirth__gte=date)
 
 
-
-
-
+            if form.cleaned_data['education']:
+                filtered_politicians = filtered_politicians.filter(education__level=form.cleaned_data['education'])
+            politicians = list_unique_order_preserving(filtered_politicians)
         else:
+            politicians = []
             form = PoliticianFilterForm() # An unbound form
 
     return render_to_response('frontoffice/politician_filter.html', {'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
