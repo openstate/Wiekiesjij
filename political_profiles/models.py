@@ -2,10 +2,11 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
+from functions import cal_work_experience_years, cal_political_experience_years
 
 GENDERS = (
         ('Male',_('Male')),
@@ -221,7 +222,8 @@ class PoliticianProfile(Profile):
     hobby           = models.CharField(_('What is your hobby'), max_length=25, choices=HOBBIES, blank=True, null=True)
     fav_club        = models.CharField(_('What is your favourite club'), max_length=25, choices=CLUBS, blank=True, null=True)
     fav_pet         = models.CharField(_('What is your favourite pet'), max_length=25, choices=PETS, blank=True, null=True)
-
+    political_experience_days      = models.PositiveIntegerField(_('Days of political experience'), max_length=10, null=True, blank=True, editable=False)
+    work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
 
     def profile_incomplete(self):
         return False
@@ -435,3 +437,7 @@ def user_profile(u):
 User.profile = property(user_profile)
 
 
+post_save.connect(cal_political_experience_years, sender=PoliticalExperience)
+post_delete.connect(cal_political_experience_years, sender=PoliticalExperience)
+post_save.connect(cal_work_experience_years, sender=WorkExperience)
+post_delete.connect(cal_work_experience_years, sender=WorkExperience)

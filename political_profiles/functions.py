@@ -1,6 +1,42 @@
 from utils.unicode_csv import UnicodeReader
 from django.conf import settings
 from django.forms.fields import email_re
+from datetime import timedelta, datetime, date
+import monthdelta
+from dateutil import relativedelta
+from utils.functions import list_unique_order_preserving
+
+def cal_political_experience_years(sender, instance, **kwargs):
+    all_months = []
+    for experience in instance.politician.political.all():
+        if experience.startdate:
+            if experience.enddate:
+                end = experience.enddate
+            else:
+                end = date.today()
+            months = monthdelta.monthmod(experience.startdate, end)
+            for month in range(0,(months[0].months + 1)):
+                all_months.append(experience.startdate + relativedelta.relativedelta(months=+month))
+    num_months = len(list_unique_order_preserving(all_months))
+    instance.politician.political_experience_days = num_months * (365 / 12)
+    instance.politician.save()
+
+
+def cal_work_experience_years(sender, instance, **kwargs):
+    all_months = []
+    for experience in instance.politician.work.all():
+        if experience.startdate:
+            if experience.enddate:
+                end = experience.enddate
+            else:
+                end = date.today()
+            months = monthdelta.monthmod(experience.startdate, end)
+            for month in range(0,(months[0].months + 1)):
+                all_months.append(experience.startdate + relativedelta.relativedelta(months=+month))
+    num_months = len(list_unique_order_preserving(all_months))
+    instance.politician.work_experience_days  = num_months * (365 / 12)
+    instance.politician.save()
+
 
 def get_candidates_from_csv(session, skip_positions=[]):
     candidates = {}
