@@ -1,0 +1,48 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n form_tags %}
+
+{% block extrahead %}
+	{{ form.media }}
+{% endblock extrahead %}
+
+{% block cols %}
+<div class="col size1of2">
+    <div class="mod">
+        <h2>{% trans "Login" %}</h2>
+        <form action="{% url fo.politician_profile_filter %}" method="get" accept-charset="utf-8">
+            <input type="hidden" name="next" value="{{ next }}" />
+            
+            {% if form.non_field_errors %}
+                <div class="errors">
+                    {% for error in form.non_field_errors %}
+                    <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>	
+            {% endif %}
+            
+    
+            <fieldset class="default">
+                {% for field in form %}
+                    {% include 'utils/forms/_form_field.html' %}
+                                      
+                {% endfor %}
+            </fieldset>
+    
+            <div class="form-submit">
+                <button class="primary next" type="submit">{% trans "Search" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col size1of2">
+	<div class="mod">
+    	<h2>{% trans "Politicians" %}</h2>
+        {% for politician in politicians %}
+            <p>{{ politician.last_name }}</p>
+        {% empty %}
+        <p>{% trans 'No Politicians: please search or select a filter options' %}
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock cols %}
