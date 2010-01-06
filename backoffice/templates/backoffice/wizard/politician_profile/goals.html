@@ -1,0 +1,33 @@
+{% extends 'backoffice/wizard/politician_profile/base.html' %}
+{% load i18n %}
+
+{% block group0 %}history{% endblock %}
+{% block group1 %}active{% endblock %}
+{% block step1 %}history{% endblock %}
+{% block step2 %}history{% endblock %}
+{% block step3 %}history{% endblock %}
+{% block step4 %}history{% endblock %}
+{% block step5 %}active{% endblock %}
+
+{% block content %}
+<div class="mod wizard">
+    <h2>{% trans 'Political goals' %}</h2>
+    <p>{% trans "The goals you hope to achieve" %}</p>
+    {% for goal in goals %}
+    <div class="profile-item link">
+        
+        <h3>{{ goal.goal }}</h3>
+        <ul class="quicklinks">
+        	<li><a href="{% url bo.politician_profile_goal_wizard_edit eip_id user_id goal.id %}" class="edit">{% trans "Edit" %}</a></li>
+       		<li><a href="{% url bo.politician_profile_goal_delete eip_id user_id goal.id  %}" class="delete">{% trans "Delete" %}</a></li>
+		</ul>
+    </div>
+    {% empty %}
+        <p class="empty">{%trans 'You have no goals defined yet' %} </p>
+    {% endfor %}
+    <a href="{% url bo.politician_profile_goal_wizard eip_id user_id %}" class="add add-item">{% trans "Add a new goal" %}</a>
+    <div class="form-submit">        
+        <a href="{% url bo.politician_profile_education eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
+    </div>
+</div>
+{% endblock content %}

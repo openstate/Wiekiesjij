@@ -32,7 +32,7 @@ from backoffice.wizards import AddElectionPartyWizard, PoliticianProfileInterest
 from backoffice.wizards import PoliticianProfileConnectionWizard, PoliticianProfilePoliticalWizard, PoliticianProfileEducationWizard, PoliticianProfileLinkWizard
 from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppearanceWizard, CouncilEditWizard
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
-from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion
+from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion, PoliticianProfileGoalWizard
 
 from questions.functions import get_question_count
 
@@ -271,8 +271,30 @@ def politician_profile_work_delete(request, work_id, eip_id, user_id):
     return redirect('backoffice.views.politician_profile_work', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
-def politician_profile_work_wizard(request, eip_id, user_id, work_experience_id=None):
-    return PoliticianProfileWorkWizard(user_id=user_id, eip_id=eip_id, work_id=work_experience_id)(request)
+def politician_profile_work_wizard(request, eip_id, user_id, work_id=None):
+    return PoliticianProfileWorkWizard(user_id=user_id, eip_id=eip_id, work_id=work_id)(request)
+    
+@candidate_required
+def politician_profile_goal(request, eip_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    goals = user.profile.goals.all()
+    return render_to_response('backoffice/wizard/politician_profile/goals.html',
+                              {'user_id': user_id, 'goals': goals,
+                              'eip_id': eip_id,
+                              'questions': range(0, get_question_count(eip_id)),
+                              },
+                              context_instance=RequestContext(request))
+
+@candidate_required
+def politician_profile_goal_delete(request, goal_id, eip_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    goal = user.profile.goals.get(pk=goal_id)
+    goal.delete()
+    return redirect('backoffice.views.politician_profile_goal', eip_id=eip_id, user_id=user_id)
+
+@candidate_required
+def politician_profile_goal_wizard(request, eip_id, user_id, goal_id=None):
+    return PoliticianProfileGoalWizard(user_id=user_id, eip_id=eip_id, goal_id=goal_id)(request)
 
 @candidate_required
 def politician_profile_political(request, eip_id, user_id):

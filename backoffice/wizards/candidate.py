@@ -7,7 +7,7 @@ from elections.functions import get_profile_forms, create_profile, profile_invit
 from utils.exceptions import PermissionDeniedException
 
 from political_profiles.forms import PoliticianProfileLifeForm, PoliticianProfileExtraForm, PoliticianProfileForm, LinkForm, InterestForm, AppearanceForm, WorkExperienceForm
-from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm, PoliticianProfilePoliticalForm
+from political_profiles.forms import ConnectionForm, EducationForm, PoliticalExperienceForm, PoliticianProfilePoliticalForm, GoalForm
 
 from questions.functions import get_question_count
 
@@ -409,6 +409,71 @@ class PoliticianProfileLinkWizard(MultiPathFormWizard):
 
         return redirect('bo.politician_profile_link', user_id=self.user_id, eip_id=self.eip_id)
 
+class PoliticianProfileGoalWizard(MultiPathFormWizard):
+    """
+        Wizard for a candidate to editing their own profiles goals
+    """
+    def __init__(self, *args, **kwargs):
+        # Getting "user_id"
+        try:
+            self.user_id = kwargs['user_id']
+            self.goal_id = kwargs['goal_id']
+            self.eip_id =  kwargs['eip_id']
+            self.election_instance_party = get_object_or_404(ElectionInstanceParty, pk=self.eip_id)
+            self.user = get_object_or_404(self.election_instance_party.candidates, candidate__pk=self.user_id).candidate
+
+            if self.goal_id:
+                self.goal = self.user.profile.goals.get(pk=self.goal_id)
+            else:
+                self.goal = None
+
+        except Exception:
+            raise
+
+        step1_forms = dict(goal=GoalForm,)
+        step1 = Step('candidate_edit_goal',
+                    forms=step1_forms,
+                    template='backoffice/wizard/politician_profile/goals-add.html',
+                    initial={'goal': self.goal },
+                    extra_context={'questions': range(0, get_question_count(self.election_instance_party)),
+                    'eip_id': self.eip_id, 'user_id': self.user_id},
+                    )
+        scenario_tree = step1
+        #default template is the base, each step can override it as needed (for buttons)
+        template = 'backoffice/wizard/politician_profile/base.html',
+        super(PoliticianProfileGoalWizard, self).__init__(scenario_tree, template)
+
+    def get_next_step(self, request, next_steps, current_path, forms_path):
+        return 0
+
+    @transaction.commit_manually
+    def done(self, request, form_dict):
+        try:
+            for path, forms in form_dict.iteritems():
+                for name, form in forms.iteritems():
+                    if name == 'goal':
+                        self.candidate_goal_data = form.cleaned_data
+
+            if self.goal_id:
+                goal = self.goal
+            else:
+                goal = self.user.profile.goals.create(
+                    politician=self.user.profile,
+                )
+
+            import ipdb; ipdb.set_trace()
+            for (key, value) in self.candidate_goal_data.items():
+                setattr(goal, key, value)
+            goal.save(force_update=True) 
+
+        except Exception:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
+
+
+        return redirect('bo.politician_profile_goal', user_id=self.user_id, eip_id=self.eip_id)
 
 class PoliticianProfileConnectionWizard(MultiPathFormWizard):
     """
@@ -593,7 +658,7 @@ class PoliticianProfileWizard(MultiPathFormWizard):
         else:
             transaction.commit()
 
-        return redirect('bo.politician_profile_education', user_id=self.user_id, eip_id=self.eip_id )
+        return redirect('bo.politician_profile_goal', user_id=self.user_id, eip_id=self.eip_id )
 
         
         

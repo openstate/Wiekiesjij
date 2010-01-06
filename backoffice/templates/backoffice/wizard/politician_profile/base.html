@@ -18,29 +18,30 @@
             	<li class="{% block step1 %}future{% endblock %}">1</li>
                 <li class="{% block step2 %}future{% endblock %}">2</li>
                 <li class="{% block step3 %}future{% endblock %}">3</li>
-                <li class="{% block step4 %}future{% endblock %} last">4</li>
+                <li class="{% block step4 %}future{% endblock %}">4</li>
+				<li class="{% block step5 %}future{% endblock %} last">5</li>
             </ul>
         </li>
         <li class="{% block group2 %}future{% endblock %}">
         	<span class="title">{% trans "Opleiding <br />&amp; werk" %}</span>
             <ul>
-            	<li class="{% block step5 %}future{% endblock %}">5</li>
-                <li class="{% block step6 %}future{% endblock %}">6</li>
-                <li class="{% block step7 %}future{% endblock %} last">7</li>
+            	<li class="{% block step6 %}future{% endblock %}">6</li>
+                <li class="{% block step7 %}future{% endblock %}">7</li>
+                <li class="{% block step8 %}future{% endblock %} last">8</li>
             </ul>
         </li>
         <li class="{% block group3 %}future{% endblock %}">
         	<span class="title">{% trans "Links <br />&amp; interesses" %}</span>
             <ul>
-            	<li class="{% block step8 %}future{% endblock %}">8</li>
-                <li class="{% block step9 %}future{% endblock %}">9</li>
-                <li class="{% block step10 %}future{% endblock %} last">10</li>
+            	<li class="{% block step9 %}future{% endblock %}">9</li>
+                <li class="{% block step10 %}future{% endblock %}">10</li>
+                <li class="{% block step11 %}future{% endblock %} last">11</li>
             </ul>
         </li>
         <li class="{% block group4 %}future{% endblock %}">
         	<span class="title">Agenda<br />&nbsp;</span>
             <ul>
-                <li class="{% block step11 %}future{% endblock %} last">11</li>
+                <li class="{% block step12 %}future{% endblock %} last">12</li>
             </ul>
         </li>
         {% if questions %}
@@ -49,7 +50,7 @@
             <ul>
             	{% block question-steps %}
             	{% for q in questions %}
-            		<li class="future{% if forloop.last %} last{% endif %}">{{ q|add:12 }}</li>
+            		<li class="future{% if forloop.last %} last{% endif %}">{{ q|add:13 }}</li>
                 {% endfor %}
                 {% endblock question-steps %}
             </ul>

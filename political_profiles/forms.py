@@ -14,7 +14,7 @@ from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
 from utils.fields import NameField, AddressField, YoutubeURLField
 
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
-from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
+from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType, PoliticalGoal
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
 DAYS =  (('Monday',_('Monday')),
@@ -134,8 +134,6 @@ class InitialChanceryProfileForm(BetterForm, TemplateForm):
         except User.MultipleObjectsReturned:
             raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         return self.cleaned_data['email']
-        
-        
         
         
 class ChanceryProfileForm(BetterForm, TemplateForm):
@@ -321,6 +319,15 @@ class PoliticalExperienceFormNew(BetterForm, TemplateForm):
                 del self.cleaned_data['startdate']
                 del self.cleaned_data['enddate']
         return self.cleaned_data
+
+class GoalForm(BetterModelForm, TemplateForm):
+    """
+        Goals
+    """
+    class Meta:
+        model = PoliticalGoal
+        exclude = ('politician')
+    
 
 class LinkForm(BetterModelForm, TemplateForm):
     '''

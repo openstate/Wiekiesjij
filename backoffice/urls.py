@@ -78,7 +78,12 @@ urlpatterns += patterns('backoffice.views',
     url(r'^welcome/(?P<eip_id>\d+)/$', 'politician_welcome', name='bo.politician_welcome'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/$', 'politician_profile_setup', name='bo.politician_profile_setup'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/done$', 'politician_profile_setup_done', name='bo.politician_profile_setup_done'),
-
+    
+    url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal$', 'politician_profile_goal', name='bo.politician_profile_goal'),
+    url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/add/$', 'politician_profile_goal_wizard', name='bo.politician_profile_goal_wizard'),
+    url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/edit/(?P<goal_id>\d+)$', 'politician_profile_goal_wizard', name='bo.politician_profile_goal_wizard_edit'),
+    url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/delete/(?P<goal_id>\d+)$', 'politician_profile_goal_delete', name='bo.politician_profile_goal_delete'),
+    
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work$', 'politician_profile_work', name='bo.politician_profile_work'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work/add/$', 'politician_profile_work_wizard', name='bo.politician_profile_work_wizard'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work/edit/(?P<work_id>\d+)$', 'politician_profile_work_wizard', name='bo.politician_profile_work_wizard_edit'),

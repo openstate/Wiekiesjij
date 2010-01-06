@@ -391,8 +391,16 @@ class PoliticalExperience(models.Model):
         verbose_name, verbose_name_plural = _('Politicial Experience'), _('Politicial Experience')
         ordering = ('startdate', 'enddate')
 
-
-
+class PoliticalGoal(models.Model):
+    """
+        A goal of a politician
+    """
+    goal            = models.CharField(_('Goal'), max_length=100, help_text=_('A short statement defining your goal'))
+    politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='goals')
+    
+    class Meta:
+        verbose_name, verbose_name_plural = _('Goal'), _('Goals')
+        ordering = ('goal', )
     
 def user_profile(u):
     """
