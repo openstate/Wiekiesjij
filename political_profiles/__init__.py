@@ -89,11 +89,10 @@ def create_profile(for_function, data):
         Assumes data contains at least an email key
     """
     created = False
-    try:
-        user = User.objects.get(email=data['email'])
+    if User.objects.filter(email__iexact=data['email']):
         if user.profile is None or user.profile.type != for_function:
             return (False, None)
-    except User.DoesNotExist:
+    else:
         created = True
         username = _generate_username()
         while True:
@@ -107,8 +106,6 @@ def create_profile(for_function, data):
             username=username,
             email=data['email'],
             is_active=False)
-    except User.MultipleObjectsReturned:
-        raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         
     if created:
         del data['email']

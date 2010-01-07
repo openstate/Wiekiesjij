@@ -470,12 +470,11 @@ def csv_import_candidates_step3(request, ep_id):
                         continue
 
                     #Link candidate to party
-                    candidacy = Candidacy(
+                    candidacy = Candidacy.objects.create(
                         election_party_instance = eip_obj,
                         candidate = candidate_obj.user,
                         position = candidate['position'],
                     )
-                    candidacy.save()
 
                     #Create invitation TODO: view and text etc.
                     templates = profile_invite_email_templates('candidate')
@@ -572,21 +571,19 @@ def csv_import_parties_step3(request, ei_id):
                     if contact is None:
                         continue
                     
-                    party_obj = Party(
+                    party_obj = Party.objects.create(
                         region = region,
                         level = level,
                         name = party['name'],
                         abbreviation = party['abbreviation'],
                     )
-                    party_obj.save()
                     
-                    eip_obj = ElectionInstanceParty(
+                    eip_obj = ElectionInstanceParty.objects.create(
                         election_instance = ei_obj,
                         party = party_obj,
                         position = unicode(party['list']),
                         list_length = 10, #TODO, maybe add in CSV
                     )
-                    eip_obj.save()
 
                     party_obj.contacts.add(contact.user)
                     party_obj.save()
