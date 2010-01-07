@@ -228,7 +228,7 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     slogan = forms.CharField(label=_('Slogan'), help_text=_('Vul hier uw verkiezingsslogan in. '), required = False)
     movie  = YoutubeURLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
 
-    #logo = forms.FileField(_('Logo'))
+    logo = forms.ImageField(_('Logo'))
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 
     def __init__(self, *args, **kwargs):

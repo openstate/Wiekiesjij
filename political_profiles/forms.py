@@ -68,7 +68,7 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
-    #picture         = forms.ImageField(label=_('Picture'), required=False)
+    picture         = forms.ImageField(label=_('Picture'), required=False)
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       
 #

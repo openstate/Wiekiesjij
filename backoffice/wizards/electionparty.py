@@ -161,7 +161,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         self.eip.party.slogan = data['slogan']
         self.eip.party.movie = data['movie']
         self.eip.party.num_seats = data['num_seats']
-        #self.eip.party.logo = data['logo']
+        self.eip.party.logo = data['logo']
         self.eip.party.description = data['description']
         self.eip.party.history = data['history']
         self.eip.party.manifesto = data['manifesto']
