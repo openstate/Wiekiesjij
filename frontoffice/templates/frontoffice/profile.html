@@ -10,7 +10,7 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{% trans 'Profile' %} {{ profile.full_name }}</h1>
+    <h1>{% trans 'Profile' %} {{ profile.full_name }} {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %}</h1> {# TODO: nice message for incomplete profile? #}
 
     <div class="mod quickProfile">
         <div class="bd">
@@ -70,13 +70,13 @@
                 <div class="popularityMeter">
                     <div class="meterContainer">
                         <img alt="" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
-                        <div class="meterActiveContainer" style="height: {{ popularity|default:27 }}%">
+                        <div class="meterActiveContainer" style="height: {{ popularity|default:33 }}%">
                             <img class="meterActive" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
                         </div>
                     </div>
                     <span class="top">100%</span>
                     <span class="bottom">0%</span>
-                    <span class="total">{{ popularity|default:0 }}%</span>
+                    <span class="total">{{ popularity|default:33 }}%</span>
                 </div>
             </div>
             <div class="ballotPosition">
@@ -87,7 +87,8 @@
         </div>
     </div>
 
-    <!-- Render tabs -->
+    <!-- TABS -->
+
     <ul class="tabs">
         <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}>
             <a href="{% url fo.politician_profile profile.user.pk 'favs' %}">
@@ -110,6 +111,8 @@
             </a>
         </li>
     </ul>
+
+    <!-- FAVORITE TAB -->
 
     {% ifequal showtab "favs" %}
         <div class="mod favs">
@@ -164,6 +167,8 @@
         </div>
     {% endifequal %}
 
+    <!-- EDUCATION TAB -->
+
     {% ifequal showtab "edu" %}
         <div class="mod edu">
             <div class="bd">
@@ -182,6 +187,8 @@
             </div>
         </div>
     {% endifequal %}
+
+    <!-- WORK TAB -->
 
     {% ifequal showtab "work" %}
         <div class="mod wor">
@@ -202,6 +209,8 @@
         </div>
     {% endifequal %}
 
+    <!-- POLITICAL EXPERIENCE TAB -->
+
     {% ifequal showtab "exp" %}
         <div class="mod exp">
             <div class="bd">
@@ -221,74 +230,88 @@
         </div>
     {% endifequal %}
 
-    <div class="col size1of3">
-        {% if twitter_url %}
+    <!-- TWITTER -->
+    
+    {% if twitter_url %}
+        <div class="col size1of3">
             <h1>{{ profile.first_name }}s Tweets</h1>
             <div class="mod tweets">
                 <div class="bd">
                     {% pull_feed twitter_url %}
                 </div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 
-    <div class="col size2of3">
-        <h1>{{ profile.first_name }}s video</h1>
-        <div class="mod video">
-            <div class="bd">
-                {{ profile.movie|youtube }}
+    <!-- YOUTUBE -->
+    
+    {% if profile.movie %}
+        <div class="col size2of3">
+            <h1>{{ profile.first_name }}s video</h1>
+            <div class="mod video">
+                <div class="bd">
+                    {{ profile.movie|youtube }}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock content %}
 
+<!-- SIDEBAR -->
+
 {% block sidebar %}
-    <h1>{% trans 'Political goals' %}</h1>
-    <div class="mod goals">
-        <div class="bd">
-            <ul class="quickList">
-                {% for goal in profile.goals.all %}
-                    <li>
-                        <b>{{ goal.goal }}</b>
-                    </li>
-                {% endfor %}
-            </ul>
+    {% if profile.goals.all %}
+        <h1>{% trans 'Political goals' %}</h1>
+        <div class="mod goals">
+            <div class="bd">
+                <ul class="quickList">
+                    {% for goal in profile.goals.all %}
+                        <li>
+                            <b>{{ goal.goal }}</b>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
-    <h1>{% trans 'Appearances' %}</h1>
-    <div class="mod appearances">
-        <div class="bd">
-            <ul class="quickList">
-                {% for appearance in profile.appearances.all %}
-                    <li>
-                        <a href="{{ appearance.url }}">
-                            <span class="date">
-                                <span class="day">{{ appearance.datetime|date:"d" }}</span>
-                                <span class="month">{{ appearance.datetime|date:"M" }}</span>
-                            </span>
-                            <span class="info">
-                                <b>{{ appearance.name }}</b>
-                                {{ appearance.description }}
-                            </span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+    {% if profile.appearances.all %}
+        <h1>{% trans 'Appearances' %}</h1>
+        <div class="mod appearances">
+            <div class="bd">
+                <ul class="quickList">
+                    {% for appearance in profile.appearances.all %}
+                        <li>
+                            <a href="{{ appearance.url }}">
+                                <span class="date">
+                                    <span class="day">{{ appearance.datetime|date:"d" }}</span>
+                                    <span class="month">{{ appearance.datetime|date:"M" }}</span>
+                                </span>
+                                <span class="info">
+                                    <b>{{ appearance.name }}</b>
+                                    {{ appearance.description }}
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
-    <h1>{% trans 'Links' %}</h1>
-    <div class="mod links">
-        <div class="bd">
-            <ul class="quickList">
-                {% for link in profile.links.all %}
-                    <li>
-                        <a href="{{ link.url }}">{{ link.name }}</a>
-                        <p>{{ link.description }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
+    {% if profile.links.all %}
+        <h1>{% trans 'Links' %}</h1>
+        <div class="mod links">
+            <div class="bd">
+                <ul class="quickList">
+                    {% for link in profile.links.all %}
+                        <li>
+                            <a href="{{ link.url }}">{{ link.name }}</a>
+                            <p>{{ link.description }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock sidebar %}

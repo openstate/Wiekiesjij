@@ -226,7 +226,8 @@ class PoliticianProfile(Profile):
     work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
 
     def profile_incomplete(self):
-        return False
+        return not self.education.all() or not self.work.all() or not self.political.all() or \
+            not (self.goals.all() or self.profile.appearances.all() or self.links.all())
 
     def __unicode__(self):
         return self.user.username
