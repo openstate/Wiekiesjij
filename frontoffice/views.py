@@ -103,3 +103,9 @@ def politician_profile(request, id, tab = "favs"):
     return render_to_response('frontoffice/profile.html', { 'profile':profile,
                                                             'twitter_url': twitter_url,
                                                             'showtab':showtab}, context_instance=RequestContext(request))
+                                                            
+                                                            
+def party_profile(request, eip_id):
+    eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
+    
+    return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))

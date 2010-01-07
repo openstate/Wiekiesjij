@@ -15,4 +15,5 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^politician/(?P<id>\d+)/$', 'politician_profile', name='fo.politician_profile'),
     url(r'^politician/(?P<id>\d+)/(?P<tab>\w+)/$', 'politician_profile', name='fo.politician_profile'),
     url(r'^politicians/$', 'politician_profile_filter', name='fo.politician_profile_filter'),
+    url(r'^party/(?P<eip_id>\d+)/$', 'party_profile', name='fo.party_profile'),
 )

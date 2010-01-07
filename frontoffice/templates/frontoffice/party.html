@@ -1,0 +1,16 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+    <h1>{% trans 'Party' %} {{ eip.party.name }}</h1>
+
+    {% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.council.region as municipality %}
+		{{ party_name }} is list {{ position }} in municipality {{ municipality }}
+	{% endblocktrans %}
+   
+{% endblock content %}
+
+{% block sidebar %}
+    
+{% endblock sidebar %}
