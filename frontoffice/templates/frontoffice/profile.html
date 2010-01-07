@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Age' %}</th>
-                        <td>{{ profile.birthday }}</td>
+                        <td>{{ profile.dateofbirth|timesince }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Gender' %}</th>
@@ -87,10 +87,10 @@
     </div>
 
     <ul class="tabs">
-        <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}><a href="#">{% trans 'Favorites and preferences' %}</a></li>
-        <li {% ifequal showtab "edu" %}class="selected"{% endifequal %}><a href="#">{% trans 'Education' %}</a></li>
-        <li {% ifequal showtab "work" %}class="selected"{% endifequal %}><a href="#">{% trans 'Work' %}</a></li>
-        <li {% ifequal showtab "exp" %}class="selected"{% endifequal %}><a href="#">{% trans 'Political experience' %}</a></li>
+        <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}><a href="?tab=favs">{% trans 'Favorites and preferences' %}</a></li>
+        <li {% ifequal showtab "edu" %}class="selected"{% endifequal %}><a href="?tab=edu">{% trans 'Education' %}</a></li>
+        <li {% ifequal showtab "work" %}class="selected"{% endifequal %}><a href="?tab=work">{% trans 'Work' %}</a></li>
+        <li {% ifequal showtab "exp" %}class="selected"{% endifequal %}><a href="?tab=exp">{% trans 'Political experience' %}</a></li>
     </ul>
 
     {% ifequal showtab "favs" %}
@@ -149,6 +149,18 @@
     {% ifequal showtab "edu" %}
         <div class="mod edu">
             <div class="bd">
+                {% for education in profile.education.all %}
+                    <h1>{{ education.field }}</h1>
+                    <div>
+                        {{ education.description }}
+                    </div>
+                    <div class="info">
+                        <p>{% trans 'At' %}: {{ education.institute }}</p>
+                        <p>{% trans 'Level' %}: {{ education.level }}</p>
+                        <p>{% trans 'From' %}: {{ education.startdate }}</p>
+                        {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate }}</p>{% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     {% endifequal %}
@@ -156,6 +168,18 @@
     {% ifequal showtab "work" %}
         <div class="mod wor">
             <div class="bd">
+                {% for work in profile.work.all %}
+                    <h1>{{ work.position }}</h1>
+                    <div>
+                        {{ work.description }}
+                    </div>
+                    <div class="info">
+                        <p>{% trans 'At' %}: {{ work.company_name }}</p>
+                        <p>{% trans 'Sector' %}: {{ work.sector }}</p>
+                        <p>{% trans 'From' %}: {{ work.startdate }}</p>
+                        {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate }}</p>{% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     {% endifequal %}
@@ -163,6 +187,18 @@
     {% ifequal showtab "exp" %}
         <div class="mod exp">
             <div class="bd">
+                {% for experience in profile.political.all %}
+                    <h1>{{ experience.position }}</h1>
+                    <div>
+                        {{ experience.description }}
+                    </div>
+                    <div class="info">
+                        <p>{% trans 'At' %}: {{ experience.organisation }}</p>
+                        <p>{% trans 'Type' %}: {{ experience.type }}</p>
+                        <p>{% trans 'From' %}: {{ experience.startdate }}</p>
+                        {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate }}</p>{% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     {% endifequal %}
@@ -193,11 +229,11 @@
     <div class="mod goals">
         <div class="bd">
             <ul class="quickList">
-                {# for goal in profile..all #}
+                {% for goal in profile.goals.all %}
                     <li>
-                        <b>{% trans 'Todo' %}</b>
+                        <b>{{ goal.goal }}</b>
                     </li>
-                {# endfor #}
+                {% endfor %}
             </ul>
         </div>
     </div>

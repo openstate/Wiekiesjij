@@ -87,8 +87,10 @@ def politician_profile_filter(request):
 def politician_profile(request, id):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
-    #TODO:
-    showtab = "favs"
+    try:
+        showtab = request.GET['tab']
+    except:
+        showtab = "favs"
 
     #Getting the twitter RSS feed URL
     try:
