@@ -89,6 +89,10 @@ def politician_profile(request, id, tab = "favs"):
     profile = get_object_or_404(PoliticianProfile, user=user)
     showtab = tab
 
+    for candidacy in user.elections.all():
+        party = candidacy.election_party_instance.party
+        position = candidacy.position
+
     #Getting the twitter RSS feed URL
     try:
         twitter = profile.connections.filter(type__type='Twitter')[0]
@@ -101,6 +105,8 @@ def politician_profile(request, id, tab = "favs"):
         twitter_url = None
 
     return render_to_response('frontoffice/profile.html', { 'profile':profile,
+                                                            'party':party,
+                                                            'position':position,
                                                             'twitter_url': twitter_url,
                                                             'showtab':showtab}, context_instance=RequestContext(request))
                                                             

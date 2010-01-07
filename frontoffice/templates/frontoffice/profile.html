@@ -6,7 +6,6 @@
     <li><a href="#">{% trans 'Take the test' %}</a></li>
     <li class="selected"><a href="#">{% trans 'Candidates' %}</a></li>
     <li><a href="#">{% trans 'Statistics' %}</a></li>
-    <li><a href="#">{% trans 'Parties' %}</a></li>
     <li><a href="#">{% trans 'Organisation' %}</a></li>
 {% endblock menu %}
 
@@ -24,7 +23,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Party' %}</th>
-                        <td>{{ profile.party }}</td>
+                        <td>{{ party.name }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Age' %}</th>
@@ -60,8 +59,8 @@
                         <td>
                             <ul class="socialNetwork">
                                 {% for connection in profile.connections.all %}
-                                <li class="{{ connection.type }}">
-                                    <a href="{{ connection.url }}">{{ connection.type }}</a>
+                                <li>
+                                    <a class="{{ connection.type }}" href="{{ connection.url }}">{{ connection.type }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -71,7 +70,7 @@
                 <div class="popularityMeter">
                     <div class="meterContainer">
                         <img alt="" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
-                        <div class="meterActiveContainer" style="height: {{ popularity|default:0 }}%">
+                        <div class="meterActiveContainer" style="height: {{ popularity|default:27 }}%">
                             <img class="meterActive" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
                         </div>
                     </div>
@@ -81,7 +80,9 @@
                 </div>
             </div>
             <div class="ballotPosition">
-                {{ profile.first_name }} {% trans 'staat nummer' %} {{ profile.position }} {% trans 'op de verkiezingslijst van' %} {# #} {% trans 'in' %} {# #}
+                {% blocktrans with profile.first_name as name and position as position and party.abbreviation as party and region.name as region %}
+                    {{ name }} is number {{ position }} on the election list of {{ party }} in {{ region }}
+                {% endblocktrans %}
             </div>
         </div>
     </div>
