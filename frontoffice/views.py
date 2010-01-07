@@ -84,13 +84,10 @@ def politician_profile_filter(request):
     return render_to_response('frontoffice/politician_filter.html', {'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
 
 
-def politician_profile(request, id):
+def politician_profile(request, id, tab = "favs"):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
-    try:
-        showtab = request.GET['tab']
-    except:
-        showtab = "favs"
+    showtab = tab
 
     #Getting the twitter RSS feed URL
     try:
@@ -104,6 +101,5 @@ def politician_profile(request, id):
         twitter_url = None
 
     return render_to_response('frontoffice/profile.html', { 'profile':profile,
-                                                            'user':user,
                                                             'twitter_url': twitter_url,
                                                             'showtab':showtab}, context_instance=RequestContext(request))
