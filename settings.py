@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'invitations',
     'backoffice',
     'frontoffice',
+    'registration',
 )
 
 # Email settings
@@ -127,6 +128,8 @@ EMAIL_FROM = 'info@wiekiesjij.nl'
 LOGIN_URL = '/backoffice/login/'
 LOGIN_REDIRECT_URL = '/backoffice/redirect/'
 UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
     'utils.auth_backend.EmailBackend',

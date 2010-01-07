@@ -1,0 +1,6 @@
+{% extends "frontoffice/base.html" %}
+{% load i18n %}
+
+{% block content %}
+	<p>{% blocktrans with activation_key as activation_key %}Activation failed, please verify that this is the correct activation key: {{ activation_key }}{% endblocktrans %}</p>
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% extends "frontoffice/base.html" %}
+{% load i18n %}
+
+{% block content %}
+	{% url fo.login as login_url %}
+	<p>{% blocktrans with login_url as login_url %}Activation succesful, <a href="{{ login_url }}">click here</a> to login.{% endblocktrans %}</p>
+{% endblock content %}
