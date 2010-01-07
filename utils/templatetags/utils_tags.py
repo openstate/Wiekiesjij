@@ -1,5 +1,4 @@
 import re, urllib, os, time, datetime, feedparser
-
 from django import template
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -147,6 +146,14 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
             'published': published,
         })
     return {'posts': posts}
+
+
+@register.filter
+def age(bday, d=None):
+    if d is None:
+        d = datetime.date.today()
+    return (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
+
 
 
 class CompareBlockNode(template.Node):

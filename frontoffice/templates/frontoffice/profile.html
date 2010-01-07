@@ -10,7 +10,10 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{% trans 'Profile' %} {{ profile.full_name }} {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %}</h1> {# TODO: nice message for incomplete profile? #}
+    <h1>
+        {% trans 'Profile' %} {{ profile.full_name }}
+        {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %} {# TODO: nice message for incomplete profile? #}
+    </h1>
 
     <div class="mod quickProfile">
         <div class="bd">
@@ -27,7 +30,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Age' %}</th>
-                        <td>{{ profile.dateofbirth|timesince }}</td>
+                        <td>{{ profile.dateofbirth|age }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Gender' %}</th>
