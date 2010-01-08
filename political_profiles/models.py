@@ -254,6 +254,11 @@ class PoliticianProfile(Profile):
         candidacy = self.user.elections.all()
         return candidacy[0].election_party_instance.party
 
+    def position(self):
+        "Returns the position of the candidate on the party's list"
+        candidacy = self.user.elections.all()
+        return candidacy[0].position
+
     def age(self):
         if self.dateofbirth:
             d = date.today()

@@ -18,7 +18,11 @@
     <div class="mod quickProfile">
         <div class="bd">
             <div class="container">
-                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{{ profile.picture }}" />
+                {% if profile.picture %}
+                    <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{{ profile.picture.url }}" />
+                {% else %}
+                    <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="/link/to/default/" />
+                {% endif %}
                 <table class="quickProfileInfo">
                     <tr>
                         <th>{% trans 'Name' %}</th>
@@ -83,7 +87,7 @@
                 </div>
             </div>
             <div class="ballotPosition">
-                {% blocktrans with profile.first_name as name and position as position and party.abbreviation as party and region.name as region %}
+                {% blocktrans with profile.first_name as name and position as position and party.abbreviation as party and region.name|default:'TODO' as region %}
                     {{ name }} is number {{ position }} on the election list of {{ party }} in {{ region }}
                 {% endblocktrans %}
             </div>

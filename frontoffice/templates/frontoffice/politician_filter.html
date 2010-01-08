@@ -52,8 +52,15 @@
                     {% if not region_filtered %}
                         <p>{% trans 'Region' %}: {{ politician.region }}</p>
                     {% endif %}
-
+                    <div class="picture">
+                        {% if politician.picture %}
+                            <img alt="{{ politician.full_name }}" src="{{ politician.picture.url }}" />
+                        {% else %}
+                            <img alt="{{ politician.full_name }}" src="/link/to/default/" />
+                        {% endif %}
+                    </div>
                 </div>
+                
 
             {% empty %}
                 <p>{% trans 'No Politicians: please search or select a filter options' %}

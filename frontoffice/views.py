@@ -185,12 +185,6 @@ def politician_profile(request, id, tab = "favs"):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
     showtab = tab
-
-    #TODO/FIXME/FIXTHIS/PRIO1: In the future, this will cause trouble. There should be something to select only the current Candidacy of a user.
-    for candidacy in user.elections.all():
-        party = candidacy.election_party_instance.party
-        position = candidacy.position
-
     #Getting the twitter RSS feed URL
     try:
         twitter = profile.connections.filter(type__type='Twitter')[0] #Raises an exception if no twitter account is entered
@@ -201,11 +195,7 @@ def politician_profile(request, id, tab = "favs"):
     except:
         twitter_url = None
 
-    return render_to_response('frontoffice/profile.html', { 'profile':profile,
-                                                            'party':party,
-                                                            'position':position,
-                                                            'twitter_url': twitter_url,
-                                                            'showtab':showtab}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab}, context_instance=RequestContext(request))
                                                             
                                                             
 def party_profile(request, eip_id):

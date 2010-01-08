@@ -106,6 +106,7 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     """
         Reads, parses and caches RSS feed.
         http://www.djangosnippets.org/snippets/384/
+        Addapted version for Twitter messages.
     """
 
     CACHE_FOLDER = settings.TMP_ROOT + '/'
@@ -131,6 +132,7 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     posts = []
     for i in range(posts_to_show):
         pub_date = feed['entries'][i].updated_parsed
+        #TODO: Twitter delivers time in GMT (probably). We don't live in Greenwich.
         published = datetime.datetime(*pub_date[:6])
 
         #make links out of URLs, @usernames and #hashtags and remove username of politician
