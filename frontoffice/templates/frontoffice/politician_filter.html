@@ -35,15 +35,28 @@
     </div>
 </div>
 <div class="col size1of2">
+
 	<div class="mod">
-    	<h2>{% trans "Politicians" %}</h2>
-        {% for politician in politicians %}
-            <p>{{ politician.last_name }}</p>
+            <h2>{% trans "Results" %}</h2>
+            <ul>
+                {% for filter1, filter2, filter3 in filters %}
+                    <li><a href="{{ filter3 }}">{{ filter1 }}: {{ filter2 }}</a></li>
+                {% endfor %}
+            </ul>
+            {% for politician in politicians %}
+                <div>
+                    <p>{% trans 'Name' %}: {{ politician.full_name }}</p>
+                    <p>{% trans 'Age' %}: {{ politician.age }}</p>
+                    <p>{% trans 'Party' %}: {{ politician.party }}</p>
+                    {% if not region_filtered %}
+                        <p>{% trans 'Region' %}: {{ politician.region }}</p>
+                    {% endif %}
 
-        {% empty %}
-        <p>{% trans 'No Politicians: please search or select a filter options' %}
-        {% endfor %}
+                </div>
 
+            {% empty %}
+                <p>{% trans 'No Politicians: please search or select a filter options' %}
+            {% endfor %}
     </div>
 </div>
 {% endblock cols %}

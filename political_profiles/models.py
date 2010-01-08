@@ -7,37 +7,38 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
 from functions import cal_work_experience_days, cal_political_experience_days
+from datetime import date
 
-GENDERS = (
+GENDERS = [
         ('Male',_('Male')),
         ('Female', _('Female')),
-        )
-PETS = (
+        ]
+PETS = [
         ('Dog',_('Dog')),
         ('Cat', _('Cat')),
         ('Rabbit', _('Rabbit')),
         ('Horse', _('Horse')),
         ('Other', _('Other')),
-        )
-HOBBIES = (
+        ]
+HOBBIES = [
         ('Footabll',_('Football')),
         ('Golf', _('Golf')),
         ('Computer Games', _('Computer Games')),
         ('Other', _('Other')),
-        )
-CLUBS  = (
+        ]
+CLUBS  = [
         ('1',_('1')),
         ('2', _('2')),
         ('Other', _('Other')),
-        )
-SPORT  = (
+        ]
+SPORT  = [
         ('Golf',_('Golf')),
         ('Football', _('Football')),
         ('Darts', _('Darts')),
         ('Horse Racing', _('Horse Racing')),
         ('Other', _('Other')),
-        )
-MEDIA  = (
+        ]
+MEDIA  = [
         ('NOS1',_('NOS1')),
         ('NOS2', _('NOS2')),
         ('NOS3',_('NOS3')),
@@ -47,8 +48,8 @@ MEDIA  = (
         ('NOS1',_('NOS1')),
         ('NOS1', _('NOS1')),
         ('Other', _('Other')),
-        )
-CHARITY = (
+        ]
+CHARITY = [
         ('Serious Request',_('Serious Request')),
         ('Red Cross', _('Red Cross')),
         ('Red Cross', _('Red Cross')),
@@ -56,16 +57,16 @@ CHARITY = (
         ('Red Cross', _('Red Cross')),
         ('Red Cross', _('Red Cross')),
         ('Other', _('Other')),
-        )
-TRANSPORT  = (
+        ]
+TRANSPORT  = [
         ('Train',_('Train')),
         ('Tram',_('Tram')),
         ('Bicycle',_('Bicycle')),
         ('Motorbike',_('Motorbike')),
         ('Car',_('Car')),
         ('Other', _('Other')),
-        )
-NEWSPAPER  = (
+        ]
+NEWSPAPER  = [
         ('News1',_('News1')),
         ('News1',_('News1')),
         ('News1',_('News1')),
@@ -73,14 +74,14 @@ NEWSPAPER  = (
         ('News1',_('News1')),
         ('News1',_('News1')),
         ('Other', _('Other')),
-        )
-DIET  = (
+        ]
+DIET  = [
         ('Omnivore',_('Nee')),
         ('vegetarian', _(u'Ja, ik ben vegetariër')),
         ('Vegan', _('Ja, ik ben veganist')),
         ('Other', _('Other')),
-        )
-CHURCH  = (
+        ]
+CHURCH = [
         ('Roman Catholic',_('Rooms Katholiek')),
         ('PKN',_('PKN')),
         ('Other Protestant',_('Anders Protestant')),
@@ -89,22 +90,22 @@ CHURCH  = (
         ('Eastern Religion',_(u'Oosterse godsdienst (Boeddhisme,Hindoeïsme)')),
         ('Other',_('Anders')),
         ('No religion', _('Geen geloofsgemeenschap')),
-        )
-LIFE_STANCE  = (
+        ]
+LIFE_STANCE  = [
         ('Religious',_('Aanhanger van een religie')),
         ('There is something there but I do not know what', _('Er bestaat wel iets, maar ik weet niet wat')),
         ('Atheist', _('Atheist')),
         ('Humanist', _('Humanist')),
-        )
+        ]
         
-MARITAL_STATUS = (
+MARITAL_STATUS = [
         ('Married',_('Married')),
 		('Civil Partnership', _('Geregistreerd partnerschap')),
 		('Committed relationship', _('Vaste relatie / samenwonend')),
         ('Single', _('Single')),
         ('Other', _('Other')),
-        )
-MOTIVATION = (
+        ]
+MOTIVATION = [
         ('A Better World',_('A Better World')),
         ('A stronger and better Netherlands', _('A stronger and better Netherlands')),
         ('A stronger and better Europe', _('A stronger and better Europe')),
@@ -112,7 +113,7 @@ MOTIVATION = (
         ('Personal development', _('Personal development')),
         ('No motivation', _('No motivation')),
 
-        )
+        ]
 
 class ConnectionType(models.Model):
     """
@@ -147,6 +148,7 @@ class EducationLevel(models.Model):
     """
 
     level      = models.CharField(_('Level'), max_length=255)
+    
     def __unicode__(self):
         return self.level
     
@@ -228,6 +230,36 @@ class PoliticianProfile(Profile):
     def profile_incomplete(self):
         return not self.education.all() or not self.work.all() or not self.political.all() or \
             not (self.goals.all() or self.profile.appearances.all() or self.links.all())
+
+    def election_party_instances(self):
+        "Returns the election_party_instance objects of the candidate"
+        # Currently there is only one but this needs to be modified at a later
+        # date for when there are past elections
+        candidicies = self.user.elections.all()
+        election_party_instances = []
+        for candidacy in candidicies:
+            election_party_instances.append(candidacy.election_party_instance)
+
+        return election_party_instances
+
+    def region(self):
+        "returns the region the politician is currently in"
+        candidacy = self.user.elections.all()
+        return candidacy[0].election_party_instance.election_instance.council.region
+
+    def party(self):
+        "Returns the party  of the candidate"
+        # Currently there is only one but this needs to be modified at a later
+        # date for when there are past elections and so more partys
+        candidacy = self.user.elections.all()
+        return candidacy[0].election_party_instance.party
+
+    def age(self):
+        if self.dateofbirth:
+            d = date.today()
+            bday = self.dateofbirth
+            return (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
+        return
 
     def __unicode__(self):
         return self.user.username
