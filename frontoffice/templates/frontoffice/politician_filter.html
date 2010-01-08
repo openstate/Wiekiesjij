@@ -46,7 +46,7 @@
             </ul>
             {% for politician in politicians %}
                 <div>
-                    <p>{% trans 'Name' %}: {{ politician.full_name }}</p>
+                    <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.user.id">{{ politician.full_name }}</a></p>
                     <p>{% trans 'Age' %}: {{ politician.age }}</p>
                     <p>{% trans 'Party' %}: {{ politician.party }}</p>
                     {% if not region_filtered %}

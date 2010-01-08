@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 
 from frontoffice.forms import PoliticianFilterForm
-from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
+from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty, Party
 from political_profiles.models import PoliticianProfile, EducationLevel
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
@@ -26,6 +26,22 @@ def new_url(path, field, value):
     new_str = field + '='
 
     return path.replace(old_str, new_str)
+
+
+def election(request, id=None):
+
+    politicians = []
+    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
+    party = Party.objects.filter(id=id)
+    eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
+    if id:
+
+        tmp_eips = party[0].election_instance_parties.all()
+        #tmp_eips.candiates
+        politicians = tmp_eips[0].candidate_dict()
+   
+    return render_to_response('frontoffice/election.html', {'eips':eips, 'politicians':politicians }, context_instance=RequestContext(request))
+
 
 def politician_profile_filter(request):
     politicians = []
