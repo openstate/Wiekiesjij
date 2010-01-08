@@ -186,6 +186,12 @@
                         <p>{% trans 'From' %}: {{ education.startdate }}</p>
                         {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate }}</p>{% endif %}
                     </div>
+                {% empty %}
+                    <div>
+                        {% blocktrans with profile.first_name as name %}
+                            {{ name }}  has not filled in any educations
+                        {% endblocktrans %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -207,6 +213,12 @@
                         <p>{% trans 'From' %}: {{ work.startdate }}</p>
                         {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate }}</p>{% endif %}
                     </div>
+                {% empty %}
+                    <div>
+                        {% blocktrans with profile.first_name as name %}
+                            {{ name }}  has not filled in any work experience
+                        {% endblocktrans %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -227,6 +239,12 @@
                         <p>{% trans 'Type' %}: {{ experience.type }}</p>
                         <p>{% trans 'From' %}: {{ experience.startdate }}</p>
                         {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate }}</p>{% endif %}
+                    </div>
+                {% empty %}
+                    <div>
+                        {% blocktrans with profile.first_name as name %}
+                            {{ name }} has not filled in any political experience
+                        {% endblocktrans %}
                     </div>
                 {% endfor %}
             </div>

@@ -89,16 +89,16 @@ def politician_profile(request, id, tab = "favs"):
     profile = get_object_or_404(PoliticianProfile, user=user)
     showtab = tab
 
+    #TODO/FIXME/FIXTHIS/PRIO1: In the future, this will cause trouble. There should be something to select only the current Candidacy of a user.
     for candidacy in user.elections.all():
         party = candidacy.election_party_instance.party
         position = candidacy.position
 
     #Getting the twitter RSS feed URL
     try:
-        twitter = profile.connections.filter(type__type='Twitter')[0]
+        twitter = profile.connections.filter(type__type='Twitter')[0] #Raises an exception if no twitter account is entered
         regex = re.compile(r"^(http://)?(www\.)?(twitter\.com/)?(?P<id>[A-Za-z0-9\-=_]+)")
         match = regex.match(twitter.url)
-        if not match: return ""
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
     except:
