@@ -88,7 +88,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                 plain_template=templates['plain'],
                 )
 
-        except Exception:
+        except:
             transaction.rollback()
             raise
         else:
