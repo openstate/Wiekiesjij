@@ -1,0 +1,76 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n form_tags %}
+
+{% block extrahead %}
+	{{ form.media }}
+{% endblock extrahead %}
+
+
+{% block cols %}
+<div><a href="{% url fo.politician_profile_filter %}">{% trans "Search all candidates" %}</a>
+    <p>{% trans 'Filter on name, region, and much more' %}</p></div>
+<div class="col size1of2">
+    <div class="mod">
+        {% for eip in eips %}
+        <div>
+            {% ifequal eip.id selected_eip.id %}
+            <p>{{ eip.position }}</p>
+            <img alt="{{ eip.party.abbreviation }}" src="{{  eip.party.logo }}" />
+            <p>{{ eip.party.abbreviation}}</p>
+            <p>{{ eip.party.name }}</p>
+            {% else %}
+            <a href="{% url fo.election eip.party.id %}">
+            <p>{{ eip.position }}</p
+
+            {% if eip.party.logo %}
+               <img alt="{{ eip.party.abbreviation }}" src="{{  eip.party.logo }}" />>
+            {% else %}
+                <img alt="{{ eip.party.abbreviation }}" src="/link/to/default/" />>
+            {% endif %}
+            <p>{{ eip.abbreviation}}</p>
+            <p>{{ eip.party.name }}</p>
+            </a>
+            {% endifequal %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="col size1of2">
+
+	<div class="mod">
+            <h2>{% trans "Candidates" %}</h2>
+            {% if selected_eip %}
+                <div>
+                <img alt="{{ selected_eip.party.abbreviation }}" src="{{  selected_eip.party.logo }}" />
+                <p>{% trans 'Candidate list for ' %} {{ selected_eip.party.abbreviation }}</p>
+                <p><a href="{% url fo.party_profile selected_eip.id %}">{% trans 'Go to the profile of this party' %}</a></p>
+                </div>
+                {% for position, politician in politicians.items %}
+
+                     {{ politician.candidate.profile.profile }}
+
+                    <div>
+                        <p>{{ position }}</p>
+                        {% if politician %}
+                            {% if politician.picture %}
+                                <img alt="{{ politician.full_name }}" src="{{ politician.picture.url }}" />
+                            {% else %}
+                                <img alt="{{ politician.full_name }}" src="/link/to/default/" />
+                            {% endif %}
+                            <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.candidate.id %}">{{ politician.candidate.profile.last_name }}</a></p>
+                            <p>{{ politician.candidate.profile.initials }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}} )</p>
+
+                        {% else %}
+                            <p>{% trans 'The Politician has not yet been added to the system for this position.' %}</p>
+                        {% endif %}
+                        <br></br>
+                    </div>
+
+
+                {% empty %}
+                    <p>{% trans 'No Politicians: please search or select a filter options' %}
+                {% endfor %}
+            {% endif %}
+    </div>
+</div>
+{% endblock cols %}
