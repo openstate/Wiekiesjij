@@ -2,9 +2,13 @@
 {% load i18n %}
 {% load utils_tags %}
 
+{% block title %}
+    {{ profile.full_name }}
+{% endblock title %}
+
 {% block menu %}
     <li><a href="#">{% trans 'Take the test' %}</a></li>
-    <li class="selected"><a href="#">{% trans 'Candidates' %}</a></li>
+    <li class="selected"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
     <li><a href="#">{% trans 'Statistics' %}</a></li>
     <li><a href="#">{% trans 'Organisation' %}</a></li>
 {% endblock menu %}
@@ -30,7 +34,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Party' %}</th>
-                        <td>{{ party.name }}</td>
+                        <td>{{ profile.party.name }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Age' %}</th>
@@ -54,7 +58,9 @@
                     </tr>
                     <tr class="fan">
                         <td colspan="2">
-                            {% trans 'Todo' %}
+                            {% blocktrans with profile.first_name as name and num_fans|default:0 as fans %}
+                                {{ name }} has got {{ fans }} fans
+                            {% endblocktrans %}
                         </td>
                     </tr>
                     <tr class="emptyRow">
@@ -69,6 +75,10 @@
                                 <li>
                                     <a class="{{ connection.type }}" href="{{ connection.url }}">{{ connection.type }}</a>
                                 </li>
+                                {% empty %}
+                                <li>
+                                    <a>{% trans 'N.A.' %}</a>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </td>
@@ -76,20 +86,22 @@
                 </table>
                 <div class="popularityMeter">
                     <div class="meterContainer">
-                        <img alt="" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
-                        <div class="meterActiveContainer" style="height: {{ popularity|default:33 }}%">
-                            <img class="meterActive" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
+                        <img alt="{% trans 'Popularity meter' %}" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
+                        <div class="meterActiveContainer" style="height: {{ popularity|default:0 }}%">
+                            <img class="meterActive" alt="{{ popularity|default:0 }}" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
                         </div>
                     </div>
                     <span class="top">100%</span>
                     <span class="bottom">0%</span>
-                    <span class="total">{{ popularity|default:33 }}%</span>
+                    <span class="total">{{ popularity|default:0 }}%</span>
                 </div>
             </div>
             <div class="ballotPosition">
-                {% blocktrans with profile.first_name as name and position as position and party.abbreviation as party and region.name|default:'TODO' as region %}
-                    {{ name }} is number {{ position }} on the election list of {{ party }} in {{ region }}
+                <a href="{% url fo.election profile.party.id %}">
+                {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
+                    {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
                 {% endblocktrans %}
+                </a>
             </div>
         </div>
     </div>

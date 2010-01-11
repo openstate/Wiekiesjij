@@ -57,7 +57,7 @@
                             {% else %}
                                 <img alt="{{ politician.full_name }}" src="/link/to/default/" />
                             {% endif %}
-                            <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.candidate.id %}">{{ politician.candidate.profile.last_name }}</a></p>
+                            <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.candidate.id %}">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a></p>
                             <p>{{ politician.candidate.profile.initials }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}} )</p>
 
                         {% else %}
