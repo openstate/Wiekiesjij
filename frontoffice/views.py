@@ -17,7 +17,7 @@ from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
-
+from django.core.paginator import Paginator
 
 def new_url(path, field, value):
     old_str = field + '='  + str(value)
@@ -192,6 +192,18 @@ def politician_profile_filter(request):
         else:
             politicians = []
             form = PoliticianFilterForm() # An unbound form
+        p = Paginator(politicians, 6)
+        # Make sure page request is an int. If not, deliver first page.
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+
+        # If page request (9999) is out of range, deliver last page of results.
+        try:
+            politicians = p.page(page)
+        except (EmptyPage, InvalidPage):
+            politicians = p.page(paginator.num_pages)
 
     return render_to_response('frontoffice/politician_filter.html', {'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
 

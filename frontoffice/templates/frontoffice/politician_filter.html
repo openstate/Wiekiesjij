@@ -38,13 +38,30 @@
 <div class="col size1of2">
 
 	<div class="mod">
+
             <h2>{% trans "Results" %}</h2>
+
             <ul>
                 {% for filter1, filter2, filter3 in filters %}
                     <li><a href="{{ filter3 }}">{{ filter1 }}: {{ filter2 }}</a></li>
                 {% endfor %}
             </ul>
-            {% for politician in politicians %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if politicians.has_previous %}
+                        <a href="?page={{ politicians.previous_page_number }}">{% trans 'previous' %}</a>
+                    {% endif %}
+
+                    <span class="current">
+                        {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}.
+                    </span>
+
+                    {% if politicians.has_next %}
+                        <a href="?page={{ politicians.next_page_number }}">{% trans 'next' %}</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% for politician in politicians.object_list %}
                 <div>
                     <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.user.id %}">{{ politician.full_name }}</a></p>
                     <p>{% trans 'Age' %}: {{ politician.age }}</p>
