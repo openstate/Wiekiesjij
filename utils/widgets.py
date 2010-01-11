@@ -102,8 +102,8 @@ class NameWidget(forms.widgets.MultiWidget):
         max_lengths = kwargs.pop('max_lengths', [80, 15, 65])
         widgets = (
             forms.widgets.TextInput(attrs={'maxlength': max_lengths[0]}),
-            forms.widgets.TextInput(attrs={'maxlength': max_lengths[1]}),
             forms.widgets.TextInput(attrs={'maxlength': max_lengths[2]}),
+            forms.widgets.TextInput(attrs={'maxlength': max_lengths[1]}),
         )
         kwargs.update({
             'widgets': widgets,
