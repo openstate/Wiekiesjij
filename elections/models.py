@@ -218,7 +218,7 @@ class Party(models.Model):
     region  = models.CharField(_('Region'), max_length=255) #autocomplete other party regions
     level   = models.CharField(_('Level'), max_length=255) #autocomplete other party levels
     name        = models.CharField(_('Name'), max_length=255)
-    abbreviation = models.CharField(_('Abbreviated Name'), max_length=10)
+    abbreviation = models.CharField(_('Abbreviated Name'), max_length=20)
     address_street      = models.CharField( ('Street'), max_length=255, null=True, blank=True)
     address_number      = models.CharField( ('Number'), max_length=255, null=True, blank=True)
     address_postalcode  = models.CharField( ('Postalcode'), max_length=255, null=True, blank=True)

@@ -33,7 +33,7 @@ class PoliticianProfileForm(BetterForm, TemplateForm):
     PoliticianProfile admin
     '''
     name            = NameField(label=_('Name'))
-    initials        = forms.CharField(label=_('Initials'))
+    initials        = forms.CharField(label=_('Initials'), max_length=15)
     dateofbirth     = forms.DateField(label=_('Date Of Birth'), widget=DateSelectPicker(years=range(1910, datetime.date.today().year)) )
     gender          = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
     

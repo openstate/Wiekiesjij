@@ -209,8 +209,8 @@ class PartyForm(BetterModelForm, TemplateForm):
         model = Party
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
-    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True)
+    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'), max_length=255)
+    abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True, max_length=20)
     #list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
     
