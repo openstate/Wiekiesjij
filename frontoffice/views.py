@@ -32,15 +32,14 @@ def election(request, id=None):
 
     politicians = []
     election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
-    party = Party.objects.filter(id=id)
-    eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
+    selected_eip = None
+    eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances).order_by('position')
     if id:
+        selected_eip = ElectionInstanceParty.objects.get(id=id)
+        politicians = selected_eip.candidate_dict()
 
-        tmp_eips = party[0].election_instance_parties.all()
-        #tmp_eips.candiates
-        politicians = tmp_eips[0].candidate_dict()
    
-    return render_to_response('frontoffice/election.html', {'eips':eips, 'politicians':politicians }, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians }, context_instance=RequestContext(request))
 
 
 def politician_profile_filter(request):
