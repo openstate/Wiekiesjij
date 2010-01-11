@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from tagging.fields import TagField
 from functions import cal_work_experience_days, cal_political_experience_days
 from datetime import date
-from django.core.urlresolvers import reverse
 
 
 GENDERS = [
@@ -247,6 +246,11 @@ class PoliticianProfile(Profile):
         candidacy = self.user.elections.all()
         return candidacy[0].election_party_instance.party
 
+    def election_party(self):
+        """ Returns election party wrapper. """
+        candidacy = self.user.elections.all().select_related('election_party_instance__party')
+        return candidacy[0].election_party_instance
+
     def position(self):
         "Returns the position of the candidate on the party's list"
         candidacy = self.user.elections.all()
@@ -264,48 +268,6 @@ class PoliticianProfile(Profile):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
-
-
-    def export_as_json(self, request):
-        """ Returns data of this profile as json string. """
-        # exports public info. do not export whole __dict__, profile may be extended
-        # with confidential info later.
-        
-        # you may add data keys you needed here.
-        # policy: your consumer must ignore keys it doesn't recognize, such that
-        # others may add their keys later.
-
-        # currently needed by OpenSocialWidget: full name, age, party, region,
-        # position in party, links (profile, party, become a fan etc).
-        from django.contrib.sites.models import Site
-        domain = u"http://%s" % Site.objects.get_current().domain
-
-        fields = ['id', 'user_id', 'first_name', 'middle_name', 'last_name', 'initials', 'gender', 'dateofbirth']
-        data = dict([(f, getattr(self, f)) for f in fields])
-        
-        party = self.party()
-        #[BIG FAT WARNING: fo.party_profile requires ElectionInstanceParty, while
-        # self.party() returns Party. we have to fetch it manually.
-        eip = self.user.elections.all()[0].election_party_instance
-
-        data.update({
-            'picture': domain + self.picture.url,
-            'age': self.age(),
-            'position': self.position(),
-            'region': self.region(),
-            'party': {
-                'abbreviation': party.abbreviation,
-                'slogan': party.slogan,
-                'logo': domain + party.logo.url,
-                'goto_url': domain + reverse('fo.party_profile', kwargs={'eip_id': eip.pk}),
-            },
-            'profile_url': domain + reverse('fo.politician_profile', kwargs = {'id': self.user_id}),
-            'become_fan_url': domain + reverse('fo.visitor.add_fan', kwargs = {'politician_id': self.user_id}),
-            'stop_being_fan_url': domain + reverse('fo.visitor.remove_fan', kwargs = {'politician_id': self.user_id}),
-            'is_fan': (request.user.profile is not None and 'visitor' == request.user.profile.type and request.user.profile in self.fans),
-            'do_test_url': None, # [FIXME: to do]
-        })
-
 
 
 

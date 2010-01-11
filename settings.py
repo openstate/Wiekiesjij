@@ -115,6 +115,8 @@ INSTALLED_APPS = (
     'backoffice',
     'frontoffice',
     'registration',
+
+    'opensocial',
 )
 
 # Email settings
