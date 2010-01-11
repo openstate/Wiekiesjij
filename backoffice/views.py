@@ -34,6 +34,8 @@ from backoffice.wizards import PoliticianProfileWizard, PoliticianProfileAppeara
 from backoffice.wizards import PartyContactWizard, AddElectionInstanceWizard, ElectionSetupWizard2, EditElectionInstanceWizard
 from backoffice.wizards import ElectionPartyEditWizard, AddCandidateWizard, AnswerQuestion, PoliticianProfileGoalWizard
 
+from backoffice.functions import check_permissions
+
 from questions.functions import get_question_count
 
 def permission_denied(request):
@@ -59,6 +61,7 @@ def redirect_view(request):
 
 @party_admin_required
 def party_contact_wizard(request, id, user_id=None):
+    check_permissions(request,id, 'party_admin')
     if user_id is None:
         if request.user.profile is None or request.user.profile.type != 'party_admin':
             raise PermissionDeniedException()
@@ -68,6 +71,7 @@ def party_contact_wizard(request, id, user_id=None):
 
 @party_admin_required
 def party_contact_wizard_done(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     
     return render_to_response('backoffice/wizard/partycontact/done.html', {'eip': eip, 'instance': eip.election_instance}, context_instance=RequestContext(request))
@@ -75,11 +79,13 @@ def party_contact_wizard_done(request, id):
     
 @council_admin_required
 def election_instance_view(request, id):
+    check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
 @council_admin_required
 def election_instance_shrink(request, id):
+    check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
     if instance.num_lists is None:
         instance.num_lists = 0
@@ -90,6 +96,7 @@ def election_instance_shrink(request, id):
 
 @council_admin_required
 def election_instance_grow(request, id):
+    check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
     if instance.num_lists is None:
         instance.num_lists = 0
@@ -99,35 +106,41 @@ def election_instance_grow(request, id):
 
 @party_admin_required
 def election_party_view(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/election_party_view.html', {'instance': eip.election_instance, 'eip': eip}, context_instance=RequestContext(request))
 
 @council_admin_required
 def election_party_create(request, id, position):
+    check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
     wizard = AddElectionPartyWizard(instance, position)
     return wizard(request)
 
 @party_admin_required
 def election_party_edit(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     wizard = ElectionPartyEditWizard(eip)
     return wizard(request)
 
 @party_admin_required
 def election_party_up(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_up()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
 @party_admin_required
 def election_party_down(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     eip.move_down()
     return redirect('bo.election_instance_view', id=eip.election_instance.id)
 
 @party_admin_required
 def election_party_shrink(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     if eip.list_length is None:
         eip.list_length = 0
@@ -138,6 +151,7 @@ def election_party_shrink(request, id):
 
 @party_admin_required
 def election_party_grow(request, id):
+    check_permissions(request,id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     if eip.list_length is None:
         eip.list_length = 0
@@ -146,19 +160,22 @@ def election_party_grow(request, id):
     return redirect('bo.election_party_view', id=id)
 
 @party_admin_required
-def candidate_up(request, id):
+def candidate_up(request, id):    
     can = get_object_or_404(Candidacy, pk=id)
+    check_permissions(request,can.election_party_instance.id, 'party_admin')
     can.move_up()
     return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
 @party_admin_required
 def candidate_down(request, id):
     can = get_object_or_404(Candidacy, pk=id)
+    check_permissions(request,can.election_party_instance.id, 'party_admin')
     can.move_down()
     return redirect('bo.election_party_view', id=can.election_party_instance.id)
 
 @party_admin_required
 def election_party_add_candidate(request, id, pos):
+    check_permissions(request,id, 'party_admin')
     return AddCandidateWizard(id, pos)(request)
 
 @staff_required
@@ -187,6 +204,7 @@ def election_setup(request, election_instance_id, user_id=None):
 
     Both parameters are required. It's obvious what they mean.
     '''
+    check_permissions(request,election_instance_id, 'council_admin')
     if user_id is None:
         user_id = request.user.id
         if not request.user.profile or request.user.profile.type != 'council_admin':
@@ -196,11 +214,13 @@ def election_setup(request, election_instance_id, user_id=None):
 
 @council_admin_required
 def election_setup_done(request, election_instance_id):
+    check_permissions(request,election_instance_id, 'council_admin')
     election_instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
     return render_to_response('backoffice/wizard/election_setup/done.html', {'instance': election_instance}, context_instance=RequestContext(request))
 
 @candidate_required
 def politician_welcome(request, eip_id):
+    check_permissions(request, eip_id, 'candidate')
     election_instance_party = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     if not request.user.profile or request.user.profile.type != 'candidate':
         #We need to find a candidate to use for the wizard
@@ -219,10 +239,12 @@ def politician_welcome(request, eip_id):
 
 @candidate_required
 def politician_profile_setup(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileWizard(user_id=user_id, eip_id=eip_id)(request)
 
 @candidate_required
 def politician_profile_setup_done(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     return render_to_response('backoffice/wizard/politician_profile/done.html',
                               {'user_id': user_id,
                               'eip_id': eip_id,
@@ -232,6 +254,7 @@ def politician_profile_setup_done(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_interest(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     interests = user.profile.interests.all()
     return render_to_response('backoffice/wizard/politician_profile/interest.html',
@@ -243,6 +266,7 @@ def politician_profile_interest(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_interest_delete(request, interest_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     interest = user.profile.interests.get(pk=interest_id)
     interest.delete()
@@ -250,10 +274,12 @@ def politician_profile_interest_delete(request, interest_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_interest_wizard(request, eip_id, user_id, interest_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileInterestWizard(user_id=user_id, eip_id=eip_id, interest_id=interest_id)(request)
 
 @candidate_required
 def politician_profile_work(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     work = user.profile.work.all()
     return render_to_response('backoffice/wizard/politician_profile/work.html',
@@ -265,6 +291,7 @@ def politician_profile_work(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_work_delete(request, work_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     work = user.profile.work.get(pk=work_id)
     work.delete()
@@ -272,10 +299,12 @@ def politician_profile_work_delete(request, work_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_work_wizard(request, eip_id, user_id, work_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileWorkWizard(user_id=user_id, eip_id=eip_id, work_id=work_id)(request)
     
 @candidate_required
 def politician_profile_goal(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     goals = user.profile.goals.all()
     return render_to_response('backoffice/wizard/politician_profile/goals.html',
@@ -287,6 +316,7 @@ def politician_profile_goal(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_goal_delete(request, goal_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     goal = user.profile.goals.get(pk=goal_id)
     goal.delete()
@@ -294,10 +324,12 @@ def politician_profile_goal_delete(request, goal_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_goal_wizard(request, eip_id, user_id, goal_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileGoalWizard(user_id=user_id, eip_id=eip_id, goal_id=goal_id)(request)
 
 @candidate_required
 def politician_profile_political(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     political = user.profile.political.all()
     return render_to_response('backoffice/wizard/politician_profile/political.html',
@@ -309,6 +341,7 @@ def politician_profile_political(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_political_delete(request, political_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     political = user.profile.political.get(pk=political_id)
     political.delete()
@@ -316,10 +349,12 @@ def politician_profile_political_delete(request, political_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_political_wizard(request, eip_id, user_id, political_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfilePoliticalWizard(user_id=user_id, eip_id=eip_id, political_id=political_id)(request)
 
 @candidate_required
 def politician_profile_education(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     education = user.profile.education.all()
     return render_to_response('backoffice/wizard/politician_profile/education.html',
@@ -331,6 +366,7 @@ def politician_profile_education(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_education_delete(request, education_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     education = user.profile.education.get(pk=education_id)
     education.delete()
@@ -338,10 +374,12 @@ def politician_profile_education_delete(request, education_id, eip_id, user_id):
     
 @candidate_required
 def politician_profile_education_wizard(request, eip_id, user_id, education_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileEducationWizard(user_id=user_id, eip_id=eip_id, education_id=education_id)(request)
 
 @candidate_required
 def politician_profile_appearance(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     appearances = user.profile.appearances.all()
     return render_to_response('backoffice/wizard/politician_profile/appearances.html',
@@ -353,6 +391,7 @@ def politician_profile_appearance(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_appearance_delete(request, appearance_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     appearance = user.profile.appearances.get(pk=appearance_id)
     appearance.delete()
@@ -360,10 +399,12 @@ def politician_profile_appearance_delete(request, appearance_id, eip_id, user_id
 
 @candidate_required
 def politician_profile_appearance_wizard(request, eip_id, user_id, appearance_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileAppearanceWizard(user_id=user_id, eip_id=eip_id, appearance_id=appearance_id)(request)
 
 @candidate_required
 def politician_profile_link(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     links = user.profile.links.all()
 
@@ -376,6 +417,7 @@ def politician_profile_link(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_link_delete(request, link_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     link = user.profile.links.get(pk=link_id)
     link.delete()
@@ -383,10 +425,12 @@ def politician_profile_link_delete(request, link_id, eip_id, user_id):
 
 @candidate_required
 def politician_profile_link_wizard(request, eip_id, user_id, link_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileLinkWizard(user_id=user_id, eip_id=eip_id, link_id=link_id)(request)
 
 @candidate_required
 def politician_profile_connection(request, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     connections = user.profile.connections.all()
 
@@ -399,6 +443,7 @@ def politician_profile_connection(request, eip_id, user_id):
 
 @candidate_required
 def politician_profile_connection_delete(request, connection_id, eip_id, user_id):
+    check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
     connection = user.profile.connections.get(pk=connection_id)
     connection.delete()
@@ -406,15 +451,18 @@ def politician_profile_connection_delete(request, connection_id, eip_id, user_id
 
 @candidate_required
 def politician_profile_connection_wizard(request, eip_id, user_id, connection_id=None):
+    check_permissions(request, eip_id, 'candidate')
     return PoliticianProfileConnectionWizard(user_id=user_id, eip_id=eip_id, connection_id=connection_id)(request)
 
 @party_admin_required
 def csv_import_candidates_step1(request, ep_id):
+    check_permissions(request, ep_id, 'party_admin')
     eip = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     return render_to_response('backoffice/csv_candidates_1.html', {'ep_id':ep_id, 'instance':eip.election_instance}, context_instance=RequestContext(request))
 
 @party_admin_required
 def csv_import_candidates_step2(request, ep_id, error = False):
+    check_permissions(request, ep_id, 'party_admin')
     if request.method == 'POST':
         form = CsvUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -438,6 +486,7 @@ def csv_import_candidates_step2(request, ep_id, error = False):
 @party_admin_required
 @transaction.commit_manually
 def csv_import_candidates_step3(request, ep_id):
+    check_permissions(request, ep_id, 'party_admin')
     eip_obj = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     try:
         positions = Candidacy.objects.filter(election_party_instance=eip_obj).values_list('position', flat=True)
@@ -507,13 +556,15 @@ def csv_import_candidates_step3(request, ep_id):
     forms = dict({'csv_confirm': form})
     return render_to_response('backoffice/csv_candidates_3.html', {'candidates':candidates, 'forms':forms, 'ep_id':ep_id, 'instance':eip.election_instance}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 def csv_import_parties_step1(request, ei_id):
+    check_permissions(request, ei_id, 'council_admin')
     ei_obj = get_object_or_404(ElectionInstance, pk=ei_id)
     return render_to_response('backoffice/csv_parties_1.html', {'ei_id': ei_id, 'instance':ei_obj}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 def csv_import_parties_step2(request, ei_id, error = False):
+    check_permissions(request, ei_id, 'council_admin')
     if request.method == 'POST':
         form = CsvUploadForm(request.POST, request.FILES)    
         if form.is_valid():
@@ -534,9 +585,10 @@ def csv_import_parties_step2(request, ei_id, error = False):
     forms = dict({'csv_upload': form})
     return render_to_response('backoffice/csv_parties_2.html', {'forms':forms, 'error': error, 'ei_id': ei_id, 'instance':ei_obj}, context_instance=RequestContext(request))
 
-@party_admin_required
+@council_admin_required
 @transaction.commit_manually
 def csv_import_parties_step3(request, ei_id):
+    check_permissions(request, ei_id, 'council_admin')
     ei_obj = get_object_or_404(ElectionInstance, pk=ei_id)
     try:
         lists = ElectionInstanceParty.objects.filter(election_instance=ei_obj).values_list('position', flat=True)
@@ -605,7 +657,7 @@ def csv_import_parties_step3(request, ei_id):
                         ei_obj.num_lists = max_list
                         ei_obj.save()
 
-                except Exception:
+                except:
                     transaction.rollback()
                     raise
                 else:
@@ -629,23 +681,27 @@ def council_edit(request, id):
 
     Both parameters are required. It's obvious what they mean.
     '''
+    check_permissions(request, id, 'council_admin')
     election_instance = get_object_or_404(ElectionInstance, pk=id)
     return CouncilEditWizard(election_instance)(request)
 
 
+@candicate_required
 def answer_question(request, election_instance_party_id, user_id=None):
     '''
         AnswerQuestion - wizard.
         @param int election_instance_party_id - ElectionInstanceParty id
         @param int user_id User (Candidate=PoliticalProfile) id
     '''
+    check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
-
+    
+@candicate_required
 def answer_question_done(request, election_instance_party_id, user_id):
     '''
         answer_question thanks page.
     '''
-    
+    check_permissions(request, election_instance_party_id, 'candidate')
     return render_to_response('backoffice/wizard/question/answer_add/done.html', {
                                 'questions': range(0, get_question_count(election_instance_party_id)),
                                 'eip_id': election_instance_party_id,
