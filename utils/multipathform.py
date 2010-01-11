@@ -444,10 +444,8 @@ class MultiPathFormWizard(object):
                 name = key[len(self.files_field_name):]
                 
                 for data in fls:
-                    print "Restoring: FUCK: %s" % repr(data)
                     try:
                         fl = RefUploadedFile.restore(data)
-                        print "SUKA!!!!"
                         if fl is not None:
                             files.update({name : fl})
 
@@ -456,7 +454,6 @@ class MultiPathFormWizard(object):
                         pass
                 # end for
         # end for post
-        print "PIZDA: %s" % repr(files)
         return files
             
 
