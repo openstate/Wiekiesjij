@@ -1,0 +1,47 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+{% load comments %}
+
+{% block title %}
+    {{ goal.politician.full_name }}
+{% endblock title %}
+
+{% block menu %}
+    <li><a href="#">{% trans 'Take the test' %}</a></li>
+    <li class="selected"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
+    <li><a href="#">{% trans 'Statistics' %}</a></li>
+    <li><a href="#">{% trans 'Organisation' %}</a></li>
+{% endblock menu %}
+
+{% block content %}
+    <h1>
+        {% blocktrans with goal.politician.full_name as name %}
+            Political goal of {{ name }}
+        {% endblocktrans %}
+    </h1>
+
+    <div>
+        <div>
+            {{ goal.goal }}
+        </div>
+
+        {% get_comment_list for goal as comments %}
+        {% for comment in comments %}
+            <div>
+                {% if comment.user_url %}
+                    <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
+                {% else %}
+                    <strong>{{ comment.user_name }}</strong>
+                {% endif %}
+                <p>{{ comment.comment }}</p>
+            </div>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+            {% trans 'Respond' %}:
+            {% render_comment_form for goal %}
+        {% endif %}
+
+
+    </div>
+{% endblock content %}
