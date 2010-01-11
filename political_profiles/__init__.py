@@ -90,6 +90,7 @@ def create_profile(for_function, data):
     """
     created = False
     if User.objects.filter(email__iexact=data['email']):
+        user = User.objects.get(email__iexact=data['email'])
         if user.profile is None or user.profile.type != for_function:
             return (False, None)
     else:
