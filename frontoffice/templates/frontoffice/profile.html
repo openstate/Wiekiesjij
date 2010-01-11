@@ -1,5 +1,6 @@
 {% extends 'frontoffice/base.html' %}
 {% load i18n %}
+{% load comments %}
 {% load utils_tags %}
 
 {% block title %}
@@ -305,6 +306,9 @@
                     {% for goal in profile.goals.all %}
                         <li>
                             <b>{{ goal.goal }}</b>
+                            {% get_comment_count for goal as comment_count %}
+                            <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% trans 'Comments' %} </a> -
+                            <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a>
                         </li>
                     {% endfor %}
                 </ul>

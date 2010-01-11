@@ -12,7 +12,7 @@ from django.utils.safestring import mark_safe
 
 from frontoffice.forms import PoliticianFilterForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty, Party
-from political_profiles.models import PoliticianProfile, EducationLevel
+from political_profiles.models import PoliticianProfile, EducationLevel, PoliticalGoal
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
@@ -40,6 +40,12 @@ def election(request, id=None):
 
    
     return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians }, context_instance=RequestContext(request))
+
+def goal(request, id):
+    goal = get_object_or_404(PoliticalGoal, pk=id)
+
+    return render_to_response('frontoffice/goal.html', {'goal': goal}, context_instance=RequestContext(request))
+
 
 
 def politician_profile_filter(request):
