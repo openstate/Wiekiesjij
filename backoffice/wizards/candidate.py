@@ -714,7 +714,7 @@ class AddCandidateWizard(MultiPathFormWizard):
 
             #Link candidate to party
             candidacy = Candidacy(
-                election_party_instance = get_object_or_404(ElectionInstanceParty, party=self.election_instance_party_id),
+                election_party_instance = get_object_or_404(ElectionInstanceParty, pk=self.election_instance_party_id),
                 candidate = self.candidate.user,
                 position = self.position,
             )

@@ -8,9 +8,4 @@ migrate.sh
 runserver.sh
 syncdb.sh
 local_settings.py
-media/media/politicians/*
-media/media/politician
-media/media/politician/PDVD_001_2_-_Sint.png
-media/media/politician/ppuf600X544__.gif
-media/media/politician/ppuf600X544_.gif
-media/media/politician/ppuf600X544.gif
+media/media/politician/*
