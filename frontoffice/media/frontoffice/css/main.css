@@ -23,6 +23,13 @@
 				margin:0 0 0 10px;
 				padding-left:28px;
 				}
+			h2 {
+				background:url(../img/h1Arrow.gif) left center no-repeat;
+				font-size:18px;
+				line-height:24px;
+				margin:0;
+				padding-left:28px;
+				}
 			
 			a {
 				color:#000000;
@@ -32,6 +39,10 @@
 				a:hover {
 					text-decoration:none;
 					}
+					
+			.image {
+				overflow:hidden;_zoom:1;
+				}
 					
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -61,6 +72,133 @@
 						background:#E0E0E0;
 						}
 
+/* 	Form styling
+	*************************************************************************************************/
+
+	form {
+
+		}
+		input,
+		textarea,
+		select {
+			border:1px solid #aaa;
+			padding:5px;
+			width:448px;
+			font-size:1.2em;
+			}
+			.size1of4 input,
+			.size1of4 textarea {
+				width:171px;
+				}
+			
+			.size1of4 select {
+				width:183px;
+				}
+		select {
+			width:460px;
+			padding:4px;
+			}
+		textarea {
+			height:100px;
+			}
+		.radioselect input,
+		.checkboxselectmultiple input {
+			border:0;
+			padding:0;
+			width:auto;
+			}
+		.small input {
+			width:50px;
+			}
+		label,
+		p.label {
+			display:block;
+			color:#000000;
+			font-weight:bold;
+			margin-bottom:2px;
+
+			}
+		span.optional,
+		span.note {
+			font-size:0.8em;
+			color:#aaa;
+			font-weight:normal;
+			}
+			.filter span.optional {
+				display:none;
+				}
+
+		.description {
+			margin-bottom:1em;
+			}
+
+		div.field,
+		div.multi-field {
+			overflow:hidden;_zoom:1;
+			margin-bottom:1em;
+			position:relative;
+			}
+			.filter div.field,
+			.filter div.multifield {
+				margin-bottom:.5em;
+				}
+			
+		/* 	checkbox
+			----------------------------------------------------------------------------------------- */
+			div.checkboxselectmultiple {
+
+				}
+				div.checkboxselectmultiple ul {
+					margin-top:.5em;
+					}
+				div.checkboxselectmultiple label {
+					margin-bottom:5px;
+					font-weight:normal;
+					}
+				div.checkboxselectmultiple input {
+					margin: 2px 5px 0 0;
+					display:block;
+					float:left;
+					}
+
+			input.checkboxinput {
+				width:auto;
+				border:none;
+				}
+
+			div.checkboxinput {
+				position:relative;
+				}
+				div.checkboxinput label {
+					font-weight:normal;
+					padding-left:20px;
+					}
+				div.checkboxinput input {
+					margin-left:-20px;
+					}
+
+		/* 	radio
+			----------------------------------------------------------------------------------------- */
+			div.radioselect {
+
+				}
+				div.radioselect ul {
+					margin-top:.5em;
+					}
+				div.radioselect label {
+					font-weight:normal;
+					margin-bottom:5px;
+					line-height:1.2em;
+					}
+				div.radioselect input {
+					margin:2px 5px 0 0;
+					padding:0;
+					display:block;
+					float:left;
+					}
+
+	
+
 	/*	generic styling
 		**************************************************************************************************************/
 		
@@ -75,7 +213,7 @@
 			#header {
 				border-bottom:4px solid #e0e0e0;
 				height:95px;
-				margin:0 10px 50px;
+				margin:0 10px 20px;
 				overflow:hidden;
 				position:relative;
 				}
@@ -113,6 +251,20 @@
 								line-height:43px;
 								margin-top:0;
 								}
+							
+							ul.tabs .do-test {
+								margin-right:3em;
+								}
+								ul.tabs .do-test a {
+									color:#ed2227;
+									text-decoration:underline;
+									
+									}
+									ul.tabs .do-test a:hover {
+										background:#ed2227;
+										text-decoration:none;
+										color:#fff;
+										}
 	
 	/*	Content
 	**************************************************************************************************************/
@@ -121,23 +273,30 @@
 			
 				}
 				
-				#content col {
+				.col {
 					
 					}
 					
-					#content .mod {
+					.mod {
 						background:#E0E0E0;
-						margin:10px 10px 50px 20px;
+						margin:34px 10px 50px 20px;
+						position:relative;
 						}
-						
-						#content .bd {
+						.hd {
+							position:absolute;
+							z-index:20;
+							left:-10px;
+							top:-39px;
+							}
+						.bd {
 							background:#ffffff;
 							border:1px solid #c2c2c2;
 							clear:left;
 							left:-10px;
-							padding:15px 15px 5px;
+							padding:15px;
 							position:relative;
 							top:-10px;
+							overflow:hidden;_zoom:1;
 							}
 						
 	/* 	Tabs
@@ -162,6 +321,214 @@
 								line-height:32px;
 								margin-top:0;
 								}
+	
+	/* 	candidate browse
+		----------------------------------------------------------------------------------------- */	
+		
+		.lastCol h1 {
+			float:left;
+			}
+	
+		.search-link {
+			float:right;
+			margin:0 10px;
+			padding:0;
+			background:none;
+			text-align:right;
+			}
+			.search-link a {
+				color:#ed2227;
+				background:url(../img/h1Arrow.gif) right center no-repeat;
+				padding:0 24px 0 0;
+				font-size:1.5em;
+				}
+			.search-link p {
+				padding:0 24px 0 0;
+				font-style:italic;
+				}
+	
+		.party-list {
+			background:none;
+			margin:34px 0 50px 0;
+			}
+			.party-list .hd {
+				position:static;
+				margin:0 15px;
+				}
+				.party-list h2 {
+					background:url(../img/arrow-down.gif) 20px 10px no-repeat;
+					padding-left:3em;
+					font-weight:bold;
+					}
+					.party-list h2 span {
+						display:block;
+						font-size:.8em;
+						line-height:1.2em;
+						}
+			.party-list .bd {
+				top:0;
+				left:0;
+				clear:none;
+				border:none;
+				}
+			.party-list ul {
+				border-top:1px solid #ccc;
+				}
+			.party-list li {
+				border-bottom:1px solid #ccc;
+				overflow:hidden;_zoom:1;
+				
+				}
+				.party-list li.selected {
+					background:#dbdbdb;
+					color:#000;
+					margin-right:-15px;
+					}
+					.party-list li.selected .full-party-name,
+					.party-list li.selected .position {
+						color:#000;
+						}
+			.party-list .position {
+				float:left;
+				font-size:2.67em;
+				width:1.5em;
+				padding:0 5px 0 0;
+				text-align:right;
+				line-height:46px;
+				color:#999;
+				}
+				.party-list a:hover .position {
+					color:#000;
+					}
+			.party-list a {
+				text-decoration:none;
+				display:block;
+				overflow:hidden;_zoom:1;
+				}
+				.party-list a:hover {
+					background:#eee;
+					}
+			.party-list .image {
+				float:left;
+				width:72px;
+				height:46px;
+				margin:2px 10px 2px 0;
+				background:#fff;
+				}
+				.party-list .image img {
+					display:block;
+					float:left;
+					margin:0 auto;
+					}
+			.party-list .abbr {
+				font-size:1.5em;
+				display:block;
+				margin-top:.3em;
+				}
+				.party-list a:hover .abbr {
+					text-decoration:underline;
+					}
+			.party-list .full-party-name {
+				color:#aaa;
+				}
+				.party-list a:hover .full-party-name {
+					color:#666;
+					}
+					
+					
+			.cand-list {
+				margin-left:10px;
+				}
+				.cand-list h2 {
+					background:none;
+					padding:0;
+					}
+					.cand-list h2 span {
+						font-size:.8em;
+						display:block;
+						line-height:1.2em;
+						}
+				.cand-list .logo {
+					height:50px;
+					min-width:40px;
+					background:#eee;
+					float:left;
+					margin-right:10px;
+					}
+				.cand-list a.party-link {
+					float:right;
+					color:#ed2227;
+					font-weight:bold;
+					}
+				.cand-list ul {
+					clear:both;
+					border-bottom:1px solid #ccc;
+					padding-top:10px;
+					}
+				.cand-list li {
+					border-top:1px solid #ccc;
+					padding:10px 0;
+					overflow:hidden;_zoom:1;
+					}
+					.cand-list .position {
+						float:left;
+						width:50px;
+						height:50px;
+						background:#aaa;
+						margin-right:10px;
+						text-align:center;
+						line-height:50px;
+						font-size:2.5em;
+						}
+					.cand-list .image {
+						float:left;
+						margin-right:10px;
+						background:#e0e0e0;
+						width:39px;
+						height:48px;
+						overflow:hidden;_zoom:1;
+						border:1px solid #000;
+						}
+					.cand-list a.last-name {
+						display:block;
+						color:#ed2227;
+						font-weight:bold;
+						}
+					.empty {
+						font-style:italic;
+						}
+	
+	/* 	politician search
+		----------------------------------------------------------------------------------------- */	
+		
+		.pol-block-list {
+			overflow:hidden;_zoom:1;
+			margin:0 -15px;
+			}
+	
+		.pol-block {
+			float:left;
+			width:218px;
+			border-right:1px solid #ccc;
+			padding:0 0 0 15px;
+			margin:0 0 15px 0;
+			overflow:hidden;_zoom:1;
+			}
+			.pol-block a.name {
+				font-weight:bold;
+				display:block;
+				margin-bottom:.2em;
+				}
+			.pol-block p {
+				line-height:1.5em;
+				}
+			.pol-block .image {
+				float:left;
+				width:50px;
+				height:70px;
+				background:#ccc;
+				margin-right:10px;
+				}
 	
 	/* 	Quick profile
 		----------------------------------------------------------------------------------------- */

@@ -6,40 +6,49 @@
 {% endblock extrahead %}
 
 {% block cols %}
-<div class="col size1of2">
-    <div class="mod">
-        <h2>{% trans "Login" %}</h2>
-        <form action="{% url fo.politician_profile_filter %}" method="get" accept-charset="utf-8">
-            <input type="hidden" name="next" value="{{ next }}" />
+<div class="col size1of4">
+    <div class="mod filter">
+    	<div class="hd">
+        	<h2>{% trans "Filter" %}</h2>
+        </div>
+    	<div class="bd">
             
-            {% if form.non_field_errors %}
-                <div class="errors">
-                    {% for error in form.non_field_errors %}
-                    <p class="error">{{ error }}</p>
+            <form action="{% url fo.politician_profile_filter %}" method="get" accept-charset="utf-8">
+                <input type="hidden" name="next" value="{{ next }}" />
+                
+                {% if form.non_field_errors %}
+                    <div class="errors">
+                        {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>	
+                {% endif %}
+                
+        
+                <fieldset class="default">
+                    {% for field in form %}
+                        {% include 'utils/forms/_form_field.html' %}
+                                          
                     {% endfor %}
-                </div>	
-            {% endif %}
-            
+                </fieldset>
+        
+            	<div class="form-submit">
+                    <button class="primary next" type="submit">{% trans "Search" %}</button>
+                </div>
+            </form>
+            <a href="{% url fo.politician_profile_filter %}">{% trans 'Clear All Filters' %}</a>
+       	</div>
     
-            <fieldset class="default">
-                {% for field in form %}
-                    {% include 'utils/forms/_form_field.html' %}
-                                      
-                {% endfor %}
-            </fieldset>
-    
-            <div class="form-submit">
-                <button class="primary next" type="submit">{% trans "Search" %}</button>
-            </div>
-        </form>
-        <a href="{% url fo.politician_profile_filter %}">{% trans 'Clear All Filters' %}</a>
     </div>
 </div>
-<div class="col size1of2">
+
+<div class="col size3of4">
 
 	<div class="mod">
-
-            <h2>{% trans "Results" %}</h2>
+    	<div class="hd">
+        	<h2>{% trans "Politicians" %}</h2>
+        </div>
+    	<div class="bd">
 
             <ul>
                 {% for filter1, filter2, filter3 in filters %}
@@ -61,27 +70,31 @@
                     {% endif %}
                 </span>
             </div>
+            <div class="pol-block-list">
             {% for politician in politicians.object_list %}
-                <div>
-                    <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.user.id %}">{{ politician.full_name }}</a></p>
-                    <p>{% trans 'Age' %}: {{ politician.age }}</p>
-                    <p>{% trans 'Party' %}: {{ politician.party }}</p>
-                    {% if not region_filtered %}
-                        <p>{% trans 'Region' %}: {{ politician.region }}</p>
-                    {% endif %}
-                    <div class="picture">
+                <div class="pol-block">
+                	<div class="image">
                         {% if politician.picture %}
                             <img alt="{{ politician.full_name }}" src="{{ politician.picture.url }}" />
                         {% else %}
                             <img alt="{{ politician.full_name }}" src="/link/to/default/" />
                         {% endif %}
                     </div>
+                    <a href="{% url fo.politician_profile politician.user.id" class="name">{{ politician.full_name }}</a>
+                    <p>{% trans 'Age' %}: {{ politician.age }}</p>
+                    <p>{% trans 'Party' %}: {{ politician.party }}</p>
+                    {% if not region_filtered %}
+                        <p>{% trans 'Region' %}: {{ politician.region }}</p>
+                    {% endif %}
+                    
                 </div>
-                
-
+            
+    
             {% empty %}
                 <p>{% trans 'No Politicians: please search or select a filter options' %}
             {% endfor %}
+            </div> 
+		</div>
     </div>
 </div>
 {% endblock cols %}

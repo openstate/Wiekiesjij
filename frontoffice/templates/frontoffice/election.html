@@ -7,70 +7,97 @@
 
 
 {% block cols %}
-<div><a href="{% url fo.politician_profile_filter %}">{% trans "Search all candidates" %}</a>
-    <p>{% trans 'Filter on name, region, and much more' %}</p></div>
-<div class="col size1of2">
-    <div class="mod">
-        {% for eip in eips %}
-        <div>
-            {% ifequal eip.id selected_eip.id %}
-            <p>{{ eip.position }}</p>
-            <img alt="{{ eip.party.abbreviation }}" src="{{  eip.party.logo }}" />
-            <p>{{ eip.party.abbreviation}}</p>
-            <p>{{ eip.party.name }}</p>
-            {% else %}
-            <a href="{% url fo.election eip.party.id %}">
-            <p>{{ eip.position }}</p
+<div class="col lastCol">
+	<h1>{% trans "Candidates for" %} [Election Event Name]: [Instance Name]</h1>
+    <div class="mod search-link">
+        <a href="{% url fo.politician_profile_filter %}">{% trans "Search all candidates" %}</a>
+        <p>{% trans 'Filter on name, region, and much more' %}</p>
+   	</div>
+</div>
 
-            {% if eip.party.logo %}
-               <img alt="{{ eip.party.abbreviation }}" src="{{  eip.party.logo }}" />>
-            {% else %}
-                <img alt="{{ eip.party.abbreviation }}" src="/link/to/default/" />>
-            {% endif %}
-            <p>{{ eip.abbreviation}}</p>
-            <p>{{ eip.party.name }}</p>
-            </a>
-            {% endifequal %}
+<div class="col size2of3">
+    <div class="mod party-list">
+    	<div class="hd">
+        	<h2>{% trans "Choose a party" %} <span>{% trans "to view the candidate list" %}</span></h2>
         </div>
-        {% endfor %}
+    	<div class="bd">
+        	<ul>
+            {% for eip in eips %}
+                
+				{% ifequal eip.id selected_eip.id %}
+                <li class="selected">
+                    <span class="position">{{ eip.position }}</span>
+                    <div class="image">
+                    	<img alt="{{ eip.party.abbreviation }}" src="{{ eip.party.logo }}" />
+                  	</div>
+                    <span class="abbr">{{ eip.party.abbreviation }}</span>
+                    <p class="full-party-name">{{ eip.party.name }}</p>
+                </li>
+				{% else %}
+                <li>
+                    <a href="{% url fo.election eip.party.id %}">
+                    <span class="position">{{ eip.position }}</span>
+        			<span class="image">
+                    {% if eip.party.logo %}
+                       	<img alt="{{ eip.party.abbreviation }}" src="{{ eip.party.logo }}" />
+                    {% else %}
+                        <img alt="{{ eip.party.abbreviation }}" src="/link/to/default/" />
+                    {% endif %}
+                    </span>
+                    <span class="abbr">{{ eip.party.abbreviation }}</span>
+                    <span class="full-party-name">{{ eip.party.name }}</span>
+                    </a>
+              	</li>
+				{% endifequal %}
+                </li>
+            {% endfor %}
+     		</ul>
+        </div>
     </div>
 </div>
-<div class="col size1of2">
-
-	<div class="mod">
-            <h2>{% trans "Candidates" %}</h2>
-            {% if selected_eip %}
-                <div>
-                <img alt="{{ selected_eip.party.abbreviation }}" src="{{  selected_eip.party.logo }}" />
-                <p>{% trans 'Candidate list for ' %} {{ selected_eip.party.abbreviation }}</p>
-                <p><a href="{% url fo.party_profile selected_eip.id %}">{% trans 'Go to the profile of this party' %}</a></p>
-                </div>
+<div class="col size1of3">
+	{% if selected_eip %}
+	<div class="mod cand-list">
+    	<div class="bd">
+            
+            	
+                <div class="logo">
+                	<img alt="{{ selected_eip.party.abbreviation }}" src="{{  selected_eip.party.logo }}" />
+               	</div>
+                <h2><span>{% trans 'Candidate list for ' %}</span>{{ selected_eip.party.abbreviation }}</h2>
+                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Go to the profile of this party' %}</a>
+				<ul>
                 {% for position, politician in politicians.items %}
 
                      {{ politician.candidate.profile.profile }}
 
-                    <div>
-                        <p>{{ position }}</p>
+                    <li>
+                        <span class="position">{{ position }}</span>
+                        
                         {% if politician %}
+                        	<div class="image">
                             {% if politician.picture %}
                                 <img alt="{{ politician.full_name }}" src="{{ politician.picture.url }}" />
                             {% else %}
                                 <img alt="{{ politician.full_name }}" src="/link/to/default/" />
                             {% endif %}
-                            <p>{% trans 'Name' %}: <a href="{% url fo.politician_profile politician.candidate.id %}">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a></p>
-                            <p>{{ politician.candidate.profile.initials }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}} )</p>
+                            </div>
+                            <a href="{% url fo.politician_profile politician.candidate.id %}" class="last-name">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a>
+                            <p>{{ politician.candidate.profile.initials }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}})</p>
 
                         {% else %}
-                            <p>{% trans 'The Politician has not yet been added to the system for this position.' %}</p>
+                            <p class="empty">{% trans 'This politician<br />has not yet been added.' %}</p>
                         {% endif %}
-                        <br></br>
-                    </div>
+                    </li>
 
 
                 {% empty %}
-                    <p>{% trans 'No Politicians: please search or select a filter options' %}
+                    <li class="empty">{% trans 'No Politicians: please search or select a filter options' %}</li>
                 {% endfor %}
-            {% endif %}
+                </ul>
+            
+       	</div>
     </div>
+    {% endif %}
 </div>
 {% endblock cols %}
