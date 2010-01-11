@@ -438,7 +438,6 @@ class MultiPathFormWizard(object):
         # restore files
         files = MultiValueDict()
         for (key, fls) in request.POST.iterlists():
-            print key[0:len(self.files_field_name)]
             
             if key[0:len(self.files_field_name)] == self.files_field_name:
                 name = key[len(self.files_field_name):]
