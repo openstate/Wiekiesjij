@@ -168,17 +168,6 @@ class Profile(models.Model):
     
     def full_name(self):
         return ' '.join(filter(lambda x: x, (self.first_name, self.middle_name, self.last_name)))
-        
-        
-    def save(self, *args, **kwargs):
-        """
-            Update the user's first_name and last_name as needed.
-        """
-        super(Profile, self).save(*args, **kwargs)
-        if self.user.get_full_name() != self.full_name():
-            self.user.first_name = self.first_name
-            self.user.last_name = ' '.join(filter(lambda x: x, (self.middle_name, self.last_name)))
-            self.user.save()
     
 class VisitorProfile(Profile):
     """
