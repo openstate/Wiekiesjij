@@ -17,7 +17,11 @@ from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
+
+from frontoffice.decorators import visitors_only
+
 from django.core.paginator import Paginator
+
 
 def new_url(path, field, value):
     old_str = field + '='  + str(value)
@@ -236,3 +240,22 @@ def party_profile(request, eip_id):
     eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     
     return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))
+
+
+
+@visitors_only
+def fan_add(request, politician_id):
+    """ Become a fan of a politician """
+    user = get_object_or_404(User, pk = politician_id)
+    profile = get_object_or_404(PoliticianProfile, user = user)
+    request.user.profile.favorites.add(profile)
+    return redirect('fo.politician_profile', id = politician_id)
+
+
+@visitors_only
+def fan_remove(request, politician_id):
+    """ Remove politician from fan list. """
+    user = get_object_or_404(User, pk = politician_id)
+    profile = get_object_or_404(PoliticianProfile, user = user)
+    request.user.profile.favorites.remove(profile)
+    return redirect('fo.politician_profile', id = politician_id)
