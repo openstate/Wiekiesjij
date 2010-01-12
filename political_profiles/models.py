@@ -474,6 +474,11 @@ def user_profile(u):
 # Python power, add the function as a property to the user
 User.profile = property(user_profile)
 
+def full_name(self):
+    if self.profile is None:
+        return self.username
+    return self.profile.full_name()
+User.get_full_name = full_name
 
 post_save.connect(cal_political_experience_days, sender=PoliticalExperience)
 post_delete.connect(cal_political_experience_days, sender=PoliticalExperience)
