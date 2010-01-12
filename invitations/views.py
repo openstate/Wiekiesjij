@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
+from django.utils.encoding import smart_str
 
 from backoffice.decorators import staff_required
 from elections.functions import replace_user
@@ -84,7 +85,25 @@ def existing(request, hash):
 @staff_required
 def list(request):
     invitations = Invitation.objects.all()
-    return render_to_response('invitations/list.html', {'invs': invitations}, context_instance=RequestContext(request))
+    context = {}
+    if request.method == 'POST':
+        for item, value in request.POST.iteritems():
+            if not item.startswith('filter_'):
+                continue
+            _, key = item.split('_', 2)
+            if key == 'accepted':
+                key = 'accepted__isnull'
+                if value != '':
+                    value = (value == 'true')
+                else:
+                    value = None
+            if value and value is not None:
+                context.update({item: request.POST.get(item, '')})
+                invitations = invitations.filter(**{smart_str(key): value})
+    
+    context.update({'invs': invitations})
+    print context
+    return render_to_response('invitations/list.html', context, context_instance=RequestContext(request))
 
 def notexist(request):
     

@@ -14,27 +14,72 @@
 	}
 </style>
 <div class="mod">
+	<form action="" method="post" accept-charset="utf-8">
 	<table>
 		<tr>
 			<th>Naam<br/>E-mail</th>
 			<th>Type</th>
-			<th>Verstuurd op</td>
+			<th>Van</th>
+			<th>Verstuurd op</th>
 			<th>Geaccepteerd?</th>
 			<th>Ga naar</th>
+			<th>&nbsp;</th>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<select name="filter_type" style="width: auto;">
+					<option value="">Alle</option>
+					<option value="council_admin" {% ifequal filter_type 'council_admin' %}selected="selected"{% endifequal %}>Griffie</option>
+					<option value="party_admin" {% ifequal filter_type 'party_admin' %}selected="selected"{% endifequal %}>Partie contact</option>
+					<option value="candidate" {% ifequal filter_type 'candidate' %}selected="selected"{% endifequal %}>Politicus</option>
+				</select>
+			</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>
+				<select name="filter_accepted" style="width: auto;">
+					<option value="">Alle</option>
+					<option value="true" {% ifequal filter_accepted 'true' %}selected="selected"{% endifequal %}>Ja</option>
+					<option value="false" {% ifequal filter_accepted 'false' %}selected="selected"{% endifequal %}>Nee</option>
+				</select>
+			</td>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="Filter" style="width: auto;"/></td>
 		</tr>
 		{% for invitation in invs %}
 		<tr>
 			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}<br/>{{ invitation.user_to.email }}</td>
 			<td>
 				{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}
-				{% ifequal invitation.type 'party_admin' %}Party contact{% endifequal %}
+				{% ifequal invitation.type 'party_admin' %}Partie contact{% endifequal %}
 				{% ifequal invitation.type 'candidate' %}Politicus{% endifequal %}
+			</td>
+			<td>
+				<ul>
+				{% ifequal invitation.type 'council_admin' %}
+					{% for council in invitation.user_to.councils.all %}
+						<li>{{ council.name }}/li>
+					{% endfor %}
+				{% endifequal %}
+				{% ifequal invitation.type 'party_admin' %}
+					{% for party in invitation.user_to.parties.all %}
+						<li>{{ party.name }}</li>
+					{% endfor %}
+				{% endifequal %}
+				{% ifequal invitation.type 'candidate' %}
+					{% for candidacy in invitation.user_to.elections.all %}
+						<li>{{ candidacy.election_party_instance.party.name }}</li>
+					{% endfor %}
+				{% endifequal %}
+				</ul>
 			</td>
 			<td>{{ invitation.send_on }}</td>
 			<td>{% if invitation.accepted %}Ja{% else %}Nee{% endif %}</td>
 			<td><a href="{% url invitations.index hash=invitation.hash %}">Klik</a></td>
 		{% endfor %}
 	</table>
+	</form>
 </div>
 {% endblock content %}
 </div>
