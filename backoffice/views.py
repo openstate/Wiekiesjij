@@ -686,7 +686,7 @@ def council_edit(request, id):
     return CouncilEditWizard(election_instance)(request)
 
 
-@candicate_required
+@candidate_required
 def answer_question(request, election_instance_party_id, user_id=None):
     '''
         AnswerQuestion - wizard.
@@ -696,7 +696,7 @@ def answer_question(request, election_instance_party_id, user_id=None):
     check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
     
-@candicate_required
+@candidate_required
 def answer_question_done(request, election_instance_party_id, user_id):
     '''
         answer_question thanks page.
