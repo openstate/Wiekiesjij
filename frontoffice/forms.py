@@ -7,6 +7,7 @@ from form_utils.forms import BetterModelForm, BetterForm
 from utils.fields import NameField
 from utils.formutils import TemplateForm
 from django.conf import settings
+from django.contrib.comments.forms import CommentForm
 from elections.models import ElectionInstance
 
 class RegionChoiceField(forms.ModelChoiceField):

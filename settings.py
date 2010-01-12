@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     
     'elections',
     'political_profiles',
+    'authorized_comments',
     'questions',
     'utils',
 
@@ -119,6 +120,8 @@ INSTALLED_APPS = (
 
     'opensocial',
 )
+
+COMMENTS_APP = 'authorized_comments'
 
 # Email settings
 EMAIL_HOST = 'smtp.xs4all.nl'
