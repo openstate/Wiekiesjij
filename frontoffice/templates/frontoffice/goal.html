@@ -14,15 +14,15 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>
-        {% blocktrans with goal.politician.full_name as name %}
-            Political goal of {{ name }}
-        {% endblocktrans %}
-    </h1>
+    <h1>{{ goal.goal }}</h1>
 
     <div>
         <div>
-            {{ goal.goal }}
+            <a href="{% url fo.politician_profile goal.politician.user.id %}">
+                {% blocktrans with goal.politician.full_name as name %}
+                    Back to {{ name }}'s profile
+                {% endblocktrans %}
+            </a>
         </div>
 
         {% get_comment_list for goal as comments %}
@@ -33,7 +33,7 @@
                 {% else %}
                     <strong>{{ comment.user_name }}</strong>
                 {% endif %}
-                <p>{{ comment.comment }}</p>
+                <p>{{ comment.comment|urlize|linebreaks }}</p>
             </div>
         {% endfor %}
 

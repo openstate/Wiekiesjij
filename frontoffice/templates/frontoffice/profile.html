@@ -3,6 +3,7 @@
 {% load comments %}
 {% load utils_tags %}
 {% load fo_tags %}
+{% load thumbnail %}
 
 {% block title %}
     {{ profile.full_name }}
@@ -25,7 +26,7 @@
         <div class="bd">
             <div class="container">
                 {% if profile.picture %}
-                    <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{{ profile.picture.url }}" />
+                    <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail profile.picture 140x210 upscale %}" />
                 {% else %}
                     <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="/link/to/default/" />
                 {% endif %}
