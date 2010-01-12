@@ -51,6 +51,7 @@ class ImageWidget(forms.FileInput):
 class ClearableFileInput(forms.MultiWidget):
     default_file_widget_class = forms.FileInput
     template = '%(input)s<div class="image-field-clear">%(checkbox)s<span class="title">%(clear_label)s</span></div>'
+    value = None
     
     def __init__(self, file_widget=None,
                  attrs=None, template=None):
