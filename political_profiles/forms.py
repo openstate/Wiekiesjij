@@ -4,12 +4,13 @@ import datetime
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 
 from form_utils.forms import BetterModelForm, BetterForm
 from form_utils.widgets import ImageWidget
-from form_utils.fields import ClearableFileField
+from form_utils.fields import ClearableImageField
 
 from utils.formutils import TemplateForm
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
@@ -70,7 +71,7 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
-    picture         = ClearableFileField(label=_('Picture'), required=False, widget=ImageWidget())
+    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(template='%(input)s<div class="image-widget-image">%(image)s</div>'), template='%%(input)s<div class="image-field-clear">%%(checkbox)s<span class="title">%s</span></div>' % ugettext('Remove image'))
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       
 #
