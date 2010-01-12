@@ -14,6 +14,7 @@
 <div class="mod">
 	<table>
 		<tr>
+			<th>Naam</th>
 			<th>E-mail</th>
 			<th>Type</th>
 			<th>Verstuurd op</td>
@@ -22,6 +23,7 @@
 		</tr>
 		{% for invitation in invs %}
 		<tr>
+			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}</td>
 			<td>{{ invitation.user_to.email }}</td>
 			<td>
 				{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}

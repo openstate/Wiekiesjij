@@ -935,8 +935,9 @@
 			
 				
 			.message-list {
-				/*clear:both;*/
-				/*background:#fee;*//*#FFF9CE;*/
+			    /*background:#fee;*//*#FFF9CE;*/
+				clear:both;
+				margin-top: .5em;
 				padding-left:65px;
 				}
 				.message-list li {
@@ -1030,6 +1031,13 @@
 		div.events {
 			min-height:600px;
 			}
+			
+		div.parties .item .image {
+		    float: left;
+		    height: 50px;
+		    margin: 0 10px 0 0;
+		    width: 50px;
+		}
 
 	/*	Politician wizard
 		**************************************************************************************************************/

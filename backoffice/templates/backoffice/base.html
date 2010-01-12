@@ -31,10 +31,10 @@
 			{% if user.is_authenticated %}
 				<p class="user-info">{% trans "You are logged in as" %} 
 					{% if user.profile %}
-						{#<a href="{% url bo.profile %}">#}<!-- link to user reg info --><strong>{{ user.get_full_name|default:'NN' }}</strong>{#</a>#}
+						{#<a href="{% url bo.profile %}">#}<!-- link to user reg info --><strong>{{ user.profile.full_name|default:'NN' }}</strong>{#</a>#}
                         {#<a href="{% url bo.profile %}"><!-- link to user reg info -->{% trans "Edit Profile" %}</a>#}
 					{% else %}
-						<strong>{{ user.get_full_name|default:'NN' }}</strong>
+						<strong>{{ user.get_full_name|default:user.username }}</strong>
 					{% endif %} 
 					{% if user.is_staff %}
 						- <a href="{% url invitations.list %}">{% trans "Invitations" %}</a>

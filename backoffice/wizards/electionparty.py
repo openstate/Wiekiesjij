@@ -55,8 +55,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                         for key, value in cleaned_data['name'].iteritems():
                             cleaned_data[key] = value
                         del cleaned_data['name']
-                        self.profile_data.update(cleaned_data)
-
+                        self.profile_data.update(cleaned_data)            
             party = Party.objects.create(
                 region = self.election_instance.council.region,
                 level = self.election_instance.council.level,
@@ -148,7 +147,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         for path, forms in form_dict.iteritems():
             for name, form in forms.iteritems():
                 data.update(form.cleaned_data)
-                
+
         self.eip.party.name = data['name']
         self.eip.party.abbreviation = data['abbreviation']
         self.eip.party.address_street = data['address']['street']
@@ -273,7 +272,7 @@ class PartyContactWizard(MultiPathFormWizard):
             self.eip.party.slogan = data['slogan']
             self.eip.party.movie = data['movie']
             self.eip.party.num_seats = data['num_seats']
-            #self.eip.party.logo = data['logo']
+            self.eip.party.logo = data['logo']
             self.eip.party.description = data['description']
             self.eip.party.history = data['history']
             self.eip.party.manifesto = data['manifesto']

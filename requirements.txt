@@ -10,6 +10,7 @@ feedparser==4.1
 
 
 # Source installs
+-e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
 -e hg+https://bitbucket.org/ubernostrum/django-registration/@073835a4269f13fc97cbe377677cf5fd4f52e930#egg=django_registration-tip
 -e svn+http://django-tagging.googlecode.com/svn/trunk/#egg=tagging
 -e hg+https://bitbucket.org/jezdez/django-staticfiles/@6f803ec3df13df01d5c7192577861b5574537a4d#egg=django-staticfiles

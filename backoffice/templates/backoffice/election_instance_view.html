@@ -1,5 +1,5 @@
 {% extends 'backoffice/base.html' %}
-{% load i18n utils_tags %}
+{% load i18n utils_tags thumbnail %}
 
 {% block title %}{{ instance.name }}{% endblock title %}
 {% block page-title %}{{ instance.name }}{% endblock page-title %}
@@ -39,7 +39,7 @@
        	<span class="list">{% trans 'List' %} <strong>{{ index }}</strong></span>
 
         {% if eip %}                
-
+			{% if eip.party.logo %}<div class="image"><img src="{% thumbnail eip.party.logo 50x50 %}" alt="{{ eip.party.abbreviation }}" /></div>{% endif %}
             <h3>{{ eip.party.name }} {% if eip.party.abbreviation %} 
                     (<abbr  title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>)
 
@@ -49,7 +49,6 @@
             	<li><a href="{% url bo.election_party_edit eip.id %}">{% trans 'Edit party profile' %}</a></li>
                	{#<li><a href="#">{% trans 'Remove party' %}</a></li>#}
            	</ul>
-            {% if eip.party.logo %}<img src="{{ eip.party.logo }}" alt=" " />{% endif %}
             
             <p class="candidates">{% if eip.candidates_invited %}{{ eip.list_length }} {% trans 'candidates' %} ({{ eip.candidates_invited }} {% trans 'invited' %}){% else %}{% trans 'no candidates defined' %}{% endif %}</p>
             <ul class="message-list">

@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'staticfiles',
+    'sorl.thumbnail',
     
     'elections',
     'political_profiles',

@@ -9,3 +9,4 @@ runserver.sh
 syncdb.sh
 local_settings.py
 media/media/politician/*
+media/media/party/*
