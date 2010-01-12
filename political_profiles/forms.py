@@ -8,6 +8,8 @@ from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 
 from form_utils.forms import BetterModelForm, BetterForm
+from form_utils.widgets import ImageWidget
+from form_utils.fields import ClearableFileField
 
 from utils.formutils import TemplateForm
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
@@ -68,7 +70,7 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
-    picture         = forms.ImageField(label=_('Picture'), required=False)
+    picture         = ClearableFileField(label=_('Picture'), required=False, widget=ImageWidget())
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       
 #
