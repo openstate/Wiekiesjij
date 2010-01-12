@@ -9,12 +9,10 @@ from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 
 from form_utils.forms import BetterModelForm, BetterForm
-from form_utils.widgets import ImageWidget
-from form_utils.fields import ClearableImageField
 
 from utils.formutils import TemplateForm
-from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker
-from utils.fields import NameField, AddressField, YoutubeURLField
+from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker, ImageWidget
+from utils.fields import NameField, AddressField, YoutubeURLField, ClearableImageField
 
 from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType, PoliticalGoal
@@ -71,7 +69,7 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
     motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
-    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(template='%(input)s<div class="image-widget-image">%(image)s</div>'), template='%%(input)s<div class="image-field-clear">%%(checkbox)s<span class="title">%s</span></div>' % ugettext('Remove image'))
+    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget())
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       
 #

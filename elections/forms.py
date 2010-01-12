@@ -3,9 +3,8 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from form_utils.forms import BetterForm, BetterModelForm
-from form_utils.widgets import ImageWidget
 
-from utils.widgets import AutoCompleter, ColorPicker, HiddenDateTimePicker, DateTimePicker
+from utils.widgets import AutoCompleter, ColorPicker, HiddenDateTimePicker, DateTimePicker, ImageWidget
 from utils.fields import AddressField, YoutubeURLField
 from utils.formutils import TemplateForm
 
