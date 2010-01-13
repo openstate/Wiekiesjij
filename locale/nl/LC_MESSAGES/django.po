@@ -1590,7 +1590,7 @@ msgstr "Opleiding toevoegen"
 #: backoffice/templates/backoffice/wizard/politician_profile/goals-add.html:4
 #: backoffice/templates/backoffice/wizard/politician_profile/goals.html:28
 msgid "Add a new goal"
-msgstr "Voeg een nieuwe doel toe"
+msgstr "Voeg een nieuw doel toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/goals.html:14
 #: frontoffice/templates/frontoffice/profile.html:308
@@ -1644,7 +1644,7 @@ msgstr "U heeft nog geen links ingesteld"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/political-add.html:4
 msgid "Add new political work experience"
-msgstr "Voeg politieke werk ervaring toe"
+msgstr "Voeg politieke werkervaring toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/political.html:17
 msgid "What political experience have you under your belt?"
@@ -1698,7 +1698,7 @@ msgstr "Klik hier om de registratie te starten"
 #: backoffice/templates/backoffice/wizard/politician_profile/work-add.html:4
 #: backoffice/templates/backoffice/wizard/politician_profile/work.html:34
 msgid "Add new work experience"
-msgstr "Voeg werk ervaring toe"
+msgstr "Voeg werkervaring toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/work.html:18
 msgid "What work experience have you under your belt?"
@@ -3238,7 +3238,7 @@ msgstr "Dagen politieke ervaring"
 
 #: political_profiles/models.py:203
 msgid "Days of work experience"
-msgstr "Dagen werk ervaring"
+msgstr "Dagen werkervaring"
 
 #: political_profiles/models.py:254
 msgid "Politician Profile"
@@ -3895,7 +3895,7 @@ msgstr "Onbekend"
 #~ msgid "Click here to add political experience"
 #~ msgstr "Klik hier om politieke ervaringen toe te voegen"
 #~ msgid "Work Experience"
-#~ msgstr "Werk ervaring"
+#~ msgstr "Werkervaring"
 #~ msgid "Company you were employed in"
 #~ msgstr "Werkgever"
 #~ msgid "Sector of employment"

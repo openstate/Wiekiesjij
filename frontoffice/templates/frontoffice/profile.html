@@ -82,7 +82,7 @@
                             <ul class="socialNetwork">
                                 {% for connection in profile.connections.all %}
                                 <li>
-                                    <a class="{{ connection.type }}" href="{{ connection.url }}">{{ connection.type }}</a>
+                                    <a class="{{ connection.type }}" href="{{ connection.url }}" title="{{ connection.description }}">{{ connection.type }}</a>
                                 </li>
                                 {% empty %}
                                 <li>
@@ -339,6 +339,22 @@
                                     {{ appearance.description }}
                                 </span>
                             </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if profile.interests.all %}
+        <h1>{% trans 'Interests' %}</h1>
+        <div class="mod links">
+            <div class="bd">
+                <ul class="quickList">
+                    {% for interest in profile.interests.all %}
+                        <li>
+                            <a href="{{ interest.url }}">{{ interest.organisation }}</a>
+                            <p>{{ interest.description }}</p>
                         </li>
                     {% endfor %}
                 </ul>

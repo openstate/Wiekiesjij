@@ -95,7 +95,7 @@ DIET  = [
         ]
 RELIGION = [
         ('NONE', 'Geen'),
-        ('RKK', 'Rooms-Katolieke kerk'),
+        ('RKK', 'Rooms-Katholieke kerk'),
         ('PROTESTANT', 'Protestants'),
         ('OTHER_CHRISTIAN', 'Overige Christelijke kerken'),
         ('ISLAM', 'Islam'),

@@ -29,19 +29,19 @@ class Command(BaseCommand):
         )
         Answer.objects.create(
             question=q4,
-            value=u'Het hebben van een open oog en oor voor wat er leeft bij de burgers en organisaties in de stad en gaat daarover met hen in gesprek',
+            value=u'Het hebben van een open oog en oor voor wat er leeft bij de burgers en organisaties in de stad en daarover met hen in gesprek gaan',
             frontoffice_value=u'Mijn kandidaat heeft een open oog en oor voor wat er leeft bij de burgers en organisaties in de stad en gaat daarover met hen in gesprek',
             position=1,
         )
         Answer.objects.create(
             question=q4,
-            value=u'Het hebben goede ideeën hoe het beter kan in de stad en het naar voren brengen in de gemeenteraad hiervan',
+            value=u'Het hebben van goede ideeën over hoe het beter kan in de stad en het naar voren brengen hiervan in de gemeenteraad',
             frontoffice_value=u'Mijn kandidaat heeft zelf goede ideeën hoe het beter kan in de stad en brengt die in de gemeenteraad naar voren',
             position=2,
         )
         Answer.objects.create(
             question=q4,
-            value=u'Het controlleren of het College van B&W het beleid uitvoert en binnen het budget blijft zoals die door de gemeenteraad zijn vastgesteld',
+            value=u'Het controleren of het College van B&W het beleid uitvoert en binnen het budget blijft zoals dat door de gemeenteraad zijn vastgesteld',
             frontoffice_value=u'Mijn kandidaat controleert of het College van B&W het beleid uitvoert en binnen het budget blijft zoals die door de gemeenteraad zijn vastgesteld',
             position=3,
         )
