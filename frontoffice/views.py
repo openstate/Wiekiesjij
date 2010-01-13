@@ -234,14 +234,17 @@ def politician_profile(request, id, tab = "favs"):
         twitter_url = None
 
     return render_to_response('frontoffice/profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab}, context_instance=RequestContext(request))
-                                                            
+
+def politician_comments(request, id):
+    user = get_object_or_404(User, pk=id)
+    profile = get_object_or_404(PoliticianProfile, user=user)
+    
+    return render_to_response('frontoffice/politician_comments.html', {'profile':profile}, context_instance=RequestContext(request))
                                                             
 def party_profile(request, eip_id):
     eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     
     return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))
-
-
 
 @visitors_only
 def fan_add(request, politician_id):

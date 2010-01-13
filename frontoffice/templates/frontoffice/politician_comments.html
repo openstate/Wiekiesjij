@@ -1,0 +1,47 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+{% load comments %}
+
+{% block title %}
+    {{ profile.full_name }}
+{% endblock title %}
+
+{% block menu %}
+    <li><a href="#">{% trans 'Take the test' %}</a></li>
+    <li class="selected"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
+    <li><a href="#">{% trans 'Statistics' %}</a></li>
+    <li><a href="#">{% trans 'Organisation' %}</a></li>
+{% endblock menu %}
+
+{% block content %}
+    <h1>{{ profile.full_name }}</h1>
+
+    <div>
+        <div>
+            <a href="{% url fo.politician_profile profile.user.id %}">
+                {% blocktrans with profile.full_name as name %}
+                    Back to {{ name }}'s profile
+                {% endblocktrans %}
+            </a>
+        </div>
+
+        {% get_comment_list for profile as comments %}
+        {% for comment in comments %}
+            <div>
+                {% if comment.user_url %}
+                    <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
+                {% else %}
+                    <strong>{{ comment.user_name }}</strong>
+                {% endif %}
+                <p>{{ comment.comment|urlize|linebreaks }}</p>
+            </div>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+            {% trans 'Respond' %}:
+            {% render_comment_form for profile %}
+        {% endif %}
+
+
+    </div>
+{% endblock content %}
