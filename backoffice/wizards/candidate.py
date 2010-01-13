@@ -565,7 +565,6 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                 'initials': self.user.profile.initials,
                 'dateofbirth': self.user.profile.dateofbirth,
                 'introduction': self.user.profile.introduction,
-                'motivation': self.user.profile.motivation,
                 'gender': self.user.profile.gender,
                 'picture': self.user.profile.picture,
                 'movie': self.user.profile.movie,
