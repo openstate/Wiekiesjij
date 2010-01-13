@@ -3,26 +3,29 @@
 {% block content %}
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-    Gefeliciteerd met uw kandidatuur voor de Gemeenteraadsverkiezingen! De komende periode zult u volop campagne voeren zodat uw partij met een zo groot mogelijk aantal zetels aan een nieuwe termijn kan starten. Naast het programma dat uw partij heeft vastgesteld zullen ook uw persoonlijke kwaliteiten reden zijn voor een stem van de kiezer op uw partij. Daarom hebben de gemeente en Stichting Het Nieuwe Stemmen besloten de online voorkeurstemhulp Wiekiesjij in te zetten voor de gemeenteraadsverkiezingen. Op de websites www.wiekiesjij.nl , op Hyves en in uw gemeentewebsites zullen kiezers een Wiekiesjij-stemadvies voor hun favoriete kandidaat krijgen. Uw partij heeft enthousiast gereageerd op dit initiatief en daarom willen wij u in deze e-mail vragen uw medewerking.
+    Voor de komende verkiezingen heeft uw gemeente en het presidium besloten Wiekiesjij in te zetten voor de komende verkiezingen. U heeft hierover reeds een brief gekregen van uw Griffie. Wiekiesjij is een stemwijzer die in plaats van de juiste politieke partij, de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken en dergelijke. Hiermee pogen wij en uw gemeente om de raadsleden en de kandidaten beter bekend te maken bij het publiek. Om Wiekiesjij goed te laten werken zijn er echter een aantal zaken die wij van u nodig hebben.
 
-    Met behulp van Wiekiesjij kunt u zich persoonlijk voorstellen aan de kiezers in uw Gemeente, en dit kost u slechts een kwartier van uw tijd! U bent niet verplicht alle velden in uw profiel in te vullen. Echter, hoe vollediger uw profiel is ingevuld, hoe groter de kans dat u binnen een door de kiezer opgegeven selectie valt. Wanneer u uw profiel niet direct invult zult u per e-mail een herinnering krijgen. Wij gaan uiteraard vertrouwelijk om met uw contactgegevens en zullen deze niet openbaar maken of verspreiden aan derden zonder uw toestemming.
+    Noodzakelijk voor Wiekiesjij is namelijk dat u uw profiel invult voor 20 januari. Zonder de profielen werkt Wiekiesjij niet en loopt u een belangrijk onderdeel van de algemene en uw persoonlijke campagne mis. Hierbij willen wij wel graag opmerken dat niet alle vragen verplicht zijn, diegene die dat wel zijn voor de berekening van de score hebben een sterretje. Natuurlijk krijgen de kiezers naar mate u meer informatie te delen wel een completer beeld van u en vergroot u de kans dat u als favoriete kandidaat naar voren komt. Wij gaan uiteraard vertrouwelijk om met uw contactgegevens en zullen deze niet verspreiden aan derden.
 
-    Door op de onderstaande link te klikken komt u op uw persoonlijke profielpagina. Heeft u moeite met het invullen van uw profiel, leest u dan de handleiding.
+    Bij deze mail zijn een aantal dingen toegevoegd om u te assisteren bij het invullen van uw profiel. Allereerst vindt u hieronder een link die naar de website verwijst waar u uw profiel kunt invullen. Middels de link krijgt u de inlogcodes die in staat stellen om uw profiel in te vullen. Ten tweede vindt u in de bijlage een handleiding die u hierbij assisteert.
 
-    Klik op onderstaande link om naar uw persoonlijke profielpagina te gaan:
+    Wiekiesjij is eerder gedraaid voor de Tweede Kamer, Provinciale en Europese verkiezingen en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor uw campagne. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne. U krijgt in januari nog een nieuwsbrief die een aantal tips geeft over hoe u Wiekiesjij optimaal kunt gebruiken.
 
     http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-    Wiekiesjij is eerder succesvol voor de Tweede Kamer, Provinciale en Europese verkiezingen ingezet en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor de campagne, specifiek voor de doelgroep jongeren.
-
-    Voor eventuele vragen kunt u altijd mailen of bellen met onze helpdesk.
-
+    Voor vragen of opmerkingen kunt u te allen tijde bellen met onze helpdesk. Deze contactgegevens vindt u onderaan. Alvast hartelijk dank voor uw tijd en moeite en veel succes met uw campagne!
+    
     Met vriendelijke groet,
-
-    Met vriendelijke groet,
-
-
 
     Lenneke van Mameren
     Projectleider Wiekiesjij
 {% endblock content %}
+
+{% block sidebar %}
+    Helpdesk
+	Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via 088-7000125
+
+	Handleiding
+	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
+	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_griffie.pdf
+{% endblock sidebar %}

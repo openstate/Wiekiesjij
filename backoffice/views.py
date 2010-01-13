@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext
 
 
 from elections.settings import ELECTION_EVENT_ID
@@ -531,8 +532,8 @@ def csv_import_candidates_step3(request, ep_id):
                         user_from = request.user,
                         user_to = candidate_obj.user,
                         view = reverse('bo.politician_welcome', kwargs={'eip_id': eip_obj.id}),
-                        text = 'Invitation text',
-                        subject = 'Invitation',
+                        text = '<p>Wiekiesjij is de voorkeurstemhulp van Nederland. Middels het beantwoorden een vijftiental vragen zullen bezoekers gekoppeld worden aan hun favoriete kandidaten. Middels de informatie die u hier invult zullen wij daarnaast in staat zijn om de bezoekers de mogelijkheid te bieden om te browsen tussen alle kandidaten, de partijen en is het mogelijk om de uitgebreide profielen van alle politici te bekijken.</p>',
+                        subject = ugettext('Invitation WieKiesJij'),
                         html_template = templates['html'],
                         plain_template = templates['plain'],
                     )
@@ -647,7 +648,7 @@ def csv_import_parties_step3(request, ei_id):
                         user_to = contact.user,
                         view=reverse('bo.party_contact_wizard', kwargs={'id': eip_obj.pk}),
                         text='<p>U bent aangekomen op de beheerderpagina van Wiekiesjij. Om Wiekiesjij gereed te maken voor uw partij volgen er nu een aantal schermen waarin u informatie kunt achterlaten. Wanneer deze informatie is ingevuld zullen we overgaan tot het uitnodigen van de kandidaten van uw partij.</p><p>We beginnen met het instellen van een wachtwoord voor Wiekiesjij door op <strong>Accepteer uitnodiging</strong> te klikken. Heeft u al eens eerder gebruik gemaakt van Wiekiesjij, drukt u dan op <strong>Ik heb al een account</strong>.</p><p>Om het gereedmaken van Wiekiesjij zo gemakkelijk mogelijk te laten verlopen hebben we een snelle start [link] handleiding [/link] beschikbaar gesteld die u kunt raadplegen.</p>',
-                        subject = 'Invitation',
+                        subject = ugettext('Invitation WieKiesJij'),
                         html_template = templates['html'],
                         plain_template = templates['plain'],
                     )

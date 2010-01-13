@@ -6,15 +6,22 @@
 
 {% block content %}
 <p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},</p>
-<p style="{% use_stylegroup 'font' %}">Gefeliciteerd met uw kandidatuur voor de Gemeenteraadsverkiezingen! De komende periode zult u volop campagne voeren zodat uw partij met een zo groot mogelijk aantal zetels aan een nieuwe termijn kan starten. Naast het programma dat uw partij heeft vastgesteld zullen ook uw persoonlijke kwaliteiten reden zijn voor een stem van de kiezer op uw partij. Daarom hebben de gemeente en Stichting Het Nieuwe Stemmen besloten de online voorkeurstemhulp Wiekiesjij in te zetten voor de gemeenteraadsverkiezingen. Op de websites www.wiekiesjij.nl , op Hyves en in uw gemeentewebsites zullen kiezers een Wiekiesjij-stemadvies voor hun favoriete kandidaat krijgen. Uw partij heeft enthousiast gereageerd op dit initiatief en daarom willen wij u in deze e-mail vragen uw medewerking.</p>
-<p style="{% use_stylegroup 'font' %}">Met behulp van Wiekiesjij kunt u zich persoonlijk voorstellen aan de kiezers in uw Gemeente, en dit kost u slechts een kwartier van uw tijd! U bent niet verplicht alle velden in uw profiel in te vullen. Echter, hoe vollediger uw profiel is ingevuld, hoe groter de kans dat u binnen een door de kiezer opgegeven selectie valt. Wanneer u uw profiel niet direct invult zult u per e-mail een herinnering krijgen. Wij gaan uiteraard vertrouwelijk om met uw contactgegevens en zullen deze niet openbaar maken of verspreiden aan derden zonder uw toestemming.</p>
-<p style="{% use_stylegroup 'font' %}">Door op de onderstaande link te klikken komt u op uw persoonlijke profielpagina. Heeft u moeite met het invullen van uw profiel, leest u dan de handleiding.</p>
-<p style="{% use_stylegroup 'font' %}">Klik op onderstaande link om naar uw persoonlijke profielpagina te gaan:</p>
-<p style="{% use_stylegroup 'font' %}">http://{{ domain }}{% url invitations.index hash=invitation.hash %}</p>
-<p style="{% use_stylegroup 'font' %}">Wiekiesjij is eerder succesvol voor de Tweede Kamer, Provinciale en Europese verkiezingen ingezet en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor de campagne, specifiek voor de doelgroep jongeren.</p>
-<p style="{% use_stylegroup 'font' %}">Voor eventuele vragen kunt u altijd mailen of bellen met onze helpdesk.</p>
+<p style="{% use_stylegroup 'font' %}">Voor de komende verkiezingen heeft uw gemeente en het presidium besloten Wiekiesjij in te zetten voor de komende verkiezingen. U heeft hierover reeds een brief gekregen van uw Griffie. Wiekiesjij is een stemwijzer die in plaats van de juiste politieke partij, de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken en dergelijke. Hiermee pogen wij en uw gemeente om de raadsleden en de kandidaten beter bekend te maken bij het publiek. Om Wiekiesjij goed te laten werken zijn er echter een aantal zaken die wij van u nodig hebben.</p>
+<p style="{% use_stylegroup 'font' %}"><strong>Noodzakelijk</strong> voor Wiekiesjij is namelijk dat u uw profiel invult voor <strong>20 januari</strong>. Zonder de profielen werkt Wiekiesjij niet en loopt u een belangrijk onderdeel van de algemene en uw persoonlijke campagne mis. Hierbij willen wij wel graag opmerken dat niet alle vragen verplicht zijn, diegene die dat wel zijn voor de berekening van de score hebben een sterretje. Natuurlijk krijgen de kiezers naar mate u meer informatie te delen wel een completer beeld van u en vergroot u de kans dat u als favoriete kandidaat naar voren komt. Wij gaan uiteraard <strong>vertrouwelijk</strong> om met uw contactgegevens en zullen deze niet verspreiden aan derden.</p>
+<p style="{% use_stylegroup 'font' %}">Bij deze mail zijn een aantal dingen toegevoegd om u te assisteren bij het invullen van uw profiel. Allereerst vindt u hieronder een link die naar de website verwijst waar u uw profiel kunt invullen. Middels de link krijgt u de inlogcodes die in staat stellen om uw profiel in te vullen. Ten tweede vindt u in de bijlage een handleiding die u hierbij assisteert.</p>
+<p style="{% use_stylegroup 'font' %}">Wiekiesjij is eerder gedraaid voor de Tweede Kamer, Provinciale en Europese verkiezingen en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor uw campagne. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne. U krijgt in januari nog een nieuwsbrief die een aantal tips geeft over hoe u Wiekiesjij optimaal kunt gebruiken.</p>
+<p style="{% use_stylegroup 'font' %}"><a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.index hash=invitation.hash %}</a></p>
+<p style="{% use_stylegroup 'font' %}">Voor vragen of opmerkingen kunt u te allen tijde bellen met onze helpdesk. Deze contactgegevens vindt u rechts. Alvast hartelijk dank voor uw tijd en moeite en veel succes met uw campagne!</p>
 <p style="{% use_stylegroup 'font' %}">Met vriendelijke groet,</p>
-<p style="{% use_stylegroup 'font' %}">Met vriendelijke groet,</p>
-<p style="{% use_stylegroup 'font' %}">Lenneke van Mameren</p>
-<p style="{% use_stylegroup 'font' %}">Projectleider Wiekiesjij</p>
+<p style="{% use_stylegroup 'font' %}">Lenneke van Mameren<br/>
+Projectleider Wiekiesjij</p>
 {% endblock content %}
+
+{% block sidebar %}
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via 088-7000125</p>
+	<br/>
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
+	<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de contactgegevens? <a href="http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_griffie.pdf">Download hier de handleiding</a> voor het invoeren van de contactgegevens</p>
+	<br/>
+{% endblock sidebar %}

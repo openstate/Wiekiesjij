@@ -1,6 +1,8 @@
 from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
+from django.utils.translation import ugettext
+
 from utils.multipathform import Step, MultiPathFormWizard
 from elections.models import Candidacy, ElectionInstanceParty
 from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates
@@ -728,8 +730,8 @@ class AddCandidateWizard(MultiPathFormWizard):
                 user_from = request.user,
                 user_to = self.candidate.user,
                 view = reverse('bo.politician_welcome', kwargs={'eip_id': self.eip.id}),
-                text = 'Invitation text',
-                subject = 'Invitation',
+                text = '<p>Wiekiesjij is de voorkeurstemhulp van Nederland. Middels het beantwoorden een vijftiental vragen zullen bezoekers gekoppeld worden aan hun favoriete kandidaten. Middels de informatie die u hier invult zullen wij daarnaast in staat zijn om de bezoekers de mogelijkheid te bieden om te browsen tussen alle kandidaten, de partijen en is het mogelijk om de uitgebreide profielen van alle politici te bekijken.</p>',
+                subject = ugettext('Invitation WieKiesJij'),
                 html_template = templates['html'],
                 plain_template = templates['plain'],
             )
