@@ -148,14 +148,12 @@
     {% ifequal showtab "favs" %}
         <div class="mod favs">
             <div class="bd">
-                <table>
-                    <tr>
-                        <th>{% trans 'Life stance' %}</th>
-                        <td>{{ profile.get_life_stance_display }}</td>
-                    </tr>
+                <table>                
                     <tr>
                         <th>{% trans 'Religion' %}</th>
-                        <td>{{ profile.get_church_display }}</td>
+                        <td>{{ profile.get_religon_display }}<br/>
+							{{ profile.religous_group }}
+						</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Smoker' %}</th>
@@ -175,7 +173,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Charities' %}</th>
-                        <td>{{ profile.get_charity_display }}</td>
+                        <td>{{ profile.charity }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Transport' %}</th>
@@ -187,11 +185,11 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Sport' %}</th>
-                        <td>{{ profile.get_fav_sport_display }}</td>
+                        <td>{{ profile.fav_sport }}</td>
                     </tr>
                     <tr class="last">
                         <th>{% trans 'Club' %}</th>
-                        <td>{{ profile.get_fav_club_display }}</td>
+                        <td>{{ profile.fav_club }}</td>
                     </tr>
                 </table>
             </div>

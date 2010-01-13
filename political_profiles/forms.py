@@ -4,7 +4,6 @@ import datetime
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 
@@ -14,7 +13,7 @@ from utils.formutils import TemplateForm
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker, ImageWidget
 from utils.fields import NameField, AddressField, YoutubeURLField, ClearableImageField
 
-from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, MEDIA, PETS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType, PoliticalGoal
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
@@ -45,10 +44,10 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     '''
     marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
     num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
-    life_stance     = forms.ChoiceField(label=_('Levensovertuiging'),choices=LIFE_STANCE)
-    church          = forms.ChoiceField(label=_('Geloofsgemeenschap'),choices=CHURCH)
+    religion        = forms.ChoiceField(label=_('Religion'),choices=RELIGION)
+    religous_group  = forms.CharField(label=_('Geloofsgemeenschap'), max_length=255)
     smoker          = forms.BooleanField(label=_('Do you Smoke?'), widget=forms.widgets.RadioSelect(choices=[('true', _('Yes')), ('false', _('No'))]) )
-    diet            = forms.ChoiceField(label=_(u'Bent u vegetariër?'),choices=DIET)
+    diet            = forms.ChoiceField(label=_(u'Wat is uw dieët?'),choices=DIET)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     '''
@@ -56,11 +55,11 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     '''
     fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=NEWSPAPER)
     transport       = forms.ChoiceField(label=_('... Method of transport?'),help_text=_('What is your regular method of transport?'),choices=TRANSPORT  )
-    charity         = forms.ChoiceField(label=_('... Charity?'),help_text=_('What charity do you care for most?'),choices=CHARITY )
+    charity         = forms.CharField(label=_('... Charity?'),help_text=_('What charity do you care for most?'), max_length=255 )
     fav_media       = forms.ChoiceField(label=_('... Media channel?'),choices=MEDIA )
-    fav_sport       = forms.ChoiceField(label=_('... Sport?'),choices=SPORT )
-    hobby           = forms.ChoiceField(label=_('... Hobby?'),help_text=_('Choose your favorite hobby.'),choices=HOBBIES )
-    fav_club        = forms.ChoiceField(label=_('... Soccer Club?'),choices=CLUBS  )
+    fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255 )
+    hobby           = forms.CharField(label=_('... Hobby?'),max_length=255 )
+    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255)
     fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=PETS )
 
 class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
@@ -68,7 +67,6 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
         Political related forms
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
-    motivation      = forms.ChoiceField(label=_('Motivation'), choices=MOTIVATION, required=False)
     picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget())
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
       

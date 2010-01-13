@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from tagging.fields import TagField
+
 from functions import cal_work_experience_days, cal_political_experience_days
 from datetime import date
 
@@ -15,105 +15,89 @@ GENDERS = [
         ('Female', _('Female')),
         ]
 PETS = [
-        ('Dog',_('Dog')),
-        ('Cat', _('Cat')),
-        ('Rabbit', _('Rabbit')),
-        ('Horse', _('Horse')),
-        ('Other', _('Other')),
-        ]
-HOBBIES = [
-        ('Footabll',_('Football')),
-        ('Golf', _('Golf')),
-        ('Computer Games', _('Computer Games')),
-        ('Other', _('Other')),
-        ]
-CLUBS  = [
-        ('1',_('1')),
-        ('2', _('2')),
-        ('Other', _('Other')),
-        ]
-SPORT  = [
-        ('Golf',_('Golf')),
-        ('Football', _('Football')),
-        ('Darts', _('Darts')),
-        ('Horse Racing', _('Horse Racing')),
-        ('Other', _('Other')),
+        ('DOG','Hond'),
+        ('CAT', 'Kat'),
+        ('RABBIT', 'Konijn'),
+        ('RODENT', 'Knaagdier'),
+        ('REPTILE', 'Reptiel'),
+        ('BIRD', 'Vogel'),
+        ('FISH', 'Vis'),
         ]
 MEDIA  = [
-        ('NOS1',_('NOS1')),
-        ('NOS2', _('NOS2')),
-        ('NOS3',_('NOS3')),
-        ('CNN', _('CNN')),
-        ('BBC',_('BBC')),
-        ('VERONICA', _('VERONICA')),
-        ('NOS1',_('NOS1')),
-        ('NOS1', _('NOS1')),
-        ('Other', _('Other')),
-        ]
-CHARITY = [
-        ('Serious Request',_('Serious Request')),
-        ('Red Cross', _('Red Cross')),
-        ('Red Cross', _('Red Cross')),
-        ('Red Cross', _('Red Cross')),
-        ('Red Cross', _('Red Cross')),
-        ('Red Cross', _('Red Cross')),
-        ('Other', _('Other')),
+        ('NED1', 'Ned 1'),
+        ('NED2', 'Ned 2'),
+        ('NED3', 'Ned 3'),
+        ('RTL4', 'RTL 4'),
+        ('RTL5', 'RTL 5'), 
+        ('RTL7', 'RTL 7'),
+        ('SBS6', 'SBS 6'),
+        ('NET5', 'Net 5'),
+        ('VERONICA', 'Veronica'), 
+        ('TMF', 'TMF'),
+        ('MTV', 'MTV'),
+        ('COMEDYCENTRAL', 'Comedycentral'), 
+        ('DISCOVERYCHANNEL', 'Discovery Channel'), 
+        ('NATIONALGEOGRAPHIC', 'National Geographic'), 
+        ('BUITENLANDSEZENDER', 'Buitenlandse zender'),
         ]
 TRANSPORT  = [
-        ('Train',_('Train')),
-        ('Tram',_('Tram')),
-        ('Bicycle',_('Bicycle')),
-        ('Motorbike',_('Motorbike')),
-        ('Car',_('Car')),
-        ('Other', _('Other')),
+        ('WALKING','Lopen'),
+        ('BICYCLE','Fiets'),
+        ('SCOOTER','Brommer/Scooter'),
+        ('MOTORBIKE','Motor'),
+        ('CAR','Auto'),
+        ('CARPOOL','Carpool'),
         ]
 NEWSPAPER  = [
-        ('News1',_('News1')),
-        ('News1',_('News1')),
-        ('News1',_('News1')),
-        ('News1',_('News1')),
-        ('News1',_('News1')),
-        ('News1',_('News1')),
-        ('Other', _('Other')),
+            ('TELEGRAAF', u'De Telegraaf'),
+            ('VOLKSKRANT', u'De Volkskrant'),
+            ('AD', u'Algemeen Dagblad'),
+            ('TROUW', u'Trouw'),
+            ('PAROOL', u'Het Parool'),
+            ('FINANCIELE_DAGBLAD', u'Het Financiële Dagblad'),
+            ('REFORMATISCH_DAGBLAD', u'Reformatisch Dagblad'),
+            ('NEDERLANDS_DAGBLAD', u'Nederlands Dagblad'),
+            ('NRC', u'NRC Hndelsblad'),
+            ('PERS', u'De Pers'),
+            ('SPITS', u'Sp!ts'),
+            ('METRO', u'Metro'),
+            ('NRCNEXT', u'nrc.next'),
+            ('AD_DENHAAG', u'AD Den Haag'),
+            ('TWENTSE_COURANT_TUBANTIA', u'Twentse Courant Tubantia'),
+            ('NOORDHOLLANDS_DAGBLAD', u'Noordhollands Dagblad'),
+            ('AD_AMSTERDAM', u'AD Amsterdam'),
+            ('GRONINGEN_COURANT', u'Groninger Courant'),
+            ('DAGBLAD_VH_NOORDEN', u'Dagblad van het Noorden'),
+            ('BRABANTS_DAGBLAD', u'Brabants Dagblad'),
+            ('GOOI__EN_EEMLANDER', u'Gooi- en Eemlander'),
+            ('AD_AMSERSFOORT', u'AD Amsersfoort'),
+            ('BUITENLANDSE_KRANT', 'Buitenlandse krant'),
+            ('ANDERS', u'Anders'),
         ]
 DIET  = [
-        ('Omnivore',_('Nee')),
-        ('vegetarian', _(u'Ja, ik ben vegetariër')),
-        ('Vegan', _('Ja, ik ben veganist')),
-        ('Other', _('Other')),
+        ('MEATEATHER', 'Vleeseter'),
+        ('VEGETARIAN', u'Vegetariër'),
+        ('VEGAN', 'Veganist'),
         ]
-CHURCH = [
-        ('Roman Catholic',_('Rooms Katholiek')),
-        ('PKN',_('PKN')),
-        ('Other Protestant',_('Anders Protestant')),
-        ('Muslim',_('Moslim')),
-        ('Jew',_('Joods')),
-        ('Eastern Religion',_(u'Oosterse godsdienst (Boeddhisme,Hindoeïsme)')),
-        ('Other',_('Anders')),
-        ('No religion', _('Geen geloofsgemeenschap')),
-        ]
-LIFE_STANCE  = [
-        ('Religious',_('Aanhanger van een religie')),
-        ('There is something there but I do not know what', _('Er bestaat wel iets, maar ik weet niet wat')),
-        ('Atheist', _('Atheist')),
-        ('Humanist', _('Humanist')),
+RELIGION = [
+        ('NONE', 'Geen'),
+        ('RKK', 'Rooms-Katolieke kerk'),
+        ('PROTESTANT', 'Protestants'),
+        ('OTHER_CHRISTIAN', 'Overige Christelijke kerken'),
+        ('ISLAM', 'Islam'),
+        ('JEWISH', 'Jodendom'),
+        ('HINDUISM', u'Hindoeïsme'),
+        ('BUDDHISM', 'Boeddhisme'),
+        ('ATEIST', u'Atheïsme'),
+        ('OTHER', 'Anders'),
         ]
         
 MARITAL_STATUS = [
-        ('Married',_('Married')),
-		('Civil Partnership', _('Geregistreerd partnerschap')),
-		('Committed relationship', _('Vaste relatie / samenwonend')),
-        ('Single', _('Single')),
-        ('Other', _('Other')),
-        ]
-MOTIVATION = [
-        ('A Better World',_('A Better World')),
-        ('A stronger and better Netherlands', _('A stronger and better Netherlands')),
-        ('A stronger and better Europe', _('A stronger and better Europe')),
-        ('A powerful party', _('A powerful party')),
-        ('Personal development', _('Personal development')),
-        ('No motivation', _('No motivation')),
-
+        ('Married','Getrouwd'),
+		('Engaged', 'Verloofd'),
+		('Together', 'samenwonend'),
+        ('LAT', 'Lat relatie'),
+        ('Single', 'Alleenstaand'),
         ]
 
 class ConnectionType(models.Model):
@@ -199,22 +183,21 @@ class PoliticianProfile(Profile):
                                       help_text=_('Link to YouTube video'))
                                       
     introduction    = models.TextField(_('Introduction'), blank=True, null=True)
-    motivation      = models.CharField(_('Motivation'), max_length=45, choices=MOTIVATION, blank=True, null=True)
 
     marital_status  = models.CharField(_('Marital Status'), max_length=25, choices=MARITAL_STATUS, blank=True, null=True)
     num_children    = models.PositiveIntegerField(_('Number of Children'), max_length=3, null=True, blank=True)
-    life_stance     = models.CharField(_('Life Stance'), max_length=25, choices=LIFE_STANCE, blank=True, null=True)
-    church          = models.CharField(_('Church'), max_length=25, choices=CHURCH, blank=True, null=True)
+    religion        = models.CharField(_('Religion'), max_length=255, choices=RELIGION, blank=True, null=True)
+    religious_group = models.CharField(_('Religious group'), max_length=255, blank=True, null=True)
     smoker          = models.BooleanField(_('Smoker'), default=False)
     diet            = models.CharField(_('Diet'), max_length=25, choices=DIET, blank=True, null=True)
     fav_news        = models.CharField(_('Favourite Newspaper'), max_length=25, choices=NEWSPAPER, blank=True, null=True)
     transport       = models.CharField(_('What is your regular method of transport'), max_length=25, choices=TRANSPORT, blank=True, null=True)
-    charity         = models.CharField(_('What charity do you care for most?'), max_length=35, choices=CHARITY, blank=True, null=True)
+    charity         = models.CharField(_('What charity do you care for most?'), max_length=255, blank=True, null=True)
     fav_media       = models.CharField(_('What is your favourite media chanel?'), max_length=25, choices=MEDIA, blank=True, null=True)
-    fav_sport       = models.CharField(_('What is your favourite sport?'), max_length=25, choices=SPORT, blank=True, null=True)
-    hobby           = models.CharField(_('What is your hobby'), max_length=25, choices=HOBBIES, blank=True, null=True)
-    fav_club        = models.CharField(_('What is your favourite club'), max_length=25, choices=CLUBS, blank=True, null=True)
-    fav_pet         = models.CharField(_('What is your favourite pet'), max_length=25, choices=PETS, blank=True, null=True)
+    fav_sport       = models.CharField(_('What is your favourite sport?'), max_length=255, blank=True, null=True)
+    hobby           = models.CharField(_('What is your hobby'), max_length=255, blank=True, null=True)
+    fav_club        = models.CharField(_('What is your favourite sport club'), max_length=255, blank=True, null=True)
+    fav_pet         = models.CharField(_('What is your favourite pet'), max_length=255, choices=PETS, blank=True, null=True)
     political_experience_days      = models.PositiveIntegerField(_('Days of political experience'), max_length=10, null=True, blank=True, editable=False)
     work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
 

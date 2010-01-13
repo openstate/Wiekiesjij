@@ -572,8 +572,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
 
                 'marital_status': self.user.profile.marital_status,
                 'num_children': self.user.profile.num_children,
-                'life_stance': self.user.profile.life_stance,
-                'church': self.user.profile.church,
+                'religion': self.user.profile.religion,
+                'religious_group': self.user.profile.religious_group,
                 'smoker': 'true' if self.user.profile.smoker == True else 'false',
                 'diet': self.user.profile.diet,
                 'fav_news': self.user.profile.fav_news,

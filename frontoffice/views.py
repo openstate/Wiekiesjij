@@ -5,18 +5,15 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 
 from frontoffice.forms import PoliticianFilterForm
-from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty, Party
-from political_profiles.models import PoliticianProfile, EducationLevel, PoliticalGoal
+from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
+from political_profiles.models import PoliticianProfile, PoliticalGoal
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
-from political_profiles.models import MOTIVATION, CHURCH, DIET, LIFE_STANCE, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, CHARITY, MEDIA, SPORT, HOBBIES , CLUBS, PETS
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 
 from frontoffice.decorators import visitors_only
 
@@ -55,8 +52,7 @@ def goal(request, id):
 def politician_profile_filter(request):
     politicians = []
     gender = dict(GENDERS)
-    church = dict(CHURCH)
-    life_stance = dict(LIFE_STANCE)
+    religion = dict(RELIGION)
     marital_status = dict(MARITAL_STATUS)
     diet = dict(DIET)
 
@@ -123,7 +119,6 @@ def politician_profile_filter(request):
             weeks to either side of age so more candidates will sho even if 
             they are a bit older or a bit younger"""
 
-            year = datetime.timedelta(days=365)
             todate = datetime.date.today()
             if form.cleaned_data['start_age'] is not None:
     
@@ -158,19 +153,15 @@ def politician_profile_filter(request):
                 filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
 
             if form.cleaned_data['religion'] != '---------' and form.cleaned_data['religion']:
-                filtered_politicians = filtered_politicians.filter(church=form.cleaned_data['religion'])
+                filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])
                 new_path = new_url(path, 'religion', form.cleaned_data['religion'])
-                filters.append((_('Religion'), church[form.cleaned_data['religion']], new_path))
+                filters.append((_('Religion'), religion[form.cleaned_data['religion']], new_path))
             if form.cleaned_data['marital_status'] != '---------' and form.cleaned_data['marital_status']:
                 filtered_politicians = filtered_politicians.filter(marital_status=form.cleaned_data['marital_status'])
                 new_path = new_url(path, 'marital_status', form.cleaned_data['marital_status'])
                 filters.append((_('Marital status'), marital_status[form.cleaned_data['marital_status']], new_path))
-            if form.cleaned_data['life_stance'] != '---------' and form.cleaned_data['life_stance']:
-                filtered_politicians = filtered_politicians.filter(life_stance=form.cleaned_data['life_stance'])
-                new_path = new_url(path, 'life_stance', form.cleaned_data['life_stance'])
-                filters.append((_('Life stance'), life_stance[form.cleaned_data['life_stance']], new_path))
             if form.cleaned_data['goals'] != '---------' and form.cleaned_data['goals']:
-                filtered_politicians = filtered_politicians.filter(goals__goal__icontains=form.cleaned_data['life_stance'])
+                filtered_politicians = filtered_politicians.filter(goals__goal__icontains=form.cleaned_data['goals'])
                 new_path = new_url(path, 'goals', form.cleaned_data['goals'])
                 filters.append((_('Goals'), form.cleaned_data['goals'], new_path))
             if form.cleaned_data['smoker'] != '---------' and form.cleaned_data['smoker']:
@@ -212,8 +203,8 @@ def politician_profile_filter(request):
         # If page request (9999) is out of range, deliver last page of results.
         try:
             politicians = p.page(page)
-        except (EmptyPage, InvalidPage):
-            politicians = p.page(paginator.num_pages)
+        except:
+            politicians = p.page(p.num_pages)
 
     return render_to_response('frontoffice/politician_filter.html', {'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
 
