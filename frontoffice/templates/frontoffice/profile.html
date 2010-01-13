@@ -313,8 +313,8 @@
                         <li>
                             <b>{{ goal.goal }}</b>
                             {% get_comment_count for goal as comment_count %}
-                            <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% trans 'Comments' %} </a> -
-                            <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a>
+                            <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}comment{% plural %}comments{% endblocktrans %}</a>
+                            {% if user.is_authenticated %}- <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a>{% endif %}
                         </li>
                     {% endfor %}
                 </ul>
