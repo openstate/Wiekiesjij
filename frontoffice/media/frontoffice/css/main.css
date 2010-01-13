@@ -252,19 +252,15 @@
 								margin-top:0;
 								}
 							
-							ul.tabs .do-test {
-								margin-right:3em;
-								}
-								ul.tabs .do-test a {
-									color:#ed2227;
-									text-decoration:underline;
-									
-									}
-									ul.tabs .do-test a:hover {
-										background:#ed2227;
-										text-decoration:none;
-										color:#fff;
-										}
+                                                        ul.tabs .do-test a {
+                                                            color:#ed2227;
+                                                            text-decoration:underline;
+                                                        }
+                                                        ul.tabs .do-test a:hover {
+                                                            background:#ed2227;
+                                                            text-decoration:none;
+                                                            color:#fff;
+                                                        }
 	
 	/*	Content
 	**************************************************************************************************************/
@@ -279,7 +275,7 @@
 					
 					.mod {
 						background:#E0E0E0;
-						margin:34px 10px 50px 20px;
+						margin:10px 10px 50px 20px;
 						position:relative;
 						}
 						.hd {
