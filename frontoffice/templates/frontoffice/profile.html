@@ -148,8 +148,8 @@
                 <table>                
                     <tr>
                         <th>{% trans 'Religion' %}</th>
-                        <td>{{ profile.get_religon_display }}<br/>
-							{{ profile.religous_group }}
+                        <td>{{ profile.get_religion_display }}<br/>
+							{{ profile.religious_group|default:'' }}
 						</td>
                     </tr>
                     <tr>
@@ -170,7 +170,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Charities' %}</th>
-                        <td>{{ profile.charity }}</td>
+                        <td>{{ profile.charity|default:'' }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Transport' %}</th>
@@ -182,11 +182,11 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Sport' %}</th>
-                        <td>{{ profile.fav_sport }}</td>
+                        <td>{{ profile.fav_sport|default:'' }}</td>
                     </tr>
                     <tr class="last">
                         <th>{% trans 'Club' %}</th>
-                        <td>{{ profile.fav_club }}</td>
+                        <td>{{ profile.fav_club|default:'' }}</td>
                     </tr>
                 </table>
             </div>
@@ -206,8 +206,8 @@
                     <div class="info">
                         <p>{% trans 'At' %}: {{ education.institute }}</p>
                         <p>{% trans 'Level' %}: {{ education.level }}</p>
-                        <p>{% trans 'From' %}: {{ education.startdate }}</p>
-                        {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate }}</p>{% endif %}
+                        <p>{% trans 'From' %}: {{ education.startdate|date:"F Y" }}</p>
+                        {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate|date:"F Y" }}</p>{% endif %}
                     </div>
                 {% empty %}
                     <div>
@@ -233,8 +233,8 @@
                     <div class="info">
                         <p>{% trans 'At' %}: {{ work.company_name }}</p>
                         <p>{% trans 'Sector' %}: {{ work.sector }}</p>
-                        <p>{% trans 'From' %}: {{ work.startdate }}</p>
-                        {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate }}</p>{% endif %}
+                        <p>{% trans 'From' %}: {{ work.startdate|date:"F Y" }}</p>
+                        {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate|date:"F Y" }}</p>{% endif %}
                     </div>
                 {% empty %}
                     <div>
@@ -260,8 +260,8 @@
                     <div class="info">
                         <p>{% trans 'At' %}: {{ experience.organisation }}</p>
                         <p>{% trans 'Type' %}: {{ experience.type }}</p>
-                        <p>{% trans 'From' %}: {{ experience.startdate }}</p>
-                        {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate }}</p>{% endif %}
+                        <p>{% trans 'From' %}: {{ experience.startdate|date:"F Y" }}</p>
+                        {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate|date:"F Y" }}</p>{% endif %}
                     </div>
                 {% empty %}
                     <div>

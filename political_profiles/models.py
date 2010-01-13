@@ -43,6 +43,7 @@ MEDIA  = [
 TRANSPORT  = [
         ('WALKING','Lopen'),
         ('BICYCLE','Fiets'),
+        ('OV','Openbaar vervoer'),
         ('SCOOTER','Brommer/Scooter'),
         ('MOTORBIKE','Motor'),
         ('CAR','Auto'),
@@ -57,7 +58,7 @@ NEWSPAPER  = [
             ('FINANCIELE_DAGBLAD', u'Het Financiële Dagblad'),
             ('REFORMATISCH_DAGBLAD', u'Reformatisch Dagblad'),
             ('NEDERLANDS_DAGBLAD', u'Nederlands Dagblad'),
-            ('NRC', u'NRC Hndelsblad'),
+            ('NRC', u'NRC Handelsblad'),
             ('PERS', u'De Pers'),
             ('SPITS', u'Sp!ts'),
             ('METRO', u'Metro'),
@@ -95,8 +96,8 @@ RELIGION = [
 MARITAL_STATUS = [
         ('Married','Getrouwd'),
 		('Engaged', 'Verloofd'),
-		('Together', 'samenwonend'),
-        ('LAT', 'Lat relatie'),
+		('Together', 'Samenwonend'),
+        ('LAT', 'LAT relatie'),
         ('Single', 'Alleenstaand'),
         ]
 

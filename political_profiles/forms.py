@@ -56,7 +56,7 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=NEWSPAPER)
     transport       = forms.ChoiceField(label=_('... Method of transport?'),help_text=_('What is your regular method of transport?'),choices=TRANSPORT  )
     charity         = forms.CharField(label=_('... Charity?'),help_text=_('What charity do you care for most?'), max_length=255 )
-    fav_media       = forms.ChoiceField(label=_('... Media channel?'),choices=MEDIA )
+    fav_media       = forms.ChoiceField(label=_('... TV channel?'),choices=MEDIA )
     fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255 )
     hobby           = forms.CharField(label=_('... Hobby?'),max_length=255 )
     fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255)
