@@ -641,7 +641,6 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     #if name == 'initial_candidate':
                     self.user_profile_dict.update(form.cleaned_data)
             
-            import ipdb; ipdb.set_trace()
             for (key, value) in self.user_profile_dict.items():
                 if key == 'smoker':
                     value = (value == 'true')
