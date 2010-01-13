@@ -18,10 +18,10 @@
             <a class="branding">Wie Kies Jij?</a>
             <ul class="tabs">
             {% block menu %}
-                <li class="do-test"><a href="#">Doe de test</a></li>
-                <li><a href="#">Kandidaten</a></li>
-                <li><a href="#">Statistieken</a></li>
-                <li><a href="#">Organisatie</a></li>
+                {% block menu_take_test %}<li class="do-test"><a href="#">{% trans 'Take the test' %}</a></li>{% endblock menu_take_test %}
+                {% block menu_candidates %}<li><a href="{% url fo.politician_profile_filter %}">{% trans 'Candidates' %}</a></li> {% endblock menu_candidates %}
+                {% block menu_statistics %}<li><a href="#">{% trans 'Statistics' %}</a></li> {% endblock menu_statistics %}
+                {% block menu_organisation %}<li><a href="#">{% trans 'Organisation' %}</a></li> {% endblock menu_organisation %}
             {% endblock menu %}
             </ul>
         </div>

@@ -9,12 +9,9 @@
     {{ profile.full_name }}
 {% endblock title %}
 
-{% block menu %}
-    <li><a href="#">{% trans 'Take the test' %}</a></li>
-    <li class="selected"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
-    <li><a href="#">{% trans 'Statistics' %}</a></li>
-    <li><a href="#">{% trans 'Organisation' %}</a></li>
-{% endblock menu %}
+{% block menu_candidates %}
+    <li class="selected"><a href="{% url fo.politician_profile_filter %}">{% trans 'Candidates' %}</a></li>
+{% endblock menu_candidates %}
 
 {% block content %}
     <h1>
