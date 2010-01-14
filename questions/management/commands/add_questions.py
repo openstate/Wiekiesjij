@@ -197,120 +197,40 @@ class Command(BaseCommand):
         print "Added basic question 6"
         
         q7 = Question.objects.create(
-            title=u'Ondanks de recessie wil ik vooral investeren in:',
-            frontend_title=u'Ondanks de recessie moet mijn ideale kandidaat vooral willen investeren in:',
-            has_no_preference=True,
-            question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
-            theme='q7',
-        )
-        qsq7 = QuestionSetQuestion.objects.create(
-            question=q7,
-            questionset=qs1,
-            position=7,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Werk en Inkomen',
-            frontoffice_value=None,
-            position=1,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Vestigingsklimaat',
-            frontoffice_value=None,
-            position=2,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Openbare orde en Veiligheid',
-            frontoffice_value=None,
-            position=3,
-        )
-        Answer.objects.create(
-           question=q7,
-            value=u'Stedelijke ontwikkeling',
-            frontoffice_value=None,
-            position=4,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Milieu & Duurzame Ontwikkeling',
-            frontoffice_value=None,
-            position=5,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Onderwijs en Jeugd',
-            frontoffice_value=None,
-            position=6,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Zorg en Volksgezondheid',
-            frontoffice_value=None,
-            position=7,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Sport',
-            frontoffice_value=None,
-            position=8,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Cultuur en Media',
-            frontoffice_value=None,
-            position=9,
-        )
-        Answer.objects.create(
-            question=q7,
-            value=u'Integratie en Emancipatie',
-            frontoffice_value=None,
-            position=10,
-        )
-        Answer.objects.create(
-           question=q7,
-            value=u'Ambtelijk apparaat',
-            frontoffice_value=None,
-            position=11,
-        )
-        print "Added basic question 7"
-        
-        q8 = Question.objects.create(
             title=u'Ik woon:',
             frontend_title=u'Mijn ideale kandidaat woont:',
             has_no_preference=False,
             question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
-            theme='q8',
+            theme='q7',
         )
         qsq8 = QuestionSetQuestion.objects.create(
-            question=q8,
+            question=q7,
             questionset=qs1,
-            position=8,
+            position=7,
         )
         Answer.objects.create(
-           question=q8,
+           question=q7,
             value=u'Minder dan 1 jaar in de gemeente',
             frontoffice_value=None,
             position=1,
         )
         Answer.objects.create(
-           question=q8,
+           question=q7,
             value=u'1 tot 4 jaar in de gemeente',
             frontoffice_value=None,
             position=2,
         )
         Answer.objects.create(
-           question=q8,
+           question=q7,
             value=u'4 tot 10 jaar in de gemeente',
             frontoffice_value=None,
             position=3,
         )
         Answer.objects.create(
-           question=q8,
+           question=q7,
             value=u'Uw hele leven in de gemeente',
             frontoffice_value=u'zijn/haar hele leven in de gemeente',
             position=4,
         )
-        print "Added basic question 8"
+        print "Added basic question 7"
         
