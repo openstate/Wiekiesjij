@@ -102,7 +102,6 @@ def list(request):
                 invitations = invitations.filter(**{smart_str(key): value})
     
     context.update({'invs': invitations})
-    print context
     return render_to_response('invitations/list.html', context, context_instance=RequestContext(request))
 
 def notexist(request):

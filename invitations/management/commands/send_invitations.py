@@ -18,10 +18,11 @@ class Command(LabelCommand):
 
         #updates all rows with the selected id's in the _database_
         Invitation.objects.filter(id__in=invitation_ids).update(send_on=datetime.datetime.min)
-
+        idx = 0
         for invite in invitations_temp:
             invite.send()
             invite.send_on = datetime.datetime.now()
             invite.save()
+            idx += 1
             
-        print "Done"
+        print "Done, send %d invitations." % idx

@@ -448,8 +448,7 @@ class MultiPathFormWizard(object):
                         if fl is not None:
                             files.update({name : fl})
 
-                    except Exception, e:
-                        print e
+                    except Exception:
                         pass
                 # end for
         # end for post

@@ -160,8 +160,7 @@ class ElectionInstance(models.Model):
             party_instance.position = party_instance.id
             party_instance.save()
             return party_instance
-        except Exception, e:
-            print e
+        except Exception:
             return False
 
 class ElectionInstanceQuestion(models.Model):
