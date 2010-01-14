@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WieKiesJij\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-13 15:48+0100\n"
-"PO-Revision-Date: 2010-01-13 15:50+0100\n"
+"PO-Revision-Date: 2010-01-14 10:20+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -1607,7 +1607,7 @@ msgstr "U heeft nog geen doelen ingesteld"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/interest-add.html:4
 msgid "Add a new interest"
-msgstr "Voeg een nieuwe intresse toe"
+msgstr "Voeg een nieuwe interesse toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/interest.html:21
 msgid "What are your interests?"
@@ -1623,7 +1623,7 @@ msgstr "U heeft nog geen interesses ingevuld"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/interest.html:38
 msgid "Add an interest"
-msgstr "Voeg intresse toe"
+msgstr "Voeg interesse toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/links-add.html:4
 #: backoffice/templates/backoffice/wizard/politician_profile/links.html:39
