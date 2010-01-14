@@ -12,34 +12,36 @@
 {% endblock menu_candidates %}
 
 {% block content %}
-    <h1>{{ goal.goal }}</h1>
-
-    <div>
-        <div>
-            <a href="{% url fo.politician_profile goal.politician.user.id %}">
-                {% blocktrans with goal.politician.full_name|possessive as name %}
-                    Back to {{ name }} profile
-                {% endblocktrans %}
-            </a>
-        </div>
-
-        {% get_comment_list for goal as comments %}
-        {% for comment in comments %}
+	<div class="mod goal">
+    	<div class="hd">
+    		<h1>{{ goal.goal }}</h1>
+       	</div>
+		<div class="bd">
+    
             <div>
-                {% if comment.user_url %}
-                    <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
-                {% else %}
-                    <strong>{{ comment.user_name }}</strong>
-                {% endif %}
-                <p>{{ comment.comment|urlize|linebreaks }}</p>
+                <a href="{% url fo.politician_profile goal.politician.user.id %}" class="back">
+                    {% blocktrans with goal.politician.full_name|possessive as name %}
+                        Back to {{ name }} profile
+                    {% endblocktrans %}
+                </a>
             </div>
-        {% endfor %}
 
-        {% if user.is_authenticated %}
-            {% trans 'Respond' %}:
-            {% render_comment_form for goal %}
-        {% endif %}
-
-
+            {% get_comment_list for goal as comments %}
+            {% for comment in comments %}
+                <div>
+                    {% if comment.user_url %}
+                        <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
+                    {% else %}
+                        <strong>{{ comment.user_name }}</strong>
+                    {% endif %}
+                    <p>{{ comment.comment|urlize|linebreaks }}</p>
+                </div>
+            {% endfor %}
+    
+            {% if user.is_authenticated %}
+                {% trans 'Respond' %}:
+                {% render_comment_form for goal %}
+            {% endif %}
+		</div>
     </div>
 {% endblock content %}

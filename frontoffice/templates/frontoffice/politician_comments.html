@@ -12,7 +12,10 @@
 {% endblock menu_candidates %}
 
 {% block content %}
-    <h1>{{ profile.full_name }}</h1>
+	<div class="mod goal">
+   		<div class="hd">
+        	<h1>{{ profile.full_name }}</h1>
+        </div>
 
     <div>
         <div>
@@ -36,7 +39,7 @@
         {% endfor %}
 
         {% if user.is_authenticated %}
-            {% trans 'Respond' %}:
+            {% trans 'Respofgnd' %}:
             {% render_comment_form for profile %}
         {% endif %}
 
