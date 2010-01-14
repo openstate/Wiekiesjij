@@ -60,6 +60,7 @@ class IfMultiFieldNode(template.Node):
         'NameWidget',
         'RadioSelect',
 		'CheckboxSelectMultiple',
+		'ClearableFileInput',
     )
     
     def __init__(self, field, nodelist_true, nodelist_false):

@@ -33,7 +33,7 @@
                 </fieldset>
         
             	<div class="form-submit">
-                    <button class="primary next" type="submit">{% trans "Search" %}</button>
+                    <button class="primary next" type="submit">{% trans "Apply filter" %}</button>
                 </div>
             </form>
             <a href="{% url fo.politician_profile_filter %}">{% trans 'Clear All Filters' %}</a>
@@ -49,27 +49,28 @@
         	<h2>{% trans "Politicians" %}</h2>
         </div>
     	<div class="bd">
-
-            <ul>
+			<p><strong>{% trans "You selected the following filters" %}:</strong></p>
+            <ul class="filters">
                 {% for filter1, filter2, filter3 in filters %}
-                    <li><a href="{{ filter3 }}">{{ filter1 }}: {{ filter2 }}</a></li>
+                    <li><a href="{{ filter3 }}" title="{% trans 'Remove this filter' %}">{{ filter1 }}: {{ filter2 }}</a></li>
                 {% endfor %}
+                {% if filters %}
+                	<li><a href="{% url fo.politician_profile_filter %}" class="clear-all">{% trans 'Clear All Filters' %}</a></li>
+            	{% else %}
+                	<li class="empty">No filters selected</li>
+                {% endif %}
             </ul>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if politicians.has_previous %}
-                        <a href="?page={{ politicians.previous_page_number }}">{% trans 'previous' %}</a>
-                    {% endif %}
-
-                    <span class="current">
-                        {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}.
-                    </span>
-
-                    {% if politicians.has_next %}
-                        <a href="?page={{ politicians.next_page_number }}">{% trans 'next' %}</a>
-                    {% endif %}
-                </span>
-            </div>
+            <ul class="pager">
+            {% if politicians.has_previous %}
+                <li><a href="?page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
+            {% endif %}
+                <li class="current">
+                    {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}
+                </li>
+            {% if politicians.has_next %}
+                <li><a href="?page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
+            {% endif %}
+            </ul>
             <div class="pol-block-list">
             {% for politician in politicians.object_list %}
                 <div class="pol-block">
@@ -91,9 +92,22 @@
             
     
             {% empty %}
-                <p>{% trans 'No Politicians: please search or select a filter options' %}
+                <p class="empty">{% trans 'No politicians found: please search or select different filters.' %}<br />
+                	<a href="{% url fo.politician_profile_filter %}" class="clear-all">{% trans 'Clear all filters' %}</a>
+                </p>
             {% endfor %}
             </div> 
+            <ul class="pager bottom-pager">
+            {% if politicians.has_previous %}
+                <li><a href="?page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
+            {% endif %}
+                <li class="current">
+                    {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}
+                </li>
+            {% if politicians.has_next %}
+                <li><a href="?page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
+            {% endif %}
+            </ul>
 		</div>
     </div>
 </div>

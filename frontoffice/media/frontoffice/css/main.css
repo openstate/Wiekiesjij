@@ -43,6 +43,12 @@
 			.image {
 				overflow:hidden;_zoom:1;
 				}
+			strong {
+				font-weight:bold;
+				}
+			em {
+				font-style:italic;
+				}
 					
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -196,6 +202,91 @@
 					display:block;
 					float:left;
 					}
+		
+		/* 	form submit
+			----------------------------------------------------------------------------------------- */
+		
+			div.form-submit {
+				overflow:hidden;_zoom:1;
+				margin-top:10px;
+                position:relative;
+                clear:both;
+				}
+				div.form-submit a {
+					float: left;
+					color:#000;
+					display:block;
+					padding:3px 5px;
+					margin-bottom:10px;
+					line-height:26px;
+					}
+
+                                div.form-submit a.btn {
+                                    margin-left:10px;
+									float:right;
+									padding:5px 8px;
+									line-height:18px;
+                                }
+
+				div.form-submit a.cancel {
+					background: url(../img/cancel.png) no-repeat 0px center;
+					padding-left:20px;
+					}	
+				div.form-submit button {
+					float: right;
+					border:none;
+					display:block;
+					margin:0 0 10px 10px;
+					cursor: pointer;
+					background-color:#cccccc;
+					width:auto;
+					overflow:visible;
+					padding:5px;
+					border:2px solid #ccc;
+					}
+					
+					div.form-submit button:hover {
+						background-color:#b9b9b9;
+						}
+					div.form-submit a.button {
+						border:2px solid #ccc;
+						text-decoration: none;
+						}
+				div.form-submit button.primary,
+				div.form-submit a.primary {
+					border-color:#666;
+					font-weight:bold;
+					}
+			
+				div.form-submit button.prev,
+                a.prev {
+					background: #ccc url(../img/prev.png) no-repeat left center;
+					padding-left: 20px;
+					}
+					
+					div.form-submit a.prev {
+					 	padding-left:25px;
+					 	}
+					
+					div.form-submit button.prev:hover,
+                    a.prev:hover {
+						background-color:#b9b9b9;
+						}
+			
+				div.form-submit button.next,
+                a.next {
+					background: #ccc url(../img/next.png) no-repeat right center;
+					padding-right:25px;
+					}
+					
+					 a.next, div.form-submit a.next {
+					 	padding-right:25px;
+					 }
+					
+					div.form-submit button.next:hover,
+                    a.next:hover {
+						background-color: #b9b9b9;
+						}
 
 	
 
@@ -501,7 +592,13 @@
 			overflow:hidden;_zoom:1;
 			margin:0 -15px;
 			}
-	
+			.pol-block-list .empty {
+				margin:0 15px 1em;
+				text-align:center;
+				}
+				.pol-block-list .empty a {
+					color:#ed2227;
+					}
 		.pol-block {
 			float:left;
 			width:218px;
@@ -514,6 +611,7 @@
 				font-weight:bold;
 				display:block;
 				margin-bottom:.2em;
+				color:#ed2227;
 				}
 			.pol-block p {
 				line-height:1.5em;
@@ -525,6 +623,55 @@
 				background:#ccc;
 				margin-right:10px;
 				}
+				
+		.filters {
+			overflow:hidden;_zoom:1;
+			margin:.5em 0 .5em;
+			}
+			.filters li {
+				float:left;
+				margin-bottom:10px;
+				}
+				.filters li a {
+					float:left;
+					font-weight:bold;
+					padding:.4em .5em .4em 20px;
+					margin:0 10px 0 0;
+					text-decoration:none;
+					background:#ccc url(../img/close-filter.png) 6px center no-repeat;
+					}
+					.filters li a:hover {
+						background:#ed2227;
+						color:#fff;
+						}
+				.filters li a.clear-all {
+					background-color:#fff;
+					}
+					.filters li a.clear-all:hover {
+						color:#000;
+						}
+		
+		.pager {
+			margin:.5em 0 15px;
+			padding:0 0 .5em;
+			overflow:hidden;_zoom:1;
+			border-bottom:1px solid #ccc;
+			}
+			.pager li {
+				float:left;
+				margin-right:.5em;
+				}
+				.pager li a {
+					font-weight:bold;
+					}
+		.bottom-pager {
+			margin:0 0 0 0;
+			padding:.5em 0 0;
+			border-bottom:none;
+			border-top:1px solid #ccc;
+			}
+			
+			
 	
 	/* 	Quick profile
 		----------------------------------------------------------------------------------------- */

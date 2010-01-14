@@ -23,3 +23,11 @@ div.form-submit button.next {
 	_zoom:1;
 	margin-right:5px;
 	}
+	
+#wizard-steps li ul { 
+	float:left;
+	display:inline;
+	}
+#wizard-steps li.last {
+	margin-right:0;
+	}
