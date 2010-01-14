@@ -646,6 +646,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
             for (key, value) in self.user_profile_dict.items():
                 if key == 'smoker':
                     value = (value == 'true')
+                if key == 'picture' and value is None:
+                    continue
                 setattr(self.user.profile, key, value)
             if self.user.profile.num_children is None:
                 self.user.profile.num_children = 0

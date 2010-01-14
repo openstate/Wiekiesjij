@@ -129,7 +129,6 @@ def politician_profile_filter(request):
                 filters.append((_('Youngest'), form.cleaned_data['start_age'], new_path))
 
             if form.cleaned_data['end_age'] is not None:
-                #import ipdb; ipdb.set_trace()
                 date = datetime.date(todate.year - (form.cleaned_data['end_age'] + 1), todate.month, todate.day)
                 filtered_politicians = filtered_politicians.filter(dateofbirth__gte=date)
                 new_path = new_url(path, 'end_age', form.cleaned_data['end_age'])
