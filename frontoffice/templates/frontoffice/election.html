@@ -28,7 +28,7 @@
                 <li class="selected">
                     <span class="position">{{ eip.position }}</span>
                     <div class="image">
-                    	<img alt="{{ eip.party.abbreviation }}" src="{{ eip.party.logo }}" />
+                    	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 72x46 %}" />
                   	</div>
                     <span class="abbr">{{ eip.party.abbreviation }}</span>
                     <p class="full-party-name">{{ eip.party.name }}</p>
@@ -39,7 +39,7 @@
                     <span class="position">{{ eip.position }}</span>
         			<span class="image">
                     {% if eip.party.logo %}
-                       	<img alt="{{ eip.party.abbreviation }}" src="{{ eip.party.logo }}" />
+                       	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 72x46 %}" />
                     {% else %}
                         <img alt="{{ eip.party.abbreviation }}" src="/link/to/default/" />
                     {% endif %}
@@ -77,7 +77,7 @@
                         {% if politician %}
                         	<div class="image">
                             {% if politician.candidate.profile.picture %}
-                                <img alt="{{ politician.full_name }}" src="{% thumbnail  politician.candidate.profile.picture 39x48 upscale %}" />
+                                <img alt="{{ politician.full_name }}" src="{% thumbnail politician.candidate.profile.picture 39x48 upscale %}" />
                             {% else %}
                                 <img alt="{{ politician.full_name }}" src="/link/to/default/" />
                             {% endif %}

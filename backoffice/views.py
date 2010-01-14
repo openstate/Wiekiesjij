@@ -64,9 +64,12 @@ def redirect_view(request):
 def party_contact_wizard(request, id, user_id=None):
     check_permissions(request,id, 'party_admin')
     if user_id is None:
-        if request.user.profile is None or request.user.profile.type != 'party_admin':
+        if not (request.user.profile is None or request.user.profile.type != 'party_admin'):
+            user_id = request.user.id
+        elif request.user.is_staff or (request.user.profile and request.user.profile.type == 'council_admin'):            
+            user_id is None
+        else:
             raise PermissionDeniedException()
-        user_id = request.user.id
         
     return PartyContactWizard(user_id=user_id, eip_id=id)(request)
 

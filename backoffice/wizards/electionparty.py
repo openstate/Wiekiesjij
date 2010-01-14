@@ -178,7 +178,10 @@ class PartyContactWizard(MultiPathFormWizard):
     def __init__(self, eip_id, user_id, *args, **kwargs):
         self.eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
         self.election_instance = self.eip.election_instance
-        self.user = get_object_or_404(self.eip.party.contacts, pk=user_id)
+        if user_id is None:
+            self.user = self.eip.party.contacts.all()[0]
+        else:
+            self.user = get_object_or_404(self.eip.party.contacts, pk=user_id)
         
         if not self.user.profile or self.user.profile.type != 'party_admin':
             raise PermissionDeniedException('Wrong user profile type')
