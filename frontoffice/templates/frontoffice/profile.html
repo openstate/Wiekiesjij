@@ -17,12 +17,12 @@
 
     {% include "frontoffice/quick_profile.html" %}
 
-    <!-- FAVORITE TAB -->
+    
 
-    {% ifequal showtab "favs" %}
-        <div class="mod tabbed favs">
-        	<div class="hd">
-            	<!-- TABS -->
+    
+        <div class="mod tabbed">
+            <div class="hd">
+<!-- TABS -->
                 <ul class="tabs">
                     <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}>
                         <a href="{% url fo.politician_profile profile.user.pk 'favs' %}">
@@ -46,6 +46,11 @@
                     </li>
                 </ul>
             </div>
+
+            {% ifequal showtab "favs" %}
+
+<!-- FAVORITE TAB -->
+
             <div class="bd">
                 <table>                
                     <tr>
@@ -92,120 +97,124 @@
                     </tr>
                 </table>
             </div>
-        </div>
-    {% endifequal %}
+            {% endifequal %}
 
-    <!-- EDUCATION TAB -->
+            {% ifequal showtab "edu" %}
 
-    {% ifequal showtab "edu" %}
-        <div class="mod edu">
-            <div class="bd">
-                {% for education in profile.education.all %}
-                    <h1>{{ education.field }}</h1>
-                    <div>
-                        {{ education.description }}
-                    </div>
-                    <div class="info">
-                        <p>{% trans 'At' %}: {{ education.institute }}</p>
-                        <p>{% trans 'Level' %}: {{ education.level }}</p>
-                        <p>{% trans 'From' %}: {{ education.startdate|date:"F Y" }}</p>
-                        {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate|date:"F Y" }}</p>{% endif %}
-                    </div>
-                {% empty %}
-                    <div>
-                        {% blocktrans with profile.first_name as name %}
-                            {{ name }}  has not filled in any educations
-                        {% endblocktrans %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endifequal %}
+<!-- EDUCATION TAB -->
 
-    <!-- WORK TAB -->
-
-    {% ifequal showtab "work" %}
-        <div class="mod wor">
-            <div class="bd">
-                {% for work in profile.work.all %}
-                    <h1>{{ work.position }}</h1>
-                    <div>
-                        {{ work.description }}
-                    </div>
-                    <div class="info">
-                        <p>{% trans 'At' %}: {{ work.company_name }}</p>
-                        <p>{% trans 'Sector' %}: {{ work.sector }}</p>
-                        <p>{% trans 'From' %}: {{ work.startdate|date:"F Y" }}</p>
-                        {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate|date:"F Y" }}</p>{% endif %}
-                    </div>
-                {% empty %}
-                    <div>
-                        {% blocktrans with profile.first_name as name %}
-                            {{ name }}  has not filled in any work experience
-                        {% endblocktrans %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endifequal %}
-
-    <!-- POLITICAL EXPERIENCE TAB -->
-
-    {% ifequal showtab "exp" %}
-        <div class="mod exp">
-            <div class="bd">
-                {% for experience in profile.political.all %}
-                    <h1>{{ experience.position }}</h1>
-                    <div>
-                        {{ experience.description }}
-                    </div>
-                    <div class="info">
-                        <p>{% trans 'At' %}: {{ experience.organisation }}</p>
-                        <p>{% trans 'Type' %}: {{ experience.type }}</p>
-                        <p>{% trans 'From' %}: {{ experience.startdate|date:"F Y" }}</p>
-                        {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate|date:"F Y" }}</p>{% endif %}
-                    </div>
-                {% empty %}
-                    <div>
-                        {% blocktrans with profile.first_name as name %}
-                            {{ name }} has not filled in any political experience
-                        {% endblocktrans %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endifequal %}
-
-		{% if twitter_url or profile.movie %}
-		<div class="line">
-			{% if twitter_url %}
-            <!-- TWITTER -->
-            <div class="col size1of3">
-                <div class="mod tweets">
-                    <div class="hd">
-                        <h2>{{ profile.first_name|possessive }} Tweets</h2>
-                    </div>
+                <div class="mod edu">
                     <div class="bd">
-                        {% pull_feed twitter_url %}
+                        {% for education in profile.education.all %}
+                            <h1>{{ education.field }}</h1>
+                            <div>
+                                {{ education.description }}
+                            </div>
+                            <div class="info">
+                                <p>{% trans 'At' %}: {{ education.institute }}</p>
+                                <p>{% trans 'Level' %}: {{ education.level }}</p>
+                                <p>{% trans 'From' %}: {{ education.startdate|date:"F Y" }}</p>
+                                {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate|date:"F Y" }}</p>{% endif %}
+                            </div>
+                        {% empty %}
+                            <div>
+                                {% blocktrans with profile.first_name as name %}
+                                    {{ name }}  has not filled in any educations
+                                {% endblocktrans %}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endifequal %}
+
+            {% ifequal showtab "work" %}
+
+<!-- WORK TAB -->
+
+                <div class="mod wor">
+                    <div class="bd">
+                        {% for work in profile.work.all %}
+                            <h1>{{ work.position }}</h1>
+                            <div>
+                                {{ work.description }}
+                            </div>
+                            <div class="info">
+                                <p>{% trans 'At' %}: {{ work.company_name }}</p>
+                                <p>{% trans 'Sector' %}: {{ work.sector }}</p>
+                                <p>{% trans 'From' %}: {{ work.startdate|date:"F Y" }}</p>
+                                {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate|date:"F Y" }}</p>{% endif %}
+                            </div>
+                        {% empty %}
+                            <div>
+                                {% blocktrans with profile.first_name as name %}
+                                    {{ name }}  has not filled in any work experience
+                                {% endblocktrans %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endifequal %}
+
+            {% ifequal showtab "exp" %}
+
+<!-- POLITICAL EXPERIENCE TAB -->
+
+                <div class="mod exp">
+                    <div class="bd">
+                        {% for experience in profile.political.all %}
+                            <h1>{{ experience.position }}</h1>
+                            <div>
+                                {{ experience.description }}
+                            </div>
+                            <div class="info">
+                                <p>{% trans 'At' %}: {{ experience.organisation }}</p>
+                                <p>{% trans 'Type' %}: {{ experience.type }}</p>
+                                <p>{% trans 'From' %}: {{ experience.startdate|date:"F Y" }}</p>
+                                {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate|date:"F Y" }}</p>{% endif %}
+                            </div>
+                        {% empty %}
+                            <div>
+                                {% blocktrans with profile.first_name as name %}
+                                    {{ name }} has not filled in any political experience
+                                {% endblocktrans %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endifequal %}
+
+        </div>
+
+        {% if twitter_url or profile.movie %}
+            <div class="line">
+                {% if twitter_url %}
+<!-- TWITTER -->
+                   <div class="col size1of3">
+                        <div class="mod tweets">
+                            <div class="hd">
+                                <h2>{{ profile.first_name|possessive }} Tweets</h2>
+                            </div>
+                            <div class="bd">
+                                {% pull_feed twitter_url %}
+                            </div>
+                        </div>
+                    </div>
     		{% endif %}
     
     		{% if profile.movie %}
-    		<!-- YOUTUBE -->
-            <div class="col size2of3">
-                <div class="mod video">
-                	<div class="hd">
-                    	<h2>{{ profile.first_name|possessive }} video</h2>
+<!-- YOUTUBE -->
+                    <div class="col size2of3">
+                        <div class="mod video">
+                            <div class="hd">
+                                <h2>{{ profile.first_name|possessive }} video</h2>
+                            </div>
+                            <div class="bd">
+                                {{ profile.movie|youtube }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="bd">
-                        {{ profile.movie|youtube }}
-                    </div>
-                </div>
+                {% endif %}
             </div>
-            {% endif %}
-    	</div>
         {% endif %}
 {% endblock content %}
 		
