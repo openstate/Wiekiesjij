@@ -366,7 +366,7 @@
 					
 					.mod {
 						background:#E0E0E0;
-						margin:10px 10px 50px 20px;
+						margin:34px 10px 50px 20px;
 						position:relative;
 						}
 						.hd {
@@ -385,7 +385,17 @@
 							top:-10px;
 							overflow:hidden;_zoom:1;
 							}
-						
+					.tabbed {
+						margin-top:60px;
+						}	
+						.tabbed .hd {
+							top:-42px;
+							width:100%;
+							border-bottom:4px solid #c2c2c2;
+							}
+						.tabbed .tabs .selected a {
+							background:#c2c2c2;
+							}
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
 					

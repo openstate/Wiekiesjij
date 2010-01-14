@@ -14,12 +14,13 @@
 {% endblock menu_candidates %}
 
 {% block content %}
-    <h1>
-        {% trans 'Profile' %} {{ profile.full_name }}
-        {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %} {# TODO: nice message for incomplete profile? #}
-    </h1>
-
     <div class="mod quickProfile">
+    	<div class="hd">
+        	<h1>
+                {% trans 'Profile' %} {{ profile.full_name }}
+                {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %} {# TODO: nice message for incomplete profile? #}
+            </h1>
+        </div>
         <div class="bd">
             <div class="container">
                 {% if profile.picture %}
@@ -115,35 +116,37 @@
         </div>
     </div>
 
-    <!-- TABS -->
-
-    <ul class="tabs">
-        <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}>
-            <a href="{% url fo.politician_profile profile.user.pk 'favs' %}">
-                {% trans 'Favorites and preferences' %}
-            </a>
-        </li>
-        <li {% ifequal showtab "edu" %}class="selected"{% endifequal %}>
-            <a href="{% url fo.politician_profile profile.user.pk 'edu' %}">
-                {% trans 'Education' %}
-            </a>
-        </li>
-        <li {% ifequal showtab "work" %}class="selected"{% endifequal %}>
-            <a href="{% url fo.politician_profile profile.user.pk 'work' %}">
-                {% trans 'Work' %}
-            </a>
-        </li>
-        <li {% ifequal showtab "exp" %}class="selected"{% endifequal %}>
-            <a href="{% url fo.politician_profile profile.user.pk 'exp' %}">
-                {% trans 'Political experience' %}
-            </a>
-        </li>
-    </ul>
+    
 
     <!-- FAVORITE TAB -->
 
     {% ifequal showtab "favs" %}
-        <div class="mod favs">
+        <div class="mod tabbed favs">
+        	<div class="hd">
+            	<!-- TABS -->
+                <ul class="tabs">
+                    <li {% ifequal showtab "favs" %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.politician_profile profile.user.pk 'favs' %}">
+                            {% trans 'Favorites and preferences' %}
+                        </a>
+                    </li>
+                    <li {% ifequal showtab "edu" %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.politician_profile profile.user.pk 'edu' %}">
+                            {% trans 'Education' %}
+                        </a>
+                    </li>
+                    <li {% ifequal showtab "work" %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.politician_profile profile.user.pk 'work' %}">
+                            {% trans 'Work' %}
+                        </a>
+                    </li>
+                    <li {% ifequal showtab "exp" %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.politician_profile profile.user.pk 'exp' %}">
+                            {% trans 'Political experience' %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div class="bd">
                 <table>                
                     <tr>

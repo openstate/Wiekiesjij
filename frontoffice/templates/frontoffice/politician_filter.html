@@ -16,6 +16,10 @@
             <form action="{% url fo.politician_profile_filter %}" method="get" accept-charset="utf-8">
                 <input type="hidden" name="next" value="{{ next }}" />
                 
+                <div class="form-submit">
+                    <button class="primary next" type="submit">{% trans "Apply filter" %}</button>
+                </div>
+                
                 {% if form.non_field_errors %}
                     <div class="errors">
                         {% for error in form.non_field_errors %}
