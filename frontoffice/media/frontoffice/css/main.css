@@ -359,7 +359,9 @@
 			#content {
 			
 				}
+			.line {
 				
+				}
 				.col {
 					
 					}
@@ -375,6 +377,20 @@
 							left:-10px;
 							top:-39px;
 							}
+							.hd h1,
+							.hd h2,
+							.hd .note {
+								float:left;
+								}
+							.hd h1 {
+								margin:0;
+								}
+							.hd .note {
+								margin-left:1em;
+								display:inline;
+								line-height:28px;
+								font-style:italic;
+								}
 						.bd {
 							background:#ffffff;
 							border:1px solid #c2c2c2;
@@ -396,6 +412,11 @@
 						.tabbed .tabs .selected a {
 							background:#c2c2c2;
 							}
+			.line .line {
+				margin-top:-30px;
+				}				
+			
+			
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
 					
@@ -593,6 +614,7 @@
 						}
 					.empty {
 						font-style:italic;
+						text-align:center;
 						}
 	
 	/* 	politician search

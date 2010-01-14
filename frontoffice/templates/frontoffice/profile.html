@@ -18,8 +18,9 @@
     	<div class="hd">
         	<h1>
                 {% trans 'Profile' %} {{ profile.full_name }}
-                {% if profile.profile_incomplete %} ({% trans 'Incomplete' %}){% endif %} {# TODO: nice message for incomplete profile? #}
             </h1>
+			<p class="note">{% if profile.profile_incomplete %} {% trans 'Note: This profile has not been completely filled in.' %}{% endif %} {# TODO: nice message for incomplete profile? #}</p>
+
         </div>
         <div class="bd">
             <div class="container">
@@ -277,40 +278,49 @@
         </div>
     {% endifequal %}
 
-    <!-- TWITTER -->
-    
-    {% if twitter_url %}
-        <div class="col size1of3">
-            <h1>{{ profile.first_name|possessive }} Tweets</h1>
-            <div class="mod tweets">
-                <div class="bd">
-                    {% pull_feed twitter_url %}
+		{% if twitter_url or profile.movie %}
+		<div class="line">
+			{% if twitter_url %}
+            <!-- TWITTER -->
+            <div class="col size1of3">
+                <div class="mod tweets">
+                    <div class="hd">
+                        <h2>{{ profile.first_name|possessive }} Tweets</h2>
+                    </div>
+                    <div class="bd">
+                        {% pull_feed twitter_url %}
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
-
-    <!-- YOUTUBE -->
+    		{% endif %}
     
-    {% if profile.movie %}
-        <div class="col size2of3">
-            <h1>{{ profile.first_name|possessive }} video</h1>
-            <div class="mod video">
-                <div class="bd">
-                    {{ profile.movie|youtube }}
+    		{% if profile.movie %}
+    		<!-- YOUTUBE -->
+            <div class="col size2of3">
+                <div class="mod video">
+                	<div class="hd">
+                    	<h2>{{ profile.first_name|possessive }} video</h2>
+                    </div>
+                    <div class="bd">
+                        {{ profile.movie|youtube }}
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+            {% endif %}
+    	</div>
+        {% endif %}
 {% endblock content %}
-
+		
 <!-- SIDEBAR -->
 
 {% block sidebar %}
-    {% if profile.goals.all %}
-        <h1>{% trans 'Political goals' %}</h1>
+        
         <div class="mod goals">
+        	<div class="hd">
+        		<h2>{% trans 'Political goals' %}</h2>
+          	</div>
             <div class="bd">
+            	{% if profile.goals.all %}
                 <ul class="quickList">
                     {% for goal in profile.goals.all %}
                         <li>
@@ -321,14 +331,18 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% else %}
+                <p class="empty">{% trans "No goals defined yet." %}</p>
+                {% endif %}
             </div>
         </div>
-    {% endif %}
-
-    {% if profile.appearances.all %}
-        <h1>{% trans 'Appearances' %}</h1>
+        
         <div class="mod appearances">
+        	<div class="hd">
+				<h2>{% trans 'Appearances' %}</h2>
+            </div>
             <div class="bd">
+            	{% if profile.appearances.all %}
                 <ul class="quickList">
                     {% for appearance in profile.appearances.all %}
                         <li>
@@ -345,14 +359,18 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% else %}
+                <p class="empty">{% trans "No appearances added yet." %}</p>
+                {% endif %}
             </div>
         </div>
-    {% endif %}
-
-    {% if profile.interests.all %}
-        <h1>{% trans 'Interests' %}</h1>
+    
         <div class="mod links">
+        	<div class="hd">
+            	<h2>{% trans 'Interests' %}</h2>
+            </div>
             <div class="bd">
+            	{% if profile.interests.all %}
                 <ul class="quickList">
                     {% for interest in profile.interests.all %}
                         <li>
@@ -361,14 +379,18 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% else %}
+                <p class="empty">{% trans "No interests defined yet" %}.</p>
+                {% endif %}
             </div>
         </div>
-    {% endif %}
-
-    {% if profile.links.all %}
-        <h1>{% trans 'Links' %}</h1>
+    
         <div class="mod links">
+        	<div class="hd">
+            	<h2>{% trans 'Links' %}</h2>
+            </div>
             <div class="bd">
+            	{% if profile.links.all %}
                 <ul class="quickList">
                     {% for link in profile.links.all %}
                         <li>
@@ -377,7 +399,10 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% else %}
+                <p class="empty">{% trans "No links defined yet." %}</p>
+                {% endif %}
             </div>
         </div>
-    {% endif %}
+    
 {% endblock sidebar %}
