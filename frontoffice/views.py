@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 from frontoffice.forms import PoliticianFilterForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
-from political_profiles.models import PoliticianProfile, PoliticalGoal
+from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
@@ -249,3 +249,32 @@ def fan_remove(request, politician_id):
     profile = get_object_or_404(PoliticianProfile, user = user)
     request.user.profile.favorites.remove(profile)
     return redirect('fo.politician_profile', id = politician_id)
+
+
+@visitors_only
+def thumbs_up(request, goal_id):
+    goal = get_object_or_404(PoliticalGoal, pk=goal_id)
+    user = request.user
+    try:
+        rank, created = GoalRanking.objects.get_or_create(user=user, goal=goal, defaults={'ranking': 0})
+        rank.ranking = 1
+        rank.save()
+    except:
+        pass
+
+    return redirect('fo.politician_profile', id = goal.politician.user.id)
+
+
+@visitors_only
+def thumbs_down(request, goal_id):
+    goal = get_object_or_404(PoliticalGoal, pk=goal_id)
+    user = request.user
+    try:
+        rank, created = GoalRanking.objects.get_or_create(user=user, goal=goal, defaults={'ranking': 0})
+        rank.ranking = -1
+        rank.save()
+    except:
+        pass
+
+    return redirect('fo.politician_profile', id = goal.politician.user.id)
+

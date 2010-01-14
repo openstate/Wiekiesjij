@@ -438,7 +438,20 @@ class PoliticalGoal(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Goal'), _('Goals')
         ordering = ('goal', )
-    
+
+class GoalRanking(models.Model):
+    """
+        A ranking of a goal. Either +1 or -1
+    """
+    ranking = models.SmallIntegerField(_('Ranking'))
+    goal    = models.ForeignKey(PoliticalGoal, verbose_name=_('Goal'), related_name='rankings')
+    user    = models.ForeignKey(User, verbose_name=_('User', related_name='rankings'))
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Ranking'), _('Rankings')
+        ordering = ('ranking',)
+        unique_together = (('goal','user'),)
+
 def user_profile(u):
     """
         Function to always get the users profile as a profile property

@@ -12,11 +12,11 @@
 {% endblock menu_candidates %}
 
 {% block content %}
-	<div class="mod goal">
+    <div class="mod goal">
     	<div class="hd">
     		<h1>{{ goal.goal }}</h1>
        	</div>
-		<div class="bd">
+        <div class="bd">
     
             <div>
                 <a href="{% url fo.politician_profile goal.politician.user.id %}" class="back">
@@ -42,6 +42,6 @@
                 {% trans 'Respond' %}:
                 {% render_comment_form for goal %}
             {% endif %}
-		</div>
+        </div>
     </div>
 {% endblock content %}

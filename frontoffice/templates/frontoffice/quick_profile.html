@@ -1,0 +1,108 @@
+{% load i18n %}
+{% load comments %}
+{% load utils_tags %}
+{% load fo_tags %}
+{% load thumbnail %}
+
+<div class="mod quickProfile">
+    <div class="hd">
+        <h1>
+            {% trans 'Profile' %} {{ profile.full_name }}
+        </h1>
+        <p class="note">{% if profile.profile_incomplete %} {% trans 'Note: This profile has not been completely filled in.' %}{% endif %}</p>
+
+    </div>
+    <div class="bd">
+        <div class="container">
+            {% if profile.picture %}
+                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail profile.picture 140x210 upscale %}" />
+            {% else %}
+                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="/link/to/default/" />
+            {% endif %}
+            <table class="quickProfileInfo">
+                <tr>
+                    <th>{% trans 'Name' %}</th>
+                    <td>{{ profile.full_name }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Party' %}</th>
+                    <td>{{ profile.party.name }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Age' %}</th>
+                    <td>{{ profile.dateofbirth|age }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Gender' %}</th>
+                    <td>{{ profile.get_gender_display }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Marital status' %}</th>
+                    <td>{{ profile.get_marital_status_display }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Number of children' %}</th>
+                    <td>{{ profile.num_children }}</td>
+                </tr>
+                <tr class="emptyRow">
+                    <th>&nbsp;</th>
+                    <td></td>
+                </tr>
+                <tr class="fan">
+                    <td colspan="2">
+                        {% blocktrans with profile.first_name as name and profile.fans.count|default:0 as fans %}
+                            {{ name }} has got {{ fans }} fans
+                        {% endblocktrans %}
+
+                        {% isprofile 'visitor' %}
+                        <div>{% if user.profile|in:profile.fans.all %}
+                                <a href="{% url fo.visitor.remove_fan profile.user.pk %}" title="{% trans 'Stop being a fan' %}">[{% trans 'Stop being a fan' %}]</a>
+                             {% else %}
+                                <a href="{% url fo.visitor.add_fan profile.user.pk %}" title="{% trans 'Become a fan' %}">[{% trans 'Become a fan' %}]</a>
+                             {% endif %}
+                        </div>
+                        {% endisprofile %}
+                    </td>
+                </tr>
+                <tr class="emptyRow">
+                    <th>&nbsp;</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Social networks' %}</th>
+                    <td>
+                        <ul class="socialNetwork">
+                            {% for connection in profile.connections.all %}
+                            <li>
+                                <a class="{{ connection.type }}" href="{{ connection.url }}" title="{{ connection.description }}">{{ connection.type }}</a>
+                            </li>
+                            {% empty %}
+                            <li>
+                                <a>{% trans 'N.A.' %}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <div class="popularityMeter">
+                <div class="meterContainer">
+                    <img alt="{% trans 'Popularity meter' %}" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
+                    <div class="meterActiveContainer" style="height: {{ popularity|default:0 }}%">
+                        <img class="meterActive" alt="{{ popularity|default:0 }}" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
+                    </div>
+                </div>
+                <span class="top">100%</span>
+                <span class="bottom">0%</span>
+                <span class="total">{{ popularity|default:0 }}%</span>
+            </div>
+        </div>
+        <div class="ballotPosition">
+            <a href="{% url fo.election profile.party.id %}">
+            {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
+                {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
+            {% endblocktrans %}
+            </a>
+        </div>
+    </div>
+</div>
