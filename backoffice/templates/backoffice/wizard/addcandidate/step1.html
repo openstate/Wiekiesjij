@@ -8,7 +8,7 @@
 	<p><em>{% trans 'Note:  invitations will not be sent right now. This will happen later ' %}</em></p>
     
     <div class="form-submit">
-            <a href="{% url bo.election_party_view instance.id %}" class="cancel">{% trans 'Cancel' %}</a>
+            <a href="{% url bo.election_party_view eip.id %}" class="cancel">{% trans 'Cancel' %}</a>
 
             <button class="primary next" type="submit" name="invite" value="invite">{% trans 'Invite this candidate' %}</button>
             {# <!-- <button type="submit" name="invite_another" value="invite_another">{% trans 'Invite & add another candidate' %}</button> --> #}
