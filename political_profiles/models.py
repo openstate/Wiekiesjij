@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models import Sum, Count
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
@@ -438,6 +439,18 @@ class PoliticalGoal(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Goal'), _('Goals')
         ordering = ('goal', )
+
+    @property
+    def ranking(self):
+        if not hasattr(self, '_ranking_cache'):
+            self._ranking_cache = self.rankings.aggregate(Sum('ranking'), Count('ranking'))
+        return self._ranking_cache['ranking__sum']
+
+    @property
+    def count_rankings(self):
+        if not hasattr(self, '_ranking_cache'):
+            self._ranking_cache = self.rankings.aggregate(Sum('ranking'), Count('ranking'))
+        return self._ranking_cache['ranking__count']
 
 class GoalRanking(models.Model):
     """
