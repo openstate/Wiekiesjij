@@ -56,8 +56,8 @@
                     <tr>
                         <th>{% trans 'Religion' %}</th>
                         <td>{{ profile.get_religion_display }}<br/>
-							{{ profile.religious_group|default:'' }}
-						</td>
+                            {{ profile.religious_group|default:'' }}
+                        </td>
                     </tr>
                     <tr>
                         <th>{% trans 'Smoker' %}</th>
@@ -238,7 +238,7 @@
                                 - <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a><br />
                                 <a href="{% url fo.thumbs_up goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-up.png" /></a>
                                 <a href="{% url fo.thumbs_down goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-down.png" /></a>
-                                {{ goal.ranking }}/{{ goal.count_rankings }}
+                                {{ goal.ranking|default:0 }}/{{ goal.count_rankings|default:0 }}
 
                             {% endif %}
                         </li>

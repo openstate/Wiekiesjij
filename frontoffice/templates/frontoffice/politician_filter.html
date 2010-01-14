@@ -1,5 +1,5 @@
 {% extends 'frontoffice/base.html' %}
-{% load i18n form_tags %}
+{% load i18n form_tags thumbnail %}
 
 {% block extrahead %}
 	{{ form.media }}
@@ -80,7 +80,7 @@
                 <div class="pol-block">
                 	<div class="image">
                         {% if politician.picture %}
-                            <img alt="{{ politician.full_name }}" src="{{ politician.picture.url }}" />
+                            <img alt="{{ politician.full_name }}" src="{% thumbnail politician.picture 50x70 upscale %}" />
                         {% else %}
                             <img alt="{{ politician.full_name }}" src="/link/to/default/" />
                         {% endif %}
