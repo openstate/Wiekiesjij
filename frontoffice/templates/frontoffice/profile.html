@@ -236,11 +236,12 @@
                             <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
                             {% if user.is_authenticated %}
                                 - <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a><br />
-                                <a href="{% url fo.thumbs_up goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-up.png" /></a>
-                                <a href="{% url fo.thumbs_down goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-down.png" /></a>
-                                {{ goal.ranking|default:0 }}/{{ goal.count_rankings|default:0 }}
-
-                            {% endif %}
+                                {% isprofile 'visitor' %}
+                                    <a href="{% url fo.thumbs_up goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-up.png" /></a>
+                                    <a href="{% url fo.thumbs_down goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-down.png" /></a>
+                                {% endisprofile %}
+                            {% endif %}<br />
+                            {% trans 'Score' %}: {{ goal.ranking|default:0 }} {% trans 'Votes' %}: {{ goal.count_rankings|default:0 }}
                         </li>
                     {% endfor %}
                 </ul>
