@@ -101,6 +101,26 @@ def youtube(url):
     """ % {'video_id': video_id})
 
 
+@register.filter
+@stringfilter
+def possessive(name):
+    """
+        Adds "s" "'s" or "'" to a name
+        Customized for Dutch
+    """
+    #import ipdb; ipdb.set_trace()
+    vowels = set(['a','e','i','o','u','y']) #'y' is a vowel in most names
+    esses = set(['s','x','z']) #characters with an 's'-sound
+    last_char = name[-1]
+
+    if last_char in vowels:
+        return name+"'s"
+    elif last_char in esses:
+        return name+"'"
+    else:
+        return name+"s"
+
+
 @register.inclusion_tag('utils_tags/_tweets.html')
 def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     """

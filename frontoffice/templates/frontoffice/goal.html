@@ -1,6 +1,7 @@
 {% extends 'frontoffice/base.html' %}
 {% load i18n %}
 {% load comments %}
+{% load utils_tags %}
 
 {% block title %}
     {{ goal.politician.full_name }}
@@ -16,8 +17,8 @@
     <div>
         <div>
             <a href="{% url fo.politician_profile goal.politician.user.id %}">
-                {% blocktrans with goal.politician.full_name as name %}
-                    Back to {{ name }}'s profile
+                {% blocktrans with goal.politician.full_name|possessive as name %}
+                    Back to {{ name }} profile
                 {% endblocktrans %}
             </a>
         </div>

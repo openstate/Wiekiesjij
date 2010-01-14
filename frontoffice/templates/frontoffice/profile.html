@@ -278,7 +278,7 @@
     
     {% if twitter_url %}
         <div class="col size1of3">
-            <h1>{{ profile.first_name }}s Tweets</h1>
+            <h1>{{ profile.first_name|possessive }} Tweets</h1>
             <div class="mod tweets">
                 <div class="bd">
                     {% pull_feed twitter_url %}
@@ -291,7 +291,7 @@
     
     {% if profile.movie %}
         <div class="col size2of3">
-            <h1>{{ profile.first_name }}s video</h1>
+            <h1>{{ profile.first_name|possessive }} video</h1>
             <div class="mod video">
                 <div class="bd">
                     {{ profile.movie|youtube }}
