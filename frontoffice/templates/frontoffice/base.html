@@ -21,7 +21,7 @@
                 {% if user.is_authenticated %}
                     {% trans "You are logged in as" %}
                     {% if user.profile %}
-                        <strong>{{ user.profile.full_name|default:'NN' }}</strong>
+                        <strong><a href="{% url fo.visitor.edit_profile %}">{{ user.profile.full_name|default:'NN' }}</a></strong>
                     {% else %}
                         <strong>{{ user.get_full_name|default:user.username }}</strong>
                     {% endif %}

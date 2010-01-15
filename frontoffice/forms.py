@@ -15,6 +15,23 @@ class RegionChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.council.region
 
+class MobilePhoneField(forms.CharField):
+
+    def clean(self, data):
+        phone = super(MobilePhoneField, self).clean(data)
+        phone = phone.strip()
+        if not phone[:2] == '06':
+            raise forms.ValidationError(_('Mobile phone numbers should start with 06'))
+        if not len(phone) == 10:
+            raise forms.ValidationError(_('Mobile phone numbers should have 10 digits'))
+        if not phone.isdigit():
+            raise forms.ValidationError(_('Mobile phone numbers should only have digits'))
+        return phone
+
+    def __init__(self, *args, **kwargs):
+        super(MobilePhoneField, self).__init__(*args, **kwargs)
+
+
 class PoliticianFilterForm(BetterForm, TemplateForm):
     '''
     PoliticianFilter Form - used in the filtering and searching of candidates.
@@ -49,5 +66,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
 
 
 class VisitorProfileForm(BetterForm, TemplateForm):
-    name            = NameField(label=_('Name'))
+    name        = NameField(label=_('Name'))
+    phone       = MobilePhoneField(label=_('Mobile phone number'))
+    send_text   = forms.BooleanField(label=_('Receive text messages?'), required=False)
     

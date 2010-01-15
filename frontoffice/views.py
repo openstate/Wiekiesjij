@@ -239,10 +239,24 @@ def edit_visitor_profile(request):
     profile = get_object_or_404(VisitorProfile, user=user)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
         form = VisitorProfileForm(request.POST)
+        if form.is_valid():
+            import ipdb; ipdb.set_trace()
+            data = form.clean()
+            profile.first_name = data['name']['first_name']
+            profile.middle_name = data['name']['middle_name']
+            profile.last_name = data['name']['last_name']
+            profile.phone = data['phone']
+            profile.send_text = data['send_text']
+
+            profile.save()
+
     else:
-        initial_dict = {'name': {'first_name': profile.first_name, 'middle_name': profile.middle_name, 'last_name': profile.last_name, }}
+        initial_dict = {
+            'name': {'first_name': profile.first_name, 'middle_name': profile.middle_name, 'last_name': profile.last_name, },
+            'phone': profile.phone,
+            'send_text': profile.send_text,
+            }
         form = VisitorProfileForm(initial=initial_dict)
 
     return render_to_response('frontoffice/visitor_profile.html', {'profile': profile, 'form':form}, context_instance=RequestContext(request))

@@ -205,6 +205,8 @@ class VisitorProfile(Profile):
     """
     type = 'visitor'
     favorites = models.ManyToManyField('PoliticianProfile', verbose_name = _('Favorites'), related_name = 'fans')
+    phone = models.CharField(_('Phone number'), max_length=10, blank=True, null=True)
+    send_text = models.BooleanField(_('Send me a text'), default=True, help_text=_('Disable this if you don\'t want a textmessage'))
     
     def __unicode__(self):
         return self.user.username
