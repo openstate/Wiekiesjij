@@ -119,8 +119,8 @@ class Command(BaseCommand):
             print "Added basic question 5"
         
             q6 = Question.objects.create(
-                title=u'Vanwege de recessie wil ik vooral bezuinigen op:',
-                frontend_title=u'Vanwege de recessie moet mijn ideale kandidaat vooral willen bezuinigen op:',
+                title=u'Vanwege de economische recessie wil ik vooral bezuinigen op:',
+                frontend_title=u'In deze tijden van economische recessie moet mijn ideale kandidaat vooral willen bezuinigen op:',
                 has_no_preference=True,
                 question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
                 theme='q6',
@@ -232,7 +232,7 @@ class Command(BaseCommand):
                question=q7,
                 value=u'Langer dan 10 jaar in de gemeente',
                 frontoffice_value=None,
-                position=4,
+                po  sition=4,
             )
             Answer.objects.create(
                question=q7,
