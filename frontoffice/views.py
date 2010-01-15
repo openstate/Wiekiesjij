@@ -220,7 +220,7 @@ def politician_profile(request, id, tab = "favs"):
     except:
         twitter_url = None
 
-    return render_to_response('frontoffice/profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab}, context_instance=RequestContext(request))
 
 def politician_comments(request, id):
     user = get_object_or_404(User, pk=id)
