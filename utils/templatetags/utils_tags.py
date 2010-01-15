@@ -172,6 +172,8 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
 
 @register.filter
 def age(bday, d=None):
+    if bday is None:
+        return ''
     if d is None:
         d = datetime.date.today()
     return (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))

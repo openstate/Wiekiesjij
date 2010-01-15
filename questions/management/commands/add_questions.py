@@ -319,67 +319,67 @@ class Command(BaseCommand):
                 
                 
             try:
-                q10 = Question.objects.filter(theme='q10')
+                q9 = Question.objects.filter(theme='q9')
             except Question.DoesNotExist:
-                q10 = None
+                q9 = None
 
-            if q10 is None:
-                q10 = Question.objects.create(
+            if q9 is None:
+                q9 = Question.objects.create(
                     title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
                     frontend_title=u'De dagelijkse bezigheid, naast haar functie als raadslid, van mijn ideale kandidaat is:',
                     has_no_preference=True,
                     question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
-                    theme='q10',
+                    theme='q9',
                 )
-                qsq10 = QuestionSetQuestion.objects.create(
-                    question=q10,
+                qsq9 = QuestionSetQuestion.objects.create(
+                    question=q9,
                     questionset=qs1,
                     position=10,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Werkt in loondienst',
                     frontoffice_value=None,
                     position=1,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Is zelfstandig ondernemer',
                     frontoffice_value=None,
                     position=2,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Werkt in de publieke sector',
                     frontoffice_value=None,
                     position=3,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Werkt in het onderwijs',
                     frontoffice_value=None,
                     position=4,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Is vrijwilliger',
                     frontoffice_value=None,
                     position=5,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Is huisvrouw of huisman',
                     frontoffice_value=None,
                     position=6,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Volgt een opleiding',
                     frontoffice_value=None,
                     position=7,
                 )
                 Answer.objects.create(
-                    question=q10,
+                    question=q9,
                     value=u'Geen andere dagelijkse bezigheid',
                     frontoffice_value=None,
                     position=8,
