@@ -236,24 +236,22 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
 
         self.eip_id = kwargs['initial']['id']
 
-
-
-
-
     def clean_list_length(self):
         """
            We have to check if the number is not already exceeded
         """
-        list_length = self.cleaned_data['list_length']
-        largest_position = 0
-        eip = ElectionInstanceParty.objects.get(id=self.eip_id)
-        candidates = eip.candidates.all()
-        for candidate in candidates:
-            if candidate.position > largest_position:
-                largest_position = candidate.position
+        # We can only validate if we have the eip_id
+        if self.eip_id:
+            list_length = self.cleaned_data['list_length']
+            largest_position = 0
+            eip = ElectionInstanceParty.objects.get(id=self.eip_id)
+            candidates = eip.candidates.all()
+            for candidate in candidates:
+                if candidate.position > largest_position:
+                    largest_position = candidate.position
 
-        if largest_position > list_length:
-            raise forms.ValidationError( _('Number needs to be at least %(largest_position)s because there is a candidate in this position already.') % {'largest_position':largest_position, 'list_length': list_length } )
+            if largest_position > list_length:
+                raise forms.ValidationError( _('Number needs to be at least %(largest_position)s because there is a candidate in this position already.') % {'largest_position':largest_position, 'list_length': list_length } )
 
         return self.cleaned_data['list_length']
 

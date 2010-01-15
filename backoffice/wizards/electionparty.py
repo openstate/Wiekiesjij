@@ -210,6 +210,7 @@ class PartyContactWizard(MultiPathFormWizard):
         )
 
         initial = self.eip.party.__dict__
+        initial.update({'id': self.eip.id})
         initial.update({'list_length': self.eip.list_length})
         initial.update({'address': self.eip.party.address})
 
