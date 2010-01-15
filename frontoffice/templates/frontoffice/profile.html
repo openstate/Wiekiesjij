@@ -235,7 +235,7 @@
                             {% get_comment_count for goal as comment_count %}
                             <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
                             {% if user.is_authenticated %}
-                                - <a href="{% url fo.goal goal.id %}">{% trans 'Comment' %}</a><br />
+                                - <a href="{% url fo.goal goal.id %}">{% trans 'Respond' %}</a><br />
                                 {% isprofile 'visitor' %}
                                     <a href="{% url fo.thumbs_up goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-up.png" /></a>
                                     <a href="{% url fo.thumbs_down goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-down.png" /></a>
