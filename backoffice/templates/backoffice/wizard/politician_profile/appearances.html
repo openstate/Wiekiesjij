@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
 {% block group1 %}history{% endblock %}
@@ -47,5 +47,9 @@
 {% endblock content %}
 
 {% block help-message %}
-	<p>{% trans "Bezoekers van de website kunnen een overzicht zien van de evenementen waar u heeft en/of gaat opgetreden" %}</p>
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Bezoekers van de website kunnen een overzicht zien van de evenementen waar u heeft en/of gaat opgetreden.
+        {% endblocktrans %}
+    {% endblockwrap %}
 {% endblock help-message %}

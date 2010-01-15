@@ -31,8 +31,13 @@
 {% endblock step_title %}
 
 {% block help-message %}
-	<p>In dit gedeelte treft u een aantal vragen aan die terug zullen komen in de vragen module van Wiekiesjij zoals die aan de kiezer wordt voorgelegd. Enkele van de 15 vragen worden beantwoord door de infotmatie die u reeds hebt in gevoerd voor uw profiel informatie. De volgende vragen zijn concrete stellingen uit de vragenmodule.</p>
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			In dit gedeelte treft u een aantal vragen aan die terug zullen komen in de vragen module van Wiekiesjij zoals die aan de kiezer wordt voorgelegd. Enkele van de 15 vragen worden beantwoord door de infotmatie die u reeds hebt in gevoerd voor uw profiel informatie. De volgende vragen zijn concrete stellingen uit de vragenmodule.
+        {% endblocktrans %}
+    {% endblockwrap %}
 {% endblock help-message %}
+
 
 {% block buttons %}
 	<div class="form-submit">

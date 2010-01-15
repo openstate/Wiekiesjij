@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
 {% block group1 %}history{% endblock %}
@@ -21,7 +21,6 @@
 {% block content %}
 <div class="mod wizard">
     <h2>{% trans 'Overige links' %}</h2>
-    <p>{% trans "Hier kunt u bijvoorbeeld een link plaatsen naar de partij website, andere interessante politieke weblogs. uw eigen bedrijf of werkgever, het raadsinformatie systeem, een opinieartikel wat u gepubliceerd hebt, of bijvoorbeeld een petitie die u hebt ondertekent." %}</p>
     {% for link in links %}
     <div class="profile-item link">
         
@@ -42,3 +41,12 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Hier kunt u bijvoorbeeld een link plaatsen naar de partij website, andere interessante politieke weblogs. uw eigen bedrijf of werkgever, het raadsinformatie systeem, een opinieartikel wat u gepubliceerd hebt, of bijvoorbeeld een petitie die u hebt ondertekent.
+
+        {% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

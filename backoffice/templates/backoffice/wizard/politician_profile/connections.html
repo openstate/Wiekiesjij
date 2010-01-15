@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
 {% block group1 %}history{% endblock %}
@@ -41,5 +41,9 @@
 {% endblock content %}
 
 {% block help-message %}
-	<p>{% trans "Visitors of the website can see an overview of the connections you enter " %}</p>
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Visitors of the website can see an overview of the connections you enter.
+        {% endblocktrans %}
+    {% endblockwrap %}
 {% endblock help-message %}

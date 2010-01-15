@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
 {% block group1 %}active{% endblock %}
@@ -12,7 +12,7 @@
 {% block content %}
 <div class="mod wizard">
     <h2>{% trans 'Political goals' %}</h2>
-    <p>{% trans "Hier kunt u diverse doelen benoemen waar u zich de komende 4 jaar voor wilt inzetten, Per doel kunt u maximaal 100 tekens gebruiken. Dit is een interactief gedeelte waar u zelf ook kunt reageren." %}</p>
+    
     {% for goal in goals %}
     <div class="profile-item link">
         
@@ -31,3 +31,11 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Hier kunt u diverse doelen benoemen waar u zich de komende 4 jaar voor wilt inzetten, Per doel kunt u maximaal 100 tekens gebruiken. Dit is een interactief gedeelte waar u zelf ook kunt reageren.
+       	{% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

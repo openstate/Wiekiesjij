@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
 {% block group1 %}history{% endblock %}
@@ -14,25 +14,35 @@
 
 {% block content %}
 <div class="mod wizard">
-    <h2>{% trans 'What political experience have you under your belt?' %}</h2>
-    <p>{% trans "Hier kunt u aangeven welke ervaring u opgedaan hebt op politiek vlak, dit kan zijn binnen uw partij, binnen een jongeren organisatie, als volksvertegenwoordiger of bestuurder. Uw ervaring als volksvertegenwoordiger wordt gebruikt voor 1 van de stellingen die wordt voorgelegd aan de kiezers. " %}</p>
-    
-    {% for political_experience in political %}
-    <div class="profile-item pol-exp">
-        <h3>{{ political_experience.position }} ({{ political_experience.type }})</h3>
-        <p class="info">{{ political_experience.startdate|date:'M Y' }} - {{ political_experience.enddate|date:'M Y' }} {% trans "with" %} {{political_experience.organisation }}.</p>
-        <p>{{ political_experience.description }}</p>
-        <ul class="quicklinks">
-        	<li><a href="{% url bo.politician_profile_political_wizard_edit eip_id user_id political_experience.id %}" class="edit">{% trans "Edit" %}</a></li>
-       		<li><a href="{% url bo.politician_profile_political_delete eip_id user_id political_experience.id  %}" class="delete">{% trans "Delete" %}</a></li>
-		</ul>
-	</div>
-    {% empty %}
-        <p class="empty">{%trans 'You have no political experience entered yet' %} </p>
-    {% endfor %}
-    <a href="{% url bo.politician_profile_political_wizard eip_id user_id %}" class="add add-item">{% trans "Add political experience" %}</a>
-    <div class="form-submit">
- 		<a href="{% url bo.politician_profile_work eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
+	<div class="hd">
+    	<h2>{% trans 'What political experience have you under your belt?' %}</h2>
+    </div>
+    <div class="bd">
+        {% for political_experience in political %}
+        <div class="profile-item pol-exp">
+            <h3>{{ political_experience.position }} ({{ political_experience.type }})</h3>
+            <p class="info">{{ political_experience.startdate|date:'M Y' }} - {{ political_experience.enddate|date:'M Y' }} {% trans "with" %} {{political_experience.organisation }}.</p>
+            <p>{{ political_experience.description }}</p>
+            <ul class="quicklinks">
+                <li><a href="{% url bo.politician_profile_political_wizard_edit eip_id user_id political_experience.id %}" class="edit">{% trans "Edit" %}</a></li>
+                <li><a href="{% url bo.politician_profile_political_delete eip_id user_id political_experience.id  %}" class="delete">{% trans "Delete" %}</a></li>
+            </ul>
+        </div>
+        {% empty %}
+            <p class="empty">{%trans 'You have no political experience entered yet' %} </p>
+        {% endfor %}
+        <a href="{% url bo.politician_profile_political_wizard eip_id user_id %}" class="add add-item">{% trans "Add political experience" %}</a>
+        <div class="form-submit">
+            <a href="{% url bo.politician_profile_work eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
+        </div>
    	</div>
 </div>
 {% endblock content %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Hier kunt u aangeven welke ervaring u opgedaan hebt op politiek vlak, dit kan zijn binnen uw partij, binnen een jongeren organisatie, als volksvertegenwoordiger of bestuurder. Uw ervaring als volksvertegenwoordiger wordt gebruikt voor 1 van de stellingen die wordt voorgelegd aan de kiezers.
+        {% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}
