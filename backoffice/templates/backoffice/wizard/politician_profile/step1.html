@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block step_title %}{% trans "Personal information" %}{% endblock step_title %}
 
@@ -12,10 +12,11 @@
 	</div>
 {% endblock buttons %}
 
+
 {% block help-message %}
-<p>
-{% blocktrans %}
-Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat en wellicht toekomstig volksvertegenwoordiger.
-{% endblocktrans %}
-</p>
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+        	Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat en wellicht toekomstig volksvertegenwoordiger.
+		{% endblocktrans %}
+    {% endblockwrap %}
 {% endblock help-message %}

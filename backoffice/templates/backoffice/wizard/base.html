@@ -22,11 +22,14 @@
             {% block step-header %}
         	<div class="hd">
 				<h2>{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}</h2>
+            	{% block outer-help-message %}
+                    {% block help-message %}
+                    {% endblock help-message %}
+               	{% endblock outer-help-message %}
             </div>
             {% endblock step-header %}
             
-            {% block help-message %}
-            {% endblock help-message %}
+            
 
         	<div class="bd">
                 <form method="post" action="" enctype="multipart/form-data">
@@ -48,4 +51,6 @@
         </div>
     {% endblock content %}
    	</div>
+    
+    {% block sidebar %}{% endblock sidebar %}
 {% endblock cols %}

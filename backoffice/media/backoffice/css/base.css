@@ -173,6 +173,9 @@
 	form {
 
 		}
+		.form-help {
+			float:right;
+			}
 		input,
 		textarea,
 		select {
@@ -245,6 +248,11 @@
 			div.error textarea {
 				border-color:#ed2227;
 				background:#fee;
+				}
+			
+			div.help {
+				padding:10px 10px 10px 44px;
+				background:#e0e0e0 url(../img/info.png) 10px 10px no-repeat;
 				}
 		
 		/* 	Multi-fields

@@ -1,6 +1,6 @@
 {% extends 'backoffice/wizard/base.html' %}
 
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block title %}{{ user.get_full_name|default:'NN' }}{% endblock title %}
 {% block page-title %}{{ user.get_full_name|default:'NN' }}{% endblock page-title %}
@@ -63,3 +63,12 @@
 
     </ul>
 {% endblock wizard-steps %}
+
+{% block outer-help-message %}{% endblock outer-help-message %}
+
+{% block sidebar %}
+
+    {% block help-message %}
+    {% endblock help-message %}
+        
+{% endblock sidebar %}

@@ -324,6 +324,17 @@
                                                 text-align: right;
                                                 }
 						
+					.user-info {
+						position:absolute;
+						right:0;
+						top:0;
+						font-size:.9em;
+						color:#aaa;
+						}
+						.user-info a {
+							color:#aaa;
+							}
+						
 					#header ul.tabs {
 						top:52px;
 						height:43px;
@@ -406,15 +417,13 @@
 							overflow:hidden;_zoom:1;
 							}
 					.tabbed {
-						margin-top:60px;
+						margin-top:62px;
 						}	
 						.tabbed .hd {
 							top:-42px;
-							width:100%;
-							border-bottom:4px solid #c2c2c2;
 							}
 						.tabbed .tabs .selected a {
-							background:#c2c2c2;
+							background:#e0e0e0;
 							}
 			.line .line {
 				margin-top:-30px;
@@ -1071,68 +1080,52 @@
 	/* 	Appearances
 		----------------------------------------------------------------------------------------- */
 		
-							.appearances ul.quickList {
-								list-style:none;
-								}
-								
-								.appearances ul.quickList li {
-									margin-bottom:10px;
-									}
-									
-									.appearances ul.quickList li a {
-										cursor:pointer;
-										display:block;
-										overflow:hidden;
-										text-decoration:none;
-										width:100%;
-										}
-										
-										.appearances ul.quickList li a span.date {
-											background:#E0E0E0;
-											border: 2px solid #ffffff;
-											display:block;
-											float:left;
-											height:31px;
-											margin-right:5px;
-											overflow:hidden;
-											padding:5px;
-											text-align:center;
-											width:31px;
-											}
-											
-												.appearances ul.quickList li a span.date span.day {
-													color:#ed2227;
-													font-size:18px;
-													font-weight:bold;
-													line-height:18px;
-													}
-												
-												.appearances ul.quickList li a span.date span.month {
-													font-size:10px;
-													font-weight:bold;
-													line-height:10px;
-													text-transform:uppercase;
-													}
-										
-										.appearances ul.quickList li a:hover span.date {
-											border: 2px solid #BAB9B9;
-											}
-										
-										.appearances ul.quickList li a span.info {
-											display:block;
-											float:left;
-											line-height:20px;
-											width:133px;
-											}
-										
-											.appearances ul.quickList li a span.info b {
-												color:#ed2227;
-												font-size:1em;
-												}
-											
-											.appearances ul.quickList li a:hover span.info b {
-												text-decoration:underline;
-												}
+		.appearances ul {
+			list-style:none;
+			overflow:hidden;_zoom:1;
+			margin-bottom:-10px;
+			}
+			.appearances li {
+				margin-bottom:10px;
+				overflow:hidden;_zoom:1;
+				}
+			.appearances .date {
+				background:#E0E0E0;
+				border: 2px solid #ffffff;
+				display:block;
+				float:left;
+				height:31px;
+				margin-right:5px;
+				overflow:hidden;
+				padding:5px;
+				text-align:center;
+				width:31px;
+				}
+				.appearances .date .day {
+					color:#ed2227;
+					font-size:18px;
+					font-weight:bold;
+					line-height:18px;
+					}
+				.appearances .date .month {
+					font-size:10px;
+					font-weight:bold;
+					line-height:10px;
+					text-transform:uppercase;
+					}
+			.appearances .info {
+				display:block;
+				float:left;
+				line-height:20px;
+				width:133px;
+				}
+				.appearances .info strong {
+					color:#ed2227;
+					font-size:1em;
+					}
+				.appearances .info a {
+					font-size:.8em;
+					}
 	
 	/* 	Goals
 		----------------------------------------------------------------------------------------- */
@@ -1144,26 +1137,44 @@
 								
 								.goals ul.quickList li {
 									color:#ed2227;
-									list-style-type:square;
-									margin:0 0 15px 15px;
+									border-bottom:1px solid #ccc;
+									padding:0 0 10px 0;
+									margin:0 0 10px 0;
 									}
 									
-									.goals ul.quickList li b {
+									.goals ul.quickList li strong {
 										color:#000000;
 										display:block;
 										font-size:1em;
 										}
 										
-									.goals ul.quickList li a {
+									.goals a {
 										color:#ed2227;
 										margin-top:2px;
 										}
+									.goals .score {
+										display:block;
+										line-height:16px;
+										margin:.2em 0;
+										font-weight:bold;
+										}
+										.goals .score .num-votes {
+											font-weight:normal;
+											}
+									.goals .comments {
+										display:block;
+										color:#ccc;
+										}
+										.goals .comments a {
+											color:#999;
+											}
 		
 	/* 	Links
 		----------------------------------------------------------------------------------------- */
 							
 							.links ul.quickList {
 								list-style:none;
+								margin-bottom:-10px;
 								}
 								
 								.links ul.quickList li {

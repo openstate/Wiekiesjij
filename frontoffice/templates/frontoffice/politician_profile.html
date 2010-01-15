@@ -64,7 +64,7 @@
                         <td>{% if profile.smoker %}{% trans 'smoker' %}{% else %}{% trans 'non-smoker' %}{% endif %}</td>
                     </tr>
                     <tr>
-                        <th>{% trans 'Vegitarian' %}</th>
+                        <th>{% trans 'Diet' %}</th>
                         <td>{{ profile.get_diet_display }}</td>
                     </tr>
                     <tr>
@@ -231,17 +231,25 @@
                 <ul class="quickList">
                     {% for goal in profile.goals.all %}
                         <li>
-                            <b>{{ goal.goal }}</b>
+                            <strong>{{ goal.goal }}</strong>
+                            <p class="score" title="{% trans 'When you log in, you can vote too!' %}">
+                            	{% if user.is_authenticated %}
+                                    {#% isprofile 'visitor' %#}
+                                        <a href="{% url fo.thumbs_up goal.id %}" class="thumbsup">{% trans "Good" %}</a>
+                                        <a href="{% url fo.thumbs_down goal.id %}" class="thumbsdown">{% trans "Bad" %}</a>
+                                    {#% endisprofile %#}
+                                {% endif %}
+                                {% trans 'Score' %}: {{ goal.ranking|default:0 }} 
+                                <span class="num-votes">({{ goal.count_rankings|default:0 }} {% trans 'Votes' %})</span>
+                            	
+                            </p>
                             {% get_comment_count for goal as comment_count %}
+                            <span class="comments">
                             <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
                             {% if user.is_authenticated %}
-                                - <a href="{% url fo.goal goal.id %}">{% trans 'Respond' %}</a><br />
-                                {% isprofile 'visitor' %}
-                                    <a href="{% url fo.thumbs_up goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-up.png" /></a>
-                                    <a href="{% url fo.thumbs_down goal.id %}"><img src="{{ STATIC_URL }}frontoffice/img/thumbs-down.png" /></a>
-                                {% endisprofile %}
-                            {% endif %}<br />
-                            {% trans 'Score' %}: {{ goal.ranking|default:0 }} {% trans 'Votes' %}: {{ goal.count_rankings|default:0 }}
+                                - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                            {% endif %}
+                            </span>
                         </li>
                     {% endfor %}
                 </ul>
@@ -260,16 +268,14 @@
                 <ul class="quickList">
                     {% for appearance in profile.appearances.all %}
                         <li>
-                            <a href="{{ appearance.url }}">
-                                <span class="date">
-                                    <span class="day">{{ appearance.datetime|date:"d" }}</span>
-                                    <span class="month">{{ appearance.datetime|date:"M" }}</span>
-                                </span>
-                                <span class="info">
-                                    <b>{{ appearance.name }}</b>
-                                    {{ appearance.description }}
-                                </span>
-                            </a>
+                            <span class="date">
+                                <span class="day">{{ appearance.datetime|date:"d" }}</span>
+                                <span class="month">{{ appearance.datetime|date:"M" }}</span>
+                            </span>
+                            <p class="info">
+                                <strong>{{ appearance.name }}</strong> <a href="{{ appearance.url }}">{% trans "website" %}</a><br />
+                                {{ appearance.description }}
+                            </p>
                         </li>
                     {% endfor %}
                 </ul>
@@ -278,7 +284,7 @@
                 {% endif %}
             </div>
         </div>
-    
+        
         <div class="mod links">
         	<div class="hd">
             	<h2>{% trans 'Links' %}</h2>

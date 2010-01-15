@@ -15,6 +15,7 @@
 <body>
     <div id="container">
         <div id="header">
+
             <a class="branding">WieKiesJij?</a>
             <p class="user-info">
                 {% if user.is_authenticated %}
@@ -29,6 +30,7 @@
                     {% trans "You are not logged in" %}. <a href="{% url fo.login %}">{% trans "Login" %}</a>
                 {% endif %}
             </p>
+
             <ul class="tabs">
             {% block menu %}
                 {% block menu_take_test %}<li class="do-test"><a href="#">{% trans 'Take the test' %}</a></li>{% endblock menu_take_test %}
