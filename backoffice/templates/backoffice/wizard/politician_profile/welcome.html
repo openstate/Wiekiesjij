@@ -13,10 +13,9 @@
         
         <h2>{%trans 'What is WieKiesJij?' %} </h2>
         <p>
-        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam adipiscing, dui sed auctor dapibus, 
-            elit dolor sodales nisi, vel aliquam turpis nisl nec velit. Aenean vulputate euismod viverra. 
-            Suspendisse potenti. Phasellus et dolor neque, et placerat elit. Sed sem massa, fringilla eu 
-            scelerisque quis, ultrices a purus.
+        	{% blocktrans %}
+        		Wiekiesjij is de voorkeurstemhulp van Nederland. Middels het beantwoorden van een vijftiental vragen zullen bezoekers gekoppeld worden aan hun favoriete kandidaten. Middels de informatie die u hier invult zullen wij tevens in staat zijn om de bezoekers de mogelijkheid te bieden om te browsen tussen alle kandidaten, de partijen en is het mogelijk voor hen om de uitgebreide profielen van hun potententiële volksvertegenwoordigers te bekijken.
+        	{% endblocktrans %}
         </p>
         <a href="{% url bo.politician_profile_setup eip_id user_id %}" class="btn next">{% trans "Click here to start the registration wizard" %}</a>
     </div>

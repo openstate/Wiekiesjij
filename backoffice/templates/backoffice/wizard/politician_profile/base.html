@@ -31,17 +31,17 @@
             </ul>
         </li>
         <li class="{% block group3 %}future{% endblock %}">
-        	<span class="title">{% trans "Links <br />&amp; interesses" %}</span>
+        	<span class="title">{% trans "Social <br />&amp; links" %}</span>
             <ul>
             	<li class="{% block step9 %}future{% endblock %}">9</li>
-                <li class="{% block step10 %}future{% endblock %}">10</li>
-                <li class="{% block step11 %}future{% endblock %} last">11</li>
+                {#<li class="{% block step10 %}future{% endblock %}">10</li>#}<!-- {% block step10 %}future{% endblock %} -->
+                <li class="{% block step11 %}future{% endblock %} last">10</li>
             </ul>
         </li>
         <li class="{% block group4 %}future{% endblock %}">
         	<span class="title">Agenda<br />&nbsp;</span>
             <ul>
-                <li class="{% block step12 %}future{% endblock %} last">12</li>
+                <li class="{% block step12 %}future{% endblock %} last">11</li>
             </ul>
         </li>
         {% if questions %}
@@ -50,7 +50,7 @@
             <ul>
             	{% block question-steps %}
             	{% for q in questions %}
-            		<li class="future{% if forloop.last %} last{% endif %}">{{ q|add:13 }}</li>
+            		<li class="future{% if forloop.last %} last{% endif %}">{{ q|add:12 }}</li>
                 {% endfor %}
                 {% endblock question-steps %}
             </ul>

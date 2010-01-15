@@ -43,8 +43,8 @@ class Command(BaseCommand):
             )
             Answer.objects.create(
                 question=q4,
-                value=u'Het controleren of het College van B&W het beleid uitvoert en binnen het budget blijft zoals dat door de gemeenteraad zijn vastgesteld',
-                frontoffice_value=u'Mijn kandidaat controleert of het College van B&W het beleid uitvoert en binnen het budget blijft zoals die door de gemeenteraad zijn vastgesteld',
+                value=u'Ik controleer of het College van B&W het beleid uitvoert zoals dat door de gemeenteraad is vastgesteld',
+                frontoffice_value=u'Mijn kandidaat controleert of het College van B&W het beleid uitvoert zoals die door de gemeenteraad is vastgesteld',
                 position=3,
             )
             print "Added basic question 4"
@@ -230,9 +230,15 @@ class Command(BaseCommand):
             )
             Answer.objects.create(
                question=q7,
+                value=u'Langer dan 10 jaar in de gemeente',
+                frontoffice_value=None,
+                position=4,
+            )
+            Answer.objects.create(
+               question=q7,
                 value=u'Uw hele leven in de gemeente',
                 frontoffice_value=u'zijn/haar hele leven in de gemeente',
-                position=4,
+                position=5,
             )
             print "Added basic question 7"
         else:

@@ -13,7 +13,7 @@ from utils.formutils import TemplateForm
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker, ImageWidget
 from utils.fields import NameField, AddressField, YoutubeURLField, ClearableImageField
 
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, MEDIA, PETS
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, MEDIA, PETS, CHARITIES
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType, PoliticalGoal
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
@@ -45,30 +45,42 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
     num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
     religion        = forms.ChoiceField(label=_('Religion'),choices=RELIGION)
-    religous_group  = forms.CharField(label=_('Geloofsgemeenschap'), max_length=255, required=False)
+    #religous_group  = forms.CharField(label=_('Geloofsgemeenschap'), max_length=255, required=False)
     smoker          = forms.BooleanField(label=_('Do you smoke?'), widget=forms.widgets.RadioSelect(choices=[('true', _('Yes')), ('false', _('No'))]) )
-    diet            = forms.ChoiceField(label=_(u'Wat is uw dieet?'),choices=DIET)
+    diet            = forms.ChoiceField(label=_(u'Are you a vegitarian?'),choices=DIET)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-    fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=NEWSPAPER)
-    transport       = forms.ChoiceField(label=_('... Method of transport?'),help_text=_('What is your regular method of transport?'),choices=TRANSPORT  )
-    charity         = forms.CharField(label=_('... Charity?'),help_text=_('What charity do you care for most?'), max_length=255 )
-    fav_media       = forms.ChoiceField(label=_('... TV channel?'),choices=MEDIA )
-    fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255 )
-    hobby           = forms.CharField(label=_('... Hobby?'),max_length=255 )
-    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255)
-    fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=PETS )
+    EMPTY_OPT = ('', '------')
+    OPT_NEWSPAPERS = NEWSPAPER
+    OPT_NEWSPAPERS.insert(0, EMPTY_OPT)
+    OPT_TRANSPORT = TRANSPORT
+    OPT_TRANSPORT.insert(0, EMPTY_OPT)
+    OPT_CHARITIES = CHARITIES
+    OPT_CHARITIES.insert(0, EMPTY_OPT)
+    OPT_MEDIA = MEDIA
+    OPT_MEDIA.insert(0, EMPTY_OPT)
+    OPT_PETS = PETS
+    OPT_PETS.insert(0, EMPTY_OPT)
+    
+    fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=OPT_NEWSPAPERS, required=False)
+    transport       = forms.ChoiceField(label=_('... Method of transport?'), help_text=_('What is your regular method of transport?'), required=False, choices=OPT_TRANSPORT)
+    charity         = forms.ChoiceField(label=_('... Charity?'),help_text=_('What charity do you care for most?'), required=False, choices=OPT_CHARITIES )
+    fav_media       = forms.ChoiceField(label=_('... TV channel?'),choices=OPT_MEDIA, required=False)
+    fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255, required=False )
+    hobby           = forms.CharField(label=_('... Hobby?'),max_length=255, required=False )
+    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255, required=False)
+    fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=OPT_PETS, required=False)
 
 class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
         Political related forms
     """
-    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False)
-    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget())
-    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to YouTube video'))
+    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False, help_text=_('Hier kunt u een korte toelichting geven over u zelf, waarom u zich kandidaat stelt, en gekozen wilt worden en wat uw plannen zijn.'))
+    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(), help_text=_('Deze foto zal getoond worden op uw profiel en in het kandidaten overzicht bij uw partij. We willen u verzoeken om een staande foto (niet liggend, dus verticaal) te gebruiken. '))
+    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to a personal YouTube video'))
       
 #
 #
@@ -247,7 +259,7 @@ class AppearanceFormNew(BetterForm, TemplateForm):
     '''
     name        = forms.CharField(label=_('Affiliated Organisation Name'))
     location    = forms.CharField(label=_('Location'))
-    url         = forms.URLField(label=_('URL'), required=True)
+    url         = forms.URLField(label=_('URL'), required=False)
     datetime    = forms.DateTimeField(label=_('Date and Time of Appearance'), widget=DateTimePicker(), required=True)
     description = forms.CharField(label=_('Description'), widget=forms.Textarea())
 
@@ -375,7 +387,7 @@ class AppearanceForm(BetterModelForm, TemplateForm):
         self.fields['datetime'].widget = DateTimePicker()
         self.fields['datetime'].hidden_widget = HiddenDateTimePicker()
         self.fields['datetime'].required=True
-        self.fields['url'].required=True
+        self.fields['url'].required=False
 
     class Meta:
         model = Appearance

@@ -115,4 +115,4 @@ class Answer(models.Model):
         return self.frontoffice_value or self.value
 
     def __unicode__(self):
-        return self.question.title + ' - ' + self.value
+        return u'%s - %s' % (self.question.title, self.value)

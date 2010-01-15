@@ -22,7 +22,7 @@
 
 {% block question-steps %}
     {% for q in questions %}
-		<li class="{% ifcompare current_question q %}active{% smaller %}history{% bigger %}future{% endifcompare %}{% if forloop.last %} last{% endif %}">{{ q|add:"13" }}</li>
+		<li class="{% ifcompare current_question q %}active{% smaller %}history{% bigger %}future{% endifcompare %}{% if forloop.last %} last{% endif %}">{{ q|add:"12" }}</li>
     {% endfor %}
 {% endblock question-steps %}
 

@@ -64,7 +64,7 @@
                         <td>{% if profile.smoker %}{% trans 'smoker' %}{% else %}{% trans 'non-smoker' %}{% endif %}</td>
                     </tr>
                     <tr>
-                        <th>{% trans 'Diet' %}</th>
+                        <th>{% trans 'Vegitarian' %}</th>
                         <td>{{ profile.get_diet_display }}</td>
                     </tr>
                     <tr>
@@ -275,26 +275,6 @@
                 </ul>
                 {% else %}
                 <p class="empty">{% trans "No appearances added yet." %}</p>
-                {% endif %}
-            </div>
-        </div>
-    
-        <div class="mod links">
-        	<div class="hd">
-            	<h2>{% trans 'Interests' %}</h2>
-            </div>
-            <div class="bd">
-            	{% if profile.interests.all %}
-                <ul class="quickList">
-                    {% for interest in profile.interests.all %}
-                        <li>
-                            <a href="{{ interest.url }}">{{ interest.organisation }}</a>
-                            <p>{{ interest.description }}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-                {% else %}
-                <p class="empty">{% trans "No interests defined yet" %}.</p>
                 {% endif %}
             </div>
         </div>

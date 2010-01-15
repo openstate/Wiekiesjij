@@ -90,9 +90,8 @@ NEWSPAPER  = [
             ('ANDERS', u'Anders'),
         ]
 DIET  = [
-        ('MEATEATHER', 'Vleeseter'),
-        ('VEGETARIAN', u'Vegetariër'),
-        ('VEGAN', 'Veganist'),
+        ('YES', 'Ja'),
+        ('NEE', 'Nee'),
         ]
 RELIGION = [
         ('NONE', 'Geen'),
@@ -106,7 +105,38 @@ RELIGION = [
         ('ATEIST', u'Atheïsme'),
         ('OTHER', 'Anders'),
         ]
-        
+   
+CHARITIES = [
+        ('AIDS_FONDS','Aids Fonds'),
+        ('AMNESTY_INTERNATIONAL','Amnesty International'),
+        ('ARTSEN_ZONDER_GRENZEN','Artsen zonder Grenzen'),
+        ('ASTMA_FONDS','Astma Fonds'),
+        ('BONT_VOOR_DIEREN','Bont voor Dieren'),
+        ('CLINICLOWNS','CliniClowns'),
+        ('DE_LEPRASTICHTING','De Leprastichting'),
+        ('DIABETES_FONDS','Diabetes Fonds'),
+        ('DIERENBESCHERMING','Dierenbescherming'),
+        ('DOE_EEN_WENS_STICHTING','Doe Een Wens Stichting'),
+        ('FAIRFOOD','Fairfood'),
+        ('GREENPEACE','Greenpeace'),
+        ('HARTSTICHTING','Hartstichting'),
+        ('HET_NEDERLANDSE_RODE_KRUIS','Het Nederlandse Rode Kruis'),
+        ('HUMANITAS','Humanitas'),
+        ('IKV_PAX_CHRISTI','IKV Pax Christi'),
+        ('JANTJE_BETON','Jantje Beton'),
+        ('KRAJICEK_FOUNDATION','Krajicek Foundation'),
+        ('KWF_KANKERBESTRIJDING','KWF Kankerbestrijding'),
+        ('MAX_HAVELAAR','Max Havelaar'),
+        ('NATUURMONUMENTEN','Natuurmonumenten'),
+        ('OXFAM_NOVIB','Oxfam Novib'),
+        ('REUMAFONDS','Reumafonds'),
+        ('SAVE_THE_CHILDREN','Save the Children'),
+        ('STICHTING_AAP','Stichting AAP'),
+        ('STICHTING_DOEN','Stichting Doen (postcode loterij)'),
+        ('STICHTING_WAR_CHILD','Stichting War Child'),
+        ('UNICEF','Unicef'),
+        ('WERELD_NATUUR_FONDS','Wereld Natuur Fonds'),
+        ]     
 MARITAL_STATUS = [
         ('Married','Getrouwd'),
 		('Engaged', 'Verloofd'),
@@ -207,7 +237,7 @@ class PoliticianProfile(Profile):
     diet            = models.CharField(_('Diet'), max_length=25, choices=DIET, blank=True, null=True)
     fav_news        = models.CharField(_('Favourite Newspaper'), max_length=25, choices=NEWSPAPER, blank=True, null=True)
     transport       = models.CharField(_('What is your regular method of transport'), max_length=25, choices=TRANSPORT, blank=True, null=True)
-    charity         = models.CharField(_('What charity do you care for most?'), max_length=255, blank=True, null=True)
+    charity         = models.CharField(_('What charity do you care for most?'), max_length=255, blank=True, null=True, choices=CHARITIES)
     fav_media       = models.CharField(_('What is your favourite media chanel?'), max_length=25, choices=MEDIA, blank=True, null=True)
     fav_sport       = models.CharField(_('What is your favourite sport?'), max_length=255, blank=True, null=True)
     hobby           = models.CharField(_('What is your hobby'), max_length=255, blank=True, null=True)

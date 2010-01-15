@@ -130,6 +130,7 @@ EMAIL_HOST_PASSWORD = '9712hv'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 DEFAULT_FROM_EMAIL = 'info@wiekiesjij.nl'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 #login logout related
 LOGIN_URL = '/backoffice/login/'
