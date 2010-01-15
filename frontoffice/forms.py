@@ -7,6 +7,7 @@ from political_profiles.models import EducationLevel
 
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
+from utils.fields import NameField
 
 from elections.models import ElectionInstance
 
@@ -45,3 +46,8 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     smoker = forms.ChoiceField(label=_('Smoker'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
     diet = forms.ChoiceField(choices=DIET, label=_('Diet'), required=False)
     goals = forms.CharField(label=_('Goals'), required=False)
+
+
+class VisitorProfileForm(BetterForm, TemplateForm):
+    name            = NameField(label=_('Name'))
+    

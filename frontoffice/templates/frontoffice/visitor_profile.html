@@ -1,0 +1,24 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data" action="">
+        {{ form.as_template }}
+        <div class="form-submit">
+            <button class="primary next" type="submit">{% trans "Submit" %}</button>
+        </div>
+    </form>
+
+    <h1>{% trans 'Favorite politicians' %}</h1>
+    <ul>
+        {% for favorite in profile.favorites.all %}
+            <li>
+                {{ favorite.full_name }} ({{ favorite.party }}) - <a href="{% url fo.visitor.remove_fan favorite.user.id %}?redirect={{ request.path }}">{% trans 'Remove' %}</a>
+            </li>
+        {% empty %}
+            <li>
+                {% trans "You don't have any favorite politicians yet" %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

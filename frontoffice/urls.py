@@ -28,6 +28,7 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^election/(?P<id>\d+)/$', 'election', name='fo.election'),
 
     # visitor profile page
+    url(r'^visitor/edit_profile/$', 'edit_visitor_profile', name='fo.visitor.edit_profile'),
     url(r'^visitor/become_fan/(?P<politician_id>\d+)/$', 'fan_add', name='fo.visitor.add_fan'),
     url(r'^visitor/leave_fan/(?P<politician_id>\d+)/$', 'fan_remove', name='fo.visitor.remove_fan'),
 

@@ -7,9 +7,9 @@ from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from frontoffice.forms import PoliticianFilterForm
+from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
-from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking
+from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
@@ -234,6 +234,20 @@ def party_profile(request, eip_id):
     return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))
 
 @visitors_only
+def edit_visitor_profile(request):
+    user = request.user
+    profile = get_object_or_404(VisitorProfile, user=user)
+
+    if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
+        form = VisitorProfileForm(request.POST)
+    else:
+        initial_dict = {'name': {'first_name': profile.first_name, 'middle_name': profile.middle_name, 'last_name': profile.last_name, }}
+        form = VisitorProfileForm(initial=initial_dict)
+
+    return render_to_response('frontoffice/visitor_profile.html', {'profile': profile, 'form':form}, context_instance=RequestContext(request))
+
+@visitors_only
 def fan_add(request, politician_id):
     """ Become a fan of a politician """
     user = get_object_or_404(User, pk = politician_id)
@@ -248,6 +262,9 @@ def fan_remove(request, politician_id):
     user = get_object_or_404(User, pk = politician_id)
     profile = get_object_or_404(PoliticianProfile, user = user)
     request.user.profile.favorites.remove(profile)
+    if request.method == 'GET':
+        if request.GET['redirect']:
+            return redirect(request.GET['redirect'])
     return redirect('fo.politician_profile', id = politician_id)
 
 
