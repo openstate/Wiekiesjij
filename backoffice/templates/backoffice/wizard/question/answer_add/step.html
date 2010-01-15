@@ -30,6 +30,10 @@
     {#<span class="question-num">{% trans "Question" %} {{ current_question|add:"12" }}:</span>#} {{ question_title }}
 {% endblock step_title %}
 
+{% block help-message %}
+	<p>In dit gedeelte treft u een aantal vragen aan die terug zullen komen in de vragen module van Wiekiesjij zoals die aan de kiezer wordt voorgelegd. Enkele van de 15 vragen worden beantwoord door de infotmatie die u reeds hebt in gevoerd voor uw profiel informatie. De volgende vragen zijn concrete stellingen uit de vragenmodule.</p>
+{% endblock help-message %}
+
 {% block buttons %}
 	<div class="form-submit">
 		<button class="primary next" type="submit">{% trans 'Volgende stap' %}</button>

@@ -12,10 +12,13 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         
-        if not QuestionSet.objects.filter(name='BasicSet1'):
+        try:
+            qs1 = QuestionSet.objects.get(name='BasicSet1')
+        except QuestionSetDoesNotExist:
+            qs1 = None
+            
+        if qs1 is None:
             qs1 = QuestionSet.objects.create(name='BasicSet1')
-        
-        
         
             q4 = Question.objects.create(
                 title=u'Als gemeenteraadslid leg ik de meeste nadruk op:',
@@ -232,7 +235,7 @@ class Command(BaseCommand):
                question=q7,
                 value=u'Langer dan 10 jaar in de gemeente',
                 frontoffice_value=None,
-                po  sition=4,
+                position=4,
             )
             Answer.objects.create(
                question=q7,
@@ -241,146 +244,143 @@ class Command(BaseCommand):
                 position=5,
             )
             print "Added basic question 7"
-        else:
-            qs1 = QuestionSet.objects.get(name='BasicSet1')
+        
+        
+        #extra questions
+        qs1 = QuestionSet.objects.get(name='BasicSet1')
+        
+        try:
+            q3 = Question.objects.get(theme='q3')
+        except Question.DoesNotExist:
+            q3 = None
+        
+        if q3 is None:
+            q3 = Question.objects.create(
+                title=u'Ik heb kennis van:',
+                frontend_title=u'Mijn ideale kandidaat heeft kennis van:',
+                has_no_preference=True,
+                question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
+                theme='q3',
+            )
+            qsq3 = QuestionSetQuestion.objects.create(
+                question=q3,
+                questionset=qs1,
+                position=3,
+            )
+            Answer.objects.create(
+               question=q3,
+                value=u'De bestuurlijke organisatie',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Openbare orde & veiligheid',
+                frontoffice_value=None,
+                position=2,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Infrastructuur & vervoer',
+                frontoffice_value=None,
+                position=3,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Ruimtelijke Ordening & wonen',
+                frontoffice_value=None,
+                position=4,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Sociale zaken',
+                frontoffice_value=None,
+                position=5,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Cultuur & recreatie',
+                frontoffice_value=None,
+                position=6,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Onderwijs & welzijn' ,
+                frontoffice_value=None,
+                position=7,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Natuur & milieu',
+                frontoffice_value=None,
+                position=8,
+            )
+            Answer.objects.create(
+                question=q3,
+                value=u'Financiën & economische zaken',
+                frontoffice_value=None,
+                position=9,
+            )
+            print "Added basic question 3"
             
-            try:
-                q3 = Question.objects.filter(theme='q3')
-            except Question.DoesNotExist:
-                q3 = None
-            
-            if q3 is None:
-                q3 = Question.objects.create(
-                    title=u'Ik heb kennis van:',
-                    frontend_title=u'Mijn ideale kandidaat heeft kennis van:',
-                    has_no_preference=True,
-                    question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
-                    theme='q3',
-                )
-                qsq3 = QuestionSetQuestion.objects.create(
-                    question=q3,
-                    questionset=qs1,
-                    position=3,
-                )
-                Answer.objects.create(
-                   question=q3,
-                    value=u'De bestuurlijke organisatie',
-                    frontoffice_value=None,
-                    position=1,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Openbare orde & veiligheid',
-                    frontoffice_value=None,
-                    position=2,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Infrastructuur & vervoer',
-                    frontoffice_value=None,
-                    position=3,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Ruimtelijke Ordening & wonen',
-                    frontoffice_value=None,
-                    position=4,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Sociale zaken',
-                    frontoffice_value=None,
-                    position=5,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Cultuur & recreatie',
-                    frontoffice_value=None,
-                    position=6,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Onderwijs & welzijn' ,
-                    frontoffice_value=None,
-                    position=7,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Natuur & milieu',
-                    frontoffice_value=None,
-                    position=8,
-                )
-                Answer.objects.create(
-                    question=q3,
-                    value=u'Financiën & economische zaken',
-                    frontoffice_value=None,
-                    position=9,
-                )
-                
-                
-            try:
-                q9 = Question.objects.filter(theme='q9')
-            except Question.DoesNotExist:
-                q9 = None
+        try:
+            q9 = Question.objects.get(theme='q9')
+        except Question.DoesNotExist:
+            q9 = None
 
-            if q9 is None:
-                q9 = Question.objects.create(
-                    title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
-                    frontend_title=u'De dagelijkse bezigheid, naast haar functie als raadslid, van mijn ideale kandidaat is:',
-                    has_no_preference=True,
-                    question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
-                    theme='q9',
-                )
-                qsq9 = QuestionSetQuestion.objects.create(
-                    question=q9,
-                    questionset=qs1,
-                    position=10,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Werkt in loondienst',
-                    frontoffice_value=None,
-                    position=1,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Is zelfstandig ondernemer',
-                    frontoffice_value=None,
-                    position=2,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Werkt in de publieke sector',
-                    frontoffice_value=None,
-                    position=3,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Werkt in het onderwijs',
-                    frontoffice_value=None,
-                    position=4,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Is vrijwilliger',
-                    frontoffice_value=None,
-                    position=5,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Is huisvrouw of huisman',
-                    frontoffice_value=None,
-                    position=6,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Volgt een opleiding',
-                    frontoffice_value=None,
-                    position=7,
-                )
-                Answer.objects.create(
-                    question=q9,
-                    value=u'Geen andere dagelijkse bezigheid',
-                    frontoffice_value=None,
-                    position=8,
-                )
+        if q9 is None:
+            q9 = Question.objects.create(
+                title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
+                frontend_title=u'De dagelijkse bezigheid, naast haar functie als raadslid, van mijn ideale kandidaat is:',
+                has_no_preference=True,
+                question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
+                theme='q9',
+            )
+            qsq9 = QuestionSetQuestion.objects.create(
+                question=q9,
+                questionset=qs1,
+                position=10,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Werkzaam in loondienst',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Zelfstandig ondernemer',
+                frontoffice_value=None,
+                position=2,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Werkzaam in de publieke sector',
+                frontoffice_value=None,
+                position=3,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Vrijwilliger',
+                frontoffice_value=None,
+                position=4,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Huisvrouw of huisman',
+                frontoffice_value=None,
+                position=5,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Bezig met een opleiding',
+                frontoffice_value=None,
+                position=6,
+            )
+            Answer.objects.create(
+                question=q9,
+                value=u'Geen andere functie',
+                frontoffice_value=None,
+                position=7,
+            )
+            print "Added basic question 9"
