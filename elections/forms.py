@@ -231,29 +231,6 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     logo = forms.ImageField(_('Logo'), widget=ImageWidget())
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-
-        self.eip_id = kwargs['initial']['id']
-
-    def clean_list_length(self):
-        """
-           We have to check if the number is not already exceeded
-        """
-        # We can only validate if we have the eip_id
-        if self.eip_id:
-            list_length = self.cleaned_data['list_length']
-            largest_position = 0
-            eip = ElectionInstanceParty.objects.get(id=self.eip_id)
-            candidates = eip.candidates.all()
-            for candidate in candidates:
-                if candidate.position > largest_position:
-                    largest_position = candidate.position
-
-            if largest_position > list_length:
-                raise forms.ValidationError( _('Number needs to be at least %(largest_position)s because there is a candidate in this position already.') % {'largest_position':largest_position, 'list_length': list_length } )
-
-        return self.cleaned_data['list_length']
 
 
 

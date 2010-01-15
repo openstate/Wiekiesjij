@@ -9,7 +9,7 @@ urlpatterns = patterns('',
    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'backoffice/logged_out.html'}, name='bo.logout'),
    url(r'^profile/$', 'backoffice.views.view_profile', name='bo.profile'),
    url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
-        'template_name': 'backoffice/forgot_password.html',
+        'template_name': 'backoffice/forgot_password.txt',
         'email_template_name': 'backoffice/email/forgot_password.html',
         }, name='bo.forgot_password'),
   url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {'template_name': 'backoffice/forgot_password_send.html'}, name='bo.password_done'),

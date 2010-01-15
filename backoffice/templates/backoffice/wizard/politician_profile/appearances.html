@@ -22,7 +22,6 @@
 {% block content %}
 <div class="mod wizard">
     <h2>{% trans 'Bij welke evenementen heeft u en/of gaat u opgetreden?' %}</h2>
-    <p>{% trans "Bezoekers van de website kunnen een overzicht zien van de evenementen waar u heeft en/of gaat opgetreden" %}</p>
 
     {% for appearance in appearances %}
     <div class="profile-item appearance">
@@ -46,3 +45,7 @@
 	</div>
 </div>
 {% endblock content %}
+
+{% block help-message %}
+	<p>{% trans "Bezoekers van de website kunnen een overzicht zien van de evenementen waar u heeft en/of gaat opgetreden" %}</p>
+{% endblock help-message %}
