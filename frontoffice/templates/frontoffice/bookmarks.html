@@ -1,32 +1,38 @@
-<ul>
+<ul class="bookmarks">
     <li>
         <!-- NuJij -->
-        <a href="http://nujij.nl/jij.lynkx?t=WieKiesJij&u={{ request.build_absolute_uri|urlencode }}" target="blank">
+        <a class="social nujij" title="Nu Jij" href="http://nujij.nl/jij.lynkx?t=WieKiesJij&u={{ request.build_absolute_uri|urlencode }}" target="blank">
             <img src="http://nujij.nl/nu-jij-icon-16x16.gif" border="0" />
         </a>
     </li>
     <li>
         <!-- Digg -->
-        <a href="http://digg.com/submit?url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij&bodytext=WieKiesJij&topic=politics">
+        <a class="social digg" title="Digg" href="http://digg.com/submit?url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij&bodytext=WieKiesJij&topic=politics">
             Digg
         </a>
     </li>
     <li>
         <!-- eKudos -->
-        <a href="http://www.ekudos.nl/artikel/nieuw?url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij&desc=WieKiesJij">
+        <a class="social ekudos" title="eKudos" href="http://www.ekudos.nl/artikel/nieuw?url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij&desc=WieKiesJij">
             <img src="http://www.ekudos.nl/images/buttons/ekudos9.gif?1251812603" height="16" width="16" />
         </a>
     </li>
     <li>
         <!-- del.icio.us -->
-        <a href="http://delicious.com/save" onclick="window.open('http://delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;">
-            <img src="http://static.delicious.com/img/delicious.gif" height="16" width="16" alt="Delicious" />
+        <a class="social delicious" title="Delicious" href="http://delicious.com/save" onclick="window.open('http://delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;">
+            Delicious
         </a>
     </li>
     <li>
         <!-- Live Favorites -->
-        <a href="https://favorites.live.com/quickadd.aspx?marklet=1&mkt=nl-NL&url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij">
+        <a class="social live" title="Live" href="https://favorites.live.com/quickadd.aspx?marklet=1&mkt=nl-NL&url={{ request.build_absolute_uri|urlencode }}&title=WieKiesJij">
             Live
+        </a>
+    </li>
+    <li>
+        <!-- Twitter -->
+        <a href="#" title="Twitter" class="social twitter">
+            Twitter
         </a>
     </li>
 </ul>

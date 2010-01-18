@@ -51,7 +51,7 @@
 
 <!-- FAVORITE TAB -->
 
-            <div class="bd">
+            <div class="bd favs">
                 <table>                
                     <tr>
                         <th>{% trans 'Religion' %}</th>
@@ -103,27 +103,23 @@
 
 <!-- EDUCATION TAB -->
 
-                <div class="mod edu">
-                    <div class="bd">
-                        {% for education in profile.education.all %}
-                            <h1>{{ education.field }}</h1>
-                            <div>
-                                {{ education.description }}
-                            </div>
-                            <div class="info">
-                                <p>{% trans 'At' %}: {{ education.institute }}</p>
-                                <p>{% trans 'Level' %}: {{ education.level }}</p>
-                                <p>{% trans 'From' %}: {{ education.startdate|date:"F Y" }}</p>
-                                {% if education.enddate %}<p>{% trans 'To' %}: {{ education.enddate|date:"F Y" }}</p>{% endif %}
-                            </div>
-                        {% empty %}
-                            <div>
-                                {% blocktrans with profile.first_name as name %}
-                                    {{ name }}  has not filled in any educations
-                                {% endblocktrans %}
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="bd education">
+                    {% for education in profile.education.all %}
+                    	<div class="item{% if forloop.last %} last-item{% endif %}">
+                            <h2>{{ education.field }} <span class="institute">{% trans 'aan' %} {{ education.institute }}</span></h2>
+                            <span class="smallInfo">
+                            	{% trans 'Level' %}: {{ education.level }} - 
+                                {% trans 'From' %} {{ education.startdate|date:"F Y" }} 
+                                {% if education.enddate %}{% trans 'to' %} {{ education.enddate|date:"F Y" }}{% endif %}</span>
+                            <p>{{ education.description }}</p>
+                       	</div>
+                    {% empty %}
+                        <p class="empty">
+                            {% blocktrans with profile.first_name as name %}
+                                {{ name }}  has not filled in any educations
+                            {% endblocktrans %}
+                        </p>
+                    {% endfor %}
                 </div>
             {% endifequal %}
 
@@ -131,27 +127,24 @@
 
 <!-- WORK TAB -->
 
-                <div class="mod wor">
-                    <div class="bd">
-                        {% for work in profile.work.all %}
-                            <h1>{{ work.position }}</h1>
-                            <div>
-                                {{ work.description }}
-                            </div>
-                            <div class="info">
-                                <p>{% trans 'At' %}: {{ work.company_name }}</p>
-                                <p>{% trans 'Sector' %}: {{ work.sector }}</p>
-                                <p>{% trans 'From' %}: {{ work.startdate|date:"F Y" }}</p>
-                                {% if work.enddate %}<p>{% trans 'To' %}: {{ work.enddate|date:"F Y" }}</p>{% endif %}
-                            </div>
-                        {% empty %}
-                            <div>
-                                {% blocktrans with profile.first_name as name %}
-                                    {{ name }}  has not filled in any work experience
-                                {% endblocktrans %}
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="bd work">
+                    {% for work in profile.work.all %}
+                    	<div class="item{% if forloop.last %} last-item{% endif %}">
+                            <h2>{{ work.position }} <span class="institute">{% trans 'at' %} {{ work.company_name }}</span></h2>
+                            <span class="smallInfo">
+                            	{% trans 'Sector' %}: {{ work.sector }} - 
+                            	{% trans 'From' %} {{ work.startdate|date:"F Y" }} 
+                                {% if work.enddate %}{% trans 'to' %} {{ work.enddate|date:"F Y" }}{% endif %}
+                            </span>
+                            <p>{{ work.description }}</p>
+                       	</div>
+                    {% empty %}
+                        <p class="empty">
+                            {% blocktrans with profile.first_name as name %}
+                                {{ name }}  has not filled in any work experience
+                            {% endblocktrans %}
+                        </p>
+                    {% endfor %}
                 </div>
             {% endifequal %}
 
@@ -159,27 +152,24 @@
 
 <!-- POLITICAL EXPERIENCE TAB -->
 
-                <div class="mod exp">
-                    <div class="bd">
-                        {% for experience in profile.political.all %}
-                            <h1>{{ experience.position }}</h1>
-                            <div>
-                                {{ experience.description }}
-                            </div>
-                            <div class="info">
-                                <p>{% trans 'At' %}: {{ experience.organisation }}</p>
-                                <p>{% trans 'Type' %}: {{ experience.type }}</p>
-                                <p>{% trans 'From' %}: {{ experience.startdate|date:"F Y" }}</p>
-                                {% if experience.enddate %}<p>{% trans 'To' %}: {{ experience.enddate|date:"F Y" }}</p>{% endif %}
-                            </div>
-                        {% empty %}
-                            <div>
-                                {% blocktrans with profile.first_name as name %}
-                                    {{ name }} has not filled in any political experience
-                                {% endblocktrans %}
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="bd experience">
+                    {% for experience in profile.political.all %}
+                    	<div class="item{% if forloop.last %} last-item{% endif %}">
+                            <h2>{{ experience.position }} <span class="institute">{% trans 'at' %} {{ experience.organisation }}</span></h2>
+                            <span class="smallInfo">
+                            	{% trans 'Type' %}: {{ experience.type }} - 
+                                {% trans 'From' %} {{ experience.startdate|date:"F Y" }}
+                                {% if experience.enddate %}{% trans 'to' %} {{ experience.enddate|date:"F Y" }}{% endif %}
+                            </span>
+                            <p>{{ experience.description }}</p>
+                       	</div>
+                    {% empty %}
+                        <p class="empty">
+                            {% blocktrans with profile.first_name as name %}
+                                {{ name }} has not filled in any political experience
+                            {% endblocktrans %}
+                        </p>
+                    {% endfor %}
                 </div>
             {% endifequal %}
 
@@ -230,14 +220,14 @@
             	{% if profile.goals.all %}
                 <ul class="quickList">
                     {% for goal in profile.goals.all %}
-                        <li>
+                        <li{% if forloop.last %} class="last-item"{% endif %}>
                             <strong>{{ goal.goal }}</strong>
-                            <p class="score" title="{% trans 'When you log in, you can vote too!' %}">
+                            <p class="score" title="{% isprofile 'visitor' %}{% trans 'Vote now!' %}{% else %}{% trans 'When you log in, you can vote too!' %}{% endisprofile %}">
                             	{% if user.is_authenticated %}
-                                    {#% isprofile 'visitor' %#}
+                                    {% isprofile 'visitor' %}
                                         <a href="{% url fo.thumbs_up goal.id %}" class="thumbsup">{% trans "Good" %}</a>
                                         <a href="{% url fo.thumbs_down goal.id %}" class="thumbsdown">{% trans "Bad" %}</a>
-                                    {#% endisprofile %#}
+                                    {% endisprofile %}
                                 {% endif %}
                                 {% trans 'Score' %}: {{ goal.ranking|default:0 }} 
                                 <span class="num-votes">({{ goal.count_rankings|default:0 }} {% trans 'Votes' %})</span>

@@ -760,21 +760,7 @@
 												font-weight:bold;
 												}
 										
-										div#content div.quickProfile ul.socialNetwork {
-											list-style:none;
-											}
 										
-										div#content div.quickProfile ul.socialNetwork li {
-											float:left;
-											margin-right:5px;
-											}
-										
-											div#content div.quickProfile ul.socialNetwork li a {
-												display:block;
-												height:26px;
-												overflow:hidden;
-												width:26px;
-												}
 								
 								div#content div.quickProfile .container .popularityMeter {
 									float:left;
@@ -894,113 +880,41 @@
 													margin:0;
 													}
 													
-	/* 	MoreInfo - Education
+	/* 	MoreInfo - tabs
 		----------------------------------------------------------------------------------------- */
 	
-							div#content div.education {
+							.item {
 								border-bottom:1px solid #C2C2C2;
 								margin-bottom:10px;
 								padding-bottom:10px;
 								}
 							
-							div#content div.edu div.last {
+							.last-item {
 								border-bottom:none;
 								margin-bottom:0;
+								padding-bottom:0;
 								}		
 								
-								div#content div.education h2 {
+								.item h2 {
 									color:#ed2227;
 									font-size:14px;
 									font-weight:bold;
+									background:none;
+									padding-left:0;
 									}
 									
-									div#content div.education h2 span.institute {
+									.item h2 span.institute {
 										color:#000000;
 										font-size:13px;
 										}
 											
-								div#content div.education span.smallInfo {
+								.item .smallInfo {
 									color:#777777;
 									display:block;
 									font-size:11px;
 									margin-bottom:5px;
 									}
-								
-								div#content div.education p {
-									width:420px;
-									}
-									
-	/* 	MoreInfo - Work
-		----------------------------------------------------------------------------------------- */
-	
-							div#content div.work {
-								border-bottom:1px solid #C2C2C2;
-								margin-bottom:10px;
-								padding-bottom:10px;
-								}
-							
-							div#content div.wrk div.last {
-								border-bottom:none;
-								margin-bottom:0;
-								}		
-								
-								div#content div.work h2 {
-									color:#ed2227;
-									font-size:14px;
-									font-weight:bold;
-									}
-									
-									div#content div.work h2 span.institute {
-										color:#000000;
-										font-size:13px;
-										}
-											
-								div#content div.work span.smallInfo {
-									color:#777777;
-									display:block;
-									font-size:11px;
-									margin-bottom:5px;
-									}
-								
-								div#content div.work p {
-									width:420px;
-									}
-									
-	/* 	MoreInfo - Political Experience
-		----------------------------------------------------------------------------------------- */
-	
-							div#content div.polExp {
-								border-bottom:1px solid #C2C2C2;
-								margin-bottom:10px;
-								padding-bottom:10px;
-								}
-							
-							div#content div.pol div.last {
-								border-bottom:none;
-								margin-bottom:0;
-								}		
-								
-								div#content div.polExp h2 {
-									color:#ed2227;
-									font-size:14px;
-									font-weight:bold;
-									}
-									
-									div#content div.polExp h2 span.institute {
-										color:#000000;
-										font-size:13px;
-										}
-											
-								div#content div.polExp span.smallInfo {
-									color:#777777;
-									display:block;
-									font-size:11px;
-									margin-bottom:5px;
-									}
-								
-								div#content div.polExp p {
-									width:420px;
-									}
+			
 	
 	/* 	Tweets
 		----------------------------------------------------------------------------------------- */
@@ -1132,7 +1046,6 @@
 		
 							.goals ul.quickList {
 								list-style:none;
-								margin-bottom:-5px;
 								}
 								
 								.goals ul.quickList li {
@@ -1141,6 +1054,11 @@
 									padding:0 0 10px 0;
 									margin:0 0 10px 0;
 									}
+									.goals ul.quickList li.last-item {
+										border:none;
+										margin-bottom:0;
+										padding-bottom:0;
+										}
 									
 									.goals ul.quickList li strong {
 										color:#000000;
@@ -1160,6 +1078,25 @@
 										}
 										.goals .score .num-votes {
 											font-weight:normal;
+											}
+										.goals .score .thumbsup,
+										.goals .score .thumbsdown {
+											display:block;
+											float:left;
+											width:15px;
+											height:15px;
+											margin-right:4px;
+											text-indent:-9999em;
+											}
+										.goals .score .thumbsup {
+											background:url(../img/thumbs-up.png) left bottom no-repeat;
+											}
+										.goals .score .thumbsdown {
+											background:url(../img/thumbs-down.png) left bottom no-repeat;
+											}
+										.goals .score a.thumbsup:hover,
+										.goals .score a.thumbsdown:hover {
+											background-position:left top;
 											}
 									.goals .comments {
 										display:block;
@@ -1200,22 +1137,48 @@
 	
 			#footer {
 				border-top:2px solid #e0e0e0;
-				margin:0 10px 0;
+				margin:0 10px 2em;
 				padding:5px 0;
 				overflow:hidden;
+				position:relative;
 				}
 			
-				#footer ul {
+				#footer .bookmarks {
 					color:#8d8d8d;
 					list-style:none;
 					overflow:hidden;
+					position:absolute;
+					top:5px;
+					right:0;
 					}
 				
-					#footer ul li {
+					#footer .bookmarks li {
 						float:left;
-						margin-right:4px;
 						}
 					
 						#footer ul li a {
 							color:#8d8d8d;
 							}
+				.social {
+					background:url(../img/socialbookmarks.png) 0 0 no-repeat;
+					display:block;
+					height:16px;
+					width:16px;
+					float:left;
+					margin-right:.4em;
+					text-indent:-9999em;
+					}
+					
+				/* USE http://www.addthis.com/bookmark.php + firebug TO DETERMINE BACKGROUND-POSITION */	
+				.nujij	 	{ background-position:0 -2528px; }
+				.digg 		{ background-position:0 -1776px; }
+				.delicious 	{ background-position:0 -144px; }
+				.ekudos 	{ background-position:0 -224px; }
+				.live 		{ background-position:0 -2224px; }
+				.twitter 	{ background-position:0 -2976px; }
+				.hyves	 	{ background-position:0 -1040px; }
+				.myspace	{ background-position:0 -3136px; }
+				
+				.flickr 	{ background:url(../img/flickr.gif) 0 0 no-repeat; }
+
+					
