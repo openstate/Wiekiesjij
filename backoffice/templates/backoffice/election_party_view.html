@@ -1,5 +1,5 @@
 {% extends 'backoffice/base.html' %}
-{% load i18n utils_tags backoffice_tags %}
+{% load i18n utils_tags backoffice_tags thumbnail %}
 
 {% block title %}{{ eip.party.name }} ({{ eip.party.abbreviation }}){% endblock title %}
 {% block page-title %}{{ eip.party.name }}{% if eip.party.abbreviation %} (<abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>){% endif %}{% endblock page-title %}
@@ -41,7 +41,7 @@
             <span class="list"><strong>{{ index }}</strong></span>
             {% if can %}
             
-                {% if can.candidate.profile.picture %}<img src="{{ can.candidate.profile.picture }}" />{% endif %}
+                {% if can.candidate.profile.picture %}<img src="{% thumbnail can.candidate.profile.picture 100x50 %}" />{% endif %}
                 <h3>{{ can.candidate.profile.full_name }}</h3>
                 {% comment %}
                 <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>
