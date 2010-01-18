@@ -146,10 +146,10 @@ class Command(BaseCommand):
                 )
             
                 idx = 1
-                for title in answers:
+                for a_title in answers:
                     Answer.objects.create(
                         question=q,
-                        value=title,
+                        value=a_title,
                         frontoffice_value=None,
                         position=idx,
                     )

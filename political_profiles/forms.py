@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import copy
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -54,15 +55,15 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     PoliticianProfile admin
     '''
     EMPTY_OPT = ('', '------')
-    OPT_NEWSPAPERS = NEWSPAPER
+    OPT_NEWSPAPERS = copy.deepcopy(NEWSPAPER)
     OPT_NEWSPAPERS.insert(0, EMPTY_OPT)
-    OPT_TRANSPORT = TRANSPORT
+    OPT_TRANSPORT = copy.deepcopy(TRANSPORT)
     OPT_TRANSPORT.insert(0, EMPTY_OPT)
-    OPT_CHARITIES = CHARITIES
+    OPT_CHARITIES = copy.deepcopy(CHARITIES)
     OPT_CHARITIES.insert(0, EMPTY_OPT)
-    OPT_MEDIA = MEDIA
+    OPT_MEDIA = copy.deepcopy(MEDIA)
     OPT_MEDIA.insert(0, EMPTY_OPT)
-    OPT_PETS = PETS
+    OPT_PETS = copy.deepcopy(PETS)
     OPT_PETS.insert(0, EMPTY_OPT)
     
     fav_news        = forms.ChoiceField(label=_('... Newspaper?'),choices=OPT_NEWSPAPERS, required=False)
@@ -495,3 +496,16 @@ class CsvConfirmForm(BetterForm, TemplateForm):
     '''
 
     confirm = forms.BooleanField(required = True, help_text=_('I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL.'))
+
+
+class AgreeForm(BetterForm, TemplateForm):
+    """
+        last form for the politician to agree to some things
+    """
+    hns_dev = forms.BooleanField(
+                            label=_('HNS.DEV'), help_text=_('I agree to my information being added to HNS.Dev'),
+                            required=False)
+    science = forms.BooleanField(
+                            label=_('Science'), help_text=_('I agree to my information being used for scientific purposes'),
+                            required=False)
+        

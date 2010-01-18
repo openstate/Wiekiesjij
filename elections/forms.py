@@ -233,7 +233,6 @@ class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
 
 
 
-
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     description = forms.CharField(label=_('Short description'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent.'), required = False)
     history = forms.CharField(label=_('Short history'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. '), required = False)

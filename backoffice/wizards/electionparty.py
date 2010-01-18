@@ -1,3 +1,5 @@
+import copy
+
 from django.db import transaction
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -55,7 +57,8 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                         for key, value in cleaned_data['name'].iteritems():
                             cleaned_data[key] = value
                         del cleaned_data['name']
-                        self.profile_data.update(cleaned_data)            
+                        self.profile_data.update(cleaned_data)  
+
             party = Party.objects.create(
                 region = self.election_instance.council.region,
                 level = self.election_instance.council.level,
@@ -114,7 +117,7 @@ class ElectionPartyEditWizard(MultiPathFormWizard):
         )
       
 
-        initial = eip.party.__dict__
+        initial = copy.deepcopy(eip.party.__dict__)
         initial.update({'list_length': eip.list_length})
         initial.update({'address': eip.party.address})
 
@@ -185,7 +188,7 @@ class PartyContactWizard(MultiPathFormWizard):
         
         if not self.user.profile or self.user.profile.type != 'party_admin':
             raise PermissionDeniedException('Wrong user profile type')
-            
+                        
         workingdays = self.user.profile.workingdays or ''
         self.user_profile_dict = {
             'name': {'first_name': self.user.profile.first_name, 'middle_name': self.user.profile.middle_name, 'last_name': self.user.profile.last_name, },
@@ -209,8 +212,7 @@ class PartyContactWizard(MultiPathFormWizard):
             election_party_description_form=ElectionPartyDescriptionForm
         )
 
-        initial = self.eip.party.__dict__
-        initial.update({'id': self.eip.id})
+        initial = copy.deepcopy(self.eip.party.__dict__)
         initial.update({'list_length': self.eip.list_length})
         initial.update({'address': self.eip.party.address})
 
@@ -252,6 +254,7 @@ class PartyContactWizard(MultiPathFormWizard):
                         self.user_profile_dict = form.cleaned_data
                     else:
                         data.update(form.cleaned_data)
+        
             self.user.profile.first_name = self.user_profile_dict['name']['first_name']
             self.user.profile.middle_name = self.user_profile_dict['name']['middle_name']
             self.user.profile.last_name =  self.user_profile_dict['name']['last_name']

@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 
 from elections.settings import ELECTION_EVENT_ID
@@ -24,7 +25,7 @@ from elections.functions import create_profile, profile_invite_email_templates, 
 from invitations.models import Invitation
 
 from political_profiles import functions
-from political_profiles.forms import CsvUploadForm, CsvConfirmForm
+from political_profiles.forms import CsvUploadForm, CsvConfirmForm, AgreeForm
 
 from utils.exceptions import PermissionDeniedException
 from backoffice.decorators import staff_required, candidate_required, council_admin_required , party_admin_required
@@ -62,7 +63,7 @@ def redirect_view(request):
 
 @party_admin_required
 def party_contact_wizard(request, id, user_id=None):
-    check_permissions(request,id, 'party_admin')
+    check_permissions(request, id, 'party_admin')
     if user_id is None:
         if not (request.user.profile is None or request.user.profile.type != 'party_admin'):
             user_id = request.user.id
@@ -706,10 +707,34 @@ def answer_question_done(request, election_instance_party_id, user_id):
         answer_question thanks page.
     '''
     check_permissions(request, election_instance_party_id, 'candidate')
+    
+    user = get_object_or_404(User, pk=user_id)
+    
+    message = None
+    
+    if request.method == 'POST':
+        form = AgreeForm(data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user.profile.hns_dev = data['hns_dev']
+            user.profile.science = data['science']
+            
+            user.profile.save()
+            
+            message = _('Your preference has been saved')
+    else:
+        initial = {
+            'hns_dev': user.profile.hns_dev,
+            'science': user.profile.science,
+        }
+        form = AgreeForm(initial=initial)
+    
     return render_to_response('backoffice/wizard/question/answer_add/done.html', {
                                 'questions': range(0, get_question_count(election_instance_party_id)),
                                 'eip_id': election_instance_party_id,
                                 'user_id': user_id,
+                                'form': form,
+                                'message': message,
                             },
                             context_instance=RequestContext(request))
 

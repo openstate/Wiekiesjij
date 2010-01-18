@@ -41,11 +41,14 @@ def accept(request, hash):
             user = invitation.user_to   
             user.set_password(form.cleaned_data['password'])
             user.is_active = True
+            if user.profile:
+                user.profile.terms_and_conditions = form.cleaned_data['terms_and_conditions']
+                user.profile.save()
             user.save()
             
             user = authenticate(username=user.username, password=form.cleaned_data['password'])
             login(request, user) #login the user
-            
+                        
             invitation.accepted = True
             invitation.save()
             return redirect(invitation.view)

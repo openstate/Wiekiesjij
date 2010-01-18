@@ -31,8 +31,21 @@
 {% block step_title %}{% trans "Done" %}{% endblock step_title %}
 
 {% block content %}
-	<p>Hartelijk dank voor het invullen van uw profiel! U kunt uw profiel blijven aanpassen tot en met <strong>30 januari</strong> via onderstaande link. Mocht u enige moeilijkheden zijn tegengekomen dan kunt u ons te allen tijde bereiken via onze helpdesk.</p>
-	<p><a href="{% url bo.politician_profile_setup eip_id=eip_id user_id=user_id %}">Klik hier</a></p>
+	
+	{% if message %}
+		<p>Hartelijk dank voor het invullen van uw profiel! U kunt uw profiel blijven aanpassen tot en met <strong>30 januari</strong> via onderstaande link. Mocht u enige moeilijkheden zijn tegengekomen dan kunt u ons te allen tijde bereiken via onze helpdesk.</p>
+		<p><a href="{% url bo.politician_profile_setup eip_id=eip_id user_id=user_id %}">Link om uw gegevens aan te passen</a></p>
+	{% else %}
+	
+	<form action="" method="post" accept-charset="utf-8">
+		{{ form.as_template }}
+
+		<div class="form-submit">
+			<button class="primary next" type="submit">{% trans 'Update' %}</button>
+		</div>
+	</form>
+	{% endif %}
+	
 {% endblock content %}
 
 

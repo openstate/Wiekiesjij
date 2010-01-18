@@ -191,6 +191,8 @@ class Profile(models.Model):
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
     middle_name = models.CharField(_('Middle name'), null=True, blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
+    
+    terms_and_conditions    = models.BooleanField(_('I agree to the terms and conditions'), blank=True, default=False)
 
     class Meta:
         abstract = True
@@ -247,6 +249,9 @@ class PoliticianProfile(Profile):
     fav_pet         = models.CharField(_('What is your favourite pet'), max_length=255, choices=PETS, blank=True, null=True)
     political_experience_days      = models.PositiveIntegerField(_('Days of political experience'), max_length=10, null=True, blank=True, editable=False)
     work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
+    
+    hns_dev                 = models.BooleanField(_('I agree to my information being added to HNS.Dev'), blank=True, default=False)
+    science                 = models.BooleanField(_('I agree to my information being used for scientific purposes'), blank=True, default=False)
 
 
     def profile_incomplete(self):

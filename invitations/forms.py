@@ -16,6 +16,12 @@ class AcceptInvitationForm(BetterForm, TemplateForm):
     password = forms.CharField(label=_('Password'), widget=forms.widgets.PasswordInput(render_value=False))
     password_again = forms.CharField(label=_('Password again'), widget=forms.widgets.PasswordInput(render_value=False))
     
+    terms_and_conditions = forms.BooleanField(
+                            label=_('Terms and conditions'),
+                            help_text=_('I agree to the terms and conditions'), 
+                            required=True, 
+                            error_messages={ 'required': _("You must agree to the terms and conditions")})
+    
     def clean(self):
         password = self.cleaned_data.get('password')
         password_again = self.cleaned_data.get('password_again')
