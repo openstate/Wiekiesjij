@@ -21,7 +21,7 @@ class Command(BaseCommand):
             for qsq in qs.questionsetquestion_set.order_by('position'):
                 
                 #Skip question 6 for den haag
-                if qsq.question.theme == 'q6' and ei.council.region.tolower() == 'den haag':
+                if qsq.question.theme == 'q6' and ei.council.region.lower() == 'den haag':
                     continue
                     
                 if ei.questions.filter(pk=qsq.question.pk).count() != 0:
