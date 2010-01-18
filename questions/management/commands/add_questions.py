@@ -15,7 +15,7 @@ class Command(BaseCommand):
         
         try:
             qs1 = QuestionSet.objects.get(name='BasicSet1')
-        except QuestionSetDoesNotExist:
+        except QuestionSet.DoesNotExist:
             qs1 = None
             
         if qs1 is None:
@@ -262,7 +262,7 @@ class Command(BaseCommand):
                 title=u'Ik heb kennis van:',
                 frontend_title=u'Mijn ideale kandidaat heeft kennis van:',
                 has_no_preference=True,
-                question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
                 theme='q3',
             )
             qsq3 = QuestionSetQuestion.objects.create(
@@ -338,7 +338,7 @@ class Command(BaseCommand):
                 title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
                 frontend_title=u'Mijn ideale kandidaat is, naast raadslid:',
                 has_no_preference=True,
-                question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
                 theme='q9',
             )
             qsq9 = QuestionSetQuestion.objects.create(

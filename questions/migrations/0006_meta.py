@@ -10,12 +10,22 @@ class Migration:
         # Adding field 'Answer.meta'
         db.add_column('questions_answer', 'meta', orm['questions.answer:meta'])
         
+        # Dropping ManyToManyField 'QuestionSet.question'
+        db.delete_table('questions_questionset_question')
+        
     
     
     def backwards(self, orm):
         
         # Deleting field 'Answer.meta'
         db.delete_column('questions_answer', 'meta')
+        
+        # Adding ManyToManyField 'QuestionSet.question'
+        db.create_table('questions_questionset_question', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('questionset', models.ForeignKey(orm.QuestionSet, null=False)),
+            ('question', models.ForeignKey(orm.question, null=False))
+        ))
         
     
     
