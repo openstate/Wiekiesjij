@@ -17,19 +17,22 @@ class Command(BaseCommand):
             return 1
         
         for ei in ElectionInstance.objects.all():
-            if ei.questions.count() == 0:
-                for qsq in qs.questionsetquestion_set.order_by('position'):
+
+            for qsq in qs.questionsetquestion_set.order_by('position'):
+                
+                #Skip question 6 for den haag
+                if qsq.question.theme == 'q6' and ei.council.region.tolower() == 'den haag':
+                    continue
                     
-                    #Skip question 6 for den haag
-                    if qsq.question.theme == 'q6' and ei.council.region.tolower() == 'den haag':
-                        continue
-                    
-                    ElectionInstanceQuestion.objects.create(
-                        election_instance = ei,
-                        position = qsq.position,
-                        question=qsq.question,
-                        locked=True,
-                    )
+                if ei.questions.filter(pk=qsq.question.pk).count() != 0:
+                    continue
+                
+                ElectionInstanceQuestion.objects.create(
+                    election_instance = ei,
+                    position = qsq.position,
+                    question=qsq.question,
+                    locked=True,
+                )
             # Haaren gets some extra questions
             if ei.council.region.lower() == 'haaren':
                 try:
@@ -39,7 +42,10 @@ class Command(BaseCommand):
                     return 1
                     
                     for qsq in qs_haren.questionsetquestion_set.order_by('position'):
-
+                        
+                        if ei.questions.filter(pk=qsq.question.pk).count() != 0:
+                            continue
+                                
                         ElectionInstanceQuestion.objects.create(
                             election_instance = ei,
                             position = qsq.position,
