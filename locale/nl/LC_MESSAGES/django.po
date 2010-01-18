@@ -1583,7 +1583,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"\t\t\tBezoekers van de website kunnen een overzicht zijn van de connecties die u invuld.\n"
+"\t\t\tBezoekers van de website kunnen een overzicht zien van de connecties die u invult.\n"
 "        "
 
 #: backoffice/templates/backoffice/wizard/politician_profile/done.html:24
@@ -1690,7 +1690,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"\t\t\tHier kunt u bijvoorbeeld een link plaatsen naar de partij website, andere interessante politieke weblogs. uw eigen bedrijf of werkgever, het raadsinformatie systeem, een opinieartikel wat u gepubliceerd hebt, of bijvoorbeeld een petitie die u hebt ondertekent.\n"
+"\t\t\tHier kunt u bijvoorbeeld een link plaatsen naar de partij website, andere interessante politieke weblogs, uw eigen bedrijf of werkgever, het raadsinformatie systeem, een opinieartikel wat u gepubliceerd hebt, of bijvoorbeeld een petitie die u hebt ondertekent.\n"
 "\n"
 "  "
 
@@ -1834,7 +1834,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"\t\t\tIn dit gedeelte treft u een aantal vragen aan die terug zullen komen in de vragen module van Wiekiesjij zoals die aan de kiezer wordt voorgelegd. Enkele van de 15 vragen worden beantwoord door de infotmatie die u reeds hebt in gevoerd voor uw profiel informatie. De volgende vragen zijn concrete stellingen uit de vragenmodule.\n"
+"\t\t\tIn dit gedeelte treft u een aantal vragen aan die terug zullen komen in de vragen module van Wiekiesjij zoals die aan de kiezer wordt voorgelegd. Enkele van de 15 vragen worden beantwoord door de informatie die u reeds hebt ingevoerd voor uw profiel informatie. De volgende vragen zijn concrete stellingen uit de vragenmodule.\n"
 "        "
 
 #: backoffice/wizards/electioninstance.py:80

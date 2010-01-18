@@ -59,17 +59,17 @@
 				<ul>
 				{% ifequal invitation.type 'council_admin' %}
 					{% for council in invitation.user_to.councils.all %}
-						<li>{{ council.name }}/li>
+						<li><a href="{% url election_instance_view id=council.election_instances.pk %}">{{ council.name }}</a>/li>
 					{% endfor %}
 				{% endifequal %}
 				{% ifequal invitation.type 'party_admin' %}
 					{% for party in invitation.user_to.parties.all %}
-						<li>{{ party.name }}</li>
+						<li><a href="{% url election_party_view id=party.current_eip.pk %}">{{ party.name }}</a></li>
 					{% endfor %}
 				{% endifequal %}
 				{% ifequal invitation.type 'candidate' %}
 					{% for candidacy in invitation.user_to.elections.all %}
-						<li>{{ candidacy.election_party_instance.party.name }}</li>
+						<li><a href="{% url election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }}</a></li>
 					{% endfor %}
 				{% endifequal %}
 				</ul>

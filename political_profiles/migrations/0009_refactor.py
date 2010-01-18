@@ -8,12 +8,6 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Adding field 'PoliticianProfile.religious_group'
-        db.add_column('political_profiles_politicianprofile', 'religious_group', orm['political_profiles.politicianprofile:religious_group'])
-        
-        # Adding field 'PoliticianProfile.religion'
-        db.add_column('political_profiles_politicianprofile', 'religion', orm['political_profiles.politicianprofile:religion'])
-        
         # Deleting field 'PoliticianProfile.church'
         db.delete_column('political_profiles_politicianprofile', 'church')
         
@@ -39,6 +33,14 @@ class Migration:
         # Changing field 'PoliticianProfile.fav_pet'
         # (to signature: django.db.models.fields.CharField(max_length=255, null=True, blank=True))
         db.alter_column('political_profiles_politicianprofile', 'fav_pet', orm['political_profiles.politicianprofile:fav_pet'])
+        
+        # Adding field 'PoliticianProfile.religious_group'
+        db.add_column('political_profiles_politicianprofile', 'religious_group', orm['political_profiles.politicianprofile:religious_group'])
+        
+        # Adding field 'PoliticianProfile.religion'
+        db.add_column('political_profiles_politicianprofile', 'religion', orm['political_profiles.politicianprofile:religion'])
+        
+        
         
     
     

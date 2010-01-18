@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.template.context import RequestContext
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
 
@@ -107,6 +107,16 @@ def list(request):
     context.update({'invs': invitations})
     return render_to_response('invitations/list.html', context, context_instance=RequestContext(request))
 
+@staff_required
+def send(request, id):
+    invitation = get_object_or_404(Invitation, pk=id)
+    
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+    return render_to_response('invitations/send.html', context, context_instance=RequestContext(request))
+    
 def notexist(request):
     
     return render_to_response('invitations/notexist.html', {}, context_instance=RequestContext(request))

@@ -256,7 +256,16 @@ class Party(models.Model):
             'postalcode': self.address_postalcode,
             'city': self.address_city,
         }
-
+        
+    @property
+    def current_eip(self):
+        if not hasattr(self, '_eip'):
+            result = self.election_instance_parties.filter(election_instance__election_event__pk=settings.ELECTION_EVENT_ID)
+            if result.count():
+                self._eip = result[0]
+            else:
+                return None
+        return self._eip
 
 class Candidacy(models.Model):
     """

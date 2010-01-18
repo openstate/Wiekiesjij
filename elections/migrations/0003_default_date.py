@@ -7,13 +7,12 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Adding field 'ElectionEvent.default_date'
-        db.add_column('elections_electionevent', 'default_date', orm['elections.electionevent:default_date'])
-        
         # Changing field 'ElectionInstance.num_lists'
         # (to signature: django.db.models.fields.PositiveIntegerField())
         db.alter_column('elections_electioninstance', 'num_lists', orm['elections.electioninstance:num_lists'])
         
+        # Adding field 'ElectionEvent.default_date'
+        db.add_column('elections_electionevent', 'default_date', orm['elections.electionevent:default_date'])
     
     
     def backwards(self, orm):
