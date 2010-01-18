@@ -31,7 +31,7 @@ class Command(BaseCommand):
                         locked=True,
                     )
             # Haaren gets some extra questions
-            if ei.council.region.tolower() == 'haaren':
+            if ei.council.region.lower() == 'haaren':
                 try:
                     qs_haren = QuestionSet.objects.get(name='HaarenExtraQuestions')
                 except qs.DoesNotExist:
