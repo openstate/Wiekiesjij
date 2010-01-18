@@ -10,7 +10,7 @@ from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoic
 from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
 from elections.models import Candidacy
-from questions.settings import QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING, QUESTION_TYPE_CHOICES
+from questions.settings import QUESTION_TYPE_CHOICES, QTYPE_NORM_POLMULTICHOICE_VISONECHOICE, QTYPE_NORM_POLONECHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL
 from questions.settings import BACKOFFICE_QUESTION_TYPES
 
 from elections.models import ElectionInstance, ElectionInstanceParty, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
@@ -58,7 +58,7 @@ class AnswerQuestion(MultiPathFormWizard):
                         # I realise that it's kind of stupid loop, 'cause I could use simply filter on the initial list
                         # TODO: rewrite when have time, but it works so as well, although it could be done nicer.
                         # In case of multiple answers we make a list of those.
-                        if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                        if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question.question_type:
                             question_answers.append(answer_id)
                         else:
                             question_answers = answer_id
@@ -100,7 +100,7 @@ class AnswerQuestion(MultiPathFormWizard):
                     answer_value = form.cleaned_data['value']
 
                     # If question type is multiple answers, we need to clean the string list first.
-                    if QUESTION_TYPE_MULTIPLEANSWER == question.question_type:
+                    if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question.question_type:
                         answer_values = []
                         for value in answer_value:
                             if value.isdigit():

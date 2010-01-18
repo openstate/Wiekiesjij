@@ -1,0 +1,51 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block wizard-steps %}
+    <ul id="wizardSteps">
+        <li><a href="#" class="history"><span class="number">1</span>{% trans 'Registration' %}</a></li>
+        <li><a href="#" class="history"><span class="number">2</span>{% trans 'Election' %}</a></li>
+        <li><a href="#" class="active"><span class="number">3</span>{% trans 'Council blaat babbel' %}</a></li>
+        <li class="last"><span class="future"><span class="number">4</span>{% trans 'Chancellery' %}</span></li>
+    </ul>
+{% endblock wizard-steps %}
+
+{% block cols %}
+	<div class="col size1of2">
+	{% block content %}
+        <div class="mod wizard">
+            {% block step-header %}
+        	<div class="hd">
+				<h2>{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}</h2>
+            </div>
+            {% endblock step-header %}
+
+            {% block help-message %}
+            {% endblock help-message %}
+
+        	<div class="bd">
+                <form method="post" action="" enctype="multipart/form-data">
+                    <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+                    {% block forms %}
+                        {% for form in forms.values %}
+                            {{ form.as_template }}
+                        {% endfor %}
+                    {% endblock forms %}
+                    {{ previous_fields|safe }}
+
+                    {% block buttons %}
+                        <div class="form-submit">
+                            <button type="submit" class="next primary">{% trans "Next" %}</button>
+                        </div>
+                    {% endblock buttons %}
+                </form>
+           	</div>
+        </div>
+    {% endblock content %}
+   	</div>
+{% endblock cols %}

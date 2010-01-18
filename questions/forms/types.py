@@ -1,12 +1,13 @@
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from django.contrib.auth.models import User
 from django.forms import widgets
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.formutils import TemplateForm
-
+from questions.exceptions import ModelAnswerFormError 
 class MultipleAnswerForm(BetterForm, TemplateForm):
     answer = forms.MultipleChoiceField(widget=widgets.CheckboxSelectMultiple)
     
@@ -28,6 +29,58 @@ class MultipleAnswerForm(BetterForm, TemplateForm):
         else:
             super(self.__class__, self).__init__(*args, **kwargs)
             self.fields['answer'].choices = choices
+
+
+class GenerateModelChoiceField(forms.ModelChoiceField):
+    def __init__(self, attribute=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.attribute = attribute
+
+    def label_from_instance(self, obj):
+        if self.attribute:
+            return getattr(obj, self.attribute)
+        return obj
+
+
+class GenerateMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, attribute=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.attribute = attribute
+
+    def label_from_instance(self, obj):
+        if self.attribute:
+            return getattr(obj, self.attribute)
+        return obj
+
+class ModelMultiAnswerForm(BetterForm, TemplateForm):
+    value = GenerateMultipleModelChoiceField(queryset=None, widget=widgets.CheckboxSelectMultiple)
+    
+    def __init__(self, queryset=None, attribute=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+
+        try:
+            self.fields['value'].attribute=attribute
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
+
+class ModelAnswerForm(BetterForm, TemplateForm):
+    answer = GenerateModelChoiceField(queryset=None, widget=widgets.RadioSelect)
+
+    def __init__(self, queryset=None, attribute=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+
+        try:
+            self.fields['value'].attribute=attribute
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
 
 class BooleanForm(BetterForm, TemplateForm):
     answer = forms.BooleanField()

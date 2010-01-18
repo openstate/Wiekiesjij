@@ -2,10 +2,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from utils.functions import move_up, move_down
+from django.core import serializers
 
-from questions.settings import QUESTION_TYPE_CHOICES, QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN, QUESTION_TYPE_RATING
-
-
+from questions.settings import QUESTION_TYPE_CHOICES, QTYPE_NORM_POLMULTICHOICE_VISONECHOICE, QTYPE_NORM_POLONECHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_SYSTEM_POLMULTICHOICE_VISONECHOICE
 class Question(models.Model):
     """
         A question, has a simple title and a description
@@ -28,6 +27,12 @@ class Question(models.Model):
         Gets lists of available themes.
         '''
         return cls.objects.distinct().value_list('theme', flat=True).order('theme')
+
+    def get_frontend_title(self):
+        """
+            Return self.frontend_title or self.title if empty
+        """
+        return self.frontend_title or self.title
 
     def __unicode__(self):
         return self.title
@@ -79,11 +84,14 @@ class Answer(models.Model):
         (This is one of the selectable answers, they get created with the question)
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'), related_name='answers',
-                                    limit_choices_to={'question_type__in': (QUESTION_TYPE_MULTIPLECHOICE,
-                                                                            QUESTION_TYPE_MULTIPLEANSWER,
-                                                                            QUESTION_TYPE_BOOLEAN)})
+                                    limit_choices_to={'question_type__in': (QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
+                                                                            QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                                                                            QTYPE_NORM_POLONECHOICE_VISONECHOICE,
+                                                                            QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
+                                                                            QTYPE_NORM_POLBOOL_VISBOOL)})
     value       = models.TextField(_('Value'))
     frontoffice_value = models.TextField(_('Frontoffice value'), blank=True, null=True)
+    meta        = models.CharField(_('Meta'), max_length=255, blank=True, null=True, editable=False)
     
     position    = models.PositiveIntegerField(_('Position'), default=0)
     

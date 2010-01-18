@@ -11,6 +11,7 @@ class Command(BaseCommand):
     help = 'Adds questions'
     
     def handle(self, *args, **options):
+
         
         try:
             qs1 = QuestionSet.objects.get(name='BasicSet1')
@@ -24,7 +25,7 @@ class Command(BaseCommand):
                 title=u'Als gemeenteraadslid leg ik de meeste nadruk op:',
                 frontend_title=u'Mijn ideale kandidaat legt binnen haar functie als gemeenteraadslid de meeste nadruk op:',
                 has_no_preference=True,
-                question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
                 theme='q4',
             )
             qsq4 = QuestionSetQuestion.objects.create(
@@ -57,7 +58,7 @@ class Command(BaseCommand):
                 title=u'Ik zet mij vooral in voor:',
                 frontend_title=u'Mijn ideale kandidaat zet zich vooral in voor:',
                 has_no_preference=False,
-                question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
                 theme='q5',
             )
             qsq5 = QuestionSetQuestion.objects.create(
@@ -122,10 +123,11 @@ class Command(BaseCommand):
             print "Added basic question 5"
         
             q6 = Question.objects.create(
+
                 title=u'Vanwege de economische recessie wil ik vooral bezuinigen op:',
                 frontend_title=u'In deze tijden van economische recessie moet mijn ideale kandidaat vooral willen bezuinigen op:',
                 has_no_preference=True,
-                question_type=settings.QUESTION_TYPE_MULTIPLEANSWER,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
                 theme='q6',
             )
             qsq6 = QuestionSetQuestion.objects.create(
@@ -204,8 +206,8 @@ class Command(BaseCommand):
             q7 = Question.objects.create(
                 title=u'Ik woon:',
                 frontend_title=u'Mijn ideale kandidaat woont:',
-                has_no_preference=False,
-                question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
                 theme='q7',
             )
             qsq8 = QuestionSetQuestion.objects.create(
@@ -244,6 +246,7 @@ class Command(BaseCommand):
                 position=5,
             )
             print "Added basic question 7"
+
         
         
         #extra questions
@@ -328,10 +331,12 @@ class Command(BaseCommand):
         except Question.DoesNotExist:
             q9 = None
 
+
+
         if q9 is None:
             q9 = Question.objects.create(
                 title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
-                frontend_title=u'De dagelijkse bezigheid, naast haar functie als raadslid, van mijn ideale kandidaat is:',
+                frontend_title=u'Mijn ideale kandidaat is, naast raadslid:',
                 has_no_preference=True,
                 question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
                 theme='q9',

@@ -1,0 +1,4 @@
+
+
+class ModelAnswerFormError(Exception):
+    pass

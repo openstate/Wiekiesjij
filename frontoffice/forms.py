@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 from political_profiles.models import EducationLevel
-
+import copy
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
 from utils.fields import NameField
@@ -37,14 +37,15 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     PoliticianFilter Form - used in the filtering and searching of candidates.
     '''
     either = ('---------', _('---------'))
-    GENDERS_A = GENDERS
+    GENDERS_A = copy.deepcopy(GENDERS)
     GENDERS_A.insert(0,('All', _('All')),)
     DIET_A = DIET
     DIET_A.insert(0,either,)
-    RELIGION_A = RELIGION
+    RELIGION_A = copy.deepcopy(RELIGION)
     RELIGION_A.insert(0,either,)
-    MARITAL_STATUS_A =MARITAL_STATUS
+    MARITAL_STATUS_A = copy.deepcopy(MARITAL_STATUS)
     MARITAL_STATUS_A.insert(0,either,)
+
 
     name = forms.CharField(label=_('Name'), required=False)
     election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)

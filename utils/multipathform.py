@@ -146,7 +146,6 @@ class Step(object):
                 'data': data,
                 'files': files,
             })
-
             f = form(**kwargs)
             forms.update({name : f})
 

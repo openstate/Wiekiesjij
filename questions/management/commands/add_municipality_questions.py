@@ -141,7 +141,7 @@ class Command(BaseCommand):
                     title=title,
                     frontend_title=frontend_title,
                     has_no_preference=True,
-                    question_type=settings.QUESTION_TYPE_MULTIPLECHOICE,
+                    question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
                     theme='q8_%s' % name.replace(' ', '_'),
                 )
             

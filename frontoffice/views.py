@@ -13,12 +13,14 @@ from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRank
 from utils.functions import list_unique_order_preserving
 from django.db.models import Q
 import datetime
+
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 
 from frontoffice.decorators import visitors_only
 
 from django.core.paginator import Paginator
-
+from questions.forms.types import ModelAnswerForm
+from frontoffice.wizards.test import BestCandidate
 
 def new_url(path, field, value):
     old_str = field + '='  + str(value)
@@ -28,6 +30,20 @@ def new_url(path, field, value):
 
     return path.replace(old_str, new_str)
 
+def answer_question(request, election_instance_party_id, user_id=None):
+    '''
+        AnswerQuestion - wizard.
+        @param int election_instance_party_id - ElectionInstanceParty id
+        @param int user_id User (Candidate=PoliticalProfile) id
+    '''
+    check_permissions(request, election_instance_party_id, 'candidate')
+    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
+
+def test(request, election_instance_party_id):
+    
+
+
+    return BestCandidate(election_instance_party_id=election_instance_party_id)(request)
 
 def election(request, id=None):
 
@@ -128,9 +144,12 @@ def politician_profile_filter(request):
                 new_path = new_url(path, 'start_age', form.cleaned_data['start_age'])
                 filters.append((_('Youngest'), form.cleaned_data['start_age'], new_path))
 
+
             if form.cleaned_data['end_age'] is not None:
                 date = datetime.date(todate.year - (form.cleaned_data['end_age'] + 1), todate.month, todate.day)
+
                 filtered_politicians = filtered_politicians.filter(dateofbirth__gte=date)
+
                 new_path = new_url(path, 'end_age', form.cleaned_data['end_age'])
                 filters.append((_('Oldest'), form.cleaned_data['end_age'], new_path))
 

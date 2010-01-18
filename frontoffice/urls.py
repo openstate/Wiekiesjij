@@ -34,6 +34,13 @@ urlpatterns += patterns('frontoffice.views',
 
     #goals
     url(r'^goal/(?P<id>\d+)/$', 'goal', name='fo.goal'),
+
+    #url(r'^test/(?P<id>\d+)/$', 'test', name='fo.test'),
+
+    url(r'^test/(?P<election_instance_party_id>\d+)/$', 'test', name='fo.test'),
+
+
     url(r'^goal/(?P<goal_id>\d+)/thumbs_up/$', 'thumbs_up', name='fo.thumbs_up'),
     url(r'^goal/(?P<goal_id>\d+)/thumbs_down/$', 'thumbs_down', name='fo.thumbs_down'),
+
 )
