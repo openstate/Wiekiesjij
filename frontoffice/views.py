@@ -236,6 +236,9 @@ def politician_profile(request, id, tab = "favs"):
         match = regex.match(twitter.url)
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
+
+        # record view
+        user.statistics.update_profile_views(request)
     except:
         twitter_url = None
 
@@ -328,3 +331,12 @@ def thumbs_down(request, goal_id):
 
     return redirect('fo.politician_profile', id = goal.politician.user.id)
 
+
+def home(request):
+    # [FIXME: bug in django 1.1, .only('council__region') produces correct SQL
+    # (checked using django-toolbar), later elinstance.council.region is empty.
+    # It is not empty if whole council object is fetched (unnecesary data)]
+    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).select_related('council').only('id', 'council')
+    
+    rt = [ (el.pk, el.council.region) for el in election_instances ]
+    return render_to_response('frontoffice/home.html', {'elections': rt}, context_instance=RequestContext(request))

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 from django.db import models
 from django.db.models import Sum, Count
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 from functions import cal_work_experience_days, cal_political_experience_days
 from datetime import date
@@ -501,6 +503,82 @@ class GoalRanking(models.Model):
         verbose_name, verbose_name_plural = _('Ranking'), _('Rankings')
         ordering = ('ranking',)
         unique_together = (('goal','user'),)
+
+
+
+class UserStatistics(models.Model):
+    """
+        One-to-One model used to store simple statistics (counters).
+
+        Profile views are accumulated in a simple metric:
+
+                           STAT_PROVIEW_INTERVAL
+            tviews = ------------------------------------- * views
+                     STAT_PROVIEW_INTERVAL + time_elapsed
+
+        Where views is roughly number of views the profile was viewed,
+        STAT_PROVIEW_INTERVAL is the time interval within which a single view
+        lives and the time_elapsed is (now() - last_update_time). The tviews
+        fades out as time_elapsed increases.
+
+        With each view the "views" is updated as:
+
+                          STAT_PROVIEW_INTERVAL
+            views = ------------------------------------- * (views + 1)
+                    STAT_PROVIEW_INTERVAL + time_elapsed
+
+        Settings:
+            STAT_PROVIEW_INTERVAL -- datetime.timedelta defines the time
+                to live for each single view
+
+
+        Note: tviews can never be 0 if views > 0, so rating will fade out slowly,
+        but will never be 0 and will increase fast as profile hits increase.
+    """
+    user            = models.OneToOneField(User, related_name="stats", unique=True, null = True, verbose_name=_('User'))
+
+    # doesn't tell us how many times it was viewed, but tells instead how "hot"
+    # the profile is. cheap and easy.
+    profile_hits    = models.FloatField(_('Roughly number of views'), null = False, blank = False, default = 1)
+    profile_hits_up = models.DateTimeField(_('View stats last update'), null = False, blank = False, default = datetime.datetime.now)
+
+    # cached variables
+    view_interval = settings.STAT_PROVIEW_INTERVAL if getattr(settings, 'STAT_PROVIEW_INTERVAL', None) else datetime.timedelta(days = 30)
+
+
+    def update_profile_views(self, request):
+        """ Updates profile rate """
+        if check_unique_visitor(request, 'update_profile_view_rate'):
+            self.profile_hits = self.get_profile_view_rate(1)
+            self.profile_hits_up = datetime.datetime.now()
+            self.save()
+
+
+    def get_profile_views(self):
+        """ Returns current profile view rate. """
+        winsec = 24*60*60 * view_interval.days + view_interval.seconds
+        dl = (datetime.datetime.now() - self.profile_hits_up)
+        dl = 24*60*60 * dl.days + dl.seconds
+
+        # current rate with time penalty
+        return (winsec / (winsec + dl)) * self.profile_hits
+
+
+
+def user_statistics(u):
+    """ Function creates UserStatistics on-the-fly on first access. """
+    try:
+        return u.stats
+
+    except:
+        UserStatistics(user = u).save()
+        return self.stats
+    
+
+# Lazy create
+User.statistics = property(user_statistics)
+
+
 
 def user_profile(u):
     """

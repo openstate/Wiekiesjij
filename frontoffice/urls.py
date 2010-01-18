@@ -12,6 +12,9 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('frontoffice.views',
+    #home page
+    url(r'^$', 'home', name = 'fo.home'),
+
     #politician profile pages
     url(r'^politician/(?P<id>\d+)/$', 'politician_profile', name='fo.politician_profile'),
     url(r'^politician/(?P<id>\d+)/comments/$', 'politician_comments', name='fo.politician_comments'),
