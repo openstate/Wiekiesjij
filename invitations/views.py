@@ -3,6 +3,7 @@ from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
+from django.utils.translation import ugettext_lazy as _
 
 from backoffice.decorators import staff_required
 from elections.functions import replace_user
