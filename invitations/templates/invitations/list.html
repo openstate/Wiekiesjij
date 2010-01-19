@@ -73,12 +73,12 @@
 				{% endifequal %}
 				{% ifequal invitation.type 'party_admin' %}
 					{% for party in invitation.user_to.parties.all %}
-						<li><a href="{% url bo.election_party_view id=party.current_eip.pk %}">{{ party.name }}</a></li>
+						<li><a href="{% url bo.election_party_view id=party.current_eip.pk %}">{{ party.name }} <br/><em>{{ party.level }} {{ party.region}}</em></a></li>
 					{% endfor %}
 				{% endifequal %}
 				{% ifequal invitation.type 'candidate' %}
 					{% for candidacy in invitation.user_to.elections.all %}
-						<li><a href="{% url bo.election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }}</a></li>
+						<li><a href="{% url bo.election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }} <br/><em>{{ candidacy.election_party_instance.party.level }} {{ candidacy.election_party_instance.party.region}}</em></a></li>
 					{% endfor %}
 				{% endifequal %}
 				</ul>
