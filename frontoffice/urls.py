@@ -3,6 +3,7 @@
 #
 #Copyright 2009 Accepté. All Rights Reserved.
 from django.conf.urls.defaults import patterns, url, include
+from django.conf import settings
 
 urlpatterns = patterns('',
    url(r'^login/$', 'utils.views.login', {'template_name': 'frontoffice/login.html'}, name='fo.login'),
