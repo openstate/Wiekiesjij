@@ -499,7 +499,113 @@
 								line-height:32px;
 								margin-top:0;
 								}
+
+	/* 	Wizard
+		----------------------------------------------------------------------------------------- */
+		
+		ul#wizardSteps {
+			background:#E0E0E0;
+			display:block;
+			margin:-15px -15px 0;
+			padding:5px;
+			overflow:hidden;
+			}
 	
+			ul#wizardSteps li {
+				float:left;
+				margin:0 3px;
+				}
+				
+				ul#wizardSteps li a,
+				ul#wizardSteps li span {
+					background:url(../img/steps.gif) left top no-repeat;
+					color:#7b7b7b;
+					cursor:default;
+					display:block;
+					font-size:11px;
+					height:17px;
+					line-height:17px;
+					text-align:center;
+					text-decoration:none;
+					width:17px;
+					}
+					
+				ul#wizardSteps li.big a,
+				ul#wizardSteps li.big span {
+					background:url(../img/stepsLarge.gif) left top no-repeat;
+					color:#000000;
+					font-size:15px;
+					line-height:15px;
+					width:45px;
+					}
+					
+				ul#wizardSteps li.finished a,
+				ul#wizardSteps li.finished span {
+					color:#000000;
+					}
+					
+				ul#wizardSteps li.current a,
+				ul#wizardSteps li.current span {
+					background:url(../img/stepsCurrent.gif) left top no-repeat;
+					color:#ffffff;
+					}
+					
+		.wizard h2.question {
+			background:#eeeeee;
+			display:block;
+			font-size:26px;
+			line-height:34px;
+			margin:0 -15px;
+			padding:10px 15px;
+			position:relative;
+			width:100%;
+			}
+			
+			.wizard h2.question a.additionPlus {
+				background:#d7d7d7 url(../img/additionPlus.gif) left top no-repeat;
+				bottom:0;
+				color:#9a9a9a;
+				display:block;
+				font-size:12px;
+				font-weight:bold;
+				line-height:16px;
+				position:absolute;
+				padding:0 5px 0 19px;
+				right:0;
+				text-decoration:none;
+				}
+				
+			.wizard h2.question a.additionPlus:hover {
+				background:#d7d7d7 url(../img/additionPlusHover.gif) left top no-repeat;
+				color:#000000;
+				}
+			
+		.wizard .addition {
+			background:#d7d7d7;
+			margin:0 -15px;
+			padding:10px 15px;
+			}
+			
+			.wizard .addition h2 {
+				background:none;
+				color:#ed2227;
+				font-size:12px;
+				font-weight:bold;
+				line-height:18px;
+				padding:0;
+				}
+			
+			.wizard .addition p {
+				line-height:18px;
+				}
+				
+			.wizard form {
+				margin-top:15px;
+			}
+			
+			.wizard div.form-submit button {
+				margin-bottom:0;
+			}
 	
 	/* 	homepage
 		----------------------------------------------------------------------------------------- */
@@ -659,7 +765,7 @@
 					.start-actions .disabled .icon {
 						background-position:left bottom;
 						}
-	
+						
 	/* 	candidate browse
 		----------------------------------------------------------------------------------------- */	
 		
