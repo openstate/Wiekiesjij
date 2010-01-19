@@ -3,7 +3,7 @@ from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from backoffice.decorators import staff_required
 from elections.functions import replace_user
@@ -117,7 +117,7 @@ def send(request, id):
         form = ConfirmationForm(invitation=invitation, data=request.POST)
         if form.is_valid():
             invitation.send()
-            request.user.message_set.create(_('The invitation has been resend'))
+            request.user.message_set.create(message=ugettext('The invitation has been resend'))
             return redirect('invitation.list')
     else:
         form = ConfirmationForm(invitation=invitation)
