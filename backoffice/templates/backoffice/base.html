@@ -4,7 +4,7 @@
 <html lang='en-us' xmlns='http://www.w3.org/1999/xhtml'>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>WieKiesJij? - {% block title %}{% endblock title %}</title>
+	<title>Wiekiesjij? - {% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/libraries.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/grids.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}backoffice/css/jquery-ui-1.7.2.custom.css" />
@@ -27,7 +27,7 @@
 	<div id="container">
         <div id="header">
         
-            <p class="wkj">WieKiesJij ?</p>
+            <p class="wkj">Wiekiesjij?</p>
 			{% if user.is_authenticated %}
 				<p class="user-info">{% trans "You are logged in as" %} 
 					{% if user.profile %}
@@ -47,7 +47,7 @@
             {% block outer-breadcrumbs %}
             <ul class="nav-breadcrumbs">
             	
-                <li>{% trans "WieKiesJij?" %}</li>
+                <li>{% trans "Wiekiesjij?" %}</li>
                 {% block breadcrumbs %}
             	{% endblock breadcrumbs %}
             </ul>

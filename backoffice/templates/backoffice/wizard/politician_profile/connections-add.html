@@ -23,3 +23,11 @@
         <a href="{% url bo.politician_profile_connection eip_id user_id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Hier kunt u de type connectie kiezen en toevoegen aan uw profiel. U moet ervoor zorgen dat u ingelogd bent op uw connectie wanneer u de URL kopieert naar Wiekiesjij. Hierdoor zullen de bezoekers direct naar uw profiel worden gelinkt in plaats van de algemene website van uw connectie. Uiteraard zal de bezoeker zelf niet ingelogd zijn op uw profiel.
+        {% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

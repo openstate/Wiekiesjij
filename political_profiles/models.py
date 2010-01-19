@@ -472,7 +472,7 @@ class PoliticalGoal(models.Model):
     """
         A goal of a politician
     """
-    goal            = models.CharField(_('Goal'), max_length=100, help_text=_('A short statement defining your goal'))
+    goal            = models.CharField(_('Goal'), max_length=100, help_text=_('Vul hier uw doel in.'))
     politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='goals')
     
     class Meta:

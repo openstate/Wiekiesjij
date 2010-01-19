@@ -12,3 +12,11 @@
 		<button class="primary next" type="submit">{% trans 'Volgende stap' %}</button>
 	</div>
 {% endblock buttons %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+        	Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat.
+		{% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

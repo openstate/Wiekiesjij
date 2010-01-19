@@ -27,3 +27,12 @@
         <a href="{% url bo.politician_profile_appearance eip_id user_id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}
+
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+			Hier kunt u de evenementen waar u heeft en/of gaat optreden invullen. Links moet u de organiserende partij invullen, de locatie waar u heeft opgetreden en een eventuele link naar het evenement. Tot slot zouden wij u graag willen vragen om een korte beschrijving van het evenement en wanneer het heeft plaatsgevonden.
+        {% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

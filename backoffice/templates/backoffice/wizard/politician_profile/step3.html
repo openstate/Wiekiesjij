@@ -13,3 +13,17 @@
 		<button class="primary next" type="submit">{% trans 'Volgende stap' %}</button>
 	</div>
 {% endblock buttons %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+        	Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat. Deze ‘luchtige’ informatie helpt om de kiezers, met name de jongeren, te betrekken bij de politiek en de individuele kandidaten.
+		{% endblocktrans %}
+    {% endblockwrap %}
+
+	{% blockwrap template='helptext' %}
+		{% blocktrans %}
+        	Bij deze vragen moet u uw favoriete hobby(‘s), sport(en) en sportclub(s) zelf invullen. U kunt er meerdere invullen en u kunt deze het beste scheiden door het gebruik van een komma. Voorbeeld: Lezen, schrijven, etc. Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat.
+		{% endblocktrans %}
+    {% endblockwrap %}
+{% endblock help-message %}

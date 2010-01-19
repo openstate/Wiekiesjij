@@ -120,6 +120,12 @@ class Command(BaseCommand):
                 frontoffice_value=None,
                 position=8,
             )
+            Answer.objects.create(
+                question=q5,
+                value=u'Jongeren',
+                frontoffice_value=None,
+                position=9,
+            )
             print "Added basic question 5"
         
             q6 = Question.objects.create(

@@ -85,7 +85,7 @@ class AddElectionPartyWizard(MultiPathFormWizard):
                 user_to=profile.user,
                 view=reverse('bo.party_contact_wizard', kwargs={'id': eip.pk}),
                 text='<p>U bent aangekomen op de beheerderpagina van Wiekiesjij. Om Wiekiesjij gereed te maken voor uw partij volgen er nu een aantal schermen waarin u informatie kunt achterlaten. Wanneer deze informatie is ingevuld zullen we overgaan tot het uitnodigen van de kandidaten van uw partij.</p><p>We beginnen met het instellen van een wachtwoord voor Wiekiesjij door op <strong>Accepteer uitnodiging</strong> te klikken. Heeft u al eens eerder gebruik gemaakt van Wiekiesjij, drukt u dan op <strong>Ik heb al een account</strong>.</p><p>Om het gereedmaken van Wiekiesjij zo gemakkelijk mogelijk te laten verlopen hebben we een snelle start [link] handleiding [/link] beschikbaar gesteld die u kunt raadplegen.</p>',
-                subject=ugettext('Invitation WieKiesJij'),
+                subject=ugettext('Invitation Wiekiesjij'),
                 html_template=templates['html'],
                 plain_template=templates['plain'],
                 )

@@ -123,7 +123,7 @@ class AddElectionInstanceWizard(MultiPathFormWizard):
                 user_to=profile.user,
                 view=reverse('bo.election_setup', kwargs={'election_instance_id': ei.pk}),
                 text="<p>U bent aangekomen op de beheerderpagina van Wiekiesjij. Om Wiekiesjij gereed te maken voor uw verkiezingen volgen er nu een aantal schermen waarin u informatie kunt achterlaten. Wanneer deze informatie is ingevuld zullen we overgaan tot het uitnodigen van de partijen die zullen participeren in deze verkiezingen.</p><p>We beginnen met het instellen van een wachtwoord voor Wiekiesjij door op <strong>Accepteer uitnodiging</strong> te klikken. Heeft u al eens eerder gebruik gemaakt van Wiekiesjij, drukt u dan op <strong>Ik heb al een account</strong>.</p><p>Om het gereedmaken van Wiekiesjij zo gemakkelijk mogelijk te laten verlopen hebben we een snelle start [link]handleiding[/link] beschikbaar gesteld die u kunt raadplegen.</p>",
-                subject=ugettext('Invitation WieKiesJij'),
+                subject=ugettext('Invitation Wiekiesjij'),
                 html_template=templates['html'],
                 plain_template=templates['plain'],
                 )
@@ -206,7 +206,7 @@ class ElectionSetupWizard(GraphFormWizard):
     # wizard scenario
     scenario = GStep("chancery_registration", header = _("Welcome Chancellery!"), title = _("Registration")) \
                 .forms(dict( [ ('chancery_registration%d' % idx, cls) for idx, cls in enumerate(get_profile_forms('council_admin', 'edit'))] )) \
-                .field(help = _("This wizard will lead you through the process of setting up WieKiesJij? for your municipality.")) \
+                .field(help = _("This wizard will lead you through the process of setting up Wiekiesjij? for your municipality.")) \
                 .field(next_button = _("Proceed to instance setup")) \
                 \
                 .next('election_details', header = _("Details about this election"), title = _("This Election")) \
@@ -223,7 +223,7 @@ class ElectionSetupWizard(GraphFormWizard):
                 \
                 .next('council_styling_setup', header = _("Setup styling"), title=_("Styling")) \
                 .form('council_styling_setup', CouncilStylingSetupForm) \
-                .field(help = _("On this page you can setup the styling for the WieKiesJij? instance for your council.")) \
+                .field(help = _("On this page you can setup the styling for the Wiekiesjij? instance for your council.")) \
                 .field(next_button = _("Proceed to Party selection")) \
                 \
                 .next('election_select_parties', template = 'backoffice/wizard/election_setup/step7.html') \

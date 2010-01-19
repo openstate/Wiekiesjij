@@ -1,5 +1,5 @@
 {% load i18n %}
 
-Your account at WieKiesJij.nl needs activation:
+Your account at Wiekiesjij.nl needs activation:
 
 http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}

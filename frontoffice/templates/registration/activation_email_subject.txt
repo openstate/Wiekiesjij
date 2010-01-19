@@ -1,1 +1,1 @@
-{% load i18n %}{% trans "Your account on WieKiesJij needs activation." %}
+{% load i18n %}{% trans "Your account on Wiekiesjij needs activation." %}

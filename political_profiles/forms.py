@@ -70,18 +70,19 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     transport       = forms.ChoiceField(label=_('... Method of transport?'), help_text=_('What is your regular method of transport?'), required=False, choices=OPT_TRANSPORT)
     charity         = forms.ChoiceField(label=_('... Charity?'),help_text=_('What charity do you care for most?'), required=False, choices=OPT_CHARITIES )
     fav_media       = forms.ChoiceField(label=_('... TV channel?'),choices=OPT_MEDIA, required=False)
-    fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255, required=False )
-    hobby           = forms.CharField(label=_('... Hobby?'),max_length=255, required=False )
-    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255, required=False)
     fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=OPT_PETS, required=False)
+    hobby           = forms.CharField(label=_('... Hobby?'),max_length=255, required=False )
+    fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255, required=False )
+    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255, required=False)
+    
 
 class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
     """
         Political related forms
     """
-    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False, help_text=_('Hier kunt u een korte toelichting geven over u zelf, waarom u zich kandidaat stelt, en gekozen wilt worden en wat uw plannen zijn.'))
-    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(), help_text=_('Deze foto zal getoond worden op uw profiel en in het kandidaten overzicht bij uw partij. We willen u verzoeken om een staande foto (niet liggend, dus verticaal) te gebruiken. '))
-    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link to a personal YouTube video'))
+    introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False, help_text=_('Hier kunt u een korte toelichting geven over uzelf, waarom u zich kandidaat stelt en wat uw plannen zijn.'))
+    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(), help_text=_('Deze foto zal getoond worden op uw profiel en in het kandidatenoverzicht bij uw partij. Wij willen u verzoeken om een staande foto (verticaal) te gebruiken.'))
+    movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_('Link naar een persoonlijke YouTube video. Deze vindt u rechts in het grijze vlak onder ‘URL’ op de website van YouTube.'))
       
 #
 #

@@ -182,9 +182,4 @@ class Command(BaseCommand):
           )
         print "ConnectionType added with id %d" % ct.pk
 
-        ct =ConnectionType.objects.create(
-            type='Article',
-          )
-        print "ConnectionType added with id %d" % ct.pk
-
 

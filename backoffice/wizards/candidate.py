@@ -733,7 +733,7 @@ class AddCandidateWizard(MultiPathFormWizard):
                 user_to = self.candidate.user,
                 view = reverse('bo.politician_welcome', kwargs={'eip_id': self.eip.id}),
                 text = '<p>Wiekiesjij is de voorkeurstemhulp van Nederland. Middels het beantwoorden een vijftiental vragen zullen bezoekers gekoppeld worden aan hun favoriete kandidaten. Middels de informatie die u hier invult zullen wij daarnaast in staat zijn om de bezoekers de mogelijkheid te bieden om te browsen tussen alle kandidaten, de partijen en is het mogelijk om de uitgebreide profielen van alle politici te bekijken.</p>',
-                subject = ugettext('Invitation WieKiesJij'),
+                subject = ugettext('Invitation Wiekiesjij'),
                 html_template = templates['html'],
                 plain_template = templates['plain'],
             )
