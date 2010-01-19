@@ -329,7 +329,7 @@ def fan_remove(request, politician_id):
     profile = get_object_or_404(PoliticianProfile, user = user)
     request.user.profile.favorites.remove(profile)
     if request.method == 'GET':
-        if request.GET['redirect']:
+        if 'redirect' in request.GET:
             return redirect(request.GET['redirect'])
     return redirect('fo.politician_profile', id = politician_id)
 

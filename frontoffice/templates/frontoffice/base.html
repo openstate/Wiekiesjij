@@ -40,7 +40,6 @@
             {% block menu %}
                 <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="#">{% trans 'Take the test' %}</a></li>
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
-                {# <li class="{% block menu_statistics %}{% endblock %}"><a href="#">{% trans 'Statistics' %}</a></li> #}
                 <li class="{% block menu_organisation %}{% endblock %}"><a href="#">{% trans 'Organisation' %}</a></li>
             {% endblock menu %}
             </ul>
