@@ -1,5 +1,5 @@
 {% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 
 {% block step_title %}{% trans "What is your favorite..." %}{% endblock step_title %}
 
@@ -19,9 +19,8 @@
 		{% blocktrans %}
         	Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat. Deze ‘luchtige’ informatie helpt om de kiezers, met name de jongeren, te betrekken bij de politiek en de individuele kandidaten.
 		{% endblocktrans %}
-    {% endblockwrap %}
-
-	{% blockwrap template='helptext' %}
+    	</div>
+		<div class="mod form-help">
 		{% blocktrans %}
         	Bij deze vragen moet u uw favoriete hobby(‘s), sport(en) en sportclub(s) zelf invullen. U kunt er meerdere invullen en u kunt deze het beste scheiden door het gebruik van een komma. Voorbeeld: Lezen, schrijven, etc. Deze informatie wordt getoond op uw profiel om kiezers een goede indruk te geven van u als kandidaat.
 		{% endblocktrans %}
