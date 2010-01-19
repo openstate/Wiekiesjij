@@ -10,12 +10,16 @@ urlpatterns = patterns('',
    url(r'^account/', include('frontoffice.registration_backend.urls')),
    
 )
+#home page
+if settings.DEBUG:
+    urlpatterns += patterns('frontoffice.view',
+        url(r'^$', 'home', name = 'fo.home'),
+    )
 
 urlpatterns += patterns('frontoffice.views',
     url(r'^redirect/$', 'redirect_view', name='fo.redirect'),
 
-    #home page
-    url(r'^$', 'home', name = 'fo.home'),
+    
 
     #politician profile pages
     url(r'^politician/(?P<id>\d+)/$', 'politician_profile', name='fo.politician_profile'),
