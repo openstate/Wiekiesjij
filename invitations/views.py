@@ -118,7 +118,7 @@ def send(request, id):
         if form.is_valid():
             invitation.send()
             request.user.message_set.create(message=ugettext('The invitation has been resend'))
-            return redirect('invitation.list')
+            return redirect(reverse('invitations.list'))
     else:
         form = ConfirmationForm(invitation=invitation)
         
