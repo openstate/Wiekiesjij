@@ -60,8 +60,11 @@
     <div class="mod tabbed">
     	<div class="hd">
         	<ul class="tabs">
-            	<li class="selected">
+            	<li>
                 	<a href="#">{% trans "Video" %}</a>
+                </li>
+                <li class="selected">
+                	<a href="#">{% trans "Candidates" %}</a>
                 </li>
                 <li>
                 	<a href="#">{% trans "History" %}</a>
@@ -71,9 +74,24 @@
                 </li>
             </ul>
         </div>
-        <div class="bd">
         
+        <!--TAB video
+        <div class="bd">
+        	{#{ profile.movie|youtube }#}
+        </div>-->
+        
+        <!--TAB Candidates-->
+        <!--<div class="bd">
+        	<div class="pol-block-list">
+            
+            </div> 
+        </div>-->
+        
+        <!--TAB History-->
+        <div class="bd">
+        	
         </div>
+        
     </div>
     
 {% endblock content %}
@@ -84,7 +102,31 @@
         	<h2>{% trans "News" %}</h2>
         </div>
         <div class="bd">
-        	
+        	<div class="item">
+            	<h3>News item title</h3>
+                <span class="smallInfo">21 januari 2010 - 12:45</span>
+                <p>
+                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
+                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                </p>
+            </div>
+            <div class="item">
+            	<h3>News item title</h3>
+                <span class="smallInfo">21 januari 2010 - 12:45</span>
+                <p>
+                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
+                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                </p>
+            </div>
+            <div class="item last-item">
+            	<h3>News item title</h3>
+                <span class="smallInfo">21 januari 2010 - 12:45</span>
+                <p>
+                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
+                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                </p>
+            </div>
+            <a href="#" class="btn rss">{% trans "Subscribe" %}</a>
         </div>
     </div>
     <div class="mod send-message">
@@ -92,7 +134,14 @@
         	<h2>{% trans "Send a message" %}</h2>
         </div>
         <div class="bd">
-        	
+        	<p>{% trans "Heb je vragen of opmerkingen?" %}</p>
+        	<p>
+            	{% blocktrans %}
+                    Stuur een email naar <em>[party name] [Council Region]</em>.
+                {% endblocktrans %}
+            </p>
+            <p>{% trans "Klik op de link hieronder om uw standaard email-programma te openen." %}</p>
+        	<a href="#" class="btn email">{% trans "Send an email" %}</a>
         </div>
     </div>
 {% endblock sidebar %}

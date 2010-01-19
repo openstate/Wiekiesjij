@@ -30,6 +30,10 @@
 				margin:0;
 				padding-left:28px;
 				}
+			h3 {
+				font-size:1em;
+				font-weight:bold;
+				}
 			
 			a {
 				color:#000000;
@@ -1477,6 +1481,27 @@
 					font-weight:bold;
 					}
 	
+		.party-news {
+		
+			}
+			.party-news a {
+				color:#ed2227;
+				font-weight:bold;
+				}
+				
+		.sidebar .btn {
+			display:block;
+			background:#e0e0e0;
+			padding:10px;
+			margin:15px 0 0 0;
+			font-size:1.2em;
+			color:#000;
+			font-weight:bold;
+			}
+		.send-message p {
+			margin-bottom:.5em;
+			}
+		
 										
 	/*	Footer
 	**************************************************************************************************************/
