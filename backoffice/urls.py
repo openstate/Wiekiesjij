@@ -6,17 +6,6 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
    url(r'^profile/$', 'backoffice.views.view_profile', name='bo.profile'),
-   url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
-        'template_name': 'backoffice/forgot_password.html',
-        'email_template_name': 'backoffice/email/forgot_password.txt',
-        }, name='bo.forgot_password'),
-  url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {'template_name': 'backoffice/forgot_password_send.html'}, name='bo.password_done'),
-  url(r'^forgot-password/confirm/(?P<uidb36>.+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {
-        'template_name': 'backoffice/forgot_password_confirm.html'
-        }, name='bo.password_confirm'),
-  url(r'^forgot-password/changed/$', 'django.contrib.auth.views.password_reset_complete', {
-        'template_name': 'backoffice/forgot_password_changed.html'
-      }, name='bo.password_changed'),
 )
 
 

@@ -6,14 +6,31 @@ from django.conf.urls.defaults import patterns, url, include
 from django.conf import settings
 
 urlpatterns = patterns('',
-   url(r'^login/$', 'utils.views.login', {'template_name': 'frontoffice/login.html'}, name='fo.login'),
-   url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'frontoffice/logged_out.html'}, name='fo.logout'),
-   url(r'^account/', include('frontoffice.registration_backend.urls')),
+
+    url(r'^login/$', 'utils.views.login', {'template_name': 'frontoffice/login.html'}, name='fo.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'frontoffice/logged_out.html'}, name='fo.logout'),
+    url(r'^account/', include('frontoffice.registration_backend.urls')),
+
+
+    #forgot password
+    url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
+        'template_name': 'frontoffice/forgot_password.html',
+        'email_template_name': 'frontoffice/email/forgot_password.txt',
+    }, name='fo.forgot_password'),
+    url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {
+        'template_name': 'frontoffice/forgot_password_send.html'
+    }, name='fo.password_done'),
+    url(r'^forgot-password/confirm/(?P<uidb36>.+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {
+        'template_name': 'frontoffice/forgot_password_confirm.html'
+    }, name='fo.password_confirm'),
+    url(r'^forgot-password/changed/$', 'django.contrib.auth.views.password_reset_complete', {
+        'template_name': 'frontoffice/forgot_password_changed.html'
+    }, name='fo.password_changed'),
    
 )
 #home page
 if settings.DEBUG:
-    urlpatterns += patterns('frontoffice.view',
+    urlpatterns += patterns('frontoffice.views',
         url(r'^$', 'home', name = 'fo.home'),
     )
 
