@@ -5,8 +5,6 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-   url(r'^login/$', 'utils.views.login', {'template_name': 'backoffice/login.html'}, name='bo.login'),
-   url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'backoffice/logged_out.html'}, name='bo.logout'),
    url(r'^profile/$', 'backoffice.views.view_profile', name='bo.profile'),
    url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
         'template_name': 'backoffice/forgot_password.html',

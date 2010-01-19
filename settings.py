@@ -133,8 +133,8 @@ DEFAULT_FROM_EMAIL = 'info@wiekiesjij.nl'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 #login logout related
-LOGIN_URL = '/backoffice/login/'
-LOGIN_REDIRECT_URL = '/backoffice/redirect/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/redirect/'
 UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 
 ACCOUNT_ACTIVATION_DAYS = 7

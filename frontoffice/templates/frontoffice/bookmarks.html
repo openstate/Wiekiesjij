@@ -1,3 +1,4 @@
+{% load utils_tags %}
 <ul class="bookmarks">
     <li>
         <!-- NuJij -->
@@ -31,7 +32,7 @@
     </li>
     <li>
         <!-- Twitter -->
-        <a href="#" title="Twitter" class="social twitter">
+        <a href="http://twitter.com/home?status=Ik kijk op de site van %23wiekiesjij: Check {{ request.build_absolute_uri|shorten }}" title="Twitter" class="social twitter">
             Twitter
         </a>
     </li>

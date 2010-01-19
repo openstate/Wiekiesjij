@@ -13,7 +13,7 @@
 <div class="col size1of2">
     <div class="mod">
         <h2>{% trans "Login" %}</h2>
-        <form action="{% url bo.login %}" method="post" accept-charset="utf-8">
+        <form action="{% url fo.login %}" method="post" accept-charset="utf-8">
             <input type="hidden" name="next" value="{{ next }}" />
             
             {% if form.non_field_errors %}

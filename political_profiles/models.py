@@ -358,6 +358,12 @@ class ContactProfile(Profile):
     description = models.CharField(_('Description'), max_length=255, null=True, blank=True,
                                    help_text=_("A short description of yourself"))
 
+    def party(self):
+        "Returns the party  of the admin"
+        # Currently there is only one but this needs to be modified at a later
+        # date for when there are past elections and so more partys
+        return user.parties.all()[0].election_instance_parties.all()[0]
+
     def __unicode__(self):
         return self.user.username
 

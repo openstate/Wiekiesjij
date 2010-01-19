@@ -12,6 +12,8 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('frontoffice.views',
+    url(r'^redirect/$', 'redirect_view', name='fo.redirect'),
+
     #home page
     url(r'^$', 'home', name = 'fo.home'),
 
@@ -30,7 +32,7 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^election/$', 'election', name='fo.election'),
     url(r'^election/(?P<id>\d+)/$', 'election', name='fo.election'),
 
-    # visitor profile page
+    #visitor profile page
     url(r'^visitor/edit_profile/$', 'edit_visitor_profile', name='fo.visitor.edit_profile'),
     url(r'^visitor/become_fan/(?P<politician_id>\d+)/$', 'fan_add', name='fo.visitor.add_fan'),
     url(r'^visitor/leave_fan/(?P<politician_id>\d+)/$', 'fan_remove', name='fo.visitor.remove_fan'),
@@ -39,11 +41,10 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^goal/(?P<id>\d+)/$', 'goal', name='fo.goal'),
 
     #url(r'^test/(?P<id>\d+)/$', 'test', name='fo.test'),
-
     url(r'^test/(?P<election_instance_party_id>\d+)/$', 'test', name='fo.test'),
-
-
     url(r'^goal/(?P<goal_id>\d+)/thumbs_up/$', 'thumbs_up', name='fo.thumbs_up'),
     url(r'^goal/(?P<goal_id>\d+)/thumbs_down/$', 'thumbs_down', name='fo.thumbs_down'),
 
+    #generic profile
+    url(r'^dashboard/$', 'dashboard', name='fo.dashboard'),
 )

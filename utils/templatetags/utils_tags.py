@@ -1,4 +1,4 @@
-import re, urllib, os, time, datetime, feedparser
+import re, urllib, os, time, datetime, feedparser, httplib
 from django import template
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -118,6 +118,23 @@ def possessive(name):
         return name+"'"
     else:
         return name+"s"
+
+@register.filter
+@stringfilter
+def shorten(url):
+    """
+        Shortens an URL using http://vl.am
+        Check http://vl.am/apidocs/
+    """
+    if settings.DEBUG:
+        return url
+    conn = httplib.HTTPConnection('vl.am', port=80, timeout=5)
+    conn.request('GET', '/api/shorten/plain/%s' % url)
+    response = conn.getresponse()
+    if response.status == 200 or response.status == 201:
+        return response.read()
+    else:
+        return url
 
 
 @register.inclusion_tag('utils_tags/_tweets.html')

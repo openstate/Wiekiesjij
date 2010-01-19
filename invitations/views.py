@@ -19,7 +19,7 @@ def index(request, hash):
     
     if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
-            return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
+            return redirect('%s?next=%s' % (reverse('fo.login'), invitation.view))
         return redirect(invitation.view)
     
     return render_to_response('invitations/index.html', {'invitation': invitation}, context_instance=RequestContext(request))
@@ -33,7 +33,7 @@ def accept(request, hash):
         
     if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
-            return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
+            return redirect('%s?next=%s' % (reverse('fo.login'), invitation.view))
         return redirect(invitation.view)
         
     if request.method == 'POST':
@@ -67,7 +67,7 @@ def existing(request, hash):
         
     if invitation.accepted or invitation.user_to.is_active:
         if not request.user.is_authenticated():
-            return redirect('%s?next=%s' % (reverse('bo.login'), invitation.view))
+            return redirect('%s?next=%s' % (reverse('fo.login'), invitation.view))
         return redirect(invitation.view)
         
     if request.method == 'POST':

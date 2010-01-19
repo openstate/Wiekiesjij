@@ -1,5 +1,6 @@
 
 import re
+from django.http import Http404
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -21,6 +22,16 @@ from frontoffice.decorators import visitors_only
 from django.core.paginator import Paginator
 from questions.forms.types import ModelAnswerForm
 from frontoffice.wizards.test import BestCandidate
+
+def redirect_view(request):
+    if not request.user.is_authenticated():
+        return redirect('fo.dashboard') #for testing, make take_test
+    elif not request.user.profile and request.user.is_staff:
+        return redirect('bo.redirect')
+    elif request.user.profile.type == 'visitor':
+        return redirect('fo.dashboard') #for testing, make take_test
+    else:
+        return redirect('bo.redirect')
 
 def new_url(path, field, value):
     old_str = field + '='  + str(value)
@@ -242,7 +253,7 @@ def politician_profile(request, id, tab = "favs"):
     except:
         twitter_url = None
 
-    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'test_url': 'http://www.google.com/ig?refresh=1'}, context_instance=RequestContext(request))
 
 def politician_comments(request, id):
     user = get_object_or_404(User, pk=id)
@@ -255,6 +266,26 @@ def party_profile(request, eip_id):
     
     return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))
 
+def dashboard(request):
+    """
+        Render a generic page for any kind of user, from where the user can do whatever they have rights for.
+    """
+    user = request.user
+    try:
+        profile = user.profile #Every logged in user has a profile, right?
+    except AttributeError:
+        return redirect('fo.login')
+    return render_to_response('frontoffice/dashboard.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))
+
+#def edit_profile(request):
+#    user = request.user
+#    try:
+#        profile = user.profile #Every logged in user has a profile, right?
+#    except AttributeError:
+#        raise Http404
+#
+#    return redirect('fo.'+profile.type+'.edit_profile')
+
 @visitors_only
 def edit_visitor_profile(request):
     user = request.user
@@ -263,7 +294,6 @@ def edit_visitor_profile(request):
     if request.method == 'POST':
         form = VisitorProfileForm(request.POST)
         if form.is_valid():
-            import ipdb; ipdb.set_trace()
             data = form.clean()
             profile.first_name = data['name']['first_name']
             profile.middle_name = data['name']['middle_name']

@@ -42,7 +42,7 @@ from questions.functions import get_question_count
 
 def permission_denied(request):
     if not request.user.is_authenticated():
-        return redirect('bo.login')
+        return redirect('fo.login')
     return render_to_response('backoffice/permission_denied.html', {'next': request.GET.get('next', None)}, context_instance=RequestContext(request))
     
 @login_required
