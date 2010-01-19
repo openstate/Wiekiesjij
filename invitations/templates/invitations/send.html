@@ -1,0 +1,39 @@
+{% extends 'invitations/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="mod">
+	<div class="bd">
+		<p>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}<br/><strong>{{ invitation.user_to.email }}</strong></p>
+		<p><strong>{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}
+		{% ifequal invitation.type 'party_admin' %}Partie contact{% endifequal %}
+		{% ifequal invitation.type 'candidate' %}Politicus{% endifequal %}</strong></p>
+		<ul>
+		{% ifequal invitation.type 'council_admin' %}
+			{% for council in invitation.user_to.councils.all %}
+				<li><a href="{% url bo.election_instance_view council.election_instance.pk %}">{{ council.name }}</a></li>
+			{% endfor %}
+		{% endifequal %}
+		{% ifequal invitation.type 'party_admin' %}
+			{% for party in invitation.user_to.parties.all %}
+				<li><a href="{% url bo.election_party_view id=party.current_eip.pk %}">{{ party.name }}</a></li>
+			{% endfor %}
+		{% endifequal %}
+		{% ifequal invitation.type 'candidate' %}
+			{% for candidacy in invitation.user_to.elections.all %}
+				<li><a href="{% url bo.election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }}</a></li>
+			{% endfor %}
+		{% endifequal %}
+		</ul>
+		<p>Verstuurd op: {{ invitation.send_on|default:"Nog niet" }}</p>
+		<p>Geaccepteerd: {% if invitation.accepted %}Ja{% else %}Nee{% endif %}</p>
+	</div>
+	<div class="bd">
+        <form method="post" action="" enctype="multipart/form-data">
+			{{ form.as_template }}
+             <div class="form-submit">
+                 <button type="submit" class="next primary">{% trans "Submit" %}</button>
+             </div>
+        </form>
+   	</div>
+</div> 
+{% endblock content %}

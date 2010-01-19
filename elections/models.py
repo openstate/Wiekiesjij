@@ -50,6 +50,15 @@ class Council(models.Model):
 
     def profile_incomplete(self):
         return not self.seats or not self.history
+        
+    @property
+    def election_instance(self):
+        if not hasattr(self, '_election_instance'):
+            result = self.election_instances.filter(election_event__pk=settings.ELECTION_EVENT_ID)
+            if result.count() == 0:
+                return None
+            self._election_instance = result[0]
+        return self._election_instance
 
 class ElectionEvent(models.Model):
     """

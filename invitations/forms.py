@@ -3,10 +3,10 @@ from django.forms.util import ErrorList
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 
-
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
 
+from invitations.models import Invitation
 
 class AcceptInvitationForm(BetterForm, TemplateForm):
     """
@@ -67,3 +67,28 @@ class ExistingUserForm(BetterForm, TemplateForm):
                 self.user = None
                 
         return self.cleaned_data
+        
+class ConfirmationForm(BetterForm, TemplateForm):
+    """
+        Form to confirm sending an invitation again
+    """
+    
+    
+    confirm = forms.CharField(label=_('Confirmation'), required=True, help_text=_('Type the users email address to confirm sending the invitation.'))
+    
+    def __init__(self, invitation, *args, **kwargs):
+        if not isinstance(invitation, Invitation):
+            raise ValueError('The first argument for this form should be an invitation')
+            
+        self.invitation = invitation
+        super(ConfirmationForm, self).__init__(*args, **kwargs)
+        
+    def clean(self):
+        confirm = self.cleaned_data.get('confirm', None)
+        
+        if confirm:
+            if confirm.lower() != self.invitation.user_to.email.lower():
+                self._errors['confirm'] = ErrorList([_('Email addresses did not match')])
+                del self.cleaned_data['confirm']
+            return self.cleaned_data['confirm']
+        return None

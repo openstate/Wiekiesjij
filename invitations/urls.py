@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'notexist/$', 'invitations.views.notexist', name='invitations.notexist'),
     
     url(r'list/$', 'invitations.views.list', name='invitations.list'),
+    url(r'send/(?P<id>\d+)/$', 'invitations.views.send', name='invitations.send'),
 )

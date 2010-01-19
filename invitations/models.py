@@ -1,3 +1,4 @@
+import datetime
 from random import seed, choice
 import string
 
@@ -41,6 +42,8 @@ class Invitation(models.Model):
             {'invitation': self},
             {'html': self.html_template, 'plain': self.plain_template}
         )
+        self.send_on = datetime.datetime.now()
+        self.save()
         
     @classmethod
     def generate_hash(cls):

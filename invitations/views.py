@@ -7,7 +7,7 @@ from django.utils.encoding import smart_str
 from backoffice.decorators import staff_required
 from elections.functions import replace_user
 from invitations.models import Invitation
-from invitations.forms import AcceptInvitationForm, ExistingUserForm
+from invitations.forms import AcceptInvitationForm, ExistingUserForm, ConfirmationForm
 
 
 def index(request, hash):
@@ -111,10 +111,17 @@ def list(request):
 def send(request, id):
     invitation = get_object_or_404(Invitation, pk=id)
     
+    context = {'invitation': invitation}
     if request.method == 'POST':
-        pass
+        form = ConfirmationForm(invitation=invitation, data=request.POST)
+        if form.is_valid():
+            invitation.send()
+            request.user.message_set.create(_('The invitation has been resend'))
+            return redirect('invitation.list')
     else:
-        pass
+        form = ConfirmationForm(invitation=invitation)
+        
+    context.update({'form': form})
     return render_to_response('invitations/send.html', context, context_instance=RequestContext(request))
     
 def notexist(request):
