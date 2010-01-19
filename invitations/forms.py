@@ -18,7 +18,7 @@ class AcceptInvitationForm(BetterForm, TemplateForm):
     
     terms_and_conditions = forms.BooleanField(
                             label=_('Terms and conditions'),
-                            help_text=_('I agree to the terms and conditions'), 
+                            help_text=_('Bij deze gaat u akkoord met onze <a href="%(url)s">Algemene Voorwaarden</a>') % '/algemene-voorwaarden/', 
                             required=True, 
                             error_messages={ 'required': _("You must agree to the terms and conditions")})
     

@@ -503,9 +503,9 @@ class AgreeForm(BetterForm, TemplateForm):
         last form for the politician to agree to some things
     """
     hns_dev = forms.BooleanField(
-                            label=_('HNS.DEV'), help_text=_('I agree to my information being added to HNS.Dev'),
+                            label=_('HNS.DEV'), help_text=_('Bij deze gaat u ermee akkoord dat uw gegevens kunnen worden gebruikt voor wetenschappelijk onderzoek.'),
                             required=False)
     science = forms.BooleanField(
-                            label=_('Science'), help_text=_('I agree to my information being used for scientific purposes'),
+                            label=_('Science'), help_text=_('Bij deze gaat u ermee akkoord dat uw gegevens worden opgeslagen in HNS.dev.'),
                             required=False)
         
