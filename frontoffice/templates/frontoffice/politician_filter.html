@@ -5,14 +5,26 @@
 	{{ form.media }}
 {% endblock extrahead %}
 
+{% block menu_candidates %}selected{% endblock %}
+
 {% block cols %}
+
+{% block breadcrumbs %}
+<div class="col lastCol">
+	<ul class="breadcrumbs">
+    	<li><a href="{% url fo.election %}">{% trans "Kandidaten overzicht" %}</a></li>
+        <li>{% trans "Search all candidates" %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
 <div class="col size1of4">
     <div class="mod filter">
-    	<div class="hd">
+    	<!--<div class="hd">
         	<h2>{% trans "Filter" %}</h2>
-        </div>
+        </div>-->
     	<div class="bd">
-            
+            <h2>{% trans "Filter" %}</h2>
             <form action="{% url fo.politician_profile_filter %}" method="get" accept-charset="utf-8">
                 <input type="hidden" name="next" value="{{ next }}" />
                 
@@ -49,10 +61,11 @@
 <div class="col size3of4">
 
 	<div class="mod">
-    	<div class="hd">
+    	<!--<div class="hd">
         	<h2>{% trans "Politicians" %}</h2>
-        </div>
+        </div>-->
     	<div class="bd">
+        	<h2>{% trans "Zoekresultaat" %}</h2>
 			<p><strong>{% trans "You selected the following filters" %}:</strong></p>
             <ul class="filters">
                 {% for filter1, filter2, filter3 in filters %}

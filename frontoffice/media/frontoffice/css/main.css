@@ -77,6 +77,22 @@
 					ul.tabs li.selected a:hover {
 						background:#E0E0E0;
 						}
+						
+			.breadcrumbs {
+				margin:0 10px;
+				font-size:18px;
+				line-height:24px;
+				overflow:hidden;_zoom:1;
+				}
+				.breadcrumbs li {
+					float:left;
+					padding-left:28px;
+					margin-right:10px;
+					background:url(../img/h1Arrow.gif) left center no-repeat;
+					}
+				.breadcrumbs a {
+					color:#ed2227;
+					}
 
 /* 	Form styling
 	*************************************************************************************************/
@@ -148,7 +164,8 @@
 			.filter div.multifield {
 				margin-bottom:.5em;
 				}
-			
+				
+				
 		/* 	checkbox
 			----------------------------------------------------------------------------------------- */
 			div.checkboxselectmultiple {
@@ -303,26 +320,44 @@
 
 			#header {
 				border-bottom:4px solid #e0e0e0;
-				height:95px;
 				margin:0 10px 20px;
-				overflow:hidden;
+				overflow:hidden;_zoom:1;
 				position:relative;
 				}
 			
-					a.branding {
-						background:url(../img/branding.gif) left top no-repeat;
-						display:block;
-						height:90px;
-						left:0;
+					.branding {
 						position:absolute;
-						text-indent:-9999px;
+						left:0;
 						top:0;
-						width:261px;
+						padding:0;
+						margin:0;
+						background:none;
+						}
+						.branding a {
+							display:block;
+							height:90px;
+							width:261px;
+							background:url(../img/branding.gif) left top no-repeat;
+							text-indent:-9999px;
+							}
+						.regional .branding a {
+							background-image:url(../img/branding-regional.gif);
+							}
+					#header h2 {
+						display:none;
+						}
+					#header h2.regional {
+						display:block;
+						background:none;
+						padding:0;
+						margin:30px 0 .3em 100px;
+						font-size:24px;
+						line-height:1.2em;
 						}
 
-                                        p.user-info {
-                                                text-align: right;
-                                                }
+					p.user-info {
+							text-align: right;
+							}
 						
 					.user-info {
 						position:absolute;
@@ -336,37 +371,46 @@
 							}
 						
 					#header ul.tabs {
-						top:52px;
-						height:43px;
-						overflow:hidden;
-						position:absolute;
-						right:0;
+						overflow:hidden;_zoom:1;
+						float:right;
+						list-style:none;
+						list-style-position:outside;
+						display:block;
+						margin:66px 0 0;
+						padding:0;
+						}
+					#container .regional ul.tabs {
+						margin:0;
 						}
 						
 						#header ul.tabs li {
 							margin-left:2px;
+							display:block;
+							list-style:none;
+							list-style-position:outside;
 							}
 							
 							#header ul.tabs li a {
 								font-size:19px;
 								line-height:34px;
-								margin-top:7px;
+								height:34px;
+								float:left;
 								}
 								
 							#header ul.tabs li.selected a {
 								line-height:43px;
-								margin-top:0;
+								height:43px;
 								}
 							
-                                                        ul.tabs .do-test a {
-                                                            color:#ed2227;
-                                                            text-decoration:underline;
-                                                        }
-                                                        ul.tabs .do-test a:hover {
-                                                            background:#ed2227;
-                                                            text-decoration:none;
-                                                            color:#fff;
-                                                        }
+							ul.tabs .do-test a {
+								color:#ed2227;
+								text-decoration:underline;
+								}
+							ul.tabs .do-test a:hover {
+								background:#ed2227;
+								text-decoration:none;
+								color:#fff;
+								}
 	
 	/*	Content
 	**************************************************************************************************************/
@@ -416,6 +460,9 @@
 							top:-10px;
 							overflow:hidden;_zoom:1;
 							}
+							.bd h2 {
+								margin:-.4em 0 .5em;
+								}
 					.tabbed {
 						margin-top:62px;
 						}	
@@ -452,6 +499,166 @@
 								line-height:32px;
 								margin-top:0;
 								}
+	
+	
+	/* 	homepage
+		----------------------------------------------------------------------------------------- */
+		
+		.introduction {
+			margin-top:15px;
+			margin-bottom:15px;
+			}
+			.introduction .bd {
+				background:#fff url(../img/tweedekamer.jpg) 0 0 no-repeat;
+				height:298px;
+				
+				}
+				.introduction p {
+					background:#fff;
+					padding:10px 33% 10px 10px;
+					font-size:2em;
+					opacity:.8;
+					}
+		.title {
+			margin-top:20px;
+			margin-bottom:0;
+			overflow:hidden;_zoom:1;
+			background:none;
+			}
+			.title h1 {
+				font-size:2em;
+				line-height:1.2em;
+				font-weight:bold;
+				background:url(../img/big-arrow.gif) left center no-repeat;
+				margin:0;
+				padding-left:50px;
+				}
+			
+		.select-region {
+			
+			}
+			.select-region .bd {
+				padding-left:65px;
+				min-height:107px;_height:107px;
+				}
+				.select-region h2,
+				.start-actions h2 {
+					font-size:2em;
+					padding:0;
+					margin:0;
+					background:none;
+					}
+					.select-region h2 .num,
+					.start-actions h2 .num {
+						position:absolute;
+						left:15px;
+						top:15px;
+						font-size:3em;
+						line-height:1em;
+						}
+				.select-region h3 {
+					font-size:16px;
+					line-height:1.4em;
+					margin-bottom:2em;
+					}
+				.select-region select {
+					width:378px;
+					position:absolute;
+					bottom:15px;
+					right:15px;
+					}
+		
+		.start-actions {
+			background:0;
+			margin-top:20px;
+			}
+			.start-actions .bd {
+				border:none;
+				padding:0 0 0 85px;
+				margin-right:-10px;
+				}
+			.start-actions h2 .num {
+				top:25px;
+				}
+			.start-actions p {
+				margin:5px 0 15px;
+				padding-left:55px;
+				font-size:2em;
+				}
+				.big-btn {
+					font-size:2em;
+					display:block;
+					background:#e0e0e0;
+					position:relative;
+					text-decoration:none;
+					}
+					.big-btn span {
+						display:block;
+						background:#fff url(../img/arrow.gif) right center no-repeat;
+						border:4px solid #ccc;
+						padding:4px;
+						position:relative;
+						left:-10px;
+						top:-10px;
+						}
+					.big-btn .icon {
+						display:none;
+						float:left;
+						border:none;
+						width:30px;
+						height:30px;
+						padding:0;
+						position:absolute;
+						left:4px;
+						top:4px;
+						background:none;
+						}
+				a.big-btn:hover {
+					text-decoration:underline;
+					}
+				.primary-btn {
+					color:#fff;
+					}
+				.primary-btn span {
+					background:#ed2227 url(../img/arrow-onred.gif) right center no-repeat;
+					border-color:#c00;
+					font-weight:bold;
+					}	
+					
+				.start-test span,
+				.list-candidates span {
+					padding-left:44px;
+					}
+				
+				.disabled {
+					color:#dbdbdb;
+					}
+				.disabled .big-btn {
+					background-color:#ececec; 
+					}
+					.disabled .big-btn span {
+						color:#dbdbdb;
+						border-color:#e5e5e5;
+						background-image:url(../img/arrow-disabled.gif);
+						}
+					.disabled .primary-btn span { 
+						background-color:#dbdbdb; 
+						color:#fff;
+						border-color:#ccc;
+						background-image:url(../img/arrow-onred-disabled.gif);
+						}
+				.start-actions .start-test .icon {
+					display:block;
+					width:37px;
+					background:url(../img/vote.png) 0 0 no-repeat;
+					}
+				.start-actions .list-candidates .icon {
+					display:block;
+					background:url(../img/person.png) 0 0 no-repeat;
+					}
+					.start-actions .disabled .icon {
+						background-position:left bottom;
+						}
 	
 	/* 	candidate browse
 		----------------------------------------------------------------------------------------- */	
@@ -573,6 +780,7 @@
 				.cand-list h2 {
 					background:none;
 					padding:0;
+					margin:0;
 					}
 					.cand-list h2 span {
 						font-size:.8em;
@@ -762,59 +970,52 @@
 										
 										
 								
-								div#content div.quickProfile .container .popularityMeter {
+								.popularityMeter {
 									float:left;
 									position:relative;
 									width:148px;
 									}
 								
 									
-									div#content div.quickProfile .popularityMeter .meterContainer {
+									.popularityMeter .meter {
 										display:block;
 										height:158px;
-										left:25px;
-										overflow:hidden;
-										position:absolute;
-										top:10px;
+										overflow:hidden;_zoom:1;
+										margin:0 0 0 25px;
 										width:64px;
+										position:relative;
+										background:url(../img/popularityMeter.gif) 0 0 no-repeat;
 										}
 										
-										div#content div.quickProfile .popularityMeter .meterActiveContainer {
-											bottom:0;_margin-bottom:-1px; /* for IE absolute bottom position bug */
+										.popularityMeter .active {
+											bottom:0;/*_margin-bottom:-1px;  for IE absolute bottom position bug */
 											left:0;
-											overflow:hidden;
+											overflow:hidden;_zoom:1;
 											position:absolute;
 											width:64px;
+											background:url(../img/popularityMeterActive.gif) left bottom no-repeat;
+											text-indent:-9999em;
 											}
-										
-											div#content div.quickProfile .popularityMeter .meterActive {
-												bottom:0;
-												left:0;
-												position:absolute;
-												width:64px;
-												}
 									
 									div#content div.quickProfile .popularityMeter span.top {
 										left:95px;
 										position:absolute;
-										top:10px;
+										top:0;
 										}
 									
 									div#content div.quickProfile .popularityMeter span.bottom {
 										left:95px;
 										position:absolute;
-										top:154px;
+										top:144px;
 										}
 									
 									div#content div.quickProfile .popularityMeter span.total {
 										display:block;
 										font-size:22px;
 										font-weight:bold;
-										left:0;
-										position:absolute;
 										text-align:center;
-										top:173px;
-										width:117px;
+										width:64px;
+										margin:10px 0 0 25px;
 										}
 										
 								div#content div.quickProfile .ballotPosition {

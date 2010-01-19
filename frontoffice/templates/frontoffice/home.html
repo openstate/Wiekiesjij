@@ -39,10 +39,27 @@ jQuery(document).ready(function() {
 </script>
 {% endblock extrahead %}
 
-{% block content %}
-    <div id="form_platf_requires_js" style="display: none">
-        <form action="" method="GET">
-            <div class="block_left">
+{% block cols %}
+<div class="col lastCol">
+	<div class="mod introduction">
+    	<div class="bd">
+        	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id lorem nisi, eget blandit erat. 
+            Mauris id nunc id risus porta faucibus ac a purus.</p>
+            
+        </div>
+    </div>
+    <div class="mod title">
+    	<h1>{% trans "Kieswijzer Gemeenteraadsverkiezingen 2010" %}</h1>
+    </div>
+</div>
+
+<form action="" method="GET">
+<div class="col size1of2">
+    <div class="mod select-region">
+    	<div class="bd">
+        	<h2><span class="num">1</span> Selecteer je regio </h2>
+            <h3>om <strong>Wiekiesjij</strong> voor jouw regio te starten.</h3>
+            <div id="form_platf_requires_js" style="display: none">
                 <select id="election_list">
                     <option value="%">{%trans 'Select region' %}</option>
 
@@ -51,22 +68,29 @@ jQuery(document).ready(function() {
                     {% endfor %}
                 </select>
             </div>
-
-            <div id="directions" style="display: none">
-                <a class="block_left" href="#">{% trans 'Do the test' %}</a>
-                <a class="block_left" href="#">{% trans 'Candidates' %}</a>
-            </div>
-        </form>
+            <noscript id="form_platf_requires_js_noscript">
+                <div class="no_script_list">
+                    {% for id, region in elections %}
+                    <div><a href="{% url fo.election id %}">{{region}}</a> <a href="">[{% trans 'Do the test' %}]</a></div>
+                    {% endfor %}
+                </div>
+            </noscript>
+       	</div>
+  	</div>
+</div>
+<div class="col size1of2">
+	<div class="mod start-actions">
+    	<div class="bd">
+        	<h2>&nbsp;<span class="num">2</span></h2>
+        	<a class="big-btn primary-btn start-test" href="#"><span><span class="icon"></span>{% trans 'Do the test' %}</span></a>
+            <p>{% trans "or" %}</p>
+          	<a class="big-btn list-candidates" href="#"><span><span class="icon"></span>{% trans 'Candidates' %}</span></a>
+        </div>
     </div>
-    <noscript id="form_platf_requires_js_noscript">
-        <div class="no_script_list">
-            {% for id, region in elections %}
-            <div><a href="{% url fo.election id %}">{{region}}</a> <a href="">[{% trans 'Do the test' %}]</a></div>
-            {% endfor %}
-      </div>
-    </noscript>
+</div>
+</form>
     <script type="text/javascript">
         document.getElementById('form_platf_requires_js').style.display = 'block';
         document.getElementById('form_platf_requires_js_noscript').style.display = 'none'; //to be sure
     </script>
-{% endblock content %}
+{% endblock cols %}

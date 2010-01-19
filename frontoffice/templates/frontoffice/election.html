@@ -5,6 +5,7 @@
 	{{ form.media }}
 {% endblock extrahead %}
 
+{% block menu_candidates %}selected{% endblock %}
 
 {% block cols %}
 <div class="col lastCol">
@@ -49,7 +50,6 @@
                     </a>
               	</li>
 				{% endifequal %}
-                </li>
             {% endfor %}
      		</ul>
         </div>

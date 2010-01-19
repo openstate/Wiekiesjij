@@ -6,9 +6,7 @@
 
 <div class="mod quickProfile">
     <div class="hd">
-        <h1>
-            {% trans 'Profile' %} {{ profile.full_name }}
-        </h1>
+        <h1>{{ profile.full_name }}</h1>
         <p class="note">{% if profile.profile_incomplete %} {% trans 'Note: This profile has not been completely filled in.' %}{% endif %}</p>
 
     </div>
@@ -44,9 +42,19 @@
                     <th>{% trans 'Number of children' %}</th>
                     <td>{{ profile.num_children }}</td>
                 </tr>
-                <tr class="emptyRow">
-                    <th>&nbsp;</th>
-                    <td></td>
+                <tr>
+                    <th>{% trans 'Social networks' %}</th>
+                    <td>
+                        <ul class="socialNetwork">
+                            {% for connection in profile.connections.all %}
+                            <li>
+                                <a class="social {{ connection.type|lower }}" href="{{ connection.url }}" title="{{ connection.description }}">{{ connection.type }}</a>
+                            </li>
+                            {% empty %}
+                            <li>-</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                 </tr>
                 <tr class="fan">
                     <td colspan="2">
@@ -64,32 +72,11 @@
                         {% endisprofile %}
                     </td>
                 </tr>
-                <tr class="emptyRow">
-                    <th>&nbsp;</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>{% trans 'Social networks' %}</th>
-                    <td>
-                        <ul class="socialNetwork">
-                            {% for connection in profile.connections.all %}
-                            <li>
-                                <a class="social {{ connection.type|lower }}" href="{{ connection.url }}" title="{{ connection.description }}">{{ connection.type }}</a>
-                            </li>
-                            {% empty %}
-                            <li>
-                                <a>{% trans 'N.A.' %}</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
             </table>
             <div class="popularityMeter">
-                <div class="meterContainer">
-                    <img alt="{% trans 'Popularity meter' %}" src="{{ STATIC_URL }}frontoffice/img/popularityMeter.gif" class="meter"/>
-                    <div class="meterActiveContainer" style="height: {{ popularity|default:0 }}%">
-                        <img class="meterActive" alt="{{ popularity|default:0 }}" src="{{ STATIC_URL }}frontoffice/img/popularityMeterActive.gif" />
+                <div class="meter">
+                    <div class="active" style="height: {{ popularity|default:0 }}%">
+                    	{{ popularity|default:0 }}%
                     </div>
                 </div>
                 <span class="top">100%</span>
