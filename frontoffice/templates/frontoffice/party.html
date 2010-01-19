@@ -3,14 +3,96 @@
 
 
 {% block content %}
-    <h1>{% trans 'Party' %} {{ eip.party.name }}</h1>
-
-    {% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.council.region as municipality %}
-		{{ party_name }} is list {{ position }} in municipality {{ municipality }}
-	{% endblocktrans %}
-   
+	<div class="mod quick-party-profile">
+    	<div class="hd">
+        	<h1>{% trans 'Party' %} {{ eip.party.name }}</h1>
+        </div>
+        <div class="bd">
+        	<div class="image">
+            	<img src="dsfsd.jpg" alt="[Party Name]" />
+            </div>
+            <div class="popularityMeter">
+                <div class="meter">
+                    <div class="active" style="height: {{ popularity|default:0 }}%">
+                    	{{ popularity|default:0 }}%
+                    </div>
+                </div>
+                <span class="top">100%</span>
+                <span class="bottom">0%</span>
+                <span class="total">{{ popularity|default:0 }}%</span>
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
+                eu, euismod ac velit. Cras nec erat eget turpis dignissim dignissim et eu diam. Vestibulum 
+                pulvinar egestas metus, vitae imperdiet lorem ornare id. Nulla tincidunt sem vel libero 
+                elementum ullamcorper.
+            </p>
+            <div class="quickProfileInfo">
+                <table>
+                    <tr>
+                        <th>{% trans 'Slogan' %}</th>
+                        <td><em>"Het gaat om mensen"</em></td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Website' %}</th>
+                        <td><a href="#">www.partywebsite.nl</a></td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Number of seats' %}</th>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans 'Number of candidates' %}</th>
+                        <td>14</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="ballotPosition">
+            	<a href="#">
+            	{% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.council.region as municipality %}
+                    {{ party_name }} is list {{ position }} in municipality {{ municipality }}
+                {% endblocktrans %}
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mod tabbed">
+    	<div class="hd">
+        	<ul class="tabs">
+            	<li class="selected">
+                	<a href="#">{% trans "Video" %}</a>
+                </li>
+                <li>
+                	<a href="#">{% trans "History" %}</a>
+                </li>
+                <li>
+                	<a href="#">{% trans "Party manifesto" %}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="bd">
+        
+        </div>
+    </div>
+    
 {% endblock content %}
 
 {% block sidebar %}
-    
+    <div class="mod party-news">
+    	<div class="hd">
+        	<h2>{% trans "News" %}</h2>
+        </div>
+        <div class="bd">
+        	
+        </div>
+    </div>
+    <div class="mod send-message">
+    	<div class="hd">
+        	<h2>{% trans "Send a message" %}</h2>
+        </div>
+        <div class="bd">
+        	
+        </div>
+    </div>
 {% endblock sidebar %}
