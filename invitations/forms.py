@@ -90,5 +90,6 @@ class ConfirmationForm(BetterForm, TemplateForm):
             if confirm.lower() != self.invitation.user_to.email.lower():
                 self._errors['confirm'] = ErrorList([_('Email addresses did not match')])
                 del self.cleaned_data['confirm']
-            return self.cleaned_data['confirm']
+                
+            return self.cleaned_data
         return None
