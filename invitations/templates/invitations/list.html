@@ -58,7 +58,7 @@
 		</tr>
 		{% for invitation in invs %}
 		<tr>
-			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend"| }}<br/>{{ invitation.user_to.email }}</td>
+			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}<br/>{{ invitation.user_to.email }}</td>
 			<td>
 				{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}
 				{% ifequal invitation.type 'party_admin' %}Partie contact{% endifequal %}
