@@ -7,8 +7,8 @@ from django.conf import settings
 
 urlpatterns = patterns('',
 
-    url(r'^login/$', 'utils.views.login', {'template_name': 'frontoffice/login.html'}, name='fo.login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'frontoffice/logged_out.html'}, name='fo.logout'),
+    url(r'^login/$', 'utils.views.login', {'template_name': 'registration/login.html'}, name='fo.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'registration/logged_out.html'}, name='fo.logout'),
     url(r'^account/', include('frontoffice.registration_backend.urls')),
 
 
@@ -32,7 +32,7 @@ urlpatterns = patterns('',
         'template_name': 'registration/change_password.html'
     }, name='fo.change_password'),
     url(r'^password_changed/$', 'django.contrib.auth.views.password_change_done', {
-        'template_name': 'registration/password_changed.html'
+        'template_name': 'registration/change_password_done.html'
     }, name='fo.password_changed'),
 
 )
