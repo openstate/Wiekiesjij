@@ -1,0 +1,41 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n utils_tags thumbnail %}
+
+{% block title %}{{ instance.name }} Vragen{% endblock title %}
+{% block page-title %}{{ instance.name }} Vragen{% endblock page-title %}
+{% block back-link %}
+{% if user.is_staff %}
+<a href="{% url bo.election_event %}" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>
+{% endif %}
+{% endblock back-link %}
+
+{% block breadcrumbs %}
+	{% if user.is_staff %}
+	<li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
+    {% else %}
+    <li>{{ instance.election_event.name }} Vragen</li>
+	{% endif %}
+{% endblock breadcrumbs %}
+
+
+
+{% block cols %}
+	<div class="col size1of1">
+    {% block content %}
+		{% for question in instance.questions.all %}
+			<h3>{{ question.frontend_title }} ({{ question.title }})</h3>
+			
+			<ul>
+				{% for answer in question.answers.all %}
+					<li> &bull; {{ answer.value }} 
+					{% if answer.frontoffice_value %}
+						({{ answer.get_frontoffice_value }})
+					{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+
+    {% endblock content %}
+    </div>
+{% endblock cols %}

@@ -88,6 +88,12 @@ def election_instance_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
     return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
+@staff_required
+def question_overview(request, election_instance_id):
+    instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
+    
+    return render_to_response('backoffice/question_overview.html', {'instance': instance}, context_instance=RequestContext(request))
+    
 @council_admin_required
 def election_instance_shrink(request, id):
     check_permissions(request,id, 'council_admin')

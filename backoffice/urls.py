@@ -25,6 +25,7 @@ urlpatterns += patterns('backoffice.views',
 
     #Staff Views
     url(r'^election/(?P<id>\d+)/$', 'election_instance_view', name='bo.election_instance_view'),
+    url(r'^election/(?P<election_instance_id>\d+)/questions/$', 'question_overview', name='bo.question_overview'),
     url(r'^election/(?P<id>\d+)/edit/$', 'edit_election_instance', name='bo.edit_election_instance'),
     url(r'^election/(?P<id>\d+)/edit-council/$', 'council_edit', name='bo.edit_council'),
     url(r'^election/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='bo.election_party_create'),
