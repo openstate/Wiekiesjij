@@ -18,6 +18,8 @@ from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 
+from questions.settings import BACKOFFICE_QUESTION_TYPES
+
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
 from elections.functions import create_profile, profile_invite_email_templates, get_profile_template
@@ -92,7 +94,9 @@ def election_instance_view(request, id):
 def question_overview(request, election_instance_id):
     instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
     
-    return render_to_response('backoffice/question_overview.html', {'instance': instance}, context_instance=RequestContext(request))
+    questions = instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES).order_by('-electioninstancequestion__position')
+    
+    return render_to_response('backoffice/question_overview.html', {'instance': instance, 'questions': questions}, context_instance=RequestContext(request))
     
 @council_admin_required
 def election_instance_shrink(request, id):

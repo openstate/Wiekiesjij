@@ -24,7 +24,7 @@
     {% block content %}
 		<p>Aantal vragen: {{ instance.questions.count }}</p>
 
-		{% for question in instance.questions.all %}
+		{% for question in questions %}
 			<h3>{{ question.frontend_title }} {% ifnotequal question.frontend_title question.title  %}
 				
 			({{ question.title }}){% endifnotequal %}</h3>
