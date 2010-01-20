@@ -24,7 +24,7 @@
                     <a href="{% url bo.election_instance_view id=ei.id %}" class="manage">{% trans "Manage this instance" %}</a>
                     <ul class="quicklinks">
                     	<li><a href="{% url bo.edit_election_instance id=ei.id %}">{% trans "Edit base settings" %}</a></li>
-						<li><a href="{% url bo.question_overview id=ei.id %}">{% trans "View Questions" %}</a></li>
+						<li><a href="{% url bo.question_overview election_instance_id=ei.id %}">{% trans "View Questions" %}</a></li>
                     </ul>
 					<p>{% blocktrans count ei.parties.count as counter %}One party{% plural %}{{ counter }} parties{% endblocktrans %}
 					</p>
