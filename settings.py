@@ -202,7 +202,11 @@ if not DEBUG:
     )
     UTILS_POSTLOG_URLS = (
         r'^/backoffice/election/\d+/setup',
+        r'^/backoffice/election/\d+/edit',
+        r'^/backoffice/election/\d+/add_party',
         r'^/backoffice/party/\d+/setup',
+        r'^/backoffice/party/\d+/edit',
+        r'^/backoffice/party/\d+/add_candidate',
         r'^/backoffice/welcome/\d+',
     )
     
