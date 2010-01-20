@@ -14,25 +14,25 @@ urlpatterns = patterns('',
 
     #forgot password
     url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
-        'template_name': 'frontoffice/forgot_password.html',
-        'email_template_name': 'frontoffice/email/forgot_password.txt',
+        'template_name': 'registration/forgot_password.html',
+        'email_template_name': 'registration/email/forgot_password.txt',
     }, name='fo.forgot_password'),
     url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {
-        'template_name': 'frontoffice/forgot_password_send.html'
+        'template_name': 'registration/forgot_password_send.html'
     }, name='fo.forgot_password_done'),
     url(r'^forgot-password/confirm/(?P<uidb36>.+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {
-        'template_name': 'frontoffice/forgot_password_confirm.html'
+        'template_name': 'registration/forgot_password_confirm.html'
     }, name='fo.forgot_password_confirm'),
     url(r'^forgot-password/changed/$', 'django.contrib.auth.views.password_reset_complete', {
-        'template_name': 'frontoffice/forgot_password_changed.html'
+        'template_name': 'registration/forgot_password_changed.html'
     }, name='fo.forgot_password_changed'),
 
    #change password
     url(r'^change_password/$', 'django.contrib.auth.views.password_change', {
-        'template_name': 'frontoffice/change_password.html'
+        'template_name': 'registration/change_password.html'
     }, name='fo.change_password'),
     url(r'^password_changed/$', 'django.contrib.auth.views.password_change_done', {
-        'template_name': 'frontoffice/password_changed.html'
+        'template_name': 'registration/password_changed.html'
     }, name='fo.password_changed'),
 
 )
