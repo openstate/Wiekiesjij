@@ -53,6 +53,10 @@
 			em {
 				font-style:italic;
 				}
+			p {
+				line-height:1.4em;
+				margin-bottom:.5em;
+				}
 					
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -109,7 +113,7 @@
 		select {
 			border:1px solid #aaa;
 			padding:5px;
-			width:448px;
+			width:416px;
 			font-size:1.2em;
 			}
 			.size1of4 input,
@@ -238,7 +242,6 @@
 					color:#000;
 					display:block;
 					padding:3px 5px;
-					margin-bottom:10px;
 					line-height:26px;
 					}
 
@@ -257,7 +260,7 @@
 					float: right;
 					border:none;
 					display:block;
-					margin:0 0 10px 10px;
+					margin:0 0 0 10px;
 					cursor: pointer;
 					background-color:#cccccc;
 					width:auto;
@@ -1473,7 +1476,7 @@
 				border-top:1px solid #ccc;
 				width:505px;
 				margin:15px 0;
-				padding:10px 0;
+				padding:10px 0 0;
 				clear:left;
 				}
 				.quick-party-profile .quickProfileInfo a {
@@ -1501,6 +1504,23 @@
 		.send-message p {
 			margin-bottom:.5em;
 			}
+		
+	
+	/*	Login
+		**************************************************************************************************************/
+	
+		.helpdesk {
+			background:#fff;
+			}
+			.helpdesk .bd {
+				border:none;
+				padding-left:28px;
+				}
+			.helpdesk a ,
+			.loggedout a {
+				color:#ed2227;
+				font-weight:bold;
+				}
 		
 										
 	/*	Footer
