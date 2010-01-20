@@ -196,7 +196,7 @@ if DEBUG and DEBUG_TOOLBAR:
         
     #end debug_toolbar
 
-if NOT DEBUG:
+if not DEBUG:
     MIDDLEWARE_CLASSES += (
         'utils.middleware.PostLogMiddleware',
     )
