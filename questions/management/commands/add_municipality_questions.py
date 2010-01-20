@@ -131,51 +131,52 @@ class Command(BaseCommand):
         }
         
         
-        nonlinked = []
-        
+        linkes = []
         for name, answers in items.iteritems():
             
             if not Question.objects.filter(theme='q8_%s' % name.replace(' ', '_')):
-                print "Adding question for %s" % name
-                q = Question.objects.create(
-                    title=title,
-                    frontend_title=frontend_title,
-                    has_no_preference=True,
-                    question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
-                    theme='q8_%s' % name.replace(' ', '_'),
-                )
-            
-                idx = 1
-                for a_title in answers:
-                    Answer.objects.create(
-                        question=q,
-                        value=a_title,
-                        frontoffice_value=None,
-                        position=idx,
-                    )
-                    idx += 1
                 
                 #try link it to the propper electioninstance
                 ei = None
                 try:
                     ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID)
+                    linkes.append(name)
                 except ElectionInstance.DoesNotExist:
-                    nonlinked.append(name)
+                    ei is None
                 
-                #Link the questions
                 if ei is not None:
-                    ElectionInstanceQuestion.objects.create(
-                        election_instance=ei,
-                        question=q,
-                        position=8,
-                        locked=False,
+                    q = Question.objects.create(
+                        title=title,
+                        frontend_title=frontend_title,
+                        has_no_preference=True,
+                        question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
+                        theme='q8_%s' % name.replace(' ', '_'),
                     )
+            
+                    idx = 1
+                    for a_title in answers:
+                        Answer.objects.create(
+                            question=q,
+                            value=a_title,
+                            frontoffice_value=None,
+                            position=idx,
+                        )
+                        idx += 1
+                
+                    #Link the questions
+                    if ei is not None:
+                        ElectionInstanceQuestion.objects.create(
+                            election_instance=ei,
+                            question=q,
+                            position=8,
+                            locked=False,
+                        )
             #end if question
         #end for
         
         
         for item in items.keys():
-            if item in nonlinked:
+            if not item in linkes:
                 print "[X] Couldn't link the question for %s" % item
             else:
                 print "[V] Did link the question for %s" % item

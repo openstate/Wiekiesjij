@@ -41,16 +41,16 @@ class Command(BaseCommand):
                     print "No questionset found for Haaren."
                     return 1
                     
-                    for qsq in qs_haren.questionsetquestion_set.order_by('position'):
+                for qsq in qs_haren.questionsetquestion_set.order_by('position'):
+                
+                    if ei.questions.filter(pk=qsq.question.pk).count() != 0:
+                        continue
                         
-                        if ei.questions.filter(pk=qsq.question.pk).count() != 0:
-                            continue
-                                
-                        ElectionInstanceQuestion.objects.create(
-                            election_instance = ei,
-                            position = qsq.position,
-                            question=qsq.question,
-                            locked=False,
-                        )
+                    ElectionInstanceQuestion.objects.create(
+                        election_instance = ei,
+                        position = qsq.position,
+                        question=qsq.question,
+                        locked=False,
+                    )
                 
                 

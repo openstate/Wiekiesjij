@@ -22,8 +22,12 @@
 {% block cols %}
 	<div class="col size1of1">
     {% block content %}
+		<p>Aantal vragen: {{ instance.questions.count }}</p>
+
 		{% for question in instance.questions.all %}
-			<h3>{{ question.frontend_title }} ({{ question.title }})</h3>
+			<h3>{{ question.frontend_title }} {% ifnotequal question.frontend_title question.title  %}
+				
+			({{ question.title }}){% endifnotequal %}</h3>
 			
 			<ul>
 				{% for answer in question.answers.all %}
@@ -33,6 +37,9 @@
 					{% endif %}
 					</li>
 				{% endfor %}
+				{% if question.has_no_preference %}
+					<li>&bull; <em>Geen voorkeur (Alleen frontoffice)</em></li>
+				{% endif %}
 			</ul>
 		{% endfor %}
 

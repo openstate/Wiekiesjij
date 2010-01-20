@@ -395,3 +395,136 @@ class Command(BaseCommand):
                 position=7,
             )
             print "Added basic question 9"
+            
+            
+        try:
+            hqs = QuestionSet.objects.get(name='HaarenExtraQuestions')
+        except QuestionSet.DoesNotExist:
+            hqs = QuestionSet.objects.create(name='HaarenExtraQuestions')
+            
+            eq1 = Question.objects.create(
+                title=u'In het buitengebied van Haaren mogen nergens megastallen komen:',
+                frontend_title=u'In het buitengebied van Haaren mogen nergens megastallen komen:',
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                theme='heq1',
+            )
+            QuestionSetQuestion.objects.create(
+                question=eq1,
+                questionset=hqs,
+                position=50,
+            )
+            Answer.objects.create(
+                question=eq1,
+                value=u'Eens',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=eq1,
+                value=u'Oneens',
+                frontoffice_value=None,
+                position=2,
+            )
+            
+            eq2 = Question.objects.create(
+                title=u'De eerstvolgende honderd woonruimtes die de gemeente bouwt zijn voor jongeren:',
+                frontend_title=u'De eerstvolgende honderd woonruimtes die de gemeente bouwt zijn voor jongeren:',
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                theme='heq2',
+            )
+            QuestionSetQuestion.objects.create(
+                question=eq2,
+                questionset=hqs,
+                position=51,
+            )
+            Answer.objects.create(
+                question=eq2,
+                value=u'Eens',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=eq2,
+                value=u'Oneens',
+                frontoffice_value=None,
+                position=2,
+            )
+            
+            eq3 = Question.objects.create(
+                title=u'De gemeente Haaren moet veel meer samenwerken met andere gemeenten, maar er mag geen nieuwe gemeentelijke herindeling komen:',
+                frontend_title=u'De gemeente Haaren moet veel meer samenwerken met andere gemeenten, maar er mag geen nieuwe gemeentelijke herindeling komen:',
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                theme='heq3',
+            )
+            QuestionSetQuestion.objects.create(
+                question=eq3,
+                questionset=hqs,
+                position=52,
+            )
+            Answer.objects.create(
+                question=eq3,
+                value=u'Eens',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=eq3,
+                value=u'Oneens',
+                frontoffice_value=None,
+                position=2,
+            )
+            
+            eq4 = Question.objects.create(
+                title=u'Voor een optimale dienstverlening is het noodzakelijk dat je voor alle diensten van de gemeente bij één loket terecht kunt:',
+                frontend_title=u'Voor een optimale dienstverlening is het noodzakelijk dat je voor alle diensten van de gemeente bij één loket terecht kunt:',
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                theme='heq4',
+            )
+            QuestionSetQuestion.objects.create(
+                question=eq4,
+                questionset=hqs,
+                position=53,
+            )
+            Answer.objects.create(
+                question=eq4,
+                value=u'Eens',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=eq4,
+                value=u'Oneens',
+                frontoffice_value=None,
+                position=2,
+            )
+            
+            eq5 = Question.objects.create(
+                title=u'Bedrijven en burgers die plannen hebben om het leven in Haaren prettiger te maken, moeten daarvoor van de gemeente geld kunnen krijgen:',
+                frontend_title=u'Bedrijven en burgers die plannen hebben om het leven in Haaren prettiger te maken, moeten daarvoor van de gemeente geld kunnen krijgen:',
+                has_no_preference=True,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                theme='heq5',
+            )
+            QuestionSetQuestion.objects.create(
+                question=eq5,
+                questionset=hqs,
+                position=54,
+            )
+            Answer.objects.create(
+                question=eq5,
+                value=u'Eens',
+                frontoffice_value=None,
+                position=1,
+            )
+            Answer.objects.create(
+                question=eq5,
+                value=u'Oneens',
+                frontoffice_value=None,
+                position=2,
+            )
+            
+            
