@@ -195,3 +195,14 @@ if DEBUG and DEBUG_TOOLBAR:
     }
         
     #end debug_toolbar
+
+if NOT DEBUG:
+    MIDDLEWARE_CLASSES += (
+        'utils.middleware.PostLogMiddleware',
+    )
+    UTILS_POSTLOG_URLS = (
+        r'^/backoffice/election/\d+/setup',
+        r'^/backoffice/party/\d+/setup',
+        r'^/backoffice/welcome/\d+',
+    )
+    
