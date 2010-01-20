@@ -167,6 +167,8 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     
     posts = []
     for i in range(posts_to_show):
+        if i not in feed['entries']:
+            continue
         pub_date = feed['entries'][i].updated_parsed
         #TODO: Twitter delivers time in GMT (probably). We don't live in Greenwich.
         published = datetime.datetime(*pub_date[:6])

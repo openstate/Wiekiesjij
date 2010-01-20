@@ -5,5 +5,9 @@
             <span class="tweet">{{ tweet.summary }}</span>
             <span class="info">{{ tweet.published|timesince }} {% trans 'ago' %}</span>
         </li>
+    {% empty %}
+        <li>
+            {% trans 'There are no posts that could be fetched' %}
+        </li>
     {% endfor %}
 </ul>

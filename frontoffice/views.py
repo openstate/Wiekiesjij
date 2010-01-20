@@ -25,11 +25,11 @@ from frontoffice.wizards.test import BestCandidate
 
 def redirect_view(request):
     if not request.user.is_authenticated():
-        return redirect('fo.dashboard') #for testing, make take_test
+        return redirect('fo.home')
     elif not request.user.profile and request.user.is_staff:
         return redirect('bo.redirect')
     elif request.user.profile.type == 'visitor':
-        return redirect('fo.dashboard') #for testing, make take_test
+        return redirect('fo.home')
     else:
         return redirect('bo.redirect')
 
