@@ -32,9 +32,9 @@
 
 {% block help-message %}
 	{% blockwrap template='helptext' %}
-		{% blocktrans %}
-			In dit gedeelte treft een aantal vragen aan die terug zullen komen in de vragenmodule van Wiekiesjij. Deze vragen zijn concrete stellingen uit de vragenmodule. De rest van de vragen worden beantwoord door de informatie die u reeds heeft ingevoerd voor uw profiel
-        {% endblocktrans %}
+		{% trans "In het gedeelte ‘extra vragen’ treft u een aantal vragen aan die terug zullen komen in de vragenmodule van Wiekiesjij. Deze vragen zijn concrete stellingen uit de vragenmodule. De rest van de vragen heeft u reeds beantwoord door middel van de informatie die u heeft ingevoerd voor uw profiel." %}
+		</p>
+		<p><strong>{% trans "Let op!" %}</strong>{% trans "Bij de vragen waar meerdere antwoorden mogelijk zijn, zal het aanvinken van meer of alle beleidsterreinen niet leiden tot meer of minder kans om als favoriete kandidaat te eindigen voor de bezoeker. Voor meer informatie over deze vragen verwijs ik u door naar de handleiding." %}
     {% endblockwrap %}
 {% endblock help-message %}
 

@@ -9,14 +9,13 @@
 <div class="col size1of2">
     <div class="mod intro">
         <h2>{% trans 'Welcome' %} {{ politician.name }}</h2>
-        <p>{% trans "You've been invited to create a profile for Wiekiesjij for the" %} {{ election_event.name }}.</p>
+        <p>{% trans "Youve been invited to create a profile for Wiekiesjij for the" %} {{ election_event.name }}.</p>
         
-        <h2>{%trans 'What is Wiekiesjij?' %} </h2>
-        <p>
-        	{% blocktrans %}
-        		Wiekiesjij is de voorkeurstemhulp van Nederland. Door het beantwoorden van een vijftiental vragen zullen bezoekers gekoppeld worden aan hun favoriete kandidaten. Middels de informatie die u hier invult zullen wij tevens in staat zijn om de bezoekers de mogelijkheid te bieden om uitgebreide profielen van de kandidaten te bekijken. Op deze manier kunnen de kiezers hun kandidaten beter leren kennen voordat ze naar de stembus gaan.
-        	{% endblocktrans %}
-        </p>
+        <h2>{%trans 'Welkom' %} </h2>
+        <p>{% trans "Hartelijk dank voor uw deelname aan Wiekiesjij. Hier kunt u uw profiel aanmaken voor de Wiekiesjij stemwijzer. Wiekiesjij is de voorkeurstemhulp van Nederland en is in de afgelopen verkiezingen meer dan 2 miljoen keer gebruikt door de Nederlandse kiezers. Door het invullen van uw profiel en het beantwoorden van een aantal vragen zijn wij in staat om de bezoekers te koppelen aan hun favoriete kandidaten. Op die manier worden de kiezers en de individuele kandidaten dichter tot elkaar gebracht." %}</p>
+		<p>{% trans "Het invullen van de vragenwizard zal 20-30 minuten duren afhankelijk van de uitgebreidheid van de gegevens die u op uw profiel kwijt wil. U kunt altijd terugkeren naar deze wizard door de link in de e-mail te volgen om uw gegevens aan te passen of aan te vullen." %}</p>
+		<p>{% trans "Heeft u een vraag over de invulwizard of over wiekiesjij, kunt u een email sturen naar " %}<a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>.</p>
+		<p>{% trans "Veel succes met het invullen van de vragenwizard. Druk op ‘klik hier om de registratie te starten’ om met het invullen te beginnen." %}</p>
         <a href="{% url bo.politician_profile_setup eip_id user_id %}" class="btn next">{% trans "Click here to start the registration wizard" %}</a>
     </div>
 </div>
