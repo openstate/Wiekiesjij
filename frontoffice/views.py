@@ -63,7 +63,7 @@ def election(request, id=None):
     selected_eip = None
     eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances).order_by('position')
     if id:
-        selected_eip = ElectionInstanceParty.objects.get(id=id)
+        selected_eip = get_object_or_404(ElectionInstanceParty, id=id)
         politicians = selected_eip.candidate_dict()
 
    
