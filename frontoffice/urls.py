@@ -19,15 +19,24 @@ urlpatterns = patterns('',
     }, name='fo.forgot_password'),
     url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {
         'template_name': 'frontoffice/forgot_password_send.html'
-    }, name='fo.password_done'),
+    }, name='fo.forgot_password_done'),
     url(r'^forgot-password/confirm/(?P<uidb36>.+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {
         'template_name': 'frontoffice/forgot_password_confirm.html'
-    }, name='fo.password_confirm'),
+    }, name='fo.forgot_password_confirm'),
     url(r'^forgot-password/changed/$', 'django.contrib.auth.views.password_reset_complete', {
         'template_name': 'frontoffice/forgot_password_changed.html'
+    }, name='fo.forgot_password_changed'),
+
+   #change password
+    url(r'^change_password/$', 'django.contrib.auth.views.password_change', {
+        'template_name': 'frontoffice/change_password.html'
+    }, name='fo.change_password'),
+    url(r'^password_changed/$', 'django.contrib.auth.views.password_change_done', {
+        'template_name': 'frontoffice/password_changed.html'
     }, name='fo.password_changed'),
-   
+
 )
+
 #home page
 if settings.DEBUG:
     urlpatterns += patterns('frontoffice.views',
@@ -37,7 +46,7 @@ if settings.DEBUG:
 urlpatterns += patterns('frontoffice.views',
     url(r'^redirect/$', 'redirect_view', name='fo.redirect'),
 
-    
+
 
     #politician profile pages
     url(r'^politician/(?P<id>\d+)/$', 'politician_profile', name='fo.politician_profile'),
