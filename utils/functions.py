@@ -1,3 +1,6 @@
+import sys
+import random
+
 def move_down(instance, field, limit, kwargs={}):
     '''
     Changes the position of the current item with position of the next one.
@@ -26,11 +29,15 @@ def move_down(instance, field, limit, kwargs={}):
         instance.save()
         return getattr(instance, field)
     else:
+        tmp_pos = random.randint(10000, sys.maxint) #Small hack to prevent DB errors. 10.000 is pretty save
         current_position = getattr(instance, field)
         next_position = getattr(next, field)
-        setattr(instance, field, next_position)
-        setattr(next, field, current_position)
+        
+        setattr(next, field, tmp_pos) #Move next to tmp_pos
+        next.save()
+        setattr(instance, field, next_position) #Move instance to it's new position
         instance.save()
+        setattr(next, field, current_position) #Move next to instance's old position
         next.save()
         return getattr(instance, field)
 
@@ -58,13 +65,19 @@ def move_up(instance, field, limit, kwargs={}):
         instance.save()
         return getattr(instance, field)
     else:
+        tmp_pos = random.randint(10000, sys.maxint) #Small hack to prevent DB errors. 10.000 is pretty save
         current_position = getattr(instance, field)
         previous_position = getattr(previous, field)
-        setattr(instance, field, previous_position)
-        setattr(previous, field, current_position)
-        instance.save()
+
+
+        setattr(previous, field, tmp_pos) #Move previous to tmp_pos
         previous.save()
-        return getattr(instance, field)
+        setattr(instance, field, previous_position) #Move instance to it's new position
+        instance.save()
+        setattr(previous, field, current_position) #Move previous to instance's old position
+        previous.save()
+
+    return getattr(instance, field)
 
 
 def list_unique_order_preserving(seq, idfun=None):

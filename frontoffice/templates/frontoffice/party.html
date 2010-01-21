@@ -131,9 +131,9 @@
 <!-- MANIFESTO TAB -->
 
         <div class="bd man">
-            <p>{{ eip.party.manifesto_summary }}</p>
+            {{ eip.party.manifesto_summary }}
             {% if eip.party.manifesto %}
-                <a href="{{ eip.party.manifesto }}">{% trans 'Read entire manifesto' %}</a>
+                <br /><a href="{{ eip.party.manifesto }}">{% trans 'Read entire manifesto' %}</a>
             {% endif %}
         </div>
 
