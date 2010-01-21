@@ -135,7 +135,7 @@ class Command(BaseCommand):
         for name, answers in items.iteritems():
             
             if not Question.objects.filter(theme='q8_%s' % name.replace(' ', '_')):
-                
+               
                 #try link it to the propper electioninstance
                 ei = None
                 try:

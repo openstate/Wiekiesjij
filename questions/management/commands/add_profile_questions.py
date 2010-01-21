@@ -13,6 +13,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        try:
+            qs1 = QuestionSet.objects.get(name='BasicSet1')
+        except QuestionSet.DoesNotExist:
+            print 'Run add_questions first'
+            return
+
 
         q1 = Question.objects.create(
             title=u'De volgende partijen maken kans op mijn stem:',
@@ -20,12 +26,22 @@ class Command(BaseCommand):
             theme='q1',
             has_no_preference=False,
         )
+        qsq1 = QuestionSetQuestion.objects.create(
+                question=q1,
+                questionset=qs1,
+                position=1,
+        )
         print "Added basic question 1"
         q2 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft:',
             question_type=settings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS,
             theme='q1',
             has_no_preference=True,
+        )
+        qsq2 = QuestionSetQuestion.objects.create(
+                question=q2,
+                questionset=qs1,
+                position=2,
         )
         Answer.objects.create(
             question=q2,
@@ -61,9 +77,14 @@ class Command(BaseCommand):
         
         q10 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft de volgende vervolgopleiding afgerond:',
-            question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
-            theme='q11',
+            question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
+            theme='q10',
             has_no_preference=True,
+        )
+        qsq10= QuestionSetQuestion.objects.create(
+                question=q10,
+                questionset=qs1,
+                position=10,
         )
         Answer.objects.create(
             question=q10,
@@ -102,15 +123,24 @@ class Command(BaseCommand):
             theme='q11',
             has_no_preference=True,
         )
-
+        qsq11 = QuestionSetQuestion.objects.create(
+                question=q11,
+                questionset=qs1,
+                position=11,
+        )
 
         print "Added basic question 11"
 
         q12 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft als hobby:',
-            question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             theme='q12',
             has_no_preference=True,
+        )
+        qsq12 = QuestionSetQuestion.objects.create(
+                question=q12,
+                questionset=qs1,
+                position=12,
         )
         Answer.objects.create(
             question=q12,
@@ -211,6 +241,11 @@ class Command(BaseCommand):
             theme='q13',
             has_no_preference=True,
         )
+        qsq13 = QuestionSetQuestion.objects.create(
+                question=q13,
+                questionset=qs1,
+                position=13,
+        )
         Answer.objects.create(
             question=q13,
             value=u'18 tot 25 jaar',
@@ -252,5 +287,10 @@ class Command(BaseCommand):
             question_type=settings.QTYPE_MODEL_PROFILE_GENDER,
             theme='q14',
             has_no_preference=False,
+        )
+        qsq14 = QuestionSetQuestion.objects.create(
+                question=q14,
+                questionset=qs1,
+                position=14,
         )
         print "Added basic question 14"

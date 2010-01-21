@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 title=u'Als gemeenteraadslid leg ik de meeste nadruk op:',
                 frontend_title=u'Mijn ideale kandidaat legt binnen haar functie als gemeenteraadslid de meeste nadruk op:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='q4',
             )
             qsq4 = QuestionSetQuestion.objects.create(
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 title=u'Ik zet mij vooral in voor:',
                 frontend_title=u'Mijn ideale kandidaat zet zich vooral in voor:',
                 has_no_preference=False,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
                 theme='q5',
             )
             qsq5 = QuestionSetQuestion.objects.create(
@@ -133,7 +133,7 @@ class Command(BaseCommand):
                 title=u'Vanwege de economische recessie wil ik vooral bezuinigen op:',
                 frontend_title=u'In deze tijden van economische recessie moet mijn ideale kandidaat vooral willen bezuinigen op:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
                 theme='q6',
             )
             qsq6 = QuestionSetQuestion.objects.create(
@@ -213,10 +213,10 @@ class Command(BaseCommand):
                 title=u'Ik woon:',
                 frontend_title=u'Mijn ideale kandidaat woont:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE,
                 theme='q7',
             )
-            qsq8 = QuestionSetQuestion.objects.create(
+            qsq7 = QuestionSetQuestion.objects.create(
                 question=q7,
                 questionset=qs1,
                 position=7,
@@ -239,17 +239,18 @@ class Command(BaseCommand):
                 frontoffice_value=None,
                 position=3,
             )
-            Answer.objects.create(
-               question=q7,
-                value=u'Langer dan 10 jaar in de gemeente',
-                frontoffice_value=None,
-                position=4,
-            )
+            #Was removed from list - leaving as it may be readded
+            #            Answer.objects.create(
+            #               question=q7,
+            #                value=u'Langer dan 10 jaar in de gemeente',
+            #                frontoffice_value=None,
+            #                position=4,
+            #            )
             Answer.objects.create(
                question=q7,
                 value=u'Uw hele leven in de gemeente',
                 frontoffice_value=u'zijn/haar hele leven in de gemeente',
-                position=5,
+                position=4,
             )
             print "Added basic question 7"
 
@@ -268,7 +269,7 @@ class Command(BaseCommand):
                 title=u'Ik heb kennis van:',
                 frontend_title=u'Mijn ideale kandidaat heeft kennis van:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
                 theme='q3',
             )
             qsq3 = QuestionSetQuestion.objects.create(
@@ -344,13 +345,13 @@ class Command(BaseCommand):
                 title=u'Mijn dagelijkse bezigheid, naast mijn functie als raadslid is:',
                 frontend_title=u'Mijn ideale kandidaat is, naast raadslid:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISONECHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='q9',
             )
             qsq9 = QuestionSetQuestion.objects.create(
                 question=q9,
                 questionset=qs1,
-                position=10,
+                position=9,
             )
             Answer.objects.create(
                 question=q9,

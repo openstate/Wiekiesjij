@@ -10,7 +10,7 @@ from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoic
 from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from questions.models import Question
 from elections.models import Candidacy
-from questions.settings import QUESTION_TYPE_CHOICES, QTYPE_NORM_POLMULTICHOICE_VISONECHOICE, QTYPE_NORM_POLONECHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL
+from questions.settings import MULTIPLE_ANSWER_TYPES, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL
 from questions.settings import BACKOFFICE_QUESTION_TYPES
 
 from elections.models import ElectionInstance, ElectionInstanceParty, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
@@ -50,6 +50,7 @@ class AnswerQuestion(MultiPathFormWizard):
         # Looping through the questions
         idx = 1;
         for question in questions:
+ 
             try:
                 # Here we need to get the answer given for the step
                 question_answers = []
@@ -58,11 +59,13 @@ class AnswerQuestion(MultiPathFormWizard):
                         # I realise that it's kind of stupid loop, 'cause I could use simply filter on the initial list
                         # TODO: rewrite when have time, but it works so as well, although it could be done nicer.
                         # In case of multiple answers we make a list of those.
-                        if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question.question_type:
+                        if question.question_type in MULTIPLE_ANSWER_TYPES:
                             question_answers.append(answer_id)
                         else:
                             question_answers = answer_id
+                        
             except Exception, e:
+
                 # Otherwise we shall specify an initial value for it
                 question_answers = ''
 
@@ -100,8 +103,7 @@ class AnswerQuestion(MultiPathFormWizard):
                     answer_value = form.cleaned_data['value']
 
                     # If question type is multiple answers, we need to clean the string list first.
-                    if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question.question_type:
-                        answer_values = []
+                    if question.question_type in MULTIPLE_ANSWER_TYPES:
                         for value in answer_value:
                             if value.isdigit():
                                 # And we add each answer to the candidacy

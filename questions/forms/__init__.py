@@ -10,7 +10,7 @@ from utils.formutils import TemplateForm
 import copy
 # TODO make better imports
 from questions.models import Question, Answer
-from questions.settings import QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_HOBBY, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLMULTICHOICE_VISONECHOICE, QTYPE_NORM_POLONECHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_SYSTEM_POLMULTICHOICE_VISONECHOICE, QUESTION_TYPE_CHOICES 
+from questions.settings import MULTIPLE_ANSWER_TYPES, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE, QUESTION_TYPE_CHOICES  
 
 class SelectQuestionForm(BetterModelForm, TemplateForm):
     '''
@@ -49,16 +49,24 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
         if question_instance.question_type in question_types:
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
 
-            if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question_instance.question_type:
+            if question_instance.question_type in MULTIPLE_ANSWER_TYPES:
                 self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices)})
-            elif QTYPE_NORM_POLMULTICHOICE_VISONECHOICE == question_instance.question_type:
+            elif QTYPE_NORM_POLONECHOICE_VISONECHOICE == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             elif QTYPE_NORM_POLBOOL_VISBOOL == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)}) #RadioBoolean() #widgets.NullBooleanSelect()
+            elif QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE == question_instance.question_type:
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
+            elif QTYPE_MODEL_EDUCATION_LEVEL == question_instance.question_type:
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
+
             else:
+                print "This question type doenst know what type of form to show"
+                print question_instance.question_type
                 pass #TODO raise error
 
         else:
+            print "This question type isnt in question type choices"
             pass #TODO raise error
     
         super(AnswerQuestionForm, self).__init__(*args, **kwargs)
@@ -88,9 +96,11 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
             choices = map(lambda x: (x.id, x.get_frontoffice_value()), question_instance.answers.all())
             if question_instance.has_no_preference:
                 choices.append(('no_pref', _('Geen voorkeur')))
-            if QTYPE_NORM_POLONECHOICE_VISMULTICHOICE == question_instance.question_type:
+            if QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE == question_instance.question_type:
                 self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices)})
-            elif QTYPE_NORM_POLMULTICHOICE_VISONECHOICE == question_instance.question_type:
+            elif QTYPE_NORM_POLONECHOICE_VISONECHOICE == question_instance.question_type:
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
+            elif QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             elif QTYPE_NORM_POLBOOL_VISBOOL == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)}) #RadioBoolean() #widgets.NullBooleanSelect()
@@ -99,13 +109,13 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
             elif QTYPE_MODEL_PROFILE_RELIGION == question_instance.question_type:
                 RELIGION_A = copy.deepcopy(RELIGION)
                 RELIGION_A.append(('no_pref', _('Geen voorkeur')))
-                self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=RELIGION), choices=RELIGION_A)})
+                self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=RELIGION_A), choices=RELIGION_A)})
             elif QTYPE_MODEL_PROFILE_AGE == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             elif QTYPE_MODEL_PROFILE_GENDER == question_instance.question_type:
                 GENDERS_A = copy.deepcopy(GENDERS)
                 GENDERS_A.append(('no_pref', _('Geen voorkeur')))
-                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=GENDERS), choices=GENDERS_A)})
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=GENDERS_A), choices=GENDERS_A)})
 
             else:
                 pass #TODO raise error

@@ -21,7 +21,7 @@ from frontoffice.decorators import visitors_only
 
 from django.core.paginator import Paginator
 from questions.forms.types import ModelAnswerForm
-from frontoffice.wizards.test import BestCandidate
+from frontoffice.wizards.match import BestCandidate
 
 def redirect_view(request):
     if not request.user.is_authenticated():
@@ -50,11 +50,11 @@ def answer_question(request, election_instance_party_id, user_id=None):
     check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-def test(request, election_instance_party_id):
+def test(request, election_instance_id):
     
 
 
-    return BestCandidate(election_instance_party_id=election_instance_party_id)(request)
+    return BestCandidate(election_instance_id=election_instance_id)(request)
 
 def election(request, id=None):
 
@@ -89,7 +89,10 @@ def politician_profile_filter(request):
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
         eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
-        candidates = User.objects.filter(pk__in=elections_candidates)
+        candidate_ids=[]
+        for elections_candidate in  elections_candidates:
+            candidate_ids.append(elections_candidate.candidate_id)
+        candidates = User.objects.filter(pk__in=candidate_ids)
         politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
         filtered_politicians = politicians
         path = request.get_full_path()
