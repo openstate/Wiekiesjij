@@ -97,11 +97,11 @@ def politician_profile_filter(request):
         filtered_politicians = politicians
         path = request.get_full_path()
         region_filtered = False
+        filters = []
         if form.is_valid():
             # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
-            filters = []
 
             if form.cleaned_data['region'] != '---------' and form.cleaned_data['region']:
                 election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=form.cleaned_data['region'].id)
