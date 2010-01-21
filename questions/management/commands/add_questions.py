@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-
 from django.core.management import BaseCommand
 
 from questions import settings
@@ -411,7 +409,7 @@ class Command(BaseCommand):
                 title=u'In het buitengebied van Haaren mogen nergens megastallen komen:',
                 frontend_title=u'In het buitengebied van Haaren mogen nergens megastallen komen:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='heq1',
             )
             QuestionSetQuestion.objects.create(
@@ -436,7 +434,7 @@ class Command(BaseCommand):
                 title=u'De eerstvolgende honderd woonruimtes die de gemeente bouwt zijn voor jongeren:',
                 frontend_title=u'De eerstvolgende honderd woonruimtes die de gemeente bouwt zijn voor jongeren:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='heq2',
             )
             QuestionSetQuestion.objects.create(
@@ -461,7 +459,7 @@ class Command(BaseCommand):
                 title=u'De gemeente Haaren moet veel meer samenwerken met andere gemeenten, maar er mag geen nieuwe gemeentelijke herindeling komen:',
                 frontend_title=u'De gemeente Haaren moet veel meer samenwerken met andere gemeenten, maar er mag geen nieuwe gemeentelijke herindeling komen:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='heq3',
             )
             QuestionSetQuestion.objects.create(
@@ -486,7 +484,7 @@ class Command(BaseCommand):
                 title=u'Voor een optimale dienstverlening is het noodzakelijk dat je voor alle diensten van de gemeente bij één loket terecht kunt:',
                 frontend_title=u'Voor een optimale dienstverlening is het noodzakelijk dat je voor alle diensten van de gemeente bij één loket terecht kunt:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='heq4',
             )
             QuestionSetQuestion.objects.create(
@@ -511,7 +509,7 @@ class Command(BaseCommand):
                 title=u'Bedrijven en burgers die plannen hebben om het leven in Haaren prettiger te maken, moeten daarvoor van de gemeente geld kunnen krijgen:',
                 frontend_title=u'Bedrijven en burgers die plannen hebben om het leven in Haaren prettiger te maken, moeten daarvoor van de gemeente geld kunnen krijgen:',
                 has_no_preference=True,
-                question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+                question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
                 theme='heq5',
             )
             QuestionSetQuestion.objects.create(
