@@ -94,7 +94,7 @@ def election_instance_view(request, id):
 def question_overview(request, election_instance_id):
     instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
     
-    questions = instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES).order_by('-electioninstancequestion__position')
+    questions = instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES).order_by('electioninstancequestion__position')
     
     return render_to_response('backoffice/question_overview.html', {'instance': instance, 'questions': questions}, context_instance=RequestContext(request))
     
