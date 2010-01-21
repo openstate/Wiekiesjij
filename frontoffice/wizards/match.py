@@ -149,7 +149,7 @@ class BestCandidate(MultiPathFormWizard):
                 if 'no_pref' in answer_value:
                     print question_id, 'no-pref'
                     for candidate in self.candidates:
-                        candidate_scores[candidate].append((question.id, 0))
+                        candidate_scores[candidate].append({question.id: 0})
                     continue
 
                 # Get length of the list to help calculate score
@@ -175,50 +175,43 @@ class BestCandidate(MultiPathFormWizard):
                                 else:
                                     if int(value) in candidate_question_answers[candidate][int(question_id)]:
                                         score = score + 1
-
                         if score > 0:
                             new_score = float(float(score) / float(length))
                         else:
                             new_score = 0
-                        candidate_scores[candidate.candidate.profile].append((question.id, new_score))
+                        candidate_scores[candidate.candidate.profile].append({question.id: new_score})
                         if question_id in keys:
                             print question_id, candidate.candidate.profile.full_name(), candidate_question_answers[candidate][int(question_id)], answer_value, 'score:', new_score
-
-
 
                 elif QTYPE_MODEL_PARTY == question.question_type:
                     for value in answer_value:
                         for candidate in self.candidates:
                             if candidate.party() == value:
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.full_name(), candidate.party(), answer_value, 'score:', 1 
-
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
                     answer = Answer.objects.get(id=answer_value[0])
                     parts = answer.meta.split(':')
                     start = parts[0]
-
                     if len(parts) > 1:
                         end= parts[1]
                     else:
-                        end = int(parts[0]) + 1
-                        
+                        end = int(parts[0]) + 1                    
                     if end == 'G':
                         for candidate in self.candidates:
                             if candidate.work_experience_days == None:
                                 candidate.work_experience_days = 0
                             if (int(candidate.work_experience_days)/365) >= int(start):
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.full_name(), (int(candidate.work_experience_days)/365), answer.meta, 'score:', 1 
                     else:
                         for candidate in self.candidates:
                             # need to subtract one form the end figure as 'to' is up to but not equal
                             if candidate.work_experience_days == None:
                                 candidate.work_experience_days = 0
-
                             if (int(candidate.work_experience_days)/365) in range(int(start),(int(end)-1)):
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.candidate.profile.full_name(), (int(candidate.work_experience_days)/365), answer.meta, 'score:', 1
 
                 elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
@@ -229,7 +222,6 @@ class BestCandidate(MultiPathFormWizard):
                         levels = EducationLevel.objects.exclude(level__in=exclude_list)
                     else:
                         levels = EducationLevel.objects.exclude(level=answer_value)
-
                     for level in levels:
                         ed_instances =Education.objects.filter(level=level.id)
                         for ed in ed_instances:
@@ -237,16 +229,17 @@ class BestCandidate(MultiPathFormWizard):
                                 candidate = PoliticianProfile.objects.get(id=ed.politician_id)
                                 answered = False
                                 for question_answer in candidate_scores[candidate]:
-                                    if question.id == question_answer[0]:
+                                    if question.id in question_answer.keys():
                                         answered = True
                                 if answered == False:
-                                    candidate_scores[candidate].append((question.id, 1))
+                                    candidate_scores[candidate].append({question.id: 1})
                                     print question_id, candidate.full_name(), ed.politician_id , candidate_ids, 'score:', 1
+
                 elif QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
                     for value in answer_value:
                         for candidate in self.candidates:
                             if candidate.religion == value:
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.full_name(), candidate.religion , answer_value, 'score:', 1
 
 
@@ -259,24 +252,25 @@ class BestCandidate(MultiPathFormWizard):
                     if end == 'G':
                         for candidate in self.candidates:
                             if candidate.age() >= int(start):
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.full_name(), candidate.age() , answer.meta, 'score:', 1
                     else:
                         for candidate in self.candidates:
                             # need to subtract one form the end figure as 'to' is up to but not equal
                             if candidate.age() in range(int(start),int(end)-1):
-                                candidate_scores[candidate].append((question.id, 1))
+                                candidate_scores[candidate].append({question.id: 1})
                                 print question_id, candidate.candidate.profile.full_name(), candidate.age() , answer.meta, 'score:', 1
 
                 elif QTYPE_MODEL_PROFILE_GENDER == question.question_type:
 
                     matches = self.candidates.filter(gender=answer_value[0])
                     for match in matches:
-                        candidate_scores[match].append((question.id, 1))
+                        candidate_scores[match].append({question.id: 1})
                         print question_id, match.full_name(), match.gender , answer_value[0], 'score:', 1
 
                 elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
-                    print answer_value, 'ANSWER FOR QUESTION WEIGHTING'
+
+                    self.multiply_questions = answer_value[0]
 
                 else:
                     print 'skipped'
@@ -286,21 +280,31 @@ class BestCandidate(MultiPathFormWizard):
                 for candidate in self.candidates:
                     answered = False
                     for question_answer in candidate_scores[candidate]:
-                        if question.id == question_answer[0]:
+                        if question.id in question_answer.keys():
                             answered = True
                     if answered == False:
-                        candidate_scores[candidate].append((question.id, 0))
+                        candidate_scores[candidate].append({question.id: 0})
+
+        #Add Weighting
+        for candidate in self.candidates:
+            for question in candidate_scores[candidate]:
+                for question_id, score in question.iteritems():
+                    qid = str(question_id)
+                    theme = 'q'+qid
+                    if theme in self.multiply_questions:
+                        score = score * 2                       
+                        question[question_id] = score
 
 
         for candidate in self.candidates:
-            keys = candidate_scores[candidate]
-            
-            #print candidate.full_name()
+            print candidate.full_name()
             total = 0
-            for i in candidate_scores[candidate]:
-                total = total + i[1]
-            #print keys
-            #print total, 'score'
+
+            for question in candidate_scores[candidate]:
+                for question_id, score in question.iteritems():
+                    total = total + score
+            print candidate_scores[candidate]
+            print total, 'score'
             
         return redirect('fo.test', election_instance_id=self.election_instance_id)
 
