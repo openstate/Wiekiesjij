@@ -29,7 +29,7 @@ def move_down(instance, field, limit, kwargs={}):
         instance.save()
         return getattr(instance, field)
     else:
-        tmp_pos = random.randint(10000, sys.maxint) #Small hack to prevent DB errors. 10.000 is pretty save
+        tmp_pos = random.randint(10000, 20000) #Small hack to prevent DB errors. 10.000 <-> 20.000 is pretty save
         current_position = getattr(instance, field)
         next_position = getattr(next, field)
         
@@ -65,7 +65,7 @@ def move_up(instance, field, limit, kwargs={}):
         instance.save()
         return getattr(instance, field)
     else:
-        tmp_pos = random.randint(10000, sys.maxint) #Small hack to prevent DB errors. 10.000 is pretty save
+        tmp_pos = random.randint(10000, 20000) #Small hack to prevent DB errors. 10.000 <-> 20.000 is pretty save
         current_position = getattr(instance, field)
         previous_position = getattr(previous, field)
 
