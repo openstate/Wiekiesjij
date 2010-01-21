@@ -141,6 +141,8 @@ class Command(BaseCommand):
                 try:
                     if name == 'amsterdam':
                         ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID, council__level='Gemeente')
+                    elif name == 'amsterdam centrum':
+                        ei = ElectionInstance.objects.get(council__region__iexact='amsterdam', election_event__pk=ELECTION_EVENT_ID, council__level='Deelgemeente')
                     else:
                         ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID)
                     linkes.append(name)
