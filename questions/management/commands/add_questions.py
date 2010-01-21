@@ -226,18 +226,21 @@ class Command(BaseCommand):
                 value=u'Minder dan 1 jaar in de gemeente',
                 frontoffice_value=None,
                 position=1,
+                meta=1,
             )
             Answer.objects.create(
                question=q7,
                 value=u'1 tot 4 jaar in de gemeente',
                 frontoffice_value=None,
                 position=2,
+                meta=4,
             )
             Answer.objects.create(
                question=q7,
                 value=u'4 tot 10 jaar in de gemeente',
                 frontoffice_value=None,
                 position=3,
+                meta=10,
             )
             #Was removed from list - leaving as it may be readded
             #            Answer.objects.create(
@@ -251,6 +254,7 @@ class Command(BaseCommand):
                 value=u'Uw hele leven in de gemeente',
                 frontoffice_value=u'zijn/haar hele leven in de gemeente',
                 position=4,
+                meta=1000,
             )
             print "Added basic question 7"
 
