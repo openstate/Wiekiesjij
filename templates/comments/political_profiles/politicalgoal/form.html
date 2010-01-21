@@ -1,19 +1,19 @@
 {% load comments i18n %}
 <form action="{% comment_form_target %}" method="post">
-  <input type="hidden" name="next" value="{% url fo.goal goal.id %}" />
-  {% for field in form %}
+    <input type="hidden" name="next" value="{% url fo.goal goal.id %}" />
+    {% for field in form %}
     {% if field.is_hidden %}
       {{ field }}
     {% else %}
       {% if field.errors %}{{ field.errors }}{% endif %}
-      <p
+      <div class="field"
         {% if field.errors %} class="error"{% endif %}
         {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
         {{ field.label_tag }} {{ field }}
-      </p>
+      </div>
     {% endif %}
-  {% endfor %}
-  <p class="submit">
-    <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
-  </p>
+    {% endfor %}
+    <div class="form-submit">
+    <button class="primary next" type="submit">{% trans "Post" %}</button>
+    </div>
 </form>

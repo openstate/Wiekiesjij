@@ -9,37 +9,56 @@
 
 {% block menu_candidates %}selected{% endblock menu_candidates %}
 
-{% block content %}
-    <div class="mod goal">
+{% block breadcrumbs %}
+<div class="col lastCol">
+	<ul class="breadcrumbs">
+    	<li class="back"><a href="{% url fo.politician_profile goal.politician.user.id %}" >
+                {% blocktrans with goal.politician.full_name|possessive as name %}
+                    Back to {{ name }} profile
+                {% endblocktrans %}
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
+{% block cols %}
+<div class="col size1of2">
+	<div class="mod goal">
     	<div class="hd">
-    		<h1>{{ goal.goal }}</h1>
-       	</div>
+        	<h1>{% trans "Politiek doel" %}</h1>
+        </div>
+    	<div class="bd">
+        	<h2>{{ goal.goal }}</h2>
+        </div>
+    </div>
+    <div class="mod comments">
+    	<div class="hd">
+        	<h2>{% trans "Comment on this" %}</h2>
+        </div>
         <div class="bd">
-    
-            <div>
-                <a href="{% url fo.politician_profile goal.politician.user.id %}" class="back">
-                    {% blocktrans with goal.politician.full_name|possessive as name %}
-                        Back to {{ name }} profile
-                    {% endblocktrans %}
-                </a>
-            </div>
+        	{% if user.is_authenticated %}
+                <span><strong>[User name] {% trans 'says' %}:</strong> </span> <em>[replace label 'opmerking' with this]</em>
+                {% render_comment_form for goal %}
+            {% endif %}
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
-                <div>
+                <div class="item{% if forloop.last %} last-item{% endif %}">
+                	<p class="smallInfo">
                     {% if comment.user_url %}
                         <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
                     {% else %}
                         <strong>{{ comment.user_name }}</strong>
                     {% endif %}
+                    zei op [date] om [time]:
+                	</p>
                     <p>{{ comment.comment|urlize|linebreaks }}</p>
                 </div>
             {% endfor %}
     
-            {% if user.is_authenticated %}
-                {% trans 'Respond' %}:
-                {% render_comment_form for goal %}
-            {% endif %}
+            
         </div>
     </div>
-{% endblock content %}
+</div>
+{% endblock cols %}

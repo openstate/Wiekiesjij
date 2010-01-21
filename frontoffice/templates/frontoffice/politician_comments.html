@@ -9,35 +9,50 @@
 
 {% block menu_candidates %}selected{% endblock menu_candidates %}
 
-{% block content %}
-    {% include "frontoffice/quick_profile.html" %}
-
-    <div>
-        <div>
-            <a href="{% url fo.politician_profile profile.user.id %}">
-                {% blocktrans with profile.full_name|possessive as name %}
-                    Back to {{ name }}'s profile
+{% block breadcrumbs %}
+<div class="col lastCol">
+	<ul class="breadcrumbs">
+    	<li class="back">
+        	<a href="{% url fo.politician_profile profile.user.id %}" >
+                {% blocktrans with profile.full_name as name %}
+                    Back to profile of {{ name }}
                 {% endblocktrans %}
             </a>
+        </li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
+{% block cols %}
+<div class="col size3of4">
+    {% include "frontoffice/quick_profile.html" %}
+</div>
+<div class="col size1of2">
+    <div class="mod comments">
+    	<div class="hd">
+        	<h2>{% trans "Comment on this politician" %}</h2>
         </div>
-
-        {% get_comment_list for profile as comments %}
-        {% for comment in comments %}
-            <div>
-                {% if comment.user_url %}
-                    <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
-                {% else %}
-                    <strong>{{ comment.user_name }}</strong>
-                {% endif %}
-                <p>{{ comment.comment|urlize|linebreaks }}</p>
-            </div>
-        {% endfor %}
-
-        {% if user.is_authenticated %}
-            {% trans 'Respond' %}:
-            {% render_comment_form for profile %}
-        {% endif %}
-
-
+    	<div class="bd">
+			{% if user.is_authenticated %}
+            	<span><strong>[User name] {% trans 'says' %}:</strong> </span> <em>[replace label 'opmerking' with this]</em>
+                {% render_comment_form for profile %}
+            {% endif %}
+            
+            {% get_comment_list for profile as comments %}
+            {% for comment in comments %}
+                <div class="item{% if forloop.last %} last-item{% endif %}">
+                    <p class="smallInfo">
+                    {% if comment.user_url %}
+                        <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
+                    {% else %}
+                        <strong>{{ comment.user_name }}</strong>
+                    {% endif %}
+                    zei op [date] om [time]:
+                    </p>
+                    <p>{{ comment.comment|urlize|linebreaks }}</p>
+                </div>
+            {% endfor %}
+		</div>
     </div>
-{% endblock content %}
+</div>
+{% endblock cols %}
