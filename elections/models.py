@@ -255,7 +255,7 @@ class Party(models.Model):
         verbose_name, verbose_name_plural = _('Party'), _('Parties')
 
     def profile_incomplete(self):
-        return not self.address_street or not self.address_number or not self.address_postalcode or not self.address_city or not self.abbreviation or not self.name or not self.num_seats 
+        return not self.address_street or not self.address_number or not self.address_postalcode or not self.address_city or not self.abbreviation or not self.name
 
     @property
     def address(self):
