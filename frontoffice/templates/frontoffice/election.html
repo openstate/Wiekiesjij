@@ -29,8 +29,12 @@
                 <li class="selected">
                     <span class="position">{{ eip.position }}</span>
                     <div class="image">
-                    	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 72x46 %}" />
-                  	</div>
+                    	{% if eip.party.logo %}
+                    	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 60x40 %}" />
+                  		{% else %}
+                        <img alt="{{ eip.party.abbreviation }}" src="{% thumbnail 'defaults/party-dummy.jpg' 60x40 %}" />
+                        {% endif %}
+                    </div>
                     <span class="abbr">{{ eip.party.abbreviation }}</span>
                     <p class="full-party-name">{{ eip.party.name }}</p>
                 </li>
@@ -40,9 +44,9 @@
                     <span class="position">{{ eip.position }}</span>
         			<span class="image">
                     {% if eip.party.logo %}
-                       	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 72x46 %}" />
+                       	<img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 60x40 %}" />
                     {% else %}
-                        <img alt="{{ eip.party.abbreviation }}" src="/link/to/default/" />
+                        <img alt="{{ eip.party.abbreviation }}" src="{% thumbnail 'defaults/party-dummy.jpg' 60x40 %}" />
                     {% endif %}
                     </span>
                     <span class="abbr">{{ eip.party.abbreviation }}</span>
@@ -77,9 +81,9 @@
                         {% if politician %}
                         	<div class="image">
                             {% if politician.candidate.profile.picture %}
-                                <img alt="{{ politician.full_name }}" src="{% thumbnail politician.candidate.profile.picture 39x48 upscale %}" />
+                                <img alt="{{ politician.full_name }}" src="{% thumbnail politician.candidate.profile.picture 40x50 upscale %}" />
                             {% else %}
-                                <img alt="{{ politician.full_name }}" src="/link/to/default/" />
+                                <img alt="{{ politician.full_name }}" src="{% thumbnail 'defaults/pol-dummy.jpg' 40x50 upscale %}" />
                             {% endif %}
                             </div>
                             <a href="{% url fo.politician_profile politician.candidate.id %}" class="last-name">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a>
