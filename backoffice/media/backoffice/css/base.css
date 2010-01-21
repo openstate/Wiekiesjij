@@ -963,9 +963,9 @@
 				
 			.message-list {
 			    /*background:#fee;*//*#FFF9CE;*/
-				clear:both;
+				/*clear:both;*/
 				margin-top: .5em;
-				padding-left:65px;
+				padding-left:115px;
 				}
 				.message-list li {
 					margin:6px 0;
@@ -1059,12 +1059,23 @@
 			min-height:600px;
 			}
 			
-		div.parties .item .image {
+		div.parties .item .image,
+		div.candidates .item .image {
 		    float: left;
-		    height: 50px;
+		    height: 40px;
 		    margin: 0 10px 0 0;
-		    width: 50px;
+		    width: 70px;
 		}
+		div.candidates .item .image {
+			height:55px;
+			width:auto;
+			}
+		
+		div.parties .message-list {
+			clear:both;
+			padding-left:65px;
+			}
+		
 
 	/*	Politician wizard
 		**************************************************************************************************************/

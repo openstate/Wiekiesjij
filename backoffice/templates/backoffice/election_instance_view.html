@@ -39,7 +39,11 @@
        	<span class="list">{% trans 'List' %} <strong>{{ index }}</strong></span>
 
         {% if eip %}                
-			{% if eip.party.logo %}<div class="image"><img src="{% thumbnail eip.party.logo 50x50 %}" alt="{{ eip.party.abbreviation }}" /></div>{% endif %}
+			{% if eip.party.logo %}
+            	<div class="image"><img src="{% thumbnail eip.party.logo 70x40 %}" alt="{{ eip.party.abbreviation }}" /></div>
+            {% else %}
+            	<div class="image"><img src="{% thumbnail "defaults/party-dummy.jpg" 70x40 %}" alt="{{ eip.party.abbreviation }}" /></div>
+           	{% endif %}
             <h3>{{ eip.party.name }} {% if eip.party.abbreviation %} 
                     (<abbr  title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr>)
 
