@@ -167,6 +167,13 @@ class Command(BaseCommand):
                             position=idx,
                         )
                         idx += 1
+                        
+                    Answer.objects.create(
+                        question=q,
+                        value=u'Een andere gemeente',
+                        frontoffice_value=None,
+                        position=idx
+                    )
                 
                     #Link the questions
                     if ei is not None:
