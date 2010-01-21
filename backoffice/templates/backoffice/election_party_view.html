@@ -41,7 +41,11 @@
             <span class="list"><strong>{{ index }}</strong></span>
             {% if can %}
             
-                {% if can.candidate.profile.picture %}<img src="{% thumbnail can.candidate.profile.picture 100x50 %}" />{% endif %}
+                {% if can.candidate.profile.picture %}
+					<img src="{% thumbnail can.candidate.profile.picture 100x50 %}" alt="{{ can.candidate.profile.full_name }}"/>
+				{% else %}
+					<img src="{% thumbnail "defaults/pol-dummy.jpg" 100x50 %}" alt="{{ can.candidate.profile.full_name }}"/>
+				{% endif %}
                 <h3>{{ can.candidate.profile.full_name }}</h3>
                 {% comment %}
                 <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>

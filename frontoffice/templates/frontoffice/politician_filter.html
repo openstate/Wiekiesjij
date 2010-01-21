@@ -95,7 +95,7 @@
                         {% if politician.picture %}
                             <img alt="{{ politician.full_name }}" src="{% thumbnail politician.picture 50x70 upscale %}" />
                         {% else %}
-                            <img alt="{{ politician.full_name }}" src="/link/to/default/" />
+                            <img alt="{{ politician.full_name }}" src="{% thumbnail "defaults/pol-dummy.jpg" 50x70 upscale %}" />
                         {% endif %}
                     </div>
                     <a href="{% url fo.politician_profile politician.user.id %}" class="name">{{ politician.full_name }}</a>
