@@ -47,9 +47,10 @@ class Council(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
         ordering = ('name',)
-
+    
+    @property
     def profile_incomplete(self):
-        return not self.seats or not self.history
+        return not self.seats or not self.street or not self.house_num or not self.postcode or not self.town
         
     @property
     def election_instance(self):
