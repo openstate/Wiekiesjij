@@ -95,6 +95,10 @@ class Answer(models.Model):
     
     position    = models.PositiveIntegerField(_('Position'), default=0)
     
+    class Meta:
+        verbose_name, verbose_name_plural = _('Answer'), _('Answers')
+        ordering = ('position', 'question')
+    
     def move_down(self):
         '''
         Changes the position value with next row
