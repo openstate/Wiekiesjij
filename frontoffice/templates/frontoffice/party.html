@@ -1,5 +1,5 @@
 {% extends 'frontoffice/base.html' %}
-{% load i18n %}
+{% load i18n thumbnail utils_tags %}
 
 
 {% block content %}
@@ -9,7 +9,7 @@
         </div>
         <div class="bd">
         	<div class="image">
-            	<img src="dsfsd.jpg" alt="[Party Name]" />
+            	<img src="{% thumbnail eip.party.logo 80x140 upscale %}" alt="{{ eip.party.name }}" />
             </div>
             <div class="popularityMeter">
                 <div class="meter">
@@ -22,33 +22,32 @@
                 <span class="total">{{ popularity|default:0 }}%</span>
             </div>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
-                eu, euismod ac velit. Cras nec erat eget turpis dignissim dignissim et eu diam. Vestibulum 
-                pulvinar egestas metus, vitae imperdiet lorem ornare id. Nulla tincidunt sem vel libero 
-                elementum ullamcorper.
+                {{ eip.party.description }}
             </p>
             <div class="quickProfileInfo">
                 <table>
                     <tr>
                         <th>{% trans 'Slogan' %}</th>
-                        <td><em>"Het gaat om mensen"</em></td>
+                        <td><em>{{ eip.party.slogan }}</em></td>
                     </tr>
-                    <tr>
-                        <th>{% trans 'Website' %}</th>
-                        <td><a href="#">www.partywebsite.nl</a></td>
-                    </tr>
+                    {% if eip.party.website %}
+                        <tr>
+                            <th>{% trans 'Website' %}</th>
+                            <td><a href="{{ eip.party.website }}">{{ eip.party.website }}</a></td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <th>{% trans 'Number of seats' %}</th>
-                        <td>12</td>
+                        <td>{{ eip.party.num_seats }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Number of candidates' %}</th>
-                        <td>14</td>
+                        <td>??</td>
                     </tr>
                 </table>
             </div>
             <div class="ballotPosition">
-            	<a href="#">
+            	<a href="{% url fo.election eip.election_instance.id %}">
             	{% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.council.region as municipality %}
                     {{ party_name }} is list {{ position }} in municipality {{ municipality }}
                 {% endblocktrans %}
@@ -56,91 +55,141 @@
             </div>
         </div>
     </div>
-    
+
     <div class="mod tabbed">
     	<div class="hd">
-        	<ul class="tabs">
-            	<li>
-                	<a href="#">{% trans "Video" %}</a>
+
+<!-- TABS -->
+
+            <ul class="tabs">
+            	{% if eip.party.movie %}
+                    <li {% ifequal showtab 'vid' %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.party_profile eip.id 'vid' %}">{% trans "Video" %}</a>
+                    </li>
+                {% endif %}
+                <li {% ifequal showtab 'can' %}class="selected"{% endifequal %}>
+                    <a href="{% url fo.party_profile eip.id 'can' %}">{% trans "Candidates" %}</a>
                 </li>
-                <li class="selected">
-                	<a href="#">{% trans "Candidates" %}</a>
-                </li>
-                <li>
-                	<a href="#">{% trans "History" %}</a>
-                </li>
-                <li>
-                	<a href="#">{% trans "Party manifesto" %}</a>
-                </li>
+                {% if eip.party.history %}
+                    <li {% ifequal showtab 'his' %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.party_profile eip.id 'his' %}">{% trans "History" %}</a>
+                    </li>
+                {% endif %}
+                {% if eip.party.manifesto_summary %}
+                    <li {% ifequal showtab 'man' %}class="selected"{% endifequal %}>
+                        <a href="{% url fo.party_profile eip.id 'man' %}">{% trans "Party manifesto" %}</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         
-        <!--TAB video
-        <div class="bd">
-        	{#{ profile.movie|youtube }#}
-        </div>-->
-        
-        <!--TAB Candidates-->
-        <!--<div class="bd">
-        	<div class="pol-block-list">
-            
-            </div> 
-        </div>-->
-        
-        <!--TAB History-->
-        <div class="bd">
-        	
+        {% ifequal showtab 'vid' %}
+
+<!-- VIDEO TAB -->
+
+        <div class="bd vid">
+            {{ eip.party.movie|youtube }}
         </div>
-        
+
+        {% endifequal %}
+        {% ifequal showtab 'can' %}
+
+<!-- CANDIDATES TAB -->
+
+        <div class="bd can">
+            <ul>
+                {% for candidacy in eip.candidates.all %}
+                    <li>
+                        <span class="position">{{ candidacy.position }}</span>
+                        <div class="image">
+                            {% if candidacy.candidate.profile.picture %}
+                                <img alt="{{ candidacy.candidate.full_name }}" src="{% thumbnail candidacy.candidate.profile.picture 39x48 upscale %}" />
+                            {% else %}
+                                <img alt="{{ candidacy.candidate.full_name }}" src="/link/to/default/" />
+                            {% endif %}
+                        </div>
+                        <a href="{% url fo.politician_profile candidacy.candidate.id %}" class="last-name">{{ candidacy.candidate.profile.middle_name }} {{ candidacy.candidate.profile.last_name }}</a>
+                        <p>{{ candidacy.candidate.profile.initials }} ({{ candidacy.candidate.profile.first_name }}) ({{ candidacy.candidate.profile.gender}})</p>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% endifequal %}
+        {% ifequal showtab 'his' %}
+
+<!-- HISTORY TAB -->
+
+        <div class="bd his">
+            {{ eip.party.history }}
+        </div>
+
+        {% endifequal %}
+        {% ifequal showtab 'man' %}
+
+<!-- MANIFESTO TAB -->
+
+        <div class="bd man">
+            <p>{{ eip.party.manifesto_summary }}</p>
+            {% if eip.party.manifesto %}
+                <a href="{{ eip.party.manifesto }}">{% trans 'Read entire manifesto' %}</a>
+            {% endif %}
+        </div>
+
+        {% endifequal %}
+
     </div>
     
 {% endblock content %}
 
 {% block sidebar %}
-    <div class="mod party-news">
-    	<div class="hd">
-        	<h2>{% trans "News" %}</h2>
-        </div>
-        <div class="bd">
-        	<div class="item">
-            	<h3>News item title</h3>
-                <span class="smallInfo">21 januari 2010 - 12:45</span>
-                <p>
-                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
-                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
-                </p>
+    {% comment %}
+        <!--<div class="mod party-news">
+            <div class="hd">
+                    <h2>{% trans "News" %}</h2>
             </div>
-            <div class="item">
-            	<h3>News item title</h3>
-                <span class="smallInfo">21 januari 2010 - 12:45</span>
-                <p>
-                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
-                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
-                </p>
+            <div class="bd">
+                    <div class="item">
+                    <h3>News item title</h3>
+                    <span class="smallInfo">21 januari 2010 - 12:45</span>
+                    <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet
+                            eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                    </p>
+                </div>
+                <div class="item">
+                    <h3>News item title</h3>
+                    <span class="smallInfo">21 januari 2010 - 12:45</span>
+                    <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet
+                            eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                    </p>
+                </div>
+                <div class="item last-item">
+                    <h3>News item title</h3>
+                    <span class="smallInfo">21 januari 2010 - 12:45</span>
+                    <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet
+                            eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
+                    </p>
+                </div>
+                <a href="#" class="btn rss">{% trans "Subscribe" %}</a>
             </div>
-            <div class="item last-item">
-            	<h3>News item title</h3>
-                <span class="smallInfo">21 januari 2010 - 12:45</span>
-                <p>
-                	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla velit magna, vehicula nec laoreet 
-                	eu, euismod ac velit. <a href="#">{% trans "Read more" %}</a>
-                </p>
-            </div>
-            <a href="#" class="btn rss">{% trans "Subscribe" %}</a>
-        </div>
-    </div>
+        </div>-->
+    {% endcomment %}
     <div class="mod send-message">
     	<div class="hd">
         	<h2>{% trans "Send a message" %}</h2>
         </div>
         <div class="bd">
-        	<p>{% trans "Heb je vragen of opmerkingen?" %}</p>
+        	<p>{% trans "Have you got questions or remarks?" %}</p>
         	<p>
-            	{% blocktrans %}
-                    Stuur een email naar <em>[party name] [Council Region]</em>.
+            	{% blocktrans with eip.party.name|title as party_name and eip.election_instance.council.region as municipality %}
+                    Send an email to <em>{{ party_name }} {{ municipality }}</em>.
                 {% endblocktrans %}
             </p>
-            <p>{% trans "Klik op de link hieronder om uw standaard email-programma te openen." %}</p>
+            <p>{% trans 'Click on the link below to open your standard email program.' %}</p>
         	<a href="#" class="btn email">{% trans "Send an email" %}</a>
         </div>
     </div>

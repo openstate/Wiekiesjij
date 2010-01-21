@@ -2,12 +2,13 @@
 {% load i18n %}
 
 {% block content %}
-    <a href="{% url fo.change_password %}">{% trans 'Change your password' %}</a>
     <h1>{% trans 'Change your information' %}</h1>
     <form method="POST" enctype="multipart/form-data" action="">
         {{ form.as_template }}
+        <a href="{% url fo.change_password %}">{% trans 'Change your password' %}</a>
+        
         <div class="form-submit">
-            <button class="primary next" type="submit">{% trans "Submit" %}</button>
+            <button class="primary" type="submit">{% trans "Submit" %}</button>
         </div>
     </form>
 

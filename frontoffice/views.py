@@ -261,30 +261,21 @@ def politician_comments(request, id):
     
     return render_to_response('frontoffice/politician_comments.html', {'profile':profile}, context_instance=RequestContext(request))
                                                             
-def party_profile(request, eip_id):
+def party_profile(request, eip_id, tab='can'):
     eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     
-    return render_to_response('frontoffice/party.html', {'eip': eip }, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/party.html', {'eip': eip, 'showtab':tab }, context_instance=RequestContext(request))
 
-def dashboard(request):
-    """
-        Render a generic page for any kind of user, from where the user can do whatever they have rights for.
-    """
-    user = request.user
-    try:
-        profile = user.profile #Every logged in user has a profile, right?
-    except AttributeError:
-        return redirect('fo.login')
-    return render_to_response('frontoffice/dashboard.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))
-
-#def edit_profile(request):
+#def dashboard(request):
+#    """
+#        Render a generic page for any kind of user, from where the user can do whatever they have rights for.
+#    """
 #    user = request.user
 #    try:
 #        profile = user.profile #Every logged in user has a profile, right?
 #    except AttributeError:
-#        raise Http404
-#
-#    return redirect('fo.'+profile.type+'.edit_profile')
+#        return redirect('fo.login')
+#    return render_to_response('frontoffice/dashboard.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))
 
 @visitors_only
 def edit_visitor_profile(request):

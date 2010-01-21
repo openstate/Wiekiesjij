@@ -157,6 +157,7 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
             urllib.urlretrieve(feed_url,CACHE_FILE)
         except IOError: #if downloading fails, proceed using cached file
             pass
+
     #load feed from cache
     feed = feedparser.parse(open(CACHE_FILE))
     #set regex shizzle for actually parsing the messages
@@ -166,23 +167,21 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     pos_regex = re.compile(r"^([A-Za-z0-9-_]+:)") #remove poster name
     
     posts = []
-    for i in range(posts_to_show):
-        if i not in feed['entries']:
-            continue
-        pub_date = feed['entries'][i].updated_parsed
+    for entry in feed['entries'][:posts_to_show]:
+        pub_date = entry.updated_parsed
         #TODO: Twitter delivers time in GMT (probably). We don't live in Greenwich.
         published = datetime.datetime(*pub_date[:6])
 
         #make links out of URLs, @usernames and #hashtags and remove username of politician
-        summary = url_regex.sub(r'<a href="\g<1>">\g<1></a>', feed['entries'][i].summary)
+        summary = url_regex.sub(r'<a href="\g<1>">\g<1></a>', entry.summary)
         summary = usn_regex.sub(r'@<a href="http://twitter.com/\g<1>">\g<1></a>', summary)
         summary = htg_regex.sub(r'#<a href="http://search.twitter.com/search?q=%23\g<1>">\g<1></a>', summary)
         summary = pos_regex.sub('', summary)
 
         posts.append({
-            'title': mark_safe(feed['entries'][i].title),
+            'title': mark_safe(entry.title),
             'summary': mark_safe(summary),
-            'link': mark_safe(feed['entries'][i].link),
+            'link': mark_safe(entry.link),
             'published': published,
         })
     return {'posts': posts}

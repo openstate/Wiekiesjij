@@ -58,6 +58,7 @@ urlpatterns += patterns('frontoffice.views',
 
     #party profile page
     url(r'^party/(?P<eip_id>\d+)/$', 'party_profile', name='fo.party_profile'),
+    url(r'^party/(?P<eip_id>\d+)/(?P<tab>\w+)/$', 'party_profile', name='fo.party_profile'),
 
     #politician browser
     url(r'^election/$', 'election', name='fo.election'),
@@ -77,5 +78,5 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^goal/(?P<goal_id>\d+)/thumbs_down/$', 'thumbs_down', name='fo.thumbs_down'),
 
     #generic profile
-    url(r'^dashboard/$', 'dashboard', name='fo.dashboard'),
+    #url(r'^dashboard/$', 'dashboard', name='fo.dashboard'),
 )
