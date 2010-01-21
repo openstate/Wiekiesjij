@@ -53,7 +53,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS), required=False)
     start_age = forms.IntegerField(label=_('Lowest Age'), required=False)
     end_age = forms.IntegerField(label=_('Oldest Age'), required=False)
-    marital_status = forms.ChoiceField(label=_('Marital Status'), choices=MARITAL_STATUS, required=False)
+    marital_status = forms.ChoiceField(label=_('Marital Status'), choices=MARITAL_STATUS_A, required=False)
     #children = forms.NullBooleanField(label=_('Children'), widget=forms.widgets.NullBooleanSelect(), required=False )
     children = forms.ChoiceField(label=_('Children'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
     religion = forms.ChoiceField(choices=RELIGION_A, label=_('Religon'), required=False)

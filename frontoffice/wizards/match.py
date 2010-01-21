@@ -8,10 +8,10 @@ from utils.multipathform import Step, MultiPathFormWizard
 
 from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
 from questions.forms import SelectQuestionForm, VisitorAnswerQuestionForm
-from questions.forms.types import ModelMultiAnswerForm
+from questions.forms.types import ModelMultiAnswerForm, ModelAnswerForm, ThemeAnswerForm
 from questions.models import Question, Answer
 from elections.models import Candidacy, ElectionInstanceParty
-from questions.settings import QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE  
+from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE
 from questions.settings import FRONTOFFICE_QUESTION_TYPES, BACKOFFICE_QUESTION_TYPES, MULTIPLE_ANSWER_TYPES
 from political_profiles.models import WorkExperienceSector, EducationLevel, PoliticianProfile, Education
 
@@ -82,6 +82,9 @@ class BestCandidate(MultiPathFormWizard):
             elif QTYPE_MODEL_PROFILE_GENDER == question.question_type:
                 form = {str(question.id): VisitorAnswerQuestionForm}
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
+            elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
+                form = {str(question.id): ThemeAnswerForm}
+                fkwargs= {str(question.id): {'queryset': self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('electioninstancequestion__position'), 'empty_label':empty_label}}
             else:
                 pass
             step = Step(str(question.id),
@@ -271,6 +274,9 @@ class BestCandidate(MultiPathFormWizard):
                     for match in matches:
                         candidate_scores[match].append((question.id, 1))
                         print question_id, match.full_name(), match.gender , answer_value[0], 'score:', 1
+
+                elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
+                    print answer_value, 'ANSWER FOR QUESTION WEIGHTING'
 
                 else:
                     print 'skipped'

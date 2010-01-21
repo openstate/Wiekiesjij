@@ -7,7 +7,8 @@ from django.forms import widgets
 
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.formutils import TemplateForm
-from questions.exceptions import ModelAnswerFormError 
+from questions.exceptions import ModelAnswerFormError
+from questions.settings import PROFILE_QUESTION_WEIGHT_OPTIONS
 class MultipleAnswerForm(BetterForm, TemplateForm):
     answer = forms.MultipleChoiceField(widget=widgets.CheckboxSelectMultiple)
     
@@ -58,7 +59,6 @@ class ModelMultiAnswerForm(BetterForm, TemplateForm):
     def __init__(self, queryset=None, attribute=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
-
         try:
             self.fields['value'].attribute=attribute
             self.fields['value'].empty_label = empty_label
@@ -68,7 +68,7 @@ class ModelMultiAnswerForm(BetterForm, TemplateForm):
             raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
 
 class ModelAnswerForm(BetterForm, TemplateForm):
-    answer = GenerateModelChoiceField(queryset=None, widget=widgets.RadioSelect)
+    value = GenerateModelChoiceField(queryset=None, widget=widgets.RadioSelect)
 
     def __init__(self, queryset=None, attribute=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -81,6 +81,30 @@ class ModelAnswerForm(BetterForm, TemplateForm):
 
         except Exception:
             raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
+
+
+class ThemeAnswerForm(BetterForm, TemplateForm):
+    value = forms.MultipleChoiceField(widget=widgets.CheckboxSelectMultiple)
+
+    def __init__(self, queryset=None, attribute=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        choices = []
+        if queryset:
+            choices = []
+            for object in queryset:
+                for choice in PROFILE_QUESTION_WEIGHT_OPTIONS:
+                    if object.theme == choice[0]:
+                        if choice not in choices:
+                            choices.append(choice)
+                    elif object.theme.startswith('q8_') and choice[0] == 'q8':
+                        if choice not in choices:
+                            choices.append(choice)
+
+        
+        self.fields['value'].widget=widgets.CheckboxSelectMultiple(choices=choices)
+        self.fields['value'].choices = choices
+        self.fields['value'].label=_('Answer')
+
 
 class BooleanForm(BetterForm, TemplateForm):
     answer = forms.BooleanField()

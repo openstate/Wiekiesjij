@@ -294,3 +294,17 @@ class Command(BaseCommand):
                 position=14,
         )
         print "Added basic question 14"
+
+ 
+        q15 = Question.objects.create(
+            title=u'U heeft nu alle vragen beantwoord. Hieronder kunt u aangeven welke vragen u extra belangrijk vindt. Het is overigens niet verplicht extra gewicht aan bepaalde vragen te geven:',
+            question_type=settings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT,
+            theme='q15',
+            has_no_preference=False,
+        )
+        qsq15 = QuestionSetQuestion.objects.create(
+                question=q15,
+                questionset=qs1,
+                position=1000,
+        )
+        print "Added basic question 15"
