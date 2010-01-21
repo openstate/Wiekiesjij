@@ -27,5 +27,5 @@
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
-	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_griffie.pdf
+	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_kandidaat.pdf
 {% endblock sidebar %}
