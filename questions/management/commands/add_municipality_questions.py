@@ -139,7 +139,10 @@ class Command(BaseCommand):
                 #try link it to the propper electioninstance
                 ei = None
                 try:
-                    ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID)
+                    if name == 'amsterdam':
+                        ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID, council__level='Gemeente')
+                    else:
+                        ei = ElectionInstance.objects.get(council__region__iexact=name, election_event__pk=ELECTION_EVENT_ID)
                     linkes.append(name)
                 except ElectionInstance.DoesNotExist:
                     ei is None
