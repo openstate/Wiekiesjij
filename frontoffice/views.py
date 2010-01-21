@@ -89,10 +89,10 @@ def politician_profile_filter(request):
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
         eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
-        candidate_ids=[]
-        for elections_candidate in  elections_candidates:
-            candidate_ids.append(elections_candidate.candidate_id)
-        candidates = User.objects.filter(pk__in=candidate_ids)
+#        candidate_ids=[]
+#        for elections_candidate in  elections_candidates:
+#            candidate_ids.append(elections_candidate.candidate_id)
+        candidates = User.objects.filter(pk__in=elections_candidates)
         politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
         filtered_politicians = politicians
         path = request.get_full_path()
@@ -115,7 +115,6 @@ def politician_profile_filter(request):
                 region_filtered = True
                 filters.append((_('Region'), form.cleaned_data['region'].council.region, new_path))
 
-
             if form.cleaned_data['name']:
                 name_filter = None
                 for name in form.cleaned_data['name'].split():
@@ -126,11 +125,11 @@ def politician_profile_filter(request):
                 filtered_politicians = filtered_politicians.filter(name_filter)
                 new_path = new_url(path, 'name', form.cleaned_data['name'])
                 filters.append((_('Name'), form.cleaned_data['name'], new_path))
+
             if form.cleaned_data['gender'] != 'All' and form.cleaned_data['gender']:
                 filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
                 new_path = new_url(path, 'gender', form.cleaned_data['gender'])
                 filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
-
 
             if form.cleaned_data['children']  != '---------' and form.cleaned_data['children']:
                 if form.cleaned_data['children'] == 1:
@@ -158,7 +157,6 @@ def politician_profile_filter(request):
                 new_path = new_url(path, 'start_age', form.cleaned_data['start_age'])
                 filters.append((_('Youngest'), form.cleaned_data['start_age'], new_path))
 
-
             if form.cleaned_data['end_age'] is not None:
                 date = datetime.date(todate.year - (form.cleaned_data['end_age'] + 1), todate.month, todate.day)
 
@@ -172,10 +170,12 @@ def politician_profile_filter(request):
                 new_path = new_url(path, 'education', form.cleaned_data['education'].id)
 
                 filters.append((_('Education'), form.cleaned_data['education'], new_path))
+
             if form.cleaned_data['political_exp_years']:
                 filtered_politicians = filtered_politicians.filter(political_experience_days__gte=(form.cleaned_data['political_exp_years'] * 365))
                 new_path = new_url(path, 'political_exp_years', form.cleaned_data['political_exp_years'])
                 filters.append((_('Years political experience'), form.cleaned_data['political_exp_years'], new_path))
+
             if form.cleaned_data['work_exp_years']:
                 filtered_politicians = filtered_politicians.filter(work_experience_days__gte=(form.cleaned_data['work_exp_years'] * 365))
                 new_path = new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
@@ -185,14 +185,17 @@ def politician_profile_filter(request):
                 filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])
                 new_path = new_url(path, 'religion', form.cleaned_data['religion'])
                 filters.append((_('Religion'), religion[form.cleaned_data['religion']], new_path))
+
             if form.cleaned_data['marital_status'] != '---------' and form.cleaned_data['marital_status']:
                 filtered_politicians = filtered_politicians.filter(marital_status=form.cleaned_data['marital_status'])
                 new_path = new_url(path, 'marital_status', form.cleaned_data['marital_status'])
                 filters.append((_('Marital status'), marital_status[form.cleaned_data['marital_status']], new_path))
+
             if form.cleaned_data['goals'] != '---------' and form.cleaned_data['goals']:
                 filtered_politicians = filtered_politicians.filter(goals__goal__icontains=form.cleaned_data['goals'])
                 new_path = new_url(path, 'goals', form.cleaned_data['goals'])
                 filters.append((_('Goals'), form.cleaned_data['goals'], new_path))
+
             if form.cleaned_data['smoker'] != '---------' and form.cleaned_data['smoker']:
                 filtered_politicians = filtered_politicians.filter(smoker=form.cleaned_data['smoker'])
                 if form.cleaned_data['smoker'] == 1:
