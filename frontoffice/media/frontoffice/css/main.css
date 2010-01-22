@@ -1077,6 +1077,7 @@
 									.quickProfileInfo th {
 										font-weight:bold;
 										width:150px;
+										vertical-align:top;
 										}
 										
 										.quickProfileInfo tr.fan td {
@@ -1587,16 +1588,38 @@
 					text-indent:-9999em;
 					}
 					
-				/* USE http://www.addthis.com/bookmark.php + firebug TO DETERMINE BACKGROUND-POSITION */	
+				.socialNetwork {
+					overflow:hidden;_zoom:1;
+					}	
+					.socialNetwork li {
+						overflow:hidden;_zoom:1;
+						float:left;
+						margin-bottom:4px;
+						}	
+					
+				/* USE http://www.addthis.com/bookmark.php + firebug TO DETERMINE BACKGROUND-POSITION */
+				.website	{ background:url(../img/website.png) 0 0 no-repeat; } 
+				.weblog		{ /* default icon */ } 	
+				.linkedin	{ background-position:0 -976px; } 
+				.hyves	 	{ background-position:0 -1040px; }
+				.facebook	{ background-position:0 -1760px; }
+				.twitter 	{ background-position:0 -2976px; }
+				.rss		{ background:url(../img/rss.gif) 0 0 no-repeat; }
+				.myspace	{ background-position:0 -3136px; }
+				.netlog		{ background-position:0 -2944px; }
+				.flickr 	{ background:url(../img/flickr.gif) 0 0 no-repeat; }
+				.plaxo		{ background-position:0 -2480px; }
+				
+				
 				.nujij	 	{ background-position:0 -2528px; }
 				.digg 		{ background-position:0 -1776px; }
 				.delicious 	{ background-position:0 -144px; }
 				.ekudos 	{ background-position:0 -224px; }
 				.live 		{ background-position:0 -2224px; }
-				.twitter 	{ background-position:0 -2976px; }
-				.hyves	 	{ background-position:0 -1040px; }
-				.myspace	{ background-position:0 -3136px; }
 				
-				.flickr 	{ background:url(../img/flickr.gif) 0 0 no-repeat; }
+				
+				
+				
+				
 
 					

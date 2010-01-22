@@ -48,7 +48,7 @@
                         <ul class="socialNetwork">
                             {% for connection in profile.connections.all %}
                             <li>
-                                <a class="social {{ connection.type|lower }}" href="{{ connection.url }}" title="{{ connection.description }}">{{ connection.type }}</a>
+                                <a class="social {{ connection.type|lower }}" href="{{ connection.url }}" title="{{ connection.type }}{% if connection.description %}: {{ connection.description }}{% endif %}">{{ connection.type }}</a>
                             </li>
                             {% empty %}
                             <li>-</li>
