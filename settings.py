@@ -74,6 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'utils.middleware.UserBasedExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -139,6 +140,9 @@ UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
+#Internal ip's used for debug toolbar and UserBasedExceptionMiddleware
+INTERNAL_IPS = ('127.0.0.1',)
+
 AUTHENTICATION_BACKENDS = (
     'utils.auth_backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -184,7 +188,7 @@ if DEBUG and DEBUG_TOOLBAR:
        'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
     
-    INTERNAL_IPS = ('127.0.0.1',)
+    
     
     INSTALLED_APPS += (
        'debug_toolbar',
@@ -207,6 +211,6 @@ if not DEBUG:
         r'^/backoffice/party/\d+/setup',
         r'^/backoffice/party/\d+/edit',
         r'^/backoffice/party/\d+/add_candidate',
-        r'^/backoffice/welcome/\d+',
+        r'^/backoffice/welcome/',
     )
     

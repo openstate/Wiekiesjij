@@ -1,10 +1,19 @@
 import json
 import re
+import sys
+
+from django.views.debug import technical_500_response
+from django.conf import settings as django_settings
 
 from utils.exceptions import PermissionDeniedException
 from utils import settings
 from utils.models import PostLog
 from django.http import HttpResponseRedirect
+
+
+
+
+
 
 class PermissionDeniedMiddleware(object):
     """
@@ -42,3 +51,16 @@ class PostLogMiddleware(object):
                     )
             
         return None
+        
+        
+class UserBasedExceptionMiddleware(object):
+    """
+        User based exception middleware
+        Shows the technical exception when logged in as superuser or 
+        when accessing from one of the internal ips
+        
+        @see http://ericholscher.com/blog/2008/nov/15/debugging-django-production-environments/
+    """
+    def process_exception(self, request, exception):
+        if request.user.is_superuser or request.META.get('REMOTE_ADDR') in django_settings.INTERNAL_IPS:
+            return technical_500_response(request, *sys.exc_info())
