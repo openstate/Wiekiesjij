@@ -223,7 +223,7 @@ def politician_profile_filter(request):
             filtered_politicians.distinct()
             
             #no query executed so far, so we see if we can do some caching stuff here :)
-            cache_key = hashlib.sha224(str(filtered_politicians.query.as_sql())).hexdigest()
+            cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
             politicians = cache.get(cache_key)
             if politicians is None:
                 #Force query to execute
