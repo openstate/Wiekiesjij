@@ -298,7 +298,7 @@ class Candidacy(models.Model):
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
 
     def profile_incomplete(self):
-        return True#self.candidate.profile.profile_incomplete()
+        return (self.candidate.profile.profile_incomplete() or self.answers.count() == 0)
 
     def questions_incomplete(self):
         return len(self.election_party_instance.instance.questions) - len(self.answers)

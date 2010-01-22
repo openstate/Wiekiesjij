@@ -259,8 +259,7 @@ class PoliticianProfile(Profile):
 
 
     def profile_incomplete(self):
-        return not self.education.all() or not self.work.all() or not self.political.all() or \
-            not (self.goals.all() or self.profile.appearances.all() or self.links.all())
+        return not self.marital_status
 
     def election_party_instances(self):
         "Returns the election_party_instance objects of the candidate"
