@@ -62,15 +62,21 @@ def test(request, election_instance_id = None):
 def election(request, id=None):
 
     politicians = []
-    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
+    if 'ElectionInstance' in request.session:
+        election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=request.session['ElectionInstance'])
+    else:
+        election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
     selected_eip = None
     eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances).order_by('position')
     if id:
-        selected_eip = get_object_or_404(ElectionInstanceParty, id=id)
+        selected_eip = get_object_or_404(ElectionInstanceParty, pk=id)
         politicians = selected_eip.candidate_dict()
-
    
-    return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians }, context_instance=RequestContext(request))
+    if len(election_instances) <= 1:
+        return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians, 'instance': election_instances[0]}, context_instance=RequestContext(request))
+    else:
+        return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians}, context_instance=RequestContext(request))
+
 
 def goal(request, id):
     goal = get_object_or_404(PoliticalGoal, pk=id)
@@ -99,6 +105,10 @@ def politician_profile_filter(request):
         path = request.get_full_path()
         region_filtered = False
         filters = []
+
+        if not request.GET and 'ElectionInstance' in request.session:
+            return redirect("%s?region=%d" % (path, request.session['ElectionInstance']))
+
         if form.is_valid():
             # All validation rules pass
             # Process the data in form.cleaned_data
@@ -114,7 +124,10 @@ def politician_profile_filter(request):
  
                 new_path = new_url(path, 'region', form.cleaned_data['region'].id)
                 region_filtered = True
-                filters.append((_('Region'), form.cleaned_data['region'].council.region, new_path))
+
+                if 'ElectionInstance' in request.session:
+                    if request.session['ElectionInstance'] != form.cleaned_data['region'].id:
+                        filters.append((_('Region'), form.cleaned_data['region'].council.region, new_path))
 
             if form.cleaned_data['name']:
                 name_filter = None

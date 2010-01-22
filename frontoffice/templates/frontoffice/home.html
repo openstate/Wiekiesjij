@@ -13,7 +13,6 @@
     });
 </script>
 {% endblock extrahead %}
-{% block menu %}{% endblock menu %}
 
 {% block cols %}
 <div class="col lastCol">
@@ -61,7 +60,7 @@
                         </span>
                     </a>
                     <p>{% trans "or" %}</p>
-                    <a class="big-btn list-candidates" href="{% url fo.election request.session.ElectionInstance %}">
+                    <a class="big-btn list-candidates" href="{% url fo.election %}">
                         <span>
                             <span class="icon"></span>{% trans 'Candidates' %}
                         </span>

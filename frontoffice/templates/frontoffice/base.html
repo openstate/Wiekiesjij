@@ -40,9 +40,11 @@
 
             <ul class="tabs">
             {% block menu %}
+                {% if request.session.ElectionInstance %}
                 <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% if request.session.ElectionInstance %}{% url fo.test request.session.ElectionInstance %}{% else %}{% url fo.test %}{% endif %}">{% trans 'Take the test' %}</a></li>
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
                 <li class="{% block menu_organisation %}{% endblock %}"><a href="#">{% trans 'Organisation' %}</a></li>
+                {% endif %}
             {% endblock menu %}
             </ul>
         </div>
