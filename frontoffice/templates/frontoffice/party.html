@@ -132,7 +132,7 @@
 <!-- HISTORY TAB -->
 
         <div class="bd his">
-            {{ eip.party.history }}
+            <p>{{ eip.party.history }}</p>
         </div>
 
         {% endifequal %}
@@ -141,9 +141,9 @@
 <!-- MANIFESTO TAB -->
 
         <div class="bd man">
-            {{ eip.party.manifesto_summary }}
+            <p>{{ eip.party.manifesto_summary }}</p>
             {% if eip.party.manifesto %}
-                <br /><a href="{{ eip.party.manifesto }}">{% trans 'Read entire manifesto' %}</a>
+                <a href="{{ eip.party.manifesto }}" class="read-more">{% trans 'Read entire manifesto' %}</a>
             {% endif %}
         </div>
 

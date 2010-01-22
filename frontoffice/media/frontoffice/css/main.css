@@ -1501,6 +1501,13 @@
 				color:#ed2227;
 				font-weight:bold;
 				}
+		
+		a.read-more {
+			color:#ed2227;
+			font-weight:bold;
+			padding-right:16px;
+			background:url(../img/next2.png) right center no-repeat;
+			}
 				
 		.sidebar .btn {
 			display:block;
@@ -1513,6 +1520,10 @@
 			}
 		.send-message p {
 			margin-bottom:.5em;
+			}
+		.send-message .email {
+			background:#e0e0e0 url(../img/email.png) 10px center no-repeat;
+			padding-left:46px;
 			}
 		
 	/*	Comments 
