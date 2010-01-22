@@ -2,42 +2,17 @@
 {% load i18n %}
 
 {% block extrahead %}
-<style type="text/css">
-.no_script_list {
-    overflow: auto;
-    height: 50;
-}
-
-.block_left {
-    display: block;
-    float: left;
-    line-height: 30px;
-    padding: 0px 5px;
-    margin-left: 10px;
-}
-
-a.block_left:hover {
-    background-color: #eee;
-}
-</style>
 
 <script type="text/javascript">
-jQuery(document).ready(function() {
-    function hndl() {
-        var me = jQuery(this);
-        var urls = ["{% url fo.election 1234567890 %}", "/fixme/1234567890"];
+    $(document).ready(function() {
+        $("#id_region").change(function() {
+            $("#form").submit();
+        })
+    });
 
-        if(me.val() != '%') {
-            jQuery('a', jQuery('#directions').show()).each(function(idx) {
-                this.href = urls[idx].replace('1234567890', me.val());
-            })
-        } else jQuery('#directions').hide()
-    }
-
-    jQuery('#election_list').each(hndl).change(hndl);
-});
 </script>
 {% endblock extrahead %}
+{% block menu %}{% endblock menu %}
 
 {% block cols %}
 <div class="col lastCol">
@@ -53,44 +28,59 @@ jQuery(document).ready(function() {
     </div>
 </div>
 
-<form action="" method="GET">
-<div class="col size1of2">
-    <div class="mod select-region">
-    	<div class="bd">
-        	<h2><span class="num">1</span> Selecteer je regio </h2>
-            <h3>om <strong>Wiekiesjij</strong> voor jouw regio te starten.</h3>
-            <div id="form_platf_requires_js" style="display: none">
-                <select id="election_list">
-                    <option value="%">{%trans 'Select region' %}</option>
+<form action="" id="form" method="POST">
 
-                    {% for id, region in elections %}
-                    <option value="{{id}}">{{region}}</option>
-                    {% endfor %}
-                </select>
+    <div class="col size1of2">
+        <div class="mod select-region">
+            <div class="bd">
+                <h2><span class="num">1</span> {% trans 'Select your region' %} </h2>
+                <h3>{% trans 'to start <strong>Wiekiesjij</strong> for your region.' %}</h3>
+
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+
+                <noscript>
+                    <input type="submit" value="{% trans 'Selecteer' %}" />
+                </noscript>
             </div>
-            <noscript id="form_platf_requires_js_noscript">
-                <div class="no_script_list">
-                    {% for id, region in elections %}
-                    <div><a href="{% url fo.election id %}">{{region}}</a> <a href="">[{% trans 'Do the test' %}]</a></div>
-                    {% endfor %}
-                </div>
-            </noscript>
-       	</div>
-  	</div>
-</div>
-<div class="col size1of2">
-	<div class="mod start-actions">
-    	<div class="bd">
-        	<h2>&nbsp;<span class="num">2</span></h2>
-        	<a class="big-btn primary-btn start-test" href="#"><span><span class="icon"></span>{% trans 'Do the test' %}</span></a>
-            <p>{% trans "or" %}</p>
-          	<a class="big-btn list-candidates" href="#"><span><span class="icon"></span>{% trans 'Candidates' %}</span></a>
         </div>
     </div>
-</div>
+
+    <div class="col size1of2">
+        <div class="mod start-actions">
+            {% if request.session.ElectionInstance %}
+                <div class="bd">
+                    <h2>&nbsp;<span class="num">2</span></h2>
+                    <a class="big-btn primary-btn start-test" href="{% url fo.test request.session.ElectionInstance %}">
+                        <span>
+                            <span class="icon"></span>{% trans 'Do the test' %}
+                        </span>
+                    </a>
+                    <p>{% trans "or" %}</p>
+                    <a class="big-btn list-candidates" href="{% url fo.election request.session.ElectionInstance %}">
+                        <span>
+                            <span class="icon"></span>{% trans 'Candidates' %}
+                        </span>
+                    </a>
+                </div>
+            {% else %}
+                <div class="bd disabled">
+                    <h2>&nbsp;<span class="num">2</span></h2>
+                    <a class="big-btn primary-btn start-test">
+                        <span>
+                            <span class="icon"></span>{% trans 'Do the test' %}
+                        </span>
+                    </a>
+                    <p>{% trans "or" %}</p>
+                    <a class="big-btn list-candidates">
+                        <span>
+                            <span class="icon"></span>{% trans 'Candidates' %}
+                        </span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </form>
-    <script type="text/javascript">
-        document.getElementById('form_platf_requires_js').style.display = 'block';
-        document.getElementById('form_platf_requires_js_noscript').style.display = 'none'; //to be sure
-    </script>
 {% endblock cols %}

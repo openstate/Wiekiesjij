@@ -8,7 +8,7 @@ from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm
+from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
 from utils.functions import list_unique_order_preserving
@@ -50,8 +50,9 @@ def answer_question(request, election_instance_party_id, user_id=None):
     check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-def test(request, election_instance_id):
-    
+def test(request, election_instance_id = None):
+    if not election_instance_id:
+        return redirect('fo.home')
 
 
     return BestCandidate(election_instance_id=election_instance_id)(request)
@@ -89,9 +90,7 @@ def politician_profile_filter(request):
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
         eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
-#        candidate_ids=[]
-#        for elections_candidate in  elections_candidates:
-#            candidate_ids.append(elections_candidate.candidate_id)
+
         candidates = User.objects.filter(pk__in=elections_candidates)
         politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
         filtered_politicians = politicians
@@ -361,10 +360,17 @@ def thumbs_down(request, goal_id):
 
 
 def home(request):
-    # [FIXME: bug in django 1.1, .only('council__region') produces correct SQL
-    # (checked using django-toolbar), later elinstance.council.region is empty.
-    # It is not empty if whole council object is fetched (unnecesary data)]
-    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).select_related('council').only('id', 'council')
-    
-    rt = [ (el.pk, el.council.region) for el in election_instances ]
-    return render_to_response('frontoffice/home.html', {'elections': rt}, context_instance=RequestContext(request))
+    region = None
+    if request.method == 'POST':
+        form = RegionSelectForm(request.POST)
+        if form.is_valid():
+            region = form.cleaned_data['region']
+            request.session['ElectionInstance'] = region.id
+    else:
+        form = RegionSelectForm()
+
+    if 'ElectionInstance' in request.session:
+        initial_dict = {'region': request.session['ElectionInstance']}
+        form = RegionSelectForm(initial=initial_dict) #overwrite the form
+
+    return render_to_response('frontoffice/home.html', {'form': form}, context_instance=RequestContext(request))

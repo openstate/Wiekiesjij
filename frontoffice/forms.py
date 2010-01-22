@@ -70,4 +70,7 @@ class VisitorProfileForm(BetterForm, TemplateForm):
     name        = NameField(label=_('Name'))
     phone       = MobilePhoneField(label=_('Mobile phone number'))
     send_text   = forms.BooleanField(label=_('Receive text messages?'), required=False)
+
+class RegionSelectForm(BetterForm, TemplateForm):
+    region  = forms.ModelChoiceField(queryset=ElectionInstance.objects, required=True, empty_label=_('Select your region'))
     
