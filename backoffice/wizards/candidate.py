@@ -648,6 +648,11 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     value = (value == 'true')
                 if key == 'picture' and value is None:
                     continue
+                if key == 'name':
+                    for (k, v) in value.items():
+                        setattr(self.user.profile, k, v)
+                    continue
+                
                 setattr(self.user.profile, key, value)
             if self.user.profile.num_children is None:
                 self.user.profile.num_children = 0
