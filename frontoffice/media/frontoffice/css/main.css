@@ -517,52 +517,10 @@
 	/* 	Wizard
 		----------------------------------------------------------------------------------------- */
 		
-		ul#wizardSteps {
-			background:#E0E0E0;
-			display:block;
-			margin:-15px -15px 0;
-			padding:5px;
-			overflow:hidden;
+		.wizard {
+		
 			}
-	
-			ul#wizardSteps li {
-				float:left;
-				margin:0 3px;
-				}
-				
-				ul#wizardSteps li a,
-				ul#wizardSteps li span {
-					background:url(../img/steps.gif) left top no-repeat;
-					color:#7b7b7b;
-					cursor:default;
-					display:block;
-					font-size:11px;
-					height:17px;
-					line-height:17px;
-					text-align:center;
-					text-decoration:none;
-					width:17px;
-					}
-					
-				ul#wizardSteps li.big a,
-				ul#wizardSteps li.big span {
-					background:url(../img/stepsLarge.gif) left top no-repeat;
-					color:#000000;
-					font-size:15px;
-					line-height:15px;
-					width:45px;
-					}
-					
-				ul#wizardSteps li.finished a,
-				ul#wizardSteps li.finished span {
-					color:#000000;
-					}
-					
-				ul#wizardSteps li.current a,
-				ul#wizardSteps li.current span {
-					background:url(../img/stepsCurrent.gif) left top no-repeat;
-					color:#ffffff;
-					}
+		
 					
 		.wizard h2.question {
 			background:#eeeeee;
@@ -615,11 +573,63 @@
 				
 			.wizard form {
 				margin-top:15px;
+				font-size:1.4em;
 			}
 			
 			.wizard div.form-submit button {
 				margin-bottom:0;
 			}
+			
+						ul#wizardSteps {
+				background:#E0E0E0;
+				display:block;
+				margin:-15px -15px 0;
+				padding:5px;
+				overflow:hidden;_zoom:1;
+				}
+		
+				ul#wizardSteps li {
+					float:left;
+					margin:0 3px;
+					}
+					
+					ul#wizardSteps li a,
+					ul#wizardSteps li span {
+						background:url(../img/steps2.gif) left top no-repeat;
+						color:#7b7b7b;
+						cursor:default;
+						display:block;
+						font-size:1.4em;
+						line-height:24px;
+						text-align:center;
+						text-decoration:none;
+						width:24px;
+						height:24px;
+						font-weight:bold;
+						}
+						
+					ul#wizardSteps li.big a,
+					ul#wizardSteps li.big span {
+						background:url(../img/stepsLarge2.gif) left top no-repeat;
+						color:#000000;
+						line-height:22px;
+						width:45px;
+						}
+						
+					ul#wizardSteps li.finished a,
+					ul#wizardSteps li.finished span {
+						color:#000000;
+						background:url(../img/stepsFinished2.gif) left top no-repeat;
+						}
+						
+					ul#wizardSteps li.current a,
+					ul#wizardSteps li.current span {
+						background:url(../img/stepsCurrent2.gif) left top no-repeat;
+						font-weight:bold;
+						color:#ffffff;
+						}
+
+			
 	
 	/* 	homepage
 		----------------------------------------------------------------------------------------- */
@@ -682,11 +692,29 @@
 					margin-bottom:2em;
 					}
 				.select-region select {
-					width:378px;
+					width:290px;
 					position:absolute;
 					bottom:15px;
+					left:65px;
+					}
+				.select-region .form-submit {
+					margin:0;
+					position:absolute;
+					
+					right:15px;
+					bottom:15px;
+					}
+					.select-region .form-submit button {
+						margin:0;
+						padding:4px 5px;
+						width:72px;
+						
+						}	
+				.select-region .javascript select {
+					width:378px;
 					right:15px;
 					}
+				
 		
 		.start-actions {
 			background:0;
