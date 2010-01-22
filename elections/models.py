@@ -291,11 +291,15 @@ class Candidacy(models.Model):
     position                    = models.PositiveIntegerField(_('Position'))
     answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
 
+        
     def __unicode__(self):
         return self.candidate.username
     
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
+        unique_together = (
+            ('election_party_instance', 'candidate'),
+        )
 
     def profile_incomplete(self):
         return (self.candidate.profile.profile_incomplete() or self.answers.count() == 0)
