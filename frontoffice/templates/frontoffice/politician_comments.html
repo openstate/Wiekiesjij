@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load comments %}
 {% load utils_tags %}
+{% load fo_tags %}
 
 {% block title %}
     {{ profile.full_name }}
@@ -33,9 +34,13 @@
         	<h2>{% trans "Comment on this politician" %}</h2>
         </div>
     	<div class="bd">
-			{% if user.is_authenticated %}
+			{% isprofile 'visitor' %}
                 {% render_comment_form for profile %}
-            {% endif %}
+            {% endisprofile %}
+
+			{% ifequal profile.user.id request.user.id %}
+                {% render_comment_form for profile %}
+            {% endifequal %}
             
             {% get_comment_list for profile as comments %}
             {% for comment in comments %}
