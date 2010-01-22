@@ -286,7 +286,8 @@ class PartyContactWizard(MultiPathFormWizard):
             self.eip.party.manifesto_summary = data['manifesto_summary']
             self.eip.party.save()
             
-            self.eip.list_length = int(data['list_length'])
+            if data['list_length']:
+                self.eip.list_length = int(data['list_length'])
             self.eip.save()
 
         except Exception:
