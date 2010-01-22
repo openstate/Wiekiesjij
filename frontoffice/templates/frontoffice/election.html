@@ -66,10 +66,14 @@
             
             	
                 <div class="logo">
-                	<img alt="{{ selected_eip.party.abbreviation }}" src="{{  selected_eip.party.logo }}" />
-               	</div>
+                	{% if selected_eip.party.logo %}
+                		<img alt="{{ selected_eip.party.abbreviation }}" src="{% thumbnail selected_eip.party.logo 75x50 %}" />
+               		{% else %}
+                        <img alt="{{ eip.party.abbreviation }}" src="{% thumbnail 'defaults/party-dummy.jpg' 75x50 %}" />
+                    {% endif %}
+                </div>
                 <h2><span>{% trans 'Candidate list for ' %}</span>{{ selected_eip.party.abbreviation }}</h2>
-                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Go to the profile of this party' %}</a>
+                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Go to the party profile' %}</a>
 				<ul>
                 {% for position, politician in politicians.items %}
 

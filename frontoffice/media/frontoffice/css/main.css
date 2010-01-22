@@ -910,15 +910,17 @@
 						}
 				.cand-list .logo {
 					height:50px;
-					min-width:40px;
-					background:#eee;
+					min-width:75px;_width:75px;
 					float:left;
 					margin-right:10px;
 					}
 				.cand-list a.party-link {
 					float:right;
+					text-align:right;
+					background:url(../img/next2.png) right center no-repeat;
 					color:#ed2227;
 					font-weight:bold;
+					padding-right:16px;
 					}
 				.cand-list ul {
 					clear:both;
@@ -934,7 +936,7 @@
 						float:left;
 						width:50px;
 						height:50px;
-						background:#aaa;
+						background:#aaa url(../img/lijst.png) 0 0 no-repeat;
 						margin-right:10px;
 						text-align:center;
 						line-height:50px;
@@ -988,12 +990,12 @@
 				}
 			.pol-block p {
 				line-height:1.5em;
+				margin:0;
 				}
 			.pol-block .image {
 				float:left;
 				width:50px;
 				height:70px;
-				background:#ccc;
 				margin-right:10px;
 				}
 				
