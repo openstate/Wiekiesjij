@@ -1,7 +1,9 @@
 
 import re
+import hashlib
 from django.http import Http404
 from django.conf import settings
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
@@ -218,14 +220,24 @@ def politician_profile_filter(request):
                     filtered_politicians = filtered_politicians.filter(diet='other')
                 new_path = new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
-            politicians = list_unique_order_preserving(filtered_politicians)
-
-
+            politicians.distinct()
+            
+            #no query executed so far, so we see if we can do some caching stuff here :)
+            
+            cache_key = hashlib.sha224(str(politicians.query.as_sql())).hexdigest()
+            result = cache.get(cache_key)
+            if result is None:
+                #Force query to execute
+                result = list(politicians)
+                cache.set(cache_key, result, settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)
+            politicians = result
                 
         else:
             politicians = []
             form = PoliticianFilterForm() # An unbound form
-        p = Paginator(politicians, 6)
+            
+        
+        p = Paginator(politicians, 2)
         # Make sure page request is an int. If not, deliver first page.
         try:
             page = int(request.GET.get('page', '1'))

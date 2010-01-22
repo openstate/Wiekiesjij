@@ -11,6 +11,9 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
+CACHE_BACKEND = 'locmem://'
+POLITICIAN_BROWSER_CACHE_TIMEOUT = 60*60 #Cache time in seconds for the politician browser
+
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
