@@ -38,20 +38,19 @@
         </div>
         <div class="bd">
         	{% if user.is_authenticated %}
-                <span><strong>[User name] {% trans 'says' %}:</strong> </span> <em>[replace label 'opmerking' with this]</em>
                 {% render_comment_form for goal %}
             {% endif %}
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
-                <div class="item{% if forloop.last %} last-item{% endif %}">
+                <div class="item{% if forloop.last %} last-item{% endif %} {% ifequal goal.politician.user.id comment.user.id %}owner{% endifequal %}">
                 	<p class="smallInfo">
                     {% if comment.user_url %}
                         <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
                     {% else %}
                         <strong>{{ comment.user_name }}</strong>
                     {% endif %}
-                    zei op [date] om [time]:
+                    zei op {{ comment.submit_date|date:"j F Y" }} om {{ comment.submit_date|date:"H:i"}}:
                 	</p>
                     <p>{{ comment.comment|urlize|linebreaks }}</p>
                 </div>
