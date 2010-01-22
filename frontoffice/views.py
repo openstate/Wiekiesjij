@@ -220,17 +220,15 @@ def politician_profile_filter(request):
                     filtered_politicians = filtered_politicians.filter(diet='other')
                 new_path = new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
-            politicians.distinct()
+            filtered_politicians.distinct()
             
             #no query executed so far, so we see if we can do some caching stuff here :)
-            
-            cache_key = hashlib.sha224(str(politicians.query.as_sql())).hexdigest()
-            result = cache.get(cache_key)
-            if result is None:
+            cache_key = hashlib.sha224(str(filtered_politicians.query.as_sql())).hexdigest()
+            politicians = cache.get(cache_key)
+            if politicians is None:
                 #Force query to execute
-                result = list(politicians)
-                cache.set(cache_key, result, settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)
-            politicians = result
+                politicians = list(filtered_politicians)
+                cache.set(cache_key, politicians, settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)
                 
         else:
             politicians = []
