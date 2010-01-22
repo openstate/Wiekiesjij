@@ -237,7 +237,7 @@ def politician_profile_filter(request):
             form = PoliticianFilterForm() # An unbound form
             
         
-        p = Paginator(politicians, 2)
+        p = Paginator(politicians, 6)
         # Make sure page request is an int. If not, deliver first page.
         try:
             page = int(request.GET.get('page', '1'))
