@@ -536,7 +536,8 @@ class UserStatistics(models.Model):
 
         Settings:
             STAT_PROVIEW_INTERVAL -- datetime.timedelta defines the time
-                to live for each single view
+                to live for each single view, when such interval is elapsed, the
+                whole rating is 1/2, 1/3...
 
 
         Note: tviews can never be 0 if views > 0, so rating will fade out slowly,
@@ -556,14 +557,14 @@ class UserStatistics(models.Model):
     def update_profile_views(self, request):
         """ Updates profile rate """
         if check_unique_visitor(request, 'update_profile_view_rate'):
-            self.profile_hits = self.get_profile_view_rate(1)
+            self.profile_hits = self.get_profile_views()
             self.profile_hits_up = datetime.datetime.now()
             self.save()
 
 
     def get_profile_views(self):
         """ Returns current profile view rate. """
-        winsec = 24*60*60 * view_interval.days + view_interval.seconds
+        winsec = 24*60*60 * self.view_interval.days + self.view_interval.seconds
         dl = (datetime.datetime.now() - self.profile_hits_up)
         dl = 24*60*60 * dl.days + dl.seconds
 

@@ -277,8 +277,8 @@ def politician_profile(request, id, tab = "favs"):
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
 
-        # record view
-        #user.statistics.update_profile_views(request)
+        #record view
+        user.statistics.update_profile_views(request)
     except:
         twitter_url = None
 
