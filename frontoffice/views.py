@@ -57,14 +57,15 @@ def match_results(request, hash):
     candidates = result.candidate_answers.all()
     visitors_profile = VisitorProfile.objects.filter(user=request.user)
 
-    default_phone = ''
 
     if visitors_profile:
-        default_phone = visitors_profile[0].phone
-    if default_phone:
-        initial = {'phone':default_phone}
+        initial = {'phone':visitors_profile[0].phone}
+
     else:
-        initial = {'phone':result.telephone}
+        if result.telephone:
+            return render_to_response('frontoffice/match_results.html', {'candidates': candidates}, context_instance=RequestContext(request))
+        else:
+            initial = {'phone':result.telephone}
 
     if request.method == 'POST':
         form = SmsForm(request.POST)
@@ -72,8 +73,8 @@ def match_results(request, hash):
             if form.cleaned_data['phone']:
                 result.telephone = form.cleaned_data['phone']
                 result.save()
-                if visitors_profile:
-                    visitors_profile[0].phone = form.cleaned_data['phone']
+            return render_to_response('frontoffice/match_results.html', {'candidates': candidates}, context_instance=RequestContext(request))
+
     else:
   
         form = SmsForm(initial=initial)
