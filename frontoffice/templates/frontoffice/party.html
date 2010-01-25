@@ -112,9 +112,9 @@
                         {% endif %}
                     </div>
                     <a href="{% url fo.politician_profile candidacy.candidate.id %}" class="name">{{ candidacy.candidate.profile.first_name }}</a>
-                    <p>{% trans 'Age' %}: {{ candidacy.candidate.age }}</p>
-                    {% if not region_filtered %}
-                        <p>{% trans 'Region' %}: {{ candidacy.candidate.region }}</p>
+                    <p>{% trans 'Age' %}: {{ candidacy.candidate.profile.dateofbirth|age }}</p>
+                    {% if not request.session.ElectionInstance %}
+                        <p>{% trans 'Region' %}: {{ candidacy.candidate.profile.region }}</p>
                     {% endif %}
                 </div>
             {% empty %}
