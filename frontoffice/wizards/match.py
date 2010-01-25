@@ -370,7 +370,9 @@ class BestCandidate(MultiPathFormWizard):
         new_visitor = visitor.create()
         #visitor.save()
         new_visitor.ipaddress=request.META['REMOTE_ADDR']
-        new_visitor.user =request.user
+        # Only link visitors
+        if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
+            new_visitor.user = request.user
         new_visitor.visitor_answers = json.dumps(all_visitor_answers)
         new_visitor.save()
 
