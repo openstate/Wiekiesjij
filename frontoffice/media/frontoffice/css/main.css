@@ -1086,7 +1086,7 @@
 								position:relative;
 								}
 								
-								div#content div.quickProfile .container img.quickProfilePicture {
+								div#content div.quickProfile .container .image {
 									float:left;
 									margin-right:30px;
 									width:140px;
@@ -1128,7 +1128,12 @@
 									margin-bottom:15px;
 									}
 								 
-								
+								    .popularityMeter .empty {
+								    	height:115px;
+										padding-top:80px;
+										font-weight:bold;
+										background:url(../img/no-stats.gif) 0 0 no-repeat;
+								    }
 									
 									.popularityMeter .meter {
 										display:block;
@@ -1298,7 +1303,14 @@
 		----------------------------------------------------------------------------------------- */
 		
 							div#content div.video .bd {
-								padding-bottom:12px;
+								
+								}
+								div#content div.video .empty {
+									height:304px;
+									font-size:2em;
+									margin:0;
+									padding-top:40px;
+									background:url(../img/no-video.gif) 0 0 no-repeat;
 								}
 		
 	/* 	LooksLike
@@ -1574,6 +1586,10 @@
 		.comments label {
 			color:#ed2227;
 			}
+		.comments .owner {
+			padding:10px;
+			background:#fde1e2;
+		}
 	
 	/*	Login
 		**************************************************************************************************************/

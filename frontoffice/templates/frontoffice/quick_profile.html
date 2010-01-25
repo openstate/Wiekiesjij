@@ -12,11 +12,13 @@
     </div>
     <div class="bd">
         <div class="container">
+        	<div class="image">
             {% if profile.picture %}
                 <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail profile.picture 140x210 upscale %}" />
             {% else %}
-                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail "defaults/pol-dummy.jpg" 140x120 upscale %}" />
+                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail 'defaults/pol-dummy.jpg' 140x120 upscale %}" />
             {% endif %}
+			</div>
             <table class="quickProfileInfo">
                 <tr>
                     <th>{% trans 'Name' %}</th>
@@ -74,17 +76,19 @@
                 </tr>
             </table>
             <div class="popularityMeter">
-                <div class="meter">
+                <!--<div class="meter">
                     <div class="active" style="height: {{ popularity|default:0 }}%">
                     	{{ popularity|default:0 }}%
                     </div>
                 </div>
                 <span class="top">100%</span>
                 <span class="bottom">0%</span>
-                <span class="total">{{ popularity|default:0 }}%</span>
+                <span class="total">{{ popularity|default:0 }}%</span>-->
+				<p class="empty">{% trans "Binnenkort vind je hier de populariteitsmeter." %}</p>
             </div>
         </div>
         <div class="ballotPosition">
+        	<p>{{ profile.introduction }}</p>
             <a href="{% url fo.election profile.party.id %}">
             {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
                 {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}

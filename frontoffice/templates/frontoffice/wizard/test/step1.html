@@ -2,7 +2,7 @@
 {% load i18n utils_tags %}
 
 {% block question-steps %}
-<p>sdafsdf</p>terst
+
     {% for q in questions %}
 		<li class="{% ifcompare current_question q %}active{% smaller %}history{% bigger %}future{% endifcompare %}{% if forloop.last %} last{% endif %}">{{ q|add:"13" }}</li>
     {% endfor %}
