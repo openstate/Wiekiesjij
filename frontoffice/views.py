@@ -14,6 +14,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 
 from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm
+from frontoffice.models import VisitorResult
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
@@ -41,12 +42,34 @@ def _new_url(path, field, value):
 
     return path.replace(old_str, new_str)
 
-def test(request, election_instance_id = None, iframe=None):
+
+def answer_question(request, election_instance_party_id, user_id=None):
+    '''
+        AnswerQuestion - wizard.
+        @param int election_instance_party_id - ElectionInstanceParty id
+        @param int user_id User (Candidate=PoliticalProfile) id
+    '''
+    check_permissions(request, election_instance_party_id, 'candidate')
+    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
+
+def match_results(request, hash):
+    results = VisitorResult.objects.get(hash=hash)
+    candidates = results.candidate_answers.all()
+    print candidates
+    return render_to_response('frontoffice/match_results.html', {'candidates': candidates}, context_instance=RequestContext(request))
+
+def match_welcome(request, election_instance_id = None):
     if not election_instance_id:
         return redirect('fo.home')
+    election_instance = ElectionInstance.objects.get(pk=election_instance_id)
+    return render_to_response('frontoffice/match_welcome.html', {'election_instance': election_instance}, context_instance=RequestContext(request))
 
 
+def match(request, election_instance_id = None, iframe=None):
+    if not election_instance_id:
+        return redirect('fo.home')
     return BestCandidate(election_instance_id=election_instance_id, iframe=iframe)(request)
+
 
 def election(request, id=None):
 

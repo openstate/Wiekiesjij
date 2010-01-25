@@ -73,9 +73,12 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^goal/(?P<id>\d+)/$', 'goal', name='fo.goal'),
 
     #url(r'^test/(?P<id>\d+)/$', 'test', name='fo.test'),
-    url(r'^test/$', 'test', name='fo.test'),
-    url(r'^test/(?P<election_instance_id>\d+)/$', 'test', name='fo.test'),
-    url(r'^test/(?P<election_instance_id>\d+)/(?P<iframe>\w+)/$', 'test', name='fo.test'),
+
+    url(r'^match/(?P<election_instance_id>\d+)/$', 'match_welcome', name='fo.match_welcome'),
+    url(r'^matching/(?P<election_instance_id>\d+)/$', 'match', name='fo.match'),
+    url(r'^match/result/(?P<hash>[a-zA-Z0-9]{32})/$', 'match_results', name='fo.match_results'),
+    url(r'^match/(?P<election_instance_id>\d+)/(?P<iframe>\w+)/$', 'match', name='fo.match'),
+
     url(r'^goal/(?P<goal_id>\d+)/thumbs_up/$', 'thumbs_up', name='fo.thumbs_up'),
     url(r'^goal/(?P<goal_id>\d+)/thumbs_down/$', 'thumbs_down', name='fo.thumbs_down'),
 
