@@ -97,12 +97,10 @@ def list(request):
                 continue
             _, key = item.split('_', 2)
             if key == 'accepted':
-                key = 'accepted__isnull'
-                if value != '':
-                    value = (value == 'true')
+                if value != 'true':
+                    value = 0
                 else:
-                    value = None
-            if value and value is not None:
+                    value = 1
                 context.update({item: request.POST.get(item, '')})
                 invitations = invitations.filter(**{smart_str(key): value})
     

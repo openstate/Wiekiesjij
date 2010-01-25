@@ -569,7 +569,7 @@ class UserStatistics(models.Model):
         dl = 24*60*60 * dl.days + dl.seconds
 
         # current rate with time penalty
-        return (winsec / (winsec + dl)) * self.profile_hits
+        return (float(winsec) / (winsec + dl)) * self.profile_hits
 
 
 
