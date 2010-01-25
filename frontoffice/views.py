@@ -72,6 +72,8 @@ def match_results(request, hash):
             if form.cleaned_data['phone']:
                 result.telephone = form.cleaned_data['phone']
                 result.save()
+                if visitors_profile:
+                    visitors_profile[0].phone = form.cleaned_data['phone']
     else:
   
         form = SmsForm(initial=initial)
