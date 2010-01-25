@@ -83,6 +83,7 @@ def match_results(request, hash, iframe=None):
     else:
         parent = 'frontoffice/base.html'
 
+    #num_questions =  result.visitor
     return render_to_response('frontoffice/match_results.html', {'form':form,'candidates': candidates, 'parent':parent, 'iframe':iframe}, context_instance=RequestContext(request))
 
 def match_welcome(request, election_instance_id = None, iframe = None):

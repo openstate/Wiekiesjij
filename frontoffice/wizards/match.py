@@ -32,7 +32,7 @@ class BestCandidate(MultiPathFormWizard):
 
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
         self.elections_candidacies = elections_candidates
-        print len(self.elections_candidacies)
+        
         # get a list of candidate ids
         self.user_ids=[] # this is a list of user ids
         for elections_candidate in  elections_candidates:
@@ -160,7 +160,6 @@ class BestCandidate(MultiPathFormWizard):
                 #all_visitor_answers[question_id] = answer_value
                 #if no preference is selected question is ignored
                 if 'no_pref' in answer_value:
-                    print question_id, 'no-pref'
                     continue
 
                 # Get length of the list to help calculate score
@@ -180,7 +179,7 @@ class BestCandidate(MultiPathFormWizard):
                                 if question.question_type == QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE:
                                     answer = Answer.objects.get(id=value)
                                     politicians_answer = Answer.objects.get(id=int(candidate_question_answers[candidate][int(question_id)][0]) )
-                                    print int(politicians_answer.meta), int(answer.meta)
+                                    
                                     if int(politicians_answer.meta) >= int(answer.meta):
                                         score = 1
                                 else:
@@ -191,9 +190,7 @@ class BestCandidate(MultiPathFormWizard):
                         else:
                             new_score = 0
                         candidate_scores[candidate].append({question.id: new_score})
-                        if question_id in keys:
-                            print question_id, candidate.full_name(), candidate_question_answers[candidate][int(question_id)], answer_value, 'score:', new_score
-
+                        
                 elif QTYPE_MODEL_PARTY == question.question_type:
                     party_names = []
                     for value in answer_value:
@@ -202,7 +199,7 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = candidate.party().id
                             if candidate.party() == value:
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), candidate.party(), answer_value, 'score:', 1
+                                
 
                     all_visitor_answers[question_id] = party_names
 
@@ -221,7 +218,7 @@ class BestCandidate(MultiPathFormWizard):
                                 candidate.work_experience_days = 0
                             if (int(candidate.work_experience_days)/365) >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), (int(candidate.work_experience_days)/365), answer.meta, 'score:', 1
+                               
                             all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)
                     else:
                         for candidate in self.candidates:
@@ -230,7 +227,7 @@ class BestCandidate(MultiPathFormWizard):
                                 candidate.work_experience_days = 0
                             if (int(candidate.work_experience_days)/365) in range(int(start),(int(end)-1)):
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), (int(candidate.work_experience_days)/365), answer.meta, 'score:', 1
+                                
                             all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)
 
                 elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
@@ -265,7 +262,7 @@ class BestCandidate(MultiPathFormWizard):
                                         answered = True
                                 if answered == False:
                                     candidate_scores[candidate].append({question.id: 1})
-                                    print question_id, candidate.full_name(), ed.politician_id , candidate_ids, 'score:', 1
+                                    
                     all_visitor_answers[question_id] = level_names
                 elif QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
                     all_visitor_answers[question_id] = answer_value
@@ -275,7 +272,7 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = candidate.religion
                             if candidate.religion == value:
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), candidate.religion , answer_value, 'score:', 1
+                               
 
 
                 elif QTYPE_MODEL_PROFILE_AGE == question.question_type:
@@ -289,14 +286,14 @@ class BestCandidate(MultiPathFormWizard):
                         for candidate in self.candidates:
                             if candidate.age() >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), candidate.age() , answer.meta, 'score:', 1
+                                
                             all_candidate_answers[candidate][question_id] = candidate.age()
                     else:
                         for candidate in self.candidates:
                             # need to subtract one form the end figure as 'to' is up to but not equal
                             if candidate.age() in range(int(start),int(end)-1):
                                 candidate_scores[candidate].append({question.id: 1})
-                                print question_id, candidate.full_name(), candidate.age() , answer.meta, 'score:', 1
+                                
                             all_candidate_answers[candidate][question_id] = candidate.age()
 
                 elif QTYPE_MODEL_PROFILE_GENDER == question.question_type:
@@ -304,7 +301,7 @@ class BestCandidate(MultiPathFormWizard):
                     for candidate in self.candidates:
                         if candidate.gender == answer_value[0]:
                             candidate_scores[candidate].append({question.id: 1})
-                            print question_id, candidate.full_name(), candidate.gender , answer_value[0], 'score:', 1
+                            
                         all_candidate_answers[candidate][question_id] = candidate.gender
 
                 elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
