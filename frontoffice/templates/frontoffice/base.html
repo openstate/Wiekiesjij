@@ -35,6 +35,7 @@
                         - <a href="{% url fo.logout %}">{% trans "Logout" %}</a>
                 {% else %}
                     {% trans "You are not logged in" %}. <a href="{% url fo.login %}">{% trans "Login" %}</a>
+                    / <a href="{% url registration_register %}">{% trans "Register" %}</a>
                 {% endif %}
             </p>
 
