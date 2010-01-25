@@ -52,7 +52,7 @@ def answer_question(request, election_instance_party_id, user_id=None):
     check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-def match_results(request, hash):
+def match_results(request, hash, iframe=None):
     result = VisitorResult.objects.get(hash=hash)
     candidates = result.candidate_answers.all()
     visitors_profile = VisitorProfile.objects.filter(user=request.user)
@@ -79,14 +79,23 @@ def match_results(request, hash):
   
         form = SmsForm(initial=initial)
 
+    if iframe:
+        parent = 'frontoffice/iframe.html'
+    else:
+        parent = 'frontoffice/base.html'
 
-    return render_to_response('frontoffice/match_results.html', {'form':form,'candidates': candidates}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/match_results.html', {'form':form,'candidates': candidates, 'parent':parent, 'iframe':iframe}, context_instance=RequestContext(request))
 
-def match_welcome(request, election_instance_id = None):
+def match_welcome(request, election_instance_id = None, iframe = None):
     if not election_instance_id:
         return redirect('fo.home')
     election_instance = ElectionInstance.objects.get(pk=election_instance_id)
-    return render_to_response('frontoffice/match_welcome.html', {'election_instance': election_instance}, context_instance=RequestContext(request))
+
+    if iframe:
+        parent = 'frontoffice/iframe.html'
+    else:
+        parent = 'frontoffice/base.html'
+    return render_to_response('frontoffice/match_welcome.html', {'election_instance': election_instance, 'parent': parent, 'iframe':iframe}, context_instance=RequestContext(request))
 
 
 def match(request, election_instance_id = None, iframe=None):

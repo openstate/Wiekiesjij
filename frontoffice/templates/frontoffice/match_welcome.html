@@ -1,4 +1,4 @@
-{% extends 'frontoffice/base.html' %}
+{% extends parent %}
 {% load i18n %}
 {% block extrahead %}
 	{% for form in forms.values %}
@@ -73,7 +73,11 @@
 
 
                     {% block buttons %}
-                        <a href="{% url fo.match election_instance.id %}">{% trans 'START MATCH WIZARD' %}</a>
+                        {% if iframe %}
+                            <a href="{% url fo.match election_instance.id iframe %}">{% trans 'START MATCH WIZARD' %}</a>
+                        {% else %}
+                            <a href="{% url fo.match election_instance.id %}">{% trans 'START MATCH WIZARD' %}</a>
+                        {% endif %}
                         <div class="form-submit">
                             <button type="submit" class="next primary">{% trans "Next" %}</button>
                         </div>

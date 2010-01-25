@@ -91,7 +91,7 @@ class BestCandidate(MultiPathFormWizard):
                 pass
 
             if self.iframe:
-                parent = 'frontoffice/wizard/iframe.html'
+                parent = 'frontoffice/iframe.html'
             else:
                 parent = 'frontoffice/wizard/base.html'
                 
@@ -389,7 +389,7 @@ class BestCandidate(MultiPathFormWizard):
             candidate_ans.save()
             new_visitor.candidate_answers.add(candidate_ans)
 
-        return redirect('fo.match_results', hash=new_visitor)
+        return redirect('fo.match_results', hash=new_visitor, iframe=self.iframe)
 
 
 
