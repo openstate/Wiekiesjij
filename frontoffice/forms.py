@@ -73,4 +73,6 @@ class VisitorProfileForm(BetterForm, TemplateForm):
 
 class RegionSelectForm(BetterForm, TemplateForm):
     region  = forms.ModelChoiceField(queryset=ElectionInstance.objects, required=True, empty_label=_('Select your region'))
-    
+
+class SmsForm(BetterForm, TemplateForm):
+    phone       = MobilePhoneField(label=_('Mobile phone number'), required=False)

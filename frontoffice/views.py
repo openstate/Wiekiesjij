@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from django.core.paginator import Paginator
 
-from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm
+from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm, SmsForm
 from frontoffice.models import VisitorResult
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
@@ -55,8 +55,19 @@ def answer_question(request, election_instance_party_id, user_id=None):
 def match_results(request, hash):
     results = VisitorResult.objects.get(hash=hash)
     candidates = results.candidate_answers.all()
-    print candidates
-    return render_to_response('frontoffice/match_results.html', {'candidates': candidates}, context_instance=RequestContext(request))
+
+    if request.method == 'POST':
+        form = SmsForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['telephone']:
+                results.telephone = form.cleaned_data['telephone']
+                results.save()
+    else:
+        forms = []
+        form = SmsForm()
+        forms = forms.append(form)
+
+    return render_to_response('frontoffice/match_results.html', {'forms':forms,'candidates': candidates}, context_instance=RequestContext(request))
 
 def match_welcome(request, election_instance_id = None):
     if not election_instance_id:
