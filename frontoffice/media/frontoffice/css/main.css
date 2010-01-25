@@ -692,8 +692,8 @@
 						width:45px;
 						}
 						
-					ul#wizardSteps li.finished a,
-					ul#wizardSteps li.finished span {
+					ul#wizardSteps li.history a,
+					ul#wizardSteps li.history span {
 						color:#000000;
 						background:url(../img/stepsFinished2.gif) left top no-repeat;
 						}
@@ -714,6 +714,15 @@
 							padding:0 .3em;
 							font-weight:bold;
 							color:#ffffff;
+							}
+					ul#wizardSteps li.future-custom {
+						background:#cdcdcd url(../img/step-l.gif) 0 0 no-repeat;
+						}
+						ul#wizardSteps li.future-custom span {
+							background:url(../img/step-r.gif) right top no-repeat;
+							width:auto;
+							padding:0 .3em;
+							font-weight:bold;
 							}
 		
 			

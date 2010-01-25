@@ -6,7 +6,7 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block menu_take_test %}selected{% endblock %}
+{% block menu_take_test %}selected test-selected{% endblock %}
 {% block bookmarks %}{% endblock bookmarks %}
 
 {% block wizard-steps %}
@@ -31,6 +31,7 @@
 					{% for q in questions %}
 						<li class="{% ifcompare q current_question %}current{% smaller %}history{% bigger %}future{% endifcompare %}"><span>{{ q|add:"1" }}</span></li>
 					{% endfor %}
+                    	<li class="last future-custom"><span>{% trans "Results" %}</span></li>
                 </ul>
                 
                 {% block step-header %}

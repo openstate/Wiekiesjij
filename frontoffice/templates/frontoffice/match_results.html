@@ -6,7 +6,7 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block menu_take_test %}selected{% endblock %}
+{% block menu_take_test %}selected test-selected{% endblock %}
 
 {% block wizard-steps %}
     <ul id="wizardSteps">
@@ -24,9 +24,9 @@
         	<div class="bd">
             	
                 <ul id="wizardSteps">
-                    <li class="history"><span>1</span></li>
-                    <li class="history"><span>2</span></li>
-                    <li class="history"><span>3</span></li>
+                    {% for q in questions %}
+                        <li class="history">{{ q|add:"13" }}</li>
+                    {% endfor %}
                     <li class="last current-custom"><span>{% trans "Results" %}</span></li>
                 </ul>
                 
