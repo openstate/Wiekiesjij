@@ -1,5 +1,5 @@
-{% extends parent %}
-{% load i18n %}
+{% extends 'frontoffice/base.html' %}
+{% load i18n thumbnail %}
 {% block extrahead %}
 	{% for form in forms.values %}
 		{{ form.media }}
@@ -20,53 +20,45 @@
 {% block cols %}
 	<div class="col size1of1">
 	{% block content %}
-        <div class="mod wizard">
-
-            {% block help-message %}
-            {% endblock help-message %}
-
+        <div class="mod wizard matches">
         	<div class="bd">
+            	
                 <ul id="wizardSteps">
-                    <li class="big"><span>&laquo;</span></li>
-                    <li class="finished"><span>1</span></li>
-                    <li class="finished"><span>2</span></li>
-                    <li class="finished"><span>3</span></li>
-                    <li class="finished"><span>4</span></li>
-                    <li class="finished"><span>5</span></li>
-                    <li class="finished"><span>6</span></li>
-                    <li class="current"><span>7</span></li>
-                    <li><span>8</span></li>
-                    <li><span>9</span></li>
-                    <li><span>10</span></li>
-                    <li><span>11</span></li>
-                    <li><span>12</span></li>
-                    <li><span>13</span></li>
-                    <li><span>14</span></li>
-                    <li><span>15</span></li>
-                    <li class="big"><span>&raquo;</span></li>
+                    <li class="history"><span>1</span></li>
+                    <li class="history"><span>2</span></li>
+                    <li class="history"><span>3</span></li>
+                    <li class="last current-custom"><span>{% trans "Results" %}</span></li>
                 </ul>
                 
                 {% block step-header %}
-                
-                <h2 class="question">
-                	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
-                    
-                    <a class="additionPlus" href="#">Toelichting</a>
-                </h2>
-                
+                	<h1>{% trans "These are your closest matches" %}:</h1>
                 {% endblock step-header %}
                 
-                <div class="addition">
-	                <h2>Toelichting op de vraag</h2>
-                    <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
-                {% for candidate in candidates %}
-                    <div>
-                        <p>{{ candidate.candidate.profile.full_name }}</p>
-                        <p>{{ candidate.candidates_score }}</p>
-                        <p>{{ candidate.candidate.profile.party }}</p>
+	              {% for candidate in candidates %}
+                    <div class="item{% if forloop.first %} best-match{% endif %}">
+                        <div class="party-logo">
+                            <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}">
+                            {% if candidate.candidate.profile.party.logo %}
+                            	<img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                           	{% else %}
+                            	<img src="{% if forloop.first %}{% thumbnail 'defaults/party-dummy.jpg' 120x75 upscale %}{% else %}{% thumbnail 'defaults/party-dummy.jpg' 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                            {% endif %}
+                            </a>
+                        </div>
+                    	<div class="image">
+                        {% if candidate.candidate.profile.picture %}
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
+                        {% else %}
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
+                        {% endif %}
+                        </div>
+                        <span class="matchmeter">{% trans "Overeenkomst" %}<span class="score">{{ candidate.candidates_score }}%</span></span>
+						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next">{% trans "View profile" %}</a>
+                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}">{{ candidate.candidate.profile.full_name }}</a></h2>
+                        <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
+                        <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
                     </div>
                 {% endfor %}
-                </div>
 
 
                 <form method="post" action="" enctype="multipart/form-data">

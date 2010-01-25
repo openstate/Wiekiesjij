@@ -37,16 +37,19 @@
                 
                 <h2 class="question">
                 	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
-                    
-                    <a class="additionPlus" href="#">{% trans 'Elucidation' %}</a>
+               
+                    <!--<a class="additionPlus" href="#">{% trans 'Elucidation' %}</a>-->
+
                 </h2>
                 
                 {% endblock step-header %}
                 
-                <div class="addition">
+				
+				
+                <!--<div class="addition">
 	                <h2>Toelichting op de vraag</h2>
                     <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
-                </div>
+                </div>-->
                 
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />

@@ -16,7 +16,7 @@
             {% if profile.picture %}
                 <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail profile.picture 140x210 upscale %}" />
             {% else %}
-                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail 'defaults/pol-dummy.jpg' 140x120 upscale %}" />
+                <img class="quickProfilePicture" alt="{{ profile.full_name }}" src="{% thumbnail 'defaults/pol-dummy.jpg' 140x210 upscale %}" />
             {% endif %}
 			</div>
             <table class="quickProfileInfo">

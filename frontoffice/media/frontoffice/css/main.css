@@ -704,7 +704,18 @@
 						font-weight:bold;
 						color:#ffffff;
 						}
-
+	
+					ul#wizardSteps li.current-custom {
+						background:#ed2227 url(../img/step-current-l.gif) 0 0 no-repeat;
+						}
+						ul#wizardSteps li.current-custom span {
+							background:url(../img/step-current-r.gif) right top no-repeat;
+							width:auto;
+							padding:0 .3em;
+							font-weight:bold;
+							color:#ffffff;
+							}
+		
 			
 	
 	/* 	homepage
@@ -1351,6 +1362,94 @@
 									font-size:11px;
 									margin-bottom:5px;
 									}
+			
+			
+			
+			.matches {
+		
+			}
+			.matches h1,
+			.matches h2 {
+				padding-left:0;
+				background:none;
+				margin:.5em 0 1em;
+				}
+			.matches h2 {
+				font-size:1.4em;
+				margin:0 0 .5em;
+				}
+				.matches h2 a {
+					color:#ed2227;
+					}
+			.matches p {
+				margin:0;
+				}
+			.matches .item {
+				background:#f1f1f1;
+				border:1px solid #c0c0c0;
+				padding:10px;
+				overflow:hidden;_zoom:1;
+				}
+				.matches .image {
+					float:left;
+					margin-right:10px;
+					width:58px;
+					height:72px;
+					text-align:center;
+					}
+				.matches .party-logo {
+					overflow:hidden;_zoom:1;
+					float:left;
+					margin-right:10px;
+					}
+					.matches .party-logo a {
+						float:left;
+						width:90px;
+						height:50px;
+						padding:10px;
+						background:#fff;
+						border:1px solid #ccc;
+						}
+				.matches .matchmeter {
+					float:right;
+					background:#fff;
+					padding:8px 8px 6px;
+					margin-left:10px;
+					border:2px solid #ccc;
+					font-weight:bold;
+					text-align:center;
+					}
+					.matches .matchmeter .score {
+						font-size:2.6em;
+						color:#ed2227;
+						display:block;
+						}		
+				.matches .btn {
+					float:right;
+					padding:6px 24px 6px 8px;
+					border:2px solid #666;
+					font-weight:bold;
+					text-decoration:none;
+					}
+			.matches .best-match {
+				background:#e0e0e0;
+				}
+				.matches .best-match .party-logo a {
+					width:120px;
+					height:75px;
+					}
+				.matches .best-match .image {
+					width:77px;
+					height:95px;
+					}
+				.matches .best-match h2 {
+					font-size:2em;
+					}
+				.matches .best-match .matchmeter {
+					font-size:1.5em;
+					}
+				
+			
 			
 	
 	/* 	Tweets
