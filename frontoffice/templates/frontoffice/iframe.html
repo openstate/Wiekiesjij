@@ -21,6 +21,7 @@
     <body>
 
 <div class="col size1of1">
+        {% block content %}
         <div class="mod wizard">
         	<div class="bd">
                 <ul id="wizardSteps">
@@ -51,7 +52,6 @@
                 </h2>
                 {% endblock step-header %}
                 
-                
                 <div class="addition">
 	                <h2>Toelichting op de vraag</h2>
                     <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
@@ -70,6 +70,7 @@
                 </form>
            	</div>
         </div>
+        {% endblock content %}
    	</div>
     </body>
 </html>
