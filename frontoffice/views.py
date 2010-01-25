@@ -52,12 +52,12 @@ def answer_question(request, election_instance_party_id, user_id=None):
     check_permissions(request, election_instance_party_id, 'candidate')
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
-def test(request, election_instance_id = None):
+def test(request, election_instance_id = None, iframe=None):
     if not election_instance_id:
         return redirect('fo.home')
 
 
-    return BestCandidate(election_instance_id=election_instance_id)(request)
+    return BestCandidate(election_instance_id=election_instance_id, iframe=iframe)(request)
 
 def election(request, id=None):
 
@@ -276,10 +276,9 @@ def politician_profile(request, id, tab = "favs"):
         match = regex.match(twitter.url)
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
-
     except:
         twitter_url = None
-        
+
     #record view
     user.statistics.update_profile_views(request)
 

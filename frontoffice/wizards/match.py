@@ -25,6 +25,7 @@ class BestCandidate(MultiPathFormWizard):
     '''
     def __init__(self, *args, **kwargs):
         self.election_instance_id = kwargs['election_instance_id']
+        self.iframe = kwargs['iframe']
         self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
         eips = ElectionInstanceParty.objects.filter(election_instance=self.election_instance)
 
@@ -87,10 +88,16 @@ class BestCandidate(MultiPathFormWizard):
                 fkwargs= {str(question.id): {'queryset': self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('electioninstancequestion__position'), 'empty_label':empty_label}}
             else:
                 pass
+
+            if self.iframe:
+                parent = 'frontoffice/wizard/iframe.html'
+            else:
+                parent = 'frontoffice/wizard/base.html'
+                
             step = Step(str(question.id),
                      forms=form,
                      template='frontoffice/wizard/test/step1.html',
-                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.get_frontend_title()},
+                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.get_frontend_title(), 'parent':parent},
                      form_kwargs=fkwargs)
             steps_tree.append(step)
             idx += 1
