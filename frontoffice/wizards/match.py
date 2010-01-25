@@ -123,6 +123,7 @@ class BestCandidate(MultiPathFormWizard):
         candidate_question_answers = {}
         self.multiply_questions = []
         candidate_ids = []
+        questions_skipped = 0
         # get list of candidate ids and create a dictionay entry for each candidate to keep array of scores
         for candidate in self.candidates:
             candidate_scores[candidate] = []
@@ -313,7 +314,7 @@ class BestCandidate(MultiPathFormWizard):
                     self.multiply_questions = answer_value[0]
 
                 else:
-                    print 'skipped'
+                    questions_skipped = questions_skipped + 1
                     pass
 
                 # fill out list with default score of 0 for each candidate, if not already there
@@ -346,10 +347,10 @@ class BestCandidate(MultiPathFormWizard):
                     theme = 'q'+qid
                     if theme in self.multiply_questions:
                         score = score * 2
-                        score = ((score * 100)/((num_questions -1) + num_weighted_questions))
+                        score = ((score * 100)/(((num_questions -1) + num_weighted_questions ) - questions_skipped))
                         question[question_id] = score
                     else:
-                        score = ((score * 100)/((num_questions -1) + num_weighted_questions))
+                        score = ((score * 100)/(((num_questions -1) + num_weighted_questions)- questions_skipped))
                         question[question_id] = score
 
         candidates_total_scores = {}
