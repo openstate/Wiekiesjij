@@ -277,10 +277,11 @@ def politician_profile(request, id, tab = "favs"):
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
 
-        #record view
-        user.statistics.update_profile_views(request)
     except:
         twitter_url = None
+        
+    #record view
+    user.statistics.update_profile_views(request)
 
     return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'test_url': 'http://www.google.com/ig?refresh=1'}, context_instance=RequestContext(request))
 

@@ -577,10 +577,9 @@ def user_statistics(u):
     """ Function creates UserStatistics on-the-fly on first access. """
     try:
         return u.stats
-
     except:
         UserStatistics(user = u).save()
-        return self.stats
+        return u.stats
     
 
 # Lazy create
