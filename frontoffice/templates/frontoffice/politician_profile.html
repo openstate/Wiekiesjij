@@ -238,9 +238,12 @@
                             {% get_comment_count for goal as comment_count %}
                             <span class="comments">
                             <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
-                            {% if user.is_authenticated %}
+                            {% isprofile 'visitor' %}
                                 - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
-                            {% endif %}
+                            {% endisprofile %}
+                            {% ifequal goal.politician.user.id request.user.id %}
+                                - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                            {% endifequal %}
                             </span>
                         </li>
                     {% endfor %}

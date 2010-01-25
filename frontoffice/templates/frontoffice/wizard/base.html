@@ -6,7 +6,7 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block menu %}{% endblock menu %}
+{% block menu_take_test %}selected{% endblock %}
 {% block bookmarks %}{% endblock bookmarks %}
 
 {% block wizard-steps %}
@@ -38,7 +38,7 @@
                 <h2 class="question">
                 	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
                     
-                    <a class="additionPlus" href="#">Toelichting</a>
+                    <a class="additionPlus" href="#">{% trans 'Elucidation' %}</a>
                 </h2>
                 
                 {% endblock step-header %}
