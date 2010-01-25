@@ -432,7 +432,7 @@ def home(request):
         form = RegionSelectForm()
 
     if 'ElectionInstance' in request.session:
-        initial_dict = {'region': request.session['ElectionInstance']['id']}
+        initial_dict = {'region': request.session['ElectionInstance'].get('id')}
         form = RegionSelectForm(initial=initial_dict) #overwrite the form
 
     return render_to_response('frontoffice/home.html', {'form': form}, context_instance=RequestContext(request))

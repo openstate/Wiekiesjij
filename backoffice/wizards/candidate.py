@@ -719,6 +719,11 @@ class AddCandidateWizard(MultiPathFormWizard):
                 'gender': self.form_data['gender'],
             }
             created, self.candidate = create_profile('candidate', tmp_data)
+            
+            if not created and Candidacy.objects.filter(election_party_instance__pk=self.election_instance_party_id, candidate=self.candidate.user).count() != 0:
+                request.user.message_set.create(message=ugettext('Elke kandidaat van een partij moet een uniek e-mail adres hebben.'))
+                return redirect('bo.election_party_view', self.election_instance_party_id)
+                
 
             #Link candidate to party
             candidacy = Candidacy(

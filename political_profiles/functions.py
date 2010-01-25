@@ -57,7 +57,7 @@ def cal_work_experience_days(sender, instance, **kwargs):
     instance.politician.save()
 
 
-def get_candidates_from_csv(session, skip_positions=[]):
+def get_candidates_from_csv(session, skip_positions=[], existing_candidates=[]):
     candidates = {}
 
     #Get file from session and read it
@@ -90,6 +90,9 @@ def get_candidates_from_csv(session, skip_positions=[]):
         except ValueError:
             continue
         if candidate_data['gender'] not in ['Female', 'Male']:
+            continue
+            
+        if candidate_data['email'] in existing_candidates:
             continue
         
         if not int(candidate_data['position']) in skip_positions:

@@ -191,6 +191,9 @@ def candidate_down(request, id):
 @party_admin_required
 def election_party_add_candidate(request, id, pos):
     check_permissions(request,id, 'party_admin')
+    if Candidacy.objects.filter(election_party_instance__pk=id, position=pos).count() != 0:
+        request.user.message_set.create(message=ugettext('U heeft al iemand op positie %(pos)s uitgenodigd.') % {'pos': pos})
+        return redirect('bo.election_party_view', id=id)
     return AddCandidateWizard(id, pos)(request)
 
 @staff_required
@@ -505,7 +508,8 @@ def csv_import_candidates_step3(request, ep_id):
     eip_obj = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     try:
         positions = Candidacy.objects.filter(election_party_instance=eip_obj).values_list('position', flat=True)
-        candidates = functions.get_candidates_from_csv(request.session, positions)
+        candidate_emails = Candidacy.objects.filter(election_party_instance=eip_obj).value_list('candidate__email', flat=True)
+        candidates = functions.get_candidates_from_csv(request.session, positions, candidate_emails)
     except:
 
         path = settings.TMP_ROOT + '/'
