@@ -508,7 +508,7 @@ def csv_import_candidates_step3(request, ep_id):
     eip_obj = get_object_or_404(ElectionInstanceParty, pk=ep_id)
     try:
         positions = Candidacy.objects.filter(election_party_instance=eip_obj).values_list('position', flat=True)
-        candidate_emails = Candidacy.objects.filter(election_party_instance=eip_obj).value_list('candidate__email', flat=True)
+        candidate_emails = Candidacy.objects.filter(election_party_instance=eip_obj).values_list('candidate__email', flat=True)
         candidates = functions.get_candidates_from_csv(request.session, positions, candidate_emails)
     except:
 
