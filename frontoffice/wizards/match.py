@@ -10,7 +10,7 @@ from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoic
 from questions.forms import SelectQuestionForm, VisitorAnswerQuestionForm
 from questions.forms.types import ModelMultiAnswerForm, ModelAnswerForm, ThemeAnswerForm
 from questions.models import Question, Answer
-from elections.models import Candidacy, ElectionInstanceParty
+from elections.models import Candidacy, ElectionInstanceParty, ElectionInstance
 from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE
 from questions.settings import FRONTOFFICE_QUESTION_TYPES, BACKOFFICE_QUESTION_TYPES, MULTIPLE_ANSWER_TYPES
 from political_profiles.models import WorkExperienceSector, EducationLevel, PoliticianProfile, Education
@@ -368,6 +368,7 @@ class BestCandidate(MultiPathFormWizard):
         new_visitor = visitor.create()
 
         new_visitor.ipaddress=request.META['REMOTE_ADDR']
+        new_visitor.election_instance = self.election_instance
 
         # Only link visitors
         if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
