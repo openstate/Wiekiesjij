@@ -60,7 +60,10 @@ def election(request, id=None):
     if id:
         selected_eip = get_object_or_404(ElectionInstanceParty, pk=id)
         politicians = selected_eip.candidate_dict()
-   
+    elif eips:
+        selected_eip = eips[0]
+        politicians = selected_eip.candidate_dict()
+        
     if len(election_instances) <= 1:
         return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians, 'instance': election_instances[0]}, context_instance=RequestContext(request))
     else:
