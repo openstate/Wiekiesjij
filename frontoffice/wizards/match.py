@@ -121,6 +121,7 @@ class BestCandidate(MultiPathFormWizard):
         num_questions = 0
         candidate_scores = {}
         candidate_question_answers = {}
+        self.multiply_questions = []
         candidate_ids = []
         # get list of candidate ids and create a dictionay entry for each candidate to keep array of scores
         for candidate in self.candidates:
@@ -324,17 +325,21 @@ class BestCandidate(MultiPathFormWizard):
                     if answered == False:
                         candidate_scores[candidate].append({question.id: 0})
 
+
         #Add Weighting
+        counted = False
         for candidate in self.candidates:
             num_weighted_questions = 0
-            for question in candidate_scores[candidate]:
-                for question_id, score in question.iteritems():
-                    qid = str(question_id)
-                    theme = 'q'+qid
+            if counted == False:
+                for question in candidate_scores[candidate]:
+                    for question_id, score in question.iteritems():
+                        qid = str(question_id)
+                        theme = 'q'+qid
 
-                    if theme in self.multiply_questions:
-                        num_weighted_questions = num_weighted_questions + 1
-
+                        if theme in self.multiply_questions:
+                            num_weighted_questions = num_weighted_questions + 1
+                counted = True
+                
             for question in candidate_scores[candidate]:
                 for question_id, score in question.iteritems():
                     qid = str(question_id)
@@ -347,29 +352,22 @@ class BestCandidate(MultiPathFormWizard):
                         score = ((score * 100)/((num_questions -1) + num_weighted_questions))
                         question[question_id] = score
 
-
-
-#
-#        for candidate in self.candidates:
-#            for key in  all_candidate_answers[candidate].keys():
-#                print candidate.full_name(), key, all_candidate_answers[candidate][key]
         candidates_total_scores = {}
         for candidate in self.candidates:
-            #print candidate.full_name()
+
             total = 0
             for question in candidate_scores[candidate]:
                for question_id, score in question.iteritems():
                     total = total + score
             candidates_total_scores[candidate] = total
-            #print candidate_scores[candidate]
-            #print total, 'score'
-        #import ipdb; ipdb.set_trace()
+        
         visitor = VisitorResult()
         
-        #serializers.serialize('python', all_visitor_answers)
+
         new_visitor = visitor.create()
-        #visitor.save()
+
         new_visitor.ipaddress=request.META['REMOTE_ADDR']
+
         # Only link visitors
         if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
             new_visitor.user = request.user
@@ -378,8 +376,6 @@ class BestCandidate(MultiPathFormWizard):
 
         sorted_candidates = [(k, candidates_total_scores[k]) for k in sorted(candidates_total_scores, key=candidates_total_scores.get, reverse=True)]
 
-
- 
         for candidate, score in sorted_candidates[:5]:
 
             candidate_ans = CandidateAnswers()
@@ -390,9 +386,6 @@ class BestCandidate(MultiPathFormWizard):
             candidate_ans.candidate_question_scores = json.dumps(candidate_scores[candidate])
             candidate_ans.save()
             new_visitor.candidate_answers.add(candidate_ans)
-            
-
-
 
         return redirect('fo.match_results', hash=new_visitor)
 
