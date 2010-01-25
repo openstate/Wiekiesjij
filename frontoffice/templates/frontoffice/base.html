@@ -20,9 +20,9 @@
 </head>
 <body>
     <div id="container">
-        <div id="header" {# if ei %} class="regional"{% endif #}>
+        <div id="header" {% if request.session.ElectionInstance %} class="regional"{% endif %}>
             <h1 class="branding"><a href="/">WieKiesJij?</a></h1>
-            {# if ei %}<h2 class="regional">Gemeenteraadsverkiezingen 2010: [Election Instance Name/Region]</h2>{% endif #}
+            {% if request.session.ElectionInstance %}<h2 class="regional">Gemeenteraadsverkiezingen 2010: {{ request.session.ElectionInstance.name }}</h2>{% endif %}
 
             <p class="user-info">
                 {% if user.is_authenticated %}
@@ -42,7 +42,7 @@
             <ul class="tabs">
             {% block menu %}
                 {% if request.session.ElectionInstance %}
-                <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% if request.session.ElectionInstance %}{% url fo.test request.session.ElectionInstance %}{% else %}{% url fo.test %}{% endif %}">{% trans 'Take the test' %}</a></li>
+                <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% url fo.test request.session.ElectionInstance.id %}">{% trans 'Take the test' %}</a></li>
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
                 <li class="{% block menu_organisation %}{% endblock %}"><a href="#">{% trans 'Organisation' %}</a></li>
                 {% endif %}

@@ -54,7 +54,7 @@
             {% if request.session.ElectionInstance %}
                 <div class="bd">
                     <h2>&nbsp;<span class="num">2</span></h2>
-                    <a class="big-btn primary-btn start-test" href="{% url fo.test request.session.ElectionInstance %}">
+                    <a class="big-btn primary-btn start-test" href="{% url fo.test request.session.ElectionInstance.id %}">
                         <span>
                             <span class="icon"></span>{% trans 'Do the test' %}
                         </span>

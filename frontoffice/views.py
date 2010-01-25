@@ -52,7 +52,7 @@ def election(request, id=None):
 
     politicians = []
     if 'ElectionInstance' in request.session:
-        election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=request.session['ElectionInstance'])
+        election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=request.session['ElectionInstance']['id'])
     else:
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
     selected_eip = None
@@ -99,7 +99,7 @@ def politician_profile_filter(request):
         filters = []
 
         if not request.GET and 'ElectionInstance' in request.session:
-            return redirect("%s?region=%d" % (path, request.session['ElectionInstance']))
+            return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
 
         if form.is_valid():
             # All validation rules pass
@@ -118,7 +118,7 @@ def politician_profile_filter(request):
                 region_filtered = True
 
                 if 'ElectionInstance' in request.session:
-                    if request.session['ElectionInstance'] != form.cleaned_data['region'].id:
+                    if request.session['ElectionInstance']['id'] != form.cleaned_data['region'].id:
                         filters.append((_('Region'), form.cleaned_data['region'].council.region, new_path))
 
             if form.cleaned_data['name']:
@@ -380,12 +380,13 @@ def home(request):
         form = RegionSelectForm(request.POST)
         if form.is_valid():
             region = form.cleaned_data['region']
-            request.session['ElectionInstance'] = region.id
+            dict = {'id': region.id, 'name': region.name}
+            request.session['ElectionInstance'] = dict
     else:
         form = RegionSelectForm()
 
     if 'ElectionInstance' in request.session:
-        initial_dict = {'region': request.session['ElectionInstance']}
+        initial_dict = {'region': request.session['ElectionInstance']['id']}
         form = RegionSelectForm(initial=initial_dict) #overwrite the form
 
     return render_to_response('frontoffice/home.html', {'form': form}, context_instance=RequestContext(request))
