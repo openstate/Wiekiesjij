@@ -8,8 +8,8 @@
 		<p class="label {{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</p>
 		<label for="{{ field.auto_id }}" class="{{ field|get_required_class }}">
         {{ field|with_class }}
-		{% if field.help_text %}{{ field.help_text|safe }}</label>
-		{% endif %}
+		{% if field.help_text %}{{ field.help_text|safe }}{% endif %}
+		</label>
 	{% else %}
     	{% ifmultifield field %}
 			<p class="label {{ field|get_required_class }}">{{ field.label }} {% if not field.field.required %}<span class="optional">{% trans "optional" %}</span>{% endif %}</p>
