@@ -2,5 +2,12 @@
 {% load i18n %}
 
 {% block content %}
-	<p>{% blocktrans with activation_key as activation_key %}Activation failed, please verify that this is the correct activation key: {{ activation_key }}{% endblocktrans %}</p>
+	<div class="mod message">
+    	<div class="hd">
+        	<h1>{% trans "Activation failed" %}</h1>
+        </div>
+        <div class="bd">
+			<p>{% blocktrans with activation_key as activation_key %}Please verify that this is the correct activation key: {{ activation_key }}{% endblocktrans %}</p>
+		</div>
+   	</div>
 {% endblock content %}

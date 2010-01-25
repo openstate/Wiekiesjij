@@ -1,11 +1,20 @@
 {% extends "frontoffice/base.html" %}
 {% load i18n %}
 
-{% block content %}
-	<form action="" method="post" accept-charset="utf-8">
-		{{ form.as_template }}
-		<div class="form-submit">
-            <button type="submit" class="next primary">{% trans "Register" %}</button>
-        </div>
-	</form>
-{% endblock content %}
+{% block cols %}
+	<div class="col size1of2">
+    	<div class="mod register-form">
+        	<div class="hd">
+            	<h1>{% trans "Registreren als bezoeker" %}</h1>
+            </div>
+            <div class="bd">
+                <form action="" method="post" accept-charset="utf-8">
+                    {{ form.as_template }}
+                    <div class="form-submit">
+                        <button type="submit" class="next primary">{% trans "Register" %}</button>
+                    </div>
+                </form>
+           	</div>
+       	</div>
+	</div>
+{% endblock cols %}

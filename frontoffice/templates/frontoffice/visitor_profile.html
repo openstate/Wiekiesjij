@@ -1,27 +1,42 @@
 {% extends 'frontoffice/base.html' %}
 {% load i18n %}
 
-{% block content %}
-    <h1>{% trans 'Change your information' %}</h1>
-    <form method="POST" enctype="multipart/form-data" action="">
-        {{ form.as_template }}
-        <a href="{% url fo.change_password %}">{% trans 'Change your password' %}</a>
+{% block cols %}
+	<div class="col size1of2">
+    	<div class="mod visitor-profile">
+        	<div class="hd">
+    			<h1>{% trans 'Change your information' %}</h1>
+           	</div>
+            <div class="bd">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    {{ form.as_template }}
+                    
+                    
+                    <div class="form-submit">
+                    	<a href="{% url fo.change_password %}">{% trans 'Change your password' %}</a>
+                        <button class="next primary" type="submit">{% trans "Submit" %}</button>
+                    </div>
+                </form>
+          	</div>
+      	</div>
         
-        <div class="form-submit">
-            <button class="primary" type="submit">{% trans "Submit" %}</button>
-        </div>
-    </form>
-
-    <h1>{% trans 'Favorite politicians' %}</h1>
-    <ul>
-        {% for favorite in profile.favorites.all %}
-            <li>
-                {{ favorite.full_name }} ({{ favorite.party }}) - <a href="{% url fo.visitor.remove_fan favorite.user.id %}?redirect={{ request.path }}">{% trans 'Remove' %}</a>
-            </li>
-        {% empty %}
-            <li>
-                {% trans "You don't have any favorite politicians yet" %}
-            </li>
-        {% endfor %}
-    </ul>
-{% endblock content %}
+        <div class="mod fav-pols">
+        	<div class="hd">
+    			<h1>{% trans 'Favorite politicians' %}</h1>
+          	</div>
+            <div class="bd">
+                <ul>
+                    {% for favorite in profile.favorites.all %}
+                        <li>
+                            {{ favorite.full_name }} ({{ favorite.party }}) - <a href="{% url fo.visitor.remove_fan favorite.user.id %}?redirect={{ request.path }}">{% trans 'Remove' %}</a>
+                        </li>
+                    {% empty %}
+                        <li class="empty">
+                            {% trans "You don't have any favorite politicians yet" %}
+                        </li>
+                    {% endfor %}
+                </ul>
+           	</div>
+       	</div>
+	</div>
+{% endblock cols %}

@@ -178,6 +178,27 @@
 				margin-bottom:.5em;
 				}
 				
+				div.field div.field label {
+					font-weight:normal;
+					}
+				
+		
+		div.errors {
+			text-align:left;
+			color:#ed2227;
+			clear:both;
+			}
+	
+		p.error {
+			color:#ed2227;
+			}
+			
+		div.error input,
+		div.error select,
+		div.error textarea {
+			border-color:#ed2227;
+			background:#fee;
+			}
 				
 		/* 	checkbox
 			----------------------------------------------------------------------------------------- */
@@ -318,6 +339,61 @@
 						background-color: #b9b9b9;
 						}
 
+		/* 	Custom Form Widget styling
+		*************************************************************************************************/
+		
+		
+		/* 	.namewidget
+			----------------------------------------------------------------------------------------- */
+
+			div.namewidget {
+			
+				}
+			
+				div.last-name {
+					float:left;
+					width:262px;
+					}
+				div.first-name {
+					clear:left;
+					float:left;
+					width:262px;
+					}
+					div.last-name input,
+					div.first-name input {
+						width:250px;
+						}
+					.sub-form div.last-name,
+					.sub-form div.first-name {
+						width:282px;
+						}
+					.sub-form div.last-name input,
+					.sub-form div.first-name input {
+						width:270px;
+						}
+				div.middle-name {
+					float:right;
+					width:152px;
+					}
+					div.middle-name input {
+						float:right;
+						width: 140px;
+						}
+					.sub-form div.middle-name {
+						width:147px;
+						}
+					.sub-form div.middle-name input {
+						width:135px;
+						}
+				
+				div.initials {
+					float:right;
+					}
+					div.initials input {
+						width:70px;
+						}	
+	
+	
 	
 
 	/*	generic styling
@@ -1607,6 +1683,16 @@
 				font-weight:bold;
 				}
 		
+		.message {
+			
+			}
+			.message p {
+				margin:0;
+				}
+			.message a {
+				color:#ed2227;
+				font-weight:bold;
+				}
 										
 	/*	Footer
 	**************************************************************************************************************/

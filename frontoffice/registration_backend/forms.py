@@ -20,7 +20,8 @@ class RegistrationForm(BetterForm, TemplateForm):
     name = NameField(label=_('Name'))
         
     tos = forms.BooleanField(widget=forms.CheckboxInput(),
-                                 label=_(u'I have read and agree to the Terms of Service'),
+                                 label=_(u'Servicevoorwaarden'),
+								 help_text=_('I have read and agree to the Terms of Service'),
                                  error_messages={ 'required': _("You must agree to the terms to register") })
     
     def clean_email(self):

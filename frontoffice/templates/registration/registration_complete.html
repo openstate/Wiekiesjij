@@ -2,5 +2,12 @@
 {% load i18n %}
 
 {% block content %}
-	<p>{% blocktrans %}Registration complete, you will receive an email containing a link to activate your account.{% endblocktrans %}</p>
+	<div class="mod message">
+    	<div class="hd">
+        	<h1>{% trans "Registration complete" %}</h1>
+        </div>
+    	<div class="bd">
+		<p>{% blocktrans %}You will receive an email containing a link to activate your account.{% endblocktrans %}</p>
+		</div>
+    </div>
 {% endblock content %}

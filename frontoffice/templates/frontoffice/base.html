@@ -34,8 +34,7 @@
                     {% endif %}
                         - <a href="{% url fo.logout %}">{% trans "Logout" %}</a>
                 {% else %}
-                    {% trans "You are not logged in" %}. <a href="{% url fo.login %}">{% trans "Login" %}</a>
-                    / <a href="{% url registration_register %}">{% trans "Register" %}</a>
+                    <a href="{% url fo.login %}">{% trans "Login" %}</a> {% trans "or" %} <a href="{% url registration_register %}">{% trans "register" %}</a>
                 {% endif %}
             </p>
 

@@ -2,6 +2,13 @@
 {% load i18n %}
 
 {% block content %}
+	<div class="mod message">
 	{% url fo.login as login_url %}
-	<p>{% blocktrans with login_url as login_url %}Activation succesful, <a href="{{ login_url }}">click here</a> to login.{% endblocktrans %}</p>
+    	<div class="hd">
+        	<h1>{% trans "Activation succesful" %}</h1>
+        </div>
+        <div class="bd">
+			<p>{% blocktrans with login_url as login_url %}<a href="{{ login_url }}">Click here</a> to login.{% endblocktrans %}</p>
+		</div>
+   	</div>
 {% endblock content %}
