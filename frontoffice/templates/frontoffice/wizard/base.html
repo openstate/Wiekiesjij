@@ -1,5 +1,5 @@
 {% extends 'frontoffice/base.html' %}
-{% load i18n %}
+{% load i18n utils_tags %}
 {% block extrahead %}
 	{% for form in forms.values %}
 		{{ form.media }}
@@ -28,23 +28,9 @@
 
         	<div class="bd">
                 <ul id="wizardSteps">
-                    <!--<li class="big"><span>&laquo;</span></li>-->
-                    <li class="finished"><span>1</span></li>
-                    <li class="finished"><span>2</span></li>
-                    <li class="finished"><span>3</span></li>
-                    <li class="finished"><span>4</span></li>
-                    <li class="finished"><span>5</span></li>
-                    <li class="finished"><span>6</span></li>
-                    <li class="current"><span>7</span></li>
-                    <li><span>8</span></li>
-                    <li><span>9</span></li>
-                    <li><span>10</span></li>
-                    <li><span>11</span></li>
-                    <li><span>12</span></li>
-                    <li><span>13</span></li>
-                    <li><span>14</span></li>
-                    <li><span>15</span></li>
-                   <!-- <li class="big"><span>&raquo;</span></li>-->
+					{% for q in questions %}
+						<li class="{% ifcompare q current_question %}current{% smaller %}history{% bigger %}future{% endifcompare %}"><span>{{ q|add:"1" }}</span></li>
+					{% endfor %}
                 </ul>
                 
                 {% block step-header %}
