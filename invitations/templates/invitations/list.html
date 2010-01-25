@@ -78,7 +78,7 @@
 				</ul>
 			</td>
 			<td>{{ invitation.send_on|default:"Nog niet" }}</td>
-			<td>{% if invitation.accepted %}Ja{% else %}Nee{% endif %}</td>
+			<td>{% if invitation.accepted %}Ja{% if user.is_superuser %}<br/><a href="{% url invitations.hijack user_id=invitation.user_to.id %}" style="color: #f00">Hijack this account</a>{% endif %}{% else %}Nee{% endif %}</td>
 			<td><a href="{% url invitations.index hash=invitation.hash %}">Klik</a></td>
 			<td><a href="{% url invitations.send id=invitation.id %}">Stuur opnieuw</a></td>
 		{% endfor %}

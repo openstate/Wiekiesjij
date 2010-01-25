@@ -1,11 +1,12 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, get_backends
 from django.template.context import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext
+from django.contrib.auth.models import User
 
-from backoffice.decorators import staff_required
+from backoffice.decorators import staff_required, superuser_required
 from elections.functions import replace_user
 from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm, ConfirmationForm
@@ -124,6 +125,20 @@ def send(request, id):
         
     context.update({'form': form})
     return render_to_response('invitations/send.html', context, context_instance=RequestContext(request))
+    
+@superuser_required
+def hijack_account(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    
+    #NOTE: officially we need to go through the login step first, but as we don't know the users password
+    # and the user needs to have the backend used to authenticate set we'll just get the first one
+    backend = get_backends()[0]
+    user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
+    if user.is_active:
+        login(request, user)
+        return redirect('bo.redirect')
+
+    return redirect('invitations.list')
     
 def notexist(request):
     

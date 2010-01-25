@@ -5,6 +5,20 @@ from utils import settings
 from elections.functions import get_profile_model
 
 
+def superuser_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
+    """
+    Decorator for views that checks that the user is a superuser, redirecting
+    to the log-in page if necessary.
+    """
+    actual_decorator = user_passes_test(
+        lambda u: u.is_superuser,
+        login_url=settings.PERMISSION_DENIED_URL,
+        redirect_field_name=redirect_field_name
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+    
 def staff_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME):
     """
     Decorator for views that checks that the user is staff, redirecting

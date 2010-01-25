@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     
     url(r'list/$', 'invitations.views.list', name='invitations.list'),
     url(r'send/(?P<id>\d+)/$', 'invitations.views.send', name='invitations.send'),
+    url(r'hijack/(?P<user_id>\d+)/$', 'invitations.views.hijack_account', name='invitations.hijack')
 )
