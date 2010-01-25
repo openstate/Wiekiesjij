@@ -73,9 +73,7 @@
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
                     {% block forms %}
-                        {% for form in forms.values %}
-                            {{ form.as_template }}
-                        {% endfor %}
+                        {{ form.as_template }}
                     {% endblock forms %}
                     {{ previous_fields|safe }}
 

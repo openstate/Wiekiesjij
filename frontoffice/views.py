@@ -53,21 +53,31 @@ def answer_question(request, election_instance_party_id, user_id=None):
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
 def match_results(request, hash):
-    results = VisitorResult.objects.get(hash=hash)
-    candidates = results.candidate_answers.all()
+    result = VisitorResult.objects.get(hash=hash)
+    candidates = result.candidate_answers.all()
+    visitors_profile = VisitorProfile.objects.filter(user=request.user)
+
+    default_phone = ''
+
+    if visitors_profile:
+        default_phone = visitors_profile[0].phone
+    if default_phone:
+        initial = {'phone':default_phone}
+    else:
+        initial = {'phone':result.telephone}
 
     if request.method == 'POST':
         form = SmsForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['telephone']:
-                results.telephone = form.cleaned_data['telephone']
-                results.save()
+            if form.cleaned_data['phone']:
+                result.telephone = form.cleaned_data['phone']
+                result.save()
     else:
-        forms = []
-        form = SmsForm()
-        forms = forms.append(form)
+  
+        form = SmsForm(initial=initial)
 
-    return render_to_response('frontoffice/match_results.html', {'forms':forms,'candidates': candidates}, context_instance=RequestContext(request))
+
+    return render_to_response('frontoffice/match_results.html', {'form':form,'candidates': candidates}, context_instance=RequestContext(request))
 
 def match_welcome(request, election_instance_id = None):
     if not election_instance_id:
