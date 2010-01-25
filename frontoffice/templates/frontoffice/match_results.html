@@ -1,0 +1,93 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block menu %}{% endblock menu %}
+{% block bookmarks %}{% endblock bookmarks %}
+
+{% block wizard-steps %}
+    <ul id="wizardSteps">
+        <li><a href="#" class="history"><span class="number">1</span>{% trans 'Registration' %}</a></li>
+        <li><a href="#" class="history"><span class="number">2</span>{% trans 'Election' %}</a></li>
+        <li><a href="#" class="active"><span class="number">3</span>{% trans 'Council blaat babbel' %}</a></li>
+        <li class="last"><span class="future"><span class="number">4</span>{% trans 'Chancellery' %}</span></li>
+    </ul>
+{% endblock wizard-steps %}
+
+{% block cols %}
+	<div class="col size1of1">
+	{% block content %}
+        <div class="mod wizard">
+
+            {% block help-message %}
+            {% endblock help-message %}
+
+        	<div class="bd">
+                <ul id="wizardSteps">
+                    <li class="big"><span>&laquo;</span></li>
+                    <li class="finished"><span>1</span></li>
+                    <li class="finished"><span>2</span></li>
+                    <li class="finished"><span>3</span></li>
+                    <li class="finished"><span>4</span></li>
+                    <li class="finished"><span>5</span></li>
+                    <li class="finished"><span>6</span></li>
+                    <li class="current"><span>7</span></li>
+                    <li><span>8</span></li>
+                    <li><span>9</span></li>
+                    <li><span>10</span></li>
+                    <li><span>11</span></li>
+                    <li><span>12</span></li>
+                    <li><span>13</span></li>
+                    <li><span>14</span></li>
+                    <li><span>15</span></li>
+                    <li class="big"><span>&raquo;</span></li>
+                </ul>
+                
+                {% block step-header %}
+                
+                <h2 class="question">
+                	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
+                    
+                    <a class="additionPlus" href="#">Toelichting</a>
+                </h2>
+                
+                {% endblock step-header %}
+                
+                <div class="addition">
+	                <h2>Toelichting op de vraag</h2>
+                    <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
+                {% for candidate in candidates %}
+                    <div>
+                        <p>{{ candidate.candidate.profile.full_name }}</p>
+                        <p>{{ candidate.candidates_score }}</p>
+                        <p>{{ candidate.candidate.profile.party }}</p>
+                    </div>
+                {% endfor %}
+                </div>
+
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+                    {% block forms %}
+                        {% for form in forms.values %}
+                            {{ form.as_template }}
+                        {% endfor %}
+                    {% endblock forms %}
+                    {{ previous_fields|safe }}
+
+
+                    {% block buttons %}
+                            <div class="form-submit">
+                            <button type="submit" class="next primary">{% trans "Next" %}</button>
+                        </div>
+                    {% endblock buttons %}
+                </form>
+           	</div>
+        </div>
+    {% endblock content %}
+   	</div>
+{% endblock cols %}
