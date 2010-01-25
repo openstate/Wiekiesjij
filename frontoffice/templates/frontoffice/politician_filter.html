@@ -7,8 +7,6 @@
 
 {% block menu_candidates %}selected{% endblock %}
 
-{% block cols %}
-
 {% block breadcrumbs %}
 <div class="col lastCol">
 	<ul class="breadcrumbs">
@@ -17,6 +15,9 @@
     </ul>
 </div>
 {% endblock breadcrumbs %}
+
+{% block cols %}
+
 
 <div class="col size1of4">
     <div class="mod filter">
@@ -99,7 +100,7 @@
                         {% endif %}
                     </div>
                     <a href="{% url fo.politician_profile politician.user.id %}" class="name">{{ politician.full_name }}</a>
-                    <p>{% trans 'Age' %}: {{ politician.age }}</p>
+                    <p>{% trans 'Age' %}: {{ politician.age|default:"Onbekend" }}</p>
                     <p>{% trans 'Party' %}: {{ politician.party }}</p>
                     {% if not region_filtered %}
                         <p>{% trans 'Region' %}: {{ politician.region }}</p>

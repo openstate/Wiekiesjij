@@ -280,7 +280,7 @@ def politician_profile_filter(request):
                     filtered_politicians = filtered_politicians.filter(diet='other')
                 new_path = _new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
-            filtered_politicians.distinct()
+            filtered_politicians.select_related().distinct()
             
             #no query executed so far, so we see if we can do some caching stuff here :)
             cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
@@ -295,7 +295,7 @@ def politician_profile_filter(request):
             form = PoliticianFilterForm() # An unbound form
             
         
-        p = Paginator(politicians, 12)
+        p = Paginator(politicians, 24)
         # Make sure page request is an int. If not, deliver first page.
         try:
             page = int(request.GET.get('page', '1'))
