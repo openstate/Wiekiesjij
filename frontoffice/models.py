@@ -1,9 +1,11 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
 import string
 from random import seed, choice
 from datetime import datetime
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
+
 class VisitorResult(models.Model):
     """
         The results of a visitors match of a candidate.
@@ -32,11 +34,12 @@ class VisitorResult(models.Model):
     @classmethod
     def create(cls):
         """
-            Create an invitation
+            Create an result object
         """
         return cls.objects.create(
             hash = cls.generate_hash()
         )
+        
     def __unicode__(self):
         return self.hash
 
