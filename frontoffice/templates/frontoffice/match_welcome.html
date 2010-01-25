@@ -9,14 +9,6 @@
 {% block menu_take_test %}selected{% endblock %}
 
 
-{% block wizard-steps %}
-    <ul id="wizardSteps">
-        <li><a href="#" class="history"><span class="number">1</span>{% trans 'Registration' %}</a></li>
-        <li><a href="#" class="history"><span class="number">2</span>{% trans 'Election' %}</a></li>
-        <li><a href="#" class="active"><span class="number">3</span>{% trans 'Council blaat babbel' %}</a></li>
-        <li class="last"><span class="future"><span class="number">4</span>{% trans 'Chancellery' %}</span></li>
-    </ul>
-{% endblock wizard-steps %}
 
 {% block cols %}
 	<div class="col size1of1">
@@ -27,40 +19,25 @@
             {% endblock help-message %}
 
         	<div class="bd">
-                <ul id="wizardSteps">
-                    <li class="big"><span>&laquo;</span></li>
-                    <li class="finished"><span>1</span></li>
-                    <li class="finished"><span>2</span></li>
-                    <li class="finished"><span>3</span></li>
-                    <li class="finished"><span>4</span></li>
-                    <li class="finished"><span>5</span></li>
-                    <li class="finished"><span>6</span></li>
-                    <li class="current"><span>7</span></li>
-                    <li><span>8</span></li>
-                    <li><span>9</span></li>
-                    <li><span>10</span></li>
-                    <li><span>11</span></li>
-                    <li><span>12</span></li>
-                    <li><span>13</span></li>
-                    <li><span>14</span></li>
-                    <li><span>15</span></li>
-                    <li class="big"><span>&raquo;</span></li>
-                </ul>
+                
+                <ul id="wizardSteps"></ul>
                 
                 {% block step-header %}
                 
                 <h2 class="question">
-                	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
+                	{% block step_title %}{% trans "Welcome" %}{% endblock step_title %}
                     
-                    <a class="additionPlus" href="#">Toelichting</a>
+                    <!--<a class="additionPlus" href="#">Toelichting</a>-->
                 </h2>
                 
                 {% endblock step-header %}
                 
-                <div class="addition">
+                <p>[Introduction text here]</p>
+                
+                <!--<div class="addition">
 	                <h2>Toelichting op de vraag</h2>
                     <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
-                </div>
+                </div>-->
                 
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
@@ -78,9 +55,9 @@
                         {% else %}
                             <a href="{% url fo.match election_instance.id %}">{% trans 'START MATCH WIZARD' %}</a>
                         {% endif %}
-                        <div class="form-submit">
+                        <!--<div class="form-submit">
                             <button type="submit" class="next primary">{% trans "Next" %}</button>
-                        </div>
+                        </div>-->
                     {% endblock buttons %}
                 </form>
            	</div>
