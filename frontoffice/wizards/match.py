@@ -162,6 +162,8 @@ class BestCandidate(MultiPathFormWizard):
                 #all_visitor_answers[question_id] = answer_value
                 #if no preference is selected question is ignored
                 if 'no_pref' in answer_value:
+                    all_visitor_answers[question_id] = answer_value
+                    questions_skipped.append(question_id)
                     continue
 
                 # Get length of the list to help calculate score
@@ -312,7 +314,6 @@ class BestCandidate(MultiPathFormWizard):
                     self.multiply_questions = answer_value[0]
 
                 else:
-                    questions_skipped.append(question_id)
                     pass
 
                 # fill out list with default score of 0 for each candidate, if not already there
@@ -334,8 +335,8 @@ class BestCandidate(MultiPathFormWizard):
             if question.id not in questions_skipped:
                 if question.theme in self.multiply_questions:
                     num_weighted_questions = num_weighted_questions + 1
-        number_of_questions = (((num_questions -2) + num_weighted_questions ) - len(questions_skipped))
-        
+        number_of_questions = (((num_questions -1) + num_weighted_questions ) - len(questions_skipped))
+        print number_of_questions, num_questions, num_weighted_questions, len(questions_skipped), questions_skipped
 
 
         for candidate in self.candidates:
