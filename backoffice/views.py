@@ -22,7 +22,7 @@ from questions.settings import BACKOFFICE_QUESTION_TYPES
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, ElectionInstanceParty, Party, Candidacy
-from elections.functions import create_profile, profile_invite_email_templates, get_profile_template
+from elections.functions import create_profile, profile_invite_email_templates, get_profile_template, get_profile_forms
 
 from invitations.models import Invitation
 
@@ -212,6 +212,37 @@ def add_election_instance(request):
 def edit_election_instance(request, id):
     wizard = EditElectionInstanceWizard(id)
     return wizard(request)
+    
+    
+@staff_required
+def candidate_edit(request, id):
+    candidacy = get_object_or_404(Candidacy, pk=id)
+    if candidacy.candidate.is_active:
+        request.user.message_set.create(message=ugettext('De kandidaat die u wilt wijzigen heft zijn/haar account al geactiveerd.'))
+        return redirect('bo.election_party_view', id=candidate.election_party_instance.id)
+        
+    FormClass = get_profile_forms('candidate', 'edit')[0]
+    
+    if request.method == 'POST':
+        form = FormClass(user=candidacy.candidate, data=request.POST)
+        
+        if form.is_valid():
+            
+            request.user.message_set.create(message=ugettext('De kandidaat is gewijzigd.'))
+            return redirect('bo.election_party_view', id=candidacy.election_party_instance.id)
+    else:
+        initial = {
+            'name': {
+                'first_name': candidacy.candidate.profile.first_name,
+                'middle_name': candidacy.candidate.profile.middle_name,
+                'last_name': candidacy.candidate.profile.last_name,
+            },
+            'email': candidacy.candidate.email,
+            'gender': candidacy.candidate.profile.gender,
+        }
+        form = FormClass(user=candidacy.candidate, initial=initial)
+        
+    return render_to_response('backoffice/edit_candidate.html', {'form': form, 'candidacy': candidacy}, context_instance=RequestContext(request))
 
 @council_admin_required
 def election_setup(request, election_instance_id, user_id=None):

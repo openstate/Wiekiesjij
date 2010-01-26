@@ -825,7 +825,7 @@ msgstr "Kandidaten voor deze partij"
 
 #: backoffice/templates/backoffice/election_party_view.html:47
 msgid "Edit candidate profile"
-msgstr "Bekijk het profiel van de kandidaat"
+msgstr "Wijzig het profiel van de kandidaat"
 
 #: backoffice/templates/backoffice/election_party_view.html:50
 msgid "Remove candidate"

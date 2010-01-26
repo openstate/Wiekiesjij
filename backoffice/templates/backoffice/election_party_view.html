@@ -50,9 +50,13 @@
 					<div class="image"><img src="{% thumbnail "defaults/pol-dummy.jpg" 39x55 %}" alt="{{ can.candidate.profile.full_name }}"/></div>
 				{% endif %}
                 <h3>{{ can.candidate.profile.full_name }}</h3>
-                {% comment %}
-                <a href="#" class="manage">{% trans 'Edit candidate profile' %}</a>
-
+                
+                {% if user.is_staff %}
+				<ul class="quicklinks">
+                	<li><a href="{% url bo.candidate_edit id=can.id %}">{% trans 'Edit candidate profile' %}</a></li>
+				</ul>
+                {% endif %}
+				{% comment %}
                 <ul class="quicklinks">
                 	<li><a href="#">{% trans 'Remove candidate' %}</a></li>
                 </ul>

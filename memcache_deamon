@@ -1,62 +1,89 @@
-#!/bin/bash
+#! /bin/sh
+# usage: ./memcache_deamon start unique_name
 #
-# memcached    This shell script takes care of starting and stopping
-#              standalone memcached.
-#
-# chkconfig: - 80 12
-# description: memcached is a high-performance, distributed memory
-#              object caching system, generic in nature, but
-#              intended for use in speeding up dynamic web
-#              applications by alleviating database load.
-# processname: memcached
-# Source function library.
-. /etc/rc.d/init.d/functions
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/local/bin/memcached
-DAEMONBOOTSTRAP=/usr/local/bin/start-memcached
-DEAMONCONF="-m 1024 -p 11211 -u www-data -l 127.0.0.1"
-NAME=memcached
-DESC=memcached
-PIDFILE=/var/run/$NAME.pid
-[ -x $DAEMON ] || exit 0
-[ -x $DAEMONBOOTSTRAP ] || exit 0
+PORT=11211
+USER=nobody
+MAXCONN=1024
+OPTIONS=""
+MEMORY=1024
+DAEMON=/usr/bin/memcached
+
 RETVAL=0
-start() {
- echo -n $"Starting $DESC: "
- daemon $DAEMONBOOTSTRAP $DAEMONCONF
- RETVAL=$?
- [ $RETVAL -eq 0 ] && touch $PIDFILE
- echo
- return $RETVAL
+prog="memcached"
+
+start_instance() {
+        echo -n $"Starting $prog ($1): "
+        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -- -d -p $PORT -$
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch /var/lock/memcached.$1
+        PORT=`expr $PORT + 1`
 }
-stop() {
- echo -n $"Shutting down $DESC: "
- killproc $NAME
- RETVAL=$?
- echo
- [ $RETVAL -eq 0 ] && rm -f $PIDFILE
- return $RETVAL
+
+stop_instance() {
+        echo -n $"Stopping $prog ($1): "
+        start-stop-daemon --stop --quiet --oknodo --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON
+        RETVAL=$?
+        echo
+        if [ $RETVAL -eq 0 ] ; then
+            rm -f /var/lock/memcached.$1
+            rm -f /var/run/memcached/memcached.$1.pid
+        fi
 }
+start () {
+        # insure that /var/run/memcached has proper permissions
+        mkdir -p /var/run/memcached
+		# insure that /var/run/memcached has proper permissions
+        mkdir -p /var/run/memcached
+        if [ "`stat -c %U /var/run/memcached`" != "$USER" ]; then
+                chown $USER /var/run/memcached
+        fi 
+
+        start_instance default 64;
+        start_instance block 16;
+        start_instance content 128;
+        start_instance filter 128;
+        start_instance form 32;
+        start_instance menu 16;
+        start_instance page 8;
+        start_instance update 8;
+        start_instance views 8;
+}
+stop () {
+        stop_instance default;
+        stop_instance block;
+        stop_instance content;
+        stop_instance filter;
+        stop_instance form;
+        stop_instance menu;
+        stop_instance page;
+        stop_instance update;
+        stop_instance views;
+}
+
+restart () {
+        stop
+        start
+}
+
 # See how we were called.
 case "$1" in
- start)
-  start
-  ;;
- stop)
-  stop
-  ;;
- restart|reload)
-  stop
-  start
-  RETVAL=$?
-  ;;
- status)
-  status $prog
-  RETVAL=$?
-  ;;
- *)
-  echo $"Usage: $0 {start|stop|restart|status}"
-  exit 1
+  start)
+        start
+        ;; 
+  stop)
+        stop
+        ;;
+  status)
+        status memcached
+        ;;
+  restart|reload|force-reload) 
+        restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart|reload|force-reload}"
+        exit 1
 esac
-exit $RETVAL
+
+exit $?

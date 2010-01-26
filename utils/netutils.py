@@ -138,7 +138,7 @@ def check_remote_timeout(timeout, request, key = None):
         @return bool True if timeout is passed, False otherwise
     """
     # treat all users with unrecognized IP as a single user with "unknown ip"
-    strkey = pickle.dumps((getip(request), key)) # will be hashed anyway
+    strkey = "%s-%s" % (getip(request), key)
     val = cache.get(strkey)
 
     # expired

@@ -47,7 +47,8 @@ urlpatterns += patterns('backoffice.views',
     
    
     
-
+    
+    url(r'^candidate/(?P<id>\d+)/edit/$', 'candidate_edit', name='bo.candidate_edit'),
     url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='bo.candidate_up'),
     url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='bo.candidate_down'),
 

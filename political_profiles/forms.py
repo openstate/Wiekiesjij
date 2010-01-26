@@ -111,6 +111,38 @@ class InitialPoliticianProfileForm(BetterForm, TemplateForm):
             raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
         return self.cleaned_data['email']
 
+class EditPoliticianProfileForm(BetterForm, TemplateForm):
+    """
+        Politician profile form for editing
+    """
+    name = NameField(label=_('Name'))
+    email = forms.EmailField(label=_('E-mail'), help_text=_('De uitnodiging wordt verzonden naar dit adres.'))
+    gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS))
+        
+    
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(EditPoliticianProfileForm, self).__init__(*args, **kwargs)
+        
+    def clean_email(self):
+        """
+           We have to check of the user exists and if it's the propper type of user
+        """
+        email = self.cleaned_data['email']
+        try:
+           user = User.objects.get(email=email)
+           if user.pk != self.user.pk:
+               del self.cleaned_data['email']
+               raise forms.ValidationError(_('Another user with the email address %(email)s exists') % {'email': email})
+           if not user.profile or user.profile.type != 'candidate':
+               del self.cleaned_data['email']
+               raise forms.ValidationError(_('A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person') % {'email': email})
+        except User.DoesNotExist:
+           pass
+        except User.MultipleObjectsReturned:
+            raise Exception('Multiple users with the same e-mail address exist, fix this in the database asap !')
+        return self.cleaned_data['email']
+    
 class InitialChanceryProfileForm(BetterForm, TemplateForm):
     '''
     ChanceryProfile admin

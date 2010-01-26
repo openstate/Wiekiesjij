@@ -1,0 +1,23 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Edit candidate' %}{% endblock title %}
+{% block page-title %}{% trans 'Edit' %} {{ candidacy.candidate.get_full_name }} {% trans "on position" %} {{ candidacy.position }}{% endblock page-title %}
+{% block back-link %}<a href="{% url bo.election_party_view id=candidacy.election_party_instance.id %}" class="back">{% trans "Back to" %} {{ candidacy.election_party_instance.party.name }}</a>{% endblock back-link %}
+
+{% block cols %}
+	<div class="col size1of2">
+		{% block content %}
+		<div class="mod">
+		    <form method="POST" enctype="multipart/form-data" action="">
+		        {{ form.as_template }}
+		        <div class="form-submit">
+		            <a href="{% url bo.election_party_view id=candidacy.election_party_instance.id %}" class="cancel">{% trans "Cancel" %}</a>
+		            <button class="primary next" type="submit">{% trans "Submit" %}</button>
+		        </div>
+    
+		    </form>
+		</div>
+		{% endblock content %}
+	</div>
+{% endblock cols %}
