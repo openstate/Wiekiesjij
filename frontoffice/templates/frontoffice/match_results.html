@@ -52,24 +52,24 @@
                     </div>
                 {% endfor %}
 
-                {% if not form %}
+                {% if form %}
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
+                        {% block forms %}
+                            {{ form.as_template }}
+                        {% endblock forms %}
+                        {{ previous_fields|safe }}
+
+
+                        {% block buttons %}
+                                <div class="form-submit">
+                                <button type="submit" class="next primary">{% trans "Next" %}</button>
+                            </div>
+                        {% endblock buttons %}
+                    </form>
+                {% else %}
                     <p>{% trans 'Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here' %}</p>
                 {% endif %}
-
-                <form method="post" action="" enctype="multipart/form-data">
-                    <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
-                    {% block forms %}
-                        {{ form.as_template }}
-                    {% endblock forms %}
-                    {{ previous_fields|safe }}
-
-
-                    {% block buttons %}
-                            <div class="form-submit">
-                            <button type="submit" class="next primary">{% trans "Next" %}</button>
-                        </div>
-                    {% endblock buttons %}
-                </form>
             </div>
         </div>
     {% endblock content %}
