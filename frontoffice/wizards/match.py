@@ -349,10 +349,10 @@ class BestCandidate(MultiPathFormWizard):
                             
                             if q.theme in self.multiply_questions:
                                 score = score * 2
-                                score = ((score * 100)/number_of_questions)
+                                score = float(float(score * 100)/number_of_questions)
                                 question[question_id] = score
                             else:
-                                score = ((score * 100)/number_of_questions)
+                                score = float(float(score * 100)/number_of_questions)
                                 question[question_id] = score
                             
 
