@@ -103,7 +103,8 @@
                     <p>{% trans 'Age' %}: {{ politician.age|default:"Onbekend" }}</p>
                     <p>{% trans 'Party' %}:
 					{% for party, region in party_data|index:politician.user_id  %}
-						{{ party }} {{ region }}{% if not forloop.last %}<br/>{% endif %}
+						{{ party }} {% if not region_filtered %}{{ region }}					
+						{% endif %}{% if not forloop.last %}<br/>{% endif %}
 					{% endfor %}                    
 					</p>
                 </div>
