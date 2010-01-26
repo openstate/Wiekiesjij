@@ -2520,7 +2520,7 @@ msgstr "Roker"
 #: frontoffice/templates/frontoffice/politician_profile.html:65
 #: political_profiles/models.py:243
 msgid "Diet"
-msgstr "Diet"
+msgstr "Vegetariër"
 
 #: frontoffice/forms.py:71
 msgid "Mobile phone number"
