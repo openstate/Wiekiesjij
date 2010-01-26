@@ -13,7 +13,7 @@
 	<div class="col size1of1">
 	{% block content %}
         <div class="mod wizard matches">
-        	<div class="bd">
+            <div class="bd">
             	
                 <ul id="wizardSteps">
                     {% for q in questions %}
@@ -26,7 +26,7 @@
                 	<h1>{% trans "These are your closest matches" %}:</h1>
                 {% endblock step-header %}
                 
-	              {% for candidate in candidates %}
+                {% for candidate in candidates %}
                     <div class="item{% if forloop.first %} best-match{% endif %}">
                         <div class="party-logo">
                             <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}" {% if iframe %}target="_blank"{% endif %}>
@@ -52,6 +52,9 @@
                     </div>
                 {% endfor %}
 
+                {% if not form %}
+                    <p>{% trans 'Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here' %}</p>
+                {% endif %}
 
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
@@ -67,7 +70,7 @@
                         </div>
                     {% endblock buttons %}
                 </form>
-           	</div>
+            </div>
         </div>
     {% endblock content %}
    	</div>
