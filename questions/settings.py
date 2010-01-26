@@ -1,22 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
 
-#QUESTION_TYPE_MULTIPLECHOICE = 'C'
-#QUESTION_TYPE_MULTIPLEANSWER = 'A'
-#QUESTION_TYPE_BOOLEAN = 'B'
-#QUESTION_TYPE_RATING = 'R'
-#QUESTION_TYPE_MODEL = 'M'
-#
-#QUESTION_TYPE_CHOICES = (
-#    (QUESTION_TYPE_MULTIPLEANSWER, _('Multiple answers')),
-#    (QUESTION_TYPE_BOOLEAN, _('Boolean (yes/no, agree/disagree)')),
-#    (QUESTION_TYPE_MULTIPLECHOICE, _('Multiple choice')),
-#    (QUESTION_TYPE_MODEL, _('Model')),
-#)
-#
-## Question types to show to the candidate
-#BACKOFFICE_QUESTION_TYPES = (QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN)
-## Question types to show to the visitor
-#FRONTOFFICE_QUESTION_TYPES= (QUESTION_TYPE_MODEL, QUESTION_TYPE_MULTIPLECHOICE, QUESTION_TYPE_MULTIPLEANSWER, QUESTION_TYPE_BOOLEAN)
 
 PROFILE_QUESTION_WEIGHT_OPTIONS = (
 ('q2', 'Jaren politieke ervaring'),
@@ -25,7 +8,16 @@ PROFILE_QUESTION_WEIGHT_OPTIONS = (
 ('q5', 'Doelgroep'),
 ('q6', 'Bezuinigingen'),
 ('q7', 'Jaren woonachtig in de gemeente'),
-('q8', 'Woonwijk'),
+('q8_groningen', 'Woonwijk'),
+('q8_den haag', 'Woonwijk'),
+('q8_haaren', 'Woonwijk'),
+('q8_enschede', 'Woonwijk'),
+('q8_amsterdam', 'Woonwijk'),
+('q8_amsterdam centrum', 'Woonwijk'),
+('q8_ten boer', 'Woonwijk'),
+('q8_bellingwedde', 'Woonwijk'),
+('q8_baarn', 'Woonwijk'),
+('q8_amersfoort', 'Woonwijk'),
 ('q12', 'Bezigheden dagelijks leven'),
 ('q10', 'Opleiding'),
 ('q11', 'Geloofsgemeenschap'),
@@ -33,20 +25,6 @@ PROFILE_QUESTION_WEIGHT_OPTIONS = (
 ('q13', 'Leeftijd'),
 ('q14', 'Man of Vrouw'),
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 QTYPE_NORM_POLONECHOICE_VISONECHOICE = 'C'
 QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE = 'G'

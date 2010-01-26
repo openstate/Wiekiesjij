@@ -123,7 +123,8 @@ class BestCandidate(MultiPathFormWizard):
         candidate_question_answers = {}
         self.multiply_questions = []
         candidate_ids = []
-        questions_skipped = 0
+        questions_skipped = []
+
         # get list of candidate ids and create a dictionay entry for each candidate to keep array of scores
         for candidate in self.candidates:
             candidate_scores[candidate] = []
@@ -144,11 +145,12 @@ class BestCandidate(MultiPathFormWizard):
         #Create a full list of candidate answers for storage
         all_candidate_answers = copy.deepcopy(candidate_question_answers)
         all_visitor_answers = {}
+        all_questions = []
         for path, forms in form_dict.iteritems():
             for question_id, form in forms.iteritems():
                 num_questions = num_questions + 1
                 question = Question.objects.get(id=question_id)
-
+                all_questions.append(question)
                 answer_value = form.cleaned_data['value']
                 empty_list = []
                 # checks if the answer is will be returned in a list, make into a list if not
@@ -199,7 +201,6 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = candidate.party().id
                             if candidate.party() == value:
                                 candidate_scores[candidate].append({question.id: 1})
-                                
 
                     all_visitor_answers[question_id] = party_names
 
@@ -306,12 +307,12 @@ class BestCandidate(MultiPathFormWizard):
 
                 elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
                     all_visitor_answers[question_id] = answer_value
-     
+
 
                     self.multiply_questions = answer_value[0]
 
                 else:
-                    questions_skipped = questions_skipped + 1
+                    questions_skipped.append(question_id)
                     pass
 
                 # fill out list with default score of 0 for each candidate, if not already there
@@ -325,33 +326,34 @@ class BestCandidate(MultiPathFormWizard):
 
 
 
-        #Add Weighting
-        counted = False
-        for candidate in self.candidates:
-            if counted == False:
-                num_weighted_questions = 0
-                for question in candidate_scores[candidate]:
-                    for question_id, score in question.iteritems():
-                        qid = str(question_id)
-                        theme = 'q'+qid
 
-                        if theme in self.multiply_questions:
-                            num_weighted_questions = num_weighted_questions + 1
-                number_of_questions = (((num_questions -1) + num_weighted_questions ) - questions_skipped)
-                #print number_of_questions, num_weighted_questions
-                counted = True
-            
+
+        #Add Weighting
+        num_weighted_questions = 0
+        for question in all_questions:
+            if question.id not in questions_skipped:
+                if question.theme in self.multiply_questions:
+                    num_weighted_questions = num_weighted_questions + 1
+        number_of_questions = (((num_questions -2) + num_weighted_questions ) - len(questions_skipped))
+        
+
+
+        for candidate in self.candidates:
             for question in candidate_scores[candidate]:
                 for question_id, score in question.iteritems():
-                    qid = str(question_id)
-                    theme = 'q'+qid
-                    if theme in self.multiply_questions:
-                        score = score * 2
-                        score = ((score * 100)/number_of_questions)
-                        question[question_id] = score
-                    else:
-                        score = ((score * 100)/number_of_questions)
-                        question[question_id] = score
+                    qid = question_id
+                    for q in all_questions:
+                        
+                        if qid == q.id:
+                            
+                            if q.theme in self.multiply_questions:
+                                score = score * 2
+                                score = ((score * 100)/number_of_questions)
+                                question[question_id] = score
+                            else:
+                                score = ((score * 100)/number_of_questions)
+                                question[question_id] = score
+                            
 
         candidates_total_scores = {}
         for candidate in self.candidates:

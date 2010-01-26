@@ -116,8 +116,8 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
                 GENDERS_A = copy.deepcopy(GENDERS)
                 GENDERS_A.append(('no_pref', _('Geen voorkeur')))
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=GENDERS_A), choices=GENDERS_A)})
-            elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question_instance.question_type:
-                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=PROFILE_QUESTION_WEIGHT_OPTIONS), choices=PROFILE_QUESTION_WEIGHT_OPTIONS)})
+#            elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question_instance.question_type:
+#                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=PROFILE_QUESTION_WEIGHT_OPTIONS), choices=PROFILE_QUESTION_WEIGHT_OPTIONS)})
 
             else:
                 pass #TODO raise error
