@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Age' %}</th>
-                    <td>{{ profile.dateofbirth|age }}</td>
+                    <td>{{ profile.dateofbirth|age|default:_('Not known') }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Gender' %}</th>
@@ -38,11 +38,11 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Marital status' %}</th>
-                    <td>{{ profile.get_marital_status_display }}</td>
+                    <td>{{ profile.get_marital_status_display|default:_('Not known') }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Number of children' %}</th>
-                    <td>{{ profile.num_children }}</td>
+                    <td>{{ profile.num_children|default:_('Not known') }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Social networks' %}</th>
@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="ballotPosition">
-        	<p>{{ profile.introduction }}</p>
+        	<p>{{ profile.introduction|default:'' }}</p>
             <a href="{% url fo.election profile.party.id %}">
             {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
                 {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}

@@ -53,7 +53,7 @@
                 <table>                
                     <tr>
                         <th>{% trans 'Religion' %}</th>
-                        <td>{{ profile.get_religion_display }}<br/>
+                        <td>{{ profile.get_religion_display|default:_('Not known') }}<br/>
                             {{ profile.religious_group|default:'' }}
                         </td>
                     </tr>
@@ -63,15 +63,15 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Diet' %}</th>
-                        <td>{{ profile.get_diet_display }}</td>
+                        <td>{{ profile.get_diet_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'News' %}</th>
-                        <td>{{ profile.get_fav_news_display }}</td>
+                        <td>{{ profile.get_fav_news_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Media' %}</th>
-                        <td>{{ profile.get_fav_media_display }}</td>
+                        <td>{{ profile.get_fav_media_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Charities' %}</th>
@@ -79,11 +79,11 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Transport' %}</th>
-                        <td>{{ profile.get_transport_display }}</td>
+                        <td>{{ profile.get_transport_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Animal' %}</th>
-                        <td>{{ profile.get_fav_pet_display }}</td>
+                        <td>{{ profile.get_fav_pet_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Sport' %}</th>
