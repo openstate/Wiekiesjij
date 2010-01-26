@@ -203,7 +203,7 @@ def politician_profile_filter(request):
                 filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
 
             if form.cleaned_data['children']  != '---------' and form.cleaned_data['children']:
-                if form.cleaned_data['children'] == 1:
+                if form.cleaned_data['children'] == '1':
                     filtered_politicians = filtered_politicians.filter(num_children__gte=1)
                     new_path = _new_url(path, 'children', form.cleaned_data['children'])
                     filters.append((_('Children'), _('Yes'), new_path))
