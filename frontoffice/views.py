@@ -59,8 +59,16 @@ def match_results(request, hash, iframe=None):
     visitors_profile = VisitorProfile.objects.filter(user=request.user)
     questions =  json.loads(result.visitor_answers)
     questions = range(0,len(questions))
+
+    if iframe:
+        parent = 'frontoffice/iframe.html'
+    else:
+        parent = 'frontoffice/base.html'
+
+    returndict = {'questions':questions, 'candidates': candidates, 'parent':parent, 'iframe': iframe}
+
     if result.telephone:
-        return render_to_response('frontoffice/match_results.html', {'questions':questions, 'candidates': candidates}, context_instance=RequestContext(request))
+        return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
     if visitors_profile:
         initial = {'phone':visitors_profile[0].phone}
@@ -68,27 +76,24 @@ def match_results(request, hash, iframe=None):
     else:
         initial = {'phone':result.telephone}
 
+    returndict
+
     if request.method == 'POST':
         form = SmsForm(request.POST)
         if form.is_valid():
             if form.cleaned_data['phone']:
                 result.telephone = form.cleaned_data['phone']
                 result.save()
-            return render_to_response('frontoffice/match_results.html', {'questions':questions, 'candidates': candidates}, context_instance=RequestContext(request))
+            return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
     else:
   
         form = SmsForm(initial=initial)
 
-    if iframe:
-        parent = 'frontoffice/iframe.html'
-    else:
-        parent = 'frontoffice/base.html'
+    
+    returndict['form'] = form
 
-
-
-
-    return render_to_response('frontoffice/match_results.html', {'questions':questions, 'form':form,'candidates': candidates, 'parent':parent, 'iframe':iframe}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
 def match_welcome(request, election_instance_id = None, iframe = None):
     if not election_instance_id:

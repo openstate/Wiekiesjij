@@ -29,7 +29,7 @@
 	              {% for candidate in candidates %}
                     <div class="item{% if forloop.first %} best-match{% endif %}">
                         <div class="party-logo">
-                            <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}">
+                            <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}" {% if iframe %}target="_blank"{% endif %}>
                             {% if candidate.candidate.profile.party.logo %}
                             	<img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
                            	{% else %}
@@ -45,8 +45,8 @@
                         {% endif %}
                         </div>
                         <span class="matchmeter">{% trans "Overeenkomst" %}<span class="score">{{ candidate.candidates_score }}%</span></span>
-						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next">{% trans "View profile" %}</a>
-                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}">{{ candidate.candidate.profile.full_name }}</a></h2>
+						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
+                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
                         <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
                         <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
                     </div>
