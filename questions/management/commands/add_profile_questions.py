@@ -35,7 +35,7 @@ class Command(BaseCommand):
         q2 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft:',
             question_type=settings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS,
-            theme='q1',
+            theme='q2',
             has_no_preference=True,
         )
         qsq2 = QuestionSetQuestion.objects.create(

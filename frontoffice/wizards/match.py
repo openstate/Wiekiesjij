@@ -324,11 +324,12 @@ class BestCandidate(MultiPathFormWizard):
                         candidate_scores[candidate].append({question.id: 0})
 
 
+
         #Add Weighting
         counted = False
         for candidate in self.candidates:
-            num_weighted_questions = 0
             if counted == False:
+                num_weighted_questions = 0
                 for question in candidate_scores[candidate]:
                     for question_id, score in question.iteritems():
                         qid = str(question_id)
@@ -336,18 +337,20 @@ class BestCandidate(MultiPathFormWizard):
 
                         if theme in self.multiply_questions:
                             num_weighted_questions = num_weighted_questions + 1
+                number_of_questions = (((num_questions -1) + num_weighted_questions ) - questions_skipped)
+                #print number_of_questions, num_weighted_questions
                 counted = True
-                
+            
             for question in candidate_scores[candidate]:
                 for question_id, score in question.iteritems():
                     qid = str(question_id)
                     theme = 'q'+qid
                     if theme in self.multiply_questions:
                         score = score * 2
-                        score = ((score * 100)/(((num_questions -1) + num_weighted_questions ) - questions_skipped))
+                        score = ((score * 100)/number_of_questions)
                         question[question_id] = score
                     else:
-                        score = ((score * 100)/(((num_questions -1) + num_weighted_questions)- questions_skipped))
+                        score = ((score * 100)/number_of_questions)
                         question[question_id] = score
 
         candidates_total_scores = {}
