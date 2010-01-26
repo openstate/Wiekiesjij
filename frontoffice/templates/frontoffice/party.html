@@ -189,6 +189,9 @@
         </div>-->
     {% endcomment %}
     <div class="mod send-message">
+		{% if eip.party.email %}
+			
+	
     	<div class="hd">
         	<h2>{% trans "Send a message" %}</h2>
         </div>
@@ -200,7 +203,8 @@
                 {% endblocktrans %}
             </p>
             <p>{% trans 'Click on the link below to open your standard email program.' %}</p>
-        	<a href="#" class="btn email">{% trans "Send an email" %}</a>
+        	<a href="mailto:{{ eip.party.email }}" class="btn email">{% trans "Send an email" %}</a>
         </div>
+	{% endif %}
     </div>
 {% endblock sidebar %}

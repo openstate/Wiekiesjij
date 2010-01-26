@@ -644,8 +644,6 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     self.user_profile_dict.update(form.cleaned_data)
             
             for (key, value) in self.user_profile_dict.items():
-                if key == 'smoker':
-                    value = (value == 'true')
                 if key == 'picture' and value is None:
                     continue
                 if key == 'name':
@@ -654,6 +652,11 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     continue
                 
                 setattr(self.user.profile, key, value)
+            if 'smoker' not in self.user_profile_dict.keys():
+                self.user.profile.smoker = False
+            else:
+                self.user.profile.smoker = True
+                
             if self.user.profile.num_children is None:
                 self.user.profile.num_children = 0
                 
