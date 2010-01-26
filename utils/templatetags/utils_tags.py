@@ -260,3 +260,7 @@ class CompareBlockNode(template.Node):
         return cls(tokens[1], tokens[2], nodelist_equal, nodelist_bigger, nodelist_smaller)
 
 register.tag('ifcompare', CompareBlockNode.tag)
+
+@register.filter
+def index(some_dict, key):
+    return some_dict.get(key)

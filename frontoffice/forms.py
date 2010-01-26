@@ -13,7 +13,7 @@ from elections.models import ElectionInstance
 
 class RegionChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        return obj.council.region
+        return obj.name
 
 class MobilePhoneField(forms.CharField):
 
@@ -48,7 +48,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
 
 
     name = forms.CharField(label=_('Name'), required=False)
-    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
+    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name')
     region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS), required=False)
     start_age = forms.IntegerField(label=_('Lowest Age'), required=False)
@@ -72,7 +72,7 @@ class VisitorProfileForm(BetterForm, TemplateForm):
     send_text   = forms.BooleanField(label=_('Voting reminder on the day of the election'), help_text=_('I would like to receive a reminder (text message) for voting on the day of election.'), required=False)
 
 class RegionSelectForm(BetterForm, TemplateForm):
-    region  = forms.ModelChoiceField(queryset=ElectionInstance.objects, required=True, empty_label=_('Select your region'))
+    region  = RegionChoiceField(queryset=ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name'), required=True, empty_label=_('Select your region'))
 
 class SmsForm(BetterForm, TemplateForm):
     phone       = MobilePhoneField(label=_('Mobile phone number'), required=False)

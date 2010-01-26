@@ -1,5 +1,5 @@
 {% extends 'frontoffice/base.html' %}
-{% load i18n form_tags thumbnail %}
+{% load i18n form_tags thumbnail utils_tags %}
 
 {% block extrahead %}
 	{{ form.media }}
@@ -101,11 +101,11 @@
                     </div>
                     <a href="{% url fo.politician_profile politician.user.id %}" class="name">{{ politician.full_name }}</a>
                     <p>{% trans 'Age' %}: {{ politician.age|default:"Onbekend" }}</p>
-                    <p>{% trans 'Party' %}: {{ politician.party }}</p>
-                    {% if not region_filtered %}
-                        <p>{% trans 'Region' %}: {{ politician.region }}</p>
-                    {% endif %}
-                    
+                    <p>{% trans 'Party' %}:
+					{% for party, region in party_data|index:politician.user_id  %}
+						{{ party }} {{ region }}{% if not forloop.last %}<br/>{% endif %}
+					{% endfor %}                    
+					</p>
                 </div>
             
     

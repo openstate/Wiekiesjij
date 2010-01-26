@@ -156,8 +156,8 @@ def politician_profile_filter(request):
         eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
 
-        candidates = User.objects.filter(pk__in=elections_candidates)
-        politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
+        candidates = User.objects.filter(elections__in=elections_candidates)
+        politicians = PoliticianProfile.objects.filter(user__in=candidates).order_by('?')
         filtered_politicians = politicians
         path = request.get_full_path()
         region_filtered = False
@@ -175,8 +175,8 @@ def politician_profile_filter(request):
                 election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=form.cleaned_data['region'].id)
                 eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
                 elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
-                candidates = User.objects.filter(pk__in=elections_candidates)
-                politicians = PoliticianProfile.objects.filter(pk__in=candidates).order_by('?')
+                candidates = User.objects.filter(elections__in=elections_candidates)
+                politicians = PoliticianProfile.objects.filter(user__in=candidates).order_by('?')
                 filtered_politicians = politicians
  
                 new_path = _new_url(path, 'region', form.cleaned_data['region'].id)
@@ -290,17 +290,29 @@ def politician_profile_filter(request):
                     filtered_politicians = filtered_politicians.filter(diet='other')
                 new_path = _new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
-            filtered_politicians.select_related().distinct()
+            filtered_politicians = filtered_politicians.distinct().select_related('user')
             
             #no query executed so far, so we see if we can do some caching stuff here :)
             cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
-            politicians = cache.get(cache_key)
-            if politicians is None:
+            data = cache.get(cache_key)
+            if data is None:
                 #Force query to execute
                 politicians = list(filtered_politicians)
-                cache.set(cache_key, politicians, settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)
                 
+                query = elections_candidates.select_related('candidate', 'election_party_instance__party', 'election_party_instance__election_instance__council').values_list('candidate__id', 'election_party_instance__party__abbreviation', 'election_party_instance__election_instance__name')
+                party_data = {}
+                for (can_id, party, region) in query:
+                    data = party_data.get(can_id, [])
+                    if data is None:
+                        data = [(party, region)]
+                    else:
+                        data.append((party, region))
+                    party_data.update({can_id: data})
+                cache.set(cache_key, (politicians, party_data), settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)    
+            else:
+                (politicians, party_data) = data
         else:
+            party_data = {}
             politicians = []
             form = PoliticianFilterForm() # An unbound form
             
@@ -317,8 +329,8 @@ def politician_profile_filter(request):
             politicians = p.page(page)
         except:
             politicians = p.page(p.num_pages)
-
-    return render_to_response('frontoffice/politician_filter.html', {'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
+    
+    return render_to_response('frontoffice/politician_filter.html', {'party_data': party_data, 'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
 
 
 def politician_profile(request, id, tab = "favs"):

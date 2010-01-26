@@ -410,7 +410,7 @@ class Command(BaseCommand):
                 frontend_title=u'In het buitengebied van Haaren mogen nergens megastallen komen:',
                 has_no_preference=True,
                 question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                theme='heq1',
+                theme='q1_he',
             )
             QuestionSetQuestion.objects.create(
                 question=eq1,
@@ -435,7 +435,7 @@ class Command(BaseCommand):
                 frontend_title=u'De eerstvolgende honderd woonruimtes die de gemeente bouwt zijn voor jongeren:',
                 has_no_preference=True,
                 question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                theme='heq2',
+                theme='q2_he',
             )
             QuestionSetQuestion.objects.create(
                 question=eq2,
@@ -460,7 +460,7 @@ class Command(BaseCommand):
                 frontend_title=u'De gemeente Haaren moet veel meer samenwerken met andere gemeenten, maar er mag geen nieuwe gemeentelijke herindeling komen:',
                 has_no_preference=True,
                 question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                theme='heq3',
+                theme='q3_he',
             )
             QuestionSetQuestion.objects.create(
                 question=eq3,
@@ -485,7 +485,7 @@ class Command(BaseCommand):
                 frontend_title=u'Voor een optimale dienstverlening is het noodzakelijk dat je voor alle diensten van de gemeente bij één loket terecht kunt:',
                 has_no_preference=True,
                 question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                theme='heq4',
+                theme='q4_he',
             )
             QuestionSetQuestion.objects.create(
                 question=eq4,
@@ -510,7 +510,7 @@ class Command(BaseCommand):
                 frontend_title=u'Bedrijven en burgers die plannen hebben om het leven in Haaren prettiger te maken, moeten daarvoor van de gemeente geld kunnen krijgen:',
                 has_no_preference=True,
                 question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                theme='heq5',
+                theme='q5_he',
             )
             QuestionSetQuestion.objects.create(
                 question=eq5,
