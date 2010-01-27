@@ -392,7 +392,10 @@ class BestCandidate(MultiPathFormWizard):
             candidate_ans.save()
             new_visitor.candidate_answers.add(candidate_ans)
 
-        return redirect('fo.match_results', hash=new_visitor, iframe=self.iframe)
+        if self.iframe:
+            return redirect('fo.match_results', hash=new_visitor, iframe=self.iframe)
+        else:
+            return redirect('fo.match_results', hash=new_visitor)
 
 
 
