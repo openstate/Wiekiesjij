@@ -3019,7 +3019,7 @@ msgstr "Verwijder mij als fan"
 
 #: frontoffice/templates/frontoffice/quick_profile.html:69
 msgid "Become a fan"
-msgstr "Wordt fan"
+msgstr "Word fan"
 
 #: frontoffice/templates/frontoffice/quick_profile.html:89
 #, python-format
