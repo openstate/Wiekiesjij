@@ -21,8 +21,10 @@
 <body>
     <div id="container">
         <div id="header" {% if request.session.ElectionInstance %} class="regional"{% endif %}>
-             <h1 class="branding"><a href="/" title="{% trans 'Go home' %}">WieKiesJij?</a></h1>
-            {% if request.session.ElectionInstance %}<h2 class="regional">Gemeenteraadsverkiezingen 2010: {{ request.session.ElectionInstance.name }}</h2>{% endif %}
+
+            <h1 class="branding"><a href="/" title="{% trans 'Go home' %}">WieKiesJij?</a></h1>
+            {% if request.session.ElectionInstance %}<h2 class="regional">Gemeenteraadsverkiezingen 2010{#: {{ request.session.ElectionInstance.name }}#}</h2>{% endif %}
+
 
             <p class="user-info">
                 {% if user.is_authenticated %}
