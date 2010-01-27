@@ -278,16 +278,7 @@ def politician_profile_filter(request):
                     filters.append((_('Smoker'), _('No'), new_path))
 
             if form.cleaned_data['diet'] != '---------' and form.cleaned_data['diet']:
-                if form.cleaned_data['diet'] == '':
-                    filtered_politicians = filtered_politicians.filter(diet='ja')
-                if form.cleaned_data['diet'] == '':
-                    filtered_politicians = filtered_politicians.filter(diet='nee')
-                if form.cleaned_data['diet'] == '':
-                    filtered_politicians = filtered_politicians.filter(diet='vegetarian')
-                if form.cleaned_data['diet'] == '':
-                    filtered_politicians = filtered_politicians.filter(diet='vegan')
-                if form.cleaned_data['diet'] == '':
-                    filtered_politicians = filtered_politicians.filter(diet='other')
+                filtered_politicians = filtered_politicians.filter(diet__iexact=form.cleaned_data['diet'])
                 new_path = _new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
             filtered_politicians = filtered_politicians.distinct().select_related('user')
