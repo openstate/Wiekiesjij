@@ -26,7 +26,12 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Party' %}</th>
-                    <td><a href="{% url fo.party_profile profile.party.id %}">{{ profile.party.name }}</a></td>
+                    <td><a href="{% url fo.party_profile profile.party.id %}">
+                    	{% if profile.party.logo %}
+                    		<img src="{% thumbnail profile.party.logo 70x40 upscale %}" alt="{{ profile.party.name }}" title="{{ profile.party.name }}" /></a></td>
+                		{% else %}
+                    		<img src="{% thumbnail 'defaults/party-dummy.jpg' 70x40 upscale %}" alt="{{ profile.party.name }}" title="{{ profile.party.name }}" /></a></td>
+						{% endif %}
                 </tr>
                 <tr>
                     <th>{% trans 'Age' %}</th>
