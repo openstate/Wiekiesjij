@@ -2532,11 +2532,11 @@ msgstr "Ontvang SMS berichten?"
 
 #: frontoffice/views.py:156
 msgid "Youngest"
-msgstr "Jongste"
+msgstr "Ouder dan"
 
 #: frontoffice/views.py:165
 msgid "Oldest"
-msgstr "Oudste"
+msgstr "Jonger dan"
 
 #: frontoffice/views.py:171
 #: frontoffice/templates/frontoffice/politician_profile.html:32
