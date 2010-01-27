@@ -968,16 +968,16 @@
 	
 		.party-list {
 			background:none;
-			margin:34px 0 50px 0;
+			margin:15px 0 50px 0;
 			}
 			.party-list .hd {
 				position:static;
 				margin:0 15px;
 				}
 				.party-list h2 {
-					background:url(../img/arrow-down.gif) 20px 10px no-repeat;
+					background:url(../img/arrow-down2.gif) 26px 10px no-repeat;
 					padding-left:3em;
-					font-weight:bold;
+					color:#aaa;
 					}
 					.party-list h2 span {
 						display:block;
@@ -1057,7 +1057,7 @@
 					
 					
 			.cand-list {
-				margin-left:10px;
+				margin:20px 10px 20px 10px;
 				}
 				.cand-list h2 {
 					background:none;
@@ -1174,11 +1174,11 @@
 					padding:.4em .5em .4em 20px;
 					margin:0 10px 0 0;
 					text-decoration:none;
-					background:#ccc url(../img/close-filter.png) 6px center no-repeat;
+					background:#ccc url(../img/close-filter.gif) 6px center no-repeat;
 					}
 					.filters li a:hover {
-						background:#ed2227;
-						color:#fff;
+						background-color:#aaa;
+						
 						}
 				.filters li a.clear-all {
 					background-color:#fff;

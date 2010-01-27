@@ -7,9 +7,19 @@
 
 {% block menu_candidates %}selected{% endblock %}
 
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+        <li class="first"><a href="/">Wiekiesjij</a></li>
+    	<li><a href="{% url fo.election %}">{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% else %}{{ form.region }}{% endif %}</a></li>
+        <li>{% trans "Candidates" %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
 {% block cols %}
 <div class="col lastCol">
-	<h1>{% trans "Candidates for" %} {{ instance.election_event.name }}: {{ instance.name }}</h1>
+	<h1>{% trans "Candidate overview for" %} {{ instance.name }}</h1>
     <div class="mod search-link">
         <a href="{% url fo.politician_profile_filter %}">{% trans "Search all candidates" %}</a>
         <p>{% trans 'Filter on name, region, and much more' %}</p>
