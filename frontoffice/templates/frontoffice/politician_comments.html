@@ -12,14 +12,12 @@
 
 {% block breadcrumbs %}
 <div class="col lastCol">
-	<ul class="breadcrumbs">
-    	<li class="back">
-        	<a href="{% url fo.politician_profile profile.user.id %}" >
-                {% blocktrans with profile.full_name as name %}
-                    Back to profile of {{ name }}
-                {% endblocktrans %}
-            </a>
-        </li>
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ profile.party.current_eip.election_instance.name }}</a></li>
+        <li><a href="{% url fo.party_profile profile.party.id %}">{{ profile.party.name }}</a></li>
+        <li><a href="{% url fo.politician_profile profile.user.id %}">{{ profile.full_name }}</a></li>
+        <li>{% trans 'Comments' %}</li>
     </ul>
 </div>
 {% endblock breadcrumbs %}

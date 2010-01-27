@@ -1,6 +1,15 @@
 {% extends 'frontoffice/base.html' %}
 {% load i18n thumbnail utils_tags %}
 
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ eip.election_instance.name }}</a></li>
+        <li>{{ eip.party.name }}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
 
 {% block content %}
 	<div class="mod quick-party-profile">
@@ -104,14 +113,16 @@
             <div class="pol-block-list">
             {% for index, candidacy in eip.candidate_dict.items %}
                 <div class="pol-block">
-                	<div class="image">
+                    <div class="image">
                         {% if candidacy.candidate.profile.picture %}
                             <img alt="{{ candidacy.candidate.full_name }}" src="{% thumbnail candidacy.candidate.profile.picture 50x70 upscale %}" />
                         {% else %}
                             <img alt="{{ candidacy.candidate.full_name }}" src="{% thumbnail "defaults/pol-dummy.jpg" 50x70 upscale %}" />
                         {% endif %}
                     </div>
-                    <a href="{% url fo.politician_profile candidacy.candidate.id %}" class="name">{{ candidacy.candidate.profile.first_name }}</a>
+                    {% if candidacy.candidate %}
+                        <a href="{% url fo.politician_profile candidacy.candidate.id %}" class="name">{{ candidacy.candidate.profile.first_name }}</a>
+                    {% endif %}
                     <p>{% trans 'Age' %}: {{ candidacy.candidate.profile.age|default:'Onbekend' }}</p>
                 </div>
             {% empty %}
