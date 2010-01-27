@@ -336,6 +336,11 @@ def politician_profile(request, id, tab = "favs"):
     profile = get_object_or_404(PoliticianProfile, user=user)
     showtab = tab
 
+    if 'back' in request.GET:
+        back = request.GET['back']
+    else:
+        back = None
+
     #Getting the twitter RSS feed URL
     try:
         twitter = profile.connections.filter(type__type='Twitter')[0] #Raises an exception if no twitter account is entered
@@ -349,7 +354,7 @@ def politician_profile(request, id, tab = "favs"):
     #record view
     user.statistics.update_profile_views(request)
 
-    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'test_url': 'http://www.google.com/ig?refresh=1'}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'back':back}, context_instance=RequestContext(request))
 
 def politician_comments(request, id):
     user = get_object_or_404(User, pk=id)

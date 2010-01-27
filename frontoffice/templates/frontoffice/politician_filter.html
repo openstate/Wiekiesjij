@@ -11,7 +11,7 @@
 <div class="col lastCol">
     <ul class="breadcrumbs">
         <li class="first"><a href="/">Wiekiesjij</a></li>
-    	<li><a href="{% url fo.election %}">{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% else %}{{ form.region }}{% endif %}</a></li>
+    	<li><a href="{% url fo.election %}">{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% endif %}</a></li>
         <li>{% trans "Search all candidates" %}</li>
     </ul>
 </div>
@@ -102,7 +102,7 @@
                             <img alt="{{ politician.full_name }}" src="{% thumbnail "defaults/pol-dummy.jpg" 50x70 upscale %}" />
                         {% endif %}
                     </div>
-                    <a href="{% url fo.politician_profile politician.user.id %}" class="name">{{ politician.full_name }}</a>
+                    <a href="{% url fo.politician_profile politician.user.id %}?back={{ request.get_full_path|urlencode }}" class="name">{{ politician.full_name }}</a>
                     <p>{% trans 'Age' %}: {{ politician.age|default:"Onbekend" }}</p>
                     <p>{% trans 'Party' %}:
 					{% for party, region in party_data|index:politician.user_id  %}
