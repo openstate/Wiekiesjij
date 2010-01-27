@@ -1,9 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-
 from form_utils.forms import BetterForm, BetterModelForm
-
 from utils.widgets import AutoCompleter, ColorPicker, HiddenDateTimePicker, DateTimePicker, ImageWidget
 from utils.fields import AddressField, YoutubeURLField
 from utils.formutils import TemplateForm
@@ -209,33 +207,32 @@ class PartyForm(BetterModelForm, TemplateForm):
         model = Party
         
 class InitialElectionPartyForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'), max_length=255)
+    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'), max_length=255) 
     abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True, max_length=20)
     #list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
     
     
 class ElectionPartyContactForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), widget=AutoCompleter(model=Party, field='name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
-    abbreviation = forms.CharField(label=_('Abbreviated party name'), help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True)
+    name = forms.CharField(label=_('Full party name'), max_length=255, widget=AutoCompleter(model=Party, field='name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
+    abbreviation = forms.CharField(label=_('Abbreviated party name'), max_length=20 , help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD). (20 tekens)'), required=True)
     address = AddressField(label=_('Address'), help_text=_('Vul hier uw contactinformatie in (b.v. adres van campagne team).'))
     email = forms.EmailField(label=_('E-mail address'), help_text=_('Vul hier het email adres in waarmee u met Wiekiesjij wenst te corresponderen.'))
     telephone = forms.CharField(label=_('Phone number'), help_text=_('Vul hier het telefoonnummer van uw campagneteam in.'))
-    website = forms.URLField(label=_('Party website'), help_text=_('Vul hier de website van uw partij in.'), required=False)
+    website = forms.URLField(max_length=255, label=_('Party website'), help_text=_('Vul hier de website van uw partij in.'), required=False)
 
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in.'), required = False)
-    slogan = forms.CharField(label=_('Slogan'), help_text=_('Vul hier uw verkiezingsslogan in. '), required = False)
+    slogan = forms.CharField(max_length=255, label=_('Slogan'), help_text=_('Vul hier uw verkiezingsslogan in. (255 tekens) '), required = False)
     movie  = YoutubeURLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
-
     logo = forms.ImageField(_('Logo'), widget=ImageWidget())
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 
 
 
 class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
-    description = forms.CharField(label=_('Short description'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent.'), required = False)
-    history = forms.CharField(label=_('Short history'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. '), required = False)
-    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), help_text=_('Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat. '), required = False)
+    description = forms.CharField(max_length=255, label=_('Short description'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent. (255 tekens)'), required = False)
+    history = forms.CharField(max_length=255, label=_('Short history'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. (255 tekens)'), required = False)
+    manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), help_text=_('Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat.'), required = False)
     manifesto = forms.URLField(label=_('Link to the manifesto'), help_text=_('Vul hier een link in naar uw verkiezingsprogramma. Dit mag een website of PDF document zijn. '), required = False)
 

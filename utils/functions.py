@@ -96,6 +96,18 @@ def list_unique_order_preserving(seq, idfun=None):
         if marker in seen: continue
         seen[marker] = 1
         result.append(item)
+
+    return result
+
+
+def smart_truncate(content, length=100, suffix='...'):
+    """
+        Truncates a string smartly
+    """
+    if len(content) <= length:
+        return content
+    else:
+        return content[:length].rsplit(' ', 1)[0]+suffix
     return result
     
     
