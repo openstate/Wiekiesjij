@@ -533,6 +533,9 @@
 			.line {
 				
 				}
+				.line .line {
+					
+					}
 				.col {
 					
 					}
@@ -542,6 +545,16 @@
 						margin:34px 10px 50px 20px;
 						position:relative;
 						}
+						.mod .mod {
+							background:none;
+							margin:0;
+							}
+							.mod .mod .bd {
+								border:none;
+								background:none;
+								left:0;
+								top:0;
+								}
 						.hd {
 							position:absolute;
 							z-index:20;
@@ -583,11 +596,9 @@
 							}
 						.tabbed .tabs .selected a {
 							background:#e0e0e0;
-							}
-			.line .line {
-				margin-top:-30px;
-				}				
+							}	
 			
+				
 			
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -1402,16 +1413,16 @@
 		
 			}
 			.matches h1,
-			.matches h2 {
+			.matches .item h2 {
 				padding-left:0;
 				background:none;
 				margin:.5em 0 1em;
 				}
-			.matches h2 {
+			.matches .item h2 {
 				font-size:1.4em;
 				margin:0 0 .5em;
 				}
-				.matches h2 a {
+				.matches .item h2 a {
 					color:#ed2227;
 					}
 			.matches p {
@@ -1484,7 +1495,51 @@
 					}
 				
 			
-			
+		#container .sms-setup {
+			border:1px solid #ccc;
+			margin:15px;
+			}	
+			#container .sms-setup .bd {
+				background:#e0e0e0;
+				}	
+				.sms-setup h2,
+				.social-setup h2 {
+					background-image:url(../img/arrow-ongrey.gif);
+					}
+				.sms-setup div.field {
+					margin-bottom:0;
+					width:232px;
+					}
+				.sms-setup fieldset {
+					float:left;_display:inline;
+					}
+				.sms-setup input {
+					width:220px;
+					}
+				.sms-setup span.optional {
+					display:none;
+					}
+				.sms-setup .form-submit {
+					float:left;
+					clear:none;
+					
+					margin-top:1.35em;
+					}
+					.sms-setup .form-submit button {
+						
+						margin-left:15px;
+						float:left;_display:inline;
+						}
+	
+	
+		#container .social-setup {
+			border:1px solid #ccc;
+			margin:15px;
+			}
+			#container .social-setup .bd {
+				background:#e0e0e0;
+				}
+	
 	
 	/* 	Tweets
 		----------------------------------------------------------------------------------------- */
