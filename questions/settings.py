@@ -24,7 +24,13 @@ PROFILE_QUESTION_WEIGHT_OPTIONS = (
 ('q9', 'Hobby'),
 ('q13', 'Leeftijd'),
 ('q14', 'Man of Vrouw'),
+('q1_he', 'Megastallen'),
+('q2_he', 'Woonruimtes voor jongeren'),
+('q3_he', 'Gemeentelijke herindeling'),
+('q4_he', 'Optimale gemeentelijke dienstverlening'),
+('q5_he', 'Financiering bedrijven en burger initiatieven'),
 )
+
 
 QTYPE_NORM_POLONECHOICE_VISONECHOICE = 'C'
 QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE = 'G'
