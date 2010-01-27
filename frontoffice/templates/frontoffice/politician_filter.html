@@ -80,13 +80,13 @@
             </ul>
             <ul class="pager">
             {% if politicians.has_previous %}
-                <li><a href="?page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
+                <li><a href="{% query_string '' 'page' 1 %}page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
             {% endif %}
                 <li class="current">
                     {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}
                 </li>
             {% if politicians.has_next %}
-                <li><a href="?page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
+                <li><a href="{% query_string '' 'page' 1 %}page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
             {% endif %}
             </ul>
             <div class="pol-block-list">
@@ -118,13 +118,13 @@
             </div> 
             <ul class="pager bottom-pager">
             {% if politicians.has_previous %}
-                <li><a href="?page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
+                <li><a href="{% query_string '' 'page' 1 %}page={{ politicians.previous_page_number }}">{% trans 'Previous' %}</a></li>
             {% endif %}
                 <li class="current">
                     {% trans 'Page' %} {{ politicians.number }} {% trans 'of' %} {{ politicians.paginator.num_pages }}
                 </li>
             {% if politicians.has_next %}
-                <li><a href="?page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
+                <li><a href="{% query_string '' 'page' 1 %}page={{ politicians.next_page_number }}">{% trans 'Next' %}</a></li>
             {% endif %}
             </ul>
 		</div>

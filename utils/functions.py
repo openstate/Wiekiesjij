@@ -1,5 +1,5 @@
-import sys
 import random
+from django.utils.safestring import mark_safe
 
 def move_down(instance, field, limit, kwargs={}):
     '''
@@ -97,3 +97,57 @@ def list_unique_order_preserving(seq, idfun=None):
         seen[marker] = 1
         result.append(item)
     return result
+    
+    
+def get_query_string(p, new_params=None, remove=None, postfix_amp=False):
+    """
+    Add and remove query parameters. From `django.contrib.admin`.
+    """
+    if new_params is None: new_params = {}
+    if remove is None: remove = []
+    for r in remove:
+        for k in p.keys():
+            if k.startswith(r):
+                del p[k]
+    for k, v in new_params.items():
+        if k in p and v is None:
+            del p[k]
+        elif v is not None:
+            p[k] = v
+    result = '?' + '&amp;'.join([u'%s=%s' % (k, v) for k, v in p.items()]).replace(' ', '%20') 
+    if postfix_amp and result[-1] != '?':
+        result = result + '&amp;'
+    return mark_safe(result)
+
+def string_to_dict(string):
+    """
+        Converts a string in the format: 'key=value, key2=value' to a dict
+    """
+    kwargs = {}
+    if string:
+        string = str(string)
+        if ',' not in string:
+            # ensure at least one ','
+            string += ','
+        for arg in string.split(','):
+            arg = arg.strip()
+            if arg == '': continue
+            kw, val = arg.split('=', 1)
+            kwargs[kw] = val
+    return kwargs
+
+def string_to_list(string):
+    """
+        Converts a string in the format 'item, item2, item3' to a list
+    """
+    args = []
+    if string:
+        string = str(string)
+        if ',' not in string:
+            # ensure at least one ','
+            string += ','
+        for arg in string.split(','):
+            arg = arg.strip()
+            if arg == '': continue
+            args.append(arg)
+    return args

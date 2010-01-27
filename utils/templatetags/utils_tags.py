@@ -6,6 +6,7 @@ from django.utils.encoding import smart_str
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 
+from utils.functions import string_to_list, string_to_dict, get_query_string
 
 register = template.Library()
 
@@ -263,4 +264,26 @@ register.tag('ifcompare', CompareBlockNode.tag)
 
 @register.filter
 def index(some_dict, key):
+    """
+        Returns the value in the dict based on the key
+    """
     return some_dict.get(key)
+    
+@register.inclusion_tag('utils/_query_string.html', takes_context=True)
+def query_string(context, add=None, remove=None, postfix_amp=False):
+    """
+    Allows the addition and removal of query string parameters.
+
+    utils/_query_string.html is just {{ response }}
+
+    Usage:
+    http://www.url.com/{% query_string "param_to_add=value, param_to_add=value" "param_to_remove, params_to_remove" %}
+    http://www.url.com/{% query_string "" "filter" %}filter={{new_filter}}
+    http://www.url.com/{% query_string "sort=value" "sort" %}
+    """
+    # Written as an inclusion tag to simplify getting the context.
+    add = string_to_dict(add)
+    remove = string_to_list(remove)
+    params = dict( context['request'].GET.items())
+    response = get_query_string(params, add, remove, postfix_amp)
+    return {'response': response }
