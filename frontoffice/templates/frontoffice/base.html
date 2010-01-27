@@ -21,7 +21,7 @@
 <body>
     <div id="container">
         <div id="header" {% if request.session.ElectionInstance %} class="regional"{% endif %}>
-            <h1 class="branding"><a href="/">WieKiesJij?</a></h1>
+             <h1 class="branding"><a href="/" title="{% trans 'Go home' %}">WieKiesJij?</a></h1>
             {% if request.session.ElectionInstance %}<h2 class="regional">Gemeenteraadsverkiezingen 2010: {{ request.session.ElectionInstance.name }}</h2>{% endif %}
 
             <p class="user-info">
@@ -68,6 +68,8 @@
 
         <div id="footer">
                 <p>&copy; Copyright <a href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a> {% trans "and" %} <a href="http://getlogic.nl">Getlogic</a> 2009</p>
+                <a href="/algemene-voorwaarden/">{% trans 'Terms of Service' %}</a>
+                <a href="/disclaimer/">{% trans 'Disclaimer' %}</a>
 
                 {% block bookmarks %}{% include "frontoffice/bookmarks.html" %}{% endblock bookmarks %}
         </div>
