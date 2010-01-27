@@ -56,7 +56,10 @@ def answer_question(request, election_instance_party_id, user_id=None):
 def match_results(request, hash, iframe=None):
     result = VisitorResult.objects.get(hash=hash)
     candidates = result.candidate_answers.all()
-    visitors_profile = VisitorProfile.objects.filter(user=request.user)
+    if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
+        visitors_profile = request.user.profile
+    else:
+        visitors_profile = False
     questions =  json.loads(result.visitor_answers)
     questions = range(0,len(questions))
 
@@ -76,7 +79,7 @@ def match_results(request, hash, iframe=None):
         return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
     if visitors_profile:
-        initial = {'phone':visitors_profile[0].phone}
+        initial = {'phone':visitors_profile.phone}
 
     else:
         initial = {'phone':result.telephone}
