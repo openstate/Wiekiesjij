@@ -238,3 +238,4 @@ class ElectionPartyDescriptionForm(BetterForm, TemplateForm):
     history = forms.CharField(label=_('Short history'), widget = forms.widgets.Textarea(), help_text=_('Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. '), required = False)
     manifesto_summary = forms.CharField(label=_('Manifesto Summary'), widget=forms.Textarea(), help_text=_('Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat. '), required = False)
     manifesto = forms.URLField(label=_('Link to the manifesto'), help_text=_('Vul hier een link in naar uw verkiezingsprogramma. Dit mag een website of PDF document zijn. '), required = False)
+

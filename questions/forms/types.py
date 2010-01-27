@@ -96,15 +96,11 @@ class ThemeAnswerForm(BetterForm, TemplateForm):
                     if object.theme == choice[0]:
                         if choice not in choices:
                             choices.append(choice)
-#                    elif object.theme.startswith('q8_') and choice[0] == 'q8':
-#                        if choice not in choices:
-#                            choices.append(choice)
-
         
         self.fields['value'].widget=widgets.CheckboxSelectMultiple(choices=choices)
         self.fields['value'].choices = choices
         self.fields['value'].label=_('Answer')
-
+        self.fields['value'].required = False
 
 class BooleanForm(BetterForm, TemplateForm):
     answer = forms.BooleanField()

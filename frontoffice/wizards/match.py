@@ -1,5 +1,6 @@
 import datetime
 import json
+from math import ceil
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
@@ -362,9 +363,9 @@ class BestCandidate(MultiPathFormWizard):
             total = 0
             for question in candidate_scores[candidate]:
                for question_id, score in question.iteritems():
-                    total = total + score
-            candidates_total_scores[candidate] = total
-        
+                    total = float(total + score)
+                    a = float(100.0)
+            candidates_total_scores[candidate] = ceil(total)
         visitor = VisitorResult()
         
 
