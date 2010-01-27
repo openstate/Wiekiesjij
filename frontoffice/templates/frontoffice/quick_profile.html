@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Party' %}</th>
-                    <td>{{ profile.party.name }}</td>
+                    <td><a href="{% url fo.party_profile profile.party.id %}">{{ profile.party.name }}</a></td>
                 </tr>
                 <tr>
                     <th>{% trans 'Age' %}</th>

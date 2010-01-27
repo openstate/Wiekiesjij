@@ -1,12 +1,12 @@
 {% load i18n %}
 <ul>
     {% for tweet in posts %}
-        <li>
+        <li {% if forloop.last %}class="last"{% endif %}>
             <span class="tweet">{{ tweet.summary }}</span>
             <span class="info">{{ tweet.published|timesince }} {% trans 'ago' %}</span>
         </li>
     {% empty %}
-        <li>
+        <li class="last">
             {% trans 'There are no posts that could be fetched' %}
         </li>
     {% endfor %}

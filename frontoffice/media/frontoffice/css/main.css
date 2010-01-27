@@ -57,6 +57,13 @@
 				line-height:1.4em;
 				margin-bottom:.5em;
 				}
+			ul {
+				list-style:none;
+				}
+			li {
+				display:block;_zoom:1;
+				list-style:none;
+				}
 					
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -86,26 +93,7 @@
 						background:#E0E0E0;
 						}
 						
-			.breadcrumbs {
-				margin:.2em 10px 2em;
-				font-size:16px;
-				line-height:24px;
-				overflow:hidden;_zoom:1;
-				}
-				.breadcrumbs li {
-					float:left;
-					padding-left:28px;
-					margin-right:10px;
-					background:url(../img/h1Arrow.gif) left center no-repeat;
-					}
-				.breadcrumbs a {
-					color:#ed2227;
-					font-weight:bold;
-					}
-				.breadcrumbs .back {
-					background-image:url(../img/h1Arrow-back.gif);
-					padding-left:16px;
-					}
+			
 
 /* 	Form styling
 	*************************************************************************************************/
@@ -244,14 +232,15 @@
 					}
 				div.radioselect label {
 					font-weight:normal;
-					margin-bottom:5px;
 					line-height:1.2em;
+					margin-bottom:5px;_margin-bottom:0;
 					}
 				div.radioselect input {
 					margin:2px 5px 0 0;
 					padding:0;
 					display:block;
 					float:left;
+					height:14px;
 					}
 		
 		/* 	form submit
@@ -409,10 +398,10 @@
 
 			#header {
 				border-bottom:4px solid #e0e0e0;
-				margin:0 10px 20px;
+				margin:0 10px .5em;
 				overflow:hidden;_zoom:1;
 				position:relative;
-				min-height:100px;_height:100px;
+				min-height:100px;
 				}
 			
 					.branding {
@@ -435,6 +424,8 @@
 							}
 					#header h2 {
 						display:none;
+						position:relative;
+						z-index:10;
 						}
 					#header h2.regional {
 						display:block;
@@ -464,29 +455,33 @@
 						overflow:hidden;_zoom:1;
 						float:right;
 						list-style:none;
-						list-style-position:outside;
 						display:block;
 						margin:66px 0 0;
 						padding:0;
 						}
 					#container .regional ul.tabs {
-						margin:0;
+						margin-top:0;
 						}
 						
 						#header ul.tabs li {
 							margin-left:2px;
+							margin-top:10px;
 							display:block;
+							overflow:hidden;_zoom:1;
 							list-style:none;
 							list-style-position:outside;
+							float:left;
 							}
 							
 							#header ul.tabs li a {
 								font-size:19px;
 								line-height:34px;
 								height:34px;
-								float:left;
+								float:left;_zoom:1;
 								}
-								
+						#header ul.tabs li.selected {
+							margin-top:3px;
+							}	
 							#header ul.tabs li.selected a {
 								line-height:43px;
 								height:43px;
@@ -501,6 +496,33 @@
 								text-decoration:none;
 								color:#fff;
 								}
+								
+				.breadcrumbs {
+					margin:.2em 10px 1em;
+					font-size:12px;
+					line-height:1.4em;
+					overflow:hidden;_zoom:1;
+					border-bottom:2px solid #e0e0e0;
+					padding-bottom:.5em;
+					padding-left:.5em;
+					}
+					.breadcrumbs li {
+						float:left;
+						padding-left:28px;
+						margin-right:10px;
+						background:url(../img/h1Arrow.gif) left center no-repeat;
+						}
+					.breadcrumbs li.first {
+						padding-left:0;
+						background:none;
+						}
+					.breadcrumbs a {
+						font-weight:bold;
+						}
+					.breadcrumbs .back {
+						background-image:url(../img/h1Arrow-back.gif);
+						padding-left:16px;
+						}
 	
 	/*	Content
 	**************************************************************************************************************/
@@ -682,6 +704,7 @@
 						width:24px;
 						height:24px;
 						font-weight:bold;
+						float:left;
 						}
 						
 					ul#wizardSteps li.big a,
@@ -1358,6 +1381,7 @@
 									font-weight:bold;
 									background:none;
 									padding-left:0;
+									margin-bottom:0;
 									}
 									
 									.item h2 span.institute {
@@ -1415,6 +1439,7 @@
 						float:left;
 						width:90px;
 						height:50px;
+						overflow:hidden;_zoom:1;
 						padding:10px;
 						background:#fff;
 						border:1px solid #ccc;
@@ -1465,11 +1490,12 @@
 		----------------------------------------------------------------------------------------- */
 		
 							div.tweets ul {
-								margin-bottom:-10px;
 								}
 								
 								div.tweets ul li {
-									margin-bottom:20px;
+									margin-bottom:10px;
+									padding-bottom:10px;
+									border-bottom:1px solid #ccc;
 									}
 
 										div.tweets ul li a {
@@ -1482,6 +1508,11 @@
 										font-size:11px;
 										margin-top:3px;
 										}
+								div.tweets ul li.last {
+									border-bottom:none;
+									margin-bottom:0;
+									padding-bottom:0;
+									}
 	
 	/* 	Video
 		----------------------------------------------------------------------------------------- */

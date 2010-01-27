@@ -11,6 +11,18 @@
 
 {% block menu_candidates %}selected{% endblock %}
 
+{% block breadcrumbs %}
+<div class="col lastCol">
+	<ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{% trans "Groningen" %}</a></li>
+        <li><a href="{% url fo.election %}">{% trans "PvdA" %}</a></li>
+        <li>{% trans "Frank de Vries" %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
+
 {% block content %}
 
     {% include "frontoffice/quick_profile.html" %}
