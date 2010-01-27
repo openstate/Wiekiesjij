@@ -5,7 +5,7 @@
 {% block content %}
 	<div class="mod quick-party-profile">
     	<div class="hd">
-        	<h1>{% trans 'Party' %} {{ eip.party.name }}</h1>
+        	<h1>{{ eip.party.name }}</h1>
         </div>
         <div class="bd">
         	<div class="image">
@@ -102,7 +102,7 @@
 
         <div class="bd party-cand">
             <div class="pol-block-list">
-            {% for candidacy in eip.candidates.all %}
+            {% for index, candidacy in eip.candidate_dict.items %}
                 <div class="pol-block">
                 	<div class="image">
                         {% if candidacy.candidate.profile.picture %}
@@ -112,10 +112,7 @@
                         {% endif %}
                     </div>
                     <a href="{% url fo.politician_profile candidacy.candidate.id %}" class="name">{{ candidacy.candidate.profile.first_name }}</a>
-                    <p>{% trans 'Age' %}: {{ candidacy.candidate.profile.dateofbirth|age }}</p>
-                    {% if not request.session.ElectionInstance %}
-                        <p>{% trans 'Region' %}: {{ candidacy.candidate.profile.region }}</p>
-                    {% endif %}
+                    <p>{% trans 'Age' %}: {{ candidacy.candidate.profile.age|default:'Onbekend' }}</p>
                 </div>
             {% empty %}
                 <p class="empty">{% trans 'No politicians defined for this party' %}</p>

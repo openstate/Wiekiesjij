@@ -76,9 +76,6 @@
                 <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Go to the party profile' %}</a>
 				<ul>
                 {% for position, politician in politicians.items %}
-
-                     {{ politician.candidate.profile.profile }}
-
                     <li>
                         <span class="position">{{ position }}</span>
                         
@@ -91,7 +88,7 @@
                             {% endif %}
                             </div>
                             <a href="{% url fo.politician_profile politician.candidate.id %}" class="last-name">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a>
-                            <p>{{ politician.candidate.profile.initials }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}})</p>
+                            <p>{{ politician.candidate.profile.initials|default:'' }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}})</p>
 
                         {% else %}
                             <p class="empty">{% trans 'This politician<br />has not yet been added.' %}</p>
