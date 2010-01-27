@@ -68,7 +68,9 @@
                         {% endblock buttons %}
                     </form>
                 {% else %}
-                    <p>{% trans 'Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here' %}</p>
+                    {% if show_message %}
+                        <p>{% trans 'Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here' %}</p>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

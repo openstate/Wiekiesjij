@@ -38,25 +38,39 @@
         	<h2>{% trans "Comment on this" %}</h2>
         </div>
         <div class="bd">
-        	{% isprofile 'visitor' %}
+            {% isprofile 'visitor' %}
                 {% render_comment_form for goal %}
             {% endisprofile %}
 
-			{% ifequal goal.politician.user.id request.user.id %}
+            {% ifequal goal.politician.user.id request.user.id %}
                 {% render_comment_form for goal %}
             {% endifequal %}
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
                 <div class="item{% if forloop.last %} last-item{% endif %} {% ifequal goal.politician.user.id comment.user.id %}owner{% endifequal %}">
-                	<p class="smallInfo">
-                    {% if comment.user_url %}
-                        <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
-                    {% else %}
-                        <strong>{{ comment.user_name }}</strong>
-                    {% endif %}
-                    zei op {{ comment.submit_date|date:"j F Y" }} om {{ comment.submit_date|date:"H:i"}}:
-                	</p>
+                    <p class="smallInfo">
+                        {% ifequal goal.politician.user.id request.user.id %}
+                            {% if comment.flags.all %}
+                                <span>{% trans 'This comment is flagged' %}</span>
+                            {% else %}
+                                <a href="{{ comment.get_flag_url }}">{% trans 'Flag as inappropiate' %}</a>
+                            {% endif %}
+                        {% endifequal %}
+
+                        {% if request.user.is_staff %}
+                            {% if comment.flags.all %}
+                                <span>{% trans 'This comment is flagged' %}</span> - <a href="{{ comment.get_delete_url }}">{% trans 'Delete' %}</a>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if comment.user_url %}
+                            <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
+                        {% else %}
+                            <strong>{{ comment.user_name }}</strong>
+                        {% endif %}
+                        zei op {{ comment.submit_date|date:"j F Y" }} om {{ comment.submit_date|date:"H:i"}}:
+                    </p>
                     <p>{{ comment.comment|urlize|linebreaks }}</p>
                 </div>
             {% endfor %}

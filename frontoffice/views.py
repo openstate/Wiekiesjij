@@ -67,6 +67,11 @@ def match_results(request, hash, iframe=None):
 
     returndict = {'questions':questions, 'candidates': candidates, 'parent':parent, 'iframe': iframe}
 
+    if request.user.is_authenticated():
+        if result.user == request.user:
+            returndict['show_message'] = True
+
+
     if result.telephone:
         return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
@@ -76,14 +81,13 @@ def match_results(request, hash, iframe=None):
     else:
         initial = {'phone':result.telephone}
 
-    returndict
-
     if request.method == 'POST':
         form = SmsForm(request.POST)
         if form.is_valid():
             if form.cleaned_data['phone']:
                 result.telephone = form.cleaned_data['phone']
                 result.save()
+            returndict['show_message'] = True
             return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
     else:

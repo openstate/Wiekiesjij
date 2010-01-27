@@ -13,8 +13,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^backoffice/', include('backoffice.urls')),
-    (r'^invitation/', include('invitations.urls')),
+    (r'^auth_comments/', include('authorized_comments.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^invitation/', include('invitations.urls')),
     (r'^opensocial/', include('opensocial.urls')),
     
     #Guessing this one should always be last
