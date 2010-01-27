@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n utils_tags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang='en-us' xmlns='http://www.w3.org/1999/xhtml'>
@@ -73,5 +73,6 @@
         {% endblock content %}
    	</div>
 	{% block bodyscript %}{% endblock bodyscript %}
+	{% googleanalyticsjs %}
     </body>
 </html>

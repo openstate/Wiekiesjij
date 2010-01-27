@@ -127,6 +127,8 @@ INSTALLED_APPS = (
 
 COMMENTS_APP = 'authorized_comments'
 
+GOOGLE_ANALYTICS_CODE = 'UA-1376555-5'
+
 # Email settings
 EMAIL_HOST = 'smtp.xs4all.nl'
 EMAIL_HOST_USER = 'accepte'
