@@ -4,3 +4,21 @@
 
 {% block title %}{% trans 'Questions' %}{% endblock title %}
 {% block page-title %}{% trans 'Questions' %}{% endblock page-title %}
+
+{% block bodyscript %}
+	<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function() {
+			jQuery('input[type=checkbox][value="no_pref"]').click(function() {
+				items = jQuery(this)
+						.parents('form')
+						.find('input[type=checkbox]')
+						.not('input[value="no_pref"]');
+				if ( jQuery(this).is(':checked') ) {
+					items.attr('disabled', 'disabled');
+				} else {
+					items.attr('disabled', false);
+				}
+			});
+		});
+	</script>
+{% endblock bodyscript %}
