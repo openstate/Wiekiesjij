@@ -219,7 +219,7 @@ def candidate_edit(request, id):
     candidacy = get_object_or_404(Candidacy, pk=id)
     if candidacy.candidate.is_active:
         request.user.message_set.create(message=ugettext('De kandidaat die u wilt wijzigen heft zijn/haar account al geactiveerd.'))
-        return redirect('bo.election_party_view', id=candidate.election_party_instance.id)
+        return redirect('bo.election_party_view', id=candidacy.election_party_instance.id)
         
     FormClass = get_profile_forms('candidate', 'edit')[0]
     
@@ -272,8 +272,7 @@ def politician_welcome(request, eip_id):
     check_permissions(request, eip_id, 'candidate')
     election_instance_party = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     if not request.user.profile or request.user.profile.type != 'candidate':
-        #We need to find a candidate to use for the wizard
-        user = election_instance_party.candidates.all()[0].candidate
+        raise PermissionDeniedException('Geen toegang met de huidige account')
     else:
         user = get_object_or_404(election_instance_party.candidates, candidate=request.user).candidate
         
@@ -569,7 +568,7 @@ def csv_import_candidates_step3(request, ep_id):
                         continue
 
                     #Link candidate to party
-                    candidacy = Candidacy.objects.create(
+                    Candidacy.objects.create(
                         election_party_instance = eip_obj,
                         candidate = candidate_obj.user,
                         position = candidate['position'],
