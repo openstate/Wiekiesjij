@@ -17,7 +17,7 @@
             <li><a href="{% url fo.visitor.edit_profile %}">{% trans 'Edit profile' %}</a></li>
         {% endisprofile %}
         {% isprofile 'party_admin' %}
-            <li><a href="{% url bo.election_party_view user.party.id %}"></a>{% trans 'View your party' %}</li>
+            <li><a href="{% url bo.election_party_view user.party.current_eip.id %}"></a>{% trans 'View your party' %}</li>
         {% endisprofile %}
     </ul>
 </div>

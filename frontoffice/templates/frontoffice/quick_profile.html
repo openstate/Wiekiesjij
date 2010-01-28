@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Party' %}</th>
-                    <td><a href="{% url fo.party_profile profile.party.id %}">
+                    <td><a href="{% url fo.party_profile profile.party.current_eip.id %}">
                     	{% if profile.party.logo %}
                     		<img src="{% thumbnail profile.party.logo 70x40 upscale %}" alt="{{ profile.party.name }}" title="{{ profile.party.name }}" /></a></td>
                 		{% else %}
@@ -94,7 +94,7 @@
         </div>
         <div class="ballotPosition">
         	<p>{{ profile.introduction|default:'' }}</p>
-            <a href="{% url fo.election profile.party.id %}">
+            <a href="{% url fo.election profile.party.current_eip.id %}">
             {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
                 {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
             {% endblocktrans %}

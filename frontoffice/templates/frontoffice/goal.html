@@ -15,7 +15,7 @@
     <ul class="breadcrumbs">
     	<li class="first"><a href="/">Wiekiesjij</a></li>
         <li><a href="{% url fo.election %}">{{ goal.politician.party.current_eip.election_instance.name }}</a></li>
-        <li><a href="{% url fo.party_profile goal.politician.party.id %}">{{ goal.politician.party.name }}</a></li>
+        <li><a href="{% url fo.party_profile goal.politician.party.current_eip.id %}">{{ goal.politician.party.name }}</a></li>
         <li><a href="{% url fo.politician_profile goal.politician.user.id %}">{{ goal.politician.full_name }}</a></li>
         <li>{{ goal.goal }}</li>
     </ul>

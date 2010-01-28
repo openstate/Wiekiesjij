@@ -29,7 +29,7 @@
                 {% for candidate in candidates %}
                     <div class="item{% if forloop.first %} best-match{% endif %}">
                         <div class="party-logo">
-                            <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}" {% if iframe %}target="_blank"{% endif %}>
+                            <a href="{% url fo.party_profile candidate.candidate.profile.party.current_eip.id %}" {% if iframe %}target="_blank"{% endif %}>
                             {% if candidate.candidate.profile.party.logo %}
                             	<img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
                            	{% else %}
