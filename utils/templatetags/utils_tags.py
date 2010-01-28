@@ -196,7 +196,11 @@ def age(bday, d=None):
         d = datetime.date.today()
     return (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
 
-
+@register.filter
+def dict_key_value(dict, key):
+    if key in dict.keys():
+        return dict[key]
+    return None
 
 class CompareBlockNode(template.Node):
     """

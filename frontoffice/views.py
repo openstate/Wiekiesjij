@@ -16,6 +16,8 @@ from django.core.paginator import Paginator
 
 from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm, SmsForm
 from frontoffice.models import VisitorResult
+from questions.models import Question, Answer
+from questions import settings as qsettings
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
@@ -470,3 +472,114 @@ def home(request):
         form = RegionSelectForm(initial=initial_dict) #overwrite the form
 
     return render_to_response('frontoffice/home.html', {'form': form}, context_instance=RequestContext(request))
+
+
+def match_result_details(request, hash, candidate_id, iframe=None):
+    result = get_object_or_404(VisitorResult,hash=hash)
+
+    candidate = result.candidate_answers.get(candidate=candidate_id)
+    visitors_profile = VisitorProfile.objects.filter(user=request.user)
+
+    visitors_answer =  json.loads(result.visitor_answers)
+    candidate_answer =  json.loads(candidate.candidate_answers)
+    candidate_scores =  json.loads(candidate.candidate_question_scores)
+    candidate_score = {}
+    questions_dict = {}
+    for i in candidate_scores:
+        for key, value in i.items():
+            candidate_score[key] = value
+
+
+
+    for qid, ans in visitors_answer.items():
+
+        qid = str(qid)
+        question = get_object_or_404(Question ,id=qid)
+        questions_dict[qid] = {}
+        questions_dict[qid]['visitor'] = ans
+        questions_dict[qid]['question'] = question
+        if qid in candidate_score.keys():
+            questions_dict[qid]['score'] = candidate_score[qid]
+        else:
+            questions_dict[qid]['score'] = 0
+        if qid in candidate_answer.keys():
+            questions_dict[qid]['candidate'] = candidate_answer[qid]
+
+    for key in questions_dict.keys():
+        if questions_dict[key]['question'].question_type == 'H':
+            weighted_questions = questions_dict[key]['visitor']
+
+    #print weighted_questions, 'weighted questions'
+    skipped = 0
+    weighted = len(weighted_questions[0])
+    #print weighted
+    for key in questions_dict.keys():
+        if 'no_pref' in questions_dict[key]['visitor']:
+            skipped = skipped + 1
+            if questions_dict[key]['question'].theme in weighted_questions[0]:
+                weighted = weighted - 1
+            questions_dict[key]['doubled'] = False
+            questions_dict[key]['skipped'] = True
+        else:
+            questions_dict[key]['skipped'] = False
+            if questions_dict[key]['question'].theme in weighted_questions[0]:
+                questions_dict[key]['doubled'] = True
+            else:
+                questions_dict[key]['doubled'] = False
+
+    num_questions = len(visitors_answer) -1 - skipped + weighted
+    #print 'number of questions', num_questions
+    #print (len(visitors_answer) -1),'-', skipped, '+', weighted
+    for key in questions_dict.keys():
+        question = questions_dict[key]['question']
+        if questions_dict[key]['doubled'] == True:
+            questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions) / 2
+        else:
+            questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions)
+#        if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
+#            print 'backoffice',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
+#            print 'party',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+#            print 'work experience',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
+#            print 'education level',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
+#            print 'religion',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_PROFILE_AGE == question.question_type:
+#            print 'age',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_PROFILE_GENDER == question.question_type:
+#            print 'gender',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        elif qsettings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
+#            print 'weight',questions_dict[key]['visitor']
+#            if 'candidate' in questions_dict[key].keys():
+#                print questions_dict[key]['candidate']
+#        else:
+#            pass
+
+    if iframe:
+        parent = 'frontoffice/iframe.html'
+    else:
+        parent = 'frontoffice/base.html'
+
+    returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe}
+
+
+
+
+
+    return render_to_response('frontoffice/match_details.html', returndict, context_instance=RequestContext(request))

@@ -278,7 +278,6 @@ class BestCandidate(MultiPathFormWizard):
                                 candidate_scores[candidate].append({question.id: 1})
                                
 
-
                 elif QTYPE_MODEL_PROFILE_AGE == question.question_type:
                     all_visitor_answers[question_id] = answer_value
                     answer = Answer.objects.get(id=answer_value[0])
@@ -327,17 +326,14 @@ class BestCandidate(MultiPathFormWizard):
                         candidate_scores[candidate].append({question.id: 0})
 
 
-
-
-
         #Add Weighting
         num_weighted_questions = 0
         for question in all_questions:
-            if question.id not in questions_skipped:
-                if question.theme in self.multiply_questions:
+            if str(question.id) not in questions_skipped:
+                  if question.theme in self.multiply_questions:
                     num_weighted_questions = num_weighted_questions + 1
         number_of_questions = (((num_questions -1) + num_weighted_questions ) - len(questions_skipped))
-        #print number_of_questions, num_questions, num_weighted_questions, len(questions_skipped), questions_skipped
+        #print  'number of questions', number_of_questions, '=', (num_questions -1), '+', num_weighted_questions, '-',len(questions_skipped), questions_skipped
 
         for candidate in self.candidates:
             for question in candidate_scores[candidate]:
@@ -363,8 +359,12 @@ class BestCandidate(MultiPathFormWizard):
             for question in candidate_scores[candidate]:
                for question_id, score in question.iteritems():
                     total = float(total + score)
-                    a = float(100.0)
-            candidates_total_scores[candidate] = ceil(total)
+
+            #candidates_total_scores[candidate] = ceil(total)
+            if total > 99 and total < 100:
+                total = 100
+
+            candidates_total_scores[candidate] = total
         visitor = VisitorResult()
         
 
@@ -396,6 +396,7 @@ class BestCandidate(MultiPathFormWizard):
             return redirect('fo.match_results', hash=new_visitor, iframe=self.iframe)
         else:
             return redirect('fo.match_results', hash=new_visitor)
+
 
 
 

@@ -1,0 +1,70 @@
+{% extends parent %}
+{% load i18n thumbnail utils_tags %}
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block menu_take_test %}selected test-selected{% endblock %}
+
+
+{% block cols %}
+	<div class="col size1of1">
+	{% block content %}
+        <div class="mod wizard matches">
+            <div class="bd">
+            	
+                <ul id="wizardSteps">
+                    {% for q in questions %}
+                        <li class="history"><span>{{ q|add:"1" }}</span></li>
+                    {% endfor %}
+                    <li class="last current-custom"><span>{% trans "Results" %}</span></li>
+                </ul>
+                
+                {% block step-header %}
+                	<h1>{% trans "Match details" %}:</h1>
+                {% endblock step-header %}
+                
+
+                
+                     <div class="party-logo">
+                        <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}" {% if iframe %}target="_blank"{% endif %}>
+                        {% if candidate.candidate.profile.party.logo %}
+                            <img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                            {% else %}
+                            <img src="{% if forloop.first %}{% thumbnail 'defaults/party-dummy.jpg' 120x75 upscale %}{% else %}{% thumbnail 'defaults/party-dummy.jpg' 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                        {% endif %}
+                        </a>
+                    </div>
+                    <div class="image">
+                    {% if candidate.candidate.profile.picture %}
+                        <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
+                    {% else %}
+                        <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
+                    {% endif %}
+                    </div>
+                    {% for info in questions.items %}
+                        <div>
+                              <p>QUESTION: {{ info.1|dict_key_value:'question' }}</p>
+                              <p>PERCENTAGE MATCH: {{ info.1|dict_key_value:'score' }}</p>
+                              <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
+                              <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
+                              <p>VISITORS ANSWER: {{ info.1|dict_key_value:'visitor' }}</p>
+                              <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{{ info.1|dict_key_value:'candidate' }}{% else %}{% trans 'None' %}{% endif %} </p>
+                              <br/>
+                        </div>
+                    {% endfor %}
+                    <a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
+                    <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
+                    <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
+                    <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
+              
+
+             
+            </div>
+        </div>
+    {% endblock content %}
+   	</div>
+{% endblock cols %}
+

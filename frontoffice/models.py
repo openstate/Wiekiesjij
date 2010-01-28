@@ -19,7 +19,7 @@ class VisitorResult(models.Model):
     visitor_answers     = models.TextField(_('Visitor Answer List'), blank=True, null=True)
     telephone           = models.CharField(_('Phone Number'), max_length=12, blank=True, null=True)
     election_instance   = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'), blank=True, null=True)
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
 
@@ -29,10 +29,18 @@ class VisitorResult(models.Model):
         """
             Generates a 32 characters hash with [a-zA-Z0-9]
         """
-        seed()
-        chars = string.letters + string.digits
-        return ''.join([choice(chars) for i in range(32)])
-
+        while True:
+            seed()
+            chars = string.letters + string.digits
+            hash = ''.join([choice(chars) for i in range(32)])
+            exists = False
+            for visitor_result in VisitorResult.objects.all():
+                print visitor_result.hash, hash
+                if hash == visitor_result.hash:
+                    exists = Ture
+            if not exists:
+                return hash
+     
     @classmethod
     def create(cls):
         """
