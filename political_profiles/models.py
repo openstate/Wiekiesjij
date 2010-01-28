@@ -281,7 +281,7 @@ class PoliticianProfile(Profile):
         "Returns the party  of the candidate"
         # Currently there is only one but this needs to be modified at a later
         # date for when there are past elections and so more partys
-        candidacy = self.user.elections.all()
+        candidacy = self.user.elections.order_by('position')
         return candidacy[0].election_party_instance.party
 
     def election_party(self):
