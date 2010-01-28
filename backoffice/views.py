@@ -257,7 +257,7 @@ def election_setup(request, election_instance_id, user_id=None):
     if user_id is None:
         user_id = request.user.id
         if not request.user.profile or request.user.profile.type != 'council_admin':
-            raise Http404('You are not the correct user')
+            raise PermissionDeniedException('You are not the correct user')
 
     return ElectionSetupWizard2(election_instance_id=election_instance_id, user_id=user_id)(request)
 
