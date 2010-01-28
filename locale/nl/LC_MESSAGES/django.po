@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wiekiesjij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-20 16:35+0100\n"
-"PO-Revision-Date: 2010-01-20 16:39+0100\n"
+"POT-Creation-Date: 2010-01-28 16:06+0100\n"
+"PO-Revision-Date: 2010-01-28 16:24+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -18,103 +18,119 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: settings.py:154
+#: settings.py:163
 msgid "CDA"
 msgstr "CDA"
 
-#: settings.py:155
+#: settings.py:164
 msgid "PvdA"
 msgstr "PvdA"
 
-#: settings.py:156
+#: settings.py:165
 msgid "SP"
 msgstr "SP"
 
-#: settings.py:157
+#: settings.py:166
 msgid "VVD"
 msgstr "VVD"
 
-#: settings.py:158
+#: settings.py:167
 msgid "PVV"
 msgstr "PVV"
 
-#: settings.py:159
+#: settings.py:168
 msgid "GL"
 msgstr "GL"
 
-#: settings.py:160
+#: settings.py:169
 msgid "CU"
 msgstr "CU"
 
-#: settings.py:161
+#: settings.py:170
 msgid "D66"
 msgstr "D66"
 
-#: settings.py:162
+#: settings.py:171
 msgid "PvdD"
 msgstr "PvdD"
 
-#: settings.py:163
+#: settings.py:172
 msgid "SGP"
 msgstr "SGP"
 
-#: settings.py:164
+#: settings.py:173
 msgid "OSF"
 msgstr "OSF"
 
-#: backoffice/views.py:546
-#: backoffice/views.py:661
-#: backoffice/wizards/candidate.py:736
+#: backoffice/views.py:195
+#, python-format
+msgid "U heeft al iemand op positie %(pos)s uitgenodigd."
+msgstr "U heeft al iemand op positie %(pos)s uitgenodigd."
+
+#: backoffice/views.py:221
+msgid "De kandidaat die u wilt wijzigen heft zijn/haar account al geactiveerd."
+msgstr "De kandidaat die u wilt wijzigen heft zijn/haar account al geactiveerd."
+
+#: backoffice/views.py:231
+msgid "De kandidaat is gewijzigd."
+msgstr "De kandidaat is gewijzigd."
+
+#: backoffice/views.py:584
+#: backoffice/views.py:699
+#: backoffice/wizards/candidate.py:752
 #: backoffice/wizards/electioninstance.py:126
 #: backoffice/wizards/electionparty.py:88
 msgid "Invitation Wiekiesjij"
 msgstr "Uitnodiging Wiekiesjij"
 
-#: backoffice/views.py:730
+#: backoffice/views.py:768
 msgid "Your preference has been saved"
 msgstr "Je voorkeuren zijn opgeslagen"
 
-#: backoffice/templates/backoffice/base.html:32
-#: frontoffice/templates/frontoffice/base.html:27
+#: backoffice/templates/backoffice/base.html:33
+#: frontoffice/templates/frontoffice/base.html:31
 msgid "You are logged in as"
 msgstr "U bent ingelogd als"
 
-#: backoffice/templates/backoffice/base.html:40
+#: backoffice/templates/backoffice/base.html:41
 msgid "Invitations"
 msgstr "Uitnodigingen"
 
-#: backoffice/templates/backoffice/base.html:42
-#: frontoffice/templates/frontoffice/base.html:33
+#: backoffice/templates/backoffice/base.html:43
+#: frontoffice/templates/frontoffice/base.html:37
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: backoffice/templates/backoffice/base.html:44
-#: frontoffice/templates/frontoffice/base.html:35
+#: backoffice/templates/backoffice/base.html:45
 msgid "You are not logged in"
 msgstr "U bent niet ingelogd"
 
-#: backoffice/templates/backoffice/base.html:44
-#: frontoffice/templates/frontoffice/base.html:35
+#: backoffice/templates/backoffice/base.html:45
+#: frontoffice/templates/frontoffice/base.html:39
 #: frontoffice/templates/registration/login.html:15
 #: frontoffice/templates/registration/login.html:54
 msgid "Login"
 msgstr "Inloggen"
 
-#: backoffice/templates/backoffice/base.html:50
+#: backoffice/templates/backoffice/base.html:51
 msgid "Wiekiesjij?"
 msgstr "Wiekiesjij?"
 
-#: backoffice/templates/backoffice/base.html:77
+#: backoffice/templates/backoffice/base.html:53
+msgid "Frontoffice"
+msgstr "Voorkant"
+
+#: backoffice/templates/backoffice/base.html:79
 msgid "We can reach you on"
 msgstr "We kunnen u bereiken op"
 
-#: backoffice/templates/backoffice/base.html:78
-#: backoffice/templates/backoffice/election_instance_view.html:164
+#: backoffice/templates/backoffice/base.html:80
+#: backoffice/templates/backoffice/election_instance_view.html:168
 msgid "edit"
 msgstr "wijzigen"
 
-#: backoffice/templates/backoffice/base.html:94
-#: frontoffice/templates/frontoffice/base.html:66
+#: backoffice/templates/backoffice/base.html:96
+#: frontoffice/templates/frontoffice/base.html:75
 #: templates/comments/preview.html:16
 msgid "and"
 msgstr "en"
@@ -185,12 +201,14 @@ msgstr "Kolom"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:27
 #: backoffice/templates/backoffice/csv_candidates_3.html:10
-#: elections/models.py:185
-#: elections/models.py:290
-#: political_profiles/forms.py:274
-#: political_profiles/forms.py:319
-#: political_profiles/models.py:435
-#: political_profiles/models.py:467
+#: elections/models.py:186
+#: elections/models.py:291
+#: frontoffice/templates/frontoffice/match_details.html:61
+#: frontoffice/templates/frontoffice/match_results.html:51
+#: political_profiles/forms.py:306
+#: political_profiles/forms.py:351
+#: political_profiles/models.py:436
+#: political_profiles/models.py:468
 #: questions/models.py:62
 #: questions/models.py:96
 msgid "Position"
@@ -202,7 +220,7 @@ msgstr "Dit is de positie van de kandidaad op de lijst"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:28
 #: backoffice/templates/backoffice/csv_candidates_3.html:13
-#: political_profiles/models.py:195
+#: political_profiles/models.py:197
 #: utils/widgets.py:187
 msgid "Last name"
 msgstr "Achternaam"
@@ -221,7 +239,7 @@ msgstr "Als de kandidaat een tussenvoegsel heeft, vul het hier in"
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:30
 #: backoffice/templates/backoffice/csv_candidates_3.html:11
-#: political_profiles/models.py:193
+#: political_profiles/models.py:195
 #: utils/widgets.py:186
 msgid "First name"
 msgstr "Voornaam"
@@ -233,7 +251,7 @@ msgstr "De voornaam van de kandidaat"
 #: backoffice/templates/backoffice/csv_candidates_1.html:31
 #: backoffice/templates/backoffice/csv_candidates_3.html:14
 #: political_profiles/forms.py:37
-#: political_profiles/models.py:228
+#: political_profiles/models.py:230
 msgid "Initials"
 msgstr "Initialen"
 
@@ -253,18 +271,19 @@ msgstr "Het e-mailadres waar de uitnodiging naartoe kan."
 
 #: backoffice/templates/backoffice/csv_candidates_1.html:33
 #: backoffice/templates/backoffice/csv_candidates_3.html:16
-#: frontoffice/forms.py:53
-#: frontoffice/views.py:129
-#: frontoffice/templates/frontoffice/quick_profile.html:34
+#: frontoffice/forms.py:54
+#: frontoffice/views.py:214
+#: frontoffice/templates/frontoffice/quick_profile.html:41
 #: political_profiles/forms.py:39
 #: political_profiles/forms.py:95
-#: political_profiles/forms.py:121
-#: political_profiles/forms.py:160
-#: political_profiles/forms.py:185
-#: political_profiles/forms.py:220
-#: political_profiles/models.py:229
-#: political_profiles/models.py:318
-#: political_profiles/models.py:348
+#: political_profiles/forms.py:120
+#: political_profiles/forms.py:153
+#: political_profiles/forms.py:192
+#: political_profiles/forms.py:217
+#: political_profiles/forms.py:252
+#: political_profiles/models.py:231
+#: political_profiles/models.py:319
+#: political_profiles/models.py:349
 msgid "Gender"
 msgstr "Geslacht"
 
@@ -326,6 +345,7 @@ msgstr "Volgende: Stuur het CSV bestand terug"
 #: backoffice/templates/backoffice/csv_parties_1.html:56
 #: backoffice/templates/backoffice/csv_parties_2.html:29
 #: backoffice/templates/backoffice/csv_parties_3.html:45
+#: backoffice/templates/backoffice/edit_candidate.html:15
 #: backoffice/templates/backoffice/wizard/addcandidate/step1.html:11
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:13
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:14
@@ -355,6 +375,8 @@ msgstr "Volgende: Stuur het CSV bestand terug"
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step1.html:15
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step2.html:16
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:19
+#: templates/comments/political_profiles_politicalgoal_preview.html:41
+#: templates/comments/political_profiles_politicianprofile_preview.html:40
 msgid "Cancel"
 msgstr "Afbreken"
 
@@ -389,7 +411,7 @@ msgid "Upload the file"
 msgstr "Upload het bestand"
 
 #: backoffice/templates/backoffice/csv_candidates_3.html:12
-#: political_profiles/models.py:194
+#: political_profiles/models.py:196
 #: utils/widgets.py:188
 msgid "Middle name"
 msgstr "Tussenvoegsel"
@@ -503,27 +525,28 @@ msgid "List"
 msgstr "Lijst"
 
 #: backoffice/templates/backoffice/csv_parties_3.html:14
-#: backoffice/templates/backoffice/election_party_view.html:107
-#: elections/forms.py:80
+#: backoffice/templates/backoffice/election_party_view.html:118
+#: elections/forms.py:78
 #: elections/models.py:14
-#: elections/models.py:70
-#: elections/models.py:89
-#: elections/models.py:110
-#: elections/models.py:228
-#: frontoffice/forms.py:50
-#: frontoffice/forms.py:70
-#: frontoffice/views.py:125
+#: elections/models.py:71
+#: elections/models.py:90
+#: elections/models.py:111
+#: elections/models.py:229
+#: frontoffice/forms.py:51
+#: frontoffice/forms.py:71
+#: frontoffice/views.py:209
 #: frontoffice/registration_backend/forms.py:20
-#: frontoffice/templates/frontoffice/quick_profile.html:22
+#: frontoffice/templates/frontoffice/quick_profile.html:24
 #: political_profiles/forms.py:36
 #: political_profiles/forms.py:93
-#: political_profiles/forms.py:119
-#: political_profiles/forms.py:159
-#: political_profiles/forms.py:183
-#: political_profiles/forms.py:218
-#: political_profiles/forms.py:230
-#: political_profiles/forms.py:245
-#: political_profiles/models.py:381
+#: political_profiles/forms.py:118
+#: political_profiles/forms.py:151
+#: political_profiles/forms.py:191
+#: political_profiles/forms.py:215
+#: political_profiles/forms.py:250
+#: political_profiles/forms.py:262
+#: political_profiles/forms.py:277
+#: political_profiles/models.py:382
 #: questions/models.py:45
 msgid "Name"
 msgstr "Naam"
@@ -556,6 +579,39 @@ msgstr "Geslacht"
 msgid "Create these parties"
 msgstr "Maak deze partijen aan"
 
+#: backoffice/templates/backoffice/edit_candidate.html:4
+msgid "Edit candidate"
+msgstr "Wijzig het profiel van de kandidaat"
+
+#: backoffice/templates/backoffice/edit_candidate.html:5
+#: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:34
+#: backoffice/templates/backoffice/wizard/politician_profile/connections.html:28
+#: backoffice/templates/backoffice/wizard/politician_profile/education.html:24
+#: backoffice/templates/backoffice/wizard/politician_profile/goals.html:21
+#: backoffice/templates/backoffice/wizard/politician_profile/interest.html:31
+#: backoffice/templates/backoffice/wizard/politician_profile/links.html:31
+#: backoffice/templates/backoffice/wizard/politician_profile/political.html:27
+#: backoffice/templates/backoffice/wizard/politician_profile/work.html:26
+msgid "Edit"
+msgstr "Wijzigen"
+
+#: backoffice/templates/backoffice/edit_candidate.html:5
+msgid "on position"
+msgstr "op positie"
+
+#: backoffice/templates/backoffice/edit_candidate.html:6
+#: backoffice/templates/backoffice/election_instance_view.html:8
+#: backoffice/templates/backoffice/election_party_view.html:8
+#: backoffice/templates/backoffice/question_overview.html:8
+msgid "Back to"
+msgstr "Terug naar"
+
+#: backoffice/templates/backoffice/edit_candidate.html:16
+#: invitations/templates/invitations/existing.html:9
+#: invitations/templates/invitations/send.html:34
+msgid "Submit"
+msgstr "Verzend"
+
 #: backoffice/templates/backoffice/election_event_view.html:11
 msgid "This election has the following instances:"
 msgstr "Deze verkiezing heeft de volgende instanties:"
@@ -587,12 +643,6 @@ msgstr[1] "%(counter)s partijen"
 msgid "There are no Election Instances defined yet for this Event."
 msgstr "Er zijn geen verkiezinginstanties voor deze verkiezing"
 
-#: backoffice/templates/backoffice/election_instance_view.html:8
-#: backoffice/templates/backoffice/election_party_view.html:8
-#: backoffice/templates/backoffice/question_overview.html:8
-msgid "Back to"
-msgstr "Terug naar"
-
 #: backoffice/templates/backoffice/election_instance_view.html:26
 msgid "Things you need to do:"
 msgstr "Acties die nog gedaan moeten worden:"
@@ -602,8 +652,8 @@ msgid "You did not completely fill in the council profile."
 msgstr "U heeft het raadsprofiel niet volledig ingevuld."
 
 #: backoffice/templates/backoffice/election_instance_view.html:28
-#: backoffice/templates/backoffice/election_instance_view.html:57
-#: backoffice/templates/backoffice/election_instance_view.html:62
+#: backoffice/templates/backoffice/election_instance_view.html:61
+#: backoffice/templates/backoffice/election_instance_view.html:66
 #: backoffice/templates/backoffice/election_party_view.html:29
 #: backoffice/templates/backoffice/election_party_view.html:30
 msgid "Do it now"
@@ -617,112 +667,112 @@ msgstr "Importeer meerdere partijen via Excel / CSV"
 msgid "All parties for this election"
 msgstr "Alle partijen voor deze verkiezing"
 
-#: backoffice/templates/backoffice/election_instance_view.html:47
+#: backoffice/templates/backoffice/election_instance_view.html:51
 msgid "View candidate list"
 msgstr "Bekijk lijst van kandidaten"
 
-#: backoffice/templates/backoffice/election_instance_view.html:47
+#: backoffice/templates/backoffice/election_instance_view.html:51
 msgid "Manage this party"
 msgstr "Beheer deze partij"
 
-#: backoffice/templates/backoffice/election_instance_view.html:49
+#: backoffice/templates/backoffice/election_instance_view.html:53
 msgid "Edit party profile"
 msgstr "Wijzig partij profiel"
 
-#: backoffice/templates/backoffice/election_instance_view.html:53
+#: backoffice/templates/backoffice/election_instance_view.html:57
 msgid "candidates"
 msgstr "kandidaten"
 
-#: backoffice/templates/backoffice/election_instance_view.html:53
+#: backoffice/templates/backoffice/election_instance_view.html:57
 msgid "invited"
 msgstr "uitgenodigd"
 
-#: backoffice/templates/backoffice/election_instance_view.html:53
+#: backoffice/templates/backoffice/election_instance_view.html:57
 msgid "no candidates defined"
 msgstr "geen kandidaten ingesteld"
 
-#: backoffice/templates/backoffice/election_instance_view.html:55
+#: backoffice/templates/backoffice/election_instance_view.html:59
 msgid "You have not finished filling in the party profile"
 msgstr "U heeft het partij profiel nog niet volledig ingevuld"
 
-#: backoffice/templates/backoffice/election_instance_view.html:55
+#: backoffice/templates/backoffice/election_instance_view.html:59
 msgid "Fill in now"
 msgstr "Vul nu in"
 
-#: backoffice/templates/backoffice/election_instance_view.html:57
-#: backoffice/templates/backoffice/election_instance_view.html:58
-#: backoffice/templates/backoffice/election_instance_view.html:59
-#: backoffice/templates/backoffice/election_instance_view.html:60
+#: backoffice/templates/backoffice/election_instance_view.html:61
+#: backoffice/templates/backoffice/election_instance_view.html:62
+#: backoffice/templates/backoffice/election_instance_view.html:63
+#: backoffice/templates/backoffice/election_instance_view.html:64
 msgid "candidate,candidates"
 msgstr "kandidaat,kandidaten"
 
-#: backoffice/templates/backoffice/election_instance_view.html:57
+#: backoffice/templates/backoffice/election_instance_view.html:61
 msgid "not invited yet"
 msgstr "nog niet uitgenodigd"
 
-#: backoffice/templates/backoffice/election_instance_view.html:57
-#: backoffice/templates/backoffice/election_instance_view.html:59
-#: backoffice/templates/backoffice/election_instance_view.html:60
-#: backoffice/templates/backoffice/election_instance_view.html:62
-#: backoffice/templates/backoffice/election_party_view.html:54
-#: backoffice/templates/backoffice/election_party_view.html:55
-#: backoffice/templates/backoffice/election_party_view.html:56
+#: backoffice/templates/backoffice/election_instance_view.html:61
+#: backoffice/templates/backoffice/election_instance_view.html:63
+#: backoffice/templates/backoffice/election_instance_view.html:64
+#: backoffice/templates/backoffice/election_instance_view.html:66
+#: backoffice/templates/backoffice/election_party_view.html:65
+#: backoffice/templates/backoffice/election_party_view.html:66
+#: backoffice/templates/backoffice/election_party_view.html:67
 msgid "overdue"
 msgstr "over tijd:"
 
-#: backoffice/templates/backoffice/election_instance_view.html:57
-#: backoffice/templates/backoffice/election_instance_view.html:59
-#: backoffice/templates/backoffice/election_instance_view.html:60
-#: backoffice/templates/backoffice/election_instance_view.html:62
-#: backoffice/templates/backoffice/election_party_view.html:54
-#: backoffice/templates/backoffice/election_party_view.html:55
-#: backoffice/templates/backoffice/election_party_view.html:56
+#: backoffice/templates/backoffice/election_instance_view.html:61
+#: backoffice/templates/backoffice/election_instance_view.html:63
+#: backoffice/templates/backoffice/election_instance_view.html:64
+#: backoffice/templates/backoffice/election_instance_view.html:66
+#: backoffice/templates/backoffice/election_party_view.html:65
+#: backoffice/templates/backoffice/election_party_view.html:66
+#: backoffice/templates/backoffice/election_party_view.html:67
 msgid "due"
 msgstr "te doen voor:"
 
-#: backoffice/templates/backoffice/election_instance_view.html:58
+#: backoffice/templates/backoffice/election_instance_view.html:62
 msgid "have not responded yet"
 msgstr "heeft nog niet gereageerd"
 
-#: backoffice/templates/backoffice/election_instance_view.html:59
+#: backoffice/templates/backoffice/election_instance_view.html:63
 msgid "did not fill in their profile yet"
 msgstr "heeft zijn/haar profiel nog niet ingevuld"
 
-#: backoffice/templates/backoffice/election_instance_view.html:60
+#: backoffice/templates/backoffice/election_instance_view.html:64
 msgid "did not answer the questions yet"
 msgstr "heeft nog geen vragen beantwoord"
 
-#: backoffice/templates/backoffice/election_instance_view.html:62
+#: backoffice/templates/backoffice/election_instance_view.html:66
 msgid "There are no candidates defined for this party"
 msgstr "Er zijn geen kandidaten voor deze partij"
 
-#: backoffice/templates/backoffice/election_instance_view.html:66
-#: backoffice/templates/backoffice/election_party_view.html:60
+#: backoffice/templates/backoffice/election_instance_view.html:70
+#: backoffice/templates/backoffice/election_party_view.html:71
 msgid "Move up"
 msgstr "Omhoog"
 
-#: backoffice/templates/backoffice/election_instance_view.html:67
-#: backoffice/templates/backoffice/election_party_view.html:61
+#: backoffice/templates/backoffice/election_instance_view.html:71
+#: backoffice/templates/backoffice/election_party_view.html:72
 msgid "Move down"
 msgstr "Omlaag"
 
-#: backoffice/templates/backoffice/election_instance_view.html:70
+#: backoffice/templates/backoffice/election_instance_view.html:74
 msgid "Define party for this list"
 msgstr "Definiëer een partij voor deze lijst"
 
-#: backoffice/templates/backoffice/election_instance_view.html:71
+#: backoffice/templates/backoffice/election_instance_view.html:75
 msgid "Remove this list"
 msgstr "Verwijder deze lijst"
 
-#: backoffice/templates/backoffice/election_instance_view.html:75
+#: backoffice/templates/backoffice/election_instance_view.html:79
 msgid "There are no parties defined yet for this election."
 msgstr "Er zijn nog geen partijen voor deze verkiezing."
 
-#: backoffice/templates/backoffice/election_instance_view.html:78
+#: backoffice/templates/backoffice/election_instance_view.html:82
 msgid "Add new party position"
 msgstr "Voeg een nieuwe positie toe"
 
-#: backoffice/templates/backoffice/election_instance_view.html:93
+#: backoffice/templates/backoffice/election_instance_view.html:97
 #, python-format
 msgid ""
 "\n"
@@ -735,75 +785,76 @@ msgstr ""
 "\t\t\t<p>U kunt de informatie hieronder aanpassen door de <a href=\"%(setup_url)s\">setup wizard.</a> te starten</p>\n"
 "\t\t"
 
-#: backoffice/templates/backoffice/election_instance_view.html:101
+#: backoffice/templates/backoffice/election_instance_view.html:105
 msgid "This election"
 msgstr "Deze verkiezing"
 
-#: backoffice/templates/backoffice/election_instance_view.html:104
+#: backoffice/templates/backoffice/election_instance_view.html:108
 msgid "Is taking place on"
 msgstr "Vindt plaats op"
 
-#: backoffice/templates/backoffice/election_instance_view.html:106
-#: backoffice/templates/backoffice/election_instance_view.html:119
-#: backoffice/templates/backoffice/election_instance_view.html:141
-#: backoffice/templates/backoffice/election_party_view.html:117
+#: backoffice/templates/backoffice/election_instance_view.html:110
+#: backoffice/templates/backoffice/election_instance_view.html:123
+#: backoffice/templates/backoffice/election_instance_view.html:145
+#: backoffice/templates/backoffice/election_party_view.html:128
 #: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:29
-#: frontoffice/templates/frontoffice/party.html:37
+#: frontoffice/templates/frontoffice/party.html:49
 msgid "Website"
 msgstr "Website"
 
-#: backoffice/templates/backoffice/election_instance_view.html:115
-#: backoffice/templates/backoffice/election_instance_view.html:139
-#: backoffice/templates/backoffice/election_party_view.html:109
-#: elections/forms.py:221
+#: backoffice/templates/backoffice/election_instance_view.html:119
+#: backoffice/templates/backoffice/election_instance_view.html:143
+#: backoffice/templates/backoffice/election_party_view.html:120
+#: elections/forms.py:219
 msgid "Address"
 msgstr "Adres"
 
-#: backoffice/templates/backoffice/election_instance_view.html:117
-#: backoffice/templates/backoffice/election_party_view.html:115
+#: backoffice/templates/backoffice/election_instance_view.html:121
+#: backoffice/templates/backoffice/election_party_view.html:126
 #: political_profiles/forms.py:94
-#: political_profiles/forms.py:120
-#: political_profiles/forms.py:184
+#: political_profiles/forms.py:119
+#: political_profiles/forms.py:152
+#: political_profiles/forms.py:216
 msgid "E-mail"
 msgstr "E-mail"
 
-#: backoffice/templates/backoffice/election_instance_view.html:127
-#: elections/models.py:245
-#: frontoffice/templates/frontoffice/party.html:41
+#: backoffice/templates/backoffice/election_instance_view.html:131
+#: elections/models.py:246
+#: frontoffice/templates/frontoffice/party.html:54
 msgid "Number of seats"
 msgstr "Aantal zetels"
 
-#: backoffice/templates/backoffice/election_instance_view.html:129
-#: backoffice/templates/backoffice/election_party_view.html:130
+#: backoffice/templates/backoffice/election_instance_view.html:133
+#: backoffice/templates/backoffice/election_party_view.html:141
 #: elections/models.py:32
-#: frontoffice/templates/frontoffice/party.html:70
+#: frontoffice/templates/frontoffice/party.html:89
 msgid "History"
 msgstr "Geschiedenis"
 
-#: backoffice/templates/backoffice/election_instance_view.html:136
-#: backoffice/templates/backoffice/election_instance_view.html:160
+#: backoffice/templates/backoffice/election_instance_view.html:140
+#: backoffice/templates/backoffice/election_instance_view.html:164
 msgid "The Chancellery"
 msgstr "De Griffie"
 
-#: backoffice/templates/backoffice/election_instance_view.html:140
+#: backoffice/templates/backoffice/election_instance_view.html:144
 msgid "Same as council."
 msgstr "De raad"
 
-#: backoffice/templates/backoffice/election_instance_view.html:150
+#: backoffice/templates/backoffice/election_instance_view.html:154
 #: backoffice/templates/backoffice/wizard/council/edit/step4.html:10
 #: backoffice/wizards/electioninstance.py:224
 msgid "Styling"
 msgstr "Styling"
 
-#: backoffice/templates/backoffice/election_instance_view.html:164
+#: backoffice/templates/backoffice/election_instance_view.html:168
 msgid "delete"
 msgstr "verwijder"
 
-#: backoffice/templates/backoffice/election_instance_view.html:167
+#: backoffice/templates/backoffice/election_instance_view.html:171
 msgid "You did not assign a chancellery yet."
 msgstr "U heeft nog geen griffie toegevoegd"
 
-#: backoffice/templates/backoffice/election_instance_view.html:168
+#: backoffice/templates/backoffice/election_instance_view.html:172
 msgid "Invite a chancellery now"
 msgstr "Nodig nu een griffie uit"
 
@@ -815,76 +866,76 @@ msgstr "U heeft het partijprofiel niet volledig ingevuld."
 msgid "You did not assign a party contact yet."
 msgstr "U heeft nog geen contactpersoon voor de partij toegewezen."
 
-#: backoffice/templates/backoffice/election_party_view.html:37
+#: backoffice/templates/backoffice/election_party_view.html:40
 msgid "Import multiple candidates via Excel / CSV"
 msgstr "Importeer meerdere kandidaten via Excel / CSV"
 
-#: backoffice/templates/backoffice/election_party_view.html:38
+#: backoffice/templates/backoffice/election_party_view.html:41
 msgid "Candidates for this party"
 msgstr "Kandidaten voor deze partij"
 
-#: backoffice/templates/backoffice/election_party_view.html:47
+#: backoffice/templates/backoffice/election_party_view.html:56
 msgid "Edit candidate profile"
 msgstr "Wijzig het profiel van de kandidaat"
 
-#: backoffice/templates/backoffice/election_party_view.html:50
+#: backoffice/templates/backoffice/election_party_view.html:61
 msgid "Remove candidate"
 msgstr "Verwijder kandidaat"
 
-#: backoffice/templates/backoffice/election_party_view.html:54
+#: backoffice/templates/backoffice/election_party_view.html:65
 msgid "Candidate has not responded yet"
 msgstr "Kandidaat heeft nog niet gereageerd"
 
-#: backoffice/templates/backoffice/election_party_view.html:55
+#: backoffice/templates/backoffice/election_party_view.html:66
 msgid "Candidate did not fill in their profile yet"
 msgstr "Kandidaat heeft zijn/haar profiel nog niet volledig ingevuld"
 
-#: backoffice/templates/backoffice/election_party_view.html:56
+#: backoffice/templates/backoffice/election_party_view.html:67
 msgid "Candidate did not answer the questions yet"
 msgstr "Kandidaat heeft de vragen nog niet beantwoord"
 
-#: backoffice/templates/backoffice/election_party_view.html:65
+#: backoffice/templates/backoffice/election_party_view.html:76
 msgid "Invite politician"
 msgstr "Nodig een politicus uit"
 
-#: backoffice/templates/backoffice/election_party_view.html:67
+#: backoffice/templates/backoffice/election_party_view.html:78
 msgid "Remove this position"
 msgstr "Verwijder deze positie"
 
-#: backoffice/templates/backoffice/election_party_view.html:72
+#: backoffice/templates/backoffice/election_party_view.html:83
 msgid "There are no candidates defined yet for this party."
 msgstr "Er zijn geen kandidaten voor deze partij."
 
-#: backoffice/templates/backoffice/election_party_view.html:75
+#: backoffice/templates/backoffice/election_party_view.html:86
 msgid "Add a new position to this list"
 msgstr "Voeg een nieuwe positie toe aan deze lijst"
 
-#: backoffice/templates/backoffice/election_party_view.html:85
+#: backoffice/templates/backoffice/election_party_view.html:96
 msgid "Start setup wizard<br />for this party"
 msgstr "Start setup wizard<br />voor de partij"
 
-#: backoffice/templates/backoffice/election_party_view.html:87
+#: backoffice/templates/backoffice/election_party_view.html:98
 #, python-format
 msgid "You can change the information below by starting the <a href=\"%(url_election_party_edit)s\">setup wizard.</a>"
 msgstr "U kunt de informatie hieronder aanpassen door de <a href=\"%(url_election_party_edit)s\">setup wizard.</a>"
 
-#: backoffice/templates/backoffice/election_party_view.html:92
+#: backoffice/templates/backoffice/election_party_view.html:103
 msgid "This party"
 msgstr "Deze partij"
 
-#: backoffice/templates/backoffice/election_party_view.html:97
-#: elections/forms.py:228
-#: elections/models.py:236
-#: frontoffice/templates/frontoffice/party.html:33
+#: backoffice/templates/backoffice/election_party_view.html:108
+#: elections/forms.py:226
+#: elections/models.py:237
+#: frontoffice/templates/frontoffice/party.html:44
 msgid "Slogan"
 msgstr "Slogan"
 
-#: backoffice/templates/backoffice/election_party_view.html:99
-#: elections/forms.py:232
+#: backoffice/templates/backoffice/election_party_view.html:110
+#: elections/forms.py:229
 msgid "Current number of seats"
 msgstr "Huidige aantal zetels"
 
-#: backoffice/templates/backoffice/election_party_view.html:105
+#: backoffice/templates/backoffice/election_party_view.html:116
 #: backoffice/templates/backoffice/wizard/partycontact/base.html:25
 #: backoffice/templates/backoffice/wizard/partycontact/done.html:7
 #: backoffice/templates/backoffice/wizard/partycontact/step2.html:7
@@ -897,44 +948,44 @@ msgstr "Huidige aantal zetels"
 msgid "Contact information"
 msgstr "Contactgegevens"
 
-#: backoffice/templates/backoffice/election_party_view.html:113
-#: political_profiles/forms.py:161
+#: backoffice/templates/backoffice/election_party_view.html:124
+#: political_profiles/forms.py:193
 msgid "Telephone"
 msgstr "Telefoon"
 
-#: backoffice/templates/backoffice/election_party_view.html:123
+#: backoffice/templates/backoffice/election_party_view.html:134
 msgid "Party description"
 msgstr "Partijomschrijving"
 
-#: backoffice/templates/backoffice/election_party_view.html:125
+#: backoffice/templates/backoffice/election_party_view.html:136
 #: elections/models.py:30
-#: elections/models.py:73
-#: elections/models.py:240
-#: political_profiles/forms.py:247
-#: political_profiles/forms.py:256
-#: political_profiles/forms.py:266
-#: political_profiles/forms.py:277
-#: political_profiles/forms.py:299
-#: political_profiles/forms.py:322
-#: political_profiles/models.py:328
-#: political_profiles/models.py:358
-#: political_profiles/models.py:383
-#: political_profiles/models.py:396
-#: political_profiles/models.py:408
-#: political_profiles/models.py:421
-#: political_profiles/models.py:438
-#: political_profiles/models.py:454
-#: political_profiles/models.py:470
+#: elections/models.py:74
+#: elections/models.py:241
+#: political_profiles/forms.py:279
+#: political_profiles/forms.py:288
+#: political_profiles/forms.py:298
+#: political_profiles/forms.py:309
+#: political_profiles/forms.py:331
+#: political_profiles/forms.py:354
+#: political_profiles/models.py:329
+#: political_profiles/models.py:359
+#: political_profiles/models.py:384
+#: political_profiles/models.py:397
+#: political_profiles/models.py:409
+#: political_profiles/models.py:422
+#: political_profiles/models.py:439
+#: political_profiles/models.py:455
+#: political_profiles/models.py:471
 msgid "Description"
 msgstr "Omschrijving"
 
-#: backoffice/templates/backoffice/election_party_view.html:135
-#: elections/forms.py:239
-#: elections/models.py:242
+#: backoffice/templates/backoffice/election_party_view.html:146
+#: elections/forms.py:236
+#: elections/models.py:243
 msgid "Manifesto Summary"
 msgstr "Samenvatting manifest"
 
-#: backoffice/templates/backoffice/election_party_view.html:140
+#: backoffice/templates/backoffice/election_party_view.html:151
 msgid "Link to manifesto"
 msgstr "Link naar manifest"
 
@@ -974,27 +1025,28 @@ msgstr "om naar de login pagina te gaan"
 #: backoffice/templates/backoffice/wizard/election_setup/step4.html:6
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:6
 #: backoffice/wizards/electioninstance.py:207
-#: frontoffice/templates/frontoffice/wizard/base.html:11
+#: frontoffice/templates/frontoffice/wizard/base.html:14
 msgid "Registration"
 msgstr "Registratie"
 
 #: backoffice/templates/backoffice/wizard/base.html:12
-#: frontoffice/templates/frontoffice/wizard/base.html:12
+#: frontoffice/templates/frontoffice/wizard/base.html:15
 msgid "Election"
 msgstr "Verkiezing"
 
 #: backoffice/templates/backoffice/wizard/base.html:13
-#: frontoffice/templates/frontoffice/wizard/base.html:13
+#: frontoffice/templates/frontoffice/wizard/base.html:16
 msgid "Council blaat babbel"
 msgstr "!!PLACEHOLDER!!"
 
 #: backoffice/templates/backoffice/wizard/base.html:14
-#: frontoffice/templates/frontoffice/wizard/base.html:14
+#: frontoffice/templates/frontoffice/wizard/base.html:17
 msgid "Chancellery"
 msgstr "Griffie"
 
 #: backoffice/templates/backoffice/wizard/base.html:24
-#: frontoffice/templates/frontoffice/wizard/base.html:50
+#: frontoffice/templates/frontoffice/iframe.html:49
+#: frontoffice/templates/frontoffice/wizard/base.html:40
 msgid "Step Title"
 msgstr "!!PLACEHOLDER!!"
 
@@ -1002,9 +1054,11 @@ msgstr "!!PLACEHOLDER!!"
 #: backoffice/templates/backoffice/wizard/council/edit/step2.html:17
 #: backoffice/templates/backoffice/wizard/election_setup/step3.html:17
 #: backoffice/templates/backoffice/wizard/election_setup/step5.html:6
-#: frontoffice/templates/frontoffice/politician_filter.html:88
-#: frontoffice/templates/frontoffice/politician_filter.html:125
-#: frontoffice/templates/frontoffice/wizard/base.html:73
+#: frontoffice/templates/frontoffice/iframe.html:68
+#: frontoffice/templates/frontoffice/match_welcome.html:59
+#: frontoffice/templates/frontoffice/politician_filter.html:92
+#: frontoffice/templates/frontoffice/politician_filter.html:130
+#: frontoffice/templates/frontoffice/wizard/base.html:66
 msgid "Next"
 msgstr "Volgende"
 
@@ -1199,6 +1253,8 @@ msgstr "Instellingen wijzigen"
 #: backoffice/templates/backoffice/wizard/politician_profile/political-add.html:19
 #: backoffice/templates/backoffice/wizard/politician_profile/work-add.html:20
 #: backoffice/templates/backoffice/wizard/setupelectionparty/step3.html:18
+#: frontoffice/templates/frontoffice/match_results.html:75
+#: frontoffice/templates/frontoffice/visitor_profile.html:17
 msgid "Save"
 msgstr "Opslaan"
 
@@ -1277,6 +1333,7 @@ msgstr "Stel uw partij in voor deze verkiezing"
 #: backoffice/templates/backoffice/wizard/partycontact/step3.html:10
 #: backoffice/templates/backoffice/wizard/partycontact/step4.html:6
 #: backoffice/templates/backoffice/wizard/politician_profile/welcome.html:11
+#: frontoffice/templates/frontoffice/match_welcome.html:28
 msgid "Welcome"
 msgstr "Welkom"
 
@@ -1413,17 +1470,6 @@ msgstr "Tijd"
 msgid "Place"
 msgstr "Plaats"
 
-#: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:34
-#: backoffice/templates/backoffice/wizard/politician_profile/connections.html:28
-#: backoffice/templates/backoffice/wizard/politician_profile/education.html:24
-#: backoffice/templates/backoffice/wizard/politician_profile/goals.html:21
-#: backoffice/templates/backoffice/wizard/politician_profile/interest.html:31
-#: backoffice/templates/backoffice/wizard/politician_profile/links.html:31
-#: backoffice/templates/backoffice/wizard/politician_profile/political.html:27
-#: backoffice/templates/backoffice/wizard/politician_profile/work.html:26
-msgid "Edit"
-msgstr "Wijzigen"
-
 #: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:35
 #: backoffice/templates/backoffice/wizard/politician_profile/connections.html:29
 #: backoffice/templates/backoffice/wizard/politician_profile/education.html:25
@@ -1432,6 +1478,7 @@ msgstr "Wijzigen"
 #: backoffice/templates/backoffice/wizard/politician_profile/links.html:32
 #: backoffice/templates/backoffice/wizard/politician_profile/political.html:28
 #: backoffice/templates/backoffice/wizard/politician_profile/work.html:27
+#: frontoffice/templates/frontoffice/goal.html:62
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -1457,7 +1504,7 @@ msgstr "Toevoegen publiek optreden"
 #: backoffice/templates/backoffice/wizard/politician_profile/step4.html:15
 #: backoffice/templates/backoffice/wizard/politician_profile/work.html:35
 #: backoffice/templates/backoffice/wizard/question/answer_add/step.html:44
-#: frontoffice/templates/frontoffice/wizard/test/step1.html:36
+#: frontoffice/templates/frontoffice/wizard/test/step1.html:18
 msgid "Volgende stap"
 msgstr "Volgende stap"
 
@@ -1545,8 +1592,8 @@ msgid "What education have you?"
 msgstr "Welke opleiding heeft u gevolgd?"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/education.html:21
-#: frontoffice/templates/frontoffice/politician_profile.html:131
-#: frontoffice/templates/frontoffice/politician_profile.html:156
+#: frontoffice/templates/frontoffice/politician_profile.html:147
+#: frontoffice/templates/frontoffice/politician_profile.html:172
 msgid "at"
 msgstr "op"
 
@@ -1574,7 +1621,8 @@ msgid "Add a new goal"
 msgstr "Voeg een nieuw doel toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/goals.html:14
-#: frontoffice/templates/frontoffice/politician_profile.html:215
+#: frontoffice/templates/frontoffice/goal.html:93
+#: frontoffice/templates/frontoffice/politician_profile.html:235
 msgid "Political goals"
 msgstr "Politieke doelen"
 
@@ -1755,10 +1803,10 @@ msgid "Now"
 msgstr "Nu"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/work.html:23
-#: frontoffice/templates/frontoffice/politician_profile.html:133
-#: political_profiles/forms.py:273
-#: political_profiles/models.py:163
-#: political_profiles/models.py:434
+#: frontoffice/templates/frontoffice/politician_profile.html:149
+#: political_profiles/forms.py:305
+#: political_profiles/models.py:165
+#: political_profiles/models.py:435
 msgid "Sector"
 msgstr "Sector"
 
@@ -1778,8 +1826,6 @@ msgstr ""
 
 #: backoffice/templates/backoffice/wizard/question/base.html:5
 #: backoffice/templates/backoffice/wizard/question/base.html:6
-#: frontoffice/templates/frontoffice/wizard/test/base.html:5
-#: frontoffice/templates/frontoffice/wizard/test/base.html:6
 msgid "Politician profile - Questions"
 msgstr "Politicus profiel - Vragen"
 
@@ -1812,6 +1858,10 @@ msgstr "Let op!"
 #: backoffice/templates/backoffice/wizard/question/answer_add/step.html:37
 msgid "Bij de vragen waar meerdere antwoorden mogelijk zijn, zal het aanvinken van meer of alle beleidsterreinen niet leiden tot meer of minder kans om als favoriete kandidaat te eindigen voor de bezoeker. Voor meer informatie over deze vragen verwijs ik u door naar de handleiding."
 msgstr "Bij de vragen waar meerdere antwoorden mogelijk zijn, zal het aanvinken van meer of alle beleidsterreinen niet leiden tot meer of minder kans om als favoriete kandidaat te eindigen voor de bezoeker. Voor meer informatie over deze vragen verwijs ik u door naar de handleiding."
+
+#: backoffice/wizards/candidate.py:728
+msgid "Elke kandidaat van een partij moet een uniek e-mail adres hebben."
+msgstr "Elke kandidaat van een partij moet een uniek e-mail adres hebben."
 
 #: backoffice/wizards/electioninstance.py:80
 #, python-format
@@ -1874,249 +1924,252 @@ msgstr "Ga door naar Partijselectie"
 msgid "Previous parties"
 msgstr "Vorige partijen"
 
-#: elections/forms.py:23
-#: elections/models.py:108
-#: elections/models.py:255
+#: elections/forms.py:21
+#: elections/models.py:109
+#: elections/models.py:256
 msgid "Parties"
 msgstr "Partijen"
 
-#: elections/forms.py:65
+#: elections/forms.py:63
 #: elections/models.py:25
 msgid "Seats"
 msgstr "Zetels"
 
-#: elections/forms.py:65
+#: elections/forms.py:63
 msgid "Wat is het huidige aantal zetels in uw gemeenteraad."
 msgstr "Wat is het huidige aantal zetels in uw gemeenteraad."
 
-#: elections/forms.py:80
+#: elections/forms.py:78
 msgid "Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen)."
 msgstr "Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen)."
 
-#: elections/forms.py:81
+#: elections/forms.py:79
 msgid "Address of the Council"
 msgstr "Adres van de raad"
 
-#: elections/forms.py:81
-#: political_profiles/forms.py:159
-#: political_profiles/forms.py:218
+#: elections/forms.py:79
+#: political_profiles/forms.py:191
+#: political_profiles/forms.py:250
 msgid "Vul hier uw contactinformatie in."
 msgstr "Vul hier uw contactinformatie in."
 
-#: elections/forms.py:82
+#: elections/forms.py:80
 #: elections/models.py:20
-#: elections/models.py:238
+#: elections/models.py:239
 msgid "E-Mail"
 msgstr "E-mail"
 
-#: elections/forms.py:82
+#: elections/forms.py:80
 msgid "Vul hier het algemene email adres van de gemeenteraad in."
 msgstr "Vul hier het algemene email adres van de gemeenteraad in."
 
-#: elections/forms.py:83
+#: elections/forms.py:81
 msgid "Website of the Council"
 msgstr "Website van de raad"
 
-#: elections/forms.py:83
+#: elections/forms.py:81
 msgid "Vul hier de permanente website van de raad in."
 msgstr "Vul hier de permanente website van de raad in."
 
-#: elections/forms.py:118
+#: elections/forms.py:116
 msgid "Which modules do you want to enable for this instance?"
 msgstr "Welke modules wilt u aan zetten voor deze instantie?"
 
-#: elections/forms.py:123
+#: elections/forms.py:121
 msgid "Insert the name of the municipality here."
 msgstr "Vul de naam van de gemeente hier in."
 
-#: elections/forms.py:124
+#: elections/forms.py:122
 #: elections/models.py:15
-#: elections/models.py:226
-#: frontoffice/forms.py:52
-#: frontoffice/views.py:113
-#: frontoffice/templates/frontoffice/politician_filter.html:105
+#: elections/models.py:227
+#: frontoffice/forms.py:53
+#: frontoffice/views.py:195
+#: frontoffice/templates/frontoffice/visitor_profile.html:49
 msgid "Region"
 msgstr "Regio"
 
-#: elections/forms.py:124
+#: elections/forms.py:122
 msgid "Probably the same as the name of your municipality."
 msgstr "Waarschijnlijk dezelfde naam als uw gemeente"
 
-#: elections/forms.py:125
+#: elections/forms.py:123
 #: elections/models.py:16
-#: elections/models.py:72
-#: elections/models.py:227
-#: frontoffice/templates/frontoffice/politician_profile.html:109
-#: political_profiles/forms.py:295
-#: political_profiles/models.py:182
-#: political_profiles/models.py:450
+#: elections/models.py:73
+#: elections/models.py:228
+#: frontoffice/templates/frontoffice/politician_profile.html:125
+#: political_profiles/forms.py:327
+#: political_profiles/models.py:184
+#: political_profiles/models.py:451
 msgid "Level"
 msgstr "Niveau"
 
-#: elections/forms.py:125
+#: elections/forms.py:123
 msgid "For example for a municipality election, the level would be Municipality."
 msgstr "Voorbeeld: Voor een gemeenteraadsverkiezing, zou het niveau Gemeente zijn."
 
-#: elections/forms.py:126
+#: elections/forms.py:124
 #: questions/models.py:49
 #: questions/models.py:59
 msgid "Question set"
 msgstr "Vragenset"
 
-#: elections/forms.py:126
+#: elections/forms.py:124
 msgid "(None)"
 msgstr "(Geen)"
 
-#: elections/forms.py:126
+#: elections/forms.py:124
 msgid "The question set to use for this election instance"
 msgstr "De vragenset die gebruikt moet worden voor deze verkiezingsinstantie"
 
-#: elections/forms.py:137
+#: elections/forms.py:135
 msgid "When does this election take place?"
 msgstr "Wanneer vindt de verkiezing plaats?"
 
-#: elections/forms.py:140
+#: elections/forms.py:138
 msgid "Election Website"
 msgstr "Verkiezingswebsite"
 
-#: elections/forms.py:140
+#: elections/forms.py:138
 msgid "Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen."
 msgstr "Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen."
 
-#: elections/forms.py:141
+#: elections/forms.py:139
 msgid "Number of parties in this election."
 msgstr "Aantal partijen in deze verkiezing."
 
-#: elections/forms.py:141
+#: elections/forms.py:139
 msgid "How many parties are taking part in this election?"
 msgstr "Hoeveel partijen nemen deel aan deze verkiezing?"
 
-#: elections/forms.py:155
+#: elections/forms.py:153
 #, python-format
 msgid "Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s."
 msgstr "Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s."
 
-#: elections/forms.py:177
+#: elections/forms.py:175
 #, python-format
 msgid "Number needs to be at least %(largest_position)s because there is a party in this position already."
 msgstr "Get getal moet minstens  %(largest_position)s zijn omdat er al een partij is op die positie."
 
-#: elections/forms.py:187
-#: elections/models.py:93
-#: elections/models.py:116
+#: elections/forms.py:185
+#: elections/models.py:94
+#: elections/models.py:117
 msgid "Modules"
 msgstr "Modules"
 
-#: elections/forms.py:212
-#: elections/forms.py:219
+#: elections/forms.py:210
+#: elections/forms.py:217
 msgid "Full party name"
 msgstr "Volledige partijnaam"
 
-#: elections/forms.py:212
-#: elections/forms.py:219
+#: elections/forms.py:210
+#: elections/forms.py:217
 msgid "Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie)."
 msgstr "Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie)."
 
-#: elections/forms.py:213
+#: elections/forms.py:211
 msgid "Abbreviated Party Name"
 msgstr "Afkorting van partijnaam"
 
-#: elections/forms.py:213
-#: elections/forms.py:220
+#: elections/forms.py:211
 msgid "Vul hier de afkorting van uw partij in (b.v. VVD)."
 msgstr "Vul hier de afkorting van uw partij in (b.v. VVD)."
 
-#: elections/forms.py:220
+#: elections/forms.py:218
 msgid "Abbreviated party name"
 msgstr "Afkorting"
 
-#: elections/forms.py:221
+#: elections/forms.py:218
+msgid "Vul hier de afkorting van uw partij in (b.v. VVD). (20 tekens)"
+msgstr "Vul hier de afkorting van uw partij in (b.v. VVD). (20 tekens)"
+
+#: elections/forms.py:219
 msgid "Vul hier uw contactinformatie in (b.v. adres van campagne team)."
 msgstr "Vul hier uw contactinformatie in (b.v. adres van campagne team)."
 
-#: elections/forms.py:222
+#: elections/forms.py:220
 msgid "E-mail address"
 msgstr "E-mailadres"
 
-#: elections/forms.py:222
+#: elections/forms.py:220
 msgid "Vul hier het email adres in waarmee u met Wiekiesjij wenst te corresponderen."
 msgstr "Vul hier het email adres in waarmee u met Wiekiesjij wenst te corresponderen."
 
-#: elections/forms.py:223
-#: political_profiles/models.py:212
+#: elections/forms.py:221
+#: political_profiles/models.py:214
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: elections/forms.py:223
+#: elections/forms.py:221
 msgid "Vul hier het telefoonnummer van uw campagneteam in."
 msgstr "Vul hier het telefoonnummer van uw campagneteam in."
 
-#: elections/forms.py:224
+#: elections/forms.py:222
 msgid "Party website"
 msgstr "Partij website"
 
-#: elections/forms.py:224
+#: elections/forms.py:222
 msgid "Vul hier de website van uw partij in."
 msgstr "Vul hier de website van uw partij in."
 
-#: elections/forms.py:227
+#: elections/forms.py:225
 msgid "Number of candidates in this election"
 msgstr "Aantal kandidaten in deze verkiezing"
 
-#: elections/forms.py:227
+#: elections/forms.py:225
 msgid "Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in."
 msgstr "Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in."
 
-#: elections/forms.py:228
-msgid "Vul hier uw verkiezingsslogan in. "
-msgstr "Vul hier uw verkiezingsslogan in. "
+#: elections/forms.py:226
+msgid "Vul hier uw verkiezingsslogan in. (255 tekens) "
+msgstr "Vul hier uw verkiezingsslogan in.  (255 tekens)"
 
-#: elections/forms.py:229
-#: elections/models.py:246
+#: elections/forms.py:227
+#: elections/models.py:247
 #: political_profiles/forms.py:85
-#: political_profiles/models.py:233
+#: political_profiles/models.py:235
 msgid "Movie"
 msgstr "Film"
 
-#: elections/forms.py:229
-#: elections/models.py:247
-#: political_profiles/models.py:234
+#: elections/forms.py:227
+#: elections/models.py:248
+#: political_profiles/models.py:236
 msgid "Link to YouTube video"
 msgstr "Link naar een YouTube video"
 
-#: elections/forms.py:231
+#: elections/forms.py:228
 msgid "Logo"
 msgstr "Logo"
 
-#: elections/forms.py:232
+#: elections/forms.py:229
 msgid "Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft)."
 msgstr "Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft)."
 
-#: elections/forms.py:237
+#: elections/forms.py:234
 msgid "Short description"
 msgstr "Korte beschrijving"
 
-#: elections/forms.py:237
-msgid "Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent."
-msgstr "Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent."
+#: elections/forms.py:234
+msgid "Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent. (255 tekens)"
+msgstr "Vul hier een korte beschrijving over uw partij in. Beantwoord voornamelijk de vraag wie u bent. (255 tekens)"
 
-#: elections/forms.py:238
+#: elections/forms.py:235
 msgid "Short history"
 msgstr "Korte geschiedenis"
 
-#: elections/forms.py:238
-msgid "Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. "
-msgstr "Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. "
+#: elections/forms.py:235
+msgid "Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft. (255 tekens)"
+msgstr "Vul hier een korte geschiedenis van uw partij in. Beantwoord voornamelijk hoe u bent ontstaan, en waar u in het verleden voor gestreden heeft.  (255 tekens)"
 
-#: elections/forms.py:239
-msgid "Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat. "
+#: elections/forms.py:236
+msgid "Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat."
 msgstr "Vul hier een korte beschrijving van uw verkiezingsprogramma in. Beantwoord voornamelijk waar u voor staat. "
 
-#: elections/forms.py:240
+#: elections/forms.py:237
 msgid "Link to the manifesto"
 msgstr "Link haar het manifest"
 
-#: elections/forms.py:240
+#: elections/forms.py:237
 msgid "Vul hier een link in naar uw verkiezingsprogramma. Dit mag een website of PDF document zijn. "
 msgstr "Vul hier een link in naar uw verkiezingsprogramma. Dit mag een website of PDF document zijn. "
 
@@ -2125,53 +2178,53 @@ msgid "Chanceries"
 msgstr "Griffies"
 
 #: elections/models.py:19
-#: elections/models.py:229
+#: elections/models.py:230
 msgid "Abbreviated Name"
 msgstr "Afkorting"
 
 #: elections/models.py:21
-#: political_profiles/models.py:321
-#: political_profiles/models.py:351
+#: political_profiles/models.py:322
+#: political_profiles/models.py:352
 #: utils/widgets.py:122
 msgid "Street"
 msgstr "Straat"
 
 #: elections/models.py:22
-#: political_profiles/models.py:322
-#: political_profiles/models.py:352
+#: political_profiles/models.py:323
+#: political_profiles/models.py:353
 msgid "House Number"
 msgstr "Huisnummer"
 
 #: elections/models.py:23
-#: political_profiles/models.py:323
-#: political_profiles/models.py:353
+#: political_profiles/models.py:324
+#: political_profiles/models.py:354
 #: utils/widgets.py:124
 msgid "Postcode"
 msgstr "Postcode"
 
 #: elections/models.py:23
-#: political_profiles/models.py:324
-#: political_profiles/models.py:354
+#: political_profiles/models.py:325
+#: political_profiles/models.py:355
 msgid "Postcode (e.g. 9725 EK or 9211BV)"
 msgstr "Postcode (bijv. 9725 EK of 9211BV"
 
 #: elections/models.py:24
-#: political_profiles/models.py:325
-#: political_profiles/models.py:355
+#: political_profiles/models.py:326
+#: political_profiles/models.py:356
 msgid "Town/City"
 msgstr "Plaatsnaam"
 
 #: elections/models.py:26
-#: political_profiles/models.py:326
-#: political_profiles/models.py:356
+#: political_profiles/models.py:327
+#: political_profiles/models.py:357
 msgid "Councils Website"
 msgstr "Website van de raad"
 
 #: elections/models.py:28
 #: political_profiles/forms.py:84
-#: political_profiles/models.py:232
-#: political_profiles/models.py:327
-#: political_profiles/models.py:357
+#: political_profiles/models.py:234
+#: political_profiles/models.py:328
+#: political_profiles/models.py:358
 msgid "Picture"
 msgstr "Afbeelding"
 
@@ -2180,7 +2233,7 @@ msgid "A picture that will be used when displaying council details."
 msgstr "Een afbeelding die gebruikt zal worden bij het laten zien van de details van de raad."
 
 #: elections/models.py:31
-#: political_profiles/models.py:328
+#: political_profiles/models.py:329
 msgid "A short description of the council"
 msgstr "Een korte beschrijving van de raad"
 
@@ -2201,7 +2254,7 @@ msgid "Another color"
 msgstr "Accent kleur"
 
 #: elections/models.py:48
-#: elections/models.py:106
+#: elections/models.py:107
 msgid "Council"
 msgstr "Raad"
 
@@ -2209,362 +2262,424 @@ msgstr "Raad"
 msgid "Councils"
 msgstr "Raden"
 
-#: elections/models.py:69
+#: elections/models.py:70
 msgid "Default Date"
 msgstr "Standaard datum"
 
-#: elections/models.py:69
+#: elections/models.py:70
 msgid "Default date for all election instances"
 msgstr "Standaard datum voor alle verkiezingsinstanties"
 
-#: elections/models.py:71
+#: elections/models.py:72
 msgid "Parent region"
 msgstr "Bovenliggende regio"
 
-#: elections/models.py:74
+#: elections/models.py:75
 msgid "Question due period"
 msgstr "Periode voor het beantwoorden van de vragen"
 
-#: elections/models.py:75
+#: elections/models.py:76
 msgid "Profile due period"
 msgstr "Periode voor het invullen van het profiel"
 
-#: elections/models.py:76
+#: elections/models.py:77
 msgid "Candidate due period"
 msgstr "Periode waarin een kandidaat zich kan registreren"
 
-#: elections/models.py:77
+#: elections/models.py:78
 msgid "Party due period"
 msgstr "Periode waarin een partij zich kan registreren"
 
-#: elections/models.py:83
-#: elections/models.py:107
+#: elections/models.py:84
+#: elections/models.py:108
 msgid "Election Event"
 msgstr "Verkiezingsevenemt"
 
-#: elections/models.py:83
+#: elections/models.py:84
 msgid "Election Events"
 msgstr "Verkiezingsevenementen"
 
-#: elections/models.py:90
+#: elections/models.py:91
 msgid "Slug"
 msgstr "Klompje"
 
-#: elections/models.py:93
+#: elections/models.py:94
 msgid "Module"
 msgstr "Module"
 
-#: elections/models.py:109
+#: elections/models.py:110
+#: frontoffice/models.py:24
+#: frontoffice/templates/frontoffice/wizard/test/base.html:5
+#: frontoffice/templates/frontoffice/wizard/test/base.html:6
 #: questions/models.py:22
 #: questions/models.py:46
 msgid "Questions"
 msgstr "Vragen"
 
-#: elections/models.py:111
-#: political_profiles/forms.py:275
-#: political_profiles/forms.py:297
-#: political_profiles/forms.py:320
-#: political_profiles/models.py:436
-#: political_profiles/models.py:452
-#: political_profiles/models.py:468
-msgid "Start Date"
-msgstr "Aanvangsdatum"
-
 #: elections/models.py:112
-#: political_profiles/forms.py:276
-#: political_profiles/forms.py:298
-#: political_profiles/forms.py:321
+#: political_profiles/forms.py:307
+#: political_profiles/forms.py:329
+#: political_profiles/forms.py:352
 #: political_profiles/models.py:437
 #: political_profiles/models.py:453
 #: political_profiles/models.py:469
+msgid "Start Date"
+msgstr "Aanvangsdatum"
+
+#: elections/models.py:113
+#: political_profiles/forms.py:308
+#: political_profiles/forms.py:330
+#: political_profiles/forms.py:353
+#: political_profiles/models.py:438
+#: political_profiles/models.py:454
+#: political_profiles/models.py:470
 msgid "End Date"
 msgstr "Einddatum"
 
-#: elections/models.py:113
+#: elections/models.py:114
 msgid "Wizard start date"
 msgstr "Wizard aanvangsdatum"
 
-#: elections/models.py:114
+#: elections/models.py:115
 msgid "Number of lists"
 msgstr "Aantal lijsten"
 
-#: elections/models.py:115
+#: elections/models.py:116
 msgid "Elections Website"
 msgstr "Verkiezingswebsite"
 
-#: elections/models.py:122
-#: elections/models.py:180
-#: elections/models.py:321
+#: elections/models.py:123
+#: elections/models.py:181
+#: elections/models.py:327
+#: frontoffice/models.py:21
 msgid "Election Instance"
 msgstr "Verkiezingsinstantie"
 
-#: elections/models.py:122
+#: elections/models.py:123
 msgid "Election Instances"
 msgstr "Verkiezingsinstanties"
 
-#: elections/models.py:181
-#: matches/models.py:9
+#: elections/models.py:182
+#: frontoffice/models.py:24
 #: questions/models.py:22
 #: questions/models.py:58
 #: questions/models.py:86
 msgid "Question"
 msgstr "Vraag"
 
-#: elections/models.py:184
+#: elections/models.py:185
 msgid "Locked"
 msgstr "Op slot"
 
-#: elections/models.py:191
-#: elections/models.py:210
+#: elections/models.py:192
+#: elections/models.py:211
 msgid "Election Instance Question"
 msgstr "Verkiezingsinstantie vraag"
 
-#: elections/models.py:191
+#: elections/models.py:192
 msgid "Election Instance Questions"
 msgstr "Verkiezingsinstantie vragen"
 
-#: elections/models.py:211
+#: elections/models.py:212
+#: frontoffice/models.py:62
 msgid "Candidate"
 msgstr "Kandidaat"
 
-#: elections/models.py:212
-#: matches/models.py:10
+#: elections/models.py:213
+#: questions/models.py:99
 #: questions/forms/__init__.py:53
 #: questions/forms/__init__.py:55
 #: questions/forms/__init__.py:57
-#: questions/forms/__init__.py:92
-#: questions/forms/__init__.py:94
-#: questions/forms/__init__.py:96
-#: questions/forms/__init__.py:98
+#: questions/forms/__init__.py:59
+#: questions/forms/__init__.py:61
+#: questions/forms/__init__.py:100
 #: questions/forms/__init__.py:102
 #: questions/forms/__init__.py:104
+#: questions/forms/__init__.py:106
 #: questions/forms/__init__.py:108
+#: questions/forms/__init__.py:112
+#: questions/forms/__init__.py:114
+#: questions/forms/__init__.py:118
+#: questions/forms/types.py:102
 msgid "Answer"
 msgstr "Antwoord"
 
-#: elections/models.py:219
+#: elections/models.py:220
 msgid "Election Instance Question Answer"
 msgstr "Verkiezingsinstantie vraag antwoord"
 
-#: elections/models.py:219
+#: elections/models.py:220
 msgid "Election Instance Question Answers"
 msgstr "Verkiezingsinstantie vraag antwoorden"
 
-#: elections/models.py:234
+#: elections/models.py:235
 msgid "Parties Website"
 msgstr "Partij website"
 
-#: elections/models.py:235
+#: elections/models.py:236
 msgid "Contacts"
 msgstr "Contactpersonen"
 
-#: elections/models.py:237
-#: political_profiles/forms.py:219
-#: political_profiles/models.py:319
-#: political_profiles/models.py:349
+#: elections/models.py:238
+#: frontoffice/models.py:20
+#: political_profiles/forms.py:251
+#: political_profiles/models.py:320
+#: political_profiles/models.py:350
 msgid "Phone Number"
 msgstr "Telefoonnummer"
 
-#: elections/models.py:239
-#: frontoffice/forms.py:66
-#: frontoffice/views.py:192
-#: political_profiles/models.py:485
+#: elections/models.py:240
+#: frontoffice/forms.py:67
+#: frontoffice/views.py:279
+#: political_profiles/models.py:486
 msgid "Goals"
 msgstr "Doelen"
 
-#: elections/models.py:241
+#: elections/models.py:242
 msgid "Short History"
 msgstr "Korte geschiedenis"
 
-#: elections/models.py:243
+#: elections/models.py:244
 msgid "Manifesto"
 msgstr "Manifest"
 
-#: elections/models.py:244
+#: elections/models.py:245
 msgid "Image"
 msgstr "Afbeelding"
 
-#: elections/models.py:245
+#: elections/models.py:246
 msgid "The number of seats you currently hold"
 msgstr "Het aantal zetels dat u momenteel bezit"
 
-#: elections/models.py:255
-#: elections/models.py:322
-#: frontoffice/templates/frontoffice/party.html:8
-#: frontoffice/templates/frontoffice/politician_filter.html:103
-#: frontoffice/templates/frontoffice/quick_profile.html:26
+#: elections/models.py:256
+#: elections/models.py:328
+#: frontoffice/templates/frontoffice/politician_filter.html:107
+#: frontoffice/templates/frontoffice/quick_profile.html:28
 msgid "Party"
 msgstr "Partij"
 
-#: elections/models.py:285
+#: elections/models.py:286
 msgid "Election Party Instance"
 msgstr "Verkiezing partij instantie"
 
-#: elections/models.py:289
-#: political_profiles/models.py:384
-#: political_profiles/models.py:397
-#: political_profiles/models.py:409
-#: political_profiles/models.py:423
-#: political_profiles/models.py:439
-#: political_profiles/models.py:455
-#: political_profiles/models.py:471
-#: political_profiles/models.py:482
+#: elections/models.py:290
+#: political_profiles/models.py:385
+#: political_profiles/models.py:398
+#: political_profiles/models.py:410
+#: political_profiles/models.py:424
+#: political_profiles/models.py:440
+#: political_profiles/models.py:456
+#: political_profiles/models.py:472
+#: political_profiles/models.py:483
 msgid "Politician"
 msgstr "Politicus"
 
-#: elections/models.py:291
+#: elections/models.py:292
+#: questions/models.py:99
 msgid "Answers"
 msgstr "Antwoorden"
 
-#: elections/models.py:297
+#: elections/models.py:299
 msgid "Candidacy"
 msgstr "Kandidaatschap"
 
-#: elections/models.py:297
+#: elections/models.py:299
 msgid "Candidacies"
 msgstr "Kandidaatschappen"
 
-#: elections/models.py:323
+#: elections/models.py:329
 msgid "Party Position"
 msgstr "Partij positie"
 
-#: elections/models.py:324
+#: elections/models.py:330
 msgid "List length"
 msgstr "Lengte van de lijst"
 
-#: frontoffice/forms.py:24
+#: frontoffice/forms.py:25
 msgid "Mobile phone numbers should start with 06"
 msgstr "Mobiele nummers moeten beginnen met 06"
 
-#: frontoffice/forms.py:26
+#: frontoffice/forms.py:27
 msgid "Mobile phone numbers should have 10 digits"
 msgstr "Mobiele telefoonnummers moeten uit 10 cijfers bestaan"
 
-#: frontoffice/forms.py:28
+#: frontoffice/forms.py:29
 msgid "Mobile phone numbers should only have digits"
 msgstr "Mobiele nummers moeten enkel uit cijfers bestaan"
 
-#: frontoffice/forms.py:39
-#: frontoffice/forms.py:58
-#: frontoffice/forms.py:64
+#: frontoffice/forms.py:40
+#: frontoffice/forms.py:59
+#: frontoffice/forms.py:65
 msgid "---------"
 msgstr "---------"
 
-#: frontoffice/forms.py:41
+#: frontoffice/forms.py:42
 msgid "All"
 msgstr "Alle"
 
-#: frontoffice/forms.py:54
+#: frontoffice/forms.py:55
 msgid "Lowest Age"
 msgstr "Minimum leeftijd"
 
-#: frontoffice/forms.py:55
+#: frontoffice/forms.py:56
 msgid "Oldest Age"
 msgstr "Maximum leeftijd"
 
-#: frontoffice/forms.py:56
+#: frontoffice/forms.py:57
 #: political_profiles/forms.py:46
-#: political_profiles/models.py:238
+#: political_profiles/models.py:240
 msgid "Marital Status"
 msgstr "Burgelijke staat"
 
-#: frontoffice/forms.py:58
-#: frontoffice/views.py:136
-#: frontoffice/views.py:140
+#: frontoffice/forms.py:59
+#: frontoffice/views.py:220
+#: frontoffice/views.py:224
 msgid "Children"
 msgstr "Kinderen"
 
-#: frontoffice/forms.py:58
-#: frontoffice/forms.py:64
-#: frontoffice/views.py:136
-#: frontoffice/views.py:197
+#: frontoffice/forms.py:59
+#: frontoffice/forms.py:65
+#: frontoffice/views.py:220
+#: frontoffice/views.py:285
 #: political_profiles/forms.py:50
 #: utils/widgets.py:809
 msgid "Yes"
 msgstr "Ja"
 
-#: frontoffice/forms.py:58
-#: frontoffice/forms.py:64
-#: frontoffice/views.py:140
-#: frontoffice/views.py:200
+#: frontoffice/forms.py:59
+#: frontoffice/forms.py:65
+#: frontoffice/views.py:224
+#: frontoffice/views.py:289
 #: political_profiles/forms.py:50
 #: utils/widgets.py:809
 msgid "No"
 msgstr "Nee"
 
-#: frontoffice/forms.py:59
+#: frontoffice/forms.py:60
 msgid "Religon"
 msgstr "Religie"
 
-#: frontoffice/forms.py:60
+#: frontoffice/forms.py:61
 msgid "Education Level"
 msgstr "Opleidingsniveau"
 
-#: frontoffice/forms.py:61
-msgid "Years of political experience"
-msgstr "Jaren politieke ervaring"
-
 #: frontoffice/forms.py:62
-msgid "Years of work experience"
-msgstr "Jaren werkervaring"
+msgid "Minimum years of political experience"
+msgstr "Minimum jaren politieke ervaring"
 
-#: frontoffice/forms.py:64
-#: frontoffice/views.py:197
-#: frontoffice/views.py:200
-#: frontoffice/templates/frontoffice/politician_profile.html:61
-#: political_profiles/models.py:242
+#: frontoffice/forms.py:63
+msgid "Mimimum years of work experience"
+msgstr "Minimum jaren werkervaring"
+
+#: frontoffice/forms.py:65
+#: frontoffice/views.py:285
+#: frontoffice/views.py:289
+#: frontoffice/templates/frontoffice/politician_profile.html:77
+#: political_profiles/models.py:244
 msgid "Smoker"
 msgstr "Roker"
 
-#: frontoffice/forms.py:65
-#: frontoffice/templates/frontoffice/politician_profile.html:65
-#: political_profiles/models.py:243
-msgid "Diet"
-msgstr "Vegetariër"
+#: frontoffice/forms.py:66
+msgid "Vegitariër"
+msgstr "Vegitariër"
 
-#: frontoffice/forms.py:71
+#: frontoffice/forms.py:72
+#: frontoffice/forms.py:79
 msgid "Mobile phone number"
 msgstr "Mobiel nummer"
 
-#: frontoffice/forms.py:72
-msgid "Receive text messages?"
-msgstr "Ontvang SMS berichten?"
+#: frontoffice/forms.py:73
+msgid "Voting reminder on the day of the election"
+msgstr "Stem herinnering op de dag van de verkiezingen"
 
-#: frontoffice/views.py:156
+#: frontoffice/forms.py:73
+msgid "I would like to receive a reminder (text message) for voting on the day of election."
+msgstr "Ik wil graag een herinnering (sms bericht) ontvangen op de dag van de verkiezingen"
+
+#: frontoffice/forms.py:76
+#: frontoffice/templates/frontoffice/home.html:36
+msgid "Select your region"
+msgstr "Selecteer regio"
+
+#: frontoffice/models.py:15
+#: political_profiles/models.py:194
+#: political_profiles/models.py:507
+#: political_profiles/models.py:546
+#: utils/models.py:9
+#: utils/models.py:27
+msgid "User"
+msgstr "Gebruiker"
+
+#: frontoffice/models.py:16
+#: utils/models.py:28
+msgid "Ip address of the user"
+msgstr "Ip adres van de gebruiker"
+
+#: frontoffice/models.py:17
+#: invitations/models.py:15
+msgid "Hash"
+msgstr "Hash"
+
+#: frontoffice/models.py:18
+msgid "Date Time Stamp"
+msgstr "Date Time Stamp"
+
+#: frontoffice/models.py:19
+msgid "Visitor Answer List"
+msgstr "Bezoeker antwoord lijst"
+
+#: frontoffice/models.py:61
+msgid "Visitor Result"
+msgstr "Bezoeker resultaat"
+
+#: frontoffice/models.py:63
+msgid "Candidates Answer List"
+msgstr "Kandidaat antwoord lijst"
+
+#: frontoffice/models.py:64
+msgid "Question Score List"
+msgstr "Vragen scores lijst"
+
+#: frontoffice/models.py:65
+msgid "Candidates Score"
+msgstr "Kandidaten scores"
+
+#: frontoffice/views.py:240
 msgid "Youngest"
 msgstr "Ouder dan"
 
-#: frontoffice/views.py:165
+#: frontoffice/views.py:248
 msgid "Oldest"
 msgstr "Jonger dan"
 
-#: frontoffice/views.py:171
-#: frontoffice/templates/frontoffice/politician_profile.html:32
-#: political_profiles/models.py:458
+#: frontoffice/views.py:254
+#: frontoffice/templates/frontoffice/politician_profile.html:48
+#: political_profiles/models.py:459
 msgid "Education"
 msgstr "Opleiding"
 
-#: frontoffice/views.py:175
+#: frontoffice/views.py:259
 msgid "Years political experience"
 msgstr "Jaren politieke ervaring"
 
-#: frontoffice/views.py:179
+#: frontoffice/views.py:264
 msgid "Years work experience"
 msgstr "Jaren werkervaring"
 
-#: frontoffice/views.py:184
-#: frontoffice/templates/frontoffice/politician_profile.html:55
+#: frontoffice/views.py:269
+#: frontoffice/templates/frontoffice/politician_profile.html:71
 #: political_profiles/forms.py:48
-#: political_profiles/models.py:240
+#: political_profiles/models.py:242
 msgid "Religion"
 msgstr "Geloof"
 
-#: frontoffice/views.py:188
-#: frontoffice/templates/frontoffice/quick_profile.html:38
+#: frontoffice/views.py:274
+#: frontoffice/templates/frontoffice/quick_profile.html:45
 msgid "Marital status"
 msgstr "Burgelijke staat"
 
-#: frontoffice/views.py:214
+#: frontoffice/views.py:294
+#: frontoffice/templates/frontoffice/politician_profile.html:81
 msgid "Vegitarian"
 msgstr "Vegetarisch"
 
@@ -2580,37 +2695,66 @@ msgid "Password again"
 msgstr "Wachtwoord nogmaals"
 
 #: frontoffice/registration_backend/forms.py:23
-msgid "I have read and agree to the Terms of Service"
-msgstr "Ik heb de algemene voorwaarden gelezen en ga ermee akkoord"
+msgid "Servicevoorwaarden"
+msgstr "Servicevoorwaarden"
 
 #: frontoffice/registration_backend/forms.py:24
+#, python-format
+msgid "I have read and agree to the <a href=\"%(url)s\">Terms of Service</a>"
+msgstr "Ik heb de <a href=\"%(url)s\">algemene voorwaarden</a> gelezen en ga ermee akkoord"
+
+#: frontoffice/registration_backend/forms.py:25
 msgid "You must agree to the terms to register"
 msgstr "Je moet akkoord gaan om je te registreren"
 
-#: frontoffice/registration_backend/forms.py:31
+#: frontoffice/registration_backend/forms.py:32
 msgid "This email address is already in use. Please supply a different email address."
 msgstr "Dit e-mail adres is al in gebruik. Geef een ander e-mail adres op."
 
-#: frontoffice/registration_backend/forms.py:41
+#: frontoffice/registration_backend/forms.py:42
 #: invitations/forms.py:31
 msgid "Passwords did not match"
 msgstr "Wachtwoorden komen niet overeen"
 
-#: frontoffice/templates/frontoffice/base.html:41
+#: frontoffice/templates/frontoffice/base.html:25
+msgid "Go home"
+msgstr "Ga naar huis"
+
+#: frontoffice/templates/frontoffice/base.html:39
+#: frontoffice/templates/frontoffice/home.html:62
+#: frontoffice/templates/frontoffice/home.html:77
+msgid "or"
+msgstr "of"
+
+#: frontoffice/templates/frontoffice/base.html:39
+msgid "register"
+msgstr "Registreer"
+
+#: frontoffice/templates/frontoffice/base.html:46
 msgid "Take the test"
 msgstr "Doe de test"
 
-#: frontoffice/templates/frontoffice/base.html:42
-#: frontoffice/templates/frontoffice/home.html:87
-#: frontoffice/templates/frontoffice/party.html:67
+#: frontoffice/templates/frontoffice/base.html:47
+#: frontoffice/templates/frontoffice/election.html:15
+#: frontoffice/templates/frontoffice/home.html:65
+#: frontoffice/templates/frontoffice/home.html:80
+#: frontoffice/templates/frontoffice/party.html:85
 msgid "Candidates"
 msgstr "Kandidaten"
 
-#: frontoffice/templates/frontoffice/base.html:43
-#: political_profiles/forms.py:317
-#: political_profiles/models.py:465
+#: frontoffice/templates/frontoffice/base.html:48
+#: political_profiles/forms.py:349
+#: political_profiles/models.py:466
 msgid "Organisation"
 msgstr "Organisatie"
+
+#: frontoffice/templates/frontoffice/base.html:76
+msgid "Terms of Service"
+msgstr "Algemene voorwaarden"
+
+#: frontoffice/templates/frontoffice/base.html:77
+msgid "Disclaimer"
+msgstr "Disclaimer"
 
 #: frontoffice/templates/frontoffice/dashboard.html:17
 msgid "Edit profile"
@@ -2620,81 +2764,186 @@ msgstr "Wijzig Profiel"
 msgid "View your party"
 msgstr "Bekijk uw partij"
 
-#: frontoffice/templates/frontoffice/election.html:12
-msgid "Candidates for"
-msgstr "Kandidaten voor"
+#: frontoffice/templates/frontoffice/election.html:22
+msgid "Candidate overview for"
+msgstr "Kandidaten lijst voor"
 
-#: frontoffice/templates/frontoffice/election.html:14
-#: frontoffice/templates/frontoffice/politician_filter.html:16
+#: frontoffice/templates/frontoffice/election.html:24
+#: frontoffice/templates/frontoffice/politician_filter.html:15
+#: frontoffice/templates/frontoffice/politician_filter.html:22
 msgid "Search all candidates"
 msgstr "Zoek in alle kandidaten"
 
-#: frontoffice/templates/frontoffice/election.html:15
+#: frontoffice/templates/frontoffice/election.html:25
 msgid "Filter on name, region, and much more"
 msgstr "Filter op naam, regio and meer"
 
-#: frontoffice/templates/frontoffice/election.html:22
+#: frontoffice/templates/frontoffice/election.html:32
 msgid "Choose a party"
 msgstr "Kies een partij"
 
-#: frontoffice/templates/frontoffice/election.html:22
+#: frontoffice/templates/frontoffice/election.html:32
 msgid "to view the candidate list"
 msgstr "om de kandidaten lijst te bekijken"
 
-#: frontoffice/templates/frontoffice/election.html:67
+#: frontoffice/templates/frontoffice/election.html:85
 msgid "Candidate list for "
 msgstr "Kandidaten lijst voor"
 
-#: frontoffice/templates/frontoffice/election.html:68
-msgid "Go to the profile of this party"
-msgstr "Ga naar het profiel van deze partij"
+#: frontoffice/templates/frontoffice/election.html:86
+msgid "Go to the party profile"
+msgstr "Ga naar partij profiel"
 
-#: frontoffice/templates/frontoffice/election.html:89
+#: frontoffice/templates/frontoffice/election.html:104
 msgid "This politician<br />has not yet been added."
 msgstr "Deze politici<br />is nog niet toegevoegd."
 
-#: frontoffice/templates/frontoffice/election.html:95
+#: frontoffice/templates/frontoffice/election.html:110
 msgid "No Politicians: please search or select a filter options"
 msgstr "Geen politici; gebruik andere zoek of filter opties."
 
-#: frontoffice/templates/frontoffice/goal.html:21
-#, python-format
-msgid ""
-"\n"
-"                        Back to %(name)s profile\n"
-"                    "
-msgstr ""
-"\n"
-"                            Terug naar %(name)s profiel\n"
-"                        "
+#: frontoffice/templates/frontoffice/goal.html:29
+msgid "Politiek doel"
+msgstr "Politiek doel"
 
-#: frontoffice/templates/frontoffice/goal.html:40
-#: frontoffice/templates/frontoffice/politician_comments.html:37
-msgid "Respond"
+#: frontoffice/templates/frontoffice/goal.html:37
+msgid "Comment on this"
+msgstr "Reageer hier op"
+
+#: frontoffice/templates/frontoffice/goal.html:54
+#: frontoffice/templates/frontoffice/goal.html:62
+msgid "This comment is flagged"
+msgstr "Deze reactie is gemarkeerd als ongepast"
+
+#: frontoffice/templates/frontoffice/goal.html:56
+msgid "Flag as inappropiate"
+msgstr "Markeer als ongepast"
+
+#: frontoffice/templates/frontoffice/goal.html:101
+#: frontoffice/templates/frontoffice/politician_profile.html:243
+msgid "Vote now!"
+msgstr "Stem nu!"
+
+#: frontoffice/templates/frontoffice/goal.html:101
+#: frontoffice/templates/frontoffice/politician_profile.html:243
+msgid "When you log in, you can vote too!"
+msgstr "Als je inlogt kun je ook stemmen!"
+
+#: frontoffice/templates/frontoffice/goal.html:104
+#: frontoffice/templates/frontoffice/politician_profile.html:246
+msgid "Good"
+msgstr "Goed"
+
+#: frontoffice/templates/frontoffice/goal.html:105
+#: frontoffice/templates/frontoffice/politician_profile.html:247
+msgid "Bad"
+msgstr "Slecht"
+
+#: frontoffice/templates/frontoffice/goal.html:108
+#: frontoffice/templates/frontoffice/politician_profile.html:250
+msgid "Score"
+msgstr "Score"
+
+#: frontoffice/templates/frontoffice/goal.html:109
+#: frontoffice/templates/frontoffice/politician_profile.html:251
+msgid "Votes"
+msgstr "Stemmen"
+
+#: frontoffice/templates/frontoffice/goal.html:114
+#: frontoffice/templates/frontoffice/politician_profile.html:256
+msgid "Comment"
+msgid_plural "Comments"
+msgstr[0] "Reactie"
+msgstr[1] "Reacties"
+
+#: frontoffice/templates/frontoffice/goal.html:116
+#: frontoffice/templates/frontoffice/goal.html:119
+#: frontoffice/templates/frontoffice/politician_profile.html:258
+#: frontoffice/templates/frontoffice/politician_profile.html:261
+msgid "React"
 msgstr "Reageer"
 
-#: frontoffice/templates/frontoffice/home.html:52
+#: frontoffice/templates/frontoffice/goal.html:126
+#: frontoffice/templates/frontoffice/politician_profile.html:268
+msgid "No goals defined yet."
+msgstr "Nog geen doelen ingesteld."
+
+#: frontoffice/templates/frontoffice/home.html:27
 msgid "Kieswijzer Gemeenteraadsverkiezingen 2010"
 msgstr "Kieswijzer Gemeenteraadsverkiezingen 2010"
 
-#: frontoffice/templates/frontoffice/home.html:64
-msgid "Select region"
-msgstr "Selecteer regio"
+#: frontoffice/templates/frontoffice/home.html:37
+msgid "to start <strong>Wiekiesjij</strong> for your region."
+msgstr "om <strong>Wiekiesjij</strong> voor je regio te starten."
 
+#: frontoffice/templates/frontoffice/home.html:45
+msgid "Selecteer"
+msgstr "Selecteer"
+
+#: frontoffice/templates/frontoffice/home.html:59
 #: frontoffice/templates/frontoffice/home.html:74
-#: frontoffice/templates/frontoffice/home.html:85
 msgid "Do the test"
 msgstr "Doe de test"
 
-#: frontoffice/templates/frontoffice/home.html:86
-msgid "or"
-msgstr "of"
+#: frontoffice/templates/frontoffice/iframe.html:51
+#: frontoffice/templates/frontoffice/wizard/base.html:42
+msgid "Elucidation"
+msgstr "Toelichting"
 
-#: frontoffice/templates/frontoffice/party.html:45
+#: frontoffice/templates/frontoffice/match_details.html:22
+#: frontoffice/templates/frontoffice/match_results.html:22
+#: frontoffice/templates/frontoffice/wizard/base.html:34
+msgid "Results"
+msgstr "Resultaten"
+
+#: frontoffice/templates/frontoffice/match_details.html:26
+msgid "Match details"
+msgstr "Details vergelijking"
+
+#: frontoffice/templates/frontoffice/match_details.html:54
+msgid "None"
+msgstr "(Geen)"
+
+#: frontoffice/templates/frontoffice/match_details.html:58
+#: frontoffice/templates/frontoffice/match_results.html:48
+msgid "View profile"
+msgstr "Bekijk Profiel"
+
+#: frontoffice/templates/frontoffice/match_results.html:26
+msgid "These are your closest matches"
+msgstr "Dit zijn de kandidaten die het meeste matchen"
+
+#: frontoffice/templates/frontoffice/match_results.html:47
+msgid "Overeenkomst"
+msgstr "START MATCH WIZARD"
+
+#: frontoffice/templates/frontoffice/match_results.html:61
+msgid "Get a free text reminder"
+msgstr "Krijg een gratis SMS herinnering"
+
+#: frontoffice/templates/frontoffice/match_results.html:81
+msgid "Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here"
+msgstr "Bedankt! Op de dag van de verkiezingen krijgt u een sms bericht op het door u opgegeven mobiele nummer."
+
+#: frontoffice/templates/frontoffice/match_results.html:93
+msgid "Share this via Opensocial"
+msgstr "Deel dit via Opensocial"
+
+#: frontoffice/templates/frontoffice/match_welcome.html:54
+#: frontoffice/templates/frontoffice/match_welcome.html:56
+msgid "START MATCH WIZARD"
+msgstr ""
+
+#: frontoffice/templates/frontoffice/party.html:36
+#: frontoffice/templates/frontoffice/quick_profile.html:92
+msgid "Binnenkort vind je hier de populariteitsmeter."
+msgstr "Binnenkort vind je hier de populariteitsmeter."
+
+#: frontoffice/templates/frontoffice/party.html:58
 msgid "Number of candidates"
 msgstr "Aantal kandidaten"
 
-#: frontoffice/templates/frontoffice/party.html:52
+#: frontoffice/templates/frontoffice/party.html:65
 #, python-format
 msgid ""
 "\n"
@@ -2705,191 +2954,209 @@ msgstr ""
 "                    %(party_name)s is list %(position)s in municipality %(municipality)s\n"
 "                "
 
-#: frontoffice/templates/frontoffice/party.html:64
+#: frontoffice/templates/frontoffice/party.html:81
 msgid "Video"
 msgstr "Video"
 
-#: frontoffice/templates/frontoffice/party.html:73
+#: frontoffice/templates/frontoffice/party.html:94
 msgid "Party manifesto"
 msgstr "Partij manifest"
 
-#: frontoffice/templates/frontoffice/party.html:102
-#: frontoffice/templates/frontoffice/politician_profile.html:69
-msgid "News"
-msgstr "Nieuws"
-
-#: frontoffice/templates/frontoffice/party.html:110
-#: frontoffice/templates/frontoffice/party.html:118
-#: frontoffice/templates/frontoffice/party.html:126
-msgid "Read more"
-msgstr "Lees meer"
-
-#: frontoffice/templates/frontoffice/party.html:129
-msgid "Subscribe"
-msgstr ""
-
-#: frontoffice/templates/frontoffice/party.html:134
-msgid "Send a message"
-msgstr "Stuur een bericht"
-
-#: frontoffice/templates/frontoffice/party.html:137
-msgid "Heb je vragen of opmerkingen?"
-msgstr "Heb je vragen of opmerkingen?"
-
-#: frontoffice/templates/frontoffice/party.html:139
-#, fuzzy
-msgid ""
-"\n"
-"                    Stuur een email naar <em>[party name] [Council Region]</em>.\n"
-"                "
-msgstr ""
-"\n"
-"                            Terug naar %(name)s profiel\n"
-"                        "
-
-#: frontoffice/templates/frontoffice/party.html:143
-msgid "Klik op de link hieronder om uw standaard email-programma te openen."
-msgstr "Klik op de link hieronder om uw standaard email-programma te openen."
-
-#: frontoffice/templates/frontoffice/party.html:144
-msgid "Send an email"
-msgstr ""
-
-#: frontoffice/templates/frontoffice/politician_comments.html:18
-#, python-format
-msgid ""
-"\n"
-"                    Back to %(name)s's profile\n"
-"                "
-msgstr ""
-"\n"
-"                            Terug naar %(name)s profiel\n"
-"                        "
-
-#: frontoffice/templates/frontoffice/politician_filter.html:15
-msgid "Kandidaten overzicht"
-msgstr "Kandidaten overzicht"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:24
-#: frontoffice/templates/frontoffice/politician_filter.html:27
-msgid "Filter"
-msgstr "Filter"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:32
-#: frontoffice/templates/frontoffice/politician_filter.html:52
-msgid "Apply filter"
-msgstr "Filter toepassen"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:55
-#: frontoffice/templates/frontoffice/politician_filter.html:75
-msgid "Clear All Filters"
-msgstr "Verwijder alle filters"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:65
-msgid "Politicians"
-msgstr "Politici"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:68
-msgid "Zoekresultaat"
-msgstr ""
-
-#: frontoffice/templates/frontoffice/politician_filter.html:69
-msgid "You selected the following filters"
-msgstr "U heeft de volgende filters geselecteerd"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:72
-msgid "Remove this filter"
-msgstr "Verwijder dit filter"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:82
-#: frontoffice/templates/frontoffice/politician_filter.html:119
-msgid "Previous"
-msgstr "Vorige"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:85
-#: frontoffice/templates/frontoffice/politician_filter.html:122
-msgid "Page"
-msgstr "Pagina"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:85
-#: frontoffice/templates/frontoffice/politician_filter.html:122
-msgid "of"
-msgstr "van"
-
-#: frontoffice/templates/frontoffice/politician_filter.html:102
-#: frontoffice/templates/frontoffice/quick_profile.html:30
+#: frontoffice/templates/frontoffice/party.html:127
+#: frontoffice/templates/frontoffice/politician_filter.html:106
+#: frontoffice/templates/frontoffice/quick_profile.html:37
 msgid "Age"
 msgstr "Leeftijd"
 
-#: frontoffice/templates/frontoffice/politician_filter.html:112
+#: frontoffice/templates/frontoffice/party.html:130
+msgid "No politicians defined for this party"
+msgstr "Geen kandidaten ingesteld voor deze partij"
+
+#: frontoffice/templates/frontoffice/party.html:155
+msgid "Read entire manifesto"
+msgstr "Lees hele manifest"
+
+#: frontoffice/templates/frontoffice/party.html:169
+#: frontoffice/templates/frontoffice/politician_profile.html:85
+msgid "News"
+msgstr "Nieuws"
+
+#: frontoffice/templates/frontoffice/party.html:177
+#: frontoffice/templates/frontoffice/party.html:185
+#: frontoffice/templates/frontoffice/party.html:193
+msgid "Read more"
+msgstr "Lees meer"
+
+#: frontoffice/templates/frontoffice/party.html:196
+msgid "Subscribe"
+msgstr "Schrijf in"
+
+#: frontoffice/templates/frontoffice/party.html:205
+msgid "Send a message"
+msgstr "Stuur een bericht"
+
+#: frontoffice/templates/frontoffice/party.html:208
+msgid "Have you got questions or remarks?"
+msgstr "Heeft u vragen of opmerkingen?"
+
+#: frontoffice/templates/frontoffice/party.html:210
+#, python-format
+msgid ""
+"\n"
+"                    Send an email to <em>%(party_name)s %(municipality)s</em>.\n"
+"                "
+msgstr ""
+"\n"
+"                    Stuur een e-mail naar <em>%(party_name)s %(municipality)s</em>.\n"
+"                "
+
+#: frontoffice/templates/frontoffice/party.html:214
+msgid "Click on the link below to open your standard email program."
+msgstr "Klik op de link hieronder om uw standaard email-programma te openen."
+
+#: frontoffice/templates/frontoffice/party.html:215
+msgid "Send an email"
+msgstr "Stuur een e-mail"
+
+#: frontoffice/templates/frontoffice/politician_comments.html:20
+msgid "Comments"
+msgstr "Reacties"
+
+#: frontoffice/templates/frontoffice/politician_comments.html:32
+msgid "Comment on this politician"
+msgstr "Reageer op deze politicus"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:28
+#: frontoffice/templates/frontoffice/politician_filter.html:31
+msgid "Filter"
+msgstr "Filter"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:36
+#: frontoffice/templates/frontoffice/politician_filter.html:56
+msgid "Apply filter"
+msgstr "Filter toepassen"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:59
+#: frontoffice/templates/frontoffice/politician_filter.html:79
+msgid "Clear All Filters"
+msgstr "Verwijder alle filters"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:69
+msgid "Politicians"
+msgstr "Politici"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:72
+msgid "Zoekresultaat"
+msgstr "Zoekresultaat"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:73
+msgid "You selected the following filters"
+msgstr "U heeft de volgende filters geselecteerd"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:76
+msgid "Remove this filter"
+msgstr "Verwijder dit filter"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:86
+#: frontoffice/templates/frontoffice/politician_filter.html:124
+msgid "Previous"
+msgstr "Vorige"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:89
+#: frontoffice/templates/frontoffice/politician_filter.html:127
+msgid "Page"
+msgstr "Pagina"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:89
+#: frontoffice/templates/frontoffice/politician_filter.html:127
+msgid "of"
+msgstr "van"
+
+#: frontoffice/templates/frontoffice/politician_filter.html:117
 msgid "No politicians found: please search or select different filters."
 msgstr "Geen politici; gebruik andere zoek of filter opties."
 
-#: frontoffice/templates/frontoffice/politician_filter.html:113
+#: frontoffice/templates/frontoffice/politician_filter.html:118
 msgid "Clear all filters"
 msgstr "Verwijder alle filters"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:27
+#: frontoffice/templates/frontoffice/politician_profile.html:20
+msgid "Back to results"
+msgstr "Terug naar resultaten"
+
+#: frontoffice/templates/frontoffice/politician_profile.html:43
 msgid "Favorites and preferences"
 msgstr "Favorieten en voorkeuren"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:37
+#: frontoffice/templates/frontoffice/politician_profile.html:53
 msgid "Work"
 msgstr "Werk"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:42
+#: frontoffice/templates/frontoffice/politician_profile.html:58
 msgid "Political experience"
 msgstr "Politieke ervaring"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:62
+#: frontoffice/templates/frontoffice/politician_profile.html:72
+#: frontoffice/templates/frontoffice/politician_profile.html:82
+#: frontoffice/templates/frontoffice/politician_profile.html:86
+#: frontoffice/templates/frontoffice/politician_profile.html:90
+#: frontoffice/templates/frontoffice/politician_profile.html:98
+#: frontoffice/templates/frontoffice/politician_profile.html:102
+#: frontoffice/templates/frontoffice/quick_profile.html:38
+#: frontoffice/templates/frontoffice/quick_profile.html:46
+#: frontoffice/templates/frontoffice/quick_profile.html:50
+msgid "Not known"
+msgstr "Onbekend"
+
+#: frontoffice/templates/frontoffice/politician_profile.html:78
 msgid "smoker"
 msgstr "Roker"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:62
+#: frontoffice/templates/frontoffice/politician_profile.html:78
 msgid "non-smoker"
 msgstr "niet roker"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:73
+#: frontoffice/templates/frontoffice/politician_profile.html:89
 msgid "Media"
 msgstr "Media"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:77
+#: frontoffice/templates/frontoffice/politician_profile.html:93
 msgid "Charities"
 msgstr "Goede doelen"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:81
+#: frontoffice/templates/frontoffice/politician_profile.html:97
 msgid "Transport"
 msgstr "Vervoer"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:85
+#: frontoffice/templates/frontoffice/politician_profile.html:101
 msgid "Animal"
 msgstr "Dier"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:89
+#: frontoffice/templates/frontoffice/politician_profile.html:105
 msgid "Sport"
 msgstr "Sport"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:93
+#: frontoffice/templates/frontoffice/politician_profile.html:109
 msgid "Club"
 msgstr "Club"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:107
+#: frontoffice/templates/frontoffice/politician_profile.html:123
 msgid "aan"
 msgstr "aan"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:110
-#: frontoffice/templates/frontoffice/politician_profile.html:134
-#: frontoffice/templates/frontoffice/politician_profile.html:159
+#: frontoffice/templates/frontoffice/politician_profile.html:126
+#: frontoffice/templates/frontoffice/politician_profile.html:150
+#: frontoffice/templates/frontoffice/politician_profile.html:175
 msgid "From"
 msgstr "Van"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:111
-#: frontoffice/templates/frontoffice/politician_profile.html:135
-#: frontoffice/templates/frontoffice/politician_profile.html:160
+#: frontoffice/templates/frontoffice/politician_profile.html:127
+#: frontoffice/templates/frontoffice/politician_profile.html:151
+#: frontoffice/templates/frontoffice/politician_profile.html:176
 msgid "to"
 msgstr "aan"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:116
+#: frontoffice/templates/frontoffice/politician_profile.html:132
 #, python-format
 msgid ""
 "\n"
@@ -2900,7 +3167,7 @@ msgstr ""
 "                            %(name)s heeft geen opleidingen ingevult\n"
 "                        "
 
-#: frontoffice/templates/frontoffice/politician_profile.html:141
+#: frontoffice/templates/frontoffice/politician_profile.html:157
 #, python-format
 msgid ""
 "\n"
@@ -2911,16 +3178,16 @@ msgstr ""
 "                            %(name)s heeft geen werkervaring ingevuld\n"
 "                        "
 
-#: frontoffice/templates/frontoffice/politician_profile.html:158
-#: political_profiles/forms.py:318
-#: political_profiles/models.py:154
-#: political_profiles/models.py:172
-#: political_profiles/models.py:394
-#: political_profiles/models.py:466
+#: frontoffice/templates/frontoffice/politician_profile.html:174
+#: political_profiles/forms.py:350
+#: political_profiles/models.py:156
+#: political_profiles/models.py:174
+#: political_profiles/models.py:395
+#: political_profiles/models.py:467
 msgid "Type"
 msgstr "Type"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:166
+#: frontoffice/templates/frontoffice/politician_profile.html:182
 #, python-format
 msgid ""
 "\n"
@@ -2931,62 +3198,28 @@ msgstr ""
 "                            %(name)s heeft geen politieke ervaring ingevuld\n"
 "                        "
 
-#: frontoffice/templates/frontoffice/politician_profile.html:223
-msgid "Vote now!"
-msgstr "Stem nu!"
+#: frontoffice/templates/frontoffice/politician_profile.html:219
+msgid "This candidate did not<br/>specify a video"
+msgstr "Deze kandidaat heeft geen<br/>video opgegeven"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:223
-msgid "When you log in, you can vote too!"
-msgstr "Als je inlogt kun je ook stemmen!"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:226
-msgid "Good"
-msgstr "Goed"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:227
-msgid "Bad"
-msgstr "Slecht"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:230
-msgid "Score"
-msgstr "Score"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:231
-msgid "Votes"
-msgstr "Stemmen"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:236
-msgid "Comment"
-msgid_plural "Comments"
-msgstr[0] "Reactie"
-msgstr[1] "Reacties"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:238
-msgid "React"
-msgstr "Reageer"
-
-#: frontoffice/templates/frontoffice/politician_profile.html:245
-msgid "No goals defined yet."
-msgstr "Nog geen doelen ingesteld."
-
-#: frontoffice/templates/frontoffice/politician_profile.html:252
+#: frontoffice/templates/frontoffice/politician_profile.html:275
 msgid "Appearances"
 msgstr "Optredens"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:264
+#: frontoffice/templates/frontoffice/politician_profile.html:287
 msgid "website"
 msgstr "website"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:271
+#: frontoffice/templates/frontoffice/politician_profile.html:294
 msgid "No appearances added yet."
 msgstr "Nog geen optredens ingesteld."
 
-#: frontoffice/templates/frontoffice/politician_profile.html:278
-#: political_profiles/models.py:387
+#: frontoffice/templates/frontoffice/politician_profile.html:301
+#: political_profiles/models.py:388
 msgid "Links"
 msgstr "Links"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:291
+#: frontoffice/templates/frontoffice/politician_profile.html:314
 msgid "No links defined yet."
 msgstr "Nog geen links ingesteld"
 
@@ -2994,15 +3227,15 @@ msgstr "Nog geen links ingesteld"
 msgid "Note: This profile has not been completely filled in."
 msgstr "Opmerking: Dit profiel is nog niet volledig ingevuld."
 
-#: frontoffice/templates/frontoffice/quick_profile.html:42
+#: frontoffice/templates/frontoffice/quick_profile.html:49
 msgid "Number of children"
 msgstr "Aantal kinderen"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:46
+#: frontoffice/templates/frontoffice/quick_profile.html:53
 msgid "Social networks"
 msgstr "Social networks"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:61
+#: frontoffice/templates/frontoffice/quick_profile.html:68
 #, python-format
 msgid ""
 "\n"
@@ -3013,80 +3246,97 @@ msgstr ""
 "                            %(name)s heeft %(fans)s fans\n"
 "                        "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:67
+#: frontoffice/templates/frontoffice/quick_profile.html:74
 msgid "Stop being a fan"
 msgstr "Verwijder mij als fan"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:69
+#: frontoffice/templates/frontoffice/quick_profile.html:76
 msgid "Become a fan"
 msgstr "Word fan"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:89
+#: frontoffice/templates/frontoffice/quick_profile.html:99
 #, python-format
 msgid ""
 "\n"
-"                %(name)s is  number %(position)s on the election list of %(party)s in %(region)s\n"
-"            "
+"\t                %(name)s is  number %(position)s on the election list of %(party)s in %(region)s\n"
+"\t            "
 msgstr ""
 "\n"
 "                    %(name)s is nummer %(position)s op de lijst van  %(party)s in %(region)s\n"
 "                "
 
-#: frontoffice/templates/frontoffice/visitor_profile.html:5
+#: frontoffice/templates/frontoffice/visitor_profile.html:8
+msgid "Change your information"
+msgstr "Wijzig uw informatie"
+
+#: frontoffice/templates/frontoffice/visitor_profile.html:16
 msgid "Change your password"
 msgstr "Wijzig uw wachtwoord"
 
-#: frontoffice/templates/frontoffice/visitor_profile.html:6
-#, fuzzy
-msgid "Change your information"
-msgstr "Griffie contactinformatie"
-
-#: frontoffice/templates/frontoffice/visitor_profile.html:10
-#: invitations/templates/invitations/existing.html:9
-#: invitations/templates/invitations/send.html:34
-msgid "Submit"
-msgstr "Verzend"
-
-#: frontoffice/templates/frontoffice/visitor_profile.html:14
+#: frontoffice/templates/frontoffice/visitor_profile.html:25
 msgid "Favorite politicians"
 msgstr "Favoriete politici"
 
-#: frontoffice/templates/frontoffice/visitor_profile.html:18
+#: frontoffice/templates/frontoffice/visitor_profile.html:31
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: frontoffice/templates/frontoffice/visitor_profile.html:22
+#: frontoffice/templates/frontoffice/visitor_profile.html:35
 msgid "You don't have any favorite politicians yet"
 msgstr "Je hebt nog een favorieten politici"
 
-#: frontoffice/templates/registration/activate.html:5
+#: frontoffice/templates/frontoffice/visitor_profile.html:43
+msgid "My match results"
+msgstr "Mijn resultaten"
+
+#: frontoffice/templates/frontoffice/visitor_profile.html:49
+msgid "See Results"
+msgstr "Bekijk resultaten"
+
+#: frontoffice/templates/frontoffice/visitor_profile.html:53
+msgid "You have not been matched yet"
+msgstr "U heeft de test nog niet gedaan"
+
+#: frontoffice/templates/registration/activate.html:7
+msgid "Activation failed"
+msgstr "Activatie gefaald"
+
+#: frontoffice/templates/registration/activate.html:10
 #, python-format
-msgid "Activation failed, please verify that this is the correct activation key: %(activation_key)s"
+msgid "Please verify that this is the correct activation key: %(activation_key)s"
 msgstr "Acttivatie mislukt, controlleer of %(activation_key)s de juiste key is"
 
-#: frontoffice/templates/registration/activation_complete.html:6
+#: frontoffice/templates/registration/activation_complete.html:8
+msgid "Activation succesful"
+msgstr "Activatie gelukt"
+
+#: frontoffice/templates/registration/activation_complete.html:11
 #, python-format
-msgid "Activation succesful, <a href=\"%(login_url)s\">click here</a> to login."
+msgid "<a href=\"%(login_url)s\">Click here</a> to login."
 msgstr "Activatie gelukt <a href=\"%(login_url)s\">klik hier</a> om in te loggen"
 
-#: frontoffice/templates/registration/change_password.html:15
+#: frontoffice/templates/registration/change_password.html:16
 #: frontoffice/templates/registration/forgot_password_confirm.html:19
 msgid "Change password"
 msgstr "Wijzig wachtwoord"
 
-#: frontoffice/templates/registration/change_password.html:35
+#: frontoffice/templates/registration/change_password.html:38
 #: frontoffice/templates/registration/forgot_password_confirm.html:42
 msgid "Change my password"
 msgstr "Wijzigen mijn wachtwoord"
 
 #: frontoffice/templates/registration/change_password_done.html:4
-#: frontoffice/templates/registration/change_password_done.html:8
+#: frontoffice/templates/registration/change_password_done.html:9
 msgid "Password change successful"
 msgstr "Wachtwoord gewijzigd"
 
 #: frontoffice/templates/registration/change_password_done.html:10
 msgid "Your password was changed."
 msgstr "Je wachtwoord is gewijzigd"
+
+#: frontoffice/templates/registration/change_password_done.html:11
+msgid "Go back to your settings page."
+msgstr "Ga terug naar de instellingen pagina."
 
 #: frontoffice/templates/registration/forgot_password.html:19
 msgid "Forgot password"
@@ -3158,20 +3408,29 @@ msgstr "U bent uitgelogd"
 msgid "Click here to login again"
 msgstr "Klik hier om weer in te loggen"
 
-#: frontoffice/templates/registration/registration_complete.html:5
-msgid "Registration complete, you will receive an email containing a link to activate your account."
+#: frontoffice/templates/registration/registration_complete.html:7
+msgid "Registration complete"
+msgstr "Registratie voltooit"
+
+#: frontoffice/templates/registration/registration_complete.html:10
+msgid "You will receive an email containing a link to activate your account."
 msgstr "Registratie voltooid, u ontvangt een e-mail met een link om uw account te activeren."
 
 #: frontoffice/templates/registration/registration_form.html:8
+msgid "Registreren als bezoeker"
+msgstr "Registreer als bezoeker"
+
+#: frontoffice/templates/registration/registration_form.html:14
 msgid "Register"
 msgstr "Registreer"
 
-#: frontoffice/wizards/test.py:44
-#: questions/forms/__init__.py:90
-#: questions/forms/__init__.py:101
-#: questions/forms/__init__.py:107
-#: questions/forms/types.py:58
+#: frontoffice/wizards/match.py:55
+#: questions/forms/__init__.py:98
+#: questions/forms/__init__.py:111
+#: questions/forms/__init__.py:117
+#: questions/forms/types.py:59
 #: questions/forms/types.py:73
+#: questions/forms/types.py:89
 msgid "Geen voorkeur"
 msgstr "Geen voorkeur"
 
@@ -3181,7 +3440,7 @@ msgstr "Algemene voorwaarden"
 
 #: invitations/forms.py:21
 #, python-format
-msgid "Bij deze gaat u akkoord met onze <a href=\"%(url)s\">Algemene Voorwaarden</a>"
+msgid "Bij dezen gaat u akkoord met onze <a href=\"%(url)s\">Algemene Voorwaarden</a>"
 msgstr "Bij deze gaat u akkoord met onze <a href=\"%(url)s\">Algemene Voorwaarden</a>"
 
 #: invitations/forms.py:23
@@ -3215,10 +3474,6 @@ msgstr "Van gebruiker"
 #: invitations/models.py:14
 msgid "To User"
 msgstr "Aan gebruiker"
-
-#: invitations/models.py:15
-msgid "Hash"
-msgstr "Hash"
 
 #: invitations/models.py:16
 msgid "View"
@@ -3280,7 +3535,7 @@ msgstr "Gemaakt"
 msgid "Updated"
 msgstr "Geüpdatet"
 
-#: invitations/views.py:120
+#: invitations/views.py:119
 msgid "The invitation has been resend"
 msgstr "De uitnodiging is verzonden naar dit adres."
 
@@ -3316,15 +3571,6 @@ msgstr "Accepteer uitnodiging"
 msgid "I already have an account"
 msgstr "Ik heb al een account"
 
-#: matches/models.py:8
-#: political_profiles/models.py:192
-#: political_profiles/models.py:506
-#: political_profiles/models.py:544
-#: utils/models.py:9
-#: utils/models.py:27
-msgid "User"
-msgstr "Gebruiker"
-
 #: political_profiles/forms.py:21
 msgid "Monday"
 msgstr "Maandag"
@@ -3354,12 +3600,12 @@ msgid "Sunday"
 msgstr "Zondag"
 
 #: political_profiles/forms.py:38
-#: political_profiles/models.py:231
+#: political_profiles/models.py:233
 msgid "Date Of Birth"
 msgstr "Geboortedatum"
 
 #: political_profiles/forms.py:47
-#: political_profiles/models.py:239
+#: political_profiles/models.py:241
 msgid "Number of Children"
 msgstr "Aantal kinderen"
 
@@ -3388,7 +3634,7 @@ msgid "... Charity?"
 msgstr "... goede doel?"
 
 #: political_profiles/forms.py:71
-#: political_profiles/models.py:246
+#: political_profiles/models.py:248
 msgid "What charity do you care for most?"
 msgstr "Met welke liefdadigheid heeft u de meeste affiniteit"
 
@@ -3413,7 +3659,7 @@ msgid "... Sport Club?"
 msgstr "... Sport Club?"
 
 #: political_profiles/forms.py:83
-#: political_profiles/models.py:236
+#: political_profiles/models.py:238
 msgid "Introduction"
 msgstr "Introductie"
 
@@ -3426,343 +3672,352 @@ msgid "Deze foto zal getoond worden op uw profiel en in het kandidatenoverzicht 
 msgstr "Deze foto zal getoond worden op uw profiel en in het kandidatenoverzicht bij uw partij. Wij willen u verzoeken om een staande foto (verticaal) te gebruiken."
 
 #: political_profiles/forms.py:85
-#, fuzzy
 msgid "Link naar een persoonlijke YouTube video. Deze vindt u rechts in het grijze vlak onder URL op de website van YouTube."
 msgstr "Link naar een persoonlijke YouTube video. Deze vindt u rechts in het grijze vlak onder ‘URL’ op de website van YouTube."
 
 #: political_profiles/forms.py:94
+#: political_profiles/forms.py:119
 msgid "De uitnodiging wordt verzonden naar dit adres."
 msgstr "De uitnodiging wordt verzonden naar dit adres."
 
 #: political_profiles/forms.py:107
-#: political_profiles/forms.py:144
-#: political_profiles/forms.py:207
+#: political_profiles/forms.py:139
+#: political_profiles/forms.py:176
+#: political_profiles/forms.py:239
 #, python-format
 msgid "A user with the email address %(email)s exists but has access as a differend type of user, you need to use a differend email adres to invite this person"
 msgstr "Een gebruiker met het e-mailadres %(email)s bestaat al maar heeft toegang als een ander type gebruiker, u moet een ander e-mailadres gebruiken om deze persoon uit te nodigen"
 
-#: political_profiles/forms.py:120
-#: political_profiles/forms.py:184
+#: political_profiles/forms.py:136
+#, python-format
+msgid "Another user with the email address %(email)s exists"
+msgstr "Een andere gebruiker met het e-mail adres %(email)s bestaat"
+
+#: political_profiles/forms.py:152
+#: political_profiles/forms.py:216
 msgid "The invitation will be sent to this address."
 msgstr "De uitnodiging wordt verzonden naar dit adres."
 
-#: political_profiles/forms.py:128
+#: political_profiles/forms.py:160
 msgid "Invite the administrative contact for this council:"
 msgstr "Nodig de administratieve contactpersoon voor deze raad uit:"
 
-#: political_profiles/forms.py:129
+#: political_profiles/forms.py:161
 msgid "This contact will be invited to complete further setup for this council."
 msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze raad in te voeren."
 
-#: political_profiles/forms.py:161
-#: political_profiles/forms.py:219
+#: political_profiles/forms.py:193
+#: political_profiles/forms.py:251
 msgid "Vul hier uw telefoonnummer in (formaat: 010-1234567)."
 msgstr "Vul hier uw telefoonnummer in (formaat: 010-1234567)."
 
-#: political_profiles/forms.py:162
-#: political_profiles/forms.py:221
-#: political_profiles/forms.py:234
+#: political_profiles/forms.py:194
+#: political_profiles/forms.py:253
+#: political_profiles/forms.py:266
 msgid "Working days"
 msgstr "Werkdagen"
 
-#: political_profiles/forms.py:162
-#: political_profiles/forms.py:221
+#: political_profiles/forms.py:194
+#: political_profiles/forms.py:253
 msgid "Vul hier de dagen in wanneer wij u telefonische kunnen bereiken."
 msgstr "Vul hier de dagen in wanneer wij u telefonische kunnen bereiken."
 
-#: political_profiles/forms.py:168
+#: political_profiles/forms.py:200
 msgid "Chancery website"
 msgstr "Griffie website"
 
-#: political_profiles/forms.py:169
+#: political_profiles/forms.py:201
 msgid "Chancery Contact Information"
 msgstr "Griffie contactinformatie"
 
-#: political_profiles/forms.py:176
+#: political_profiles/forms.py:208
 msgid "Use Councils Address"
 msgstr "Gebruik het adres van de raad"
 
-#: political_profiles/forms.py:176
+#: political_profiles/forms.py:208
 msgid "Select if you want to use the same address as the councils address"
 msgstr "Selecteer als u hetzelfde adres wilt gebruiken als het adres van de raad"
 
-#: political_profiles/forms.py:191
+#: political_profiles/forms.py:223
 msgid "Invite the administrative contact for this party:"
 msgstr "Nodig de administratieve contactpersoon uit:"
 
-#: political_profiles/forms.py:192
+#: political_profiles/forms.py:224
 msgid "This contact will be invited to complete further setup for this party."
 msgstr "Deze contactpersoon zal uitgenodigd worden om verdere gegevens voor deze partij in te voeren."
 
-#: political_profiles/forms.py:246
-#: political_profiles/forms.py:255
-#: political_profiles/forms.py:264
-#: political_profiles/models.py:382
-#: political_profiles/models.py:395
-#: political_profiles/models.py:407
-#: political_profiles/models.py:420
+#: political_profiles/forms.py:278
+#: political_profiles/forms.py:287
+#: political_profiles/forms.py:296
+#: political_profiles/models.py:383
+#: political_profiles/models.py:396
+#: political_profiles/models.py:408
+#: political_profiles/models.py:421
 msgid "URL"
 msgstr "URL"
 
-#: political_profiles/forms.py:254
-#: political_profiles/models.py:406
+#: political_profiles/forms.py:286
+#: political_profiles/models.py:407
 msgid "Organisation Name"
 msgstr "Organisatie naam"
 
-#: political_profiles/forms.py:262
-#: political_profiles/models.py:418
+#: political_profiles/forms.py:294
+#: political_profiles/models.py:419
 msgid "Affiliated Organisation Name"
 msgstr "Aangesloten organisatie naam"
 
-#: political_profiles/forms.py:263
-#: political_profiles/models.py:419
+#: political_profiles/forms.py:295
+#: political_profiles/models.py:420
 msgid "Location"
 msgstr "Lokatie"
 
-#: political_profiles/forms.py:265
-#: political_profiles/models.py:422
+#: political_profiles/forms.py:297
+#: political_profiles/models.py:423
 msgid "Date and Time of Appearance"
 msgstr "Datum en tijd van optreden"
 
-#: political_profiles/forms.py:272
-#: political_profiles/models.py:433
+#: political_profiles/forms.py:304
+#: political_profiles/models.py:434
 msgid "Company Name"
 msgstr "Bedrijfsnaam"
 
-#: political_profiles/forms.py:276
-#: political_profiles/forms.py:298
-#: political_profiles/forms.py:321
-#: political_profiles/forms.py:410
-#: political_profiles/forms.py:439
-#: political_profiles/forms.py:468
+#: political_profiles/forms.py:308
+#: political_profiles/forms.py:330
+#: political_profiles/forms.py:353
+#: political_profiles/forms.py:442
+#: political_profiles/forms.py:471
+#: political_profiles/forms.py:500
 msgid "Leaving this empty will indicate it is ongoing"
 msgstr "Als u dit leeg laat geeft u aan dat het nog aan de gang is."
 
-#: political_profiles/forms.py:285
-#: political_profiles/forms.py:308
-#: political_profiles/forms.py:331
-#: political_profiles/forms.py:419
-#: political_profiles/forms.py:452
-#: political_profiles/forms.py:482
+#: political_profiles/forms.py:317
+#: political_profiles/forms.py:340
+#: political_profiles/forms.py:363
+#: political_profiles/forms.py:451
+#: political_profiles/forms.py:484
+#: political_profiles/forms.py:514
 msgid "End date should be after the start date"
 msgstr "Eind datum moet na de start datum liggen"
 
-#: political_profiles/forms.py:294
-#: political_profiles/models.py:449
+#: political_profiles/forms.py:326
+#: political_profiles/models.py:450
 msgid "Institute Name"
 msgstr "Instituutsnaam"
 
-#: political_profiles/forms.py:296
-#: political_profiles/models.py:451
+#: political_profiles/forms.py:328
+#: political_profiles/models.py:452
 msgid "Field"
 msgstr "Opleiding"
 
-#: political_profiles/forms.py:499
+#: political_profiles/forms.py:531
 msgid "I confirm that this information is correct. Any trouble or problems that occur because I submitted wrong data are for my account and not for WKJ, HNS or GL."
 msgstr "Ik bevestig dat deze informatie correct is. Enige problemen die optreden omdat ik verkeerde gegevens opstuur, zijn voor mijn rekening en niet voor WKJ, HNS of GL."
 
-#: political_profiles/forms.py:507
+#: political_profiles/forms.py:539
 msgid "HNS.DEV"
 msgstr "HNS.DEV"
 
-#: political_profiles/forms.py:507
+#: political_profiles/forms.py:539
 msgid "Bij deze gaat u ermee akkoord dat uw gegevens worden opgeslagen in HNS.dev."
 msgstr "Bij deze gaat u ermee akkoord dat uw gegevens worden opgeslagen in HNS.dev."
 
-#: political_profiles/forms.py:510
+#: political_profiles/forms.py:542
 msgid "Science"
 msgstr "Wetenschappelijk onderzoek"
 
-#: political_profiles/forms.py:510
-#, fuzzy
+#: political_profiles/forms.py:542
 msgid "Bij deze gaat u ermee akkoord dat uw gegevens <strong>geanonimiseerd</strong> gebruikt kunnen worden voor wetenschappelijk onderzoek."
-msgstr "Bij deze gaat u ermee akkoord dat uw gegevens kunnen worden gebruikt voor wetenschappelijk onderzoek."
+msgstr "Bij deze gaat u ermee akkoord dat uw gegevens <strong>geanonimiseerd</strong> gebruikt kunnen worden voor wetenschappelijk onderzoek."
 
-#: political_profiles/models.py:17
+#: political_profiles/models.py:19
 msgid "Male"
 msgstr "Man"
 
-#: political_profiles/models.py:18
+#: political_profiles/models.py:20
 msgid "Female"
 msgstr "Vrouw"
 
-#: political_profiles/models.py:197
+#: political_profiles/models.py:199
 msgid "I agree to the terms and conditions"
 msgstr "Ik ga akkoord met de algemene voorwaarden"
 
-#: political_profiles/models.py:201
+#: political_profiles/models.py:203
 msgid "Profile"
 msgstr "Profiel"
 
-#: political_profiles/models.py:201
+#: political_profiles/models.py:203
 msgid "Profiles"
 msgstr "Profielen"
 
-#: political_profiles/models.py:211
+#: political_profiles/models.py:213
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: political_profiles/models.py:213
+#: political_profiles/models.py:215
 msgid "Send me a text"
 msgstr "Stuur me SMS"
 
-#: political_profiles/models.py:213
+#: political_profiles/models.py:215
 msgid "Disable this if you don't want a textmessage"
 msgstr "Zet dit uit als je geen SMS wilt ontvangen"
 
-#: political_profiles/models.py:219
+#: political_profiles/models.py:221
 msgid "Visitor Profile"
 msgstr "Bezoekersprofiel"
 
-#: political_profiles/models.py:219
+#: political_profiles/models.py:221
 msgid "Visitor Profiles"
 msgstr "Bezoekersprofielen"
 
-#: political_profiles/models.py:230
+#: political_profiles/models.py:232
 msgid "Please choose your gender."
 msgstr "Kies uw geslacht."
 
-#: political_profiles/models.py:241
+#: political_profiles/models.py:243
 msgid "Religious group"
 msgstr "Geloofsgemeenschap"
 
-#: political_profiles/models.py:244
+#: political_profiles/models.py:245
+msgid "Diet"
+msgstr "Vegetariër"
+
+#: political_profiles/models.py:246
 msgid "Favourite Newspaper"
 msgstr "Favoriete krant"
 
-#: political_profiles/models.py:245
+#: political_profiles/models.py:247
 msgid "What is your regular method of transport"
 msgstr "Wat is uw meest gebruikte methode van vervoer"
 
-#: political_profiles/models.py:247
+#: political_profiles/models.py:249
 msgid "What is your favourite media chanel?"
 msgstr "Wat is uw favoriete media kanaal?"
 
-#: political_profiles/models.py:248
+#: political_profiles/models.py:250
 msgid "What is your favourite sport?"
 msgstr "Wat is uw favorieten sport?"
 
-#: political_profiles/models.py:249
+#: political_profiles/models.py:251
 msgid "What is your hobby"
 msgstr "Wat is uw hobby?"
 
-#: political_profiles/models.py:250
+#: political_profiles/models.py:252
 msgid "What is your favourite sport club"
 msgstr "Wat is uw favorieten sport club?"
 
-#: political_profiles/models.py:251
+#: political_profiles/models.py:253
 msgid "What is your favourite pet"
 msgstr "Wat is uw favoriete huisdier"
 
-#: political_profiles/models.py:252
+#: political_profiles/models.py:254
 msgid "Days of political experience"
 msgstr "Dagen politieke ervaring"
 
-#: political_profiles/models.py:253
+#: political_profiles/models.py:255
 msgid "Days of work experience"
 msgstr "Dagen werkervaring"
 
-#: political_profiles/models.py:255
+#: political_profiles/models.py:257
 msgid "I agree to my information being added to HNS.Dev"
 msgstr "Ik ga akkoord dat m'n informatie aan HNS.Dev wordt toegevoegd"
 
-#: political_profiles/models.py:256
+#: political_profiles/models.py:258
 msgid "I agree to my information being used for scientific purposes"
 msgstr "Ik ga akkoord dat mijn informatie voor wetenschappelijke doeleinden gebruikt wordt."
 
-#: political_profiles/models.py:307
+#: political_profiles/models.py:308
 msgid "Politician Profile"
 msgstr "Politicusprofiel"
 
-#: political_profiles/models.py:307
+#: political_profiles/models.py:308
 msgid "Politician Profiles"
 msgstr "Politicusprofielen"
 
-#: political_profiles/models.py:320
-#: political_profiles/models.py:350
+#: political_profiles/models.py:321
+#: political_profiles/models.py:351
 msgid "Working Days"
 msgstr "Werkdagen"
 
-#: political_profiles/models.py:337
+#: political_profiles/models.py:338
 msgid "Chancery Profile"
 msgstr "Griffie profiel"
 
-#: political_profiles/models.py:337
+#: political_profiles/models.py:338
 msgid "Chancery Profiles"
 msgstr "Griffie profielen"
 
-#: political_profiles/models.py:359
+#: political_profiles/models.py:360
 msgid "A short description of yourself"
 msgstr "Een korte beschrijving van uzelf"
 
-#: political_profiles/models.py:371
+#: political_profiles/models.py:372
 msgid "Contact Profile"
 msgstr "Contactprofiel"
 
-#: political_profiles/models.py:371
+#: political_profiles/models.py:372
 msgid "Contact Profiles"
 msgstr "Contactprofielen"
 
-#: political_profiles/models.py:387
+#: political_profiles/models.py:388
 msgid "Link"
 msgstr "Link"
 
-#: political_profiles/models.py:400
+#: political_profiles/models.py:401
 msgid "Connection"
 msgstr "Connectie"
 
-#: political_profiles/models.py:400
+#: political_profiles/models.py:401
 msgid "Connections"
 msgstr "Connecties"
 
-#: political_profiles/models.py:412
+#: political_profiles/models.py:413
 msgid "Intrest"
 msgstr "Interesse"
 
-#: political_profiles/models.py:412
+#: political_profiles/models.py:413
 msgid "Intrests"
 msgstr "Interesses"
 
-#: political_profiles/models.py:426
+#: political_profiles/models.py:427
 msgid "Politician Appearance"
 msgstr "Politiek optreden"
 
-#: political_profiles/models.py:426
+#: political_profiles/models.py:427
 msgid "Politician Appearances"
 msgstr "Politieke optredens"
 
-#: political_profiles/models.py:442
+#: political_profiles/models.py:443
 msgid "Work experience"
 msgstr "Werkervaring"
 
-#: political_profiles/models.py:474
+#: political_profiles/models.py:475
 msgid "Politicial Experience"
 msgstr "Politieke ervaring"
 
-#: political_profiles/models.py:481
-#: political_profiles/models.py:485
-#: political_profiles/models.py:505
+#: political_profiles/models.py:482
+#: political_profiles/models.py:486
+#: political_profiles/models.py:506
 msgid "Goal"
 msgstr "Doel"
 
-#: political_profiles/models.py:481
+#: political_profiles/models.py:482
 msgid "Vul hier uw doel in."
 msgstr "Vul hier uw doel in."
 
-#: political_profiles/models.py:504
-#: political_profiles/models.py:509
+#: political_profiles/models.py:505
+#: political_profiles/models.py:510
 msgid "Ranking"
 msgstr "Ordering"
 
-#: political_profiles/models.py:509
+#: political_profiles/models.py:510
 msgid "Rankings"
 msgstr "Ordeningen"
 
-#: political_profiles/models.py:548
+#: political_profiles/models.py:550
 msgid "Roughly number of views"
 msgstr "Aantal keer bekeken"
 
-#: political_profiles/models.py:549
+#: political_profiles/models.py:551
 msgid "View stats last update"
 msgstr "Bekijk statistieken laatste update"
 
@@ -3819,78 +4074,70 @@ msgstr "Waarde frontoffice"
 msgid "Meta"
 msgstr "Meta"
 
-#: questions/settings.py:41
+#: questions/settings.py:51
+msgid "Politicians chooses one, Visitor selects one but calculation based on meta"
+msgstr "Politici leeftijd, Bezoeker selecteer leeftijd reeks"
+
+#: questions/settings.py:52
 msgid "Politicians Age, Visitor Selects age range"
 msgstr "Politici leeftijd, Bezoeker selecteer leeftijd reeks"
 
-#: questions/settings.py:42
+#: questions/settings.py:53
 msgid "Politicians gender, Visitor Selects gender"
-msgstr ""
+msgstr "Politicians gender, Visitor Selects gender"
 
-#: questions/settings.py:43
-msgid "Politicians hobby, Visitor Selects hobbies"
-msgstr ""
-
-#: questions/settings.py:44
+#: questions/settings.py:54
 msgid "Politicians religon, Visitor Selects religons"
-msgstr ""
+msgstr "Politicians religon, Visitor Selects religons"
 
-#: questions/settings.py:45
+#: questions/settings.py:55
 msgid "Politicians education level, Visitor Selects range"
-msgstr ""
+msgstr "Politicians education level, Visitor Selects range"
 
-#: questions/settings.py:46
+#: questions/settings.py:56
+msgid "Politicians Question Themes, Visitor Selects Theme"
+msgstr "Politici leeftijd, Bezoeker selecteer leeftijd reeks"
+
+#: questions/settings.py:57
 msgid "Politicians work experience years, Visitor Selects range"
-msgstr ""
+msgstr "Politicians work experience years, Visitor Selects range"
 
-#: questions/settings.py:47
+#: questions/settings.py:58
 msgid "Politicians work experience, Visitor Selects multiple from model"
-msgstr ""
+msgstr "Politicians work experience, Visitor Selects multiple from model"
 
-#: questions/settings.py:48
-msgid "Politician Chooses Multiple, Visitor Selects One"
-msgstr ""
-
-#: questions/settings.py:49
-msgid "Politician Chooses One, Visitor Selects Many"
-msgstr ""
-
-#: questions/settings.py:50
+#: questions/settings.py:59
 msgid "Politician Chooses One, Visitor Selects One"
-msgstr ""
+msgstr "Politician Chooses One, Visitor Selects One"
 
-#: questions/settings.py:51
+#: questions/settings.py:60
 msgid "Politician Chooses Multiple, Visitor Selects Multiple"
-msgstr ""
+msgstr "Politician Chooses Multiple, Visitor Selects Multiple"
 
-#: questions/settings.py:52
+#: questions/settings.py:61
 msgid "Both Politician and Visitor selects (yes/no, agree/disagree)"
 msgstr "Beide selecteren (ja/nee, eens/oneens)"
 
-#: questions/settings.py:53
+#: questions/settings.py:62
 msgid "Politcian profile detais are used, Visitor Selects One"
-msgstr ""
+msgstr "Politcian profile detais are used, Visitor Selects One"
 
-#: questions/settings.py:54
+#: questions/settings.py:63
 msgid "Politcian profile detais are used, Visitor Selects Multiple"
-msgstr ""
+msgstr "Politcian profile detais are used, Visitor Selects Multiple"
 
-#: questions/settings.py:55
-msgid "Politcian profile information is used to make statistics, Visitor Selects One"
-msgstr ""
-
-#: questions/settings.py:56
-msgid "Politcian profile information is used to make statistics, Visitor Selects Multiple"
-msgstr ""
+#: questions/settings.py:64
+msgid "Politcian model information has multiple correct answers, Visitor Selects Miltiple"
+msgstr "Politcian model information has multiple correct answers, Visitor Selects Miltiple"
 
 #: questions/forms/types.py:68
 #: questions/forms/types.py:83
 msgid "You need to provide a model to the ModelAnswerForm"
-msgstr ""
+msgstr "You need to provide a model to the ModelAnswerForm"
 
 #: templates/comments/form.html:17
-#: templates/comments/political_profiles_politicalgoal_preview.html:35
-#: templates/comments/political_profiles_politicianprofile_preview.html:35
+#: templates/comments/political_profiles_politicalgoal_preview.html:40
+#: templates/comments/political_profiles_politicianprofile_preview.html:39
 #: templates/comments/preview.html:32
 #: templates/comments/political_profiles/politicalgoal/form.html:17
 #: templates/comments/political_profiles/politicianprofile/form.html:17
@@ -3911,29 +4158,22 @@ msgstr "Voorbeeld"
 msgid "Preview your comment"
 msgstr "Bekijk uw reactie"
 
-#: templates/comments/political_profiles_politicalgoal_preview.html:11
-#: templates/comments/political_profiles_politicianprofile_preview.html:11
+#: templates/comments/political_profiles_politicalgoal_preview.html:12
+#: templates/comments/political_profiles_politicianprofile_preview.html:12
 #: templates/comments/preview.html:11
 msgid "Please correct the error below"
 msgid_plural "Please correct the errors below"
 msgstr[0] "Corrigeer de fout hieronder"
 msgstr[1] "Corrigeer de fouten hieronder"
 
-#: templates/comments/political_profiles_politicalgoal_preview.html:12
-#: templates/comments/political_profiles_politicalgoal_preview.html:15
-#: templates/comments/political_profiles_politicianprofile_preview.html:12
-#: templates/comments/political_profiles_politicianprofile_preview.html:15
-msgid "Back"
-msgstr "Terug"
-
-#: templates/comments/political_profiles_politicalgoal_preview.html:18
-#: templates/comments/political_profiles_politicianprofile_preview.html:18
+#: templates/comments/political_profiles_politicalgoal_preview.html:24
+#: templates/comments/political_profiles_politicianprofile_preview.html:24
 #: templates/comments/preview.html:16
 msgid "Post your comment"
 msgstr "Verstuur uw reactie"
 
-#: templates/comments/political_profiles_politicalgoal_preview.html:19
-#: templates/comments/political_profiles_politicianprofile_preview.html:19
+#: templates/comments/political_profiles_politicalgoal_preview.html:25
+#: templates/comments/political_profiles_politicianprofile_preview.html:25
 #: templates/comments/preview.html:16
 msgid "or make changes"
 msgstr "of maak wijzigingen"
@@ -3944,7 +4184,7 @@ msgstr "geleden"
 
 #: templates/utils_tags/_tweets.html:10
 msgid "There are no posts that could be fetched"
-msgstr ""
+msgstr "Er konden geen tweets gevonden worden"
 
 #: utils/emails.py:27
 msgid "No plain-text template is specified for sending of an e-mail."
@@ -4044,24 +4284,16 @@ msgid "Request path"
 msgstr "Request path"
 
 #: utils/models.py:25
-#, fuzzy
 msgid "Post data"
 msgstr "Metadata"
 
-#: utils/models.py:28
-#, fuzzy
-msgid "Ip address of the user"
-msgstr "Adres van de raad"
-
 #: utils/models.py:34
-#, fuzzy
 msgid "Post Log"
-msgstr "Verstuur"
+msgstr "Post log"
 
 #: utils/models.py:34
-#, fuzzy
 msgid "Post logs"
-msgstr "Verstuur"
+msgstr "Post logs"
 
 #: utils/multipathform.py:474
 msgid "We apologize, but your form has expired. Please continue filling out the form from this page."
@@ -4130,5 +4362,4 @@ msgstr "Jaar"
 #: utils/widgets.py:809
 msgid "Unknown"
 msgstr "Onbekend"
-
 
