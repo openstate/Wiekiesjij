@@ -73,7 +73,7 @@
                         <div>{% if user.profile|in:profile.fans.all %}
                                 <a href="{% url fo.visitor.remove_fan profile.user.pk %}" title="{% trans 'Stop being a fan' %}">[{% trans 'Stop being a fan' %}]</a>
                              {% else %}
-                                <a href="{% url fo.visitor.add_fan profile.user.pk %}" title="{% trans 'Become a fan' %}">[{% trans 'Become a fan' %}]</a>
+                                <a href="{% url fo.visitor.add_fan profile.user.pk %}" title="{% trans 'Become a fan' %}" class="btn">[{% trans 'Become a fan' %}]</a>
                              {% endif %}
                         </div>
                         {% endisprofile %}

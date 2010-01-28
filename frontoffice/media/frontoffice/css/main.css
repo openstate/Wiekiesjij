@@ -501,7 +501,7 @@
 								}
 								
 				.breadcrumbs {
-					margin:.2em 10px 1em;
+					margin:.2em 10px 2em;
 					font-size:12px;
 					line-height:1.4em;
 					overflow:hidden;_zoom:1;
@@ -513,6 +513,7 @@
 						float:left;
 						padding-left:28px;
 						margin-right:10px;
+						margin-bottom:.3em;
 						background:url(../img/h1Arrow.gif) left center no-repeat;
 						}
 					.breadcrumbs li.first {
@@ -1244,6 +1245,7 @@
 										}
 										
 										.quickProfileInfo tr.fan td {
+											padding-top:1em;
 											text-align:center;
 											}
 											
@@ -1708,7 +1710,7 @@
 										}
 										
 									.goals a {
-										color:#ed2227;
+										color:#000;
 										margin-top:2px;
 										}
 									.goals .score {
