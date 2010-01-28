@@ -95,7 +95,7 @@
         <div class="ballotPosition">
         	<p>{{ profile.introduction|default:'' }}</p>
             <a href="{% url fo.election profile.party.current_eip.id %}">
-            {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.region as region %}
+            {% blocktrans with profile.first_name as name and profile.position as position and profile.party.abbreviation as party and profile.party.current_eip.election_instance.name as region %}
                 {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
             {% endblocktrans %}
             </a>

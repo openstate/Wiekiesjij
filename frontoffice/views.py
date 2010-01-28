@@ -125,8 +125,10 @@ def match(request, election_instance_id = None, iframe=None):
 def election(request, id=None):
 
     politicians = []
-    if 'ElectionInstance' in request.session:
+    if 'ElectionInstance' in request.session and id is None:
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=request.session['ElectionInstance']['id'])
+    elif id is not None:
+        election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, election_instance_parties__id=id)
     else:
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
     selected_eip = None
