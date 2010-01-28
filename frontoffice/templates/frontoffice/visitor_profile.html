@@ -38,5 +38,23 @@
                 </ul>
            	</div>
        	</div>
+        <div class="mod fav-pols">
+        	<div class="hd">
+    			<h1>{% trans 'My match results' %}:</h1>
+          	</div>
+            <div class="bd">
+                <ul>
+                    {% for result in results %}
+                        <li>
+                            {% trans 'Region' %}: {{ result.election_instance.council.region }} ({{ result.datetime_stamp.date }}) - <a href="{% url fo.match_results result.hash %}">{% trans 'See Results' %}</a>
+                        </li>
+                    {% empty %}
+                        <li class="empty">
+                            {% trans "You have not been matched yet" %}
+                        </li>
+                    {% endfor %}
+                </ul>
+           	</div>
+       	</div>
 	</div>
 {% endblock cols %}

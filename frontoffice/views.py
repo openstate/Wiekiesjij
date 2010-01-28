@@ -56,7 +56,7 @@ def answer_question(request, election_instance_party_id, user_id=None):
     return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
 
 def match_results(request, hash, iframe=None):
-    result = VisitorResult.objects.get(hash=hash)
+    result = get_object_or_404(VisitorResult,hash=hash)
     candidates = result.candidate_answers.all()
     if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
         visitors_profile = request.user.profile
@@ -386,6 +386,7 @@ def party_profile(request, eip_id, tab='can'):
 def edit_visitor_profile(request):
     user = request.user
     profile = get_object_or_404(VisitorProfile, user=user)
+    results = VisitorResult.objects.filter(user=user)
 
     if request.method == 'POST':
         form = VisitorProfileForm(request.POST)
@@ -407,7 +408,7 @@ def edit_visitor_profile(request):
             }
         form = VisitorProfileForm(initial=initial_dict)
 
-    return render_to_response('frontoffice/visitor_profile.html', {'profile': profile, 'form':form}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/visitor_profile.html', {'results':results, 'profile': profile, 'form':form}, context_instance=RequestContext(request))
 
 @visitors_only
 def fan_add(request, politician_id):
