@@ -41,9 +41,9 @@
                 {% render_comment_form for goal %}
             {% endisprofile %}
 
-            {% ifequal goal.politician.user.id request.user.id %}
+			{% isprofile 'candidate' %}
                 {% render_comment_form for goal %}
-            {% endifequal %}
+            {% endisprofile %}
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
