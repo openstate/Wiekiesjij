@@ -31,9 +31,6 @@
 
     {% include "frontoffice/quick_profile.html" %}
 
-    
-
-    
         <div class="mod tabbed">
             <div class="hd">
 <!-- TABS -->
@@ -242,10 +239,16 @@
                             <strong><a href="{% url fo.goal goal.id %}">{{ goal.goal }}</a></strong>
                             <p class="score" title="{% isprofile 'visitor' %}{% trans 'Vote now!' %}{% else %}{% trans 'When you log in, you can vote too!' %}{% endisprofile %}">
                             	{% if user.is_authenticated %}
-                                    {% isprofile 'visitor' %}
+                                    {% ifequal request.user.profile.type 'visitor' %}
                                         <a href="{% url fo.thumbs_up goal.id %}" class="thumbsup">{% trans "Good" %}</a>
                                         <a href="{% url fo.thumbs_down goal.id %}" class="thumbsdown">{% trans "Bad" %}</a>
-                                    {% endisprofile %}
+                                    {% else %}
+                                        <a class="thumbsup" title="You need to be a registered visitor to do this">{% trans "Good" %}</a>
+                                        <a class="thumbsdown" title="You need to be a registered visitor to do this">{% trans "Bad" %}</a>
+                                    {% endifequal %}
+                                {% else %}
+                                    <a href="{% url registration_register %}"  class="thumbsup" title="You need to be a registered visitor to do this">{% trans "Good" %}</a>
+                                    <a href="{% url registration_register %}" class="thumbsdown" title="You need to be a registered visitor to do this">{% trans "Bad" %}</a>
                                 {% endif %}
                                 {% trans 'Score' %}: {{ goal.ranking|default:0 }} 
                                 <span class="num-votes">({{ goal.count_rankings|default:0 }} {% trans 'Votes' %})</span>
@@ -254,12 +257,16 @@
                             {% get_comment_count for goal as comment_count %}
                             <span class="comments">
                             <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
-                            {% isprofile 'visitor' %}
-                                - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
-                            {% endisprofile %}
-                            {% ifequal goal.politician.user.id request.user.id %}
-                                - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
-                            {% endifequal %}
+                            {% if request.user.is_authenticated %}
+                                {% isprofile 'visitor' %}
+                                    - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                                {% endisprofile %}
+                                {% ifequal request.user.profile.type 'politician' %}
+                                    - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                                {% endifequal %}
+                            {% else %}
+                                - <a href="{% url registration_register %}" title="You need to be a registered visitor to do this">{% trans 'React' %}</a>
+                            {% endif %}
                             </span>
                         </li>
                     {% endfor %}

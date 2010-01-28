@@ -69,14 +69,31 @@
                             {{ name }} has got {{ fans }} fans
                         {% endblocktrans %}
 
-                        {% isprofile 'visitor' %}
-                        <div>{% if user.profile|in:profile.fans.all %}
-                                <a href="{% url fo.visitor.remove_fan profile.user.pk %}" title="{% trans 'Stop being a fan' %}">[{% trans 'Stop being a fan' %}]</a>
-                             {% else %}
-                                <a href="{% url fo.visitor.add_fan profile.user.pk %}" title="{% trans 'Become a fan' %}" class="btn">[{% trans 'Become a fan' %}]</a>
-                             {% endif %}
-                        </div>
-                        {% endisprofile %}
+                        {% url fo.visitor.add_fan profile.user.pk as fan_url %}
+                        {% url registration_register as not_fan_url %}
+                        {% ifequal user.profile.type 'visitor' %}
+                            <div>{% if request.user.profile|in:profile.fans.all %}
+                                    <a href="{% url fo.visitor.remove_fan profile.user.pk %}" title="{% trans 'Stop being a fan' %}">[{% trans 'Stop being a fan' %}]</a>
+                                 {% else %}
+                                    {% blocktrans with fan_url as url and profile.first_name as name %}
+                                        Become a <a href="{{ url }}">fan</a> of {{ name }}
+                                    {% endblocktrans %}
+                                 {% endif %}
+                            </div>
+                        {% else %}
+                            <div>
+                                {% if not request.user.is_authenticated %}
+                                    {% blocktrans with not_fan_url as url and profile.first_name as name %}
+                                        Become a <a href="{{ url }}" title="You need to be a registered visitor to do this">fan</a> of {{ name }}
+                                    {% endblocktrans %}
+                                {% else %}
+                                    {% blocktrans with  profile.first_name as name %}
+                                        Become a <a title="You need to be a registered visitor to do this">fan</a> of {{ name }}
+                                    {% endblocktrans %}                                
+                                {% endif %}
+                            </div>
+                        {% endifequal %}
+                        
                     </td>
                 </tr>
             </table>
