@@ -60,10 +60,22 @@
 			ul {
 				list-style:none;
 				}
-			li {
-				display:block;_zoom:1;
-				list-style:none;
+				li {
+					display:block;_zoom:1;
+					list-style:none;
+					}
+			ol {
+				line-height:1.4em;
+				padding-left:2em;
+				margin-bottom:.5em;
 				}
+				ol li {
+					list-style-type:decimal;
+					list-style-position:outside;
+					display:list-item;
+					}
+			
+			
 					
 	/* 	Tabs
 		----------------------------------------------------------------------------------------- */
@@ -546,7 +558,7 @@
 					
 					.mod {
 						background:#E0E0E0;
-						margin:34px 10px 50px 20px;
+						margin:50px 10px 50px 20px;
 						position:relative;
 						}
 						.mod .mod {
@@ -799,7 +811,7 @@
 				}
 			
 		.select-region {
-			
+			margin-top:34px;
 			}
 			.select-region .bd {
 				padding-left:65px;
@@ -1906,6 +1918,12 @@
 				}
 				#footer a {
 					color:#8d8d8d;
+					}
+				
+				#footer .cc-license img {
+					display:block;
+					float:left;
+					margin:.1em .5em 0 0;
 					}
 				
 				#footer .bookmarks {
