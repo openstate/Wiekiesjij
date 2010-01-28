@@ -723,6 +723,7 @@ class AddCandidateWizard(MultiPathFormWizard):
             }
             created, self.candidate = create_profile('candidate', tmp_data)
             
+            # If it's an existing user and (s)he is already in this party as candidate we won't allow it
             if not created and Candidacy.objects.filter(election_party_instance__pk=self.election_instance_party_id, candidate=self.candidate.user).count() != 0:
                 request.user.message_set.create(message=ugettext('Elke kandidaat van een partij moet een uniek e-mail adres hebben.'))
                 #We need to commit the transaction, even if we didn't do anything, or the transaction manager will throw an error

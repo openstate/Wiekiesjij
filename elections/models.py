@@ -299,6 +299,7 @@ class Candidacy(models.Model):
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
         unique_together = (
             ('election_party_instance', 'candidate'),
+            ('election_party_instance', 'position'),
         )
 
     def profile_incomplete(self):
