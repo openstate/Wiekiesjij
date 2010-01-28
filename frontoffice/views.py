@@ -382,9 +382,12 @@ def party_profile(request, eip_id, tab='can'):
 #        return redirect('fo.login')
 #    return render_to_response('frontoffice/dashboard.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))
 
-@visitors_only
 def edit_visitor_profile(request):
     user = request.user
+
+    if user.profile and user.profile != 'visitor':
+        return redirect('fo.redirect')
+
     profile = get_object_or_404(VisitorProfile, user=user)
     results = VisitorResult.objects.filter(user=user)
 
