@@ -105,7 +105,7 @@ def match_results(request, hash, iframe=None):
 def match_welcome(request, election_instance_id = None, iframe = None):
     if not election_instance_id:
         return redirect('fo.home')
-    election_instance = ElectionInstance.objects.get(pk=election_instance_id)
+    election_instance = get_object_or_404(ElectionInstance, pk=election_instance_id)
 
     if iframe:
         parent = 'frontoffice/iframe.html'

@@ -28,7 +28,7 @@ class BestCandidate(MultiPathFormWizard):
     def __init__(self, *args, **kwargs):
         self.election_instance_id = kwargs['election_instance_id']
         self.iframe = kwargs['iframe']
-        self.election_instance = ElectionInstance.objects.get(id=self.election_instance_id)
+        self.election_instance = get_object_or_404(ElectionInstance, id=self.election_instance_id)
         eips = ElectionInstanceParty.objects.filter(election_instance=self.election_instance)
 
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
