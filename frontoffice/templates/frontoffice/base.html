@@ -69,9 +69,13 @@
         </div>
 
         <div id="footer">
-                <p>&copy; Copyright <a href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a> {% trans "and" %} <a href="http://getlogic.nl">Getlogic</a> 2009</p>
-                <a href="/algemene-voorwaarden/">{% trans 'Terms of Service' %}</a>
-                <a href="/disclaimer/">{% trans 'Disclaimer' %}</a>
+                <p>
+                	&copy; Copyright <a href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a> 
+                    {% trans "and" %} <a href="http://getlogic.nl">Getlogic</a> 2009 -
+                	<a href="/algemene-voorwaarden/">{% trans 'Terms of Service' %}</a> -
+                	<a href="/disclaimer/">{% trans 'Disclaimer' %}</a>
+                </p>
+                
 
                 {% block bookmarks %}{% include "frontoffice/bookmarks.html" %}{% endblock bookmarks %}
         </div>
