@@ -38,10 +38,10 @@ urlpatterns = patterns('',
 )
 
 #home page
-if settings.DEBUG:
-    urlpatterns += patterns('frontoffice.views',
-        url(r'^$', 'home', name = 'fo.home'),
-    )
+
+urlpatterns += patterns('frontoffice.views',
+    url(r'^$', 'home', name = 'fo.home'),
+)
 
 urlpatterns += patterns('frontoffice.views',
     url(r'^redirect/$', 'redirect_view', name='fo.redirect'),
