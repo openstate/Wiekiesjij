@@ -144,8 +144,7 @@ def election(request, id=None):
 
 def goal(request, id):
     goal = get_object_or_404(PoliticalGoal, pk=id)
-
-    return render_to_response('frontoffice/goal.html', {'goal': goal}, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/goal.html', {'goal': goal, 'profile':  goal.politician}, context_instance=RequestContext(request))
 
 
 

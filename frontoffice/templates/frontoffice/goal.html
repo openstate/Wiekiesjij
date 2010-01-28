@@ -78,4 +78,55 @@
         </div>
     </div>
 </div>
+{% comment %}
+<div class="col size1of2 lastCol">
+	<div class="mod">
+		<div class="hd">
+			<h2>{{ profile.full_name }}</h2>
+		</div>
+		<div class="bd">
+			{% include "frontoffice/quick_profile.html" %}
+		</div>
+	</div>
+	<div class="mod goals">
+    	<div class="hd">
+    		<h2>{% trans 'Political goals' %}</h2>
+      	</div>
+        <div class="bd">
+        	{% if profile.goals.all %}
+            <ul class="quickList">
+                {% for goal in profile.goals.all %}
+                    <li{% if forloop.last %} class="last-item"{% endif %}>
+                        <strong><a href="{% url fo.goal goal.id %}">{{ goal.goal }}</a></strong>
+                        <p class="score" title="{% isprofile 'visitor' %}{% trans 'Vote now!' %}{% else %}{% trans 'When you log in, you can vote too!' %}{% endisprofile %}">
+                        	{% if user.is_authenticated %}
+                                {% isprofile 'visitor' %}
+                                    <a href="{% url fo.thumbs_up goal.id %}" class="thumbsup">{% trans "Good" %}</a>
+                                    <a href="{% url fo.thumbs_down goal.id %}" class="thumbsdown">{% trans "Bad" %}</a>
+                                {% endisprofile %}
+                            {% endif %}
+                            {% trans 'Score' %}: {{ goal.ranking|default:0 }} 
+                            <span class="num-votes">({{ goal.count_rankings|default:0 }} {% trans 'Votes' %})</span>
+                        	
+                        </p>
+                        {% get_comment_count for goal as comment_count %}
+                        <span class="comments">
+                        <a href="{% url fo.goal goal.id %}">{{ comment_count }} {% blocktrans count comment_count as counter %}Comment{% plural %}Comments{% endblocktrans %}</a>
+                        {% isprofile 'visitor' %}
+                            - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                        {% endisprofile %}
+                        {% ifequal goal.politician.user.id request.user.id %}
+                            - <a href="{% url fo.goal goal.id %}">{% trans 'React' %}</a>
+                        {% endifequal %}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">{% trans "No goals defined yet." %}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endcomment %}
 {% endblock cols %}
