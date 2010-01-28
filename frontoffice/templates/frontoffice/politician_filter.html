@@ -11,7 +11,7 @@
 <div class="col lastCol">
     <ul class="breadcrumbs">
         <li class="first"><a href="/">Wiekiesjij</a></li>
-    	<li><a href="{% url fo.election %}">{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% endif %}</a></li>
+    	{% if region_filtered %}<li><a href="{% url fo.election %}">{{ region_filtered }}</a></li> {% endif %}
         <li>{% trans "Search all candidates" %}</li>
     </ul>
 </div>

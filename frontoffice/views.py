@@ -187,11 +187,12 @@ def politician_profile_filter(request):
                 filtered_politicians = politicians
  
                 new_path = _new_url(path, 'region', form.cleaned_data['region'].id)
-                region_filtered = True
+                region_filtered = form.cleaned_data['region'].name
 
-                if 'ElectionInstance' in request.session:
-                    if request.session['ElectionInstance']['id'] != form.cleaned_data['region'].id:
-                        filters.append((_('Region'), form.cleaned_data['region'].council.region, new_path))
+                filters.append((_('Region'), form.cleaned_data['region'].name, new_path))
+
+                sess = {'id': form.cleaned_data['region'].id, 'name': form.cleaned_data['region'].name}
+                request.session['ElectionInstance'] = sess
 
             if form.cleaned_data['name']:
                 name_filter = None
