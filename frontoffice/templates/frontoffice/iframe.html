@@ -18,56 +18,47 @@
 
     {% block extrahead %}{% endblock extrahead %}
 </head>
-    <body>
+    <body class="iframe">
 
 <div class="col size1of1">
         {% block content %}
         <div class="mod wizard">
         	<div class="bd">
+                
                 <ul id="wizardSteps">
-                    <li class="big"><span>&laquo;</span></li>
-                    <li class="finished"><span>1</span></li>
-                    <li class="finished"><span>2</span></li>
-                    <li class="finished"><span>3</span></li>
-                    <li class="finished"><span>4</span></li>
-                    <li class="finished"><span>5</span></li>
-                    <li class="finished"><span>6</span></li>
-                    <li class="current"><span>7</span></li>
-                    <li><span>8</span></li>
-                    <li><span>9</span></li>
-                    <li><span>10</span></li>
-                    <li><span>11</span></li>
-                    <li><span>12</span></li>
-                    <li><span>13</span></li>
-                    <li><span>14</span></li>
-                    <li><span>15</span></li>
-                    <li class="big"><span>&raquo;</span></li>
+					{% for q in questions %}
+						<li class="{% ifcompare q current_question %}current{% smaller %}history{% bigger %}future{% endifcompare %}"><span>{{ q|add:"1" }}</span></li>
+					{% endfor %}
+                    	<li class="last future-custom"><span>{% trans "Results" %}</span></li>
                 </ul>
                 
                 {% block step-header %}
                 <h2 class="question">
                 	{% block step_title %}{% trans 'Step Title' %}{% endblock step_title %}
                     
-                    <a class="additionPlus" href="#">{% trans 'Elucidation' %}</a>
+                    <!--<a class="additionPlus" href="#">{% trans 'Elucidation' %}</a>-->
                 </h2>
                 {% endblock step-header %}
                 
-                <div class="addition">
+               <!-- <div class="addition">
 	                <h2>Toelichting op de vraag</h2>
                     <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
-                </div>
+                </div>-->
                 
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
-                    {% for form in forms.values %}
-                        {{ form.as_template }}
-                    {% endfor %}
-                    {{ previous_fields|safe }}
-
+                    <div class="scrollable">
+                       	{% for form in forms.values %}
+                            {{ form.as_template }}
+                        {% endfor %}
+                        {{ previous_fields|safe }}
+					</div>
                     <div class="form-submit">
-                        <button type="submit" class="next primary">{% trans "Next" %}</button>
+                        <button type="submit" class="next primary">{% trans "Next question" %}</button>
+                        <a href="#">{% trans "Candidates" %}</a>
                     </div>
                 </form>
+                
            	</div>
         </div>
         {% endblock content %}

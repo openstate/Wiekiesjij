@@ -13,3 +13,13 @@
 .start-actions .list-candidates .icon {
 	_display:none;
 	}
+	
+.iframe .checkboxselectmultiple input {
+	margin-top:0;
+	}
+.iframe form li label {
+	_margin-bottom:0;
+	}
+.iframe .wizard div.form-submit {
+	_padding:0 15px;
+	}

@@ -211,6 +211,7 @@
 				div.checkboxselectmultiple label {
 					margin-bottom:5px;
 					font-weight:normal;
+					line-height:1.4em;
 					}
 				div.checkboxselectmultiple input {
 					margin: 2px 5px 0 0;
@@ -229,6 +230,7 @@
 				div.checkboxinput label {
 					font-weight:normal;
 					padding-left:20px;
+					line-height:1.4em;
 					}
 				div.checkboxinput input {
 					margin-left:-20px;
@@ -244,7 +246,7 @@
 					}
 				div.radioselect label {
 					font-weight:normal;
-					line-height:1.2em;
+					line-height:1.4em;
 					margin-bottom:5px;_margin-bottom:0;
 					}
 				div.radioselect input {
@@ -642,10 +644,34 @@
 	/* 	Wizard
 		----------------------------------------------------------------------------------------- */
 		
+		
+		
 		.wizard {
 		
 			}
-		
+			.iframe .wizard {
+				width:600px;
+				height:400px;
+				margin:40px;
+				border:2px solid #d7d7d7;
+				background:#fff;
+				}
+				.iframe .wizard .bd {
+					position:static;
+					border:none;
+					background:none;
+					}
+					.iframe .scrollable {
+						margin:0 -15px 0;
+						padding:15px;
+						overflow:auto;
+						height:281px;
+						position:relative;
+						}
+						.iframe label {
+							line-height:1.4em;
+							}
+							
 					
 		.wizard h2.question {
 			background:#eeeeee;
@@ -657,6 +683,13 @@
 			position:relative;
 			width:100%;
 			}
+			.iframe .wizard h2.question {
+				font-size:20px;
+				line-height:24px;
+				padding:5px 10px;
+				border-bottom:1px solid #ccc;
+				width:auto;
+				}
 			
 			.wizard h2.question a.additionPlus {
 				background:#d7d7d7 url(../img/additionPlus.gif) left top no-repeat;
@@ -699,19 +732,53 @@
 			.wizard form {
 				margin-top:15px;
 				font-size:1.4em;
-			}
+				}
+				.iframe .wizard form {
+					font-size:1em;
+					margin:0;
+					}
+			.wizard div.form-submit {
+				}
+				.iframe .wizard div.form-submit {
+					background:#d7d7d7;
+					position:absolute;
+					bottom:0;
+					left:0;
+					width:100%;
+					padding:2px 0 0;
+					line-height:25px;
+					}
 			
 			.wizard div.form-submit button {
 				margin-bottom:0;
-			}
+				}
+				.iframe .wizard div.form-submit button {
+					background:#ed2227 url(../img/arrow-onred.gif) right center no-repeat;
+					border:2px solid #ed2227;
+					margin:2px;
+					padding:3px 30px 3px 3px;
+					color:#fff;
+					}
+					.iframe .wizard div.form-submit button:hover {
+						background:#fff url(../img/arrow.gif) right center no-repeat;
+						color:#ed2227;
+						}
+				
+			.iframe .wizard div.form-submit a {
+				margin-bottom:0;
+				line-height:25px;
+				}
 			
-						ul#wizardSteps {
+			ul#wizardSteps {
 				background:#E0E0E0;
 				display:block;
 				margin:-15px -15px 0;
 				padding:5px;
 				overflow:hidden;_zoom:1;
 				}
+				.iframe ul#wizardSteps {
+					padding:2px;
+					}
 		
 				ul#wizardSteps li {
 					float:left;
@@ -733,6 +800,14 @@
 						font-weight:bold;
 						float:left;
 						}
+						.iframe ul#wizardSteps li a,
+						.iframe ul#wizardSteps li span {
+							background:url(../img/steps.gif) left top no-repeat;
+							width:17px;
+							height:17px;
+							line-height:17px;
+							font-size:1em;
+							}
 						
 					ul#wizardSteps li.big a,
 					ul#wizardSteps li.big span {
@@ -747,6 +822,10 @@
 						color:#000000;
 						background:url(../img/stepsFinished2.gif) left top no-repeat;
 						}
+						.iframe ul#wizardSteps li.history a,
+						.iframe ul#wizardSteps li.history span {
+							background:url(../img/stepsFinished.gif) left top no-repeat;
+							}
 						
 					ul#wizardSteps li.current a,
 					ul#wizardSteps li.current span {
@@ -754,6 +833,10 @@
 						font-weight:bold;
 						color:#ffffff;
 						}
+						.iframe ul#wizardSteps li.current a,
+						.iframe ul#wizardSteps li.current span {
+							background:url(../img/stepsCurrent.gif) left top no-repeat;
+							}
 	
 					ul#wizardSteps li.current-custom {
 						background:#ed2227 url(../img/step-current-l.gif) 0 0 no-repeat;
@@ -1155,6 +1238,7 @@
 			padding:0 0 0 15px;
 			margin:0 0 15px 0;
 			overflow:hidden;_zoom:1;
+			min-height:90px;_height:90px;
 			}
 			.pol-block a.name {
 				font-weight:bold;
