@@ -65,12 +65,12 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
 
             else:
-                print "This question type doenst know what type of form to show"
-                print question_instance.question_type
+                #print "This question type doenst know what type of form to show"
+                #print question_instance.question_type
                 pass #TODO raise error
 
         else:
-            print "This question type isnt in question type choices"
+            #print "This question type isnt in question type choices"
             pass #TODO raise error
     
         super(AnswerQuestionForm, self).__init__(*args, **kwargs)

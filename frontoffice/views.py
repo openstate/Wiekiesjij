@@ -587,7 +587,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
         elif qsettings.QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
-            print 'religion',questions_dict[key]['visitor']
+            #print 'religion',questions_dict[key]['visitor']
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])

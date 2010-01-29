@@ -333,7 +333,6 @@ class BestCandidate(MultiPathFormWizard):
                   if question.theme in self.multiply_questions:
                     num_weighted_questions = num_weighted_questions + 1
         number_of_questions = (((num_questions -1) + num_weighted_questions ) - len(questions_skipped))
-        #print  'number of questions', number_of_questions, '=', (num_questions -1), '+', num_weighted_questions, '-',len(questions_skipped), questions_skipped
 
         for candidate in self.candidates:
             for question in candidate_scores[candidate]:
