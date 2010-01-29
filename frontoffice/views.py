@@ -333,7 +333,7 @@ def politician_profile_filter(request):
         except:
             politicians = p.page(p.num_pages)
     
-    return render_to_response('frontoffice/politician_filter.html', {'party_data': party_data, 'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form }, context_instance=RequestContext(request))
+    return render_to_response('frontoffice/politician_filter.html', {'party_data': party_data, 'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form, 'num_filters':len(filters) }, context_instance=RequestContext(request))
 
 
 def politician_profile(request, id, tab = "favs"):

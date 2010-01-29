@@ -80,6 +80,7 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^matching/(?P<election_instance_id>\d+)/(?P<iframe>\w+)/$', 'match', name='fo.match'),
     url(r'^match/result/(?P<hash>[a-zA-Z0-9]{32})/$', 'match_results', name='fo.match_results'),
     url(r'^match/result/(?P<hash>[a-zA-Z0-9]{32})/(?P<iframe>\w+)/$', 'match_results', name='fo.match_results'),
+    url(r'^match/details/(?P<hash>[a-zA-Z0-9]{32})/(?P<candidate_id>\d+)/$', 'match_result_details', name='fo.match_result_details'),
     url(r'^match/details/(?P<hash>[a-zA-Z0-9]{32})/(?P<candidate_id>\d+)/(?P<iframe>\w+)/$', 'match_result_details', name='fo.match_result_details'),
 
     url(r'^goal/(?P<goal_id>\d+)/thumbs_up/$', 'thumbs_up', name='fo.thumbs_up'),

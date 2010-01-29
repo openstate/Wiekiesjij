@@ -75,11 +75,12 @@
                 {% for filter1, filter2, filter3 in filters %}
                     <li><a href="{{ filter3 }}" title="{% trans 'Remove this filter' %}">{{ filter1 }}: {{ filter2 }}</a></li>
                 {% endfor %}
-                {% if filters %}
-                	<li><a href="{% url fo.politician_profile_filter %}" class="clear-all">{% trans 'Clear All Filters' %}</a></li>
-            	{% else %}
-                	<li class="empty">{% trans "Geen filter geselecteerd" %}</li>
-                {% endif %}
+                {% ifcompare num_filters 1 %}
+                {% bigger %}
+                    <li><a href="{% url fo.politician_profile_filter %}" class="clear-all">{% trans 'Clear All Filters' %}</a></li>
+            	{% smaller %}
+                	<li class="empty">{% trans "No filters selected" %}</li>
+                {% endifcompare %}
             </ul>
             <ul class="pager">
             {% if politicians.has_previous %}
