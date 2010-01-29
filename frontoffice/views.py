@@ -22,6 +22,7 @@ from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 from frontoffice.decorators import visitors_only
+from django.contrib.auth.decorators import login_required
 
 
 from frontoffice.wizards.match import BestCandidate
@@ -382,6 +383,7 @@ def party_profile(request, eip_id, tab='can'):
 #        return redirect('fo.login')
 #    return render_to_response('frontoffice/dashboard.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))
 
+@login_required
 def edit_visitor_profile(request):
     user = request.user
 
