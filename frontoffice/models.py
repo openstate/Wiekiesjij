@@ -35,7 +35,7 @@ class VisitorResult(models.Model):
             hash = ''.join([choice(chars) for i in range(32)])
             exists = False
             for visitor_result in VisitorResult.objects.all():
-                print visitor_result.hash, hash
+                #print visitor_result.hash, hash
                 if hash == visitor_result.hash:
                     exists = Ture
             if not exists:
