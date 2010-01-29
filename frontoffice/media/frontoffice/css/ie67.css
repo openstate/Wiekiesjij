@@ -20,6 +20,7 @@
 .iframe form li label {
 	_margin-bottom:0;
 	}
-.iframe .wizard div.form-submit {
+.iframe .wizard div.form-submit,
+.iframe .matches div.sms-setup {
 	_padding:0 15px;
 	}

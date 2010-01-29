@@ -2915,7 +2915,7 @@ msgstr "Dit zijn de kandidaten die het meeste matchen"
 
 #: frontoffice/templates/frontoffice/match_results.html:47
 msgid "Overeenkomst"
-msgstr "START MATCH WIZARD"
+msgstr "Match"
 
 #: frontoffice/templates/frontoffice/match_results.html:61
 msgid "Get a free text reminder"

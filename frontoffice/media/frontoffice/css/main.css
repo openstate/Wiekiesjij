@@ -841,6 +841,9 @@
 					ul#wizardSteps li.current-custom {
 						background:#ed2227 url(../img/step-current-l.gif) 0 0 no-repeat;
 						}
+						.iframe ul@wizardSteps li.current-custom {
+							background-image:url(../img/step-current-l2.gif);
+							}
 						ul#wizardSteps li.current-custom span {
 							background:url(../img/step-current-r.gif) right top no-repeat;
 							width:auto;
@@ -848,6 +851,9 @@
 							font-weight:bold;
 							color:#ffffff;
 							}
+							.iframe ul#wizardSteps li.current-custom span {
+								background-image:url(../img/step-current-r2.gif);
+								}
 					ul#wizardSteps li.future-custom {
 						background:#cdcdcd url(../img/step-l.gif) 0 0 no-repeat;
 						}
@@ -1510,25 +1516,56 @@
 			
 			
 			
-			.matches {
-		
+		.matches {
+	
 			}
+			.iframe .matches .scrollable {
+				height:260px;
+				}
+			.iframe .matches .item {
+				padding:5px;
+				}
 			.matches h1,
 			.matches .item h2 {
 				padding-left:0;
 				background:none;
 				margin:.5em 0 1em;
 				}
+				.iframe .matches h1,
+				.iframe .matches .item h2 {
+					margin:0 0 .2em;
+					}
+					
+				.iframe .matches h1 {
+					background:#eeeeee;
+					display:block;
+					font-size:20px;
+					line-height:24px;
+					margin:0 -15px;
+					padding:5px 10px;
+					position:relative;
+					width:auto;
+					border-bottom:1px solid #ccc;
+					}
 			.matches .item h2 {
 				font-size:1.4em;
 				margin:0 0 .5em;
 				}
+				.iframe .matches .item h2 {
+					font-size:1em;
+					line-height:1.4em;
+					
+					}
 				.matches .item h2 a {
 					color:#ed2227;
 					}
 			.matches p {
 				margin:0;
 				}
+				.iframe .matches p {
+					display:inline;
+					font-style:italic;
+					}
 			.matches .item {
 				background:#f1f1f1;
 				border:1px solid #c0c0c0;
@@ -1542,11 +1579,17 @@
 					height:72px;
 					text-align:center;
 					}
+					.iframe .matches .image {
+						display:none;
+						}
 				.matches .party-logo {
 					overflow:hidden;_zoom:1;
 					float:left;
 					margin-right:10px;
 					}
+					.iframe .matches .party-logo {
+						display:none;
+						}
 					.matches .party-logo a {
 						float:left;
 						width:90px;
@@ -1565,11 +1608,18 @@
 					font-weight:bold;
 					text-align:center;
 					}
+					.iframe .matches .matchmeter {
+						padding:4px 4px 3px;
+						}
 					.matches .matchmeter .score {
 						font-size:2.6em;
 						color:#ed2227;
 						display:block;
 						}		
+						.iframe .matches .matchmeter .score {
+							font-size:1em;
+							display:inline;
+							}
 				.matches .btn {
 					float:right;
 					padding:6px 24px 6px 8px;
@@ -1577,9 +1627,15 @@
 					font-weight:bold;
 					text-decoration:none;
 					}
+					.iframe .matches .btn {
+						display:none;
+						}
 			.matches .best-match {
 				background:#e0e0e0;
 				}
+				.iframe .matches .best-match .party-logo {
+					
+					}
 				.matches .best-match .party-logo a {
 					width:120px;
 					height:75px;
@@ -1588,25 +1644,73 @@
 					width:77px;
 					height:95px;
 					}
+					.iframe .matches .best-match .image {
+						display:block;
+						width:36px;
+						height:46px;
+						}
 				.matches .best-match h2 {
 					font-size:2em;
 					}
+					.iframe .matches .best-match h2 {
+						font-size:1.5em;
+						}
 				.matches .best-match .matchmeter {
 					font-size:1.5em;
 					}
+					.iframe .matches .best-match .matchmeter {
+						font-size:1.2em;
+						
+						}
 				
-			
+		.iframe .size1of2 {
+			width:auto;
+			}	
 		#container .sms-setup {
 			border:1px solid #ccc;
 			margin:15px;
-			}	
+			}
+			.iframe .sms-setup {
+				position:absolute;
+				bottom:0;
+				left:0;
+				width:100%;
+				background:#d7d7d7;
+				}	
 			#container .sms-setup .bd {
 				background:#e0e0e0;
 				}	
+				.iframe .sms-setup .bd {
+					background:none;
+					padding:2px;
+					}
+					
 				.sms-setup h2,
 				.social-setup h2 {
 					background-image:url(../img/arrow-ongrey.gif);
 					}
+					.iframe .sms-setup h2,
+					.iframe .sms-setup p {
+						float:left;
+						}
+						.iframe .sms-setup h2 {
+							background:none;
+							padding:0;
+							margin:0;
+							font-size:1.2em;
+							font-weight:bold;
+							position:absolute;
+							right:4px;
+							top:0;
+							}
+						.iframe .sms-setup p {
+							clear:left;
+							position:absolute;
+							right:4px;
+							top:2em;
+							width:260px;
+							text-align:right;
+							}
 				.sms-setup div.field {
 					margin-bottom:0;
 					width:232px;
@@ -1614,6 +1718,9 @@
 				.sms-setup fieldset {
 					float:left;_display:inline;
 					}
+					.iframe .sms-setup fieldset {
+						float:left;
+						}
 				.sms-setup input {
 					width:220px;
 					}
@@ -1623,9 +1730,14 @@
 				.sms-setup .form-submit {
 					float:left;
 					clear:none;
-					
 					margin-top:1.35em;
 					}
+					.iframe .sms-setup div.form-submit {
+						background:none;
+						float:left;
+						width:auto;
+						position:static;
+						}
 					.sms-setup .form-submit button {
 						
 						margin-left:15px;

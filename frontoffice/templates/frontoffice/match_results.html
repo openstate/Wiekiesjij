@@ -25,7 +25,7 @@
                 {% block step-header %}
                 	<h1>{% trans "These are your closest matches" %}:</h1>
                 {% endblock step-header %}
-                
+                <div class="scrollable">
                 {% for candidate in candidates %}
                     <div class="item{% if forloop.first %} best-match{% endif %}">
                         <div class="party-logo">
@@ -39,19 +39,19 @@
                         </div>
                     	<div class="image">
                         {% if candidate.candidate.profile.picture %}
-                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail candidate.candidate.profile.picture 36x46 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% endif %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
                         {% else %}
-                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail 'defaults/pol-dummy.jpg' 36x46 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% endif %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
                         {% endif %}
                         </div>
-                        <span class="matchmeter">{% trans "Overeenkomst" %}<span class="score">{{ candidate.candidates_score }}%</span></span>
+                        <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ candidate.candidates_score }}%</span></span>
 						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
                         <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
                         <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
                         <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
                     </div>
                 {% endfor %}
-           	
+           		</div>
       			<div class="line">
                 	
                     <div class="col size1of2">
