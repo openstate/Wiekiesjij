@@ -3,7 +3,7 @@ import re
 import hashlib
 import datetime
 import json
-import urllib2
+import urllib
 
 from django.conf import settings
 from django.core.cache import cache
@@ -40,7 +40,7 @@ def redirect_view(request):
 
 #Helper function
 def _new_url(path, field, value):
-    old_str = field + '='  + urllib2.quote(str(value))
+    old_str = field + '='  + urllib.quote_plus(str(value))
     old_str = old_str.replace(' ','+')
 
     new_str = field + '='
