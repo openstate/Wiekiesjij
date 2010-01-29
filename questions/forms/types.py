@@ -1,11 +1,8 @@
 from django import forms
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as __
-from django.contrib.auth.models import User
 from django.forms import widgets
 
-from form_utils.forms import BetterModelForm, BetterForm
+from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
 from questions.exceptions import ModelAnswerFormError
 from questions.settings import PROFILE_QUESTION_WEIGHT_OPTIONS
