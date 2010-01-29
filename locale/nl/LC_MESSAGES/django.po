@@ -2799,7 +2799,7 @@ msgstr "Bekijk het partij profiel"
 
 #: frontoffice/templates/frontoffice/election.html:104
 msgid "This politician<br />has not yet been added."
-msgstr "Deze politici<br />is nog niet toegevoegd."
+msgstr "Deze politicus<br />is nog niet toegevoegd."
 
 #: frontoffice/templates/frontoffice/election.html:110
 msgid "No Politicians: please search or select a filter options"
@@ -3320,7 +3320,7 @@ msgid ""
 "                                    "
 msgstr ""
 "\n"
-"                                        Word <a title=\"Je moet hiervoor een geregistreerde gebruiker zijn\">fan</a> van%(name)s\n"
+"                                        Word <a title=\"Je moet hiervoor een geregistreerde gebruiker zijn\">fan</a> van %(name)s\n"
 "                                    "
 
 #: frontoffice/templates/frontoffice/quick_profile.html:116

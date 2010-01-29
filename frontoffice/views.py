@@ -41,6 +41,7 @@ def redirect_view(request):
 
 #Helper function
 def _new_url(path, field, value):
+
     bits = urlparse.urlsplit(path)
     data = urlparse.parse_qsl(bits[3])
     data2 = []
