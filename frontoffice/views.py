@@ -369,7 +369,6 @@ def politician_comments(request, id):
                                                             
 def party_profile(request, eip_id, tab='can'):
     eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
-    
     return render_to_response('frontoffice/party.html', {'eip': eip, 'showtab':tab }, context_instance=RequestContext(request))
 
 #def dashboard(request):
