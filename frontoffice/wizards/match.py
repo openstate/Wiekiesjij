@@ -406,8 +406,9 @@ class BestCandidate(MultiPathFormWizard):
                 send_email(
                             'Error: score more than 100 in results',
                             'info@wiekiesjij.nl',
-                            'info@wiekiesjij.nl',
+                            'exceptions+wkjwizard@wiekiesjij.nl',
                             {'hash': new_visitor.hash},
+                            {'plain': 'questions/score_error.txt'},
                 )
             except:
                 pass
