@@ -3,6 +3,7 @@ import re
 import hashlib
 import datetime
 import json
+import urlparse
 import urllib
 
 from django.conf import settings
@@ -40,22 +41,19 @@ def redirect_view(request):
 
 #Helper function
 def _new_url(path, field, value):
-    old_str = field + '='  + urllib.quote_plus(str(value))
-    old_str = old_str.replace(' ','+')
-
-    new_str = field + '='
-
-    return path.replace(old_str, new_str)
-
-
-def answer_question(request, election_instance_party_id, user_id=None):
-    '''
-        AnswerQuestion - wizard.
-        @param int election_instance_party_id - ElectionInstanceParty id
-        @param int user_id User (Candidate=PoliticalProfile) id
-    '''
-    check_permissions(request, election_instance_party_id, 'candidate')
-    return AnswerQuestion(election_instance_party_id=election_instance_party_id, user_id=user_id)(request)
+    bits = urlparse.urlsplit(path)
+    data = urlparse.parse_qsl(bits[3])
+    data2 = []
+    for (key, value) in data:
+        if key == field:
+            data2.append((key, ''))
+        else:
+            data2.append((key, value))
+    result = []
+    for x in bits:
+        result.append(x)
+    result[3] = urllib.urlencode(data2)
+    return urlparse.urlunsplit(result)
 
 def match_results(request, hash, iframe=None):
     result = get_object_or_404(VisitorResult,hash=hash)
