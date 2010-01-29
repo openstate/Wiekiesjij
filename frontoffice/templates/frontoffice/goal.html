@@ -47,21 +47,9 @@
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
-                <div class="item{% if forloop.last %} last-item{% endif %} {% ifequal goal.politician.user.id comment.user.id %}owner{% endifequal %} {% ifnotequal comment.user.politician_profile None %}politician{% endifnotequal %}">
+                <div class="item{% if forloop.last %} last-item{% endif %} {% ifequal goal.politician.user.id comment.user.id %}owner{% endifequal %} {% ifnotequal comment.user.politicianprofile None %}politician{% endifnotequal %}">
                     <p class="smallInfo">
-                        {% ifequal goal.politician.user.id request.user.id %}
-                            {% if comment.flags.all %}
-                                <span>{% trans 'This comment is flagged' %}</span>
-                            {% else %}
-                                <a href="{{ comment.get_flag_url }}">{% trans 'Flag as inappropiate' %}</a>
-                            {% endif %}
-                        {% endifequal %}
-
-                        {% if request.user.is_staff %}
-                            {% if comment.flags.all %}
-                                <span>{% trans 'This comment is flagged' %}</span> - <a href="{{ comment.get_delete_url }}">{% trans 'Delete' %}</a>
-                            {% endif %}
-                        {% endif %}
+                        
 
                         {% if comment.user_url %}
                             <a href="{{ comment.user_url }}"><strong>{{ comment.user_name }}</strong></a>
@@ -69,6 +57,21 @@
                             <strong>{{ comment.user_name }}</strong>
                         {% endif %}
                         zei op {{ comment.submit_date|date:"j F Y" }} om {{ comment.submit_date|date:"H:i"}}:
+                        
+                        {% ifequal goal.politician.user.id request.user.id %}
+                            {% if comment.flags.all %}
+                                <span class="flagged">{% trans 'This comment is flagged' %}</span>
+                            {% else %}
+                                <a href="{{ comment.get_flag_url }}">{% trans 'Flag as inappropiate' %}</a>
+                            {% endif %}
+                        {% endifequal %}
+
+                        {% if request.user.is_staff %}
+                            {% if comment.flags.all %}
+                                <span class="flagged">{% trans 'This comment is flagged' %} - <a href="{{ comment.get_delete_url }}" class="delete">{% trans 'Delete' %}</a></span>
+                            {% endif %}
+                        {% endif %}
+                        
                     </p>
                     <p>{{ comment.comment|urlize|linebreaks }}</p>
                 </div>
@@ -78,16 +81,9 @@
         </div>
     </div>
 </div>
-{% comment %}
-<div class="col size1of2 lastCol">
-	<div class="mod">
-		<div class="hd">
-			<h2>{{ profile.full_name }}</h2>
-		</div>
-		<div class="bd">
-			{% include "frontoffice/quick_profile.html" %}
-		</div>
-	</div>
+
+<div class="col size1of2 lastCol goal-sidebar">
+	{% include "frontoffice/quick_profile.html" %}
 	<div class="mod goals">
     	<div class="hd">
     		<h2>{% trans 'Political goals' %}</h2>
@@ -128,5 +124,5 @@
         </div>
     </div>
 </div>
-{% endcomment %}
+
 {% endblock cols %}

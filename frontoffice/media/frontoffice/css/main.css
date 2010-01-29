@@ -1326,7 +1326,9 @@
 									float:left;
 									margin-right:30px;
 									width:140px;
+									height:210px;
 									}
+									
 									
 								.quickProfileInfo {
 									float:left;
@@ -1334,6 +1336,10 @@
 									margin-right:30px;
 									width:325px;
 									}
+									.goal-sidebar .quickProfileInfo {
+										width:255px;
+										margin-right:0;
+										}
 									
 									.quickProfileInfo tr.emptyRow th,
 									.quickProfileInfo tr.emptyRow td {
@@ -1345,6 +1351,9 @@
 										width:150px;
 										vertical-align:top;
 										}
+										.goal-sidebar .quickProfileInfo th {
+											width:120px;
+											}
 										
 										.quickProfileInfo tr.fan td {
 											padding-top:1em;
@@ -1364,6 +1373,9 @@
 									width:148px;
 									margin-bottom:15px;
 									}
+									.goal-sidebar .popularityMeter {
+										display:none;
+										}
 								 
 								    .popularityMeter .empty {
 								    	height:115px;
@@ -1420,6 +1432,9 @@
 									padding-top:14px;
 									clear:both;
 									}
+									.goal-sidebar .ballotPosition {
+										display:none;
+										}
 									
 									.ballotPosition a {
 										color:#ed2227;
@@ -2062,6 +2077,10 @@
 		.comments .smallInfo {
 			color:#ed2227;
 			}
+			.comments .politician .smallInfo {
+				background:url(../img/politician.gif) left 2px no-repeat;
+				padding-left:16px;
+				}
 		.comments .form-submit {
 			border-bottom:1px solid #ccc;
 			margin-bottom:10px;
@@ -2072,7 +2091,13 @@
 		.comments .owner {
 			padding:10px;
 			background:#fde1e2;
-		}
+			}
+		.comments .flagged {
+			color:#000;
+			font-style:italic;
+			font-weight:bold;
+			display:block;
+			}
 	
 	/*	Login
 		**************************************************************************************************************/
