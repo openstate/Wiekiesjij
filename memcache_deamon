@@ -1,5 +1,5 @@
 #! /bin/sh
-# usage: ./memcache_deamon start unique_name
+# usage: ./memcache_deamon start
 #
 
 PORT=11211
@@ -14,7 +14,7 @@ prog="memcached"
 
 start_instance() {
         echo -n $"Starting $prog ($1): "
-        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -- -d -p $PORT -$
+        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -m $MEMORY -d -p $PORT
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && touch /var/lock/memcached.$1
@@ -40,26 +40,10 @@ start () {
                 chown $USER /var/run/memcached
         fi 
 
-        start_instance default 64;
-        start_instance block 16;
-        start_instance content 128;
-        start_instance filter 128;
-        start_instance form 32;
-        start_instance menu 16;
-        start_instance page 8;
-        start_instance update 8;
-        start_instance views 8;
+        start_instance wiekiesjij;
 }
 stop () {
-        stop_instance default;
-        stop_instance block;
-        stop_instance content;
-        stop_instance filter;
-        stop_instance form;
-        stop_instance menu;
-        stop_instance page;
-        stop_instance update;
-        stop_instance views;
+        stop_instance wiekiesjij;
 }
 
 restart () {
