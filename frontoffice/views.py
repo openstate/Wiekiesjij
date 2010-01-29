@@ -385,7 +385,7 @@ def party_profile(request, eip_id, tab='can'):
 def edit_visitor_profile(request):
     user = request.user
 
-    if user.profile and user.profile != 'visitor':
+    if user.profile and user.profile.type != 'visitor':
         return redirect('fo.redirect')
 
     profile = get_object_or_404(VisitorProfile, user=user)
