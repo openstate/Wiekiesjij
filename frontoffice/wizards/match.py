@@ -1,26 +1,23 @@
-import datetime
+import copy
 import json
-from math import ceil
-from django.db import transaction
+
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from utils.multipathform import Step, MultiPathFormWizard
-import copy
-from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
-from questions.forms import SelectQuestionForm, VisitorAnswerQuestionForm, PartyQuestionForm
-from questions.forms.types import ModelMultiAnswerForm, ModelAnswerForm, ThemeAnswerForm
+from django.conf import settings
+
+
+from questions.forms import VisitorAnswerQuestionForm, PartyQuestionForm
+from questions.forms.types import ThemeAnswerForm
 from questions.models import Question, Answer
 from elections.models import Candidacy, ElectionInstanceParty, ElectionInstance
-from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE
+from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY
 from questions.settings import FRONTOFFICE_QUESTION_TYPES, BACKOFFICE_QUESTION_TYPES, MULTIPLE_ANSWER_TYPES
-from political_profiles.models import WorkExperienceSector, EducationLevel, PoliticianProfile, Education
+from political_profiles.models import EducationLevel, PoliticianProfile, Education
 from frontoffice.models import VisitorResult, CandidateAnswers
-from elections.models import ElectionInstance, ElectionInstanceParty, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
-from types import ListType
-from questions.forms import SelectQuestionForm, AnswerQuestionForm
-from django.core import serializers
+
+from questions.forms import AnswerQuestionForm
 from utils.emails import send_email
 
 class BestCandidate(MultiPathFormWizard):

@@ -618,7 +618,6 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = ['Not Answered']
         else:
             pass
-        print key, questions_dict[key]['candidate'], questions_dict[key]['question'].question_type
     if iframe:
         parent = 'frontoffice/iframe.html'
     else:
