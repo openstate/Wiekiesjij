@@ -687,7 +687,7 @@
 						.iframe label {
 							line-height:1.4em;
 							}
-							
+						
 					
 		.wizard h2.question {
 			background:#eeeeee;
@@ -753,6 +753,30 @@
 					font-size:1em;
 					margin:0;
 					}
+			
+			.wizard .party-selection li {
+				clear:both;
+				}		
+			.wizard .party-selection li input {
+				line-height:40px;
+				height:40px;
+				margin-top:0;
+				}
+			.wizard .with-logo {
+				line-height:40px;
+				float:left;
+				
+				}		
+				.wizard .with-logo .logo {
+					float:left;
+					margin-right:.5em;
+					width:70px;
+					height:40px;
+					line-height:1em;
+					font-size:.7em;
+					text-align:center;
+					}
+					
 			.wizard div.form-submit {
 				}
 				.iframe .wizard div.form-submit {
@@ -1396,8 +1420,8 @@
 							div#content div.quickProfile .container {
 								background:#FFFFFF url(../img/quickProfileBackground.gif) top left repeat-y;
 								overflow:hidden;_zoom:1;
-								margin-bottom:15px;
 								position:relative;
+								min-height:220px;
 								}
 								
 								div#content div.quickProfile .container .image {
@@ -1505,7 +1529,7 @@
 										
 								.ballotPosition {
 									border-top:1px solid #c2c2c2;
-									margin-top:10px;
+									margin-top:15px;
 									margin-bottom:10px;
 									padding-top:14px;
 									clear:both;

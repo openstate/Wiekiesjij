@@ -2,10 +2,13 @@
 	Renders a single answer label in the party question
 {% endcomment %}
 {% load thumbnail %}
-{{ party.name }}<span class="logo">
+<span class="with-logo">
+<span class="logo">
 {% if party.logo %}
-	<img src="{% thumbnail party.logo 120x80 upscale %}" alt="{{ party.name }}" />
+	<img src="{% thumbnail party.logo 70x40 upscale %}" alt="{{ party.name }}" />
 {% else %}
-	<img src="{% thumbnail 'defaults/party-dummy.jpg' 120x80 upscale %}" alt="{{ party.name }}" />
+	<img src="{% thumbnail 'defaults/party-dummy.jpg' 70x40 upscale %}" alt="{{ party.name }}" />
 {% endif %}
+</span>
+{{ party.name }}
 </span>
