@@ -14,7 +14,7 @@ prog="memcached"
 
 start_instance() {
         echo -n $"Starting $prog ($1): "
-        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -m $MEMORY -d -p $PORT
+        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -- -m $MEMORY -d -p $PORT
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && touch /var/lock/memcached.$1
