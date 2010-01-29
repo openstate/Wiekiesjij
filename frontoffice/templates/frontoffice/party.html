@@ -5,7 +5,7 @@
 <div class="col lastCol">
     <ul class="breadcrumbs">
     	<li class="first"><a href="/">Wiekiesjij</a></li>
-        <li><a href="{% url fo.election %}">{{ eip.election_instance.name }}</a></li>
+        <li><a href="{% url fo.election eip.id %}">{{ eip.election_instance.name }}</a></li>
         <li>{{ eip.party.name }}</li>
     </ul>
 </div>
@@ -51,12 +51,12 @@
                         </tr>
                     {% endif %}
                     <tr>
-                        <th>{% trans 'Number of seats' %}</th>
+                        <th>{% trans 'Huidige aantal zetels' %}</th>
                         <td>{{ eip.party.num_seats }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Number of candidates' %}</th>
-                        <td>??</td>
+                        <td>{{ eip.candidate_dict|length }}</td>
                     </tr>
                 </table>
             </div>

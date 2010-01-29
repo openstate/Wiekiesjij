@@ -22,7 +22,7 @@
 	<h1>{% trans "Candidate overview for" %} {{ instance.name }}</h1>
     <div class="mod search-link">
         <a href="{% url fo.politician_profile_filter %}">{% trans "Search all candidates" %}</a>
-        <p>{% trans 'Filter on name, region, and much more' %}</p>
+        <p>{% trans 'Filter op naam, region, en meer' %}</p>
    	</div>
 </div>
 
@@ -83,7 +83,7 @@
                     {% endif %}
                 </div>
                 <h2><span>{% trans 'Candidate list for ' %}</span>{{ selected_eip.party.abbreviation }}</h2>
-                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Go to the party profile' %}</a>
+                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Bekijk het partij profiel' %}</a>
 				<ul>
                 {% for position, politician in politicians.items %}
                     <li>
@@ -98,7 +98,7 @@
                             {% endif %}
                             </div>
                             <a href="{% url fo.politician_profile politician.candidate.id %}" class="last-name">{{ politician.candidate.profile.middle_name }} {{ politician.candidate.profile.last_name }}</a>
-                            <p>{{ politician.candidate.profile.initials|default:'' }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.gender}})</p>
+                            <p>{{ politician.candidate.profile.initials|default:'' }} ({{ politician.candidate.profile.first_name }}) ({{ politician.candidate.profile.get_gender_display }})</p>
 
                         {% else %}
                             <p class="empty">{% trans 'This politician<br />has not yet been added.' %}</p>

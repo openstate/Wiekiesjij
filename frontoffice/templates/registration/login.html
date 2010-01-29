@@ -61,16 +61,10 @@
 <div class="col size1of2">
 	<div class="mod helpdesk">
     	<div class="hd">
-        	<h2>{% trans "Helpdesk" %}</h2>
+        	<h2>{% trans "Profiel" %}</h2>
         </div>
     	<div class="bd">
-            <p>
-                {% trans "Do you have a question?" %}
-             </p>
-             <p>
-                {% trans "Contact us at" %} <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a><br />
-                {% trans "or phone number" %} (088) 7000 125.
-            </p>
+            <p>{% trans "U kunt op Wiekiesjij een account aanmaken om uw advies op te slaan of te kunnen reageren op de politieke doelen van politici. Nog geen account?" %}<br/><a href="{% url registration_register %}">{% trans "Maak hem dan nu aan." %}</a></p>
       	</div>
     </div>
 </div>

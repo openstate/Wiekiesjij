@@ -78,7 +78,7 @@
                 {% if filters %}
                 	<li><a href="{% url fo.politician_profile_filter %}" class="clear-all">{% trans 'Clear All Filters' %}</a></li>
             	{% else %}
-                	<li class="empty">No filters selected</li>
+                	<li class="empty">{% trans "Geen filter geselecteerd" %}</li>
                 {% endif %}
             </ul>
             <ul class="pager">

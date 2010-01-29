@@ -21,7 +21,7 @@ class RegistrationForm(BetterForm, TemplateForm):
         
     tos = forms.BooleanField(widget=forms.CheckboxInput(),
                                  label=_(u'Servicevoorwaarden'),
-                                 help_text=_('I have read and agree to the <a href="%(url)s">Terms of Service</a>' % {'url': '/algemene-voorwaarden/'}),
+                                 help_text=_('I have read and agree to the <a href="%(url)s">Terms of Service</a>') % {'url': '/algemene-voorwaarden/'},
                                  error_messages={ 'required': _("You must agree to the terms to register") })
     
     def clean_email(self):
