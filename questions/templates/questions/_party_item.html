@@ -1,0 +1,11 @@
+{% comment %}
+	Renders a single answer label in the party question
+{% endcomment %}
+{% load thumbnail %}
+{{ party.name }}<span class="logo">
+{% if party.logo %}
+	<img src="{% thumbnail party.logo 120x80 upscale %}" alt="{{ party.name }}" />
+{% else %}
+	<img src="{% thumbnail 'defaults/party-dummy.jpg' 120x80 upscale %}" alt="{{ party.name }}" />
+{% endif %}
+</span>

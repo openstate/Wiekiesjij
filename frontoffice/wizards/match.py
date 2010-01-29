@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from utils.multipathform import Step, MultiPathFormWizard
 import copy
 from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
-from questions.forms import SelectQuestionForm, VisitorAnswerQuestionForm
+from questions.forms import SelectQuestionForm, VisitorAnswerQuestionForm, PartyQuestionForm
 from questions.forms.types import ModelMultiAnswerForm, ModelAnswerForm, ThemeAnswerForm
 from questions.models import Question, Answer
 from elections.models import Candidacy, ElectionInstanceParty, ElectionInstance
@@ -62,9 +62,9 @@ class BestCandidate(MultiPathFormWizard):
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
 
             elif QTYPE_MODEL_PARTY == question.question_type:
-                form = {str(question.id): ModelMultiAnswerForm}
+                form = {str(question.id): PartyQuestionForm}
 
-                fkwargs= {str(question.id): {'queryset': self.election_instance.parties, 'attribute':'name', 'empty_label':empty_label}}
+                fkwargs= {str(question.id): {'queryset': self.election_instance.parties, 'empty_label':empty_label}}
 
             elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
                 form = {str(question.id): VisitorAnswerQuestionForm}

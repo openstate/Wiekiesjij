@@ -1,13 +1,19 @@
+import copy
+
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.forms import widgets
+from django.template.loader import render_to_string
+
 from utils.widgets import RadioRating, RadioBoolean
 from political_profiles.models import RELIGION, GENDERS
 from form_utils.forms import BetterModelForm, BetterForm
 from utils.formutils import TemplateForm
-import copy
+
+
+
 # TODO make better imports
 from questions.models import Question, Answer
 from questions.settings import PROFILE_QUESTION_WEIGHT_OPTIONS, MULTIPLE_ANSWER_TYPES, QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE, QUESTION_TYPE_CHOICES
@@ -76,7 +82,25 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
     class Meta:
         fields = ('value',)
 
+class PartyMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
 
+    def label_from_instance(self, obj):
+        return render_to_string('questions/_party_item.html', {'party': obj})
+        
+class PartyQuestionForm(BetterForm, TemplateForm):
+    value = PartyMultipleModelChoiceField(queryset=None, widget=widgets.CheckboxSelectMultiple)
+
+    def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        try:
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
 
 class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
     '''
