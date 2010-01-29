@@ -434,8 +434,8 @@
 							text-indent:-9999px;
 							}
 							.beta .branding a {
-								background-image:url(../img/branding-beta.gif);
-								width:351px;
+								background-image:url(../img/branding-beta2.gif);
+								
 								}
 					
 					.iframe .wkj {
@@ -462,6 +462,9 @@
 						font-size:20px;
 						line-height:1.2em;
 						}
+						.beta #header h2.regional {
+							color:#ccc;
+							}
 
 					p.user-info {
 							text-align: right;
