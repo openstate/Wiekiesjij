@@ -13,7 +13,7 @@
 {% block cols %}
 	<div class="col size1of1">
 	{% block content %}
-        <div class="mod wizard welcome">
+        <div class="mod wizard welcome beta">
 
             {% block help-message %}
             {% endblock help-message %}
@@ -29,7 +29,7 @@
                     
                     <!--<a class="additionPlus" href="#">Toelichting</a>-->
                 </h2>
-                
+                {% if iframe %}<a href="http://www.wiekiesjij.nl" target="_blank" class="wkj">Wiekiesjij</a>{% endif %}
                 {% endblock step-header %}
                 
                 <form method="post" action="" enctype="multipart/form-data">

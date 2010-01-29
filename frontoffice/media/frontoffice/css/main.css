@@ -433,9 +433,22 @@
 							background:url(../img/branding.gif) left top no-repeat;
 							text-indent:-9999px;
 							}
-						.regional .branding a {
-							background-image:url(../img/branding.gif);
-							}
+							.beta .branding a {
+								background-image:url(../img/branding-beta.gif);
+								width:351px;
+								}
+					
+					.iframe .wkj {
+						position:absolute;
+						top:65px;
+						right:20px;
+						display:block;
+						width:148px;
+						height:51px;
+						background:url(../img/branding-small.gif) 0 0 no-repeat;
+						text-indent:-9999em;
+						}
+							
 					#header h2 {
 						display:none;
 						position:relative;
