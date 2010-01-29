@@ -34,7 +34,7 @@
             <div id="selector" class="bd">
                 <h2><span class="num">1</span> {% trans 'Selecteer uw regio' %} </h2>
                 <h3>{% trans 'om met Wiekiesjij te beginnen.' %}</h3>
-				<p>{% trans "Staat uw regio niet in deze lijst? In dat geval heeft uw gemeente er niet voor gekozen om te participeren in Wiekiesjij." %}</p>
+				<p><em>{% trans "Staat uw regio niet in deze lijst? In dat geval heeft uw gemeente er niet voor gekozen om te participeren in Wiekiesjij." %}</em></p>
                 {% for field in form %}
                     {{ field }}
                 {% endfor %}

@@ -13,7 +13,7 @@
 {% block cols %}
 	<div class="col size1of1">
 	{% block content %}
-        <div class="mod wizard">
+        <div class="mod wizard welcome">
 
             {% block help-message %}
             {% endblock help-message %}
@@ -32,13 +32,6 @@
                 
                 {% endblock step-header %}
                 
-                <p>[Introduction text here]</p>
-                
-                <!--<div class="addition">
-	                <h2>Toelichting op de vraag</h2>
-                    <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
-                </div>-->
-                
                 <form method="post" action="" enctype="multipart/form-data">
                     <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
                     {% block forms %}
@@ -51,15 +44,29 @@
 
                     {% block buttons %}
                         {% if iframe %}
-                            <a href="{% url fo.match election_instance.id iframe %}">{% trans 'START MATCH WIZARD' %}</a>
+                            <a href="{% url fo.match election_instance.id iframe %}" class="start">{% trans 'START MATCH WIZARD' %}</a>
                         {% else %}
-                            <a href="{% url fo.match election_instance.id %}">{% trans 'START MATCH WIZARD' %}</a>
+                            <a href="{% url fo.match election_instance.id %}" class="start">{% trans 'START DE WIZARD' %}</a>
                         {% endif %}
                         <!--<div class="form-submit">
                             <button type="submit" class="next primary">{% trans "Next" %}</button>
                         </div>-->
                     {% endblock buttons %}
+                    <span class="start-help">Druk op <strong>START</strong> om <em>Wiekiesjij</em> te starten.</span>
                 </form>
+                
+                <p class="intro">
+                	{% blocktrans %}
+                    Met de stemhulp Wiekiesjij kunt u, nadat u ongeveer bepaald heeft welke partij u zult stemmen, eenvoudig bepalen welke kandidaat het beste bij u past. Door middel van 15 vragen over de achtergrond, persoonskenmerken en ervaring van de kandidaten zoeken wij de beste overeenkomst.  Bij sommige vragen kunt u meerdere antwoorden selecteren.
+                    {% endblocktrans %}
+                </p>
+                
+                <!--<div class="addition">
+	                <h2>Toelichting op de vraag</h2>
+                    <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>
+                </div>-->
+                
+                
            	</div>
         </div>
     {% endblock content %}

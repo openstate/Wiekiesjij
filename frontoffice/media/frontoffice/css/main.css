@@ -865,6 +865,54 @@
 							}
 		
 			
+			.welcome {
+			
+				}
+				.welcome h2.question {
+					margin-bottom:1em;
+					}
+				.welcome p {
+					font-size:1.2em;
+					width:50%;
+					}
+					.iframe .welcome p {
+						font-size:1em;
+						}
+				.welcome a.start {
+					float:right;_display:inline;
+					margin-right:50px;_margin-right:25px;
+					background:#ed2227 url(../img/start-big.gif) left top no-repeat;
+					display:block;
+					width:280px;
+					height:80px;
+					padding:10px;
+					font-weight:bold;
+					font-size:1.7em;
+					text-align:center;
+					line-height:80px;
+					text-indent:-9999em;
+					}
+					.welcome a.start:hover {
+						background-position:left bottom;
+						}
+					.iframe .welcome a.start {
+						width:180px;
+						height:46px;
+						line-height:46px;
+						font-size:1.4em;
+						background-image:url(../img/start-small.gif);
+						}
+			
+				.welcome .start-help {
+					float:right;_display:inline;
+					clear:both;
+					display:block;
+					margin:1em 50px 0 0;_margin-right:25px;
+					}
+					.iframe .welcome .start-help {
+						margin-right:40px;_margin-right:20px;
+						}
+			
 	
 	/* 	homepage
 		----------------------------------------------------------------------------------------- */
@@ -904,7 +952,7 @@
 			}
 			.select-region .bd {
 				padding-left:65px;
-				min-height:107px;_height:107px;
+				min-height:114px;_height:107px;
 				}
 				.select-region h2,
 				.start-actions h2 {
@@ -924,7 +972,7 @@
 				.select-region h3 {
 					font-size:16px;
 					line-height:1.4em;
-					margin-bottom:2em;
+					margin-bottom:.1em;
 					}
 				.select-region select {
 					width:290px;
