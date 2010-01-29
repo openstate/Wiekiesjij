@@ -88,7 +88,7 @@ class PartyMultipleModelChoiceField(forms.ModelMultipleChoiceField):
         return render_to_string('questions/_party_item.html', {'party': obj})
         
 class PartyQuestionForm(BetterForm, TemplateForm):
-    answer = PartyMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+    value = PartyMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
     
     class Meta:
         fieldsets = (('main', {'fields': ('answer',), 'legend': '', 'classes': ('default','party-selection')}),)
@@ -96,8 +96,8 @@ class PartyQuestionForm(BetterForm, TemplateForm):
         super(self.__class__, self).__init__(*args, **kwargs)
 
         try:
-            self.fields['answer'].empty_label = empty_label
-            self.fields['answer'].queryset = queryset
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
 
         except Exception:
             raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
