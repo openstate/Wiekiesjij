@@ -89,7 +89,7 @@ NEWSPAPER  = [
             ('DAGBLAD_VH_NOORDEN', u'Dagblad van het Noorden'),
             ('BRABANTS_DAGBLAD', u'Brabants Dagblad'),
             ('GOOI__EN_EEMLANDER', u'Gooi- en Eemlander'),
-            ('AD_AMSERSFOORT', u'AD Amsersfoort'),
+            ('AD_AMSERSFOORT', u'AD Amersfoortse Courant'),
             ('BUITENLANDSE_KRANT', 'Buitenlandse krant'),
             ('ANDERS', u'Anders'),
         ]
