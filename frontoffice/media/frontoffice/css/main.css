@@ -855,10 +855,10 @@
 								background-image:url(../img/step-current-r2.gif);
 								}
 					ul#wizardSteps li.future-custom {
-						background:#cdcdcd url(../img/step-l.gif) 0 0 no-repeat;
+						background:#cdcdcd url(../img/step-l2.gif) 0 0 no-repeat;
 						}
 						ul#wizardSteps li.future-custom span {
-							background:url(../img/step-r.gif) right top no-repeat;
+							background:url(../img/step-r2.gif) right top no-repeat;
 							width:auto;
 							padding:0 .3em;
 							font-weight:bold;
@@ -876,7 +876,7 @@
 					width:50%;
 					}
 					.iframe .welcome p {
-						font-size:1em;
+						
 						}
 				.welcome a.start {
 					float:right;_display:inline;
@@ -895,13 +895,20 @@
 					.welcome a.start:hover {
 						background-position:left bottom;
 						}
-					.iframe .welcome a.start {
+						.iframe .welcome a.start {
+							float:none;
+							position:absolute;
+							bottom:30px;
+							right:30px;
+							margin:0;
+							}
+					/*.iframe .welcome a.start {
 						width:180px;
 						height:46px;
 						line-height:46px;
 						font-size:1.4em;
 						background-image:url(../img/start-small.gif);
-						}
+						}*/
 			
 				.welcome .start-help {
 					float:right;_display:inline;
@@ -910,9 +917,16 @@
 					margin:1em 50px 0 0;_margin-right:25px;
 					}
 					.iframe .welcome .start-help {
+						float:none;
+						position:absolute;
+						bottom:140px;
+						right:30px;
+						margin:0;
+						}
+					/*.iframe .welcome .start-help {
 						margin-right:40px;_margin-right:20px;
 						}
-			
+			*/
 	
 	/* 	homepage
 		----------------------------------------------------------------------------------------- */
