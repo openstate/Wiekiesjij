@@ -275,24 +275,32 @@ class PoliticianProfile(Profile):
     def region(self):
         "returns the region the politician is currently in"
         candidacy = self.user.elections.all()
-        return candidacy[0].election_party_instance.election_instance.council.region
+        if candidacy.count() != 0:
+            return candidacy[0].election_party_instance.election_instance.council.region
+        return None
 
     def party(self):
         "Returns the party  of the candidate"
         # Currently there is only one but this needs to be modified at a later
         # date for when there are past elections and so more partys
         candidacy = self.user.elections.order_by('position')
-        return candidacy[0].election_party_instance.party
+        if candidacy.count() != 0:
+            return candidacy[0].election_party_instance.party
+        return None
 
     def election_party(self):
         """ Returns election party wrapper. """
         candidacy = self.user.elections.all().select_related('election_party_instance__party')
-        return candidacy[0].election_party_instance
+        if candidacy.count() != 0:
+            return candidacy[0].election_party_instance
+        return None
 
     def position(self):
         "Returns the position of the candidate on the party's list"
         candidacy = self.user.elections.all()
-        return candidacy[0].position
+        if candidacy.count() != 0:
+            return candidacy[0].position
+        return None
 
     def age(self):
         if self.dateofbirth:
