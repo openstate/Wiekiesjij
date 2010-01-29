@@ -43,6 +43,7 @@
                             <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail 'defaults/pol-dummy.jpg' 36x46 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% endif %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
                         {% endif %}
 
+
                         </div>
                         <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ candidate.candidates_score }}%</span></span>
 						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
@@ -68,6 +69,7 @@
                     --></div>
                 {% endfor %}
                 </div>
+
 
             </div>
         </div>

@@ -1,6 +1,10 @@
 import copy
 import json
 
+from django.conf import settings
+from math import ceil
+from django.db import transaction
+
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -235,13 +239,15 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)
 
                 elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
+
                     answer = Answer.objects.get(id=answer_value[0])
                     answer_value= answer.meta
                     if answer_value == 'ALL_OTHERS':
                         exclude_list = ['HBO', 'MBO', 'Universitair']
                         levels = EducationLevel.objects.exclude(level__in=exclude_list)
                     else:
-                        levels = EducationLevel.objects.exclude(level=answer_value)
+                        levels = EducationLevel.objects.filter(level=answer_value)
+                        
                     # Check all levels that the politican can be in to be a match
                     level_names = []
                     for level in levels:

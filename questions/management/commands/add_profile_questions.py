@@ -77,7 +77,7 @@ class Command(BaseCommand):
         
         q10 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft de volgende vervolgopleiding afgerond:',
-            question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
+            question_type=settings.QTYPE_MODEL_EDUCATION_LEVEL,
             theme='q10',
             has_no_preference=True,
         )
