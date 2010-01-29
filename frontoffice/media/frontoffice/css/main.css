@@ -1769,6 +1769,55 @@
 				}
 	
 	
+	.meter {
+		width:200px;
+		background:#fff;
+		border:2px solid #000;
+		position:relative;
+		}
+		.meter .match {
+			display:block;
+			background:#ed2227;
+			height:24px;
+			
+			}
+		.meter .value {
+			display:block;
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			font-size:1.4em;
+			font-weight:bold;
+			line-height:24px;
+			text-align:center;
+			}
+	
+	
+	.question-matches {
+	
+		}
+		.question-matches .item {
+		
+			}
+		.question-matches h2.question {
+			
+			}	
+		.question-matches .meter {
+			float:right;
+			}
+			
+			
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/* 	Tweets
 		----------------------------------------------------------------------------------------- */
 		

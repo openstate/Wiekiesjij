@@ -16,52 +16,59 @@
             <div class="bd">
             	
                 <ul id="wizardSteps">
-                    {% for q in questions %}
-                        <li class="history"><span>{{ q|add:"1" }}</span></li>
-                    {% endfor %}
-                    <li class="last current-custom"><span>{% trans "Results" %}</span></li>
+                    <li class="current-custom"><span>{% trans "Back to results" %}</span></li>
+                    <li class="last current-custom"><span>{% trans "Match with" %} {{ candidate.candidate.profile.full_name }}</span></li>
                 </ul>
                 
                 {% block step-header %}
                 	<h1>{% trans "Match details" %}:</h1>
                 {% endblock step-header %}
                 
-
                 
-                     <div class="party-logo">
-                        <a href="{% url fo.party_profile candidate.candidate.profile.party.id %}" {% if iframe %}target="_blank"{% endif %}>
-                        {% if candidate.candidate.profile.party.logo %}
-                            <img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
-                            {% else %}
-                            <img src="{% if forloop.first %}{% thumbnail 'defaults/party-dummy.jpg' 120x75 upscale %}{% else %}{% thumbnail 'defaults/party-dummy.jpg' 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
-                        {% endif %}
-                        </a>
-                    </div>
-                    <div class="image">
-                    {% if candidate.candidate.profile.picture %}
-                        <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
-                    {% else %}
-                        <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
-                    {% endif %}
-                    </div>
-                    {% for info in questions.items %}
-                        <div>
-                                <p>QUESTION: {{ info.1|dict_key_value:'question' }}</p>
-                                <p>PERCENTAGE MATCH: {{ info.1|dict_key_value:'score' }}</p>
-                                <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
-                                <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
-                                <p>VISITORS ANSWER: {% for answer in info.1|dict_key_value:'visitor' %}{{ answer }} {% endfor %}</p>
-                                <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{% for answer in info.1|dict_key_value:'candidate' %}{{ answer }} {% endfor %}{% else %}{% trans 'None' %}{% endif %} </p>
-                                <br/>
+                <div class="scrollable">
+                    <div class="item best-match">
+                        <div class="party-logo">
+                            <a href="{% url fo.party_profile candidate.candidate.profile.party.current_eip.id %}" {% if iframe %}target="_blank"{% endif %}>
+                            {% if candidate.candidate.profile.party.logo %}
+                            	<img src="{% if forloop.first %}{% thumbnail candidate.candidate.profile.party.logo 120x75 upscale %}{% else %}{% thumbnail candidate.candidate.profile.party.logo 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                           	{% else %}
+                            	<img src="{% if forloop.first %}{% thumbnail 'defaults/party-dummy.jpg' 120x75 upscale %}{% else %}{% thumbnail 'defaults/party-dummy.jpg' 90x50 upscale %}{% endif %}" alt="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" title="{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})" />
+                            {% endif %}
+                            </a>
                         </div>
-                    {% endfor %}
-                    <a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
-                    <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
-                    <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
-                    <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
-              
+                    	<div class="image">
+                        {% if candidate.candidate.profile.picture %}
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail candidate.candidate.profile.picture 36x46 upscale %}{% else %}{% thumbnail candidate.candidate.profile.picture 77x95 upscale %}{% endif %}{% else %}{% thumbnail candidate.candidate.profile.picture 58x72 upscale %}{% endif %}" />
+                        {% else %}
+                            <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail 'defaults/pol-dummy.jpg' 36x46 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% endif %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
+                        {% endif %}
 
-             
+                        </div>
+                        <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ candidate.candidates_score }}%</span></span>
+						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
+                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
+                        <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
+                        <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
+                    </div>
+           		</div>
+				
+                <div class="question-matches">
+                {% for info in questions.items %}
+                    <div class="item">
+                    	<div class="meter">
+                        	<span class="match" style="width:{{ info.1|dict_key_value:'score' }}%;"></span>
+                            <span class="value">{{ info.1|dict_key_value:'score' }}%</span>
+                        </div>
+                        <h2 class="question">{{ info.1|dict_key_value:'question' }}</h2>
+                        
+                        <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
+                        <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
+                        <!--<p>VISITORS ANSWER: {{ info.1|dict_key_value:'visitor' }}</p>
+                        <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{{ info.1|dict_key_value:'candidate' }}{% else %}{% trans 'None' %}{% endif %} </p>
+                    --></div>
+                {% endfor %}
+                </div>
+
             </div>
         </div>
     {% endblock content %}
