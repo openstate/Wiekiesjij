@@ -200,7 +200,7 @@ def age(bday, d=None):
 def dict_key_value(dict, key):
     if key in dict.keys():
         return dict[key]
-    return None
+    return ['Not answered yet']
 
 class CompareBlockNode(template.Node):
     """

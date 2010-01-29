@@ -543,41 +543,83 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions) / 2
         else:
             questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions)
-#        if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
-#            print 'backoffice',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
-#            print 'party',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
-#            print 'work experience',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
-#            print 'education level',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
-#            print 'religion',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_PROFILE_AGE == question.question_type:
-#            print 'age',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_PROFILE_GENDER == question.question_type:
-#            print 'gender',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        elif qsettings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
-#            print 'weight',questions_dict[key]['visitor']
-#            if 'candidate' in questions_dict[key].keys():
-#                print questions_dict[key]['candidate']
-#        else:
-#            pass
 
+        if  questions_dict[key]['score'] > 100 and settings.DEBUG == False:
+            questions_dict[key]['score'] = 100
+            
+        if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
+            #print 'backoffice',questions_dict[key]['visitor']
+            if 'no_pref' not in questions_dict[key]['visitor']:
+                questions_dict[key]['visitor'] = Answer.objects.filter(id__in=questions_dict[key]['visitor'])
+                if 'candidate' in questions_dict[key].keys():
+                    #print questions_dict[key]['candidate']
+                    questions_dict[key]['candidate'] = Answer.objects.filter(id__in=questions_dict[key]['candidate'])
+                    #print questions_dict[key]['candidate'], 'ts'
+                else:
+                    questions_dict[key]['candidate'] = ['Not Answered']
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
+            #print 'party',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                temp_list = []
+                temp_list.append(questions_dict[key]['candidate'])
+                questions_dict[key]['candidate'] = temp_list
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+
+            #print 'work experience',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                temp_list = []
+                temp_list.append(questions_dict[key]['candidate'])
+                questions_dict[key]['candidate'] = temp_list
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+
+        elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
+            #print 'education level',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                questions_dict[key]['candidate'] = list[questions_dict[key]['candidate']]
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
+            print 'religion',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                temp_list = []
+                temp_list.append(questions_dict[key]['candidate'])
+                questions_dict[key]['candidate'] = temp_list
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_PROFILE_AGE == question.question_type:
+            #print 'age',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                temp_list = []
+                temp_list.append(questions_dict[key]['candidate'])
+                questions_dict[key]['candidate'] = temp_list
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_PROFILE_GENDER == question.question_type:
+            #print 'gender',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                questions_dict[key]['candidate'] = list[questions_dict[key]['candidate']]
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        elif qsettings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
+            #print 'weight',questions_dict[key]['visitor']
+            if 'candidate' in questions_dict[key].keys():
+                #print questions_dict[key]['candidate']
+                questions_dict[key]['candidate'] = list[questions_dict[key]['candidate']]
+            else:
+                questions_dict[key]['candidate'] = ['Not Answered']
+        else:
+            pass
+        print key, questions_dict[key]['candidate'], questions_dict[key]['question'].question_type
     if iframe:
         parent = 'frontoffice/iframe.html'
     else:
@@ -585,6 +627,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
     returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe}
 
+    # <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{% for answer in info.1|dict_key_value:'candidate' %}{{ answer }} {% endfor %}{% else %}{% trans 'None' %}{% endif %} </p>
 
 
 

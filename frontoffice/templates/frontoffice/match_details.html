@@ -46,13 +46,13 @@
                     </div>
                     {% for info in questions.items %}
                         <div>
-                              <p>QUESTION: {{ info.1|dict_key_value:'question' }}</p>
-                              <p>PERCENTAGE MATCH: {{ info.1|dict_key_value:'score' }}</p>
-                              <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
-                              <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
-                              <p>VISITORS ANSWER: {{ info.1|dict_key_value:'visitor' }}</p>
-                              <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{{ info.1|dict_key_value:'candidate' }}{% else %}{% trans 'None' %}{% endif %} </p>
-                              <br/>
+                                <p>QUESTION: {{ info.1|dict_key_value:'question' }}</p>
+                                <p>PERCENTAGE MATCH: {{ info.1|dict_key_value:'score' }}</p>
+                                <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
+                                <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
+                                <p>VISITORS ANSWER: {% for answer in info.1|dict_key_value:'visitor' %}{{ answer }} {% endfor %}</p>
+                                <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{% for answer in info.1|dict_key_value:'candidate' %}{{ answer }} {% endfor %}{% else %}{% trans 'None' %}{% endif %} </p>
+                                <br/>
                         </div>
                     {% endfor %}
                     <a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>

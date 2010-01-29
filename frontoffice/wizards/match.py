@@ -21,6 +21,8 @@ from elections.functions import get_profile_forms, create_profile, profile_invit
 from types import ListType
 from questions.forms import SelectQuestionForm, AnswerQuestionForm
 from django.core import serializers
+from utils.emails import send_email
+
 class BestCandidate(MultiPathFormWizard):
     '''
         BestCandidate Wizard.
@@ -120,6 +122,7 @@ class BestCandidate(MultiPathFormWizard):
     def done(self, request, form_dict):
         num_weighted_questions = 0
         num_questions = 0
+        real_score = 0
         candidate_scores = {}
         candidate_question_answers = {}
         self.multiply_questions = []
@@ -361,8 +364,14 @@ class BestCandidate(MultiPathFormWizard):
                     total = float(total + score)
 
             #candidates_total_scores[candidate] = ceil(total)
-            if total > 99 and total < 100:
+            if total > 99 and settings.DEBUG == False:
+                if total > 100:
+                    real_score = total
                 total = 100
+
+            if settings.DEBUG and total < 100 and total > 99:
+                total = 100
+
 
             candidates_total_scores[candidate] = total
         visitor = VisitorResult()
@@ -392,6 +401,16 @@ class BestCandidate(MultiPathFormWizard):
             candidate_ans.save()
             new_visitor.candidate_answers.add(candidate_ans)
 
+        if real_score > 0:
+            try:
+                send_email(
+                            'Error: score more than 100 in results',
+                            'info@wiekiesjij.nl',
+                            'info@wiekiesjij.nl',
+                            {'hash': new_visitor.hash},
+                )
+            except:
+                pass
         if self.iframe:
             return redirect('fo.match_results', hash=new_visitor, iframe=self.iframe)
         else:
