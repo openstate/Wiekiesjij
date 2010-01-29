@@ -80,15 +80,27 @@
                     </tr>
                     <tr>
                         <th>{% trans 'News' %}</th>
-                        <td>{{ profile.get_fav_news_display|default:_('Not known') }}</td>
+                        <td>{% if profile.fav_news %}
+                        	<img src="{{ STATIC_URL }}frontoffice/img/content/newspapers/{{ profile.fav_news }}.gif" alt="{{ profile.get_fav_news_display }}" />
+						{% else %}
+							{% trans "Not known" %}
+                        {% endif %}{{ profile.get_fav_news_display|default:'' }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Media' %}</th>
-                        <td>{{ profile.get_fav_media_display|default:_('Not known') }}</td>
+                        <td>{% if profile.fav_media %}
+                        	<img src="{{ STATIC_URL }}frontoffice/img/content/media/{{ profile.fav_media }}.gif" alt="{{ profile.get_fav_media_display }}" />
+							{% else %}
+								{% trans "Not known" %}
+                        {% endif %}{{ profile.get_fav_media_display|default:'' }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Charities' %}</th>
-                        <td>{{ profile.charity|default:'' }}</td>
+                        <td>{% if profile.fav_media %}
+                        	<img src="{{ STATIC_URL }}frontoffice/img/content/charities/{{ profile.charity }}.gif" alt="{{ profile.get_charity_display }}" />
+							{% else %}
+								{% trans "Not known" %}
+                        {% endif %}{{ profile.get_charity_display|default:'' }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Transport' %}</th>
