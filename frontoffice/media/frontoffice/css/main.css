@@ -756,6 +756,8 @@
 			
 			.wizard .party-selection li {
 				clear:both;
+				overflow:hidden;_zoom:1;
+				margin-bottom:.2em;
 				}		
 			.wizard .party-selection li input {
 				line-height:40px;
