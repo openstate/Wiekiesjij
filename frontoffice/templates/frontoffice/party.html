@@ -61,7 +61,7 @@
                 </table>
             </div>
             <div class="ballotPosition">
-            	<a href="{% url fo.election eip.election_instance.id %}">
+            	<a href="{% url fo.election eip.id %}">
             	{% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.council.region as municipality %}
                     {{ party_name }} is list {{ position }} in municipality {{ municipality }}
                 {% endblocktrans %}
