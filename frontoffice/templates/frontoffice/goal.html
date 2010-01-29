@@ -39,11 +39,15 @@
         <div class="bd">
             {% isprofile 'visitor' %}
                 {% render_comment_form for goal %}
+			{% else %}
+				{% isprofile 'candidate' %}
+	                {% render_comment_form for goal %}
+				{% else %}
+					<p>{% trans "U dient ingelogd te zijn om te kunnen reageren." %}</p>
+	            {% endisprofile %}
             {% endisprofile %}
 
-			{% isprofile 'candidate' %}
-                {% render_comment_form for goal %}
-            {% endisprofile %}
+			
 
             {% get_comment_list for goal as comments %}
             {% for comment in comments %}
