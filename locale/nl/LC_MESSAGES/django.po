@@ -1602,7 +1602,7 @@ msgstr "Welke opleiding heeft u gevolgd?"
 #: frontoffice/templates/frontoffice/politician_profile.html:156
 #: frontoffice/templates/frontoffice/politician_profile.html:181
 msgid "at"
-msgstr "op"
+msgstr "bij"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/education.html:29
 msgid "You have no education entered yet"
