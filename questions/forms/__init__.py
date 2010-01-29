@@ -91,7 +91,7 @@ class PartyQuestionForm(BetterForm, TemplateForm):
     value = PartyMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
     
     class Meta:
-        fieldsets = (('main', {'fields': ('answer',), 'legend': '', 'classes': ('default','party-selection')}),)
+        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
     def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
