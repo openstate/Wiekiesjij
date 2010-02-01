@@ -21,7 +21,7 @@ from frontoffice.models import VisitorResult
 from questions.models import Question, Answer
 from questions import settings as qsettings
 from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
-from political_profiles.models import PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
+from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 from frontoffice.decorators import visitors_only
 from django.contrib.auth.decorators import login_required
@@ -497,8 +497,6 @@ def match_result_details(request, hash, candidate_id, iframe=None):
         for key, value in i.items():
             candidate_score[key] = value
 
-
-
     for qid, ans in visitors_answer.items():
 
         qid = str(qid)
@@ -517,10 +515,8 @@ def match_result_details(request, hash, candidate_id, iframe=None):
         if questions_dict[key]['question'].question_type == 'H':
             weighted_questions = questions_dict[key]['visitor']
 
-    #print weighted_questions, 'weighted questions'
     skipped = 0
     weighted = len(weighted_questions[0])
-    #print weighted
     for key in questions_dict.keys():
         if 'no_pref' in questions_dict[key]['visitor']:
             skipped = skipped + 1
@@ -536,12 +532,10 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['doubled'] = False
 
     num_questions = len(visitors_answer) -1 - skipped + weighted
-    #print 'number of questions', num_questions
-    #print (len(visitors_answer) -1),'-', skipped, '+', weighted
     for key in questions_dict.keys():
-        
+
         question = questions_dict[key]['question']
-        
+       
         questions_dict[key]['question_type'] = question.question_type
         if questions_dict[key]['doubled'] == True:
             questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions) / 2
@@ -550,26 +544,25 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
         if  questions_dict[key]['score'] > 100 and settings.DEBUG == False:
             questions_dict[key]['score'] = 100
-            
+        
         if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
-            #print 'backoffice',questions_dict[key]['visitor']
             if 'no_pref' not in questions_dict[key]['visitor']:
                 answers = []
                 for answer in Answer.objects.filter(id__in=questions_dict[key]['visitor']):
                     answers.append(answer.value)
                 questions_dict[key]['visitor'] = answers
                 if 'candidate' in questions_dict[key].keys():
-                    #print questions_dict[key]['candidate']
-                    questions_dict[key]['candidate'] = Answer.objects.filter(id__in=questions_dict[key]['candidate'])
-                    #print questions_dict[key]['candidate'], 'ts'
+                    answers = []
+                    for answer in  Answer.objects.filter(id__in=questions_dict[key]['candidate']):
+                        answers.append(answer.value)
+                    questions_dict[key]['candidate'] = answers
+
                 else:
                     questions_dict[key]['candidate'] = ['Not Answered']
             else:
-                questions_dict[key]['candidate'] = ['Not Answered']
+                questions_dict[key]['visitor'] = ['Question Skipped']
         elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
-            #print 'party',questions_dict[key]['visitor']
             if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
                 temp_list = []
                 eip = get_object_or_404(ElectionInstanceParty,id=questions_dict[key]['candidate'])
                 temp_list.append(eip.party.name)
@@ -578,17 +571,19 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = ['Not Answered']
 
         elif qsettings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
-
-            #print 'work experience',questions_dict[key]['visitor']
             if 'no_pref' not in questions_dict[key]['visitor']:
                 answers = []
                 for answer in Answer.objects.filter(id__in=questions_dict[key]['visitor']):
                     answers.append(answer.value)
                 questions_dict[key]['visitor'] = answers
+            else:
+                questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
                 temp_list = []
-                years_worked = _('Canidate has %d years experience') % int((candidate.candidate.profile.work_experience_days)/365)
+                if candidate.candidate.profile.work_experience_days > 0:
+                    years_worked = _('Canidate has %d years experience') % int((candidate.candidate.profile.work_experience_days)/365)
+                else:
+                    years_worked = _('Canidate has 0 years experience')
 
                 temp_list.append(years_worked)
                 questions_dict[key]['candidate'] = temp_list
@@ -596,24 +591,28 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = ['Not Answered']
 
         elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
-            #print 'education level',questions_dict[key]['visitor']
-
             if 'no_pref' not in questions_dict[key]['visitor']:
-                answers = []
-
-                answers.append(questions_dict[key]['visitor'])
-      
-                questions_dict[key]['visitor'] = answers
-
+                questions_dict[key]['visitor'] = questions_dict[key]['visitor']
+            else:
+                questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
-                temp_list = []
-                temp_list.append(questions_dict[key]['candidate'])
-                questions_dict[key]['candidate'] = temp_list
+                
+                answers = []
+                for answer in  Education.objects.filter(politician=candidate.candidate.profile):
+                    answers.append(answer.level)
+                
+                questions_dict[key]['candidate'] = answers
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
         elif qsettings.QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
-            #print 'religion',questions_dict[key]['visitor']
+            if 'no_pref' not in questions_dict[key]['visitor']:
+                answers = []
+                for ans in questions_dict[key]['visitor']:
+                    answers.append(ans)
+                questions_dict[key]['visitor'] = answers
+            else:
+                questions_dict[key]['visitor'] = ['Question Skipped']
+                
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])
@@ -621,32 +620,38 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
         elif qsettings.QTYPE_MODEL_PROFILE_AGE == question.question_type:
-            #print 'age',questions_dict[key]['visitor']
+            if 'no_pref' not in questions_dict[key]['visitor']:
+                answers = []
+                for answer in Answer.objects.filter(id__in=questions_dict[key]['visitor']):
+                    answers.append(answer.value)
+                questions_dict[key]['visitor'] = answers
+            else:
+                questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
+                
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])
                 questions_dict[key]['candidate'] = temp_list
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
         elif qsettings.QTYPE_MODEL_PROFILE_GENDER == question.question_type:
-            #print 'gender',questions_dict[key]['visitor']
+            if 'no_pref' not in questions_dict[key]['visitor']:
+                answers = []
+                answers.append(questions_dict[key]['visitor'])
+                questions_dict[key]['visitor'] = answers
+            else:
+                questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
+                
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])
                 questions_dict[key]['candidate'] = temp_list
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
+            
         elif qsettings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
-            #print 'weight',questions_dict[key]['visitor']
-            if 'candidate' in questions_dict[key].keys():
-                #print questions_dict[key]['candidate']
-                temp_list = []
-                temp_list.append(questions_dict[key]['candidate'])
-                questions_dict[key]['candidate'] = temp_list
-            else:
-                questions_dict[key]['candidate'] = ['Not Answered']
+                questions_dict[key]['visitor'] = 'weighted'
+
         else:
             pass
 
