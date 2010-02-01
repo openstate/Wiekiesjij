@@ -3,7 +3,7 @@
 #
 
 PORT=11211
-USER=nobody
+USER=www-data
 MAXCONN=1024
 OPTIONS=""
 MEMORY=1024
@@ -14,7 +14,7 @@ prog="memcached"
 
 start_instance() {
         echo -n $"Starting $prog ($1): "
-        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -- -m $MEMORY -d -p $PORT -u www-data
+        start-stop-daemon --start --quiet --pidfile /var/run/memcached/memcached.$1.pid --exec $DAEMON -- -m $MEMORY -d -p $PORT -u $USER
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && touch /var/lock/memcached.$1
