@@ -1,4 +1,6 @@
 import re, urllib, os, time, datetime, feedparser, httplib
+
+from django.core.cache import cache
 from django import template
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -129,13 +131,21 @@ def shorten(url):
     """
     if settings.DEBUG:
         return url
-    conn = httplib.HTTPConnection('vl.am', port=80, timeout=5)
-    conn.request('GET', '/api/shorten/plain/%s' % url)
-    response = conn.getresponse()
-    if response.status == 200 or response.status == 201:
-        return response.read()
-    else:
-        return url
+        
+    key = template.defaultfilters.slugify(url)
+    result = cache.get(url)
+    if result is None:
+        try:
+            conn = httplib.HTTPConnection('vl.am', port=80, timeout=5)
+            conn.request('GET', '/api/shorten/plain/%s' % url)
+            response = conn.getresponse()
+            if response.status == 200 or response.status == 201:
+                result = response.read()
+        except:
+            result = url
+        cache.set(key, result)
+        
+    return result
 
 
 @register.inclusion_tag('utils_tags/_tweets.html')
@@ -155,38 +165,41 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     #is cache expired? default 60 minutes (60*60)
     if (cache_age + cache_expires*60 < time.time()):
         try: #refresh cache
-            urllib.urlretrieve(feed_url,CACHE_FILE)
+            urllib.urlretrieve(feed_url, CACHE_FILE)
         except IOError: #if downloading fails, proceed using cached file
             pass
-
-    #load feed from cache
-    feed = feedparser.parse(open(CACHE_FILE))
-    #set regex shizzle for actually parsing the messages
-    url_regex = re.compile(r"([A-Za-z]+://[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&?/.=]+)") #url
-    usn_regex = re.compile(r"[@]([A-Za-z0-9-_]+)") #username
-    htg_regex = re.compile(r"[#]([A-Za-z0-9-_]+)") #hashtag
-    pos_regex = re.compile(r"^([A-Za-z0-9-_]+:)") #remove poster name
     
-    posts = []
-    for entry in feed['entries'][:posts_to_show]:
-        pub_date = entry.updated_parsed
-        #TODO: Twitter delivers time in GMT (probably). We don't live in Greenwich.
-        published = datetime.datetime(*pub_date[:6])
+    try:
+        #load feed from cache
+        feed = feedparser.parse(open(CACHE_FILE))
+        #set regex shizzle for actually parsing the messages
+        url_regex = re.compile(r"([A-Za-z]+://[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&?/.=]+)") #url
+        usn_regex = re.compile(r"[@]([A-Za-z0-9-_]+)") #username
+        htg_regex = re.compile(r"[#]([A-Za-z0-9-_]+)") #hashtag
+        pos_regex = re.compile(r"^([A-Za-z0-9-_]+:)") #remove poster name
+    
+        posts = []
+        for entry in feed['entries'][:posts_to_show]:
+            pub_date = entry.updated_parsed
+            #TODO: Twitter delivers time in GMT (probably). We don't live in Greenwich.
+            published = datetime.datetime(*pub_date[:6])
 
-        #make links out of URLs, @usernames and #hashtags and remove username of politician
-        summary = url_regex.sub(r'<a href="\g<1>">\g<1></a>', entry.summary)
-        summary = usn_regex.sub(r'@<a href="http://twitter.com/\g<1>">\g<1></a>', summary)
-        summary = htg_regex.sub(r'#<a href="http://search.twitter.com/search?q=%23\g<1>">\g<1></a>', summary)
-        summary = pos_regex.sub('', summary)
+            #make links out of URLs, @usernames and #hashtags and remove username of politician
+            summary = url_regex.sub(r'<a href="\g<1>">\g<1></a>', entry.summary)
+            summary = usn_regex.sub(r'@<a href="http://twitter.com/\g<1>">\g<1></a>', summary)
+            summary = htg_regex.sub(r'#<a href="http://search.twitter.com/search?q=%23\g<1>">\g<1></a>', summary)
+            summary = pos_regex.sub('', summary)
 
-        posts.append({
-            'title': mark_safe(entry.title),
-            'summary': mark_safe(summary),
-            'link': mark_safe(entry.link),
-            'published': published,
-        })
-    return {'posts': posts}
-
+            posts.append({
+                'title': mark_safe(entry.title),
+                'summary': mark_safe(summary),
+                'link': mark_safe(entry.link),
+                'published': published,
+            })
+        return {'posts': posts}
+    except:
+        pass
+    return {'posts': []}
 
 @register.filter
 def age(bday, d=None):
