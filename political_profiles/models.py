@@ -241,7 +241,7 @@ class PoliticianProfile(Profile):
     num_children    = models.PositiveIntegerField(_('Number of Children'), max_length=3, null=True, blank=True)
     religion        = models.CharField(_('Religion'), max_length=255, choices=RELIGION, blank=True, null=True)
     religious_group = models.CharField(_('Religious group'), max_length=255, blank=True, null=True)
-    smoker          = models.BooleanField(_('Smoker'), default=False)
+    smoker          = models.NullBooleanField(_('Smoker'), blank=True, null=True, default=None)
     diet            = models.CharField(_('Diet'), max_length=25, choices=DIET, blank=True, null=True)
     fav_news        = models.CharField(_('Favourite Newspaper'), max_length=25, choices=NEWSPAPER, blank=True, null=True)
     transport       = models.CharField(_('What is your regular method of transport'), max_length=25, choices=TRANSPORT, blank=True, null=True)

@@ -5,11 +5,14 @@ from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from backoffice.decorators import staff_required, superuser_required
 from elections.functions import replace_user
 from invitations.models import Invitation
 from invitations.forms import AcceptInvitationForm, ExistingUserForm, ConfirmationForm
+
+from political_profiles.models import ChanceryProfile, ContactProfile, PoliticianProfile
 
 
 def index(request, hash):
@@ -91,18 +94,63 @@ def existing(request, hash):
 def list(request):
     invitations = Invitation.objects.all()
     context = {}
+    name_filter = None
+    email_filter = None
     if request.method == 'POST':
         for item, value in request.POST.iteritems():
             if not item.startswith('filter_'):
                 continue
             _, key = item.split('_', 2)
-            if key == 'accepted':
-                if value != 'true':
-                    value = 0
-                else:
-                    value = 1
-                context.update({item: request.POST.get(item, '')})
-                invitations = invitations.filter(**{smart_str(key): value})
+            if not value:
+                continue
+            if key == 'search':
+                for part in value.split():
+                    if part.find('@') != -1:
+                        if email_filter is None:
+                            email_filter = Q(user_to__email__icontains=part)
+                        else:
+                            email_filter = email_filter & Q(user_to__email__icontains=part)
+                    else:
+                        if name_filter is None:
+                            name_filter = (
+                                    Q(user_to__chanceryprofile__last_name__icontains=part) | 
+                                    Q(user_to__chanceryprofile__first_name__icontains=part) | 
+                                    Q(user_to__chanceryprofile__middle_name__icontains=part) |
+                                    Q(user_to__contactprofile__last_name__icontains=part) | 
+                                    Q(user_to__contactprofile__first_name__icontains=part) | 
+                                    Q(user_to__contactprofile__middle_name__icontains=part) |
+                                    Q(user_to__politicianprofile__last_name__icontains=part) | 
+                                    Q(user_to__politicianprofile__first_name__icontains=part) | 
+                                    Q(user_to__politicianprofile__middle_name__icontains=part)
+                                )
+                        else:
+                            name_filter = name_filter & (
+                                    Q(user_to__chanceryprofile__last_name__icontains=part) | 
+                                    Q(user_to__chanceryprofile__first_name__icontains=part) | 
+                                    Q(user_to__chanceryprofile__middle_name__icontains=part) |
+                                    Q(user_to__contactprofile__last_name__icontains=part) | 
+                                    Q(user_to__contactprofile__first_name__icontains=part) | 
+                                    Q(user_to__contactprofile__middle_name__icontains=part) |
+                                    Q(user_to__politicianprofile__last_name__icontains=part) | 
+                                    Q(user_to__politicianprofile__first_name__icontains=part) | 
+                                    Q(user_to__politicianprofile__middle_name__icontains=part)
+                                )
+                            
+                if email_filter is not None:
+                    invitations = invitations.filter(email_filter)                
+                    
+                if name_filter is not None:
+                    invitations = invitations.filter(name_filter)
+                    
+            else:
+                if key == 'accepted':
+                    if value != 'true':
+                        value = 0
+                    else:
+                        value = 1
+                if value != '':
+                    invitations = invitations.filter(**{smart_str(key): value})
+            context.update({item: request.POST.get(item, '')})
     
     context.update({'invs': invitations})
     return render_to_response('invitations/list.html', context, context_instance=RequestContext(request))

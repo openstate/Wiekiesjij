@@ -5,6 +5,8 @@ django-form-utils==0.1.6
 python-dateutil
 monthdelta
 feedparser==4.1
+django-pagination==1.0.5
+
 
 
 

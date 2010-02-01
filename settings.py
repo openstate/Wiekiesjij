@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'utils.middleware.UserBasedExceptionMiddleware',
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -110,6 +111,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'staticfiles',
     'sorl.thumbnail',
+    'pagination',
     
     'elections',
     'political_profiles',

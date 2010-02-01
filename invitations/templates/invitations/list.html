@@ -1,5 +1,5 @@
 {% extends 'invitations/base.html' %}
-{% load i18n utils_tags %}
+{% load i18n utils_tags pagination_tags %}
 {% block cols %}
 	<div class="col size1of1">
 {% block content %}
@@ -13,6 +13,13 @@
 		padding: 10px;
 		width: 110px;
 	}
+	input.small {
+		width: 110px;
+	}
+	ul.parties, ul.parties li {
+		list-style-type: circle;
+		list-style-position: inside;
+	}
 </style>
 
 <div class="mod">
@@ -22,14 +29,13 @@
 		<tr>
 			<th>Naam<br/>E-mail</th>
 			<th>Type</th>
-			<th>Van</th>
 			<th>Verstuurd op</th>
 			<th>Geaccepteerd?</th>
 			<th>Ga naar</th>
 			<th>&nbsp;</th>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
+			<td><input type="text" name="filter_search" value="{{ filter_search }}" class="small" /></td>
 			<td>
 				<select name="filter_type" style="width: auto;">
 					<option value="">Alle</option>
@@ -39,7 +45,6 @@
 				</select>
 			</td>
 			<td>&nbsp;</td>
-			<td>&nbsp;</td>
 			<td>
 				<select name="filter_accepted" style="width: auto;">
 					<option value="">Alle</option>
@@ -47,19 +52,19 @@
 					<option value="false" {% ifequal filter_accepted 'false' %}selected="selected"{% endifequal %}>Nee</option>
 				</select>
 			</td>
-			<td>&nbsp;</td>
 			<td><input type="submit" value="Filter" style="width: auto;"/></td>
 		</tr>
+		{% autopaginate invs 20 %}
 		{% for invitation in invs %}
 		<tr>
-			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}<br/>{{ invitation.user_to.email }}</td>
+			<td>{{ invitation.user_to.profile.full_name|default:"Onbekend" }}<br/>{{ invitation.user_to.email }}<br/>
+			<a href="{% url invitations.send id=invitation.id %}"><strong>Stuur opnieuw</strong></a></td>
 			<td>
 				{% ifequal invitation.type 'council_admin' %}Griffie{% endifequal %}
 				{% ifequal invitation.type 'party_admin' %}Partie contact{% endifequal %}
 				{% ifequal invitation.type 'candidate' %}Politicus{% endifequal %}
-			</td>
-			<td>
-				<ul>
+				
+				<ul class="parties">
 				{% ifequal invitation.type 'council_admin' %}
 					{% for council in invitation.user_to.councils.all %}
 						<li><a href="{% url bo.election_instance_view council.election_instance.pk %}">{{ council.name }}</a></li>
@@ -80,10 +85,10 @@
 			<td>{{ invitation.send_on|default:"Nog niet" }}</td>
 			<td>{% if invitation.accepted %}Ja{% if user.is_superuser %}<br/><a href="{% url invitations.hijack user_id=invitation.user_to.id %}" style="color: #f00">Hijack this account</a>{% endif %}{% else %}Nee{% endif %}</td>
 			<td><a href="{% url invitations.index hash=invitation.hash %}">Klik</a></td>
-			<td><a href="{% url invitations.send id=invitation.id %}">Stuur opnieuw</a></td>
 		{% endfor %}
 	</table>
 	</form>
+	{% paginate %}
 	</div>
 </div>
 {% endblock content %}
