@@ -652,7 +652,8 @@ class PoliticianProfileWizard(MultiPathFormWizard):
                     continue
                 
                 setattr(self.user.profile, key, value)
-            if 'smoker' not in self.user_profile_dict.keys():
+
+            if self.user_profile_dict['smoker'] == 'false':
                 self.user.profile.smoker = False
             else:
                 self.user.profile.smoker = True
