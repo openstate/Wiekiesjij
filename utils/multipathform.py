@@ -467,6 +467,7 @@ class MultiPathFormWizard(object):
         """
         return self.render(
             request,
+            None,
             step_path, # all steps including the last broken
             forms_path, # all forms including the last broken
             str_path, # string path to broken step
