@@ -155,6 +155,7 @@ def goal(request, id):
 
 def politician_profile_filter(request):
     politicians = []
+    party_data = {}
     gender = dict(GENDERS)
     religion = dict(RELIGION)
     marital_status = dict(MARITAL_STATUS)
