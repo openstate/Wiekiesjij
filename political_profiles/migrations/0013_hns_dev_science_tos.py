@@ -233,7 +233,8 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
-            'terms_and_conditions': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
+            'send_text': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'visitorprofile'", 'unique': 'True', 'to': "orm['auth.User']"})
         },
         'political_profiles.workexperience': {
