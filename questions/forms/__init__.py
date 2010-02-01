@@ -52,7 +52,8 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
 
         if question_instance.question_type in question_types:
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
-
+            if question_instance.has_no_preference:
+                choices.append(('no_pref', _('Geen voorkeur')))
             if question_instance.question_type in MULTIPLE_ANSWER_TYPES:
                 self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices)})
             elif QTYPE_NORM_POLONECHOICE_VISONECHOICE == question_instance.question_type:
