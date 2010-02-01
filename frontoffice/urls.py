@@ -4,7 +4,14 @@
 #Copyright 2009 Accepté. All Rights Reserved.
 from django.conf.urls.defaults import patterns, url, include
 from django.conf import settings
+from django.views.decorators.cache import cache_page
+from frontoffice.views import politician_profile
 
+if not settings.DEBUG:
+    politician_profile_view = cache_page(politician_profile, 15*60)
+else:
+    politician_profile_view = politician_profile
+    
 urlpatterns = patterns('',
 
     url(r'^login/$', 'utils.views.login', {'template_name': 'registration/login.html'}, name='fo.login'),
@@ -49,9 +56,9 @@ urlpatterns += patterns('frontoffice.views',
 
 
     #politician profile pages
-    url(r'^politician/(?P<id>\d+)/$', 'politician_profile', name='fo.politician_profile'),
+    url(r'^politician/(?P<id>\d+)/$', politician_profile_view, name='fo.politician_profile'),
     url(r'^politician/(?P<id>\d+)/comments/$', 'politician_comments', name='fo.politician_comments'),
-    url(r'^politician/(?P<id>\d+)/(?P<tab>\w+)/$', 'politician_profile', name='fo.politician_profile'),
+    url(r'^politician/(?P<id>\d+)/(?P<tab>\w+)/$',  politician_profile_view, name='fo.politician_profile'),
 
     #politician filter
     url(r'^politicians/$', 'politician_profile_filter', name='fo.politician_profile_filter'),
