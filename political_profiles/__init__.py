@@ -160,6 +160,9 @@ def replace_user(original_user, new_user, delete_original=True):
         #Skip profile relations
         if accessor.endswith('profile'):
             continue
+            
+        if accessor == 'statistics':
+            continue
 
         relation = getattr(original_user, accessor)
         
