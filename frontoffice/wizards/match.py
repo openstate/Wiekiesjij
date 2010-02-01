@@ -214,7 +214,7 @@ class BestCandidate(MultiPathFormWizard):
                     all_visitor_answers[question_id] = party_names
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
-                    import ipdb; ipdb.set_trace()
+
                     all_visitor_answers[question_id] = answer_value
                     answer = Answer.objects.get(id=answer_value[0])
                     parts = answer.meta.split(':')
