@@ -46,7 +46,7 @@ class Command(BaseCommand):
         Answer.objects.create(
             question=q2,
             value=u'Geen ervaring als volksvertegenwoordiger',
-            meta=u'0',
+            meta=u'1',
             frontoffice_value=u'Geen ervaring als volksvertegenwoordiger',
             position=1,
         )

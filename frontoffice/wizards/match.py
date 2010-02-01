@@ -206,12 +206,15 @@ class BestCandidate(MultiPathFormWizard):
                         party_names.append(value.name)
                         for candidate in self.candidates:
                             all_candidate_answers[candidate][question_id] = candidate.party().id
+                            
                             if candidate.party() == value:
+                                
                                 candidate_scores[candidate].append({question.id: 1})
 
                     all_visitor_answers[question_id] = party_names
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+                    import ipdb; ipdb.set_trace()
                     all_visitor_answers[question_id] = answer_value
                     answer = Answer.objects.get(id=answer_value[0])
                     parts = answer.meta.split(':')
@@ -233,7 +236,7 @@ class BestCandidate(MultiPathFormWizard):
                             # need to subtract one form the end figure as 'to' is up to but not equal
                             if candidate.work_experience_days == None:
                                 candidate.work_experience_days = 0
-                            if (int(candidate.work_experience_days)/365) in range(int(start),(int(end)-1)):
+                            if (int(candidate.work_experience_days)/365) in range(int(start),(int(end))):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
                             all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)

@@ -20,7 +20,7 @@ from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSe
 from frontoffice.models import VisitorResult
 from questions.models import Question, Answer
 from questions import settings as qsettings
-from elections.models import Candidacy, ElectionInstance, ElectionInstanceParty
+from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
 from frontoffice.decorators import visitors_only
@@ -564,8 +564,8 @@ def match_result_details(request, hash, candidate_id, iframe=None):
         elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
-                eip = get_object_or_404(ElectionInstanceParty,id=questions_dict[key]['candidate'])
-                temp_list.append(eip.party.name)
+                eip = get_object_or_404(Party,id=questions_dict[key]['candidate'])
+                temp_list.append(eip.name)
                 questions_dict[key]['candidate'] = temp_list
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
