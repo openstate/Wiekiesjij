@@ -1,1 +1,2 @@
 The following item got a result score of over 100: {{ hash }}
+Real score: {{ real_score }}

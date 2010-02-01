@@ -409,7 +409,7 @@ class BestCandidate(MultiPathFormWizard):
                             'Error: score more than 100 in results',
                             'info@wiekiesjij.nl',
                             'exceptions+wkjwizard@wiekiesjij.nl',
-                            {'hash': new_visitor.hash},
+                            {'hash': new_visitor.hash, 'real_score': real_score},
                             {'plain': 'questions/score_error.txt'},
                 )
             except:
