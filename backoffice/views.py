@@ -218,7 +218,7 @@ def edit_election_instance(request, id):
 def candidate_edit(request, id):
     candidacy = get_object_or_404(Candidacy, pk=id)
     if candidacy.candidate.is_active:
-        request.user.message_set.create(message=ugettext('De kandidaat die u wilt wijzigen heft zijn/haar account al geactiveerd.'))
+        request.user.message_set.create(message=ugettext('De kandidaat die u wilt wijzigen heeft zijn/haar account al geactiveerd.'))
         return redirect('bo.election_party_view', id=candidacy.election_party_instance.id)
         
     FormClass = get_profile_forms('candidate', 'edit')[0]
