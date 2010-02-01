@@ -54,8 +54,7 @@
            		</div>
 				
                 <div class="question-matches">
-                {% for info in questions.items %}
-                    
+                {% for info in questions.items %}                    
                     {% ifnotequal info.1|dict_key_value:'visitor' 'weighted' %}
                     <div class="item">
                     	<div class="meter">
@@ -76,7 +75,7 @@
 
             </div>
         </div>
-    {% endblock content %}
-   	</div>
+        {% endblock content %}
+   </div>
 {% endblock cols %}
 

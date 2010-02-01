@@ -34,7 +34,7 @@ class Command(BaseCommand):
         print "Added basic question 1"
         q2 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft:',
-            question_type=settings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS,
+            question_type=settings.QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS,
             theme='q2',
             has_no_preference=True,
         )

@@ -16,7 +16,7 @@ from questions.forms import VisitorAnswerQuestionForm, PartyQuestionForm
 from questions.forms.types import ThemeAnswerForm
 from questions.models import Question, Answer
 from elections.models import Candidacy, ElectionInstanceParty, ElectionInstance
-from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_WORK_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY
+from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY
 from questions.settings import FRONTOFFICE_QUESTION_TYPES, BACKOFFICE_QUESTION_TYPES, MULTIPLE_ANSWER_TYPES
 from political_profiles.models import EducationLevel, PoliticianProfile, Education
 from frontoffice.models import VisitorResult, CandidateAnswers
@@ -69,7 +69,7 @@ class BestCandidate(MultiPathFormWizard):
 
                 fkwargs= {str(question.id): {'queryset': self.election_instance.parties, 'empty_label':empty_label}}
 
-            elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+            elif QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS == question.question_type:
                 form = {str(question.id): VisitorAnswerQuestionForm}
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
 
@@ -213,7 +213,7 @@ class BestCandidate(MultiPathFormWizard):
 
                     all_visitor_answers[question_id] = party_names
 
-                elif QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+                elif QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS == question.question_type:
 
                     all_visitor_answers[question_id] = answer_value
                     answer = Answer.objects.get(id=answer_value[0])
@@ -225,21 +225,21 @@ class BestCandidate(MultiPathFormWizard):
                         end = int(parts[0]) + 1                    
                     if end == 'G':
                         for candidate in self.candidates:
-                            if candidate.work_experience_days == None:
-                                candidate.work_experience_days = 0
-                            if (int(candidate.work_experience_days)/365) >= int(start):
+                            if candidate.political_experience_days == None:
+                                candidate.political_experience_days = 0
+                            if (int(candidate.political_experience_days)/365) >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
                                
-                            all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)
+                            all_candidate_answers[candidate][question_id] = (int(candidate.political_experience_days)/365)
                     else:
                         for candidate in self.candidates:
                             # need to subtract one form the end figure as 'to' is up to but not equal
-                            if candidate.work_experience_days == None:
-                                candidate.work_experience_days = 0
-                            if (int(candidate.work_experience_days)/365) in range(int(start),(int(end))):
+                            if candidate.political_experience_days == None:
+                                candidate.political_experience_days = 0
+                            if (int(candidate.political_experience_days)/365) in range(int(start),(int(end))):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
-                            all_candidate_answers[candidate][question_id] = (int(candidate.work_experience_days)/365)
+                            all_candidate_answers[candidate][question_id] = (int(candidate.political_experience_days)/365)
 
                 elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
 

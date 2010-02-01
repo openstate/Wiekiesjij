@@ -546,6 +546,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             questions_dict[key]['score'] = 100
         
         if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
+            questions_dict[key]['type'] = 'backoffice'
             if 'no_pref' not in questions_dict[key]['visitor']:
                 answers = []
                 for answer in Answer.objects.filter(id__in=questions_dict[key]['visitor']):
@@ -562,6 +563,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
         elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
+            questions_dict[key]['type'] = 'party'
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
                 eip = get_object_or_404(Party,id=questions_dict[key]['candidate'])
@@ -570,7 +572,8 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
 
-        elif qsettings.QTYPE_MODEL_WORK_EXPERIENCE_YEARS == question.question_type:
+        elif qsettings.QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS == question.question_type:
+            questions_dict[key]['type'] = 'political_experience'
             if 'no_pref' not in questions_dict[key]['visitor']:
                 answers = []
                 for answer in Answer.objects.filter(id__in=questions_dict[key]['visitor']):
@@ -580,8 +583,8 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
-                if candidate.candidate.profile.work_experience_days > 0:
-                    years_worked = _('Canidate has %d years experience') % int((candidate.candidate.profile.work_experience_days)/365)
+                if candidate.candidate.profile.political_experience_days > 0:
+                    years_worked = _('Canidate has %d years experience') % int((candidate.candidate.profile.political_experience_days)/365)
                 else:
                     years_worked = _('Canidate has 0 years experience')
 
@@ -642,10 +645,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                
-                temp_list = []
-                temp_list.append(questions_dict[key]['candidate'])
-                questions_dict[key]['candidate'] = temp_list
+                questions_dict[key]['candidate'] = questions_dict[key]['candidate']
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
             
@@ -662,8 +662,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
     returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe}
 
-    # <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{% for answer in info.1|dict_key_value:'candidate' %}{{ answer }} {% endfor %}{% else %}{% trans 'None' %}{% endif %} </p>
-
+    
 
 
 
