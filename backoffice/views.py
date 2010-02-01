@@ -227,7 +227,14 @@ def candidate_edit(request, id):
         form = FormClass(user=candidacy.candidate, data=request.POST)
         
         if form.is_valid():
-            
+            candidacy.candidate.email = form.cleaned_data['email']
+            candidacy.candidate.profile.first_name = form.cleaned_data['first_name']
+            candidacy.candidate.profile.middle_name = form.cleaned_data['middle_name']
+            candidacy.candidate.profile.last_name = form.cleaned_data['last_name']
+            candidacy.candidate.profile.gender = form.cleaned_data['gender']
+            candidacy.candidate.save()
+            candidacy.candidate.profile.save()
+
             request.user.message_set.create(message=ugettext('De kandidaat is gewijzigd.'))
             return redirect('bo.election_party_view', id=candidacy.election_party_instance.id)
     else:
