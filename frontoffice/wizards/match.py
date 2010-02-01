@@ -302,8 +302,8 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = candidate.age()
                     else:
                         for candidate in self.candidates:
-                            # need to subtract one form the end figure as 'to' is up to but not equal
-                            if candidate.age() in range(int(start),int(end)-1):
+                            
+                            if candidate.age() in range(int(start),int(end)):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
                             all_candidate_answers[candidate][question_id] = candidate.age()
