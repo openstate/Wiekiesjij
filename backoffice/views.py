@@ -228,9 +228,9 @@ def candidate_edit(request, id):
         
         if form.is_valid():
             candidacy.candidate.email = form.cleaned_data['email']
-            candidacy.candidate.profile.first_name = form.cleaned_data['first_name']
-            candidacy.candidate.profile.middle_name = form.cleaned_data['middle_name']
-            candidacy.candidate.profile.last_name = form.cleaned_data['last_name']
+            candidacy.candidate.profile.first_name = form.cleaned_data['name']['first_name']
+            candidacy.candidate.profile.middle_name = form.cleaned_data['name']['middle_name']
+            candidacy.candidate.profile.last_name = form.cleaned_data['name']['last_name']
             candidacy.candidate.profile.gender = form.cleaned_data['gender']
             candidacy.candidate.save()
             candidacy.candidate.profile.save()
