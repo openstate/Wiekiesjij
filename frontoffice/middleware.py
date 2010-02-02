@@ -20,17 +20,21 @@ class SubdomainMiddleware:
             domain = request.get_host()
         
         if subdomain:
-            (ei_id, _) = cache.get('%s-%s' % ('sdmid', subdomain))
+            result = cache.get('%s-%s' % ('sdmid', subdomain))
             #If not found we update the cache for all of them
-            if ei_id is None:
+            if result is None:
                 for (id, name) in ElectionInstance.objects.values_list('id', 'name'):
                     subd = slugify(name)
                     cache.set('%s-%s' % ('sdmid', subd), (id, name))
                     if subd == subdomain:
                         ei_id = id
-                        request.session['ElectionInstance'] = {'id': id, 'name': name}
+                        ei_name = name
+                        
+            else:
+                (ei_id, ei_name) = result
+            
             #might still be None
             if ei_id:
-                request.session['ElectionInstance']
+                request.session['ElectionInstance'] = {'id': ei_id, 'name': ei_name}
                 url = reverse('fo.match_welcome', kwargs={'election_instance_id': ei_id})
                 return HttpResponseRedirect('http://%s%s' % (domain, url))
