@@ -79,6 +79,7 @@ MIDDLEWARE_CLASSES = (
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'frontoffice.middleware.SubdomainMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
