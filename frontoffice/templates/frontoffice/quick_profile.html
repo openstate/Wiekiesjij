@@ -113,7 +113,7 @@
         	<p>{{ profile.introduction|default:'' }}</p>
 			{% for candidacy in profile.user.elections.all %}
 				<a href="{% url fo.election candidacy.election_party_instance.id %}">
-				{% blocktrans with profile.first_name as name and candidacy.position as position and candidacy.party.abbreviation as party and candidacy.election_party_instance.election_instance.name as region %}
+				{% blocktrans with profile.first_name as name and candidacy.position as position and candidacy.election_party_instance.party.abbreviation as party and candidacy.election_party_instance.election_instance.name as region %}
 	                {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
 	            {% endblocktrans %}</a><br />
 			{% endfor %}
