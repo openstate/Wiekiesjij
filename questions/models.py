@@ -17,7 +17,9 @@ class Question(models.Model):
     weight          = models.PositiveIntegerField(_('Weight'), default=1,)
     theme           = models.CharField(_('Theme'), max_length=255, blank=True, null=False, default='')
     has_no_preference   = models.BooleanField(_('Has a no-preference option'), default=False)
-
+    result_title    = models.TextField(_('Question'))
+    help_text       = models.TextField(_('Help Text'))
+    
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
 
