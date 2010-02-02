@@ -33,12 +33,9 @@ class VisitorResult(models.Model):
             seed()
             chars = string.letters + string.digits
             hash = ''.join([choice(chars) for i in range(32)])
-            exists = False
-            for visitor_result in VisitorResult.objects.all():
-
-                if hash == visitor_result.hash:
-                    exists = Ture
-            if not exists:
+            try:
+                cls.objects.get(hash=hash)
+            except cls.DoesNotExist:
                 return hash
      
     @classmethod
