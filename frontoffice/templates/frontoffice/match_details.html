@@ -65,9 +65,7 @@
                         
                         <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
                         <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
-                        <p>VISITORS ANSWER: {% for ans in info.1|dict_key_value:'visitor' %}{{ ans }}, {% endfor %}</p>
-                        <p>CANDIDATES ANSWER: {% if info.1|dict_key_value:'candidate' %}{% for ans in info.1|dict_key_value:'candidate' %}{{ ans }}, {% endfor %}{% else %}{% trans 'None' %}{% endif %} </p>
-                    </div>
+                   </div>
                     {% endifnotequal %}
                 {% endfor %}
                 </div>

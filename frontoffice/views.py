@@ -654,7 +654,8 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
         else:
             pass
-
+        questions_dict[key]['question'] = question.result_title
+        
     if iframe:
         parent = 'frontoffice/iframe.html'
     else:
