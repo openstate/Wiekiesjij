@@ -1,4 +1,4 @@
-import re, urllib, os, time, datetime, feedparser, httplib
+import re, urllib, os, time, datetime, feedparser, httplib, hashlib
 
 from django.core.cache import cache
 from django import template
@@ -132,8 +132,8 @@ def shorten(url):
     if settings.DEBUG:
         return url
         
-    key = template.defaultfilters.slugify(url)
-    result = cache.get(url)
+    key = hashlib.sha224(str(url)).hexdigest()
+    result = cache.get(key)
     if result is None:
         try:
             conn = httplib.HTTPConnection('vl.am', port=80, timeout=5)
