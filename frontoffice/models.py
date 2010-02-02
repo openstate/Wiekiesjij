@@ -29,13 +29,12 @@ class VisitorResult(models.Model):
         """
             Generates a 32 characters hash with [a-zA-Z0-9]
         """
+        chars = string.letters + string.digits
         while True:
-            seed()
-            chars = string.letters + string.digits
-            hash = ''.join([choice(chars) for i in range(32)])
+            hash = ''.join([choice(chars) for i in xrange(32)])
             try:
-                cls.objects.get(hash=hash)
-            except cls.DoesNotExist:
+                VisitorResult.objects.filter(hash = hash).get()
+            except:
                 return hash
      
     @classmethod

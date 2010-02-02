@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <!-- title_url should point to page explaining the gadget -->
+  <!-- todo: screenshot, thumbnail, description -->
+  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl">
+    <!-- hyves supported -->
+    <Require feature="opensocial-0.7"/>
+    <!-- Some prefferences can not be changed by user directly. -->
+    <Require feature="setprefs"/>
+    
+    <!-- Preferences -->	
+    <!-- view type (politician, voter) -->
+    <UserPref name="vtype" datatype="hidden" default_value=""/>
+    <!-- voter's hash -->
+    <UserPref name="vhash" datatype="hidden" default_value=""/>
+  </ModulePrefs>
+  
+  
+  <Content type="html" preferred_height="350">
+    <![CDATA[
+    <!-- ======================- CONFIG -========================== -->
+    <!-- ensure all paths are correct -->
+    <script type="text/javascript" src="http://watstemtmijnraad.accepteproject.nl/opensocial/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://watstemtmijnraad.accepteproject.nl/opensocial/stylesheet.css" type="text/css" />
+      
+    <script type="text/javascript">
+        //our service responding with JSON
+    	var service_urls = {
+            politician_profile: "",
+            voters_result: "",
+    	}
+    	
+    	//true - generate unique token with each request, disables cache (developing, debugging)
+        var disable_cache = true;
+    </script>
+      
+      
+    <!-- ===============- Do not edit bellow this line -================= -->
+    <script type="text/javascript">
+    	//user preferences
+    	var prefs = new gadgets.Prefs();
+    	var owner = null;
+    	
+    	
+    	/** entry point */
+    	function init() {
+    		//look up the config
+    		var vtype = prefs.getString('vtype');
+    		var vhash = prefs.getString('vhash');
+    		
+    		//current visitor
+    		var req = opensocial.newDataRequest();
+  		    req.add(req.newFetchPersonRequest('OWNER'), 'owner');
+  			req.send(function(data) {
+  				if(data.get('viewer').hadError()) return showError('no_viewer', init);
+  				owner = data.get('owner').getData();
+  				
+  				//show configure button for owner
+  				if(owner.isViewer()) $('#configure_platf').show();
+
+                //fetch the data
+  				var url = THE DATA URL
+                var params = {}; params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+                gadgets.io.makeRequest(url, function(mdata) {
+                    if(mdata.data && !isError(mdata.data)) render(mdata.data);
+                    	else return showError('data_fetch_failed', init);
+                	}, params);
+                }
+  			});
+    	}
+    
+    	/** Check server side error. */
+    	function isError(data) {
+    		return ('error' in data);
+    	}
+    	
+    	/** Show error screen. */
+    	function showError(type, againfunc) {
+    		//show errors based on class
+    		$('#main .widget .screen, #errors .escreen').hide(); // hide all screens
+    		$('#errors, #errors .' + type).show(); //show error error screen
+
+            //bind againfunc to class="again" element
+    		$('#errors .' + type + ' .again').unbind('click');
+    		if(againfunc) {
+    			$('#errors .' + type + ' .again').show().click(againfunc);
+    		} else {
+    			$('#errors .' + type + ' .again').hide();
+    		}
+    		return false;
+    	}
+    	
+    	/** Render the data */
+    	function render(data) {
+            var html = RENDERED CONTENT
+        	$('#main .widget .screen').hide(); // hide all screens
+        	$('#contplatf').html(html).show(); //fill and show the content screen
+    	}
+        
+    	/** re-init gadget */
+        gadgets.util.registerOnLoadHandler(init);
+      </script>
+      
+      
+	<div id="main" style="height: 100%; overflow: auto;">
+		<div class="widget">
+			<!-- we also need a kind of a general loading screen. used when loading configuration data. -->
+		
+			<!-- error pages, only one shown at a time -->
+			<div class="screen" id="errors" style="display: none">
+				<div class="KIND OF ERROR escreen">
+					<!-- EXAMPLE ERROR SCREEN. -->
+					<p><button class="again">Probeer opnieuw</button></p>
+				</div>
+			</div>
+			
+			<div class="screen" id="configplatf" style="display: none;">
+				<!-- CONFIGURATION SCREENS -->
+				<div class="cscreen">
+                    <!-- a single configuration screen (wizard step) -->
+				</div>
+			</div>
+			
+			<div class="screen" id="contplatf">
+				<!-- initial content, shown when widget is not fully loaded -->
+				Welkom!
+			</div>
+
+        	<div style="clear: both"></div>
+        	<div id="configure_platf" style="display: none">
+        		<!-- shown if viewer == owner. better to show small line here, with hover opening the buttons -->
+        		<button onclick="showConfig();">Instellingen</button>
+        	</div>
+    	</div>
+	</div>
+    ]]>
+  </Content>
+</Module>
