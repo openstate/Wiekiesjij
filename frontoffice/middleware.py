@@ -19,7 +19,6 @@ class SubdomainMiddleware:
             subdomain = ''
             domain = request.get_host()
         
-        print subdomain, domain
         if subdomain:
             ei_id = cache.get('%s-%s' % ('sdmid', subdomain))
             #If not found we update the cache for all of them
