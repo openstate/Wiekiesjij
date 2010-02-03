@@ -9,6 +9,7 @@ import urllib
 from django.conf import settings
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
@@ -583,10 +584,11 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
-                if candidate.candidate.profile.political_experience_days > 0:
-                    years_worked = _('Canidate has %d years experience') % int((candidate.candidate.profile.political_experience_days)/365)
+                if candidate.candidate.profile.political_experience_days:
+                    number = int((candidate.candidate.profile.political_experience_days)/365)
                 else:
-                    years_worked = _('Canidate has 0 years experience')
+                    number = 0
+                years_worked = ungettext('Candidate has %(number)d year experience', 'Candidate has %(number)d years experience', number) % {'number': number}
 
                 temp_list.append(years_worked)
                 questions_dict[key]['candidate'] = temp_list

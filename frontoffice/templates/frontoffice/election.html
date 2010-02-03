@@ -83,7 +83,7 @@
                     {% endif %}
                 </div>
                 <h2><span>{% trans 'Candidate list for ' %}</span>{{ selected_eip.party.abbreviation }}</h2>
-                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Bekijk het partij profiel' %}</a>
+                <a href="{% url fo.party_profile selected_eip.id %}" class="party-link">{% trans 'Bekijk het partijprofiel' %}</a>
 				<ul>
                 {% for position, politician in politicians.items %}
                     <li>

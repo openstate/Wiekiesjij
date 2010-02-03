@@ -137,9 +137,14 @@
                     	<div class="item{% if forloop.last %} last-item{% endif %}">
                             <h2>{{ education.field }} <span class="institute">{% trans 'aan' %} {{ education.institute }}</span></h2>
                             <span class="smallInfo">
-                            	{% trans 'Level' %}: {{ education.level }} - 
-                                {% trans 'From' %} {{ education.startdate|date:"F Y" }} 
-                                {% if education.enddate %}{% trans 'to' %} {{ education.enddate|date:"F Y" }}{% endif %}</span>
+								{% if education.enddate %}
+								{% blocktrans with education.level as level and education.startdate|date:"F Y" as start_date and education.enddate|date:"F Y" as enddate  %}
+									Level {{ level }} from {{ start_date }} to {{ end_date }}
+								{% endblocktrans %}
+								{% else %}
+                            	{% blocktrans with education.level as level and education.startdate|date:"F Y" as start_date %}
+									Level {{ level }} from {{ start_date }}
+								{% endblocktrans %}</span>
                             <p>{{ education.description }}</p>
                        	</div>
                     {% empty %}
@@ -161,9 +166,15 @@
                     	<div class="item{% if forloop.last %} last-item{% endif %}">
                             <h2>{{ work.position }} <span class="institute">{% trans 'at' %} {{ work.company_name }}</span></h2>
                             <span class="smallInfo">
-                            	{% trans 'Sector' %}: {{ work.sector }} - 
-                            	{% trans 'From' %} {{ work.startdate|date:"F Y" }} 
-                                {% if work.enddate %}{% trans 'to' %} {{ work.enddate|date:"F Y" }}{% endif %}
+								{% if work.enddate %}
+									{% blocktrans with work.sector as sector and work.startdate|date:"F Y" as start_date and work.enddate|date:"F Y" as end_date %}
+										Sector {{ sector }} from {{ start_date }} to {{ end_date }}
+									{% endblocktrans %}
+								{% else %}
+									{% blocktrans with work.sector as sector and work.startdate|date:"F Y" as start_date %}
+										Sector {{ sector }} from {{ start_date }}
+									{% endblocktrans %}
+								{% endif %}
                             </span>
                             <p>{{ work.description }}</p>
                        	</div>
@@ -186,9 +197,15 @@
                     	<div class="item{% if forloop.last %} last-item{% endif %}">
                             <h2>{{ experience.position }} <span class="institute">{% trans 'at' %} {{ experience.organisation }}</span></h2>
                             <span class="smallInfo">
-                            	{% trans 'Type' %}: {{ experience.type }} - 
-                                {% trans 'From' %} {{ experience.startdate|date:"F Y" }}
-                                {% if experience.enddate %}{% trans 'to' %} {{ experience.enddate|date:"F Y" }}{% endif %}
+								{% if experience.enddate %}
+									{% blocktrans with experience.type as type and experience.startdate|date:"F Y" as start_date and experience.enddate|date:"F Y" %}
+										Type {{ type }} from {{ start_date }} to {{ end_date }}
+									{% endblocktrans %}
+								{% else %}
+									{% blocktrans with experience.type as type and experience.startdate|date:"F Y" as start_date %}
+										Type {{ type }} from {{ start_date }}
+									{% endblocktrans %}
+								{% endif %}
                             </span>
                             <p>{{ experience.description }}</p>
                        	</div>
