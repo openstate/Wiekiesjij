@@ -87,22 +87,24 @@ def match_results(request, hash, iframe=None):
 
     else:
         initial = {'phone':result.telephone}
+    
+    #check for sms module
+    if result.election_instance.modules.filter(slug='SMS').count() != 0:
+        if request.method == 'POST':
+            form = SmsForm(request.POST)
+            if form.is_valid():
+                if form.cleaned_data['phone']:
+                    result.telephone = form.cleaned_data['phone']
+                    result.save()
+                returndict['show_message'] = True
+                return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
-    if request.method == 'POST':
-        form = SmsForm(request.POST)
-        if form.is_valid():
-            if form.cleaned_data['phone']:
-                result.telephone = form.cleaned_data['phone']
-                result.save()
-            returndict['show_message'] = True
-            return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
-
-    else:
+        else:
   
-        form = SmsForm(initial=initial)
+            form = SmsForm(initial=initial)
 
     
-    returndict['form'] = form
+        returndict['form'] = form
 
     return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 

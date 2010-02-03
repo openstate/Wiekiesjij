@@ -14,3 +14,12 @@ class Command(BaseCommand):
             print "Module added: %s" % eim.name
         else:
             print "Module exists: %s" % eim.name
+
+        eim, created = ElectionInstanceModule.objects.get_or_create(
+            name='Event SMS Module',
+            slug='Event-SMS',
+        )
+        if created:
+            print "Module added: %s" % eim.name
+        else:
+            print "Module exists: %s" % eim.name
