@@ -144,7 +144,7 @@
 								{% else %}
                             	{% blocktrans with education.level as level and education.startdate|date:"F Y" as start_date %}
 									Level {{ level }} from {{ start_date }}
-								{% endblocktrans %}</span>
+								{% endblocktrans %}{% endif %}</span>
                             <p>{{ education.description }}</p>
                        	</div>
                     {% empty %}
