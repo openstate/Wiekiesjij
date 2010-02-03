@@ -138,7 +138,7 @@
                             <h2>{{ education.field }} <span class="institute">{% trans 'aan' %} {{ education.institute }}</span></h2>
                             <span class="smallInfo">
 								{% if education.enddate %}
-								{% blocktrans with education.level as level and education.startdate|date:"F Y" as start_date and education.enddate|date:"F Y" as enddate  %}
+								{% blocktrans with education.level as level and education.startdate|date:"F Y" as start_date and education.enddate|date:"F Y" as end_date  %}
 									Level {{ level }} from {{ start_date }} to {{ end_date }}
 								{% endblocktrans %}
 								{% else %}
