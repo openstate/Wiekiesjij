@@ -37,10 +37,10 @@ class Migration:
         'questions.question': {
             'frontend_title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
             'has_no_preference': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
-            'help_text': ('django.db.models.fields.TextField', [], {}),
+            'help_text': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question_type': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'result_title': ('django.db.models.fields.TextField', [], {}),
+            'result_title': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'theme': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})
