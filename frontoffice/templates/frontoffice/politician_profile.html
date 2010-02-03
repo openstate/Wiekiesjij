@@ -198,7 +198,7 @@
                             <h2>{{ experience.position }} <span class="institute">{% trans 'at' %} {{ experience.organisation }}</span></h2>
                             <span class="smallInfo">
 								{% if experience.enddate %}
-									{% blocktrans with experience.type as type and experience.startdate|date:"F Y" as start_date and experience.enddate|date:"F Y" %}
+									{% blocktrans with experience.type as type and experience.startdate|date:"F Y" as start_date and experience.enddate|date:"F Y" as end_date %}
 										Type {{ type }} from {{ start_date }} to {{ end_date }}
 									{% endblocktrans %}
 								{% else %}
