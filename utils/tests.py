@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django import forms
 
-from utils.validators import validate_postcode, validate_dutchbanknumber
+from utils.validators import validate_postcode, validate_dutchbanknumber, validate_dutchmobilephone
 
 class PostalCodeValidationTest(TestCase):
     """
@@ -92,6 +92,37 @@ class DutchBankNumberValidationTest(TestCase):
         for number in self.special_invalid_numbers:
             self.assertRaises(forms.ValidationError, validate_dutchbanknumber, number)
         
-        
+       
+class DutchMobilePhoneValidationTest(TestCase):
+    """
+        Tests the validate_postcode function
+    """
+    valid_numbers = (
+        ('06-14463526', '0031614463526'),
+        ('0031614463526', '0031614463526'),
+        ('06 14 46 35 26', '0031614463526'),
+        ('+31614463526', '0031614463526'),
+    )
+    
+    invalid_numbers = (
+        '0503126544',
+        '1234',
+        '07123456789',
+        '00310614463526',
+    )
+    
+    def test_valids(self):
+        """
+            Tests that the output of the validate_dutchmobilephone function has the expected result
+        """
+        for number, expected_result in self.valid_numbers:
+            self.failUnlessEqual(validate_dutchmobilephone(number), expected_result)
+    
+    def test_invalids(self):
+        """
+            Tests that the validate_postcode throws the right error on invalid input
+        """
+        for number in self.invalid_numbers:
+            self.assertRaises(forms.ValidationError, validate_dutchmobilephone, number)         
         
         

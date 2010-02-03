@@ -45,3 +45,19 @@ def validate_dutchbanknumber(value):
         
     raise ValidationError(_('%(value)s is not a valid bank account number, postbank numbers should be prefixed with a P') % {'value': value})
         
+        
+def validate_dutchmobilephone(value, error_message=None):
+    """
+        Tests and cleansup a dutch mobile phone number
+        We accept anything from 003106123456789 to 06
+    """
+    if error_message is None:
+        error_message = _(u'%(value)s is not a valid mobile phone number')
+        
+    value = value.replace('+', '00')
+    value = re.sub(r'\D+', '', value)
+    if value.startswith('06'):
+        value = re.sub(r'^06', '00316', value)
+    if not re.match(r'^00316\d{8}$', value):
+        raise ValidationError(error_message % {'value': value})
+    return value

@@ -9,7 +9,7 @@ from django.forms.fields import MultiValueField, EMPTY_VALUES
 from django.forms.util import ErrorList
 from django.forms import ValidationError
 
-from utils.validators import validate_dutchbanknumber, validate_postcode
+from utils.validators import validate_dutchbanknumber, validate_postcode, validate_dutchmobilephone
 from utils.widgets import AddressWidget, NameWidget, HiddenAddressWidget, HiddenNameWidget, ClearableFileInput
 
 from django import forms
@@ -152,6 +152,25 @@ class DutchPostcodeField(CharField):
     def clean(self, value):
         return validate_postcode(value, self.error_messages['invalid_postalcode'])
 
+class DutchMobilePhoneField(CharField):
+    """
+    Validates input for valid mobile phone number
+    """
+    default_error_messages = {
+        'invalid_phonenumber': _(u'%(value)s is not a valid mobile phone number'),
+    }
+    
+    def __init__(self, *args, **kwargs):
+        if not 'min_length' in kwargs.keys():
+            kwargs.update({'min_length': 10})
+        if not 'max_length' in kwargs.keys():
+            kwargs.update({'max_length': 13})
+        super(DutchMobilePhoneField, self).__init__(*args, **kwargs)
+        
+    def clean(self, value):
+        return validate_dutchmobilephone(value, self.error_messages['invalid_phonenumber'])
+    
+    
 class AddressField(MultiValueField):
     """
         Multi widget for the address and the house number
