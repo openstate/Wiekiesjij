@@ -20,13 +20,13 @@
     <![CDATA[
     <!-- ======================- CONFIG -========================== -->
     <!-- ensure all paths are correct -->
-    <script type="text/javascript" src="http://watstemtmijnraad.accepteproject.nl/opensocial/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://watstemtmijnraad.accepteproject.nl/opensocial/stylesheet.css" type="text/css" />
+    <script type="text/javascript" src="http://79.125.14.187/media/static/opensocial/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://79.125.14.187/media/static/opensocial/stylesheet.css" type="text/css" />
       
     <script type="text/javascript">
         //our service responding with JSON
     	var service_urls = {
-            politician_profile: "",
+            politician_profile: "http://79.125.14.187",
             voters_result: "",
     	}
     	

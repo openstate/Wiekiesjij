@@ -94,7 +94,7 @@ def get_politician_info(request, id):
 
 
 def get_testresult_politicians(request, hash):
-    """ Returns list of politician candidates ordered by score in a test reesult"""
+    """ Returns list of politician candidates ordered by score in a test result"""
     # this is secured by hash only (you are the only one who knows the hash)
     result = get_object_or_404(VisitorResult, hash = hash)
     data = { 'date_time': result.datetime_stamp }

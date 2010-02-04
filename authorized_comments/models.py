@@ -17,7 +17,7 @@ def comment_flagged(sender, **kwargs):
         domain = current_site.domain
 
         subject = _('A comment was flagged')
-        message = _("A comment was flagged as inappropiate. Check out http://%s" % domain+reverse('fo.goal', args=[flag.comment.object_pk]) ) #Hardcoded goal. Maybe change?
+        message = _("A comment was flagged as inappropiate. Check out http://%(domain)s") % dict(domain=domain+reverse('fo.goal', args=[flag.comment.object_pk])) #Hardcoded goal. Maybe change?
         mail_managers(subject, message, fail_silently=False)
         
 

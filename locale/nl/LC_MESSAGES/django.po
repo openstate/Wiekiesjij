@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wiekiesjij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 10:32+0100\n"
-"PO-Revision-Date: 2010-02-03 10:42+0100\n"
+"POT-Creation-Date: 2010-02-04 10:37+0100\n"
+"PO-Revision-Date: 2010-02-04 10:37+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -68,8 +68,8 @@ msgstr "Een reactie is gemarkeerd als ongepast"
 
 #: authorized_comments/models.py:20
 #, python-format
-msgid "A comment was flagged as inappropiate. Check out http://%s"
-msgstr "Een reactie is gemarkeerd als ongepast. Bekijk hem op de volgende url: http://%s"
+msgid "A comment was flagged as inappropiate. Check out http://%(domain)s"
+msgstr "Een reactie is gemarkeerd als ongepast. Bekijk hem op de volgende url: http://%(domain)s"
 
 #: backoffice/views.py:195
 #, python-format
@@ -281,7 +281,7 @@ msgstr "Het e-mailadres waar de uitnodiging naartoe kan."
 #: backoffice/templates/backoffice/csv_candidates_1.html:33
 #: backoffice/templates/backoffice/csv_candidates_3.html:16
 #: frontoffice/forms.py:54
-#: frontoffice/views.py:217
+#: frontoffice/views.py:219
 #: frontoffice/templates/frontoffice/quick_profile.html:41
 #: political_profiles/forms.py:39
 #: political_profiles/forms.py:95
@@ -543,7 +543,7 @@ msgstr "Lijst"
 #: elections/models.py:229
 #: frontoffice/forms.py:51
 #: frontoffice/forms.py:71
-#: frontoffice/views.py:212
+#: frontoffice/views.py:214
 #: frontoffice/registration_backend/forms.py:20
 #: frontoffice/templates/frontoffice/quick_profile.html:24
 #: political_profiles/forms.py:36
@@ -648,7 +648,7 @@ msgid_plural "%(counter)s parties"
 msgstr[0] "Één partij"
 msgstr[1] "%(counter)s partijen"
 
-#: backoffice/templates/backoffice/election_event_view.html:34
+#: backoffice/templates/backoffice/election_event_view.html:42
 msgid "There are no Election Instances defined yet for this Event."
 msgstr "Er zijn geen verkiezinginstanties voor deze verkiezing"
 
@@ -1989,7 +1989,7 @@ msgstr "Vul de naam van de gemeente hier in."
 #: elections/models.py:15
 #: elections/models.py:227
 #: frontoffice/forms.py:53
-#: frontoffice/views.py:198
+#: frontoffice/views.py:200
 #: frontoffice/templates/frontoffice/visitor_profile.html:49
 msgid "Region"
 msgstr "Regio"
@@ -2437,7 +2437,7 @@ msgstr "Telefoonnummer"
 
 #: elections/models.py:240
 #: frontoffice/forms.py:67
-#: frontoffice/views.py:282
+#: frontoffice/views.py:284
 #: political_profiles/models.py:494
 msgid "Goals"
 msgstr "Doelen"
@@ -2539,15 +2539,15 @@ msgid "Marital Status"
 msgstr "Burgelijke staat"
 
 #: frontoffice/forms.py:59
-#: frontoffice/views.py:223
-#: frontoffice/views.py:227
+#: frontoffice/views.py:225
+#: frontoffice/views.py:229
 msgid "Children"
 msgstr "Kinderen"
 
 #: frontoffice/forms.py:59
 #: frontoffice/forms.py:65
-#: frontoffice/views.py:223
-#: frontoffice/views.py:288
+#: frontoffice/views.py:225
+#: frontoffice/views.py:290
 #: political_profiles/forms.py:50
 #: utils/widgets.py:809
 msgid "Yes"
@@ -2555,8 +2555,8 @@ msgstr "Ja"
 
 #: frontoffice/forms.py:59
 #: frontoffice/forms.py:65
-#: frontoffice/views.py:227
-#: frontoffice/views.py:292
+#: frontoffice/views.py:229
+#: frontoffice/views.py:294
 #: political_profiles/forms.py:50
 #: utils/widgets.py:809
 msgid "No"
@@ -2579,8 +2579,8 @@ msgid "Mimimum years of work experience"
 msgstr "Minimum jaren werkervaring"
 
 #: frontoffice/forms.py:65
-#: frontoffice/views.py:288
-#: frontoffice/views.py:292
+#: frontoffice/views.py:290
+#: frontoffice/views.py:294
 #: frontoffice/templates/frontoffice/politician_profile.html:74
 #: political_profiles/models.py:244
 msgid "Smoker"
@@ -2650,46 +2650,46 @@ msgstr "Vragen scores lijst"
 msgid "Candidates Score"
 msgstr "Kandidaten scores"
 
-#: frontoffice/views.py:243
+#: frontoffice/views.py:245
 msgid "Youngest"
 msgstr "Ouder dan"
 
-#: frontoffice/views.py:251
+#: frontoffice/views.py:253
 msgid "Oldest"
 msgstr "Jonger dan"
 
-#: frontoffice/views.py:257
+#: frontoffice/views.py:259
 #: frontoffice/templates/frontoffice/politician_profile.html:45
 #: political_profiles/models.py:467
 msgid "Education"
 msgstr "Opleiding"
 
-#: frontoffice/views.py:262
+#: frontoffice/views.py:264
 msgid "Years political experience"
 msgstr "Jaren politieke ervaring"
 
-#: frontoffice/views.py:267
+#: frontoffice/views.py:269
 msgid "Years work experience"
 msgstr "Jaren werkervaring"
 
-#: frontoffice/views.py:272
+#: frontoffice/views.py:274
 #: frontoffice/templates/frontoffice/politician_profile.html:68
 #: political_profiles/forms.py:48
 #: political_profiles/models.py:242
 msgid "Religion"
 msgstr "Geloof"
 
-#: frontoffice/views.py:277
+#: frontoffice/views.py:279
 #: frontoffice/templates/frontoffice/quick_profile.html:45
 msgid "Marital status"
 msgstr "Burgelijke staat"
 
-#: frontoffice/views.py:297
+#: frontoffice/views.py:299
 #: frontoffice/templates/frontoffice/politician_profile.html:78
 msgid "Vegitarian"
 msgstr "Vegetariër"
 
-#: frontoffice/views.py:591
+#: frontoffice/views.py:593
 #, python-format
 msgid "Candidate has %(number)d year experience"
 msgid_plural "Candidate has %(number)d years experience"
@@ -2765,6 +2765,10 @@ msgstr "Algemene voorwaarden"
 #: frontoffice/templates/frontoffice/base.html:77
 msgid "Disclaimer"
 msgstr "Disclaimer"
+
+#: frontoffice/templates/frontoffice/base.html:78
+msgid "Privacy"
+msgstr "Privacy"
 
 #: frontoffice/templates/frontoffice/dashboard.html:17
 msgid "Edit profile"
@@ -2987,7 +2991,7 @@ msgstr ""
 "                    "
 
 #: frontoffice/templates/frontoffice/party.html:36
-#: frontoffice/templates/frontoffice/quick_profile.html:109
+#: frontoffice/templates/frontoffice/quick_profile.html:113
 msgid "Binnenkort vind je hier de populariteitsmeter."
 msgstr "Binnenkort vind je hier de populariteitsmeter."
 
@@ -3161,7 +3165,7 @@ msgstr "Politieke ervaring"
 #: frontoffice/templates/frontoffice/politician_profile.html:117
 #: frontoffice/templates/frontoffice/quick_profile.html:38
 #: frontoffice/templates/frontoffice/quick_profile.html:46
-#: frontoffice/templates/frontoffice/quick_profile.html:50
+#: frontoffice/templates/frontoffice/quick_profile.html:53
 msgid "Not known"
 msgstr "Onbekend"
 
@@ -3333,15 +3337,15 @@ msgstr "Opmerking: Dit profiel is nog niet volledig ingevuld."
 msgid "Number of children"
 msgstr "Aantal kinderen"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:53
+#: frontoffice/templates/frontoffice/quick_profile.html:57
 msgid "Social networks"
 msgstr "Social networks"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:68
+#: frontoffice/templates/frontoffice/quick_profile.html:72
 msgid "nog geen"
 msgstr "nog geen"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:68
+#: frontoffice/templates/frontoffice/quick_profile.html:72
 #, python-format
 msgid ""
 "\n"
@@ -3352,11 +3356,11 @@ msgstr ""
 "                            %(name)s heeft %(fans)s fans\n"
 "                        "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:76
+#: frontoffice/templates/frontoffice/quick_profile.html:80
 msgid "Stop being a fan"
 msgstr "Verwijder mij als fan"
 
-#: frontoffice/templates/frontoffice/quick_profile.html:78
+#: frontoffice/templates/frontoffice/quick_profile.html:82
 #, python-format
 msgid ""
 "\n"
@@ -3367,7 +3371,7 @@ msgstr ""
 "                                        Word <a href=\"%(url)s\">fan</a> van %(name)s\n"
 "                                    "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:86
+#: frontoffice/templates/frontoffice/quick_profile.html:90
 #, python-format
 msgid ""
 "\n"
@@ -3378,7 +3382,7 @@ msgstr ""
 "                                        Word <a href=\"%(url)s\" title=\"Je moet hiervoor een geregistreerde gebruiker zijn\">fan</a> van %(name)s\n"
 "                                    "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:90
+#: frontoffice/templates/frontoffice/quick_profile.html:94
 #, python-format
 msgid ""
 "\n"
@@ -3389,7 +3393,7 @@ msgstr ""
 "                                        Word <a title=\"Je moet hiervoor een geregistreerde gebruiker zijn\">fan</a> van %(name)s\n"
 "                                    "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:116
+#: frontoffice/templates/frontoffice/quick_profile.html:120
 #, python-format
 msgid ""
 "\n"
@@ -4367,7 +4371,7 @@ msgid "Postbank numbers should be prefixed with a 'P'"
 msgstr "Postbanknummers moeten beginnen met een 'P'"
 
 #: utils/fields.py:140
-#: utils/fields.py:169
+#: utils/fields.py:188
 #: utils/validators.py:16
 #, python-format
 msgid "%(value)s is not a valid postalcode"
@@ -4377,37 +4381,43 @@ msgstr "%(value)s is geen geldige postcode"
 msgid "For example 1234 AA"
 msgstr "Voorbeeld: 1234 AA"
 
-#: utils/fields.py:162
+#: utils/fields.py:160
+#: utils/validators.py:55
+#, python-format
+msgid "%(value)s is not a valid mobile phone number"
+msgstr "%(value)s is geen geldig mobiel nummer"
+
+#: utils/fields.py:181
 msgid "The address fields are (all) required"
 msgstr "De adresvelden zijn (allemaal) vereist"
 
-#: utils/fields.py:167
+#: utils/fields.py:186
 #, python-format
 msgid "Ensure the postalcode has at most %(max)d characters (it has %(length)d)."
 msgstr "Zorg ervoor dat de postcode maximaal %(max)d tekens bevat (het bevat nu %(length)d)."
 
-#: utils/fields.py:168
+#: utils/fields.py:187
 #, python-format
 msgid "Ensure the postalcode has at least %(min)d characters (it has %(length)d)."
 msgstr "Zorg ervoor dat de postcode minstens %(min)d tekens bevat (het bevat nu %(length)d)."
 
-#: utils/fields.py:173
+#: utils/fields.py:192
 msgid "Housenumber should start with a number"
 msgstr "Huisnummer moet beginnen met een cijfer"
 
-#: utils/fields.py:199
+#: utils/fields.py:218
 msgid "The first and last name field are required"
 msgstr "De voor- en achternaam zijn vereist"
 
-#: utils/fields.py:226
+#: utils/fields.py:245
 msgid "Enter a valid URL."
 msgstr "Voer een geldige URL in."
 
-#: utils/fields.py:227
+#: utils/fields.py:246
 msgid "This URL appears to be a broken link."
 msgstr "Deze link lijkt niet geldig te zijn."
 
-#: utils/fields.py:228
+#: utils/fields.py:247
 msgid "This does not appear to be an valid youtube url."
 msgstr "Deze link lijkt niet een geldige youtube link te zijn."
 
