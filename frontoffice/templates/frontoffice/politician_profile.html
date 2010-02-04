@@ -15,7 +15,7 @@
 <div class="col lastCol">
     <ul class="breadcrumbs">
     	<li class="first"><a href="/">Wiekiesjij</a></li>
-        <li><a href="{% url fo.election %}">{{ profile.party.current_eip.election_instance.name }}</a></li>
+        <li><a href="{% url fo.election rofile.party.current_eip.id %}">{{ profile.party.current_eip.election_instance.name }}</a></li>
         {% if back %}
             <li><a href="{{ back }}">{% trans 'Back to results' %}</a></li>
         {% else %}
