@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Number of children' %}</th>
-                    <td>{% ifequal profile.num_children '0'  %}
+                    <td>{% ifequal profile.num_children 0  %}
 						{{ profile.num_children }}
                     	{% else %}
 						{{ profile.num_children|default:_('Not known') }}
