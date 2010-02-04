@@ -47,7 +47,11 @@
                 </tr>
                 <tr>
                     <th>{% trans 'Number of children' %}</th>
-                    <td>{{ profile.num_children|default:_('Not known') }}</td>
+                    <td>{% ifequal profile.num_children '0'  %}
+						{{ profile.num_children }}
+                    	{% else %}
+						{{ profile.num_children|default:_('Not known') }}
+                    {% endifequal %}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Social networks' %}</th>
