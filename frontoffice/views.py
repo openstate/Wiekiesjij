@@ -353,7 +353,7 @@ def politician_profile(request, id, tab = "favs"):
     #Getting the twitter RSS feed URL
     try:
         twitter = profile.connections.filter(type__type='Twitter')[0] #Raises an exception if no twitter account is entered
-        regex = re.compile(r"^(http://)?(www\.)?(twitter\.com/)?(?P<id>[A-Za-z0-9\-=_]+)")
+        regex = re.compile(r"^(https?://)?(www\.)?(twitter\.com/)?(?P<id>[A-Za-z0-9\-=_]+)")
         match = regex.match(twitter.url)
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
