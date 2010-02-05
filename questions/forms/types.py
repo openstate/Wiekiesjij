@@ -62,7 +62,7 @@ class ModelMultiAnswerForm(BetterForm, TemplateForm):
             self.fields['value'].queryset = queryset
 
         except Exception:
-            raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
+            raise ModelAnswerFormError(_('You need to provide a model to the ModelMiltiAnswerForm'))
 
 class ModelAnswerForm(BetterForm, TemplateForm):
     value = GenerateModelChoiceField(queryset=None, widget=widgets.RadioSelect)

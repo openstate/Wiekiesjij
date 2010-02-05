@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^invitation/', include('invitations.urls')),
     (r'^opensocial/', include('opensocial.urls')),
-    
+    (r'^elections/', include('elections.urls')),
     #Guessing this one should always be last
     (r'^', include('frontoffice.urls')),
 )

@@ -3,8 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 from elections import settings
 import datetime
 from utils.functions import move_up, move_down
-
+from utils.fields import DutchMobilePhoneField
 from django.contrib.auth.models import User
+
+
 
 
 class Council(models.Model):
@@ -363,3 +365,32 @@ class ElectionInstanceParty(models.Model):
         Changes the position value with previous row
         '''
         return move_up(self, 'position', 1, {'election_instance': self.election_instance.id})
+
+class CouncilEvent(models.Model):
+
+    council  = models.ForeignKey(Council, verbose_name=_('Council'), related_name='events')
+    title = models.CharField(_('Title'), max_length=60)
+    originator = models.CharField(_('Title'), max_length=11)
+    location = models.TextField(_('Location'))
+    message = models.CharField(_('Message'), max_length=140)
+    event_datetime  = models.DateTimeField(_('Date and Time of Event'), blank = True)
+
+    def __unicode__(self):
+        return self.title
+    
+    def sms_recipients(self):
+        recipient_list = []
+        for subscription in self.sms_subscriptions.all():
+#            if recipient_list != '':
+#                recipient_list = recipient_list + ',' + str(subscription.phone_number)
+#            else:
+#                recipient_list = str(subscription.phone_number)
+            recipient_list.append(subscription.phone_number)
+        rset = set(recipient_list)
+        return list(rset)
+    
+
+
+class SmsSubscription(models.Model):
+    council_event = models.ForeignKey(CouncilEvent, verbose_name=_('Council Event'), related_name='sms_subscriptions')
+    phone_number = models.CharField(_('Phone Number'), max_length=15)

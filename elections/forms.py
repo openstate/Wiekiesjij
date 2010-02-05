@@ -10,8 +10,13 @@ from utils.formutils import TemplateForm
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 from elections.models import ElectionInstanceParty, ElectionInstanceModule
-
+from utils.fields import DutchMobilePhoneField
+from utils.forms import ModelMultiAnswerForm
 from questions.models import QuestionSet
+
+class SmsEventForm(ModelMultiAnswerForm):
+    phone_number = DutchMobilePhoneField(label=_('Phone Number'), required=True)
+
 
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
     '''

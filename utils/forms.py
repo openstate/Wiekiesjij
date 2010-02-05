@@ -2,7 +2,10 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
-
+from utils.fields import GenerateMultipleModelChoiceField, GenerateModelChoiceField
+from form_utils.forms import BetterForm, BetterModelForm
+from utils.formutils import TemplateForm
+from django.forms import widgets
 class EmailAuthForm(AuthenticationForm):	
     """
     Extends to:
@@ -39,3 +42,44 @@ class EmailAuthForm(AuthenticationForm):
 
         return self.cleaned_data
 
+
+
+class ModelMultiAnswerForm(BetterForm, TemplateForm):
+    value = GenerateMultipleModelChoiceField(queryset=None, widget=widgets.CheckboxSelectMultiple)
+
+    def __init__(self, queryset=None, attribute=None, empty_label=None, *args, **kwargs):
+        super(ModelMultiAnswerForm, self).__init__(*args, **kwargs)
+
+        try:
+            self.fields['value'].attribute=attribute
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError(_('You need to provide a model to the ModelMiltiAnswerForm'))
+
+    def clean(self):
+        ''' Overwrite to rewrite hard-coded strings and get the right form data '''
+
+        return self.cleaned_data
+
+
+class ModelAnswerForm(BetterForm, TemplateForm):
+    value = GenerateModelChoiceField(queryset=None, widget=widgets.RadioSelect)
+
+    def __init__(self, queryset=None, attribute=None, empty_label=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+
+        try:
+            self.fields['value'].attribute=attribute
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError(_('You need to provide a model to the ModelAnswerForm'))
+
+    def clean(self):
+        ''' Overwrite to rewrite hard-coded strings and get the right form data '''
+
+        return self.cleaned_data

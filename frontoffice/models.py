@@ -22,6 +22,8 @@ class VisitorResult(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
+        get_latest_by = 'datetime_stamp'
+
 
 
     @classmethod

@@ -8,7 +8,8 @@ from political_profiles.models import EducationLevel
 import copy
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
-from utils.fields import NameField
+from utils.fields import NameField, DutchMobilePhoneField
+
 
 from elections.models import ElectionInstance
 
@@ -76,4 +77,4 @@ class RegionSelectForm(BetterForm, TemplateForm):
     region  = RegionChoiceField(queryset=ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name'), required=True, empty_label=_('Select your region'))
 
 class SmsForm(BetterForm, TemplateForm):
-    phone       = MobilePhoneField(label=_('Mobile phone number'), required=False)
+    phone       = DutchMobilePhoneField(label=_('Mobile phone number'), required=False)

@@ -256,3 +256,27 @@ class YoutubeURLField(URLField):
             raise ValidationError(self.error_messages['invalid_youtube_link'])
             
         return value
+
+
+
+
+class GenerateModelChoiceField(forms.ModelChoiceField):
+    def __init__(self, attribute=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.attribute = attribute
+
+    def label_from_instance(self, obj):
+        if self.attribute:
+            return getattr(obj, self.attribute)
+        return obj
+
+
+class GenerateMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, attribute=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.attribute = attribute
+
+    def label_from_instance(self, obj):
+        if self.attribute:
+            return getattr(obj, self.attribute)
+        return obj

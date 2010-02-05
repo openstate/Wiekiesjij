@@ -119,12 +119,11 @@ INSTALLED_APPS = (
     'authorized_comments',
     'questions',
     'utils',
-
+    'sms',
     'invitations',
     'backoffice',
     'frontoffice',
     'registration',
-
     'opensocial',
 )
 
