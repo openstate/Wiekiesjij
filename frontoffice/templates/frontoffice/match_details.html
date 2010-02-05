@@ -56,15 +56,15 @@
                 <div class="question-matches">
                 {% for info in questions.items %}                    
                     {% ifnotequal info.1|dict_key_value:'visitor' 'weighted' %}
-                    <div class="item">
+                    <div class="item{% if info.1|dict_key_value:'skipped' %} skipped{% endif %}{% if info.1|dict_key_value:'doubled' %} doubled{% endif %}">
                     	<div class="meter">
                         	<span class="match" style="width:{{ info.1|dict_key_value:'score' }}%;"></span>
-                            <span class="value">{{ info.1|dict_key_value:'score' }}%</span>
+                            <span class="value">{% if info.1|dict_key_value:'skipped' %}{% trans "Geen voorkeur" %}{% else %}{{ info.1|dict_key_value:'score' }}%{% endif %}</span>
                         </div>
                         <h2 class="question">{{ info.1|dict_key_value:'question' }}</h2>
                         
-                        <p>{% if info.1|dict_key_value:'skipped' %} This question was skipped {% endif %}</p>
-                        <p>{% if info.1|dict_key_value:'doubled' %} Score was doubled due to extra weighting {% endif %}</p>
+                        {% if info.1|dict_key_value:'skipped' %}<p>{% trans "Je hebt geen voorkeur bij deze vraag opgegeven." %}</p>{% endif %}
+                        {% if info.1|dict_key_value:'doubled' %}<p>{% trans "Deze vraag vind je extra belangrijk." %}</p>{% endif %}
                    </div>
                     {% endifnotequal %}
                 {% endfor %}

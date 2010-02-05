@@ -1876,12 +1876,12 @@
 	.meter {
 		width:200px;
 		background:#fff;
-		border:2px solid #000;
+		border:1px solid #999;
 		position:relative;
 		}
 		.meter .match {
 			display:block;
-			background:#ed2227;
+			background:#ccc;
 			height:24px;
 			
 			}
@@ -1905,11 +1905,43 @@
 		
 			}
 		.question-matches h2.question {
-			
+			padding:0;
+			margin:0;
+			line-height:1.4em;
+			color:#000;
 			}	
+		.question-matches p {
+			margin-top:.5em;
+			}
 		.question-matches .meter {
 			float:right;
+			margin-left:2em;
 			}
+		.question-matches .skipped {
+			background:none;
+			border-color:#d1d1d1;
+			}
+			.question-matches .skipped h2.question {
+				color:#aaa;
+				}
+			.question-matches .skipped .meter {
+				color:#aaa;
+				border-color:#d1d1d1;
+				}
+		.question-matches .doubled {
+			border-color:#ed2227;
+			background:#f1c1c1;
+			}
+			.question-matches .doubled h2.question {
+				
+				}
+			.question-matches .doubled .meter {
+				border-color:#000;
+				}
+				.question-matches .doubled .meter .match {
+					background:#ed2227;
+					
+					}
 			
 			
 		
