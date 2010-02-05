@@ -15,8 +15,8 @@ class Command(BaseCommand):
             for phone_num in phone_nums:
 
                 visitor_results = VisitorResult.objects.filter(election_instance=election_instance, telephone=phone_num['telephone']).latest()
-                print visitor_results
+                
                 #get(election_instance=election_instance, telephone=phone_num).
 
-                print sendsms(election_instance.council.name[0:11], phone_num['telephone'], visitor_results.hash, datetime.now())
+                sendsms(election_instance.council.name[0:11], phone_num['telephone'], visitor_results.hash, datetime.now())
 

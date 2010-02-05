@@ -10,5 +10,5 @@ class Command(BaseCommand):
         for council in councils:
             for event in council.events.all():
                 recipients = event.sms_recipients()
-                print sendsms(event.originator, recipients, event.message, event.event_datetime)
+                sendsms(event.originator, recipients, event.message, event.event_datetime)
 
