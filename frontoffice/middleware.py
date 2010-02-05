@@ -19,7 +19,7 @@ class SubdomainMiddleware:
             subdomain = ''
             domain = request.get_host()
         
-        if subdomain:
+        if subdomain and not subdomain.isdigit():
             result = cache.get('%s-%s' % ('sdmid', subdomain))
             #If not found we update the cache for all of them
             if result is None:
