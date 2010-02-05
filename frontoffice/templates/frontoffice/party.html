@@ -15,6 +15,7 @@
 	<div class="mod quick-party-profile">
     	<div class="hd">
         	<h1>{{ eip.party.name }}</h1>
+			<p class="note">{% if profile.profile_incomplete %} {% trans 'Deze partij heeft er voor gekozen om zijn profiel niet in te vullen.' %}{% endif %}</p>
         </div>
         <div class="bd">
         	<div class="image">
