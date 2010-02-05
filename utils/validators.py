@@ -55,7 +55,7 @@ def validate_dutchmobilephone(value, error_message=None):
         error_message = _(u'%(value)s is not a valid mobile phone number')
         
     #Replace starting + with 00
-    value = re.sub(r'^+', '00', value)
+    value = re.sub(r'^\+', '00', value)
     #Replace all non numbers with nothing
     value = re.sub(r'\D+', '', value)
     
