@@ -1,0 +1,33 @@
+{% extends parent %}
+{% load i18n thumbnail %}
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block menu_take_test %}selected test-selected{% endblock %}
+
+
+{% block cols %}
+	<div class="col size1of1">
+	{% block content %}
+
+                <form method="post" action="" enctype="multipart/form-data">
+                   
+                    <div class="scrollable">
+              {% block forms %}
+
+                         {{ form.as_template }}
+
+              {% endblock forms %}
+
+					</div>
+                    <div>
+                        <button type="submit">{% trans "Submit" %}</button>
+                    </div>
+                </form>
+        {% endblock content %}
+   	</div>
+{% endblock cols %}
+

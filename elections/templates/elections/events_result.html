@@ -1,0 +1,19 @@
+{% extends parent %}
+{% load i18n thumbnail %}
+{% block extrahead %}
+	{% for form in forms.values %}
+		{{ form.media }}
+	{% endfor %}
+{% endblock extrahead %}
+
+{% block menu_take_test %}selected test-selected{% endblock %}
+
+
+{% block cols %}
+	<div class="col size1of1">
+	{% block content %}
+            {{ events }}
+        {% endblock content %}
+   	</div>
+{% endblock cols %}
+
