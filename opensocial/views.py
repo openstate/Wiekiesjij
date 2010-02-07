@@ -72,26 +72,19 @@ def get_politician_info(request, politician_id):
     response = HttpResponse(content_type = 'application/json')
 
     domain = u"http://%s" % Site.objects.get_current().domain
-    fields = ['id', 'user_id', 'first_name', 'middle_name', 'last_name', 'initials', 'gender', 'dateofbirth']
-    data = dict([(f, getattr(profile, f)) for f in fields])
-    
     party = profile.election_party()
-    data.update({
+    data = {
         #[FIXME: scaled version is needed!]
+        'name': profile.full_name(),
         'picture': domain + (profile.picture.url if profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg"),
         'age': profile.age(),
         'position': profile.position(),
         'region': profile.region(),
-        'party': {
-                'abbreviation': party.party.abbreviation,
-                'slogan': party.party.slogan,
-                'logo': domain + (party.party.logo.url if party.party.logo else settings.MEDIA_URL + "defaults/party-dummy_jpg_120x80_upscale_q85.jpg"),
-                'goto_url': domain + reverse('fo.party_profile', kwargs={'eip_id': party.pk}),
-        },
+        'party_short': party.party.abbreviation,
+        'party_name': party.party.name,
         'profile_url': domain + reverse('fo.politician_profile', kwargs = {'id': politician_id}),
         'become_fan_url': domain + reverse('fo.visitor.add_fan', kwargs = {'politician_id': politician_id}),
-        'stop_being_fan_url': domain + reverse('fo.visitor.remove_fan', kwargs = {'politician_id': politician_id}),
-    })
+    }
 
     simplejson.dump(data, response, cls=DjangoJSONEncoder, ensure_ascii=False)
     return response
@@ -107,12 +100,19 @@ def get_testresult(request, hash):
     
     cand = []
     for an in result.candidate_answers.select_related('candidate__profile').order_by('-candidates_score'):
+        profile = an.candidate.profile
+        party = profile.election_party().party
         cand.append({
             'id': an.pk,
             'score': an.candidates_score,
-            'name': an.candidate.profile.full_name(),
+            'name': profile.full_name(),
             #[FIXME: scaled version is needed!]
-            'picture': domain + (an.candidate.profile.picture.url if an.candidate.profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg")
+            'picture': domain + (an.candidate.profile.picture.url if an.candidate.profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg"),
+            'age': profile.age(),
+            'region': profile.region(),
+            'position': profile.position(),
+            'party_short': party.abbreviation,
+            'party_name': party.name,
         })
         
     data.update(candidates = cand)
