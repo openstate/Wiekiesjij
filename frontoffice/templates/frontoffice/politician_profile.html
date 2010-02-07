@@ -357,5 +357,27 @@
                 {% endif %}
             </div>
         </div>
+
+        {% ifequal profile.user_id request.user.id %}
+        <div class="mod openid_maps">
+        	<div class="hd">
+            	<h2>{% trans "OpenID's" %}</h2>
+            </div>
+            <div class="bd">
+            	{% if request.user.openids.all %}
+                <ul class="quickList">
+                    {% for oid in request.user.openids.all %}
+                        <li>
+                            <strong><a href="http://{{ oid.container }}">{{ oid.container }}</a>: {{ oid.openid }}</strong>
+                            <a href="{% url opensocial.politician.unregister oid.id %}" onclick="return confirm('{% blocktrans with oid.container as container %}Do you really want to unlink your OpenID of {{container}} network?{% endblocktrans %}')">[X]</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="empty">{% trans "No OpenID's registered yet." %}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endifequal %}
     
 {% endblock sidebar %}

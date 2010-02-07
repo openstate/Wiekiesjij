@@ -3,8 +3,7 @@
 #
 #Copyright 2009 Accepte. All Rights Reserved.
 
-import json
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from political_profiles.models import PoliticianProfile
@@ -14,78 +13,84 @@ from django.core.urlresolvers import reverse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils import simplejson
 
-from frontoffice.models import VisitorResult, CandidateAnswers
+from frontoffice.models import VisitorResult
+from opensocial.models import OpenIDMap
+
+from frontoffice.decorators import politicians_only
+from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
 
 
-# Bernard, the idea is:
-#   Gadget is either configured to a politician(1) or to a test result view(2).
-#
-# 1) Politician adds gadget to his/her profile page
-#    Gadget makes request to map_openid_to_politician(openid) and gets either no_map_error
-#    or politician ID.
-#
-#    If no_map_error, then gadget shows the link to register_openid(). User clicks and
-#    page opens (normal page, not in the gadget) where the user has to confirm the mapping.
-#    Next time the user opens the gadget, the map_openid_to_politician() should not fail.
-#
-#    Once map_openid_to_politician() succeeds, the obtained ID is stored in gadget settings.
-#    Subsequent views will use the ID from the settings.
-#    The ID is used in get_politician_info() to obtain the politician info.
-#
-# 2) User makes the test and obtains the hash.
-#    User adds gadget to his/her profile page.
-#    User specifies the hash to the gadget, the gadget stores it in settings.
-#    The gadget makes request to get_testrestult_politicians(hash) to obtain test candidates.
-#    The candidates are presented in gadget view to the user.
-#    The user selects candidate, its ID is stored in the settings.
-#    Subsequent views will use that ID in get_test_result(cnadidate ID) to obtain
-#    the politician profile info and the score.
-#
-# At any time the user can reconfigure the gadget to politician profile view or to a test
-# result view. In test result view the hash is stored, such that later the user is able to
-# choose another candidate if he/she wants to (loosing hash means loosing test result forever).
 
-
-def map_openid_to_politician(request, openid):
-    """Returns User.id of politician mapped to openid. Fails if no mapping is found. Answers with JSON"""
-    pass
-
-
-def register_openid(request, openid):
-    """Register given openid to request.user. Next time map_openid_to_politician() is called with
-       the same openid, the request.user ID will be returned.
-       Fails if current user has no politician profile.
+def map_openid_to_user(request, container, openid):
     """
-    pass
+        Maps container::openid to registered user. Throws 404 if mapping is not found.
+    """
+    omap = get_object_or_404(OpenIDMap, openid = openid, container = container)
+    response = HttpResponse(content_type = 'application/json')
+    simplejson.dump({'politician_id': omap.user_id}, response, cls=DjangoJSONEncoder, ensure_ascii=False)
+    return response
 
 
-def get_politician_info(request, id):
+
+@login_required
+@politicians_only
+def register_openid(request, container, openid):
+    """
+        Register given container::openid to request.user.
+        Next time map_openid_to_user() is called with the same container::openid,
+        the current request.user ID will be returned.
+
+        Fails if current user has no politician profile.
+    """
+    ct = OpenIDMap.objects.filter(openid = openid, container = container).count()
+
+    container = container.strip()
+    openid = openid.strip()
+    if ct == 0 and container != "" and openid != "": # if no such mapping doesn't exist yet
+        OpenIDMap.objects.create(user = request.user, openid = openid, container = container)
+
+    # redirect to profile page
+    return redirect('fo.politician_profile', id = request.user.id)
+
+
+@login_required
+@politicians_only
+def unregister_openid(request, id):
+    """
+        Removes OpenID mapping.
+    """
+    OpenIDMap.objects.filter(user = request.user, pk = id).delete()
+    return redirect('fo.politician_profile', id = request.user.id)
+
+
+def get_politician_info(request, politician_id):
     """ Returns politician profile by id """
-    user = get_object_or_404(User, pk = id)
+    user = get_object_or_404(User, pk = politician_id)
     profile = get_object_or_404(PoliticianProfile, user = user)
     response = HttpResponse(content_type = 'application/json')
 
     domain = u"http://%s" % Site.objects.get_current().domain
     fields = ['id', 'user_id', 'first_name', 'middle_name', 'last_name', 'initials', 'gender', 'dateofbirth']
     data = dict([(f, getattr(profile, f)) for f in fields])
-
+    
     party = profile.election_party()
     data.update({
-        'picture': domain + profile.picture.url,
+        #[FIXME: scaled version is needed!]
+        'picture': domain + (profile.picture.url if profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg"),
         'age': profile.age(),
         'position': profile.position(),
         'region': profile.region(),
         'party': {
                 'abbreviation': party.party.abbreviation,
                 'slogan': party.party.slogan,
-                'logo': domain + party.party.logo.url,
+                'logo': domain + (party.party.logo.url if party.party.logo else settings.MEDIA_URL + "defaults/party-dummy_jpg_120x80_upscale_q85.jpg"),
                 'goto_url': domain + reverse('fo.party_profile', kwargs={'eip_id': party.pk}),
         },
-        'profile_url': domain + reverse('fo.politician_profile', kwargs = {'id': id}),
-        'become_fan_url': domain + reverse('fo.visitor.add_fan', kwargs = {'politician_id': id}),
-        'stop_being_fan_url': domain + reverse('fo.visitor.remove_fan', kwargs = {'politician_id': id}),
-        'is_fan': (request.user.profile is not None and 'visitor' == request.user.profile.type and request.user.profile in profile.fans.all()),
-        # 'do_test_url': domain + reverse('fo.match_welcome', kwargs={'election_instance_id': TODO}),
+        'profile_url': domain + reverse('fo.politician_profile', kwargs = {'id': politician_id}),
+        'become_fan_url': domain + reverse('fo.visitor.add_fan', kwargs = {'politician_id': politician_id}),
+        'stop_being_fan_url': domain + reverse('fo.visitor.remove_fan', kwargs = {'politician_id': politician_id}),
     })
 
     simplejson.dump(data, response, cls=DjangoJSONEncoder, ensure_ascii=False)
@@ -93,19 +98,21 @@ def get_politician_info(request, id):
 
 
 
-def get_testresult_politicians(request, hash):
+def get_testresult(request, hash):
     """ Returns list of politician candidates ordered by score in a test result"""
     # this is secured by hash only (you are the only one who knows the hash)
     result = get_object_or_404(VisitorResult, hash = hash)
     data = { 'date_time': result.datetime_stamp }
+    domain = u"http://%s" % Site.objects.get_current().domain
     
     cand = []
-    for an in result.candidate_answers.select_related('candidate__profile').order('-candidates_score'):
-        cand.extend({
+    for an in result.candidate_answers.select_related('candidate__profile').order_by('-candidates_score'):
+        cand.append({
             'id': an.pk,
             'score': an.candidates_score,
             'name': an.candidate.profile.full_name(),
-            'picture': an.candidate.profile.picture()
+            #[FIXME: scaled version is needed!]
+            'picture': domain + (an.candidate.profile.picture.url if an.candidate.profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg")
         })
         
     data.update(candidates = cand)
@@ -113,11 +120,6 @@ def get_testresult_politicians(request, hash):
     response = HttpResponse(content_type = 'application/json')
     simplejson.dump(data, response, cls=DjangoJSONEncoder, ensure_ascii=False)
     return response
-
-
-def get_testresult(request, candidate_answer):
-    """Returns test info of specific candidate answer"""
-    pass
 
 
 
