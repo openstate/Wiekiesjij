@@ -17,16 +17,16 @@
     <![CDATA[
     <!-- ======================- CONFIG -========================== -->
     <!-- ensure all paths are correct -->
-    <script type="text/javascript" src="http://eurogates.ru/sardar/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://eurogates.ru/sardar/gadget.css" type="text/css" />
+    <script type="text/javascript" src="http://79.125.14.187/media/static/opensocial/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://79.125.14.187/media/static/opensocial/css/gadget.css" type="text/css" />
       
     <script type="text/javascript">
         //our service responding with JSON
     	var service_urls = {
-            profile_url: "http://domain/opensocial/json/politician/@@id@@",
-            result_url: "http://domain/opensocial/json/result/@@hash@@",
-            map_openid: "http://domain/opensocial/json/map/@@opendomain@@/@@openid@@",
-            register_openid: "http://domain/opensocial/register/@@opendomain@@/@@openid@@"
+            profile_url: "http://79.125.14.187/opensocial/json/politician/@@id@@",
+            result_url: "http://79.125.14.187/opensocial/json/result/@@hash@@",
+            map_openid: "http://79.125.14.187/opensocial/json/map/@@opendomain@@/@@openid@@",
+            register_openid: "http://79.125.14.187/opensocial/register/@@opendomain@@/@@openid@@"
     	}
     	
     	//true - generate unique token with each request, disables cache (developing, debugging)
