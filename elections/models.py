@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from elections import settings
-import datetime
+from datetime import datetime
 from utils.functions import move_up, move_down
 from utils.fields import DutchMobilePhoneField
 from django.contrib.auth.models import User
-
+from utils.emails import send_email
 
 
 
@@ -36,6 +36,8 @@ class Council(models.Model):
     background_color   = models.CharField(_('Background color'), max_length=6, null=True, blank=True)
     foreground_color   = models.CharField(_('Foreground color'), max_length=6, null=True, blank=True)
     another_color   = models.CharField(_('Another color'), max_length=6, null=True, blank=True)
+    credit_warning  = models.DateTimeField(_('Credit Warning Datetime Stamp'), null=True, blank=True)
+    credit          = models.PositiveIntegerField(_('Seats'), max_length=8, default=0)
 
     def __unicode__(self):
         return self.name
@@ -53,7 +55,68 @@ class Council(models.Model):
     @property
     def profile_incomplete(self):
         return not self.seats or not self.street or not self.house_num or not self.postcode or not self.town
-        
+
+    def credit_left(self):
+        total_credits = 0
+        phone_nums = []
+        if self.election_instances:
+            
+            for election_instance in self.election_instances.all():
+                dict_phones = election_instance.visitor_results.filter(election_instance=election_instance).exclude(telephone=None).values('telephone')
+                for  dict_phone in dict_phones:
+                    if 'telephone' in dict_phone.keys():
+                        phone_nums.append(dict_phone['telephone'])
+        else:
+            for election_instance in self.election_instances.all():
+                dict_phones = election_instance.visitor_results.filter(election_instance=None).exclude(telephone=None).values('telephone')
+                for  dict_phone in dict_phones:
+                    if 'telephone' in dict_phone.keys():
+                        phone_nums.append(dict_phone['telephone'])
+        total_credits = len(set(phone_nums))
+
+        for event in self.events.all():
+            if event.sent_datetime == None:
+                recipients = event.sms_recipients()
+                total_credits = total_credits + len(recipients)
+        #print self.name, total_credits, phone_nums
+        credits_left = self.credit - total_credits
+
+        if self.credit_warning == None:
+            if credits_left < 500:
+                message = self.name + ' has only ' + str(credits_left) + ' credits left.'
+
+                try:
+                    send_email(
+                                'A Councils Credit is Low',
+                                'bmcmahon@gmail.com',
+                                'bmcmahon@gmail.com',
+                                {'message': message },
+                                {'plain': 'elections/credits_low.txt'},
+                    )
+                    self.credit_warning = datetime.now()
+                    self.save()
+
+                except:
+                    pass
+                message = '%s has only %s credits left. Please contact us if you would like to purchase more credit. If you do not have enough prebought credit before when a message is sent you will be charged at a higher rate for that text message.'%(self.name, str(credits_left))
+
+                try:
+                    send_email(
+                                'Your Credits Low',
+                                'bmcmahon@gmail.com',
+                                'bmcmahon@gmail.com',
+                                {'message': message },
+                                {'plain': 'elections/credits_low.txt'},
+                    )
+                    #'credits_warning+info@wiekiesjij.nl',
+                    #'info@wiekiesjij.nl',
+                    self.credit_warning = datetime.now()
+                    self.save()
+                except:
+                    pass
+        return credits_left
+
+
     @property
     def election_instance(self):
         if not hasattr(self, '_election_instance'):
@@ -69,7 +132,7 @@ class ElectionEvent(models.Model):
     e.g. European Predisent elections 2009, Municipality elections 2010
     """
 
-    default_date    = models.DateTimeField(_('Default Date'), help_text = _("Default date for all election instances"), default = datetime.datetime.now)
+    default_date    = models.DateTimeField(_('Default Date'), help_text = _("Default date for all election instances"), default = datetime.now)
     name            = models.CharField(_('Name'), max_length=255)
     parent_region   = models.CharField(_('Parent region'), max_length=255) #autocomplete other electionevent regions
     level           = models.CharField(_('Level'), max_length=255) #autocomplete other electionevent levels
@@ -374,6 +437,7 @@ class CouncilEvent(models.Model):
     location = models.TextField(_('Location'))
     message = models.CharField(_('Message'), max_length=140)
     event_datetime  = models.DateTimeField(_('Date and Time of Event'), blank = True)
+    sent_datetime = models.DateTimeField(_('Date and Time when sms were sent'), blank = True)
 
     def __unicode__(self):
         return self.title

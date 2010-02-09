@@ -1,12 +1,11 @@
 import string
 from random import seed, choice
 from datetime import datetime
-
 from django.db import models
-from elections.models import ElectionInstance
+
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-
+from elections.models import ElectionInstance
 class VisitorResult(models.Model):
     """
         The results of a visitors match of a candidate.
@@ -18,7 +17,7 @@ class VisitorResult(models.Model):
     datetime_stamp      = models.DateTimeField(_('Date Time Stamp'), default=datetime.now)
     visitor_answers     = models.TextField(_('Visitor Answer List'), blank=True, null=True)
     telephone           = models.CharField(_('Phone Number'), max_length=12, blank=True, null=True)
-    election_instance   = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'), blank=True, null=True)
+    election_instance   = models.ForeignKey(ElectionInstance, related_name='visitor_results', verbose_name=_('Election Instance'), blank=True, null=True)
 
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
@@ -38,7 +37,7 @@ class VisitorResult(models.Model):
                 VisitorResult.objects.filter(hash = hash).get()
             except:
                 return hash
-     
+
     @classmethod
     def create(cls):
         """
@@ -47,7 +46,7 @@ class VisitorResult(models.Model):
         return cls.objects.create(
             hash = cls.generate_hash()
         )
-        
+
     def __unicode__(self):
         return self.hash
 

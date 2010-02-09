@@ -4,8 +4,20 @@ import urllib, urllib2
 from xml.dom.minidom import parseString
 import types
 from datetime import datetime
-from sms.settings import USERNAME, PASSWORD, DEFAULT_MOLLIEGW
+from sms.settings import USERNAME, PASSWORD, DEFAULT_MOLLIEGW, CREDITS_MOLLIEGW
 from  sms.exceptions import by_code
+
+def get_credit():
+    args = {}
+    args['username'] = USERNAME
+    args['password'] = PASSWORD
+    molliegw = CREDITS_MOLLIEGW
+    url = molliegw + "?" + urllib.urlencode(args)
+    response = urllib2.urlopen(url)
+    responsexml = response.read()
+    dom = parseString(responsexml)
+    credits = float(dom.getElementsByTagName("credits")[0].childNodes[0].data)
+    return int(credits)
 
 def sendsms(originator, recipients, message, deliverydate):
 
