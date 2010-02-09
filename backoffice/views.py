@@ -1,3 +1,4 @@
+
 #!/usr/env python
 #-*- coding: utf-8 -*-
 #
@@ -88,7 +89,17 @@ def party_contact_wizard_done(request, id):
 def election_instance_view(request, id):
     check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
-    return render_to_response('backoffice/election_instance_view.html', {'instance': instance}, context_instance=RequestContext(request))
+    credit_left = instance.council.credit_left()
+    pos_credit_left = credit_left
+    if credit_left < 0:
+        pos_credit_left = abs(credit_left)
+
+    allocated = instance.council.credit - credit_left
+    enough = True
+    if credit_left < 0:
+        enough = False
+
+    return render_to_response('backoffice/election_instance_view.html', {'pos_credit_left':pos_credit_left,'credit_left':credit_left,'allocated':allocated,'enough':enough,'instance': instance}, context_instance=RequestContext(request))
 
 @staff_required
 def question_overview(request, election_instance_id):
