@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from form_utils.forms import BetterForm, BetterModelForm
@@ -13,9 +14,32 @@ from elections.models import ElectionInstanceParty, ElectionInstanceModule
 from utils.fields import DutchMobilePhoneField
 from utils.forms import ModelMultiAnswerForm
 from questions.models import QuestionSet
+from django.template.loader import render_to_string
 
-class SmsEventForm(ModelMultiAnswerForm):
+
+class CouncilEventMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def label_from_instance(self, obj):
+        return render_to_string('elections/_council_event.html', {'council_event': obj})
+
+class SmsEventForm(BetterForm, TemplateForm):
     phone_number = DutchMobilePhoneField(label=_('Mobile phone number'), required=True)
+    value = CouncilEventMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+
+#    class Meta:
+#        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
+#
+    def __init__(self, queryset=None, empty_label=None, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        try:
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
 
 
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):
