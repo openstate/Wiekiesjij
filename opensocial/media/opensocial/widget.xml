@@ -2,11 +2,13 @@
 <Module>
   <!-- title_url should point to page explaining the gadget -->
   <!-- todo: screenshot, thumbnail, description -->
-  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl">
+  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl" height="350">
     <!-- hyves supported -->
     <Require feature="opensocial-0.7"/>
-    <!-- Some prefferences can not be changed by user directly. -->
+    <!-- used to manage configurations -->
     <Require feature="setprefs"/>
+    <!-- used to adjust height dynamically -->
+    <Optional feature="window"/>
     
     <!-- Preferences -->	
     <UserPref name="appinfo" datatype="hidden"/>
@@ -17,16 +19,16 @@
     <![CDATA[
     <!-- ======================- CONFIG -========================== -->
     <!-- ensure all paths are correct -->
-    <script type="text/javascript" src="http://79.125.25.211:8000/media/static/opensocial/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://79.125.25.211:8000/media/static/opensocial/css/widget.css" type="text/css" />
+    <script type="text/javascript" src="http://79.125.25.211:8080/media/static/opensocial/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://79.125.25.211:8080/media/static/opensocial/css/widget.css" type="text/css" />
       
     <script type="text/javascript">
         //our service responding with JSON
     	var service_urls = {
-            profile_url: "http://79.125.25.211:8000/opensocial/json/politician/@@id@@",
-            result_url: "http://79.125.25.211:8000/opensocial/json/result/@@hash@@",
-            map_openid: "http://79.125.25.211:8000/opensocial/json/map/@@opendomain@@/@@openid@@",
-            register_openid: "http://79.125.25.211:8000/opensocial/register/@@opendomain@@/@@openid@@"
+            profile_url: "http://79.125.25.211:8080/opensocial/json/politician/@@id@@",
+            result_url: "http://79.125.25.211:8080/opensocial/json/result/@@hash@@",
+            map_openid: "http://79.125.25.211:8080/opensocial/json/map/@@opendomain@@/@@openid@@",
+            register_openid: "http://79.125.25.211:8080/opensocial/register/@@opendomain@@/@@openid@@"
     	}
     	
     	//true - generate unique token with each request, disables cache (developing, debugging)
@@ -112,6 +114,7 @@
             } else {
                 $('#configure_entry').hide();
             }
+            if(window.adjustHeight) window.adjustHeight();
         }
     
     	/** Show error screen. */
@@ -149,7 +152,7 @@
                 var html = "";
                 for(var i = 0; i < data.candidates.length; i++) {
                     var cd = data.candidates[i];
-                    html += '<a href="configUseCandidate(' + cd.id + ')" class="action">' + cd.name + '(' + cd.party_short + ')</a>';
+                    html += '<a href="javascript: void(0);" onclick="configUseCandidate(' + cd.id + ')" class="action">' + cd.name + '(' + cd.party_short + ')</a>';
                 }
 
                 $('#match_list').html(html);
@@ -239,7 +242,7 @@
 	<div id="main" style="height: 100%; overflow: auto;">
 		<div class="widget">
             <h1 class="branding">Wiekiesjij</h1>
-            <a href="javascript: void(0);" id="configure_entry" class="edit-settings" style="display: none">Instellingen</a>
+            <a href="javascript: void(0);" onclick="configWelcome();" id="configure_entry" class="edit-settings" style="display: none">Instellingen</a>
             
 			<div id='load_screen' class="screen" style="display: none">
                 <!-- shown each time we make a request.
@@ -303,7 +306,7 @@
                                 <label for="result-code">Mijn resultaat-code</label>
                                 <input type="text" name="result-code" id="result-code" />
                                 <p class="error">Voer uw resultaat-code in. <br />
-                                    Deze vindt u op de resultaat-pagina van de test op <a href="#">www.wiekiesjij.nl</a></p>
+                                    Deze vindt u op de resultaat-pagina van de test op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a></p>
                             </div>
                             <button onclick="configUseHash(); return false">Opslaan en politicus uitkiezen</button>
                         </form>
@@ -350,37 +353,37 @@
                         <p>
                             Ik ben verkiesbaar voor de gemeenteraadsverkiezingen van Groningen.
                             Ben jij benieuwd welke kandidaat het beste bij jou past?
-                            Doe dan de test op <a href="#">www.wiekiesjij.nl</a>.
+                            Doe dan de test op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a>.
                         </p>
                         <div class="pol-info">
                             <div class="image">
                                 <img src="" class="photo" width="50" height="70" alt="" />
                             </div>
-                            <h3><a href="#" class="name"></a></h3>
+                            <h3><a href="#" class="name" target="__blank"></a></h3>
                             <p>Leeftijd: <span class="age"></span></p>
                             <p class="party">Partij: <abbr title=""></abbr></p>
                             <p class="munic">Gemeente: <span></span></p>
                             <p class="pos">Positie op de Lijst: <span></span></p>
                         </div>
                         <div class="actions">
-                            <a href="#" class="view_profile">Bekijk<br />mijn profiel</a>
-                            <a href="#" class="become_fan">Wordt fan<br />van mij</a>
+                            <a href="#" class="view_profile" target="__blank">Bekijk<br />mijn profiel</a>
+                            <a href="#" class="become_fan" target="__blank">Wordt fan<br />van mij</a>
                         </div>
                         <div class="ft">
-                            <a class="btn next" href="http://www.wiekiesjij.nl">Doe de test ook</a>
+                            <a class="btn next" href="http://www.wiekiesjij.nl" target="__blank">Doe de test ook</a>
                         </div>
                     </div>
                 </div>
     
                 <div class="mod visitor subscreen">
                     <div class="bd">
-                        <p>Ik heb de kieswijzer voor de gemeenteraadsverkiezingen van Groningen gedaan op <a href="http://www.wiekiesjij.nl">www.wiekiesjij.nl</a>.</p>
+                        <p>Ik heb de kieswijzer voor de gemeenteraadsverkiezingen van Groningen gedaan op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a>.</p>
                         <p><strong>Dit is mijn resultaat:</strong></p>
                         <div class="pol-info ">
                             <div class="image">
                                 <img class="photo" src="" width="50" height="70" alt="" />
                             </div>
-                            <h2><a href="#" class="name"></a></h2>
+                            <h2><a href="#" class="name" target="__blank"></a></h2>
                             <p>Leeftijd: <span class="age"></span></p>
                             <p class="party">Partij: <abbr title=""></abbr></p>
                             <p class="munic">Gemeente: <span></span></p>
@@ -394,7 +397,7 @@
                             </div>
                         </div>
                         <div class="ft">
-                            <a class="btn next" href="http://www.wiekiesjij.nl">Doe de test ook</a>
+                            <a class="btn next" href="http://www.wiekiesjij.nl" target="__blank">Doe de test ook</a>
                         </div>
                     </div>
                 </div>

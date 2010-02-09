@@ -113,6 +113,7 @@ def get_testresult(request, hash):
             'position': profile.position(),
             'party_short': party.abbreviation,
             'party_name': party.name,
+            'profile_url': domain + reverse('fo.politician_profile', kwargs = {'id': an.candidate.id}),
         })
         
     data.update(candidates = cand)
