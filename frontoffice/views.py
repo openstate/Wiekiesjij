@@ -418,6 +418,7 @@ def edit_visitor_profile(request):
 
     return render_to_response('frontoffice/visitor_profile.html', {'results':results, 'profile': profile, 'form':form}, context_instance=RequestContext(request))
 
+@login_required
 @visitors_only
 def fan_add(request, politician_id):
     """ Become a fan of a politician """
@@ -426,7 +427,7 @@ def fan_add(request, politician_id):
     request.user.profile.favorites.add(profile)
     return redirect('fo.politician_profile', id = politician_id)
 
-
+@login_required
 @visitors_only
 def fan_remove(request, politician_id):
     """ Remove politician from fan list. """
