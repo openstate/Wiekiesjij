@@ -3,7 +3,8 @@
 #
 #Copyright 2009 Accepte. All Rights Reserved.
 
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from political_profiles.models import PoliticianProfile
@@ -48,11 +49,13 @@ def register_openid(request, container, openid):
 
     container = container.strip()
     openid = openid.strip()
+    registered = False
     if ct == 0 and container != "" and openid != "": # if no such mapping doesn't exist yet
         OpenIDMap.objects.create(user = request.user, openid = openid, container = container)
+        registered = True
 
     # redirect to profile page
-    return redirect('fo.politician_profile', id = request.user.id)
+    return render_to_response('opensocial/confirm_registration.html', {'registered': registered, 'existing': (ct > 0)}, context_instance=RequestContext(request))
 
 
 @login_required
