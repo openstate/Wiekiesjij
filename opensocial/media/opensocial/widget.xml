@@ -18,7 +18,7 @@
     <!-- ======================- CONFIG -========================== -->
     <!-- ensure all paths are correct -->
     <script type="text/javascript" src="http://79.125.14.187/media/static/opensocial/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://79.125.14.187/media/static/opensocial/css/gadget.css" type="text/css" />
+    <link rel="stylesheet" href="http://79.125.14.187/media/static/opensocial/css/widget.css" type="text/css" />
       
     <script type="text/javascript">
         //our service responding with JSON
