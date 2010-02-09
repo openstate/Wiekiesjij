@@ -15,7 +15,7 @@ from utils.forms import ModelMultiAnswerForm
 from questions.models import QuestionSet
 
 class SmsEventForm(ModelMultiAnswerForm):
-    phone_number = DutchMobilePhoneField(label=_('Phone Number'), required=True)
+    phone_number = DutchMobilePhoneField(label=_('Mobile phone number'), required=True)
 
 
 class ElectionInstanceSelectPartiesForm(BetterForm, TemplateForm):

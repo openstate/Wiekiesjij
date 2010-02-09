@@ -106,6 +106,10 @@
 			border:none;
 			}
 
+	li {
+		margin-bottom:1em;
+		}
+
 /* 	Grid styling
 	*************************************************************************************************/
 	
@@ -312,6 +316,10 @@
 			font-weight:bold;
 			
 			}
+		form li {
+			display:block;
+			_display:inline;
+			}
 	.error {
 		color:red;
 		}
@@ -331,8 +339,10 @@
 					}
 				div.checkboxselectmultiple input {
 					margin: 2px 5px 0 0;
+					*margin-top:0;
 					display:block;
 					float:left;
+					width:auto;
 					}
 
 			input.checkboxinput {
@@ -351,3 +361,25 @@
 				div.checkboxinput input {
 					margin-left:-20px;
 					}
+			.radioselect input,
+			.checkboxselectmultiple input {
+				border:0;
+				padding:0;
+				width:auto;
+				}
+				
+					
+	/* 	text message subscription iframe
+		----------------------------------------------------------------------------------------- */
+					
+		.event-list {
+		
+			}
+			.event-list strong,
+			.event-list span {
+				display:block;
+				line-height:1.4em;
+				}
+				
+			.event-list
+	

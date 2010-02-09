@@ -6,28 +6,18 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block menu_take_test %}selected test-selected{% endblock %}
 
-
-{% block cols %}
-	<div class="col size1of1">
-	{% block content %}
-
-                <form method="post" action="" enctype="multipart/form-data">
-                   
-                    <div class="scrollable">
-              {% block forms %}
-
-                         {{ form.as_template }}
-
-              {% endblock forms %}
-
-					</div>
-                    <div>
-                        <button type="submit">{% trans "Submit" %}</button>
-                    </div>
-                </form>
-        {% endblock content %}
-   	</div>
-{% endblock cols %}
-
+{% block content %}
+    <h2>{% trans "Gratis stem-herinnering per SMS" %}</h2>
+    <p>{% trans "U kunt hieronder uw mobiele telefoonnummer achterlaten om een gratis sms herinnering te ontvangen." %}</p>   
+	<form method="post" action="" enctype="multipart/form-data">
+        {% block forms %}
+        
+            {{ form.as_template }}
+        
+        {% endblock forms %}
+        <div>
+            <button type="submit">{% trans "Verzenden" %}</button>
+        </div>
+    </form>
+{% endblock content %}

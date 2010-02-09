@@ -11,7 +11,7 @@ def events(request, council_id):
     council = get_object_or_404(Council, id=council_id)
     events = council.events.all()
 
-    parent = 'frontoffice/iframe.html'
+    parent = 'elections/iframe.html'
   
     returndict = {'council': council, 'parent':parent, }
 

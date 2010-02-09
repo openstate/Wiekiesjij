@@ -6,14 +6,19 @@
 	{% endfor %}
 {% endblock extrahead %}
 
-{% block menu_take_test %}selected test-selected{% endblock %}
 
+{% block content %}
+	<h2>{% trans "Bedankt!" %}</h2>
+    <p>{% trans "Uw krijgt een SMS herinnering voor de volgende evenementen" %}:</p>
+    <ul class="event-list">
+    {% for event in events %}
+    	<li>
+        	<strong class="title">{{ event.title }}</strong>
+            <span class="date">{% trans "Datum/tijd" %}: {{ event.event_datetime|date:"l j F, H:i" }}</span>
+            <span class="location">{% trans "Location" %}: {{ event.location }}</span>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
 
-{% block cols %}
-	<div class="col size1of1">
-	{% block content %}
-            {{ events }}
-        {% endblock content %}
-   	</div>
-{% endblock cols %}
 
