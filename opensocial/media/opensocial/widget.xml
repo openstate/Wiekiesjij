@@ -9,9 +9,6 @@
     <Require feature="setprefs"/>
     <!-- used to adjust height dynamically -->
     <Optional feature="window"/>
-    
-    <!-- Preferences -->	
-    <UserPref name="appinfo" datatype="hidden"/>
   </ModulePrefs>
   
   
@@ -40,30 +37,31 @@
       
     <!-- ===============- Do not edit bellow this line -================= -->
     <script type="text/javascript">
-    	//user preferences
-    	var prefs = new gadgets.Prefs();
-    	var viewer = null;
+    	var owner = null;
         var dtype = null;
         var dkey = null;
     	
     	
     	/** entry point */
     	function init() {
-            //look up the config
-            var appinfo = prefs.getString('appinfo');
-            //hyves doesn't support arrays properly and incorectly updates
-            //multiple settings. we have to seriazlize it manually.
-            appinfo = appinfo? appinfo.split(':::'): [null, null];
-            dtype = appinfo[0];
-            dkey = appinfo[1];
-            var dspec = appinfo.length > 2? appinfo[2]: 0;
-            
     		//current visitor
     		var req = opensocial.newDataRequest();
-  		    req.add(req.newFetchPersonRequest('VIEWER'), 'viewer');
+  		    req.add(req.newFetchPersonRequest('OWNER'), 'owner');
+            req.add(req.newFetchPersonAppDataRequest('OWNER', '*'), 'owner_prefs');
   			req.send(function(data) {
-  				if(data.get('viewer').hadError()) return showError('no_viewer', init);
-  				viewer = data.get('viewer').getData();
+                //onwer info should always be available
+  				if(data.get('owner').hadError()) return showError('no_owner', init);
+  				owner = data.get('owner').getData();
+  				var prefs = data.get('owner_prefs').hadError()? null: data.get('owner_prefs').getData();
+  				prefs = (prefs != null && (owner.getId() in prefs))? prefs[owner.getId()]: null;
+
+  				//fail if we have no access to config and this is not owner
+  				if(prefs == null && !owner.isViewer()) return showError('not_configured', init);
+
+    			var appinfo = prefs && 'appinfo' in prefs? prefs['appinfo'].split(':::'): [null, null];
+    			dtype = appinfo[0];
+                dkey = appinfo[1];
+                var dspec = appinfo.length > 2? appinfo[2]: 0;
 
                 if(dtype == 'politician' && dkey != '') { //show politician profile
                     showScreen('#load_screen');
@@ -82,7 +80,7 @@
                         else return showError('data_fetch_failed', init);
                     }, params);
                 } else { //not configured
-                    if(viewer.isOwner()) configWelcome();
+                    if(owner.isViewer()) configWelcome();
                     else showError('not_configured', init);
                 }
   			});
@@ -111,7 +109,7 @@
                 $(subscreen, s).show();
             }
 
-            if(viewer && viewer.isOwner() && screen != '#config_screen') {
+            if(owner && owner.isViewer() && screen != '#config_screen') {
                 $('#configure_entry').show();
             } else {
                 $('#configure_entry').hide();
@@ -121,7 +119,7 @@
     
     	/** Show error screen. */
     	function showError(type, againfunc) {
-            //data_fetch_failed, not_configured
+            //data_fetch_failed, not_configured, no_owner
             showScreen('#error_screen', '.'+type);
             
             //bind againfunc to class="again" element
@@ -181,6 +179,20 @@
             }
     	}
 
+        /** Store settings. */
+        function saveSettings(tp, k, id) {
+            showScreen('#load_screen');
+            var dat = tp + ':::' + k;
+            if(id) dat += ':::' + id;
+
+            var req = opensocial.newDataRequest();
+    		req.add(req.newUpdatePersonAppDataRequest('VIEWER', 'appinfo', dat));
+  			req.send(function() {
+    			init(); //re-init
+    		});
+        }
+
+
         /** First config screen */
         function configWelcome() {
             showScreen('#config_screen', '#conf_welcome');
@@ -188,19 +200,18 @@
 
         /** Politician profile config. */
         function configPoliticianProfile() {
-            //try to map openid -> politician, we know that viewer == owner here
+            //try to map openid -> politician
             showScreen('#load_screen');
-            var url = cache_interval(service_urls.map_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', viewer.getId()), 0);
+            var url = cache_interval(service_urls.map_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', owner.getId()), 0);
             var params = {}; params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
             gadgets.io.makeRequest(url, function(mdata) {
                 if(mdata.data && mdata.data.politician_id) { //mapped successfully
-                    prefs.set('appinfo', 'politician:::' + mdata.data.politician_id);
-                    init(); //re-init
+                    saveSettings('politician', mdata.data.politician_id);
                 } else { //id not mapped, show map url
                     showScreen('#config_screen', '#conf_politician');
-                    $('#conf_politician .cdat_openid').text(viewer.getId());
+                    $('#conf_politician .cdat_openid').text(owner.getId());
 
-                    var murl = service_urls.register_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', viewer.getId());
+                    var murl = service_urls.register_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', owner.getId());
                     $('#conf_politician .openid_register').attr('href', murl);
                 }
             }, params);
@@ -219,21 +230,18 @@
         function configUseHash() {
             var code = $('#result-code').val();
             if(code) {
-                prefs.set('appinfo', 'test_result:::' + code + ':::-');
-                init(); //re-init
+                saveSettings('test_result', code, '-');
             }
         }
 
         /** Reset candidate choice */
         function configResetHash() {
-            prefs.set('appinfo', 'test_result:::' + dkey + ':::-');
-            init(); //re-init
+            saveSettings('test_result', dkey, '-');
         }
 
         /** Use specific candidate */
         function configUseCandidate(id) {
-            prefs.set('appinfo', 'test_result:::' + dkey + ':::' + id);
-            init(); //re-init
+            saveSettings('test_result', dkey, id);
         }
         
     	/** re-init gadget */
@@ -258,7 +266,7 @@
                 <!-- NOTE: element(s) with class="again" can be anything, not just a button -->
                 
                 <!-- shown if profile info can't be fetched -->
-				<div class="no_viewer subscreen">
+				<div class="no_viewer no_owner subscreen">
                     <p>Het relevante profiel informatie is niet beschikbaar.</p>
                     <p><button class="again">Opnieuw proberen</button></p>
 				</div>
