@@ -8,9 +8,39 @@
     <div class="mod stats tabbed">
     	<div class="hd">
         	<ul class="tabs">
-            	<li>
-                	<a href="#" class="selected">
+            	<li class="selected">
+                	<a href="#" >
                			{% trans "Gender" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Leeftijd" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Roken" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Vegetariers" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Religie" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Burgelijke staat" %}
+                 	</a>
+                </li>
+                <li>
+                	<a href="#">
+               			{% trans "Opleidingsniveau" %}
                  	</a>
                 </li>
             </ul>
@@ -19,6 +49,13 @@
         	{% for eip in eips %}
             	<div class="stat item gender">
                     {% draw_chart gender_data eip 'Gender distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item age">
+                    {% draw_chart age_data eip 'Age distribution' %}
                 </div>
             {% endfor %}
         </div>
@@ -40,13 +77,6 @@
         	{% for eip in eips %}
             	<div class="stat item religion">
                     {% draw_chart religion_data eip 'Religion distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item age">
-                    {% draw_chart age_data eip 'Age distribution' %}
                 </div>
             {% endfor %}
         </div>
