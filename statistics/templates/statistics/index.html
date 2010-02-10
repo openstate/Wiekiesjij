@@ -8,13 +8,13 @@
     <div class="mod stats tabbed">
     	<div class="hd">
         	<ul class="tabs">
-            	<li class="selected">
-                	<a href="#" >
+            	<li {% ifequal tab 'geslacht' %}class="selected"{% endifequal %}>
+                	<a href="{% url statistics.index_tab tab='geslacht' %}" >
                			{% trans "Gender" %}
                  	</a>
                 </li>
-                <li>
-                	<a href="#">
+                <li {% ifequal tab 'leeftijd' %}class="selected"{% endifequal %}>
+                	<a href="{% url statistics.index_tab tab='leeftijd' %}">
                			{% trans "Leeftijd" %}
                  	</a>
                 </li>
@@ -45,6 +45,7 @@
                 </li>
             </ul>
         </div>
+		{% ifequal tab 'geslacht' %}
         <div class="bd">
         	{% for eip in eips %}
             	<div class="stat item gender">
@@ -52,6 +53,8 @@
                 </div>
             {% endfor %}
         </div>
+		{% endifequal %}
+		{% ifequal tab 'leeftijd' %}
         <div class="bd">
         	{% for eip in eips %}
             	<div class="stat item age">
@@ -59,6 +62,7 @@
                 </div>
             {% endfor %}
         </div>
+		{% endifequal %}
         <div class="bd">
         	{% for eip in eips %}
             	<div class="stat item smoking">

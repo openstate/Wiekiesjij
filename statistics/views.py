@@ -61,7 +61,7 @@ def _query_to_dict(query_str, *query_args):
         yield row_dict
     return
 
-def index(request):
+def index(request, tab):
     election_instance_id = request.session.get('ElectionInstance', {}).get('id', None)
     if election_instance_id is None:
         return redirect('/')
@@ -84,6 +84,7 @@ def index(request):
 
     eips = ElectionInstanceParty.objects.filter(election_instance__pk=election_instance_id).select_related('party')
     context.update({'eips': eips})
+    context.update({'tab': tab})
 
     return render_to_response('statistics/index.html', context, context_instance=RequestContext(request))
 
@@ -251,7 +252,6 @@ def _get_age_data(election_instance_id):
             break
 
         grouped_data.update({row['label']: row['count']})
-        print grouped_data
         current_id = row['id']
 
     return result
@@ -312,7 +312,7 @@ def _get_education_data(election_instance_id):
         INNER JOIN political_profiles_educationlevel el ON el.id = ppe.level_id
         WHERE eip.election_instance_id = %s
         GROUP BY eip.id, el.level
-        ORDER BY eip.id, el.level
+        ORDER BY eip.id, el.id
     """
     
     education_levels = EducationLevel.objects.order_by('level').values_list('level', flat=True)
@@ -371,7 +371,6 @@ def _get_chart_to_serve(request):
             Get the image from google
         """
         google_url = "http://chart.apis.google.com/chart?%s" % (qs)
-        print '===', google_url
         try:
             urllib.urlretrieve(google_url, path)
         except:
