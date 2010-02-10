@@ -10,7 +10,8 @@ urlpatterns = patterns('',
     url(r'^login/$', 'utils.views.login', {'template_name': 'registration/login.html'}, name='fo.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'registration/logout.html'}, name='fo.logout'),
     url(r'^account/', include('frontoffice.registration_backend.urls')),
-
+    
+    url(r'^statistics/', include('statistics.urls')),
 
     #forgot password
     url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {

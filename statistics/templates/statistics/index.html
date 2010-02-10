@@ -1,0 +1,17 @@
+{% extends "statistics/base.html" %}
+{% load stats_tags %}
+{% block content %}
+	
+	{% for eip in eips %}
+		<h1>{{ eip.party.name }}</h1>
+		{% draw_chart gender_data eip 'Gender distribution' %}<br/>
+		{% draw_chart smoke_data eip 'Smoking distribution' %}<br/>
+		{% draw_chart diet_data eip 'Diet distribution' %}<br/>
+		{% draw_chart religion_data eip 'Religion distribution' %}<br/>
+		{% draw_chart age_data eip 'Age distribution' %}<br/>
+		{% draw_chart marital_data eip 'Martial distribution' %}<br/>
+		{% draw_chart education_data eip 'Education distribution' %}<br/>
+		<hr/>
+	{% endfor %}
+	
+{% endblock content %}

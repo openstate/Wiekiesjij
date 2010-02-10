@@ -80,7 +80,7 @@ def get_politician_info(request, politician_id):
         #[FIXME: scaled version is needed!]
         'name': profile.full_name(),
         'picture': domain + (profile.picture.url if profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg"),
-        'age': profile.age(),
+        'age': profile.age,
         'position': profile.position(),
         'region': profile.region(),
         'party_short': party.party.abbreviation,
@@ -111,7 +111,7 @@ def get_testresult(request, hash):
             'name': profile.full_name(),
             #[FIXME: scaled version is needed!]
             'picture': domain + (an.candidate.profile.picture.url if an.candidate.profile.picture else settings.MEDIA_URL + "defaults/pol-dummy_jpg_140x210_upscale_q85.jpg"),
-            'age': profile.age(),
+            'age': profile.age,
             'region': profile.region(),
             'position': profile.position(),
             'party_short': party.abbreviation,

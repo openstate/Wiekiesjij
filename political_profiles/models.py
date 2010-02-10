@@ -33,16 +33,16 @@ MEDIA  = [
         ('NED2', 'Ned 2'),
         ('NED3', 'Ned 3'),
         ('RTL4', 'RTL 4'),
-        ('RTL5', 'RTL 5'), 
+        ('RTL5', 'RTL 5'),
         ('RTL7', 'RTL 7'),
         ('SBS6', 'SBS 6'),
         ('NET5', 'Net 5'),
-        ('VERONICA', 'Veronica'), 
+        ('VERONICA', 'Veronica'),
         ('TMF', 'TMF'),
         ('MTV', 'MTV'),
-        ('COMEDYCENTRAL', 'Comedycentral'), 
-        ('DISCOVERYCHANNEL', 'Discovery Channel'), 
-        ('NATIONALGEOGRAPHIC', 'National Geographic'), 
+        ('COMEDYCENTRAL', 'Comedycentral'),
+        ('DISCOVERYCHANNEL', 'Discovery Channel'),
+        ('NATIONALGEOGRAPHIC', 'National Geographic'),
         ('BUITENLANDSEZENDER', 'Buitenlandse zender'),
         ('RTV_NOORD', 'RTV Noord'),
         ('RTV_NOORD_HOLLAND', 'RTV Noord Holland'),
@@ -109,7 +109,7 @@ RELIGION = [
         ('ATEIST', u'Atheïsme'),
         ('OTHER', 'Anders'),
         ]
-   
+
 CHARITIES = [
         ('AIDS_FONDS','Aids Fonds'),
         ('AMNESTY_INTERNATIONAL','Amnesty International'),
@@ -140,11 +140,11 @@ CHARITIES = [
         ('STICHTING_WAR_CHILD','Stichting War Child'),
         ('UNICEF','Unicef'),
         ('WERELD_NATUUR_FONDS','Wereld Natuur Fonds'),
-        ]     
+        ]
 MARITAL_STATUS = [
         ('Married','Getrouwd'),
-		('Engaged', 'Verloofd'),
-		('Together', 'Samenwonend'),
+        ('Engaged', 'Verloofd'),
+        ('Together', 'Samenwonend'),
         ('LAT', 'LAT relatie'),
         ('Single', 'Alleenstaand'),
         ]
@@ -182,10 +182,10 @@ class EducationLevel(models.Model):
     """
 
     level      = models.CharField(_('Level'), max_length=255)
-    
+
     def __unicode__(self):
         return self.level
-    
+
 # Profiles
 class Profile(models.Model):
     """
@@ -195,16 +195,16 @@ class Profile(models.Model):
     first_name = models.CharField(_('First name'), blank=True, max_length=80)
     middle_name = models.CharField(_('Middle name'), null=True, blank=True, max_length=80)
     last_name = models.CharField(_('Last name'), blank=True, max_length=80)
-    
+
     terms_and_conditions    = models.BooleanField(_('I agree to the terms and conditions'), blank=True, default=False)
 
     class Meta:
         abstract = True
         verbose_name, verbose_name_plural = _('Profile'), _('Profiles')
-    
+
     def full_name(self):
         return ' '.join(filter(lambda x: x, (self.first_name, self.middle_name, self.last_name)))
-    
+
 class VisitorProfile(Profile):
     """
         A profile for visitors of the website when they "register"
@@ -213,28 +213,29 @@ class VisitorProfile(Profile):
     favorites = models.ManyToManyField('PoliticianProfile', verbose_name = _('Favorites'), related_name = 'fans')
     phone = models.CharField(_('Phone number'), max_length=10, blank=True, null=True)
     send_text = models.BooleanField(_('Send me a text'), default=True, help_text=_('Disable this if you don\'t want a textmessage'))
-    
+
     def __unicode__(self):
         return self.user.username
 
     class Meta:
         verbose_name, verbose_name_plural = _('Visitor Profile'), _('Visitor Profiles')
-            
-    
+
+
 class PoliticianProfile(Profile):
     """
         A profile for a politician
     """
     type = 'candidate'
-    
+
     initials        = models.CharField(_('Initials'), max_length=15, blank=True, null=True)
     gender          = models.CharField(_('Gender'), max_length=25,choices=GENDERS, default='Male',
                                        help_text=_("Please choose your gender."))
     dateofbirth     = models.DateField(_('Date Of Birth'), null=True, blank=True)
+    age             = models.PositiveIntegerField(_('Age'), blank=True, null=True)
     picture         = models.ImageField(_('Picture'), upload_to='media/politician', null=True, blank=True)
     movie           = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
                                       help_text=_('Link to YouTube video'))
-                                      
+
     introduction    = models.TextField(_('Introduction'), blank=True, null=True)
 
     marital_status  = models.CharField(_('Marital Status'), max_length=25, choices=MARITAL_STATUS, blank=True, null=True)
@@ -253,9 +254,12 @@ class PoliticianProfile(Profile):
     fav_pet         = models.CharField(_('What is your favourite pet'), max_length=255, choices=PETS, blank=True, null=True)
     political_experience_days      = models.PositiveIntegerField(_('Days of political experience'), max_length=10, null=True, blank=True, editable=False)
     work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
-    
+
     hns_dev                 = models.BooleanField(_('I agree to my information being added to HNS.Dev'), blank=True, default=False)
     science                 = models.BooleanField(_('I agree to my information being used for scientific purposes'), blank=True, default=False)
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
 
 
     def profile_incomplete(self):
@@ -302,18 +306,20 @@ class PoliticianProfile(Profile):
             return candidacy[0].position
         return None
 
-    def age(self):
+    def _calculate_age(self):
         if self.dateofbirth:
             d = date.today()
             bday = self.dateofbirth
-            return (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
-        return
+            self.age = (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
+        else:
+            self.age = None
 
     def __unicode__(self):
         return self.user.username
 
-    class Meta:
-        verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
+    def save(self, *args, **kwargs):
+        self._calculate_age()
+        super(PoliticianProfile, self).save(*args, **kwargs)
 
 
 
@@ -323,13 +329,13 @@ class ChanceryProfile(Profile):
         A profile for a chancery
     """
     type = 'council_admin'
-    
+
     gender      = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
-    telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
+    telephone   = models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
     workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)
     street      = models.CharField(_('Street'), max_length=40, null=True, blank=True)
     house_num   = models.CharField(_('House Number'), max_length=5, null=True, blank=True)
-    postcode  	= models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
+    postcode    = models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
                                    help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
@@ -344,7 +350,7 @@ class ChanceryProfile(Profile):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Chancery Profile'), _('Chancery Profiles')
-    #Expenses	Reference
+    #Expenses   Reference
 
 
 
@@ -353,13 +359,13 @@ class ContactProfile(Profile):
         A profile for a contact (for a party)
     """
     type = 'party_admin'
-    
+
     gender = models.CharField(_('Gender'), max_length=25, choices=GENDERS, default='Male')
-    telephone	= models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
+    telephone   = models.CharField(_('Phone Number'), max_length=255, null=True, blank=True)
     workingdays = models.CharField(_('Working Days'), max_length=255, null=True, blank=True)
     street      = models.CharField(_('Street'), max_length=40, null=True, blank=True)
     house_num   = models.CharField(_('House Number'), max_length=5, null=True, blank=True)
-    postcode  	= models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
+    postcode    = models.CharField(_('Postcode'), max_length=7, null=True, blank=True,
                                    help_text=_("Postcode (e.g. 9725 EK or 9211BV)"))
     town        = models.CharField(_('Town/City'), max_length=30, null=True, blank=True)
     website     = models.URLField(_('Councils Website'), max_length=255, verify_exists=True, null=True, blank=True)
@@ -378,7 +384,7 @@ class ContactProfile(Profile):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Contact Profile'), _('Contact Profiles')
-    #Expenses	Reference
+    #Expenses   Reference
 
 
 # Profile Attribute Classes
@@ -389,7 +395,7 @@ class Link(models.Model):
     """
     name        = models.CharField(_('Name'), max_length=255)
     url         = models.URLField(_('URL'), verify_exists=True)
-    description	= models.TextField(_('Description'), blank=True, null=True)
+    description = models.TextField(_('Description'), blank=True, null=True)
     politician  = models.ForeignKey(PoliticianProfile, related_name='links', verbose_name=_('Politician') )
 
     class Meta:
@@ -402,7 +408,7 @@ class Connection(models.Model):
     """
     type        = models.ForeignKey(ConnectionType, verbose_name=_('Type'), null=True, blank=True)
     url         = models.URLField(_('URL'), verify_exists=True)
-    description	= models.TextField(_('Description'), null=True, blank=True)
+    description = models.TextField(_('Description'), null=True, blank=True)
     politician  = models.ForeignKey(PoliticianProfile, related_name='connections', verbose_name=_('Politician') )
 
     class Meta:
@@ -425,7 +431,7 @@ class Appearance(models.Model):
         A class to hold an appearance (where they attended somthing) of the politician
     """
     name        = models.CharField(_('Affiliated Organisation Name'), max_length=255)
-    location	= models.CharField(_('Location'), max_length=255)
+    location    = models.CharField(_('Location'), max_length=255)
     url         = models.URLField(_('URL'), verify_exists=True, null=True, blank=True)
     description = models.TextField(_('Description'), null=True, blank=True)
     datetime    = models.DateTimeField(_('Date and Time of Appearance'), null=True, blank=True)
@@ -489,7 +495,7 @@ class PoliticalGoal(models.Model):
     """
     goal            = models.CharField(_('Goal'), max_length=100, help_text=_('Vul hier uw doel in.'))
     politician      = models.ForeignKey(PoliticianProfile, verbose_name=_('Politician'), related_name='goals')
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Goal'), _('Goals')
         ordering = ('goal', )
@@ -588,7 +594,7 @@ def user_statistics(u):
     except:
         UserStatistics(user = u).save()
         return u.stats
-    
+
 
 # Lazy create
 User.statistics = property(user_statistics)
@@ -622,7 +628,7 @@ def user_profile(u):
         except ObjectDoesNotExist:
             pass
         u._cached_profile = None
-            
+
     return u._cached_profile
 # Python power, add the function as a property to the user
 User.profile = property(user_profile)

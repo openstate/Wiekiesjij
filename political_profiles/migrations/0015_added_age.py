@@ -8,22 +8,17 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Adding model 'UserStatistics'
-        db.create_table('political_profiles_userstatistics', (
-            ('id', orm['political_profiles.userstatistics:id']),
-            ('user', orm['political_profiles.userstatistics:user']),
-            ('profile_hits', orm['political_profiles.userstatistics:profile_hits']),
-            ('profile_hits_up', orm['political_profiles.userstatistics:profile_hits_up']),
-        ))
-        db.send_create_signal('political_profiles', ['UserStatistics'])
+        # Adding field 'PoliticianProfile.age'
+        db.add_column('political_profiles_politicianprofile', 'age', orm['political_profiles.politicianprofile:age'])
         
     
     
     def backwards(self, orm):
         
-        # Deleting model 'UserStatistics'
-        db.delete_table('political_profiles_userstatistics')
+        # Deleting field 'PoliticianProfile.age'
+        db.delete_column('political_profiles_politicianprofile', 'age')
         
+    
     
     models = {
         'auth.group': {
@@ -171,6 +166,7 @@ class Migration:
             'politician': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'goals'", 'to': "orm['political_profiles.PoliticianProfile']"})
         },
         'political_profiles.politicianprofile': {
+            'age': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'charity': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'dateofbirth': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'diet': ('django.db.models.fields.CharField', [], {'max_length': '25', 'null': 'True', 'blank': 'True'}),

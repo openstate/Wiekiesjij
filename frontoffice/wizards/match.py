@@ -296,17 +296,17 @@ class BestCandidate(MultiPathFormWizard):
                         end=parts[1]
                     if end == 'G':
                         for candidate in self.candidates:
-                            if candidate.age() >= int(start):
+                            if candidate.age >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
-                            all_candidate_answers[candidate][question_id] = candidate.age()
+                            all_candidate_answers[candidate][question_id] = candidate.age
                     else:
                         for candidate in self.candidates:
                             
-                            if candidate.age() in range(int(start),int(end)):
+                            if candidate.age in range(int(start),int(end)):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
-                            all_candidate_answers[candidate][question_id] = candidate.age()
+                            all_candidate_answers[candidate][question_id] = candidate.age
 
                 elif QTYPE_MODEL_PROFILE_GENDER == question.question_type:
                     all_visitor_answers[question_id] = answer_value

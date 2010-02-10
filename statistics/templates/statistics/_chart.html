@@ -1,0 +1,6 @@
+{% load stats_tags %}
+{% if dataset %}
+	<img src="http://chart.apis.google.com/chart{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
+{% else %}
+	<p>Geen statistieken beschikbaar</p>
+{% endif %}

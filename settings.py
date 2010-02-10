@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'frontoffice',
     'registration',
     'opensocial',
+    'statistics',
 )
 
 COMMENTS_APP = 'authorized_comments'
