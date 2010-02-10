@@ -39,7 +39,7 @@ class Command(BaseCommand):
 
         elif margin < 2000:
 
-            message = 'Accepte may not enough credit bought. Currently Accepte has %s credits left. Councils have reserved: %s. %s credits have not been reserved. Total (Acceptes credits - reserver - non_reserved): %s' %(str(credit_left), str(councils_credit), str(over_drawn),str(margin))
+            message = 'Accepte may not have enough credit bought. Currently Accepte has %s credits left. Councils have reserved: %s. %s credits have not been reserved. Total (Acceptes credits - reserver - non_reserved): %s' %(str(credit_left), str(councils_credit), str(over_drawn),str(margin))
 
             try:
                 send_email(
