@@ -10,7 +10,7 @@ from registration import signals
 from registration.models import RegistrationProfile
 
 from frontoffice.registration_backend.forms import RegistrationForm
-from utils.emails import sent_email
+from utils.emails import send_email
 from elections.functions import get_profile_model
 
 class VisitorBackend(DefaultBackend):
