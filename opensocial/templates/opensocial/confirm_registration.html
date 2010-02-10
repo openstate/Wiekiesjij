@@ -1,0 +1,23 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'OpenID confirmation' %}
+{% endblock title %}
+
+{% block extrahead %}
+    <script type="text/javascript">
+        window.setTimeout(function() {
+            location.replace("{% url fo.politician_profile request.user.id %}");
+        }, 3*1000);
+    </script>
+    <meta http-equiv="Refresh" content="5; URL={% url fo.politician_profile request.user.id %}">
+{% endblock extrahead %}
+
+{% block content %}
+    {% if registered %}
+        OpenID is geregistreerd. Naar uw <a href="{% url fo.politician_profile request.user.id %}">profiel</a>.
+    {% else %}
+        OpenID is al geregistreerd. Naar uw <a href="{% url fo.politician_profile request.user.id %}">profiel</a>.
+    {% endif %}
+{% endblock content %}
