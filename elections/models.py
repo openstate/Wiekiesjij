@@ -87,7 +87,7 @@ class Council(models.Model):
 
                 try:
                     send_email(
-                                'A Councils Credit is Low',
+                                _('A Councils Credit is Low'),
                                 'bmcmahon@gmail.com',
                                 'bmcmahon@gmail.com',
                                 {'message': message },
@@ -98,11 +98,11 @@ class Council(models.Model):
 
                 except:
                     pass
-                message = '%s has only %s credits left. Please contact us if you would like to purchase more credit. If you do not have enough prebought credit before when a message is sent you will be charged at a higher rate for that text message.'%(self.name, str(credits_left))
+                message = '%s has only %s credits left. Please contact us if you would like to purchase more credit. If you do not have enough pre-bought credit when a message is sent you will be charged at a higher rate for that text message.'%(self.name, str(credits_left))
 
                 try:
                     send_email(
-                                'Your Credits Low',
+                                _('Your Credit is Low'),
                                 'bmcmahon@gmail.com',
                                 'bmcmahon@gmail.com',
                                 {'message': message },

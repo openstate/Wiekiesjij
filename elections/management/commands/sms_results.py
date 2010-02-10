@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
                     #get(election_instance=election_instance, telephone=phone_num).
                     top_3 = visitor_results.candidate_answers.order_by('-candidates_score')[:3]
-                    message = 'Voting is tomorrow your top three candidates were: '
+                    message = 'Voting is tomorrow your top three candidates were '
                     for candidate in top_3:
                         message= message + str(candidate.candidate.profile.full_name()) + ', score: ' + str(candidate.candidates_score) + ' '
                     sendsms(election_instance.council.name[0:11], phone_num['telephone'], message, datetime.now())
