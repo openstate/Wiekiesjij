@@ -1,6 +1,15 @@
 from itertools import izip
+import os
+import urllib
+import hashlib
+import stat
+import mimetypes
 
+from django.views.static import was_modified_since
+from django.utils.http import http_date
+from django.http import HttpResponseNotModified, HttpResponse
 from django.db import connection
+from django.conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.core.cache import cache
 from django.template.context import RequestContext
@@ -57,10 +66,10 @@ def index(request):
     if election_instance_id is None:
         return redirect('/')
 
-    cache_key = 'statistics'
+    cache_key = 'statistics-%s' % (election_instance_id)
 
 
-    context = None #cache.get(cache_key)
+    context = cache.get(cache_key)
     if context is None:
         context = {}
         context.update({'gender_data': _get_gender_data(election_instance_id)})
@@ -71,10 +80,10 @@ def index(request):
         context.update({'marital_data': _get_maritalstatus_data(election_instance_id)})
         context.update({'education_data': _get_education_data(election_instance_id)})
 
-        #cache.set(cache_key, context)
+        cache.set(cache_key, context)
 
     eips = ElectionInstanceParty.objects.filter(election_instance__pk=election_instance_id).select_related('party')
-    context.update({'eips': eips[0:1]})
+    context.update({'eips': eips})
 
     return render_to_response('statistics/index.html', context, context_instance=RequestContext(request))
 
@@ -344,14 +353,43 @@ def _get_education_data(election_instance_id):
 
     return result
 
-
-def chart_cache(request):
+def _get_chart_to_serve(request):
     """
         Caches images from google charts based on request string
     """
+    default_image = '%s/defaults/party-dummy.jpg' % (settings.MEDIA_ROOT)  #TODO; change default
+    
     qs = request.META.get('QUERY_STRING', '')
     if qs == '':
-        return '%s/defaults/party-dummy.jpg' #TODO; change default
+        return default_image
         
-    cachekey = hashlib.sha224(qs).hexdigest()
+    imagekey = hashlib.sha224(qs).hexdigest()
     
+    path = '%s/statistics/%s.png' % (settings.MEDIA_ROOT, imagekey)
+    if not os.path.isfile(path):
+        """
+            Get the image from google
+        """
+        google_url = "http://chart.apis.google.com/chart?%s" % (qs)
+        print '===', google_url
+        try:
+            urllib.urlretrieve(google_url, path)
+        except:
+            return default_image
+        
+        
+    return '%s/statistics/%s.png' % (settings.MEDIA_ROOT, imagekey)
+
+def chart_cache(request):
+    fullpath = _get_chart_to_serve(request)
+    
+    statobj = os.stat(fullpath)
+    if not was_modified_since(request.META.get('HTTP_IF_MODIFIED_SINCE'),
+                              statobj[stat.ST_MTIME], statobj[stat.ST_SIZE]):
+        return HttpResponseNotModified()
+    mimetype = mimetypes.guess_type(fullpath)[0] or 'application/octet-stream'
+    contents = open(fullpath, 'rb').read()
+    response = HttpResponse(contents, mimetype=mimetype)
+    response["Last-Modified"] = http_date(statobj[stat.ST_MTIME])
+    response["Content-Length"] = len(contents)
+    return response

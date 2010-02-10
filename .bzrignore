@@ -16,3 +16,4 @@ media/defaults/party-dummy_*
 .pydevproject
 frontoffice/media/frontoffice/img/Thumbs.db
 frontoffice/media/frontoffice/img/Thumbs.db
+./media/statistics/*
