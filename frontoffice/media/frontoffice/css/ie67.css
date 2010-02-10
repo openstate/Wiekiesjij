@@ -4,7 +4,9 @@
 .tabbed .hd {
 	width:705px;
 	}
-
+.st .tabbed .hd {
+	width:900px;
+	}
 #header ul.tabs {
 	
 	}
