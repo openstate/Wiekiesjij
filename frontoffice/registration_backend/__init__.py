@@ -1,6 +1,6 @@
 from random import seed, choice
 import string
-
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
@@ -32,14 +32,15 @@ class VisitorBackend(DefaultBackend):
             site = RequestSite(request)
         username = self._generate_username()
         new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site, send_email=False)
-
+   
+        reg_profile = RegistrationProfile.objects.get(user=new_user)
 
         send_email(
                 _('Wiekiesjij - User Registration'),
                 'bmcmahon@gmail.com',
                 email,
-                {'site': site, 'activation_key': new_user.activation_key },
-                {'plain': 'frontoffice/registration/activation_email.txt','html': 'frontoffice/registration/_activation_email.html'},
+                {'site': site, 'activation_key': reg_profile.activation_key },
+                {'plain': 'registration/activation_email.txt','html': 'registration/_activation_email.html'},
         )
 
  

@@ -9,9 +9,55 @@ import copy
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
 from utils.fields import NameField, DutchMobilePhoneField
-
-
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
 from elections.models import ElectionInstance
+from django.contrib.sites.models import Site
+from django.utils.http import int_to_base36
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label=_("E-mail"), max_length=75)
+
+    def clean_email(self):
+        """
+        Validates that a user exists with the given e-mail address.
+        """
+        email = self.cleaned_data["email"]
+        self.users_cache = User.objects.filter(email__iexact=email)
+        if len(self.users_cache) == 0:
+            raise forms.ValidationError(_("That e-mail address doesn't have an associated user account. Are you sure you've registered?"))
+        return email
+
+    def save(self, domain_override=None, email_template_name='registration/password_reset_email.html',
+             use_https=False, token_generator=default_token_generator):
+        """
+        Generates a one-use only link for resetting password and sends to the user
+        """
+        from utils.emails import send_email
+        for user in self.users_cache:
+            if not domain_override:
+                current_site = Site.objects.get_current()
+                site_name = current_site.name
+                domain = current_site.domain
+            else:
+                site_name = domain = domain_override
+            #t = loader.get_template(email_template_name)
+
+
+            send_email(
+                    _("Password reset on %s") % site_name,
+                    'info@wiekiesjij.nl',
+                    user.email,
+                    {
+                        'email': user.email,
+                        'domain': domain,
+                        'site_name': site_name,
+                        'uid': int_to_base36(user.id),
+                        'user': user,
+                        'token': token_generator.make_token(user),
+                        'protocol': use_https and 'https' or 'http', },
+                    {'plain': 'registration/email/forgot_password.txt','html': email_template_name},
+                )
 
 class RegionChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):

@@ -28,6 +28,7 @@ from frontoffice.decorators import visitors_only
 from django.contrib.auth.decorators import login_required
 
 
+
 from frontoffice.wizards.match import BestCandidate
 
 def redirect_view(request):
@@ -39,6 +40,8 @@ def redirect_view(request):
         return redirect('fo.home')
     else:
         return redirect('bo.redirect')
+
+
 
 #Helper function
 def _new_url(path, field, value):

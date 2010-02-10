@@ -4,7 +4,7 @@
 #Copyright 2009 Accepté. All Rights Reserved.
 from django.conf.urls.defaults import patterns, url, include
 from django.conf import settings
-    
+from frontoffice.forms import PasswordResetForm
 urlpatterns = patterns('',
 
     url(r'^login/$', 'utils.views.login', {'template_name': 'registration/login.html'}, name='fo.login'),
@@ -16,7 +16,8 @@ urlpatterns = patterns('',
     #forgot password
     url(r'^forgot-password/$', 'django.contrib.auth.views.password_reset', {
         'template_name': 'registration/forgot_password.html',
-        'email_template_name': 'registration/email/forgot_password.txt',
+        'email_template_name': 'registration/email/password_reset_email.html',
+        'password_reset_form':PasswordResetForm,
     }, name='fo.forgot_password'),
     url(r'^forgot-password/send/$', 'django.contrib.auth.views.password_reset_done', {
         'template_name': 'registration/forgot_password_send.html'
