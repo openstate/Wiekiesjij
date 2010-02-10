@@ -104,7 +104,7 @@ class Migration:
             'location': ('django.db.models.fields.TextField', [], {}),
             'message': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
             'originator': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
-            'sent_datetime': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
+            'sent_datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
         'elections.electionevent': {

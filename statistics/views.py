@@ -1,4 +1,6 @@
+from itertools import izip
 
+from django.db import connection
 from django.shortcuts import render_to_response, redirect
 from django.core.cache import cache
 from django.template.context import RequestContext
@@ -36,8 +38,7 @@ CHART_COLORS = (
     'e866f8',
     'f86666',
 )
-from itertools import izip
-from django.db import connection
+
 
 def _query_to_dict(query_str, *query_args):
     cursor = connection.cursor()
@@ -73,7 +74,7 @@ def index(request):
         #cache.set(cache_key, context)
 
     eips = ElectionInstanceParty.objects.filter(election_instance__pk=election_instance_id).select_related('party')
-    context.update({'eips': eips})
+    context.update({'eips': eips[0:1]})
 
     return render_to_response('statistics/index.html', context, context_instance=RequestContext(request))
 
@@ -345,4 +346,8 @@ def _get_education_data(election_instance_id):
 
 
 def chart_cache(request):
+    """
+        Caches images from google charts based on request string
+    """
+    print request.META
     pass

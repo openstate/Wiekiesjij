@@ -437,7 +437,7 @@ class CouncilEvent(models.Model):
     location = models.TextField(_('Location'))
     message = models.CharField(_('Message'), max_length=140)
     event_datetime  = models.DateTimeField(_('Date and Time of Event'), blank = True)
-    sent_datetime = models.DateTimeField(_('Date and Time when sms were sent'), blank = True)
+    sent_datetime = models.DateTimeField(_('Date and Time when sms were sent'), blank = True, null=True)
 
     def __unicode__(self):
         return self.title
