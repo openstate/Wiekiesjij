@@ -1,19 +1,13 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-{% load i18n %}
+{% extends 'registration/email/base.html' %}
+{% stylegroup "font" %}
+	font: 13px Arial, Helvetiva, sans-serif;
+{% end_stylegroup %}
 
-Your account at Wiekiesjij.nl needs activation:
-
-http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}
-
-  </body>
-</html>
+{% block content %}
+<p style="{% use_stylegroup 'font' %}">Your account at Wiekiesjij.nl needs activation:</p>
+<p style="{% use_stylegroup 'font' %}"><a href="http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}">http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}</a></p>
+{% endblock content %}
+{% block sidebar %}
+	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
+	<p style="{% use_stylegroup 'font' %}">[Some text]. Neemt u dan contact met ons op via 088-7000125</p>
+{% endblock sidebar %}           

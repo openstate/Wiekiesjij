@@ -1,12 +1,6 @@
 {% comment %}
 	Renders a single answer label in the election event selection
 {% endcomment %}
-{% load thumbnail %}
-<span class="with-logo">
-<span class="logo">
-    <p>{{ council_event.location }}</p>
-    <p>{{ council_event.event_datetime }}</p>
-
-</span>
-{{ council_event.title }}
-</span>
+<strong>{{ council_event.title }}</strong>
+<span class="date">{{ council_event.event_datetime }}</span>
+<span class="location">{{ council_event.location }}</span>

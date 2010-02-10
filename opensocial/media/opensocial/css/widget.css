@@ -52,7 +52,8 @@
 		margin-bottom:.5em;
 		}	
 		
-	a {
+	a,
+	a:visited {
 		color:#ed2227;
 		text-decoration:underline;
 		}
@@ -376,7 +377,9 @@
 		
 			}
 			.event-list strong,
-			.event-list span {
+			.event-list span,
+			.sms-setup form li strong,
+			.sms-setup form li span {
 				display:block;
 				line-height:1.4em;
 				}
