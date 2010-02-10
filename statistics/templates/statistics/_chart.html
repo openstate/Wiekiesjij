@@ -1,7 +1,7 @@
 {% load stats_tags %}
 
 {% if dataset %}
-	<img src="{% url statistics.chartcache %}{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
+	<img src="http://chart.apis.google.com/chart{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
 {% else %}
 	<p>Geen statistieken beschikbaar</p>
 {% endif %}

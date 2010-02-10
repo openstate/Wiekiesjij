@@ -349,5 +349,9 @@ def chart_cache(request):
     """
         Caches images from google charts based on request string
     """
-    print request.META
-    pass
+    qs = request.META.get('QUERY_STRING', '')
+    if qs == '':
+        return '%s/defaults/party-dummy.jpg' #TODO; change default
+        
+    cachekey = hashlib.sha224(qs).hexdigest()
+    
