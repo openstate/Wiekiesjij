@@ -1,2 +1,15 @@
 {% extends "frontoffice/base.html" %}
+{% load i18n %}
+
+{% block menu_statistics %}selected{% endblock %}
+
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+        <li class="first"><a href="/">Wiekiesjij</a></li>
+    	<li><a href="{% url fo.election %}">{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% else %}{{ form.region }}{% endif %}</a></li>
+        <li>{% trans "Statistics" %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
 

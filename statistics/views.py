@@ -22,14 +22,14 @@ from political_profiles.models import RELIGION, GENDERS, MARITAL_STATUS, Educati
 
 
 CHART_COLORS = (
-    'f8b8aa',
-    'aaf8aa',
-    'aaaaf8',
-    'f8aab8',
-    'f8f8aa',
-    'aaf8f8',
-    'b8aaf8',
-    'f8aaaa',
+    'ED2227',
+    'BDE717',
+    '1D9DCE',
+    'EFC620',
+    '2D1DCE',
+    '00ffff',
+    '9900ff',
+    'ff0000',
     'b866aa',
     'aab8aa',
     'aaaab8',
@@ -103,7 +103,7 @@ def _get_gender_data(election_instance_id):
             chd='t:%s,%s' % (row['male_count'], row['female_count']),
             chs='280x100',
             chdl='Mannen+(%s)|Vrouwen+(%s)' % (row['male_count'], row['female_count']),
-            chco=','.join(CHART_COLORS),
+            chco=','.join(CHART_COLORS[0:2]),
         )
         result.update({row['id']: query_dict})
     return result
@@ -124,7 +124,7 @@ def _get_smoke_data(election_instance_id):
             chd='t:%s,%s' % (row['smoker_count'], row['nonsmoker_count']),
             chs='280x100',
             chdl='Roken+(%s)|Niet+Roken+(%s)' % (row['smoker_count'], row['nonsmoker_count']),
-            chco=','.join(CHART_COLORS),
+            chco=','.join(CHART_COLORS[0:2]),
         )
         result.update({row['id']: query_dict})
     return result
@@ -146,7 +146,7 @@ def _get_vegetarian_data(election_instance_id):
             chd='t:%s,%s' % (row['nonveggie_count'], row['veggie_count']),
             chs='280x100',
             chdl='Niet+vegetarisch+(%s)|Vegetarisch+(%s)' % (row['nonveggie_count'], row['veggie_count']),
-            chco=','.join(CHART_COLORS),
+            chco=','.join(CHART_COLORS[0:2]),
         )
         result.update({row['id']: query_dict})
     return result
@@ -182,13 +182,13 @@ def _get_religion_data(election_instance_id):
             query_dict = dict(
                 cht='bhs',
                 chd='t:%s' % (','.join(map(str, reversed(chart_data)))),
-                chs='300x300',
+                chs='400x280',
                 chxt='y,x',
                 chds='0,%s' % (sum(chart_data)),
-                chxl='0:|%s|' % ('|'.join(chart_titles)),
+                chxl='0:|%s' % ('|'.join(chart_titles)),
                 chbh=20,
-                chco=','.join(CHART_COLORS),
-                chg='%s,0,1,1' % (100/sum(chart_data)),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
+                chg='10,0,1,1',
             )
             result.update({current_id: query_dict})
             grouped_data = {}
@@ -241,7 +241,7 @@ def _get_age_data(election_instance_id):
                 chds='0,%s' % (sum(chart_data)),
                 chxl='0:|%s|' % ('|'.join(chart_titles)),
                 chbh=30,
-                chco=','.join(CHART_COLORS),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
                 chg='0,10,1,0',
             )
             result.update({current_id: query_dict})
@@ -289,7 +289,7 @@ def _get_maritalstatus_data(election_instance_id):
                 chd='t:%s' % (','.join(map(str,chart_data))),
                 chs='280x100',
                 chdl='%s' % ('|'.join(chart_titles)),
-                chco=','.join(CHART_COLORS),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
             )
             result.update({current_id: query_dict})
             grouped_data = {}
@@ -340,7 +340,7 @@ def _get_education_data(election_instance_id):
                 chd='t:%s' % (','.join(map(str,chart_data))),
                 chs='280x120',
                 chdl='%s' % ('|'.join(chart_titles)),
-                chco=','.join(CHART_COLORS),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
             )
             result.update({current_id: query_dict})
             grouped_data = {}

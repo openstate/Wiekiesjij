@@ -1,7 +1,16 @@
-{% load stats_tags %}
-
-{% if dataset %}
-	<img src="{% url statistics.chartcache %}{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
-{% else %}
-	<p>Geen statistieken beschikbaar</p>
-{% endif %}
+{% load stats_tags i18n thumbnail %}
+    <div class="image">
+    {% if eip.party.logo %}
+        <img alt="{{ eip.party.abbreviation }}" src="{% thumbnail eip.party.logo 60x40 %}" />
+    {% else %}
+        <img alt="{{ eip.party.abbreviation }}" src="{% thumbnail 'defaults/party-dummy.jpg' 60x40 %}" />
+    {% endif %}
+    </div>
+    <h3><abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr></h3>
+    <div class="chart">
+    {% if dataset %}
+        <img src="{% url statistics.chartcache %}{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
+    {% else %}
+        <p class="empty">Geen statistieken beschikbaar</p>
+    {% endif %}
+    </div>

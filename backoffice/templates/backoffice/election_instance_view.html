@@ -107,15 +107,17 @@
             	<dd>{{ instance.council.credit }} {% trans "credits." %}</dd>
         	<dt>{% trans "The Sms's in the system currently will cost you" %}:</dt>
             	<dd>{{ allocated }} {% trans "credits." %}</dd>
-                {% if enough %}
-                    <dt>{% trans "After which you will only have:" %}:</dt>
-                    <dd>{{ credit_left }} {% trans "credits." %}</dd>
-                {% else %}
-                    <dt>{% trans "Currently you will be charged at the higher rate for" %}:</dt>
-                    <dd>{{ pos_credit_left }} {% trans "credits. Contact us to buy more credits to avoid this." %}</dd>
-
-                {% endif %}
+            {% if enough %}
+            <dt>{% trans "After which you will only have:" %}:</dt>
+                <dd>{{ credit_left }} {% trans "credits." %}</dd>
+            {% else %}
+            <dt>{% trans "Currently you will be charged at the higher rate for" %}:</dt>
+                <dd>{{ pos_credit_left }} {% trans " credits." %}
+                	<p><em><a href="#">{% trans "Contact us" %}</a>{% trans " to buy more credits to avoid this." %}</em></p>
+                </dd>
+            {% endif %}
         </dl>
+        
 	{% endblockwrap %}
 
 	{% blockwrap %}

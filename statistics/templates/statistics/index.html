@@ -1,17 +1,82 @@
 {% extends "statistics/base.html" %}
-{% load stats_tags %}
-{% block content %}
-	
+{% load stats_tags i18n thumbnail %}
+
+
+{% block cols %}
+<div class="col lastCol">
+	<h1>{% trans "Statistieken voor " %}{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% else %}{{ form.region }}{% endif %}</h1>
+    <div class="mod stats tabbed">
+    	<div class="hd">
+        	<ul class="tabs">
+            	<li>
+                	<a href="#" class="selected">
+               			{% trans "Gender" %}
+                 	</a>
+                </li>
+            </ul>
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item gender">
+                    {% draw_chart gender_data eip 'Gender distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item smoking">
+                    {% draw_chart smoke_data eip 'Smoking distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item diet">
+                    {% draw_chart diet_data eip 'Diet distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item religion">
+                    {% draw_chart religion_data eip 'Religion distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item age">
+                    {% draw_chart age_data eip 'Age distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item marital">
+                    {% draw_chart marital_data eip 'Martial distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bd">
+        	{% for eip in eips %}
+            	<div class="stat item education">
+                    {% draw_chart education_data eip 'Education distribution' %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    
+    {% comment %}
 	{% for eip in eips %}
-		<h1>{{ eip.party.name }}</h1>
-		{% draw_chart gender_data eip 'Gender distribution' %}<br/>
-		{% draw_chart smoke_data eip 'Smoking distribution' %}<br/>
-		{% draw_chart diet_data eip 'Diet distribution' %}<br/>
-		{% draw_chart religion_data eip 'Religion distribution' %}<br/>
-		{% draw_chart age_data eip 'Age distribution' %}<br/>
-		{% draw_chart marital_data eip 'Martial distribution' %}<br/>
-		{% draw_chart education_data eip 'Education distribution' %}<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 		<hr/>
 	{% endfor %}
-	
-{% endblock content %}
+	{% endcomment %}
+    
+</div>    
+{% endblock cols %}

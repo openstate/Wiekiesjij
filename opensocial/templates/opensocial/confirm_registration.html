@@ -14,10 +14,21 @@
     <meta http-equiv="Refresh" content="5; URL={% url fo.politician_profile request.user.id %}">
 {% endblock extrahead %}
 
-{% block content %}
-    {% if registered %}
-        OpenID is geregistreerd. Naar uw <a href="{% url fo.politician_profile request.user.id %}">profiel</a>.
-    {% else %}
-        OpenID is al geregistreerd. Naar uw <a href="{% url fo.politician_profile request.user.id %}">profiel</a>.
-    {% endif %}
-{% endblock content %}
+{% block cols %}
+<div class="col size1of2">
+    <div class="mod openid-confirmation">
+    	<div class="hd">
+        	<h2>{% trans 'OpenID confirmation' %}</h2>
+        </div>
+    	<div class="bd">
+        {% if registered %}
+            <p>{% trans "Uw OpenID is gekoppeld aan uw account." %}
+            	<a href="{% url fo.politician_profile request.user.id %}">{% trans "Ga door naar uw profiel" %}</a>.</p>
+        {% else %}
+            <p class="error">{% trans "OpenID is al gekoppeld aan een ander account." %}</p>
+            <p><a href="{% url fo.politician_profile request.user.id %}">{% trans "Ga door naar uw profiel" %}</a>.</p>
+        {% endif %}
+       	</div>
+  	</div>
+</div>
+{% endblock cols %}

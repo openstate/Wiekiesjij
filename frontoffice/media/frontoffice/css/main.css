@@ -2283,6 +2283,49 @@
 			font-weight:bold;
 			display:block;
 			}
+
+
+	/*	Statistics
+		**************************************************************************************************************/
+
+		.stats {
+			margin-top:70px;
+			}
+			.stat {
+				float:left;
+				width:31%;
+				margin:10px 1%;
+				text-align:center;
+				height:140px;
+				}
+				.stat h3 {
+					text-align:left;
+					}
+				.stat .image {
+					float:left;
+					margin-right:1em;
+					height:40px;
+					width:60px;
+					}
+				.stat .empty {
+					clear:both;
+					margin-top:5em;
+					}
+				.stat .chart {
+					clear:both;
+					}
+
+			.stats .religion {
+				width:48%;				
+				height:340px;
+				}
+			.stats .age {
+				width:48%;
+				height:300px;
+				}
+			.stats .education {
+				height:180px;
+				}
 	
 	/*	Login
 		**************************************************************************************************************/
