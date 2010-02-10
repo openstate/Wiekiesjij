@@ -10,7 +10,7 @@ from registration import signals
 from registration.models import RegistrationProfile
 
 from frontoffice.registration_backend.forms import RegistrationForm
-
+from utils.emails import sent_email
 from elections.functions import get_profile_model
 
 class VisitorBackend(DefaultBackend):
@@ -31,8 +31,18 @@ class VisitorBackend(DefaultBackend):
         else:
             site = RequestSite(request)
         username = self._generate_username()
-        new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
-        
+        new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site, send_email=False)
+
+
+        send_email(
+                _('Wiekiesjij - User Registration'),
+                'bmcmahon@gmail.com',
+                email,
+                {'site': site, 'activation_key': new_user.activation_key },
+                {'plain': 'frontoffice/registration/activation_email.txt','html': 'frontoffice/registration/_activation_email.html'},
+        )
+
+ 
         ProfileModel = get_profile_model('visitor')
         
         ProfileModel.objects.create(
