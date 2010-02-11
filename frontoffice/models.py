@@ -18,6 +18,7 @@ class VisitorResult(models.Model):
     visitor_answers     = models.TextField(_('Visitor Answer List'), blank=True, null=True)
     telephone           = models.CharField(_('Phone Number'), max_length=12, blank=True, null=True)
     election_instance   = models.ForeignKey(ElectionInstance, related_name='visitor_results', verbose_name=_('Election Instance'), blank=True, null=True)
+    sent                = models.DateTimeField(_('Dent DateTime'), blank=True, null=True)
 
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')

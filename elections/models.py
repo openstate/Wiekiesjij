@@ -62,17 +62,12 @@ class Council(models.Model):
         if self.election_instances:
             
             for election_instance in self.election_instances.all():
-                dict_phones = election_instance.visitor_results.filter(election_instance=election_instance).exclude(telephone=None).values('telephone')
+                dict_phones = election_instance.visitor_results.filter(election_instance=election_instance, sent=None).exclude(telephone=None).values('telephone')
                 for  dict_phone in dict_phones:
                     if 'telephone' in dict_phone.keys():
                         phone_nums.append(dict_phone['telephone'])
-        else:
-            for election_instance in self.election_instances.all():
-                dict_phones = election_instance.visitor_results.filter(election_instance=None).exclude(telephone=None).values('telephone')
-                for  dict_phone in dict_phones:
-                    if 'telephone' in dict_phone.keys():
-                        phone_nums.append(dict_phone['telephone'])
-        total_credits = len(set(phone_nums))
+
+            total_credits = len(set(phone_nums))
 
         for event in self.events.all():
             if event.sent_datetime == None:
@@ -88,7 +83,7 @@ class Council(models.Model):
                 try:
                     send_email(
                                 _('A Councils Credit is Low'),
-                                'bmcmahon@gmail.com',
+                                'info@wiekiesjij.nl',
                                 'bmcmahon@gmail.com',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
@@ -103,7 +98,7 @@ class Council(models.Model):
                 try:
                     send_email(
                                 _('Your Credit is Low'),
-                                'bmcmahon@gmail.com',
+                                'info@wiekiesjij.nl',
                                 'bmcmahon@gmail.com',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
@@ -445,10 +440,6 @@ class CouncilEvent(models.Model):
     def sms_recipients(self):
         recipient_list = []
         for subscription in self.sms_subscriptions.all():
-#            if recipient_list != '':
-#                recipient_list = recipient_list + ',' + str(subscription.phone_number)
-#            else:
-#                recipient_list = str(subscription.phone_number)
             recipient_list.append(subscription.phone_number)
         rset = set(recipient_list)
         return list(rset)
