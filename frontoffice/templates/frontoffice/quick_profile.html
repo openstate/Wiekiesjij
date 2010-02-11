@@ -102,15 +102,14 @@
                 </tr>
             </table>
             <div class="popularityMeter">
-                <!--<div class="meter">
-                    <div class="active" style="height: {{ popularity|default:0 }}%">
-                    	{{ popularity|default:0 }}%
+                <div class="meter">
+                    <div class="active" style="height: {{ profile.popularity|default:0 }}%">
+                    	{{ profile.popularity|default:0 }}%
                     </div>
                 </div>
                 <span class="top">100%</span>
                 <span class="bottom">0%</span>
-                <span class="total">{{ popularity|default:0 }}%</span>-->
-				<p class="empty">{% trans "Binnenkort vind je hier de populariteitsmeter." %}</p>
+                <span class="total">{{ profile.popularity|default:0 }}%</span>
             </div>
         </div>
         <div class="ballotPosition">

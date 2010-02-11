@@ -1,7 +1,10 @@
 from django.utils.importlib import import_module
 from django.core.exceptions import ImproperlyConfigured
+from django.core.cache import cache
 
 from elections import settings
+from utils.functions import query_to_dict
+
 
 def get_profile_app():
     """
@@ -60,3 +63,53 @@ def get_profile_template(for_function, type):
         Returns False if not found
     """
     return get_profile_app().get_profile_template(for_function, type)
+    
+def _make_normalize_function(max_pop, max_sum):
+    def f(item):
+        ((c_id), (raw_sum, raw_pop)) = item
+        new_sum = 100.0
+        new_pop = 100.0
+
+        if max_sum != 0:
+            new_sum = float((raw_sum * 100) / max_sum)
+
+        if max_pop != 0:
+            new_pop = float((raw_pop * 100 / max_pop))
+
+        return ((c_id), (new_sum, new_pop))
+    return f
+        
+def get_popularity(election_instance_id):
+    key = 'pop-%s' % (election_instance_id)
+    result = cache.get(key)
+    if result is None:
+        query = """
+            SELECT ec.id, SUM(COALESCE(ca.candidates_score, 0)) as sum, (1-COALESCE(us.profile_hits, 1))*100 AS pop
+            FROM elections_candidacy ec 
+            JOIN elections_electioninstanceparty p ON p.id = ec.election_party_instance_id
+            LEFT JOIN frontoffice_candidateanswers ca
+            LEFT JOIN political_profiles_userstatistics us ON ec.candidate_id = ca.candidate_id
+            WHERE p.election_instance_id = %s
+            GROUP BY ec.id ORDER BY `sum` ASC
+        """
+        result = []
+        max_pop = 0
+        max_sum = 0
+        for row in query_to_dict(query, election_instance_id):
+            if max_pop < float(row['pop']):
+                max_pop = float(row['pop'])
+            if max_sum < int(row['sum']):
+                max_sum = int(row['sum'])
+            result.append((
+                    (row['id']), (int(row['sum']), float(row['pop']))
+                ))
+            
+        f = _make_normalize_function(max_pop, max_sum)
+        result = dict(map(f, result))
+        
+        cache.set(key, result, 60*60*24) #24 hour cache
+    
+    return result
+
+def calc_popularity(match, views):
+    return int((match * 4 + views) / 5)

@@ -7,6 +7,8 @@ from utils.fields import DutchMobilePhoneField
 from django.contrib.auth.models import User
 from utils.emails import send_email
 
+from elections.functions import get_popularity, calc_popularity
+
 
 
 class Council(models.Model):
@@ -41,7 +43,7 @@ class Council(models.Model):
 
     def __unicode__(self):
         return self.name
-        
+
     @property
     def chancery_id(self):
         if self.chanceries.count() == 0:
@@ -51,7 +53,7 @@ class Council(models.Model):
     class Meta:
         verbose_name, verbose_name_plural = _('Council'), _('Councils')
         ordering = ('name',)
-    
+
     @property
     def profile_incomplete(self):
         return not self.seats or not self.street or not self.house_num or not self.postcode or not self.town
@@ -60,7 +62,7 @@ class Council(models.Model):
         total_credits = 0
         phone_nums = []
         if self.election_instances:
-            
+
             for election_instance in self.election_instances.all():
                 dict_phones = election_instance.visitor_results.filter(election_instance=election_instance, sent=None).exclude(telephone=None).values('telephone')
                 for  dict_phone in dict_phones:
@@ -139,7 +141,7 @@ class ElectionEvent(models.Model):
 
     def __unicode__(self):
         return self.name
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Election Event'), _('Election Events')
 
@@ -149,21 +151,21 @@ class ElectionInstanceModule(models.Model):
     """
     name = models.CharField(_('Name'), max_length=255)
     slug = models.SlugField(_('Slug'), unique=True)
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Module'), _('Modules')
         ordering = ('name',)
-        
+
     def __unicode__(self):
         return self.name
-        
-    
+
+
 class ElectionInstance(models.Model):
     """
     A election instance for an election event
     e.g. Municipality Groningen (for Election Event Municipality elections 2010)
     """
-    
+
     council         = models.ForeignKey(Council, verbose_name=_('Council'), related_name='election_instances')
     election_event  = models.ForeignKey(ElectionEvent, verbose_name=_('Election Event'))
     parties         = models.ManyToManyField('Party', verbose_name=_('Parties'), through='ElectionInstanceParty')
@@ -181,7 +183,7 @@ class ElectionInstance(models.Model):
 
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance'), _('Election Instances')
-        
+
     def party_dict(self):
         list = dict(map(lambda x: (x, None), range(1, self.num_lists+1)))
         list.update(dict(map(lambda x: (x.position, x), self.election_instance_parties.all())))
@@ -240,18 +242,18 @@ class ElectionInstanceQuestion(models.Model):
     """
     election_instance   = models.ForeignKey(ElectionInstance, verbose_name=_('Election Instance'))
     question            = models.ForeignKey('questions.Question', verbose_name=_('Question'))
-    
+
      #locked means it can only be edited by admins because it's used in multiple electioninstances
     locked              = models.BooleanField(_('Locked'), default=False)
     position            = models.PositiveIntegerField(_('Position'), default=0)
 
     def __unicode__(self):
         return self.election_instance.council.name + ' - ' + self.question.title
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Election Instance Question'), _('Election Instance Questions')
         ordering = ('position', 'question__id',)
-        
+
     def move_down(self):
         '''
         Changes the position value with next row
@@ -306,14 +308,26 @@ class Party(models.Model):
     num_seats = models.PositiveIntegerField(_('Number of seats'), null=True, blank=True, help_text=_('The number of seats you currently hold'))
     movie        = models.URLField(_('Movie'), max_length=255, verify_exists=True, blank=True, null=True,
                                       help_text=_('Link to YouTube video'))
+
+    class Meta:
+        verbose_name, verbose_name_plural = _('Party'), _('Parties')
+
     def __unicode__(self):
         if self.abbreviation:
             return self.abbreviation
         else:
             return self.name
-        
-    class Meta:
-        verbose_name, verbose_name_plural = _('Party'), _('Parties')
+
+    @property
+    def popularity(self):
+        if not hasattr(self, '_popularity'):
+            popularities = get_popularity(self.current_eip.election_instance_id)
+            candidates = self.current_eip.candidates.all()
+            sum_data = 0.0
+            for candidate in candidates:
+                sum_data = sum_data + calc_popularity(*popularities[candidate.id])
+            self._popularity = int(sum_data / len(candidates))
+        return self._popularity
 
     def profile_incomplete(self):
         return not self.address_street or not self.address_number or not self.address_postalcode or not self.address_city or not self.abbreviation or not self.name
@@ -326,7 +340,7 @@ class Party(models.Model):
             'postalcode': self.address_postalcode,
             'city': self.address_city,
         }
-        
+
     @property
     def current_eip(self):
         if not hasattr(self, '_eip'):
@@ -342,19 +356,19 @@ class Candidacy(models.Model):
         A candidacy for a position within a council for optionally a party.
         Position indicated the number on the list.
     """
-    election_party_instance     = models.ForeignKey('ElectionInstanceParty', 
-                                                verbose_name=_('Election Party Instance'), 
+    election_party_instance     = models.ForeignKey('ElectionInstanceParty',
+                                                verbose_name=_('Election Party Instance'),
                                                 related_name='candidates')
-    candidate                   = models.ForeignKey(User, 
-                                        limit_choices_to=settings.POLITICIAN_LIMITATION, 
+    candidate                   = models.ForeignKey(User,
+                                        limit_choices_to=settings.POLITICIAN_LIMITATION,
                                         verbose_name=_('Politician'), related_name='elections')
     position                    = models.PositiveIntegerField(_('Position'))
     answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
 
-        
+
     def __unicode__(self):
         return self.candidate.username
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Candidacy'), _('Candidacies')
         unique_together = (
@@ -436,14 +450,14 @@ class CouncilEvent(models.Model):
 
     def __unicode__(self):
         return self.title
-    
+
     def sms_recipients(self):
         recipient_list = []
         for subscription in self.sms_subscriptions.all():
             recipient_list.append(subscription.phone_number)
         rset = set(recipient_list)
         return list(rset)
-    
+
 
 
 class SmsSubscription(models.Model):

@@ -1,4 +1,3 @@
-from itertools import izip
 import os
 import urllib
 import hashlib
@@ -8,13 +7,12 @@ import mimetypes
 from django.views.static import was_modified_since
 from django.utils.http import http_date
 from django.http import HttpResponseNotModified, HttpResponse
-from django.db import connection
 from django.conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.core.cache import cache
 from django.template.context import RequestContext
 
-
+from utils.functions import query_to_dict
 from elections.models import ElectionInstanceParty
 from political_profiles.models import RELIGION, MARITAL_STATUS
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
@@ -49,18 +47,6 @@ CHART_COLORS = (
 )
 
 
-def _query_to_dict(query_str, *query_args):
-    cursor = connection.cursor()
-    cursor.execute(query_str, query_args)
-    col_names = [desc[0] for desc in cursor.description]
-    while True:
-        row = cursor.fetchone()
-        if row is None:
-            break
-        row_dict = dict(izip(col_names, row))
-        yield row_dict
-    return
-
 def index(request, tab):
     election_instance_id = request.session.get('ElectionInstance', {}).get('id', None)
     if election_instance_id is None:
@@ -84,7 +70,7 @@ def index(request, tab):
         
         
 
-        cache.set(cache_key, context)
+        cache.set(cache_key, context, 60*60*24) #24 hour cache
 
     eips = ElectionInstanceParty.objects.filter(
             election_instance__pk=election_instance_id
@@ -105,7 +91,7 @@ def _get_gender_data(election_instance_id):
         GROUP BY eip.id
     """
     result = {}
-    for row in _query_to_dict(query, election_instance_id):
+    for row in query_to_dict(query, election_instance_id):
         query_dict = dict(
             cht='p3',
             chd='t:%s,%s' % (row['male_count'], row['female_count']),
@@ -126,7 +112,7 @@ def _get_smoke_data(election_instance_id):
         GROUP BY eip.id
     """
     result = {}
-    for row in _query_to_dict(query, election_instance_id):
+    for row in query_to_dict(query, election_instance_id):
         query_dict = dict(
             cht='p3',
             chd='t:%s,%s' % (row['smoker_count'], row['nonsmoker_count']),
@@ -148,7 +134,7 @@ def _get_vegetarian_data(election_instance_id):
     """
 
     result = {}
-    for row in _query_to_dict(query, election_instance_id):
+    for row in query_to_dict(query, election_instance_id):
         query_dict = dict(
             cht='p3',
             chd='t:%s,%s' % (row['nonveggie_count'], row['veggie_count']),
@@ -173,7 +159,7 @@ def _get_religion_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()
@@ -224,7 +210,7 @@ def _get_age_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()
@@ -277,7 +263,7 @@ def _get_maritalstatus_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()
@@ -327,7 +313,7 @@ def _get_education_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()
@@ -378,7 +364,7 @@ def _get_worksector_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()
@@ -429,7 +415,7 @@ def _get_politicaltype_data(election_instance_id):
     result = {}
     grouped_data = {}
     current_id = None
-    generator = _query_to_dict(query, election_instance_id)
+    generator = query_to_dict(query, election_instance_id)
     while True:
         try:
             row = generator.next()

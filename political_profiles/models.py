@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from datetime import date
+
 from django.db import models
 from django.db.models import Sum, Count
 from django.utils.translation import ugettext_lazy as _
@@ -9,8 +11,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
-from functions import cal_work_experience_days, cal_political_experience_days
-from datetime import date
+from political_profiles.functions import cal_work_experience_days, cal_political_experience_days
+from elections.functions import get_popularity, calc_popularity
+
 
 from utils.netutils import check_unique_visitor
 
@@ -261,7 +264,21 @@ class PoliticianProfile(Profile):
     class Meta:
         verbose_name, verbose_name_plural = _('Politician Profile'), _('Politician Profiles')
 
-
+    @property
+    def popularity(self):
+        if not hasattr(self, '_popularity'):
+            candidacy_id = self.get_first_candidacy().id
+            popularity = get_popularity(self.election_party().election_instance_id)
+            data = popularity.get(candidacy_id, (0.0, 0.0))
+            self._popularity = calc_popularity(*data)
+        return self._popularity
+        
+    def get_first_candidacy(self):
+        candidacy = self.user.elections.order_by('position').all()
+        if candidacy.count() != 0:
+            return candidacy[0]
+        return None
+    
     def profile_incomplete(self):
         return not self.marital_status
 
@@ -287,21 +304,21 @@ class PoliticianProfile(Profile):
         "Returns the party  of the candidate"
         # Currently there is only one but this needs to be modified at a later
         # date for when there are past elections and so more partys
-        candidacy = self.user.elections.order_by('position')
+        candidacy = self.user.elections.select_related('election_party_instance__party').order_by('position')
         if candidacy.count() != 0:
             return candidacy[0].election_party_instance.party
         return None
 
     def election_party(self):
         """ Returns election party wrapper. """
-        candidacy = self.user.elections.all().select_related('election_party_instance__party')
+        candidacy = self.user.elections.all().select_related('election_party_instance__party').order_by('position')
         if candidacy.count() != 0:
             return candidacy[0].election_party_instance
         return None
 
     def position(self):
         "Returns the position of the candidate on the party's list"
-        candidacy = self.user.elections.all()
+        candidacy = self.user.elections.order_by('position').all()
         if candidacy.count() != 0:
             return candidacy[0].position
         return None
@@ -313,7 +330,7 @@ class PoliticianProfile(Profile):
             self.age = (d.year - bday.year) - int((d.month, d.day) < (bday.month, bday.day))
         else:
             self.age = None
-
+            
     def __unicode__(self):
         return self.user.username
 
@@ -372,12 +389,6 @@ class ContactProfile(Profile):
     picture     = models.ImageField(_('Picture'), upload_to='media/contact', null=True, blank=True)
     description = models.CharField(_('Description'), max_length=255, null=True, blank=True,
                                    help_text=_("A short description of yourself"))
-
-    def party(self):
-        "Returns the party  of the admin"
-        # Currently there is only one but this needs to be modified at a later
-        # date for when there are past elections and so more partys
-        return user.parties.all()[0].election_instance_parties.all()[0]
 
     def __unicode__(self):
         return self.user.username

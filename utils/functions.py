@@ -1,4 +1,6 @@
 import random
+from itertools import izip
+from django.db import connection
 from django.utils.safestring import mark_safe
 
 def move_down(instance, field, limit, kwargs={}):
@@ -106,9 +108,7 @@ def smart_truncate(content, length=100, suffix='...'):
     """
     if len(content) <= length:
         return content
-    else:
-        return content[:length].rsplit(' ', 1)[0]+suffix
-    return result
+    return content[:length].rsplit(' ', 1)[0]+suffix
     
     
 def get_query_string(p, new_params=None, remove=None, postfix_amp=False):
@@ -163,3 +163,16 @@ def string_to_list(string):
             if arg == '': continue
             args.append(arg)
     return args
+    
+    
+def query_to_dict(query_str, *query_args):
+    cursor = connection.cursor()
+    cursor.execute(query_str, query_args)
+    col_names = [desc[0] for desc in cursor.description]
+    while True:
+        row = cursor.fetchone()
+        if row is None:
+            break
+        row_dict = dict(izip(col_names, row))
+        yield row_dict
+    return
