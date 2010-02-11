@@ -24,13 +24,12 @@ class Command(BaseCommand):
                             for candidate in top_3:
 
                                 message= message + str(candidate.candidate.profile.full_name()) + ', score: ' + str(candidate.candidates_score) + ' '
-                            try:
-                                sendsms(election_instance.council.name[0:11], phone_num['telephone'], message, datetime.now())
-                                visitor_results.sent = datetime.now()
-                                visitor_results.save()
-                                accepte_credits = accepte_credits - 1
-                            except:
-                                pass
+
+                            sendsms(election_instance.council.name[0:11], phone_num['telephone'], message, datetime.now())
+                            visitor_results.sent = datetime.now()
+                            visitor_results.save()
+                            accepte_credits = accepte_credits - 1
+
 
                     else:
                         message = 'ERROR: Accepte has not enough credit bought to send queued sms\'s. Buy credits imediately! To identify how many, run credits_left command. Then Purchase required amount. Then Manually run sms_results command again.'

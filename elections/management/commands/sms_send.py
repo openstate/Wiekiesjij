@@ -16,14 +16,13 @@ class Command(BaseCommand):
             for event in council.events.all():
                 if event.sent_datetime == None and (event.event_datetime - timedelta(days=1)) < datetime.now():
                     if accepte_credit > 0:
-                        try:
-                            recipients = event.sms_recipients()
-                            sendsms(event.originator, recipients, event.message, event.event_datetime)
-                            event.sent_datetime = datetime.now()
-                            event.save()
-                            accepte_credit = accepte_credit - len(recipients)
-                        except:
-                            pass
+
+                        recipients = event.sms_recipients()
+                        sendsms(event.originator, recipients, event.message, event.event_datetime)
+                        event.sent_datetime = datetime.now()
+                        event.save()
+                        accepte_credit = accepte_credit - len(recipients)
+
                     else:
                         message = 'ERROR: Accepte has not enough credit bought to send queued sms\'s. Buy credits imediately! To identify how many, run credits_left command. Then Purchase required amount. Then Manually run sms_send command again.'
 
