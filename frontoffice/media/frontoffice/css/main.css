@@ -2326,6 +2326,14 @@
 			.stats .education {
 				height:180px;
 				}
+		    .stats .work {
+				width:48%;
+				height:300px;
+				}
+		    .stats .political {
+				width:48%;
+				height:300px;
+				}
 				
 		#content .stats ul.tabs li a {
 			font-size:14px;

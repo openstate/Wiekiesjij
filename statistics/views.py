@@ -13,12 +13,11 @@ from django.conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.core.cache import cache
 from django.template.context import RequestContext
-from django.utils.datastructures import SortedDict
 
-from django.db.models import Count, Avg
 
-from elections.models import ElectionInstanceParty, Candidacy
-from political_profiles.models import RELIGION, GENDERS, MARITAL_STATUS, EducationLevel
+from elections.models import ElectionInstanceParty
+from political_profiles.models import RELIGION, MARITAL_STATUS
+from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType
 
 
 CHART_COLORS = (
@@ -79,10 +78,17 @@ def index(request, tab):
         context.update({'age_data': _get_age_data(election_instance_id)})
         context.update({'marital_data': _get_maritalstatus_data(election_instance_id)})
         context.update({'education_data': _get_education_data(election_instance_id)})
+        context.update({'work_data': _get_worksector_data(election_instance_id)})
+        context.update({'political_data': _get_politicaltype_data(election_instance_id)})
+        
+        
 
         cache.set(cache_key, context)
 
-    eips = ElectionInstanceParty.objects.filter(election_instance__pk=election_instance_id).select_related('party')
+    eips = ElectionInstanceParty.objects.filter(
+            election_instance__pk=election_instance_id
+        ).select_related('party').order_by('position')
+        
     context.update({'eips': eips})
     context.update({'tab': tab})
 
@@ -352,6 +358,109 @@ def _get_education_data(election_instance_id):
         current_id = row['id']
 
     return result
+    
+def _get_worksector_data(election_instance_id):
+    query = """
+        SELECT eip.id, ws.sector AS label, COUNT(*) AS count
+        FROM elections_electioninstanceparty eip
+        INNER JOIN elections_candidacy ec ON eip.id = ec.election_party_instance_id
+        INNER JOIN political_profiles_politicianprofile p ON p.user_id = ec.candidate_id
+        INNER JOIN political_profiles_workexperience pwe ON pwe.politician_id = p.id
+        INNER JOIN political_profiles_workexperiencesector ws ON ws.id = pwe.sector_id
+        WHERE eip.election_instance_id = %s
+        GROUP BY eip.id, ws.sector
+        ORDER BY eip.id, ws.id
+    """
+
+    work_sectors = WorkExperienceSector.objects.order_by('sector').values_list('sector', flat=True)
+
+    result = {}
+    grouped_data = {}
+    current_id = None
+    generator = _query_to_dict(query, election_instance_id)
+    while True:
+        try:
+            row = generator.next()
+        except StopIteration:
+            row = None
+
+        if row is None or (row['id'] != current_id and current_id is not None):
+            chart_data = []
+            chart_titles = []
+            for title in work_sectors:
+                key = title
+                chart_titles.append("%s (%s)" % (title, grouped_data.get(key, 0)))
+                chart_data.append(grouped_data.get(key, 0))
+
+            query_dict = dict(
+                cht='p3',
+                chd='t:%s' % (','.join(map(str,chart_data))),
+                chs='400x280',
+                chdl='%s' % ('|'.join(chart_titles)),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
+            )
+            result.update({current_id: query_dict})
+            grouped_data = {}
+
+        if row is None:
+            break
+
+        grouped_data.update({row['label']: row['count']})
+        current_id = row['id']
+
+    return result
+
+def _get_politicaltype_data(election_instance_id):
+    query = """
+        SELECT eip.id, pt.type AS label, COUNT(*) AS count
+        FROM elections_electioninstanceparty eip
+        INNER JOIN elections_candidacy ec ON eip.id = ec.election_party_instance_id
+        INNER JOIN political_profiles_politicianprofile p ON p.user_id = ec.candidate_id
+        INNER JOIN political_profiles_politicalexperience ppe ON ppe.politician_id = p.id
+        INNER JOIN political_profiles_politicalexperiencetype pt ON pt.id = ppe.type_id
+        WHERE eip.election_instance_id = %s
+        GROUP BY eip.id, pt.type
+        ORDER BY eip.id, pt.id
+    """
+
+    political_type = PoliticalExperienceType.objects.order_by('type').values_list('type', flat=True)
+
+    result = {}
+    grouped_data = {}
+    current_id = None
+    generator = _query_to_dict(query, election_instance_id)
+    while True:
+        try:
+            row = generator.next()
+        except StopIteration:
+            row = None
+
+        if row is None or (row['id'] != current_id and current_id is not None):
+            chart_data = []
+            chart_titles = []
+            for title in political_type:
+                key = title
+                chart_titles.append("%s (%s)" % (title, grouped_data.get(key, 0)))
+                chart_data.append(grouped_data.get(key, 0))
+
+            query_dict = dict(
+                cht='p3',
+                chd='t:%s' % (','.join(map(str,chart_data))),
+                chs='400x280',
+                chdl='%s' % ('|'.join(chart_titles)),
+                chco=','.join(CHART_COLORS[0:len(chart_data)]),
+            )
+            result.update({current_id: query_dict})
+            grouped_data = {}
+
+        if row is None:
+            break
+
+        grouped_data.update({row['label']: row['count']})
+        current_id = row['id']
+
+    return result
+
 
 def _get_chart_to_serve(request):
     """

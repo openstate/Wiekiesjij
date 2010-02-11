@@ -5,118 +5,148 @@
 {% block cols %}
 <div class="col lastCol st">
 	<h1>{% trans "Statistieken voor " %}{% if request.session.ElectionInstance %}{{ request.session.ElectionInstance.name }}{% else %}{{ form.region }}{% endif %}</h1>
-    <div class="mod stats tabbed">
-    	<div class="hd">
-        	<ul class="tabs">
-            	<li {% ifequal tab 'geslacht' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='geslacht' %}" >
-               			{% trans "Gender" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'leeftijd' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='leeftijd' %}">
-               			{% trans "Leeftijd" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'roken' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='roken' %}">
-               			{% trans "Roken" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'vegetariers' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='vegetariers' %}">
-               			{% trans "Vegetariers" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'religie' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='religie' %}">
-               			{% trans "Religie" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'burg-staat' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='burg-staat' %}">
-               			{% trans "Burgelijke staat" %}
-                 	</a>
-                </li>
-                <li {% ifequal tab 'opleiding' %}class="selected"{% endifequal %}>
-                	<a href="{% url statistics.index_tab tab='opleiding' %}">
-               			{% trans "Opleidingsniveau" %}
-                 	</a>
-                </li>
-            </ul>
-        </div>
-        
+	<div class="mod stats tabbed">
+		<div class="hd">
+			<ul class="tabs">
+				<li {% ifequal tab 'geslacht' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='geslacht' %}" >
+						{% trans "Gender" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'leeftijd' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='leeftijd' %}">
+						{% trans "Leeftijd" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'roken' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='roken' %}">
+						{% trans "Roken" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'vegetariers' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='vegetariers' %}">
+						{% trans "Vegetariers" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'religie' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='religie' %}">
+						{% trans "Religie" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'burg-staat' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='burg-staat' %}">
+						{% trans "Burgelijke staat" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'opleiding' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='opleiding' %}">
+						{% trans "Opleidingsniveau" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'werk' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='werk' %}">
+						{% trans "Werkervaring" %}
+					</a>
+				</li>
+				<li {% ifequal tab 'politiek' %}class="selected"{% endifequal %}>
+					<a href="{% url statistics.index_tab tab='politiek' %}">
+						{% trans "Politieke ervaring" %}
+					</a>
+				</li>
+			</ul>
+		</div>
+		
 		{% ifequal tab 'geslacht' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item gender">
-                    {% draw_chart gender_data eip 'Gender distribution' %}
-                </div>
-            {% endfor %}
-        </div>
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item gender">
+					{% draw_chart gender_data eip 'Gender distribution' %}
+				</div>
+			{% endfor %}
+		</div>
 		{% endifequal %}
-        
+		
 		{% ifequal tab 'leeftijd' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item age">
-                    {% draw_chart age_data eip 'Age distribution' %}
-                </div>
-            {% endfor %}
-        </div>
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item age">
+					{% draw_chart age_data eip 'Age distribution' %}
+				</div>
+			{% endfor %}
+		</div>
 		{% endifequal %}
-        
-        {% ifequal tab 'roken' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item smoking">
-                    {% draw_chart smoke_data eip 'Smoking distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% endifequal %}
-        
-        {% ifequal tab 'vegetariers' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item diet">
-                    {% draw_chart diet_data eip 'Diet distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% endifequal %}
-        
-        {% ifequal tab 'religie' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item religion">
-                    {% draw_chart religion_data eip 'Religion distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% endifequal %}
-        
-        {% ifequal tab 'burg-staat' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item marital">
-                    {% draw_chart marital_data eip 'Martial distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% endifequal %}
-        
-        {% ifequal tab 'opleiding' %}
-        <div class="bd">
-        	{% for eip in eips %}
-            	<div class="stat item education">
-                    {% draw_chart education_data eip 'Education distribution' %}
-                </div>
-            {% endfor %}
-        </div>
-        {% endifequal %}
-        
-    </div>
-    
-</div>    
+		
+		{% ifequal tab 'roken' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item smoking">
+					{% draw_chart smoke_data eip 'Smoking distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'vegetariers' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item diet">
+					{% draw_chart diet_data eip 'Diet distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'religie' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item religion">
+					{% draw_chart religion_data eip 'Religion distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'burg-staat' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item marital">
+					{% draw_chart marital_data eip 'Martial distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'opleiding' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item education">
+					{% draw_chart education_data eip 'Education distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'werk' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item work">
+					{% draw_chart work_data eip 'Work distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+		{% ifequal tab 'politiek' %}
+		<div class="bd">
+			{% for eip in eips %}
+				<div class="stat item political">
+					{% draw_chart political_data eip 'Political distribution' %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endifequal %}
+		
+	</div>
+	
+</div>	  
 {% endblock cols %}
