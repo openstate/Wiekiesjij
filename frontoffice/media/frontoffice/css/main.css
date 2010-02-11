@@ -2289,7 +2289,7 @@
 		**************************************************************************************************************/
 
 		.stats {
-			margin-top:70px;
+			margin-top:80px;
 			}
 			.stat {
 				float:left;
@@ -2328,11 +2328,11 @@
 				}
 		    .stats .work {
 				width:48%;
-				height:300px;
+				height:270px;
 				}
 		    .stats .political {
 				width:48%;
-				height:300px;
+				height:290px;
 				}
 				
 		#content .stats ul.tabs li a {

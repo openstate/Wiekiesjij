@@ -22,20 +22,21 @@ from political_profiles.models import EducationLevel, WorkExperienceSector, Poli
 
 CHART_COLORS = (
     'ED2227',
-    'BDE717',
-    '1D9DCE',
-    'EFC620',
-    '2D1DCE',
-    '00ffff',
-    '9900ff',
-    'ff0000',
-    'b866aa',
-    'aab8aa',
-    'aaaab8',
-    'b8aa66',
-    'f8e866',
-    '66f866',
-    '6666f8',
+    'CCFF00',
+    '3399CC',
+    'FFCC33',
+    '9900FF',
+    '00FFFF',
+    'FF66CC',
+    '996600',
+    '009900',
+    '990000',
+    '000099',
+    'FFFF66',
+    'FF6666',
+    '999900',
+    'FF9900',
+	
     'f866e8',
     'b8b8aa',
     'aab8b8',
@@ -395,7 +396,7 @@ def _get_worksector_data(election_instance_id):
             query_dict = dict(
                 cht='p3',
                 chd='t:%s' % (','.join(map(str,chart_data))),
-                chs='400x280',
+                chs='400x220',
                 chdl='%s' % ('|'.join(chart_titles)),
                 chco=','.join(CHART_COLORS[0:len(chart_data)]),
             )
@@ -446,7 +447,7 @@ def _get_politicaltype_data(election_instance_id):
             query_dict = dict(
                 cht='p3',
                 chd='t:%s' % (','.join(map(str,chart_data))),
-                chs='400x280',
+                chs='400x240',
                 chdl='%s' % ('|'.join(chart_titles)),
                 chco=','.join(CHART_COLORS[0:len(chart_data)]),
             )
