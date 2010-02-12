@@ -9,7 +9,7 @@
     <h3><abbr title="{{ eip.party.name }}">{{ eip.party.abbreviation }}</abbr></h3>
     <div class="chart">
     {% if dataset %}
-        <img src="{% url statistics.chartcache %}{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
+        <img src="{% url statistics.chartcache eip_id=eip.pk %}{{ dataset|dict_to_querystring }}" alt="{{ description }}" />
     {% else %}
         <p class="empty">Geen statistieken beschikbaar</p>
     {% endif %}

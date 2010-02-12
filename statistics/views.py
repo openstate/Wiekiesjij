@@ -449,7 +449,7 @@ def _get_politicaltype_data(election_instance_id):
     return result
 
 
-def _get_chart_to_serve(request):
+def _get_chart_to_serve(request, eip_id):
     """
         Caches images from google charts based on request string
     """
@@ -461,7 +461,7 @@ def _get_chart_to_serve(request):
         
     imagekey = hashlib.sha224(qs).hexdigest()
     
-    path = '%s/statistics/%s.png' % (settings.MEDIA_ROOT, imagekey)
+    path = '%s/statistics/%s-%s.png' % (settings.MEDIA_ROOT, eip_id, imagekey)
     if not os.path.isfile(path):
         """
             Get the image from google
@@ -472,11 +472,10 @@ def _get_chart_to_serve(request):
         except:
             return default_image
         
-        
-    return '%s/statistics/%s.png' % (settings.MEDIA_ROOT, imagekey)
+    return path
 
-def chart_cache(request):
-    fullpath = _get_chart_to_serve(request)
+def chart_cache(request, eip_id):
+    fullpath = _get_chart_to_serve(request, eip_id)
     
     statobj = os.stat(fullpath)
     if not was_modified_since(request.META.get('HTTP_IF_MODIFIED_SINCE'),
