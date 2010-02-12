@@ -88,7 +88,7 @@ def get_popularity(election_instance_id):
             FROM elections_candidacy ec 
             JOIN elections_electioninstanceparty p ON p.id = ec.election_party_instance_id
             LEFT JOIN frontoffice_candidateanswers ca ON ca.candidate_id = ec.candidate_id
-            LEFT JOIN political_profiles_userstatistics us ON ec.candidate_id = ca.candidate_id
+            LEFT JOIN political_profiles_userstatistics us ON ec.candidate_id = us.user_id
             WHERE p.election_instance_id = %s
             GROUP BY ec.id
         """
