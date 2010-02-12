@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <!-- title_url should point to page explaining the gadget -->
+  <!-- todo: screenshot, thumbnail, description -->
+  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl">
+    <!-- hyves supported -->
+    <Require feature="opensocial-0.7"/>
+    <!-- used to manage configurations -->
+    <Require feature="setprefs"/>
+    <!-- used to adjust height dynamically -->
+    <Optional feature="window"/>
+  </ModulePrefs>
+  
+  
+  <Content type="html" preferred_height="350">
+    <![CDATA[
+    <!-- ======================- CONFIG -========================== -->
+    <!-- private test: 79.125.25.211:8080
+    <!-- default test: 79.125.14.187
+    <!-- ensure all paths are correct -->
+    <script type="text/javascript" src="http://79.125.14.187/media/static/opensocial/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://79.125.14.187/media/static/opensocial/css/widget.css" type="text/css" />
+      
+    <script type="text/javascript">
+        //our service responding with JSON
+    	var service_urls = {
+            profile_url: "http://79.125.14.187/opensocial/json/politician/@@id@@",
+            result_url: "http://79.125.14.187/opensocial/json/result/@@hash@@",
+            map_openid: "http://79.125.14.187/opensocial/json/map/@@opendomain@@/@@openid@@",
+            register_openid: "http://79.125.14.187/opensocial/register/@@opendomain@@/@@openid@@"
+    	}
+    	
+    	//true - generate unique token with each request, disables cache (developing, debugging)
+        var disable_cache = true;
+    </script>
+      
+      
+    <!-- ===============- Do not edit bellow this line -================= -->
+    <script type="text/javascript">
+    	var owner = null;
+        var dtype = null;
+        var dkey = null;
+    	
+    	
+    	/** entry point */
+    	function init() {
+    		//current visitor
+    		var req = opensocial.newDataRequest();
+  		    req.add(req.newFetchPersonRequest('OWNER'), 'owner');
+            req.add(req.newFetchPersonAppDataRequest('OWNER', '*'), 'owner_prefs');
+  			req.send(function(data) {
+                //onwer info should always be available
+  				if(data.get('owner').hadError()) return showError('no_owner', init);
+  				owner = data.get('owner').getData();
+  				var prefs = data.get('owner_prefs').hadError()? null: data.get('owner_prefs').getData();
+  				prefs = (prefs != null && (owner.getId() in prefs))? prefs[owner.getId()]: null;
+
+  				//fail if we have no access to config and this is not owner
+  				if(prefs == null && !owner.isViewer()) return showError('not_configured', init);
+
+    			var appinfo = prefs && 'appinfo' in prefs? prefs['appinfo'].split(':::'): [null, null];
+    			dtype = appinfo[0];
+                dkey = appinfo[1];
+                var dspec = appinfo.length > 2? appinfo[2]: 0;
+
+                if(dtype == 'politician' && dkey != '') { //show politician profile
+                    showScreen('#load_screen');
+                    var url = cache_interval(service_urls.profile_url.replace('@@id@@', dkey));
+                    var params = {}; params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+                    gadgets.io.makeRequest(url, function(mdata) {
+                        if(mdata.data) renderPolitician(mdata.data);
+                        else return showError('data_fetch_failed', init);
+                    }, params);
+                } else if(dtype == 'test_result' && dkey != '') { //show visitor test result
+                    showScreen('#load_screen');
+                    var url = cache_interval(service_urls.result_url.replace('@@hash@@', dkey));
+                    var params = {}; params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+                    gadgets.io.makeRequest(url, function(mdata) {
+                        if(mdata.data) renderTestResult(mdata.data, dspec);
+                        else return showError('data_fetch_failed', init);
+                    }, params);
+                } else { //not configured
+                    if(owner.isViewer()) configWelcome();
+                    else showError('not_configured', init);
+                }
+  			});
+    	}
+
+        /** Disables cache if needed */
+        function cache_interval(url, interval) {
+            if(disable_cache) interval = 0;
+            else if(arguments.length < 2) return url;
+
+            var ts = new Date().getTime();
+            if (interval && interval > 0) {
+                ts = Math.floor(ts / (interval * 1000));
+            }
+
+            var ct = url.indexOf('?') >= 0? '&': '?';
+            return url + ct + 'nocache=' + ts;
+        }
+
+        /** Show specific screen */
+        function showScreen(screen, subscreen) {
+            $('#main .screen').not(screen).hide();
+            var s = $(screen, $('#main')).show();
+            if(subscreen) {
+                $('.subscreen', s).not(subscreen).hide();
+                $(subscreen, s).show();
+            }
+
+            if(owner && owner.isViewer() && screen != '#config_screen') {
+                $('#configure_entry').show();
+            } else {
+                $('#configure_entry').hide();
+            }
+            if(window.adjustHeight) window.adjustHeight();
+        }
+    
+    	/** Show error screen. */
+    	function showError(type, againfunc) {
+            //data_fetch_failed, not_configured, no_owner
+            showScreen('#error_screen', '.'+type);
+            
+            //bind againfunc to class="again" element
+    		var again = $('#error_screen .' + type + ' .again').unbind('click');
+    		if(againfunc) {
+    			again.show().click(againfunc);
+    		} else {
+    			again.hide();
+    		}
+    		return false;
+    	}
+    	
+    	/** Render politician view */
+    	function renderPolitician(data) {
+            var info = $('#content_screen .politician');
+            $('.photo', info).attr('src', data.picture).attr('alt', data.name);
+            $('.name', info).attr('href', data.profile_url).text(data.name);
+            $('.age', info).text(data.age);
+            $('.party abbr', info).attr('title', data.party_name).text(data.party_short);
+            $('.munic span', info).text(data.region);
+            $('.pos span', info).text(data.position);
+            $('.view_profile', info).attr('href', data.profile_url);
+            $('.become_fan', info).attr('href', data.become_fan_url);
+            showScreen('#content_screen', '.politician');
+    	}
+
+        /** Render visitor test result */
+    	function renderTestResult(data, dspec) {
+            if(dspec == '-') { //choose politician
+                var html = "";
+                for(var i = 0; i < data.candidates.length; i++) {
+                    var cd = data.candidates[i];
+                    html += '<a href="javascript: void(0);" onclick="configUseCandidate(' + cd.id + ')" class="action">' + cd.name + '(' + cd.party_short + ')</a>';
+                }
+
+                $('#match_list').html(html);
+                showScreen('#config_screen', '#conf_testresult_match');
+            } else { //render content
+                var cd = null;
+                for(var i = 0; i < data.candidates.length; i++) {
+                    cd = data.candidates[i];
+                    if(cd.id == dspec) break;
+                }
+                //can not happen
+                if(!cd) return showError('data_fetch_failed', init);
+
+                var info = $('#content_screen .visitor');
+                $('.photo', info).attr('src', cd.picture).attr('alt', cd.name);
+                $('.name', info).attr('href', cd.profile_url).text(cd.name);
+                $('.age', info).text(cd.age);
+                $('.party abbr', info).attr('title', cd.party_name).text(cd.party_short);
+                $('.munic span', info).text(cd.region);
+                $('.pos span', info).text(cd.position);
+                $('.total', info).text(cd.score + '%');
+                $('.meter .active', info).css('height', cd.score + '%').text(cd.score + '%');
+                showScreen('#content_screen', '.visitor');
+            }
+    	}
+
+        /** Store settings. */
+        function saveSettings(tp, k, id) {
+            showScreen('#load_screen');
+            var dat = tp + ':::' + k;
+            if(id) dat += ':::' + id;
+
+            var req = opensocial.newDataRequest();
+    		req.add(req.newUpdatePersonAppDataRequest('VIEWER', 'appinfo', dat));
+  			req.send(function() {
+    			init(); //re-init
+    		});
+        }
+
+
+        /** First config screen */
+        function configWelcome() {
+            showScreen('#config_screen', '#conf_welcome');
+        }
+
+        /** Politician profile config. */
+        function configPoliticianProfile() {
+            //try to map openid -> politician
+            showScreen('#load_screen');
+            var url = cache_interval(service_urls.map_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', owner.getId()), 0);
+            var params = {}; params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+            gadgets.io.makeRequest(url, function(mdata) {
+                if(mdata.data && mdata.data.politician_id) { //mapped successfully
+                    saveSettings('politician', mdata.data.politician_id);
+                } else { //id not mapped, show map url
+                    showScreen('#config_screen', '#conf_politician');
+                    $('#conf_politician .cdat_openid').text(owner.getId());
+
+                    var murl = service_urls.register_openid.replace('@@opendomain@@', opensocial.getEnvironment().getDomain()).replace('@@openid@@', owner.getId());
+                    $('#conf_politician .openid_register').attr('href', murl);
+                }
+            }, params);
+        }
+
+        /** Testresult config */
+        function configTestResult() {
+            if(dtype == 'test_result' && dkey != '') { //hash is known, possibly candidate re-select
+                showScreen('#config_screen', '#conf_testresult_change');
+            } else { //hash is unknown
+                showScreen('#config_screen', '#conf_testresult');
+            }
+        }
+
+        /** Use given testresult has */
+        function configUseHash() {
+            var code = $('#result-code').val();
+            if(code) {
+                saveSettings('test_result', code, '-');
+            }
+        }
+
+        /** Reset candidate choice */
+        function configResetHash() {
+            saveSettings('test_result', dkey, '-');
+        }
+
+        /** Use specific candidate */
+        function configUseCandidate(id) {
+            saveSettings('test_result', dkey, id);
+        }
+        
+    	/** re-init gadget */
+        gadgets.util.registerOnLoadHandler(init);
+      </script>
+      
+      
+	<div id="main" style="height: 100%; overflow: auto;">
+		<div class="widget">
+            <h1 class="branding">Wiekiesjij</h1>
+            <a href="javascript: void(0);" onclick="configWelcome();" id="configure_entry" class="edit-settings" style="display: none">Instellingen</a>
+            
+			<div id='load_screen' class="screen" style="display: none">
+                <!-- shown each time we make a request.
+                     currently opensocial doesn't allow canceling requests, so
+                     we can't make an "abort" button -->
+                Loading...
+            </div>
+		
+			<!-- error pages, only one shown at a time -->
+			<div id="error_screen" class="screen" style="display: none">
+                <!-- NOTE: element(s) with class="again" can be anything, not just a button -->
+                
+                <!-- shown if profile info can't be fetched -->
+				<div class="no_viewer no_owner subscreen">
+                    <p>Het relevante profiel informatie is niet beschikbaar.</p>
+                    <p><button class="again">Opnieuw proberen</button></p>
+				</div>
+
+                <!-- shown for visitors only if the gadget is not configured -->
+				<div class="not_configured subscreen">
+					<p>Het gadget is nog niet geconfigureerd.</p>
+				</div>
+
+                <!-- shown if normal data fetch is failed -->
+				<div class="data_fetch_failed subscreen">
+					<p>Het ophalen van gegevens is mislukt.</p>
+                    <p><button class="again">Opnieuw proberen</button></p>
+				</div>
+			</div>
+			
+			<div id="config_screen" class="screen" style="display: none;">
+				<div id="conf_welcome" class="subscreen">
+                    <!-- first screen, gadget type -->
+                    <div class="settings select-version">
+                        <h2>Selecteer een versie</h2>
+                        <p>Ik heb de test op www.wiekiesjij.nl gedaan en wil <a href="javascript: void(0);" onclick="configTestResult()" class="next action">Mijn resultaat delen</a></p>
+                        <p>Ik ben politicus en wil <a href="javascript: void(0);" onclick="configPoliticianProfile()" class="next action">Mijn Wiekiesjij-profiel tonen</a></p>
+                  	</div>
+				</div>
+
+                <div id="conf_politician" class="subscreen">
+                    <!-- politician porofile view config -->
+                    <a href="javascript: void(0)" onclick="configWelcome()" class="back">Terug</a>
+                    <div class="settings opensocial-id">
+                        <h2>Opensocial ID doorgeven</h2>
+                        <p>Om uw profiel te tonen, heeft Wiekiesjij uw <em>Opensocial ID</em> nodig.
+                        Klik op de onderstaande link om uw ID aan uw Wiekiesjij-account te koppelen.</p>
+                        <p>Uw Opensocial ID is <strong class="cdat_openid"></strong></p>
+                        <a href="#" onclick="configWelcome(); return true;" target="__blank" class="openid_register action">Ik wil mijn Opensocial ID doorgeven</a>
+                    </div>
+                </div>
+
+                <div id="conf_testresult" class="subscreen">
+                    <a href="javascript: void(0)" onclick="configWelcome()" class="back">Terug</a>
+                    <div class="settings hash-tag">
+                        <h2>Resultaat-code doorgeven</h2>
+                        <p>Op de pagina waar uw test-resultaat van Wiekiesjij staat een <em>resultaat-code</em></p>
+                        <p>Voer deze code hieronder in en klik op <em>opslaan</em>.</p>
+                        <form>
+                            <div class="field">
+                                <label for="result-code">Mijn resultaat-code</label>
+                                <input type="text" name="result-code" id="result-code" />
+                                <p class="error">Voer uw resultaat-code in. <br />
+                                    Deze vindt u op de resultaat-pagina van de test op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a></p>
+                            </div>
+                            <button onclick="configUseHash(); return false">Opslaan en politicus uitkiezen</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="conf_testresult_change" class="subscreen">
+                    <a href="javascript: void(0)" onclick="configWelcome()" class="back">Terug</a>
+                    <div class="settings hash-tag">
+                        <h2>Resultaat-code wijzigen</h2>
+                        <p>Voer hieronder de aangepaste code in en klik op <em>opslaan</em>.</p>
+                        <p>(U vindt de resultaat-code op de resultaat-pagina van uw Wiekiesjij test.</p>
+                        <p><a href="javascript: void(0);" onclick="configResetHash()">Ik wil alleen mijn match wijzigen</a></p>
+                        <form>
+                            <div class="field">
+                                <label for="result-code">Resultaat-code</label>
+                                <input type="text" name="result-code" id="result-code" />
+                            </div>
+                            <button onclick="configUseHash(); return false">Opslaan en politicus uitkiezen</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="conf_testresult_match" class="subscreen">
+                    <a href="javascript: void(0)" onclick="configTestResult()" class="back">Terug</a>
+                    <div class="settings hash-tag">
+                        <h2>Kies uw match</h2>
+                        <p>Hieronder staan de politici die als match uit uw test kwamen.</p>
+                        <p>Kies een match om deze op uw profiel te tonen.</p>
+                        <div id="match_list">
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div id="content_screen" class="screen">
+                <div class="mod subscreen">
+                    <!-- initial content, shown when widget is not fully loaded -->
+                    Welkom!
+                </div>
+
+                <div class="mod politician subscreen">
+                    <div class="bd">
+                        <p>
+                            Ik ben verkiesbaar voor de gemeenteraadsverkiezingen van Groningen.
+                            Ben jij benieuwd welke kandidaat het beste bij jou past?
+                            Doe dan de test op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a>.
+                        </p>
+                        <div class="pol-info">
+                            <div class="image">
+                                <img src="" class="photo" width="50" height="70" alt="" />
+                            </div>
+                            <h3><a href="#" class="name" target="__blank"></a></h3>
+                            <p>Leeftijd: <span class="age"></span></p>
+                            <p class="party">Partij: <abbr title=""></abbr></p>
+                            <p class="munic">Gemeente: <span></span></p>
+                            <p class="pos">Positie op de Lijst: <span></span></p>
+                        </div>
+                        <div class="actions">
+                            <a href="#" class="view_profile" target="__blank">Bekijk<br />mijn profiel</a>
+                            <a href="#" class="become_fan" target="__blank">Wordt fan<br />van mij</a>
+                        </div>
+                        <div class="ft">
+                            <a class="btn next" href="http://www.wiekiesjij.nl" target="__blank">Doe de test ook</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="mod visitor subscreen">
+                    <div class="bd">
+                        <p>Ik heb de kieswijzer voor de gemeenteraadsverkiezingen van Groningen gedaan op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a>.</p>
+                        <p><strong>Dit is mijn resultaat:</strong></p>
+                        <div class="pol-info ">
+                            <div class="image">
+                                <img class="photo" src="" width="50" height="70" alt="" />
+                            </div>
+                            <h2><a href="#" class="name" target="__blank"></a></h2>
+                            <p>Leeftijd: <span class="age"></span></p>
+                            <p class="party">Partij: <abbr title=""></abbr></p>
+                            <p class="munic">Gemeente: <span></span></p>
+                            <p class="pos">Positie op de Lijst: <span></span></p>
+                        </div>
+                        <div class="match-meter">
+                            <h2>Match:</h2>
+                            <span class="total">0%</span>
+                            <div class="meter">
+                                <div class="active" style="height: 0%">0%</div>
+                            </div>
+                        </div>
+                        <div class="ft">
+                            <a class="btn next" href="http://www.wiekiesjij.nl" target="__blank">Doe de test ook</a>
+                        </div>
+                    </div>
+                </div>
+			</div>
+    	</div>
+	</div>
+    ]]>
+  </Content>
+</Module>
