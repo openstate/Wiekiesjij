@@ -327,6 +327,8 @@ class Party(models.Model):
             for candidate in candidates:
                 sum_data = sum_data + calc_popularity(*popularities[candidate.id])
             self._popularity = int(sum_data / len(candidates))
+        if self._popularity < 20:
+            return 20    
         return self._popularity
 
     def profile_incomplete(self):

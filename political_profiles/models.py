@@ -271,6 +271,8 @@ class PoliticianProfile(Profile):
             popularity = get_popularity(self.election_party().election_instance_id)
             data = popularity.get(candidacy_id, (0.0, 0.0))
             self._popularity = calc_popularity(*data)
+        if self._popularity < 20:
+            return 20
         return self._popularity
         
     def get_first_candidacy(self):

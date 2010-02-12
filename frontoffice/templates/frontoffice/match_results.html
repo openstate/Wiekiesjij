@@ -58,10 +58,10 @@
                     {% if form or show_message %}
                     	<div class="mod sms-setup">
                         	<div class="bd">
-                                <h2>{% trans "Get a free text reminder" %}</h2>
+                                <h2>{% trans "Stemherinnering" %}</h2>
                                 
                                 {% if form %}
-                                	<p>[Explanatory text here]</p>
+                                	<p>{% trans "Wilt u op de dag van de verkiezingen een gratis herinnering ontvangen met uw resultaat? Vul dan hier uw mobiele telefoonnummer in. Uw telefoonnummer zal eenmalig worden gebruikt en zal niet worden opgeslagen." %}</p>
                                     <form method="post" action="" enctype="multipart/form-data">
                                         <input type="hidden" name="{{ step_field }}" value="{{ step_path }}" />
                                         {% block forms %}
