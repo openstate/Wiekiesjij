@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wiekiesjij\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-12 15:34+0100\n"
-"PO-Revision-Date: 2010-02-12 15:51+0100\n"
+"POT-Creation-Date: 2010-02-12 16:39+0100\n"
+"PO-Revision-Date: 2010-02-12 17:00+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -134,7 +134,6 @@ msgid "We can reach you on"
 msgstr "We kunnen u bereiken op"
 
 #: backoffice/templates/backoffice/base.html:81
-#: backoffice/templates/backoffice/election_instance_view.html:189
 msgid "edit"
 msgstr "wijzigen"
 
@@ -796,49 +795,32 @@ msgstr ""
 "\t\t"
 
 #: backoffice/templates/backoffice/election_instance_view.html:104
-msgid "Sms Credit"
+msgid "Sms Krediet"
 msgstr "Sms Krediet"
 
 #: backoffice/templates/backoffice/election_instance_view.html:106
-#, fuzzy
-msgid "You have preordered"
-msgstr "U bent uitgelogd"
-
-#: backoffice/templates/backoffice/election_instance_view.html:107
-#: backoffice/templates/backoffice/election_instance_view.html:113
-#, fuzzy
-msgid "credits"
-msgstr "wijzigen"
+msgid "Hoeveelheid sms krediet aangekocht"
+msgstr "Hoeveelheid sms krediet aangekocht"
 
 #: backoffice/templates/backoffice/election_instance_view.html:108
-msgid "The Sms's in the system currently will cost you"
-msgstr "Het aantal sms berichten in het systeem kosten u op dit moment"
-
-#: backoffice/templates/backoffice/election_instance_view.html:109
-#, fuzzy
-msgid "credits."
-msgstr "wijzigen"
+msgid "Hoeveelheid krediet dat verbruikt gaat worden"
+msgstr "Hoeveelheid krediet dat verbruikt gaat worden"
 
 #: backoffice/templates/backoffice/election_instance_view.html:112
-msgid "After which you will only have"
-msgstr "Zodat u er nog"
+msgid "Hoeveelheid krediet na versturen"
+msgstr "Hoeveelheid krediet na versturen"
 
 #: backoffice/templates/backoffice/election_instance_view.html:115
-msgid "Currently you will be charged at the higher rate for"
-msgstr ""
-
-#: backoffice/templates/backoffice/election_instance_view.html:116
-msgid "credits. Contact us to buy more credits to avoid this."
-msgstr ""
+msgid "Hoeveelheid smsjes dat tegen een duurder tarief verstuurd gaat worden"
+msgstr "Hoeveelheid smsjes dat tegen een duurder tarief verstuurd gaat worden"
 
 #: backoffice/templates/backoffice/election_instance_view.html:117
-#, fuzzy
-msgid "Contact us"
-msgstr "Contactpersonen"
+msgid "Neem contact op"
+msgstr "Neem contact op"
 
 #: backoffice/templates/backoffice/election_instance_view.html:117
-msgid " to buy more credits to avoid this."
-msgstr ""
+msgid " om meer krediet aan te vragen om dit te voorkomen."
+msgstr " om meer krediet aan te vragen om dit te voorkomen."
 
 #: backoffice/templates/backoffice/election_instance_view.html:126
 msgid "This election"
@@ -850,15 +832,13 @@ msgstr "Vindt plaats op"
 
 #: backoffice/templates/backoffice/election_instance_view.html:131
 #: backoffice/templates/backoffice/election_instance_view.html:144
-#: backoffice/templates/backoffice/election_instance_view.html:166
 #: backoffice/templates/backoffice/election_party_view.html:128
 #: backoffice/templates/backoffice/wizard/politician_profile/appearances.html:29
-#: frontoffice/templates/frontoffice/party.html:49
+#: frontoffice/templates/frontoffice/party.html:50
 msgid "Website"
 msgstr "Website"
 
 #: backoffice/templates/backoffice/election_instance_view.html:140
-#: backoffice/templates/backoffice/election_instance_view.html:164
 #: backoffice/templates/backoffice/election_party_view.html:120
 #: elections/forms.py:248
 msgid "Address"
@@ -882,36 +862,9 @@ msgstr "Aantal zetels"
 #: backoffice/templates/backoffice/election_instance_view.html:154
 #: backoffice/templates/backoffice/election_party_view.html:141
 #: elections/models.py:36
-#: frontoffice/templates/frontoffice/party.html:89
+#: frontoffice/templates/frontoffice/party.html:90
 msgid "History"
 msgstr "Geschiedenis"
-
-#: backoffice/templates/backoffice/election_instance_view.html:161
-#: backoffice/templates/backoffice/election_instance_view.html:185
-msgid "The Chancellery"
-msgstr "De Griffie"
-
-#: backoffice/templates/backoffice/election_instance_view.html:165
-msgid "Same as council."
-msgstr "De raad"
-
-#: backoffice/templates/backoffice/election_instance_view.html:175
-#: backoffice/templates/backoffice/wizard/council/edit/step4.html:10
-#: backoffice/wizards/electioninstance.py:224
-msgid "Styling"
-msgstr "Styling"
-
-#: backoffice/templates/backoffice/election_instance_view.html:189
-msgid "delete"
-msgstr "verwijder"
-
-#: backoffice/templates/backoffice/election_instance_view.html:192
-msgid "You did not assign a chancellery yet."
-msgstr "U heeft nog geen griffie toegevoegd"
-
-#: backoffice/templates/backoffice/election_instance_view.html:193
-msgid "Invite a chancellery now"
-msgstr "Nodig nu een griffie uit"
 
 #: backoffice/templates/backoffice/election_party_view.html:29
 msgid "You did not completely fill in the party profile."
@@ -981,7 +934,7 @@ msgstr "Deze partij"
 #: backoffice/templates/backoffice/election_party_view.html:108
 #: elections/forms.py:255
 #: elections/models.py:299
-#: frontoffice/templates/frontoffice/party.html:44
+#: frontoffice/templates/frontoffice/party.html:45
 msgid "Slogan"
 msgstr "Slogan"
 
@@ -1275,6 +1228,11 @@ msgstr "Afronden"
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:4
 msgid "Styling instellen"
 msgstr "Styling instellen"
+
+#: backoffice/templates/backoffice/wizard/council/edit/step4.html:10
+#: backoffice/wizards/electioninstance.py:224
+msgid "Styling"
+msgstr "Styling"
 
 #: backoffice/templates/backoffice/wizard/council/edit/step4.html:13
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:13
@@ -1676,7 +1634,7 @@ msgstr "Voeg een nieuw doel toe"
 
 #: backoffice/templates/backoffice/wizard/politician_profile/goals.html:14
 #: frontoffice/templates/frontoffice/goal.html:93
-#: frontoffice/templates/frontoffice/politician_profile.html:267
+#: frontoffice/templates/frontoffice/politician_profile.html:274
 msgid "Political goals"
 msgstr "Politieke doelen"
 
@@ -2335,7 +2293,7 @@ msgstr "Accent kleur"
 
 #: elections/models.py:41
 msgid "Credit Warning Datetime Stamp"
-msgstr ""
+msgstr "Krediet waarschuwing datetime stamp"
 
 #: elections/models.py:54
 #: elections/models.py:169
@@ -2348,13 +2306,12 @@ msgid "Councils"
 msgstr "Raden"
 
 #: elections/models.py:87
-#, fuzzy
 msgid "A Councils Credit is Low"
-msgstr "Website van de raad"
+msgstr "Krediet van een council is laag"
 
 #: elections/models.py:102
 msgid "Your Credit is Low"
-msgstr ""
+msgstr "Uw krediet is laag"
 
 #: elections/models.py:132
 msgid "Default Date"
@@ -2587,57 +2544,54 @@ msgstr "Lokatie"
 
 #: elections/models.py:449
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: elections/models.py:450
-#, fuzzy
 msgid "Date and Time of Event"
-msgstr "Datum en tijd van optreden"
+msgstr "Datum en tijd van evenement"
 
 #: elections/models.py:451
-#, fuzzy
 msgid "Date and Time when sms were sent"
-msgstr "Datum en tijd van optreden"
+msgstr "Datum en tijd verzending sms"
 
 #: elections/models.py:466
-#, fuzzy
 msgid "Council Event"
-msgstr "Raad"
+msgstr "Raad evenement"
 
 #: elections/templates/elections/events.html:11
 #: elections/templates/elections/iframe.html:23
 msgid "Gratis stem-herinnering per SMS"
-msgstr ""
+msgstr "Gratis stem-herinnering per SMS"
 
 #: elections/templates/elections/events.html:12
 #: elections/templates/elections/iframe.html:24
 msgid "U kunt hieronder uw mobiele telefoonnummer achterlaten om een gratis sms herinnering te ontvangen."
-msgstr ""
+msgstr "U kunt hieronder uw mobiele telefoonnummer achterlaten om een gratis sms herinnering te ontvangen."
 
 #: elections/templates/elections/events.html:20
 msgid "Verzenden"
-msgstr ""
+msgstr "Verzenden"
 
 #: elections/templates/elections/events_result.html:11
 msgid "Bedankt!"
-msgstr ""
+msgstr "Bedankt!"
 
 #: elections/templates/elections/events_result.html:12
 msgid "Uw krijgt een SMS herinnering voor de volgende evenementen"
-msgstr ""
+msgstr "Uw krijgt een SMS herinnering voor de volgende evenementen"
 
 #: elections/templates/elections/events_result.html:17
 msgid "Datum/tijd"
-msgstr ""
+msgstr "Datum/tijd"
 
 #: frontoffice/forms.py:28
 msgid "That e-mail address doesn't have an associated user account. Are you sure you've registered?"
-msgstr ""
+msgstr "Dat e-mail adres heeft geen geassocieerde gebruikers account. Weet u zeker dat u al geregistreerd bent?"
 
 #: frontoffice/forms.py:48
 #, python-format
 msgid "Password reset on %s"
-msgstr ""
+msgstr "Wachtwoord reset op %s"
 
 #: frontoffice/forms.py:72
 msgid "Mobile phone numbers should start with 06"
@@ -2768,9 +2722,8 @@ msgid "Visitor Answer List"
 msgstr "Bezoeker antwoord lijst"
 
 #: frontoffice/models.py:21
-#, fuzzy
 msgid "Dent DateTime"
-msgstr "Standaard datum"
+msgstr "Sent Datetime"
 
 #: frontoffice/models.py:59
 msgid "Visitor Result"
@@ -2835,9 +2788,8 @@ msgstr[0] "Kandidaat heeft %(number)d jaar ervaring"
 msgstr[1] "Kandidaat heeft %(number)d jaren ervaring"
 
 #: frontoffice/registration_backend/__init__.py:39
-#, fuzzy
 msgid "Wiekiesjij - User Registration"
-msgstr "Wiekiesjij gereed maken"
+msgstr "Wiekiesjij - Registratie"
 
 #: frontoffice/registration_backend/forms.py:16
 #: invitations/forms.py:16
@@ -2893,14 +2845,14 @@ msgstr "Doe de test"
 #: frontoffice/templates/frontoffice/base.html:47
 #: frontoffice/templates/frontoffice/election.html:15
 #: frontoffice/templates/frontoffice/iframe.html:58
-#: frontoffice/templates/frontoffice/party.html:85
+#: frontoffice/templates/frontoffice/party.html:86
 msgid "Candidates"
 msgstr "Kandidaten"
 
 #: frontoffice/templates/frontoffice/base.html:48
 #: statistics/templates/statistics/base.html:11
 msgid "Statistics"
-msgstr ""
+msgstr "Statitieken"
 
 #: frontoffice/templates/frontoffice/base.html:50
 msgid "Over Ons"
@@ -2986,41 +2938,41 @@ msgid "Flag as inappropiate"
 msgstr "Markeer als ongepast"
 
 #: frontoffice/templates/frontoffice/goal.html:101
-#: frontoffice/templates/frontoffice/politician_profile.html:275
+#: frontoffice/templates/frontoffice/politician_profile.html:282
 msgid "Vote now!"
 msgstr "Stem nu!"
 
 #: frontoffice/templates/frontoffice/goal.html:101
-#: frontoffice/templates/frontoffice/politician_profile.html:275
+#: frontoffice/templates/frontoffice/politician_profile.html:282
 msgid "When you log in, you can vote too!"
 msgstr "Als je inlogt kun je ook stemmen!"
 
 #: frontoffice/templates/frontoffice/goal.html:104
-#: frontoffice/templates/frontoffice/politician_profile.html:278
-#: frontoffice/templates/frontoffice/politician_profile.html:281
 #: frontoffice/templates/frontoffice/politician_profile.html:285
+#: frontoffice/templates/frontoffice/politician_profile.html:288
+#: frontoffice/templates/frontoffice/politician_profile.html:292
 msgid "Good"
 msgstr "Goed"
 
 #: frontoffice/templates/frontoffice/goal.html:105
-#: frontoffice/templates/frontoffice/politician_profile.html:279
-#: frontoffice/templates/frontoffice/politician_profile.html:282
 #: frontoffice/templates/frontoffice/politician_profile.html:286
+#: frontoffice/templates/frontoffice/politician_profile.html:289
+#: frontoffice/templates/frontoffice/politician_profile.html:293
 msgid "Bad"
 msgstr "Slecht"
 
 #: frontoffice/templates/frontoffice/goal.html:108
-#: frontoffice/templates/frontoffice/politician_profile.html:288
+#: frontoffice/templates/frontoffice/politician_profile.html:295
 msgid "Score"
 msgstr "Score"
 
 #: frontoffice/templates/frontoffice/goal.html:109
-#: frontoffice/templates/frontoffice/politician_profile.html:289
+#: frontoffice/templates/frontoffice/politician_profile.html:296
 msgid "Votes"
 msgstr "Stemmen"
 
 #: frontoffice/templates/frontoffice/goal.html:114
-#: frontoffice/templates/frontoffice/politician_profile.html:294
+#: frontoffice/templates/frontoffice/politician_profile.html:301
 msgid "Comment"
 msgid_plural "Comments"
 msgstr[0] "Reactie"
@@ -3028,14 +2980,14 @@ msgstr[1] "Reacties"
 
 #: frontoffice/templates/frontoffice/goal.html:116
 #: frontoffice/templates/frontoffice/goal.html:119
-#: frontoffice/templates/frontoffice/politician_profile.html:297
-#: frontoffice/templates/frontoffice/politician_profile.html:300
-#: frontoffice/templates/frontoffice/politician_profile.html:303
+#: frontoffice/templates/frontoffice/politician_profile.html:304
+#: frontoffice/templates/frontoffice/politician_profile.html:307
+#: frontoffice/templates/frontoffice/politician_profile.html:310
 msgid "React"
 msgstr "Reageer"
 
 #: frontoffice/templates/frontoffice/goal.html:126
-#: frontoffice/templates/frontoffice/politician_profile.html:310
+#: frontoffice/templates/frontoffice/politician_profile.html:317
 msgid "No goals defined yet."
 msgstr "Nog geen doelen ingesteld."
 
@@ -3122,23 +3074,27 @@ msgstr "Geen voorkeur"
 
 #: frontoffice/templates/frontoffice/match_details.html:66
 msgid "Je hebt geen voorkeur bij deze vraag opgegeven."
-msgstr ""
+msgstr "Je hebt geen voorkeur bij deze vraag opgegeven."
 
 #: frontoffice/templates/frontoffice/match_details.html:67
 msgid "Deze vraag vind je extra belangrijk."
-msgstr ""
+msgstr "Deze vraag vind je extra belangrijk."
 
 #: frontoffice/templates/frontoffice/match_results.html:26
 msgid "These are your closest matches"
 msgstr "Dit zijn de kandidaten die het meeste matchen"
 
+#: frontoffice/templates/frontoffice/match_results.html:49
+msgid "Details"
+msgstr "Details"
+
 #: frontoffice/templates/frontoffice/match_results.html:61
 msgid "Stemherinnering"
-msgstr ""
+msgstr "Stemherinnering"
 
 #: frontoffice/templates/frontoffice/match_results.html:64
 msgid "Wilt u op de dag van de verkiezingen een gratis herinnering ontvangen met uw resultaat? Vul dan hier uw mobiele telefoonnummer in. Uw telefoonnummer zal eenmalig worden gebruikt en zal niet worden opgeslagen."
-msgstr ""
+msgstr "Wilt u op de dag van de verkiezingen een gratis herinnering ontvangen met uw resultaat? Vul dan hier uw mobiele telefoonnummer in. Uw telefoonnummer zal eenmalig worden gebruikt en zal niet worden opgeslagen."
 
 #: frontoffice/templates/frontoffice/match_results.html:81
 msgid "Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here"
@@ -3165,17 +3121,22 @@ msgstr ""
 
 #: frontoffice/templates/frontoffice/party.html:18
 msgid "Deze partij heeft er voor gekozen om zijn profiel niet in te vullen."
-msgstr ""
+msgstr "Deze partij heeft er voor gekozen om zijn profiel niet in te vullen."
 
-#: frontoffice/templates/frontoffice/party.html:54
+#: frontoffice/templates/frontoffice/party.html:37
+#: frontoffice/templates/frontoffice/quick_profile.html:113
+msgid "Toelichting"
+msgstr "Toelichting"
+
+#: frontoffice/templates/frontoffice/party.html:55
 msgid "Huidige aantal zetels"
 msgstr "Huidige aantal zetels"
 
-#: frontoffice/templates/frontoffice/party.html:58
+#: frontoffice/templates/frontoffice/party.html:59
 msgid "Number of candidates"
 msgstr "Aantal kandidaten"
 
-#: frontoffice/templates/frontoffice/party.html:65
+#: frontoffice/templates/frontoffice/party.html:66
 #, python-format
 msgid ""
 "\n"
@@ -3186,53 +3147,63 @@ msgstr ""
 "                    %(party_name)s is lijst %(position)s in de gemeente %(municipality)s\n"
 "                "
 
-#: frontoffice/templates/frontoffice/party.html:81
+#: frontoffice/templates/frontoffice/party.html:82
 msgid "Video"
 msgstr "Video"
 
-#: frontoffice/templates/frontoffice/party.html:94
+#: frontoffice/templates/frontoffice/party.html:95
 msgid "Party manifesto"
 msgstr "Partijmanifest"
 
-#: frontoffice/templates/frontoffice/party.html:127
+#: frontoffice/templates/frontoffice/party.html:128
 #: frontoffice/templates/frontoffice/politician_filter.html:107
 #: frontoffice/templates/frontoffice/quick_profile.html:37
 #: political_profiles/models.py:237
 msgid "Age"
 msgstr "Leeftijd"
 
-#: frontoffice/templates/frontoffice/party.html:130
+#: frontoffice/templates/frontoffice/party.html:131
 msgid "No politicians defined for this party"
 msgstr "Geen kandidaten ingesteld voor deze partij"
 
-#: frontoffice/templates/frontoffice/party.html:155
+#: frontoffice/templates/frontoffice/party.html:156
 msgid "Read entire manifesto"
 msgstr "Lees hele manifest"
 
-#: frontoffice/templates/frontoffice/party.html:169
+#: frontoffice/templates/frontoffice/party.html:165
+msgid ""
+"\n"
+"            De populariteit van een partij is gelijk aan de gemiddelde populariteit van haar kandidaten.\n"
+"        "
+msgstr ""
+"\n"
+"            De populariteit van een partij is gelijk aan de gemiddelde populariteit van haar kandidaten.\n"
+"        "
+
+#: frontoffice/templates/frontoffice/party.html:177
 #: frontoffice/templates/frontoffice/politician_profile.html:82
 msgid "News"
 msgstr "Nieuws"
 
-#: frontoffice/templates/frontoffice/party.html:177
 #: frontoffice/templates/frontoffice/party.html:185
 #: frontoffice/templates/frontoffice/party.html:193
+#: frontoffice/templates/frontoffice/party.html:201
 msgid "Read more"
 msgstr "Lees meer"
 
-#: frontoffice/templates/frontoffice/party.html:196
+#: frontoffice/templates/frontoffice/party.html:204
 msgid "Subscribe"
 msgstr "Schrijf in"
 
-#: frontoffice/templates/frontoffice/party.html:205
+#: frontoffice/templates/frontoffice/party.html:213
 msgid "Send a message"
 msgstr "Stuur een bericht"
 
-#: frontoffice/templates/frontoffice/party.html:208
+#: frontoffice/templates/frontoffice/party.html:216
 msgid "Have you got questions or remarks?"
 msgstr "Heeft u vragen of opmerkingen?"
 
-#: frontoffice/templates/frontoffice/party.html:210
+#: frontoffice/templates/frontoffice/party.html:218
 #, python-format
 msgid ""
 "\n"
@@ -3243,11 +3214,11 @@ msgstr ""
 "                    Stuur een e-mail naar <em>%(party_name)s %(municipality)s</em>.\n"
 "                "
 
-#: frontoffice/templates/frontoffice/party.html:214
+#: frontoffice/templates/frontoffice/party.html:222
 msgid "Click on the link below to open your standard email program."
 msgstr "Klik op de link hieronder om uw standaard email-programma te openen."
 
-#: frontoffice/templates/frontoffice/party.html:215
+#: frontoffice/templates/frontoffice/party.html:223
 msgid "Send an email"
 msgstr "Stuur een e-mail"
 
@@ -3481,40 +3452,53 @@ msgstr ""
 msgid "This candidate did not<br/>specify a video"
 msgstr "Deze kandidaat heeft geen<br/>video opgegeven"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:317
+#: frontoffice/templates/frontoffice/politician_profile.html:259
+msgid ""
+"\n"
+"                \tDe populariteit van een politicus wordt bepaald door: \n"
+"   \t\t\t\t\t1) het aantal keer dat hij gematcht wordt in de test, en \n"
+"                    2) het aantal bezoeken aan zijn profiel\n"
+"                "
+msgstr ""
+"\n"
+"                \tDe populariteit van een politicus wordt bepaald door: \n"
+"   \t\t\t\t\t1) het aantal keer dat hij gematcht wordt in de test, en \n"
+"                    2) het aantal bezoeken aan zijn profiel\n"
+"                "
+
+#: frontoffice/templates/frontoffice/politician_profile.html:324
 msgid "Appearances"
 msgstr "Optredens"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:329
+#: frontoffice/templates/frontoffice/politician_profile.html:336
 msgid "website"
 msgstr "website"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:336
+#: frontoffice/templates/frontoffice/politician_profile.html:343
 msgid "No appearances added yet."
 msgstr "Nog geen optredens ingesteld."
 
-#: frontoffice/templates/frontoffice/politician_profile.html:343
+#: frontoffice/templates/frontoffice/politician_profile.html:350
 #: political_profiles/models.py:415
 msgid "Links"
 msgstr "Links"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:356
+#: frontoffice/templates/frontoffice/politician_profile.html:363
 msgid "No links defined yet."
 msgstr "Nog geen links ingesteld"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:364
+#: frontoffice/templates/frontoffice/politician_profile.html:371
 msgid "OpenID's"
-msgstr ""
+msgstr "OpenID's"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:372
+#: frontoffice/templates/frontoffice/politician_profile.html:379
 #, python-format
 msgid "Do you really want to unlink your OpenID of %(container)s network?"
-msgstr ""
+msgstr "Weet u zeker dat u uw OpenID van %(container)s netwerk wilt ontkoppelen?"
 
-#: frontoffice/templates/frontoffice/politician_profile.html:377
-#, fuzzy
+#: frontoffice/templates/frontoffice/politician_profile.html:384
 msgid "No OpenID's registered yet."
-msgstr "Nog geen links ingesteld"
+msgstr "Nog geen OpenID's geregistreerd"
 
 #: frontoffice/templates/frontoffice/quick_profile.html:10
 msgid "Note: This profile has not been completely filled in."
@@ -3580,7 +3564,7 @@ msgstr ""
 "                                        Word <a title=\"Je moet hiervoor een geregistreerde gebruiker zijn\">fan</a> van %(name)s\n"
 "                                    "
 
-#: frontoffice/templates/frontoffice/quick_profile.html:119
+#: frontoffice/templates/frontoffice/quick_profile.html:120
 #, python-format
 msgid ""
 "\n"
@@ -3770,30 +3754,29 @@ msgstr "Hier kunt u uw account voor Wiekiesjij aanmaken. Dit is zeker niet verpl
 
 #: frontoffice/templates/registration/email/password_reset_email.html:10
 msgid "You're receiving this e-mail because you requested a password reset"
-msgstr ""
+msgstr "U ontvangt deze e-mail omdat er een wachtwoord reset is aangevraagd"
 
 #: frontoffice/templates/registration/email/password_reset_email.html:11
 #, python-format
 msgid "for your user account at %(site_name)s"
-msgstr ""
+msgstr "voor uw account op %(site_name)s"
 
 #: frontoffice/templates/registration/email/password_reset_email.html:13
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "Ga naar de volgende pagina en kies een nieuw wachtwoord:"
 
 #: frontoffice/templates/registration/email/password_reset_email.html:19
 msgid "Your username, in case you've forgotten:"
-msgstr ""
+msgstr "Je gebruikersnaam in het geval je deze vergeten bent:"
 
 #: frontoffice/templates/registration/email/password_reset_email.html:21
-#, fuzzy
 msgid "Thanks for using our site!"
-msgstr "Bedankt voor het invullen van uw profile."
+msgstr "Bedankt voor het gebruiken van onze site"
 
 #: frontoffice/templates/registration/email/password_reset_email.html:23
 #, python-format
 msgid "The %(site_name)s team"
-msgstr ""
+msgstr "The %(site_name)s team"
 
 #: invitations/forms.py:20
 msgid "Terms and conditions"
@@ -3934,35 +3917,33 @@ msgstr "Ik heb al een account"
 
 #: opensocial/models.py:12
 msgid "Related user"
-msgstr ""
+msgstr "Gerelateerde gebruiker"
 
 #: opensocial/models.py:13
 msgid "Per container OpenID"
-msgstr ""
+msgstr "Per container OpenID"
 
 #: opensocial/models.py:14
-#, fuzzy
 msgid "Container domain"
-msgstr "Contactgegevens"
+msgstr "Container domein"
 
 #: opensocial/templates/opensocial/confirm_registration.html:5
 #: opensocial/templates/opensocial/confirm_registration.html:21
-#, fuzzy
 msgid "OpenID confirmation"
-msgstr "Bevestiging"
+msgstr "OpenID Bevestiging"
 
 #: opensocial/templates/opensocial/confirm_registration.html:25
 msgid "Uw OpenID is gekoppeld aan uw account."
-msgstr ""
+msgstr "Uw OpenID is gekoppeld aan uw account."
 
 #: opensocial/templates/opensocial/confirm_registration.html:26
 #: opensocial/templates/opensocial/confirm_registration.html:29
 msgid "Ga door naar uw profiel"
-msgstr ""
+msgstr "Ga door naar uw profiel"
 
 #: opensocial/templates/opensocial/confirm_registration.html:28
 msgid "OpenID is al gekoppeld aan een ander account."
-msgstr ""
+msgstr "OpenID is al gekoppeld aan een ander account."
 
 #: political_profiles/forms.py:21
 msgid "Monday"
@@ -4533,7 +4514,6 @@ msgstr "Politcian model information has multiple correct answers, Visitor Select
 
 #: questions/forms/types.py:65
 #: utils/forms.py:59
-#, fuzzy
 msgid "You need to provide a model to the ModelMiltiAnswerForm"
 msgstr "You need to provide a model to the ModelAnswerForm"
 
@@ -4543,91 +4523,82 @@ msgid "You need to provide a model to the ModelAnswerForm"
 msgstr "You need to provide a model to the ModelAnswerForm"
 
 #: sms/models.py:73
-#, fuzzy
 msgid "Whois sending the message"
-msgstr "Stuur een bericht"
+msgstr "Wie het bericht verstuurd"
 
 #: sms/models.py:74
 msgid "Sent Date and Time"
-msgstr ""
+msgstr "Sent Date and Time"
 
 #: sms/models.py:75
 #: sms/models.py:76
-#, fuzzy
 msgid "Phone Numbers of recipients"
-msgstr "Aantal kinderen"
+msgstr "Phone Numbers of recipients"
 
 #: sms/models.py:77
 msgid "Message was sent"
-msgstr ""
+msgstr "Message was sent"
 
 #: sms/models.py:78
 msgid "Success of sms send"
-msgstr ""
+msgstr "Success of sms send"
 
 #: sms/models.py:79
-#, fuzzy
 msgid "Result Message"
-msgstr "Resultaten"
+msgstr "Result Message"
 
 #: sms/models.py:80
 #: sms/models.py:81
-#, fuzzy
 msgid "Result Code"
-msgstr "Resultaten"
+msgstr "Result Code"
 
 #: sms/models.py:82
-#, fuzzy
 msgid "SMS Message"
-msgstr "Stuur een bericht"
+msgstr "SMS Message"
 
 #: sms/models.py:83
-#, fuzzy
 msgid "Date and Time to send sms"
-msgstr "Datum en tijd van optreden"
+msgstr "Date and Time to send sms"
 
 #: sms/models.py:84
 msgid "Information about sms for identifying"
-msgstr ""
+msgstr "Information about sms for identifying"
 
 #: statistics/templates/statistics/index.html:7
 msgid "Statistieken voor "
-msgstr ""
+msgstr "Statistieken voor "
 
 #: statistics/templates/statistics/index.html:18
 msgid "Leeftijd"
-msgstr ""
+msgstr "Leeftijd"
 
 #: statistics/templates/statistics/index.html:23
 msgid "Roken"
-msgstr ""
+msgstr "Roken"
 
 #: statistics/templates/statistics/index.html:28
-#, fuzzy
 msgid "Vegetariers"
-msgstr "Vegitariër"
+msgstr "Vegetariërs"
 
 #: statistics/templates/statistics/index.html:33
-#, fuzzy
 msgid "Religie"
 msgstr "Geloof"
 
 #: statistics/templates/statistics/index.html:38
 msgid "Burgelijke staat"
-msgstr ""
+msgstr "Burgelijke staat"
 
 #: statistics/templates/statistics/index.html:43
 msgid "Opleidingsniveau"
-msgstr ""
+msgstr "Opleidingsniveau"
 
 #: statistics/templates/statistics/index.html:48
 msgid "Werkervaring"
-msgstr ""
+msgstr "Werkervaring"
 
 #: statistics/templates/statistics/index.html:53
-#, fuzzy
 msgid "Politieke ervaring"
-msgstr "Politiek doel"
+msgstr "Politiek ervaring"
 
 #: templates/comments/form.html:17
 #: templates/comments/political_profiles_politicalgoal_preview.html:40
@@ -4863,6 +4834,35 @@ msgstr "Jaar"
 msgid "Unknown"
 msgstr "Onbekend"
 
+#, fuzzy
+#~ msgid "You have preordered"
+#~ msgstr "U bent uitgelogd"
+
+#, fuzzy
+#~ msgid "credits"
+#~ msgstr "wijzigen"
+#~ msgid "The Sms's in the system currently will cost you"
+#~ msgstr "Het aantal sms berichten in het systeem kosten u op dit moment"
+
+#, fuzzy
+#~ msgid "credits."
+#~ msgstr "wijzigen"
+#~ msgid "After which you will only have"
+#~ msgstr "Zodat u er nog"
+
+#, fuzzy
+#~ msgid "Contact us"
+#~ msgstr "Contactpersonen"
+#~ msgid "The Chancellery"
+#~ msgstr "De Griffie"
+#~ msgid "Same as council."
+#~ msgstr "De raad"
+#~ msgid "delete"
+#~ msgstr "verwijder"
+#~ msgid "You did not assign a chancellery yet."
+#~ msgstr "U heeft nog geen griffie toegevoegd"
+#~ msgid "Invite a chancellery now"
+#~ msgstr "Nodig nu een griffie uit"
 #~ msgid "Get a free text reminder"
 #~ msgstr "Krijg een gratis SMS herinnering"
 #~ msgid "Binnenkort vind je hier de populariteitsmeter."
