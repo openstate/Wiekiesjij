@@ -90,7 +90,7 @@ def get_popularity(election_instance_id):
             LEFT JOIN frontoffice_candidateanswers ca
             LEFT JOIN political_profiles_userstatistics us ON ec.candidate_id = ca.candidate_id
             WHERE p.election_instance_id = %s
-            GROUP BY ec.id ORDER BY `sum` ASC
+            GROUP BY ec.id
         """
         result = []
         max_pop = 0
