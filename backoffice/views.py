@@ -14,6 +14,7 @@ from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
@@ -334,8 +335,11 @@ def politician_profile_interest(request, eip_id, user_id):
 def politician_profile_interest_delete(request, interest_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    interest = user.profile.interests.get(pk=interest_id)
-    interest.delete()
+    try:
+        interest = user.profile.interests.get(pk=interest_id)
+        interest.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_interest', eip_id=eip_id, user_id = user_id)
 
 @candidate_required
@@ -359,8 +363,11 @@ def politician_profile_work(request, eip_id, user_id):
 def politician_profile_work_delete(request, work_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    work = user.profile.work.get(pk=work_id)
-    work.delete()
+    try:
+        work = user.profile.work.get(pk=work_id)
+        work.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_work', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
@@ -384,8 +391,11 @@ def politician_profile_goal(request, eip_id, user_id):
 def politician_profile_goal_delete(request, goal_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    goal = user.profile.goals.get(pk=goal_id)
-    goal.delete()
+    try:
+        goal = user.profile.goals.get(pk=goal_id)
+        goal.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_goal', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
@@ -409,8 +419,11 @@ def politician_profile_political(request, eip_id, user_id):
 def politician_profile_political_delete(request, political_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    political = user.profile.political.get(pk=political_id)
-    political.delete()
+    try:
+        political = user.profile.political.get(pk=political_id)
+        political.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_political', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
@@ -434,8 +447,11 @@ def politician_profile_education(request, eip_id, user_id):
 def politician_profile_education_delete(request, education_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    education = user.profile.education.get(pk=education_id)
-    education.delete()
+    try:
+        education = user.profile.education.get(pk=education_id)
+        education.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_education', eip_id=eip_id, user_id=user_id)
     
 @candidate_required
@@ -459,8 +475,11 @@ def politician_profile_appearance(request, eip_id, user_id):
 def politician_profile_appearance_delete(request, appearance_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    appearance = user.profile.appearances.get(pk=appearance_id)
-    appearance.delete()
+    try:
+        appearance = user.profile.appearances.get(pk=appearance_id)
+        appearance.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_appearance', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
@@ -485,8 +504,11 @@ def politician_profile_link(request, eip_id, user_id):
 def politician_profile_link_delete(request, link_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    link = user.profile.links.get(pk=link_id)
-    link.delete()
+    try:
+        link = user.profile.links.get(pk=link_id)
+        link.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_link', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
@@ -511,8 +533,11 @@ def politician_profile_connection(request, eip_id, user_id):
 def politician_profile_connection_delete(request, connection_id, eip_id, user_id):
     check_permissions(request, eip_id, 'candidate')
     user = get_object_or_404(User, pk=user_id)
-    connection = user.profile.connections.get(pk=connection_id)
-    connection.delete()
+    try:
+        connection = user.profile.connections.get(pk=connection_id)
+        connection.delete()
+    except ObjectDoesNotExist:
+        pass
     return redirect('backoffice.views.politician_profile_connection', eip_id=eip_id, user_id=user_id)
 
 @candidate_required
