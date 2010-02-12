@@ -45,8 +45,8 @@
                         {% endif %}
                         </div>
                         <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ candidate.candidates_score }}%</span></span>
-						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>
-                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
+						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
+                        <a href="#" class="btn next" {% if iframe %}target="_blank"{% endif %} style="margin-top:.3em;">{% trans "Details" %}</a>
                         <span class="party">{{ candidate.candidate.profile.party.name }} ({{ candidate.candidate.profile.party }})</span>
                         <p>{% trans "Position" %}: {{ candidate.candidate.profile.position }}</p>
                     </div>
