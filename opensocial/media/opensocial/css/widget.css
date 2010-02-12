@@ -172,7 +172,7 @@
 			float:left;
 			position:relative;
 			margin:.5em 0 1em 0;
-			border-right:1px solid #e0e0e0;
+			/*border-right:1px solid #e0e0e0;*/
 			}
 			.match-meter h2 {
 				margin-top:0;
@@ -227,7 +227,7 @@
 				
 		.pol-info {
 			padding:0 0 0 60px;
-			margin:.5em 0 1em;
+			margin:.5em 10px 1em 0;
 			overflow:hidden;_zoom:1;
 			width:50%;
 			float:left;
@@ -238,7 +238,7 @@
 				}
 			.pol-info .image {
 				float:left;
-				margin-left:-80px;_display:inline;
+				margin-left:-60px;_display:inline;
 				width:50px;
 				height:70px;
 				background:#e0e0e0;

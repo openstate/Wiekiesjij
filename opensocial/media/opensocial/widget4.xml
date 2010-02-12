@@ -2,7 +2,7 @@
 <Module>
   <!-- title_url should point to page explaining the gadget -->
   <!-- todo: screenshot, thumbnail, description -->
-  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl">
+  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl" height="380">
     <!-- hyves supported -->
     <Require feature="opensocial-0.7"/>
     <!-- used to manage configurations -->
@@ -12,7 +12,7 @@
   </ModulePrefs>
   
   
-  <Content type="html" preferred_height="350">
+  <Content type="html" preferred_height="380">
     <![CDATA[
     <!-- ======================- CONFIG -========================== -->
     <!-- private test: 79.125.25.211:8080
