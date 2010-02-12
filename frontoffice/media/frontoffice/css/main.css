@@ -57,6 +57,16 @@
 				line-height:1.4em;
 				margin-bottom:.5em;
 				}
+				p.explanation {
+					font-size:.8em;
+					text-align:left;
+					color:#8d8d8d;
+					padding-left:25px;
+					}
+					p.explanation a {
+						text-decoration:none;
+						color:#ed2227;
+						}
 			ul {
 				list-style:none;
 				}
@@ -1527,6 +1537,10 @@
 										text-align:center;
 										width:64px;
 										margin:10px 0 0 25px;
+										}
+									.popularityMeter .expl {
+										text-align:right;
+										font-style:italic;
 										}
 										
 								.ballotPosition {

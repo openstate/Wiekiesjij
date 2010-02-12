@@ -34,6 +34,7 @@
                 <span class="top">100%</span>
                 <span class="bottom">0%</span>
                 <span class="total">{{ eip.party.popularity|default:0 }}%</span>
+                <p class="expl">* <a href="#expl">{% trans "Toelichting" %}</a></p>
             </div>
             <p>
                 {{ eip.party.description }}
@@ -159,6 +160,13 @@
         {% endifequal %}
 
     </div>
+    
+    <p class="explanation"><a name="expl">
+        * {% blocktrans %}
+            De populariteit van een partij is gelijk aan de gemiddelde populariteit van haar kandidaten.
+        {% endblocktrans %}
+        </a>
+    </p>
     
 {% endblock content %}
 
