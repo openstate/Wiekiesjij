@@ -678,7 +678,7 @@
 			.iframe .wizard {
 				width:600px;
 				height:400px;
-				margin:40px;
+				margin:0;
 				border:2px solid #d7d7d7;
 				background:#fff;
 				}
