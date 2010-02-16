@@ -444,9 +444,9 @@ class CouncilEvent(models.Model):
 
     council  = models.ForeignKey(Council, verbose_name=_('Council'), related_name='events')
     title = models.CharField(_('Title'), max_length=60)
-    originator = models.CharField(_('Title'), max_length=11)
+    originator = models.CharField(_('SMS Originator'), max_length=11)
     location = models.TextField(_('Location'))
-    message = models.CharField(_('Message'), max_length=140)
+    message = models.CharField(_('SMS Message'), max_length=140)
     event_datetime  = models.DateTimeField(_('Date and Time of Event'), blank = True)
     sent_datetime = models.DateTimeField(_('Date and Time when sms were sent'), blank = True, null=True)
 

@@ -25,8 +25,8 @@ class CouncilEventMultipleModelChoiceField(forms.ModelMultipleChoiceField):
         return render_to_string('elections/_council_event.html', {'council_event': obj})
 
 class SmsEventForm(BetterForm, TemplateForm):
-    phone_number = DutchMobilePhoneField(label=_('Mobile phone number'), required=True)
-    value = CouncilEventMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+    value = CouncilEventMultipleModelChoiceField(label=_('Selecteer de evenementen waar u een SMS voor wilt ontvangen'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+    phone_number = DutchMobilePhoneField(label=_('Your mobile phone number'), required=True)
 
 #    class Meta:
 #        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)

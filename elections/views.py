@@ -2,14 +2,25 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
+
 from frontoffice.models import VisitorResult
 from elections.models import Council
 from elections.forms import SmsEventForm
+import elections.settings as el_settings
 from sms.models import sendsms
 
 def events(request, council_id):
     council = get_object_or_404(Council, id=council_id)
-    events = council.events.all()
+    #Permission check
+    try:
+        election_instance = council.election_instances.get(election_event__pk=el_settings.ELECTION_EVENT_ID)
+        if election_instance.modules.filter(slug='Event-SMS').count() == 0:
+            return redirect('fo.home')
+    except:
+        #If there is only a council without election instance for this election then we allow it
+        pass
+    
+    events = council.events.order_by('-event_datetime')
 
     parent = 'elections/iframe.html'
   
@@ -19,7 +30,7 @@ def events(request, council_id):
     #check for sms module
   
     if request.method == 'POST':
-        form = SmsEventForm(queryset=council.events.all(), data=request.POST)
+        form = SmsEventForm(queryset=events, data=request.POST)
         if form.is_valid():
             if form.cleaned_data['value']:
                 events = form.cleaned_data['value']
@@ -33,8 +44,6 @@ def events(request, council_id):
                 event.sms_subscriptions.create(phone_number=phone_number)
   
             return render_to_response('elections/events_result.html', returndict, context_instance=RequestContext(request))
-        else:
-            print 'test'
     else:
         form = SmsEventForm(queryset=council.events.all(),empty_label=None)
    

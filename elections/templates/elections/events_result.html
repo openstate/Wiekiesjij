@@ -14,8 +14,8 @@
     {% for event in events %}
     	<li>
         	<strong class="title">{{ event.title }}</strong>
-            <span class="date">{% trans "Datum/tijd" %}: {{ event.event_datetime|date:"l j F, H:i" }}</span>
-            <span class="location">{% trans "Location" %}: {{ event.location }}</span>
+            <span class="date">{% trans "Datum/tijd" %}: {{ event.event_datetime|date:"l j F Y, H:i" }}</span>
+            <span class="location">{% if event.location %}{% trans "Location" %}: {{ event.location }}{% endif %}</span>
         </li>
     {% endfor %}
     </ul>

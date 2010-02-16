@@ -1,6 +1,7 @@
 {% comment %}
 	Renders a single answer label in the election event selection
 {% endcomment %}
+{% load i18n %}
 <strong>{{ council_event.title }}</strong>
-<span class="date">{{ council_event.event_datetime }}</span>
-<span class="location">{{ council_event.location }}</span>
+<span class="date">{{ council_event.event_datetime|date:"l j F Y, H:i" }}</span>
+<span class="location">{% if council_event.location %}{% trans "Locatie" %}: {{ council_event.location }}{% endif %}</span>
