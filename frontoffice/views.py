@@ -75,7 +75,7 @@ def match_results(request, hash, iframe=None):
     else:
         parent = 'frontoffice/base.html'
 
-    returndict = {'hash':hash, 'questions':questions, 'candidates': candidates, 'parent':parent, 'iframe': iframe}
+    returndict = {'hash':hash, 'questions':questions, 'candidates': candidates, 'parent':parent, 'iframe': iframe, 'election_instance': result.election_instance}
 
     if request.user.is_authenticated():
         if result.user == request.user:
@@ -670,7 +670,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
     else:
         parent = 'frontoffice/base.html'
 
-    returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe}
+    returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe, 'election_instance': result.election_instance}
 
     
 
