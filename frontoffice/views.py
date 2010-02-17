@@ -663,7 +663,6 @@ def match_result_details(request, hash, candidate_id, iframe=None):
         else:
             pass
         questions_dict[key]['score'] = int(questions_dict[key]['score'])
-        print question.result_title
         questions_dict[key]['question'] = question.result_title
         
     if iframe:
