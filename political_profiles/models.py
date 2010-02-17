@@ -269,7 +269,7 @@ class PoliticianProfile(Profile):
         if not hasattr(self, '_popularity'):
             candidacy_id = self.get_first_candidacy().id
             canpop, partypop = get_popularity(self.election_party().election_instance_id)
-            self._popularity = canpop.get(candidacy_id, 0)
+            self._popularity = int(canpop.get(candidacy_id, 0))
         if self._popularity < 20:
             return 20
         return self._popularity

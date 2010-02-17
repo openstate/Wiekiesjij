@@ -37,7 +37,7 @@ class VisitorBackend(DefaultBackend):
 
         send_email(
                 _('Wiekiesjij - User Registration'),
-                'bmcmahon@gmail.com',
+                'info@wiekiesjij.nl',
                 email,
                 {'site': site, 'activation_key': reg_profile.activation_key },
                 {'plain': 'registration/activation_email.txt','html': 'registration/_activation_email.html'},

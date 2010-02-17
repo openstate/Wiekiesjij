@@ -322,7 +322,7 @@ class Party(models.Model):
     def popularity(self):
         if not hasattr(self, '_popularity'):
             candpop, partypop = get_popularity(self.current_eip.election_instance_id)
-            self._popularity = partypop.get(self.current_eip.pk, 0)
+            self._popularity = int(partypop.get(self.current_eip.pk, 0))
         if self._popularity < 20:
             return 20    
         return self._popularity
