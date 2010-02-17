@@ -90,7 +90,7 @@ def match_results(request, hash, iframe=None):
 
     else:
         initial = {'phone':result.telephone}
-    
+
     #check for sms module
     if result.election_instance.modules.filter(slug='SMS').count() != 0:
         if request.method == 'POST':
@@ -103,10 +103,10 @@ def match_results(request, hash, iframe=None):
                 return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
 
         else:
-  
+
             form = SmsForm(initial=initial)
 
-    
+
         returndict['form'] = form
 
     return render_to_response('frontoffice/match_results.html', returndict, context_instance=RequestContext(request))
@@ -146,7 +146,7 @@ def election(request, id=None):
     elif eips:
         selected_eip = eips[0]
         politicians = selected_eip.candidate_dict()
-        
+
     if len(election_instances) <= 1:
         return render_to_response('frontoffice/election.html', {'selected_eip':selected_eip, 'eips':eips, 'politicians':politicians, 'instance': election_instances[0]}, context_instance=RequestContext(request))
     else:
@@ -196,7 +196,7 @@ def politician_profile_filter(request):
                 candidates = User.objects.filter(elections__in=elections_candidates)
                 politicians = PoliticianProfile.objects.filter(user__in=candidates).order_by('?')
                 filtered_politicians = politicians
- 
+
                 new_path = _new_url(path, 'region', form.cleaned_data['region'].id)
                 region_filtered = form.cleaned_data['region'].name
 
@@ -233,14 +233,14 @@ def politician_profile_filter(request):
 
 
 
-            """ Calculate date from age - uses rough estimate of how 36 years 
+            """ Calculate date from age - uses rough estimate of how 36 years
             ago - its rough because of leapyears - to compensate will add two
-            weeks to either side of age so more candidates will sho even if 
+            weeks to either side of age so more candidates will sho even if
             they are a bit older or a bit younger"""
 
             todate = datetime.date.today()
             if form.cleaned_data['start_age'] is not None:
-    
+
                 date = datetime.date(todate.year - (form.cleaned_data['start_age']), todate.month, todate.day)
 
                 filtered_politicians = filtered_politicians.filter(dateofbirth__lt=date)
@@ -301,14 +301,14 @@ def politician_profile_filter(request):
                 new_path = _new_url(path, 'diet', form.cleaned_data['diet'])
                 filters.append((_('Vegitarian'), diet[form.cleaned_data['diet']], new_path))
             filtered_politicians = filtered_politicians.distinct().select_related('user')
-            
+
             #no query executed so far, so we see if we can do some caching stuff here :)
             cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
             data = cache.get(cache_key)
             if data is None:
                 #Force query to execute
                 politicians = list(filtered_politicians)
-                
+
                 query = elections_candidates.select_related('candidate', 'election_party_instance__party', 'election_party_instance__election_instance__council').values_list('candidate__id', 'election_party_instance__party__abbreviation', 'election_party_instance__election_instance__name')
                 party_data = {}
                 for (can_id, party, region) in query:
@@ -318,15 +318,15 @@ def politician_profile_filter(request):
                     else:
                         data.append((party, region))
                     party_data.update({can_id: data})
-                cache.set(cache_key, (politicians, party_data), settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)    
+                cache.set(cache_key, (politicians, party_data), settings.POLITICIAN_BROWSER_CACHE_TIMEOUT)
             else:
                 (politicians, party_data) = data
         else:
             party_data = {}
             politicians = []
             form = PoliticianFilterForm() # An unbound form
-            
-        
+
+
         p = Paginator(politicians, 24)
         # Make sure page request is an int. If not, deliver first page.
         try:
@@ -339,7 +339,7 @@ def politician_profile_filter(request):
             politicians = p.page(page)
         except:
             politicians = p.page(p.num_pages)
-    
+
     return render_to_response('frontoffice/politician_filter.html', {'party_data': party_data, 'region_filtered':region_filtered, 'filters':filters, 'politicians':politicians, 'form':form, 'num_filters':len(filters) }, context_instance=RequestContext(request))
 
 
@@ -371,9 +371,9 @@ def politician_profile(request, id, tab = "favs"):
 def politician_comments(request, id):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
-    
+
     return render_to_response('frontoffice/politician_comments.html', {'profile':profile}, context_instance=RequestContext(request))
-                                                            
+
 def party_profile(request, eip_id, tab='can'):
     eip = get_object_or_404(ElectionInstanceParty, pk=eip_id)
     return render_to_response('frontoffice/party.html', {'eip': eip, 'showtab':tab }, context_instance=RequestContext(request))
@@ -542,7 +542,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
     for key in questions_dict.keys():
 
         question = questions_dict[key]['question']
-       
+
         questions_dict[key]['question_type'] = question.question_type
         if questions_dict[key]['doubled'] == True:
             questions_dict[key]['score'] = (questions_dict[key]['score'] * num_questions) / 2
@@ -551,7 +551,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
         if  questions_dict[key]['score'] > 100 and settings.DEBUG == False:
             questions_dict[key]['score'] = 100
-        
+
         if question.question_type in qsettings.BACKOFFICE_QUESTION_TYPES:
             questions_dict[key]['type'] = 'backoffice'
             if 'no_pref' not in questions_dict[key]['visitor']:
@@ -607,11 +607,11 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                
+
                 answers = []
                 for answer in  Education.objects.filter(politician=candidate.candidate.profile):
                     answers.append(answer.level)
-                
+
                 questions_dict[key]['candidate'] = answers
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
@@ -623,7 +623,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['visitor'] = answers
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
-                
+
             if 'candidate' in questions_dict[key].keys():
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])
@@ -639,7 +639,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
             if 'candidate' in questions_dict[key].keys():
-                
+
                 temp_list = []
                 temp_list.append(questions_dict[key]['candidate'])
                 questions_dict[key]['candidate'] = temp_list
@@ -656,7 +656,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = questions_dict[key]['candidate']
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
-            
+
         elif qsettings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
                 questions_dict[key]['visitor'] = 'weighted'
 
@@ -664,16 +664,12 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             pass
         questions_dict[key]['score'] = int(questions_dict[key]['score'])
         questions_dict[key]['question'] = question.result_title
-        
+
     if iframe:
         parent = 'frontoffice/iframe.html'
     else:
         parent = 'frontoffice/base.html'
 
     returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe, 'election_instance': result.election_instance}
-
-    
-
-
 
     return render_to_response('frontoffice/match_details.html', returndict, context_instance=RequestContext(request))
