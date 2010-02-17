@@ -195,7 +195,7 @@ class BestCandidate(MultiPathFormWizard):
                                     if int(value) in candidate_question_answers[candidate][int(question_id)]:
                                         score = score + 1
                         if score > 0:
-                            new_score = float(float(score) / float(length))
+                            new_score = float(float(score) / float(len(candidate_question_answers[candidate][int(question_id)])))
                         else:
                             new_score = 0
                         candidate_scores[candidate].append({question.id: new_score})
