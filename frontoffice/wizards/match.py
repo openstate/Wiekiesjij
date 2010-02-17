@@ -103,7 +103,7 @@ class BestCandidate(MultiPathFormWizard):
             step = Step(str(question.id),
                      forms=form,
                      template='frontoffice/wizard/test/step1.html',
-                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.get_frontend_title(), 'parent':parent},
+                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.get_frontend_title(), 'parent':parent, 'election_instance': self.election_instance},
                      form_kwargs=fkwargs)
             steps_tree.append(step)
             idx += 1
