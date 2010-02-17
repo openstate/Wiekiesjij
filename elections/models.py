@@ -323,10 +323,13 @@ class Party(models.Model):
         if not hasattr(self, '_popularity'):
             popularities = get_popularity(self.current_eip.election_instance_id)
             candidates = self.current_eip.candidates.all()
-            sum_data = 0.0
-            for candidate in candidates:
-                sum_data = sum_data + calc_popularity(*popularities[candidate.id])
-            self._popularity = int(sum_data / len(candidates))
+            if len(candidates) == 0:
+                self._popularity = 0
+            else:
+                sum_data = 0.0
+                for candidate in candidates:
+                    sum_data = sum_data + calc_popularity(*popularities[candidate.id])
+                self._popularity = int(sum_data / len(candidates))
         if self._popularity < 20:
             return 20    
         return self._popularity
