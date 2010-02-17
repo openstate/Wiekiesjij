@@ -673,7 +673,7 @@
 		
 		
 		.wizard {
-		
+			margin-top:30px;
 			}
 			.iframe .wizard {
 				width:600px;
@@ -698,7 +698,11 @@
 							line-height:1.4em;
 							}
 						
-					
+		.wizard a.other-mun {
+			color:#ed2227;
+			font-size:1.2em;
+			}
+						
 		.wizard h2.question {
 			background:#eeeeee;
 			display:block;
@@ -1796,26 +1800,27 @@
 						
 						}
 				
-		.iframe .size1of2 {
-			width:auto;
-			}	
+			
 		#container .sms-setup {
 			border:1px solid #ccc;
 			margin:15px;
 			}
-			.iframe .sms-setup {
+			/*.iframe .sms-setup {
 				position:absolute;
 				bottom:0;
 				left:0;
 				width:100%;
 				background:#d7d7d7;
-				}	
+				}	*/
+			.iframe .sms-setup {
+				float:left;
+				background:#d7d7d7;
+				}
 			#container .sms-setup .bd {
 				background:#e0e0e0;
 				}	
 				.iframe .sms-setup .bd {
 					background:none;
-					padding:2px;
 					}
 					
 				.sms-setup h2,
@@ -1835,6 +1840,9 @@
 							position:absolute;
 							right:4px;
 							top:0;
+							}
+						.sms-setup h2 a {
+							text-decoration:none;
 							}
 						.iframe .sms-setup p {
 							clear:left;
@@ -1877,15 +1885,57 @@
 						float:left;_display:inline;
 						}
 	
-	
+		.iframe .options {
+			background:#d7d7d7;
+			margin:0 -15px;
+			height:54px;
+			overflow:hidden;_zoom:1;
+			}
+			.iframe .options a.share,
+			.iframe .options a.reminder {
+				float:left;
+				font-size:14px;
+				font-weight:bold;
+				color:#ed2227;
+				height:48px;
+				padding:6px 0 6px 60px;
+				}
+			.iframe .options a.reminder {
+				background:url(../img/mobile.png) 0 0 no-repeat;
+				}
+			.iframe .options a.share {
+				float:right;
+				background:url(../img/hyves-logo-large.png) 0 0 no-repeat;
+				}
+			.iframe .options .mod .bd {
+				padding:4px 15px;
+				}
+			
+		.iframe .social-setup {
+			float:right;
+			background:#d7d7d7;
+			}
 		#container .social-setup {
 			border:1px solid #ccc;
 			margin:15px;
 			}
 			#container .social-setup .bd {
 				background:#e0e0e0;
+				
 				}
-	
+		.social-setup .image {
+			height:auto;
+			width:auto;
+			margin:0 10px 5px 0;
+			}
+		.social-setup p {
+			margin-bottom:.5em;
+			}
+			.social-setup a.hyves-info {
+				font-size:16px;
+				color:#ed2227;
+				font-weight:bold;
+				}
 	
 	.meter {
 		width:200px;

@@ -8,6 +8,16 @@
 
 {% block menu_take_test %}selected test-selected{% endblock %}
 
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
+        <li>{% trans 'Take the test' %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
 
 {% block cols %}
 	<div class="col size1of1">
@@ -52,13 +62,16 @@
                     </div>
                 {% endfor %}
            		</div>
-      			<div class="line">
+      			<div class="line options">
                 	
                     <div class="col size1of2">
                     {% if form or show_message %}
                     	<div class="mod sms-setup">
                         	<div class="bd">
-                                <h2>{% trans "Stemherinnering" %}</h2>
+                            {% if iframe %}
+                            	<a href="#" target="_blank" class="reminder">Ik wil een gratis sms- <br /> herinnering om te stemmen</a>
+                            {% else %}
+                                <h2><a name="sms">{% trans "Stemherinnering" %}</a></h2>
                                 
                                 {% if form %}
                                 	<p>{% trans "Wilt u op de dag van de verkiezingen een gratis herinnering ontvangen met uw resultaat? Vul dan hier uw mobiele telefoonnummer in. Uw telefoonnummer zal eenmalig worden gebruikt en zal niet worden opgeslagen." %}</p>
@@ -81,20 +94,39 @@
                                         <p>{% trans 'Thank you! At the date of the elections, a text message will be sent to the phonenumber you entered here' %}</p>
                                     {% endif %}
                             	{% endif %}
+                            {% endif %}
                            	</div>
                        	</div>
                    	{% endif %}
                     </div>
                     
-                    {% comment %}
                     <div class="col size1of2"> 
                         <div class="mod social-setup">
                         	<div class="bd">
-                                <h2>{% trans "Share this via Opensocial" %}</h2>
-                           	</div>
+                            {% if iframe %}
+                            	<a href="#" target="_blank" class="share">Ik wil dit resultaat<br />op mijn Hyves profiel</a>
+                            {% else %}
+                                <h2>{% trans "Deel dit resultaat op uw Hyves-profiel" %}</h2>
+                                <div class="image">
+                                	<img src="{{ STATIC_URL }}frontoffice/img/hyves-logo-large.png" alt="Hyves" />
+                               	</div>
+                                <p>
+                                	{% blocktrans %}
+                                    U kunt dit resultaat delen met uw Hyves netwerk, door de <em>Wiekiejij</em>-gadget op
+                                	uw profiel te plaatsen.
+                                    {% endblocktrans %}
+                                </p>
+                                <p>
+                                	{% blocktrans %}
+                                    Klik op de onderstaande link voor meer uitleg en uw <em>resultaatcode</em> 
+                                	(die u nodig heeft om dit resultaat te tonen op uw profiel.
+                                    {% endblocktrans %}
+                                </p>
+                                <a href="#" target="_blank" class="hyves-info">Ik wil dit resultaat op mijn Hyves profiel</a>
+                           	{% endif %}
+                            </div>
                        	</div>
                     </div>
-                    {% endcomment %}
                     
                     
                     

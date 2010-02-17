@@ -8,7 +8,15 @@
 
 {% block menu_take_test %}selected{% endblock %}
 
-
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
+        <li>{% trans 'Take the test' %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
 
 {% block cols %}
 	<div class="col size1of1">
@@ -25,7 +33,7 @@
                 {% block step-header %}
                 
                 <h2 class="question">
-                	{% block step_title %}{% trans "Welcome" %}{% endblock step_title %}
+                	{% block step_title %}{% trans "Welkom bij Wiekiesjij voor" %} {{ election_instance.name }}{% endblock step_title %}
                     
                     <!--<a class="additionPlus" href="#">Toelichting</a>-->
                 </h2>
@@ -60,7 +68,7 @@
                     Met de stemhulp Wiekiesjij kunt u eenvoudig bepalen welke kandidaat het beste bij u past. Door middel van een aantal vragen over de achtergrond, persoonskenmerken en ervaring van de kandidaten zoeken wij de beste overeenkomst. Bij sommige vragen kunt u meerdere antwoorden selecteren.
                     {% endblocktrans %}
                 </p>
-                
+                <a href="/" class="other-mun">{% trans "Ik wil een andere gemeente selecteren" %}</a>
                 <!--<div class="addition">
 	                <h2>Toelichting op de vraag</h2>
                     <p>Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag. Toelichting op de vraag.</p>

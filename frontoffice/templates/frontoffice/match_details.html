@@ -8,6 +8,15 @@
 
 {% block menu_take_test %}selected test-selected{% endblock %}
 
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
+        <li>{% trans 'Take the test' %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
 
 {% block cols %}
 	<div class="col size1of1">
