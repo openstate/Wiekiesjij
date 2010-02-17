@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Wiekiesjij\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-17 09:27+0100\n"
-"PO-Revision-Date: 2010-02-17 09:31+0100\n"
+"PO-Revision-Date: 2010-02-17 10:41+0100\n"
 "Last-Translator: Harro van der Klauw <harro.vanderklauw@accepte.nl>\n"
 "Language-Team: Getlogic <info@getlogic.nl>\n"
 "MIME-Version: 1.0\n"
@@ -2866,7 +2866,7 @@ msgstr "Kandidaten"
 #: frontoffice/templates/frontoffice/base.html:48
 #: statistics/templates/statistics/base.html:11
 msgid "Statistics"
-msgstr "Statitieken"
+msgstr "Statistieken"
 
 #: frontoffice/templates/frontoffice/base.html:50
 msgid "Over Ons"
