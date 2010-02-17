@@ -87,7 +87,7 @@ def get_popularity(election_instance_id):
         #[FIXME: by taking sum of scores we give to high penalties for people that
         # where not in top 5, but have almost no difference in score with top 5]
         query = """
-            SELECT ec.id, p.id as party_id, SUM(COALESCE(ca.candidates_score, 0)) as sum, {0}
+            SELECT ec.id, p.id as party_id, COUNT(ca.candidates_score) as sum, {0}
             FROM elections_candidacy ec 
             JOIN elections_electioninstanceparty p ON p.id = ec.election_party_instance_id
             LEFT JOIN frontoffice_candidateanswers ca ON ca.candidate_id = ec.candidate_id

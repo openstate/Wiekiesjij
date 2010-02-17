@@ -5,10 +5,10 @@
 {% end_stylegroup %}
 
 {% block content %}
-<p style="{% use_stylegroup 'font' %}">Your account at Wiekiesjij.nl needs activation:</p>
+<p style="{% use_stylegroup 'font' %}">Uw account op Wiekiesjij.nl moet nog geactiveerd worden via de volgende link:</p>
 <p style="{% use_stylegroup 'font' %}"><a href="http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}">http://{{ site.domain }}{% url registration_activate activation_key=activation_key %}</a></p>
 {% endblock content %}
 {% block sidebar %}
 	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
-	<p style="{% use_stylegroup 'font' %}">[Some text]. Neemt u dan contact met ons op via 088-7000125</p>
+	<p style="{% use_stylegroup 'font' %}">heeft u vragen, neemt u dan contact met ons op via 088-7000125</p>
 {% endblock sidebar %}           
