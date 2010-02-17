@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from utils.multipathform import Step, MultiPathFormWizard
+from utils.netutils import getip
 from django.conf import settings
 
 
@@ -384,7 +385,7 @@ class BestCandidate(MultiPathFormWizard):
 
         new_visitor = visitor.create()
 
-        new_visitor.ipaddress=request.META['REMOTE_ADDR']
+        new_visitor.ipaddress=getip(request)
         new_visitor.election_instance = self.election_instance
 
         # Only link visitors

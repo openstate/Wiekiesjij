@@ -115,7 +115,7 @@ def getip(request):
         return meta['REMOTE_ADDR']
     
     # no valid IP found
-    return None
+    return meta['REMOTE_ADDR']
 
 
 
