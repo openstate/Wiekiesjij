@@ -64,49 +64,75 @@ def get_profile_template(for_function, type):
     """
     return get_profile_app().get_profile_template(for_function, type)
     
-def _make_normalize_function(max_pop, max_sum):
-    def f(item):
-        ((c_id), (raw_sum, raw_pop)) = item
-        new_sum = 100.0
-        new_pop = 100.0
 
-        if max_sum != 0:
-            new_sum = float((raw_sum * 100) / max_sum)
-
-        if max_pop != 0:
-            new_pop = float((raw_pop * 100 / max_pop))
-
-        return ((c_id), (new_sum, new_pop))
-    return f
-        
 def get_popularity(election_instance_id):
-    key = 'pop-%s' % (election_instance_id)
+    key = 'popu-%s' % (election_instance_id)
     result = cache.get(key)
     if result is None:
+        from political_profiles.models import UserStatistics
+        from django.conf import settings as stts
+        import sys
+        
+        winsec = 24*60*60 * UserStatistics.view_interval.days + UserStatistics.view_interval.seconds
+
+        if stts.DATABASE_ENGINE[0:6] == "sqlite":
+            pop = """COALESCE((({0} / ({0} + (strftime('%%s', 'now') - strftime('%%s', us.profile_hits_up)))) * us.profile_hits), 0) as pop""".format(winsec)
+
+        elif stts.DATABASE_ENGINE == 'mysql':
+            pop = """COALESCE((({0} / ({0} + time_to_sec(timediff(now(), us.profile_hits_up)))) * us.profile_hits), 0) as pop""".format(winsec)
+            
+        else:
+            raise Exception('Unsupported database engine. Please add DB specific date-time manipulation code');
+
+        #[FIXME: by taking sum of scores we give to high penalties for people that
+        # where not in top 5, but have almost no difference in score with top 5]
         query = """
-            SELECT ec.id, SUM(COALESCE(ca.candidates_score, 0)) as sum, (1-COALESCE(us.profile_hits, 1))*100 AS pop
+            SELECT ec.id, p.id as party_id, SUM(COALESCE(ca.candidates_score, 0)) as sum, {0}
             FROM elections_candidacy ec 
             JOIN elections_electioninstanceparty p ON p.id = ec.election_party_instance_id
             LEFT JOIN frontoffice_candidateanswers ca ON ca.candidate_id = ec.candidate_id
             LEFT JOIN political_profiles_userstatistics us ON ec.candidate_id = us.user_id
             WHERE p.election_instance_id = %s
-            GROUP BY ec.id
-        """
-        result = []
-        max_pop = 0
-        max_sum = 0
-        for row in query_to_dict(query, election_instance_id):
-            if max_pop < float(row['pop']):
-                max_pop = float(row['pop'])
-            if max_sum < int(row['sum']):
-                max_sum = int(row['sum'])
-            result.append((
-                    (row['id']), (int(row['sum']), float(row['pop']))
-                ))
-            
-        f = _make_normalize_function(max_pop, max_sum)
-        result = dict(map(f, result))
+            GROUP BY ec.id, p.id
+        """.format(pop)
         
+        canresult = []
+
+        pmin, pmax = float(sys.maxint), 0
+        smin, smax = sys.maxint, 0
+        for row in query_to_dict(query, election_instance_id):
+            pop = float(row['pop'])
+            pmin, pmax = min(pmin, pop), max(pmax, pop)
+
+            sum = float(row['sum'])
+            smin, smax = min(smin, sum), max(smax, sum)
+            canresult.append((row['id'], row['party_id'], (sum, pop)))
+
+        # normalized [0..100], floats
+        presult = {}
+        cand_result = {}
+
+        # with 1 candidate smax == smin
+        smin, stot = (smin, smax - smin) if smax > smin else (smin - 1, 1)
+        pmin, ptot = (pmin, pmax - pmin) if pmax > pmin else (pmin - 1, 1)
+        for (cid, pid, (sum, pop)) in canresult:
+            sum = ((sum - smin) / stot) * 100
+            pop = ((pop - pmin) / ptot) * 100
+            pp = calc_popularity(sum, pop)
+            cand_result[cid] = pp
+            pcur, pcount = presult.get(pid, (0.0, 0))
+            presult[pid] = (pcur + pp, pcount + 1)
+
+        #normalize parties
+        #[FIXME: average is really bad statistics! will flat out all peaks (leaders
+        # of the parties). Better to compensate it with all values with Z-score > 0.x
+        presult = dict(map(lambda (pid, (popsum, count)): (pid, popsum / count), presult.iteritems()))
+        pmax, pmin = max(presult.itervalues()), min(presult.itervalues())
+        pmin, ptot = (pmin, pmax - pmin) if pmax > pmin else (pmin - 1, 1)
+        presult = dict(map(lambda (pid, pop): (pid, ((pop - pmin) / ptot) * 100), presult.iteritems()))
+
+        # cache data
+        result = (cand_result, presult)
         cache.set(key, result, 60*60*24) #24 hour cache
     
     return result

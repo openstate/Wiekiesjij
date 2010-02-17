@@ -7,7 +7,7 @@ from utils.fields import DutchMobilePhoneField
 from django.contrib.auth.models import User
 from utils.emails import send_email
 
-from elections.functions import get_popularity, calc_popularity
+from elections.functions import get_popularity
 
 
 
@@ -321,15 +321,8 @@ class Party(models.Model):
     @property
     def popularity(self):
         if not hasattr(self, '_popularity'):
-            popularities = get_popularity(self.current_eip.election_instance_id)
-            candidates = self.current_eip.candidates.all()
-            if len(candidates) == 0:
-                self._popularity = 0
-            else:
-                sum_data = 0.0
-                for candidate in candidates:
-                    sum_data = sum_data + calc_popularity(*popularities[candidate.id])
-                self._popularity = int(sum_data / len(candidates))
+            candpop, partypop = get_popularity(self.current_eip.election_instance_id)
+            self._popularity = partypop.get(self.current_eip.pk, 0)
         if self._popularity < 20:
             return 20    
         return self._popularity

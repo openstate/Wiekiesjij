@@ -12,7 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
 from political_profiles.functions import cal_work_experience_days, cal_political_experience_days
-from elections.functions import get_popularity, calc_popularity
+from elections.functions import get_popularity
 
 
 from utils.netutils import check_unique_visitor
@@ -268,9 +268,8 @@ class PoliticianProfile(Profile):
     def popularity(self):
         if not hasattr(self, '_popularity'):
             candidacy_id = self.get_first_candidacy().id
-            popularity = get_popularity(self.election_party().election_instance_id)
-            data = popularity.get(candidacy_id, (0.0, 0.0))
-            self._popularity = calc_popularity(*data)
+            canpop, partypop = get_popularity(self.election_party().election_instance_id)
+            self._popularity = canpop.get(candidacy_id, 0)
         if self._popularity < 20:
             return 20
         return self._popularity
@@ -584,19 +583,18 @@ class UserStatistics(models.Model):
     def update_profile_views(self, request):
         """ Updates profile rate """
         if check_unique_visitor(request, 'update_profile_view_rate'):
-            self.profile_hits = self.get_profile_views()
+            self.profile_hits = self.get_profile_views(1)
             self.profile_hits_up = datetime.datetime.now()
             self.save()
 
 
-    def get_profile_views(self):
+    def get_profile_views(self, shift = 0):
         """ Returns current profile view rate. """
         winsec = 24*60*60 * self.view_interval.days + self.view_interval.seconds
         dl = (datetime.datetime.now() - self.profile_hits_up)
         dl = 24*60*60 * dl.days + dl.seconds
-
         # current rate with time penalty
-        return (float(winsec) / (winsec + dl)) * self.profile_hits
+        return (float(winsec) / (winsec + dl)) * (self.profile_hits + shift)
 
 
 
