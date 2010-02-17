@@ -20,7 +20,7 @@ def events(request, council_id):
         #If there is only a council without election instance for this election then we allow it
         pass
     
-    events = council.events.order_by('-event_datetime')
+    events = council.events.order_by('event_datetime')
 
     parent = 'elections/iframe.html'
   
@@ -45,7 +45,7 @@ def events(request, council_id):
   
             return render_to_response('elections/events_result.html', returndict, context_instance=RequestContext(request))
     else:
-        form = SmsEventForm(queryset=council.events.all(),empty_label=None)
+        form = SmsEventForm(queryset=events,empty_label=None)
    
 
     returndict['form'] = form
