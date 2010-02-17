@@ -227,8 +227,7 @@
         }
 
         /** Use given testresult has */
-        function configUseHash() {
-            var code = $('#result-code').val();
+        function configUseHash(code) {
             if(code) {
                 saveSettings('test_result', code, '-');
             }
@@ -318,7 +317,7 @@
                                 <p class="error">Voer uw resultaat-code in. <br />
                                     Deze vindt u op de resultaat-pagina van de test op <a href="http://www.wiekiesjij.nl" target="__blank">www.wiekiesjij.nl</a></p>
                             </div>
-                            <button onclick="configUseHash(); return false">Opslaan en politicus uitkiezen</button>
+                            <button onclick="configUseHash($('#result-code').val()); return false">Opslaan en politicus uitkiezen</button>
                         </form>
                     </div>
                 </div>
@@ -332,10 +331,10 @@
                         <p><a href="javascript: void(0);" onclick="configResetHash()">Ik wil alleen mijn match wijzigen</a></p>
                         <form>
                             <div class="field">
-                                <label for="result-code">Resultaat-code</label>
-                                <input type="text" name="result-code" id="result-code" />
+                                <label for="result-code2">Resultaat-code</label>
+                                <input type="text" name="result-code" id="result-code2" />
                             </div>
-                            <button onclick="configUseHash(); return false">Opslaan en politicus uitkiezen</button>
+                            <button onclick="configUseHash($('#result-code2').val()); return false">Opslaan en politicus uitkiezen</button>
                         </form>
                     </div>
                 </div>
