@@ -69,10 +69,16 @@
                 </tr>
                 <tr class="fan">
                     <td colspan="2">
+						{% ifequal profile.fans.count 1  %}
+						{% blocktrans with profile.first_name as name and profile.fans.count|default:_('nog geen') as fans %}
+                            {{ name }} has got {{ fans }} fan
+                        {% endblocktrans %}
+						{% else %}
+						
                         {% blocktrans with profile.first_name as name and profile.fans.count|default:_('nog geen') as fans %}
                             {{ name }} has got {{ fans }} fans
                         {% endblocktrans %}
-
+						{% endifequal %}
                         {% url fo.visitor.add_fan profile.user.pk as fan_url %}
                         {% url registration_register as not_fan_url %}
                         {% ifequal user.profile.type 'visitor' %}
