@@ -683,6 +683,6 @@ def match_result_details(request, hash, candidate_id, iframe=None):
     else:
         parent = 'frontoffice/base.html'
 
-    returndict = {'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe, 'election_instance': result.election_instance}
+    returndict = {'hash': hash, 'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe, 'election_instance': result.election_instance}
 
     return render_to_response('frontoffice/match_details.html', returndict, context_instance=RequestContext(request))
