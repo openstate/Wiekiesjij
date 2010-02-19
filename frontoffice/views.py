@@ -62,8 +62,9 @@ def _new_url(path, field, value):
 
 def match_results(request, hash, iframe=None):
     result = get_object_or_404(VisitorResult,hash=hash)
-    if 'ElectionInstance' not in request.session:
-        request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
+    
+    request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
+    
     candidates = result.candidate_answers.all()
     if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
         visitors_profile = request.user.profile
@@ -495,14 +496,12 @@ def home(request):
 
 def opensocial_sharing(request, hash):
     result = get_object_or_404(VisitorResult,hash=hash) #Just to make sure we have a valid hash
-    if 'ElectionInstance' not in request.session:
-        request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
+    request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
     return render_to_response('frontoffice/opensocial_sharing.html', {'hash': hash, 'election_instance': result.election_instance}, context_instance=RequestContext(request))
 
 def match_result_details(request, hash, candidate_id, iframe=None):
     result = get_object_or_404(VisitorResult,hash=hash)
-    if 'ElectionInstance' not in request.session:
-        request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
+    request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
 
     candidate = result.candidate_answers.get(candidate=candidate_id)
     visitors_profile = VisitorProfile.objects.filter(user=request.user)
