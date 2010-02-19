@@ -1,0 +1,50 @@
+{% extends "frontoffice/base.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="col lastCol">
+    <ul class="breadcrumbs">
+    	<li class="first"><a href="/">Wiekiesjij</a></li>
+        <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
+        <li>{% trans "Toevoegen Wiekiesjij widget op Hyves" %}</li>
+    </ul>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+	
+	<p>Het toevoegen van de Wiekiesjij widget op Hyves is middels de volgende stappen te doen. (bent u politicus? Dan kunt u een andere widget plaatsen via deze link)</p>
+	
+	<h2>Stap 1</h2>
+
+	<p>Log in op hyves en ga naar je profiel pagina </p>
+
+	<h2>Stap 2</h2> 
+
+	<p>Ga naar het menu item 'Mijn profiel' en selecteer vervolgens 'toevoegen' achter het item 'Gadgets' </p>
+	
+	<h2>Stap 3 </h2>
+
+	 <p>Selecteer rechtsboven de optie 'OpenSocial-XML' </p>
+
+	<h2>Stap 4</h2> 
+
+	<p>Vul bij de URL het volgende in:  <input type="text" value="http://www.wiekiesjij.nl/media/static/opensocial/gadget.xml" /></p>
+
+
+	<h2>Stap 6 </h2>
+
+	<p>Nu krijg je de melding dat je je resultaat kunt delen. Klik op ‘mijn resultaat delen’. </p>
+
+	<h2>Stap 7</h2> 
+
+	<p>Je wordt nu gevraagd om je resultaat code in te voeren. Vul de code <input type="text" value="{{ hash }}" /> in en druk op ‘opslaan en politicus kiezen’. </p>
+
+	<h2>Stap 8</h2> 
+
+	<p>Je kunt nu de politicus kiezen die je in de widget wilt laten zien. </p>
+
+	<h2>Stap 9</h2> 
+
+	<p>Je hebt de widget succesvol geplaatst op je profiel. Met deze widget ondersteun je een kandidaat en nodig je anderen uit om de test te doen.</p>
+{% endblock content %}

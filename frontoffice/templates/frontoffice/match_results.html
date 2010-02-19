@@ -104,7 +104,7 @@
                         <div class="mod social-setup">
                         	<div class="bd">
                             {% if iframe %}
-                            	<a href="#" target="_blank" class="share">Ik wil dit resultaat<br />op mijn Hyves profiel</a>
+                            	<a href="{% url fo.opensocial hash=hash %}" target="_blank" class="share">Ik wil dit resultaat<br />op mijn Hyves profiel</a>
                             {% else %}
                                 <h2>{% trans "Deel dit resultaat op uw Hyves-profiel" %}</h2>
                                 <div class="image">
@@ -122,7 +122,7 @@
                                 	(die u nodig heeft om dit resultaat te tonen op uw profiel.
                                     {% endblocktrans %}
                                 </p>
-                                <a href="#" target="_blank" class="hyves-info">Ik wil dit resultaat op mijn Hyves profiel</a>
+                                <a href="{% url fo.opensocial hash=hash %}" target="_blank" class="hyves-info">Ik wil dit resultaat op mijn Hyves profiel</a>
                            	{% endif %}
                             </div>
                        	</div>

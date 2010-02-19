@@ -84,7 +84,10 @@ urlpatterns += patterns('frontoffice.views',
     url(r'^match/result/(?P<hash>[a-zA-Z0-9]{32})/(?P<iframe>\w+)/$', 'match_results', name='fo.match_results'),
     url(r'^match/details/(?P<hash>[a-zA-Z0-9]{32})/(?P<candidate_id>\d+)/$', 'match_result_details', name='fo.match_result_details'),
     url(r'^match/details/(?P<hash>[a-zA-Z0-9]{32})/(?P<candidate_id>\d+)/(?P<iframe>\w+)/$', 'match_result_details', name='fo.match_result_details'),
-
+    
+    url(r'^hyves/(?P<hash>[a-zA-Z0-9]{32})/$', 'opensocial_sharing', name='fo.opensocial'),
+    
+    
     url(r'^goal/(?P<goal_id>\d+)/thumbs_up/$', 'thumbs_up', name='fo.thumbs_up'),
     url(r'^goal/(?P<goal_id>\d+)/thumbs_down/$', 'thumbs_down', name='fo.thumbs_down'),
 
