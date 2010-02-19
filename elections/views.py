@@ -45,7 +45,7 @@ def events(request, council_id):
   
             return render_to_response('elections/events_result.html', returndict, context_instance=RequestContext(request))
     else:
-        form = SmsEventForm(queryset=events,empty_label=None)
+        form = SmsEventForm(queryset=events, empty_label=None)
    
 
     returndict['form'] = form

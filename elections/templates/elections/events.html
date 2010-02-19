@@ -21,3 +21,11 @@
         </div>
     </form>
 {% endblock content %}
+
+{% block bodyscript %}
+	<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function() {
+			jQuery('input[type=checkbox]').attr('checked', 'checked');
+		});
+	</script>
+{% endblock bodyscript %}
