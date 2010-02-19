@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.http import Http404
 
 from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSelectForm, SmsForm
 from frontoffice.models import VisitorResult
@@ -351,7 +352,8 @@ def politician_profile_filter(request):
 def politician_profile(request, id, tab = "favs"):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
-    candidacy = get_object_or_404(Candidacy, candidate=user)
+    if Candidacy.objects.filter(candidate=user).count() == 0:
+        return Http404()
     showtab = tab
 
     if 'back' in request.GET:
