@@ -67,17 +67,25 @@
 				<ul class="parties">
 				{% ifequal invitation.type 'council_admin' %}
 					{% for council in invitation.user_to.councils.all %}
+						{% if council.election_instance %}
 						<li><a href="{% url bo.election_instance_view council.election_instance.pk %}">{{ council.name }}</a></li>
+						{% endif %}
 					{% endfor %}
 				{% endifequal %}
 				{% ifequal invitation.type 'party_admin' %}
 					{% for party in invitation.user_to.parties.all %}
+						{% if party.current_eip %}
 						<li><a href="{% url bo.election_party_view id=party.current_eip.pk %}">{{ party.name }} <br/><em>{{ party.level }} {{ party.region}}</em></a></li>
+						{% endif %}
 					{% endfor %}
 				{% endifequal %}
 				{% ifequal invitation.type 'candidate' %}
 					{% for candidacy in invitation.user_to.elections.all %}
-						<li><a href="{% url bo.election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }} <br/><em>{{ candidacy.election_party_instance.party.level }} {{ candidacy.election_party_instance.party.region}}</em></a></li>
+						{% if candidacy.election_party_instance %}
+							{% if candidacy.election_party_instance.current_eip %}
+								<li><a href="{% url bo.election_party_view id=candidacy.election_party_instance.party.current_eip.pk %}">{{ candidacy.election_party_instance.party.name }} <br/><em>{{ candidacy.election_party_instance.party.level }} {{ candidacy.election_party_instance.party.region}}</em></a></li>
+							{% endif %}
+						{% endif %}
 					{% endfor %}
 				{% endifequal %}
 				</ul>
