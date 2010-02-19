@@ -346,6 +346,7 @@ def politician_profile_filter(request):
 def politician_profile(request, id, tab = "favs"):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
+    candidacy = get_object_or_404(Candidacy, candidate=user)
     showtab = tab
 
     if 'back' in request.GET:
