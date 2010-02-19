@@ -619,6 +619,14 @@
 								line-height:28px;
 								font-style:italic;
 								}
+							.hd a.back {
+								font-size:18px;
+								line-height:24px;
+								float:left;
+								color:#ed2227;
+								background:url(../img/h1Arrow-back.gif) left center no-repeat;
+								padding-left:20px;
+								}
 						.bd {
 							background:#ffffff;
 							border:1px solid #c2c2c2;
@@ -1936,6 +1944,21 @@
 				color:#ed2227;
 				font-weight:bold;
 				}
+	
+		.opensocial-info h1 {
+			margin:0;
+			}
+		.opensocial-info h2 {
+			margin:1.5em 0 .2em;
+			}
+		.opensocial-info img,
+		.opensocial-info input {
+			margin:1em 0 0;
+			}
+	
+	
+	
+	
 	
 	.meter {
 		width:200px;

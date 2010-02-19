@@ -6,44 +6,63 @@
     <ul class="breadcrumbs">
     	<li class="first"><a href="/">Wiekiesjij</a></li>
         <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
-        <li>{% trans "Toevoegen Wiekiesjij widget op Hyves" %}</li>
+        <li><a href="{% url fo.match_results hash=hash %}">{% trans 'Take the test' %}</a></li>
+        <li>{% trans "Wiekiesjij gadget toevoegen op Hyves" %}</li>
     </ul>
 </div>
 {% endblock breadcrumbs %}
 
 {% block content %}
-	
-	<p>Het toevoegen van de Wiekiesjij widget op Hyves is middels de volgende stappen te doen.</p>
-	
-	<h2>Stap 1</h2>
-
-	<p>Log in op hyves en ga naar je profiel pagina </p>
-
-	<h2>Stap 2</h2> 
-
-	<p>Ga naar het menu item 'Mijn profiel' en selecteer vervolgens 'toevoegen' achter het item 'Gadgets' </p>
-	
-	<h2>Stap 3 </h2>
-
-	 <p>Selecteer rechtsboven de optie 'OpenSocial-XML' </p>
-
-	<h2>Stap 4</h2> 
-
-	<p>Vul bij de URL het volgende in:  <input type="text" value="http://www.wiekiesjij.nl/media/static/opensocial/gadget.xml" /></p>
-
-	<h2>Stap 5 </h2>
-
-	<p>Nu krijg je de melding dat je je resultaat kunt delen. Klik op ‘mijn resultaat delen’. </p>
-
-	<h2>Stap 6</h2> 
-
-	<p>Je wordt nu gevraagd om je resultaat code in te voeren. Vul de code <input type="text" value="{{ hash }}" /> in en druk op ‘opslaan en politicus kiezen’. </p>
-
-	<h2>Stap 7</h2> 
-
-	<p>Je kunt nu de politicus kiezen die je in de widget wilt laten zien. </p>
-
-	<h2>Stap 8</h2> 
-
-	<p>Je hebt de widget succesvol geplaatst op je profiel. Met deze widget ondersteun je een kandidaat en nodig je anderen uit om de test te doen.</p>
+<div class="mod opensocial-info">
+	<div class="hd">
+    	<a href="{% url fo.match_results hash=hash %}" class="back">{% trans "Terug naar uw matches" %}</a>
+    </div>
+	<div class="bd">	
+    	<h1>{% trans "Wiekiesjij gadget toevoegen op Hyves" %}</h1>
+        <p>Het toevoegen van de Wiekiesjij widget op Hyves is middels de volgende stappen te doen.</p>
+        
+        <h2>Stap 1</h2>
+        <p><a href="https://secure.hyves.org/login/" target="_blank" style="color:#ed2227;">Log in op hyves</a> en ga naar je profiel pagina.
+        	
+        </p>
+    	
+        <h2>Stap 2</h2>
+        <p>Ga naar het menu item <strong>Mijn profiel</strong> en selecteer vervolgens <strong>Toevoegen</strong> achter het item <strong>Gadgets</strong> 
+        	<img src="{{ STATIC_URL }}frontoffice/img/hyves001.png" alt="screenshot" style="display:block;" />
+        </p>
+        
+        <h2>Stap 3 </h2>
+    
+         <p>Selecteer rechtsboven de optie <strong>OpenSocial-XML</strong>. 
+         	<img src="{{ STATIC_URL }}frontoffice/img/hyves002.png" alt="screenshot" style="display:block;" />
+         </p>
+    
+        <h2>Stap 4</h2> 
+    
+        <p>Vul bij de URL het volgende in en klik op <strong>Opslaan</strong>:  <input type="text" value="http://www.wiekiesjij.nl/media/static/opensocial/gadget.xml" /></p>
+    	<p><img src="{{ STATIC_URL }}frontoffice/img/hyves003.png" alt="screenshot" style="display:block;" /></p>
+        <h2>Stap 5 </h2>
+    
+        <p>Nu krijg je de melding dat je je resultaat kunt delen. Klik op <strong>Mijn resultaat delen</strong>.
+		<img src="{{ STATIC_URL }}frontoffice/img/gadget01.png" alt="screenshot" style="display:block; border:1px solid #d4d4d4;" />
+	`	</p>
+    
+        <h2>Stap 6</h2> 
+    
+        <p>Je wordt nu gevraagd om je resultaat code in te voeren.<br />
+        Vul de volgende code in en klik op <strong>Opslaan en politicus kiezen</strong>. : <input type="text" value="{{ hash }}" /><br />
+        
+		<img src="{{ STATIC_URL }}frontoffice/img/gadget02.png" alt="screenshot" style="display:block; border:1px solid #d4d4d4;" />
+        </p>
+    
+        <h2>Stap 7</h2> 
+    
+        <p>Je kunt nu de politicus kiezen die je in de widget wilt laten zien. </p>
+    
+        <h2>Stap 8</h2> 
+    
+        <p>Je hebt de widget succesvol geplaatst op je profiel.</p>
+        <p>Met deze widget ondersteun je een kandidaat en nodig je anderen uit om de test te doen.</p>
+	</div>
+</div>   
 {% endblock content %}
