@@ -2,7 +2,14 @@
 <Module>
   <!-- title_url should point to page explaining the gadget -->
   <!-- todo: screenshot, thumbnail, description -->
-  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl" height="380">
+  <ModulePrefs title="wiekiesjij.nl" title_url="http://wiekiesjij.nl" height="380" 
+		author="Getlogic B.V." 
+		author_email="wietse.vanderwal@accepte.nl"
+		summary="Met deze widget kun je je favoriete kandidaat uit wiekiesjij.nl promoten of als kandidaat jezelf promoten"
+		thumbnail="http://www.wiekiesjij.nl/media/static/opensocial/img/thumbnail.png"
+		screenshot="http://www.wiekiesjij.nl/media/static/opensocial/img/screenshot.png"
+		description="Met deze widget kun je je favoriete kandidaat uit wiekiesjij.nl promoten of als kandidaat jezelf promoten. Ga naar Wiekiesjij.nl om de test voor jouw gemeente te doen en jouw favoriete kandidaat op je profiel weer te kunnen geven."
+	>
     <!-- hyves supported -->
     <Require feature="opensocial-0.7"/>
     <!-- used to manage configurations -->
