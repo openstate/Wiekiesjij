@@ -13,7 +13,8 @@
     <ul class="breadcrumbs">
     	<li class="first"><a href="/">Wiekiesjij</a></li>
         <li><a href="{% url fo.election %}">{{ election_instance.name }}</a></li>
-        <li>{% trans 'Take the test' %}</li>
+        <li><a href="{% url fo.match_results hash=hash %}">{% trans 'Take the test' %}</a></li>
+		<li>{% trans "Match with" %} {{ candidate.candidate.profile.full_name }}</li>
     </ul>
 </div>
 {% endblock breadcrumbs %}
@@ -25,7 +26,6 @@
             <div class="bd">
             	
                 <ul id="wizardSteps">
-                    <li class="current-custom"><span>{% trans "Back to results" %}</span></li>
                     <li class="last current-custom"><span>{% trans "Match with" %} {{ candidate.candidate.profile.full_name }}</span></li>
                 </ul>
                 
