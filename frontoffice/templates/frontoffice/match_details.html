@@ -23,6 +23,9 @@
 	<div class="col size1of1">
 	{% block content %}
         <div class="mod wizard matches">
+			<div class="hd">
+				<a class="back" href="{% url fo.match_results hash=hash %}">{% trans "Terug naar mijn resultaten" %}</a>
+			</div>
             <div class="bd">
             	
                 <ul id="wizardSteps">
