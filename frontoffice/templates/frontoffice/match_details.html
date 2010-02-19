@@ -25,7 +25,7 @@
             <div class="bd">
             	
                 <ul id="wizardSteps">
-                    <li class="current-custom"><a href="{% url fo.match_results hash=hash %}">{% trans "Back to results" %}</a></li>
+                    <li class="current-custom"><span><a href="{% url fo.match_results hash=hash %}">{% trans "Back to results" %}</a></span></li>
                     <li class="last current-custom"><span>{% trans "Match with" %} {{ candidate.candidate.profile.full_name }}</span></li>
                 </ul>
                 
