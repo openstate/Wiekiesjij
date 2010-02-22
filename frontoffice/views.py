@@ -356,10 +356,10 @@ def politician_profile(request, id, tab = "favs"):
         return Http404()
     showtab = tab
     
-    #election_instance = get_object_or_404(pk=profile.party.current_eip().election_instance.pk)
+    election_instance = get_object_or_404(pk=profile.party().current_eip().election_instance.pk)
     
-    #if 'ElectionInstance' not in request.session:
-        #request.session['ElectionInstance'] = dict(id=election_instance.id, name=election_instance.name)
+    if 'ElectionInstance' not in request.session:
+        request.session['ElectionInstance'] = dict(id=election_instance.id, name=election_instance.name)
 
     if 'back' in request.GET:
         back = request.GET['back']
