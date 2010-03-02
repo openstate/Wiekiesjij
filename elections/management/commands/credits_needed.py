@@ -8,7 +8,6 @@ class Command(BaseCommand):
     help = 'Test how many credits accepte is gonna need'
 
     def handle(self, *args, **options):
-        credit_costs = 0
         council_costs = {}
         councils = Council.objects.all()
         accepte_credit =  get_credit()
@@ -27,7 +26,8 @@ class Command(BaseCommand):
                 council_count += len(event.sms_recipients())
             
             council_costs.update({council.pk: council_count})
-
+            
+        #VisitorResult texts
         for ei in ElectionInstance.objects.filter(modules__slug__in=['SMS']):
             council_count = council_costs.get(ei.council.pk, 0)
             
@@ -37,11 +37,12 @@ class Command(BaseCommand):
                     recipients.append(vr.telephone)
                     
             council_count += len(list(set(recipients)))
-            credit_costs += council_count
             council_costs.update({ei.council.pk: council_count})
             
+        credit_costs = 0
         for council in councils:
             if council.pk in council_costs:
+                credit_costs += council_costs.get(council.pk, 0)
                 print council, 'credits used:', council_costs.get(council.pk, 0)
                 
         print '---'
