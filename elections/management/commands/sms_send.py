@@ -18,7 +18,7 @@ class Command(BaseCommand):
                     if accepte_credit > 0:
 
                         recipients = event.sms_recipients()
-                        sendsms(event.originator, recipients, event.message, event.event_datetime)
+                        sendsms(event.originator, recipients, event.message, datetime.now())
                         event.sent_datetime = datetime.now()
                         event.save()
                         accepte_credit = accepte_credit - len(recipients)
