@@ -7,7 +7,7 @@ from sms.models import get_credit
 from utils.emails import send_email
 
 class Command(BaseCommand):
-    help = 'Sends smss at correct time'
+    help = 'Sends sms at correct time'
     
     def handle(self, *args, **options):
         councils = Council.objects.all()
