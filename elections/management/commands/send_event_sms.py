@@ -49,7 +49,7 @@ class Command(BaseCommand):
                         event.save()
                         accepte_credit = accepte_credit - len(recipients)
                     elif fake:
-                        print "Would send %s messages for the event" % (recipients)
+                        print "Would send %s messages for the event" % (len(recipients))
                 else:
                     print "Not enough credits"
                     return False
