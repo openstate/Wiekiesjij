@@ -8,7 +8,7 @@ from sms.models import get_credit
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
-            make_option('--list', '-l', default=False, dest='list',
+            make_option('--list', '-l', action='store_true', default=False, dest='list',
                 help='Lists the events with the ids'),
             make_option('--send', '-s', default=None, dest='send',
                 help='Specifies which event is to send them for'),
@@ -26,7 +26,7 @@ class Command(BaseCommand):
         accepte_credit = get_credit()
         
         if list_events:
-            for event in CouncilEvent.objects.all():
+            for event in CouncilEvent.objects.filter(sent_datetime__isnull=True).all():
                 print '%s - %s for %s' % (event.pk, event.title, event.council)
             return True
         
