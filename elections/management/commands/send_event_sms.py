@@ -1,10 +1,10 @@
 from django.core.management import BaseCommand
+from optparse import make_option
 
-from elections.models import Council, CouncilEvent
+from elections.models import CouncilEvent
 from sms.models import sendsms
-from datetime import datetime, timedelta
+from datetime import datetime
 from sms.models import get_credit
-from utils.emails import send_email
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -23,6 +23,7 @@ class Command(BaseCommand):
         send = options.get('send')
         fake = options.get('fake')
         
+        accepte_credit = get_credit()
         
         if list_events:
             for event in CouncilEvent.objects.all():
