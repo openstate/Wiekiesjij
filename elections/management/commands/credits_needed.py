@@ -2,7 +2,6 @@ from django.core.management import BaseCommand
 
 from elections.settings import ELECTION_EVENT_ID
 from elections.models import ElectionInstance, Council
-from datetime import datetime, timedelta
 from sms.models import get_credit
 
 class Command(BaseCommand):
@@ -29,7 +28,7 @@ class Command(BaseCommand):
             
             council_costs.update({council.pk: council_count})
             
-            credit_cost += council_count
+            credit_costs += council_count
 
         for ei in ElectionInstance.objects.filter(modules__slug__in=['SMS']):
             council_count = council_costs.get(ei.council.pk, 0)
@@ -40,7 +39,7 @@ class Command(BaseCommand):
                     recipients.append(vr.telephone)
                     
             council_count = len(list(set(recipients)))
-            credit_cost += council_count
+            credit_costs += council_count
             council_costs.update(ei.council.pk, council_count)
             
         for council in councils:
@@ -48,5 +47,6 @@ class Command(BaseCommand):
                 print council, 'credits used:', council_costs.get(council.pk, 0)
                 
         print '---'
-        print 'Total:', credit_cost
+        print 'Total:', credit_costs
+        print 'Currently available:', accepte_credit
         return
