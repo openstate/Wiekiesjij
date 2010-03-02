@@ -31,7 +31,7 @@ class Command(BaseCommand):
             credit_costs += council_count
 
         for ei in ElectionInstance.objects.filter(modules__slug__in=['SMS']):
-            council_count = council_costs[ei.council.pk]
+            council_count = council_costs.get(ei.council.pk, 0)
             
             recipients = []
             for vr in ei.visitor_results.all():
