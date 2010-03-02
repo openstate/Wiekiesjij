@@ -27,8 +27,6 @@ class Command(BaseCommand):
                 council_count += len(event.sms_recipients())
             
             council_costs.update({council.pk: council_count})
-            
-            credit_costs += council_count
 
         for ei in ElectionInstance.objects.filter(modules__slug__in=['SMS']):
             council_count = council_costs.get(ei.council.pk, 0)
