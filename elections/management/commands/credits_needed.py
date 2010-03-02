@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     
             council_count = len(list(set(recipients)))
             credit_costs += council_count
-            council_costs.update(ei.council.pk, council_count)
+            council_costs.update({ei.council.pk: council_count})
             
         for council in councils:
             if council.pk in council_costs:
