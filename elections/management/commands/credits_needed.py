@@ -32,7 +32,7 @@ class Command(BaseCommand):
             council_count = council_costs.get(ei.council.pk, 0)
             
             recipients = []
-            for vr in ei.visitor_results.all():
+            for vr in ei.visitor_results.filter(telephone__isnull=False).filter(sent__isnull=True).all():
                 if vr.telephone:
                     recipients.append(vr.telephone)
                     
