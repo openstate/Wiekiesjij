@@ -44,7 +44,7 @@ class Command(BaseCommand):
                 
             if accepte_credit > 0:
                 
-                recipients = ei.visitor_results.distinct('telephone').filter(telephone__isnull=False).values_list('telephone', flat=True)
+                recipients = ei.visitor_results.filter(sent__isnull=True).distinct('telephone').filter(telephone__isnull=False).values_list('telephone', flat=True)
                 recipients = list(set(recipients))
                 
                 if send:
