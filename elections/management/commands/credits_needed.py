@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 continue
 
             council_count = 0
-            for event in council.events.all():
+            for event in council.events.filter(sent_datetime__isnull=True).all():
                 council_count += len(event.sms_recipients())
             
             council_costs.update({council.pk: council_count})

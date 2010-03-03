@@ -13,7 +13,7 @@ class Command(BaseCommand):
             make_option('--send', '-s', default=None, dest='send',
                 help='Specifies which event is to send them for'),
             make_option('--fake', '-f', default=None, dest='fake',
-                help='Specifies which event is to send them for'),
+                help='Shows the number of messages that will be send for the event'),
         )
     help = 'Sends sms for a certain event'
     
