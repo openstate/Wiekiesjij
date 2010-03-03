@@ -34,9 +34,7 @@ def sendsms(originator, recipients, message, deliverydate):
 
     # optional arguments
     new_sms.originator = originator
-    recipient_list = ''
-    for recipient in recipients:
-        recipient_list = recipient_list + str(recipient)
+    recipient_list = ','.join(recipients)
     new_sms.recipients = recipient_list
     new_sms.message = message
     new_sms.deliverydate = deliverydate

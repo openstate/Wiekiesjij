@@ -48,7 +48,8 @@ class Command(BaseCommand):
                 recipients = list(set(recipients))
                 
                 if send:
-                    sendsms('Wiekiesjij', recipients, 'Vandaag tot 21.00 uur: gemeenteraadsverkiezingen! U kunt uw stem uitbrengen in een stemlokaal naar keuze. Neem uw stempas en ID-bewijs mee!', datetime.now())
+                    for r in recipients:
+                        sendsms('Wiekiesjij', [r], 'Vandaag tot 21.00 uur: gemeenteraadsverkiezingen! U kunt uw stem uitbrengen in een stemlokaal naar keuze. Neem uw stempas en ID-bewijs mee!', datetime.now())
                     ei.visitor_results.update(sent=datetime.now())
                     accepte_credit = accepte_credit - len(recipients)
                 elif fake:

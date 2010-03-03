@@ -44,7 +44,8 @@ class Command(BaseCommand):
                     recipients = event.sms_recipients()
                     
                     if send:
-                        sendsms(event.originator, recipients, event.message, datetime.now())
+                        for r in recipients:
+                            sendsms(event.originator, [r], event.message, datetime.now())
                         event.sent_datetime = datetime.now()
                         event.save()
                         accepte_credit = accepte_credit - len(recipients)
