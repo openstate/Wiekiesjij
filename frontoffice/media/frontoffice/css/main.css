@@ -1142,19 +1142,26 @@
 				.disabled {
 					color:#dbdbdb;
 					}
-				.disabled .big-btn {
+				.disabled .big-btn,
+				.no-test {
 					background-color:#ececec; 
 					}
-					.disabled .big-btn span {
+					.disabled .big-btn span,
+					.no-test span {
 						color:#dbdbdb;
 						border-color:#e5e5e5;
 						background-image:url(../img/arrow-disabled.gif);
 						}
-					.disabled .primary-btn span { 
+					.disabled .primary-btn span,
+					.no-test span { 
 						background-color:#dbdbdb; 
 						color:#fff;
 						border-color:#ccc;
 						background-image:url(../img/arrow-onred-disabled.gif);
+						}
+					.no-test span,
+					.disabled .no-test span {
+						background-image:none;
 						}
 				.start-actions .start-test .icon {
 					display:block;
@@ -1165,9 +1172,28 @@
 					display:block;
 					background:url(../img/person.png) 0 0 no-repeat;
 					}
-					.start-actions .disabled .icon {
+					.start-actions .disabled .icon,
+					.start-actions .no-test .icon {
 						background-position:left bottom;
 						}
+				a.no-test {
+					font-style:italic;
+					
+					}
+				a.no-test:hover {
+					text-decoration:none;
+					}
+					
+				p.test-over {
+					position:absolute;
+					top:1em;
+					left:120px;
+					font-weight:bold;
+					font-style:italic;
+					padding-left:0;
+					font-size:1.6em;
+					color:red;
+					}
 						
 	/* 	candidate browse
 		----------------------------------------------------------------------------------------- */	
