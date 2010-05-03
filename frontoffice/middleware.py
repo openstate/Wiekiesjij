@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.core.cache import cache
 from django.http import HttpResponseRedirect
@@ -9,6 +10,7 @@ class SubdomainMiddleware:
     """ Make the subdomain publicly available to classes """
     
     def process_request(self, request):
+        ei_id = None
         domain_parts = request.get_host().split('.')
         if (len(domain_parts) > 2):
             subdomain = domain_parts[0]
