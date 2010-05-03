@@ -18,7 +18,7 @@
 <div class="col lastCol">
 	<div class="mod introduction">
     	<div class="bd">                
-				<p><strong>Wiekiesjij</strong> stelt u in staat de kandidaten achter de partijen van uw gemeenteraad te leren kennen. Begin eerst met het selecteren van uw regio.</p>
+				<p><strong>Wiekiesjij</strong> stelt u in staat de kandidaten achter de partijen van uw gemeenteraad te leren kennen. Met deze stemhulp kunt u, door eenvoudig een aantal vragen te beantwoorden, uw favoriete kandidaat vinden. Begin eerst met het selecteren van uw regio.</p>
         </div>
     </div>
     <div class="mod title">
@@ -52,13 +52,12 @@
             {% if request.session.ElectionInstance %}
                 <div class="bd">
                     <h2>&nbsp;<span class="num">2</span></h2>
-                    {#<a class="big-btn primary-btn start-test" href="{% url fo.match_welcome request.session.ElectionInstance.id %}">#}
-                    <a class="big-btn primary-btn start-test no-test">
+                    <a class="big-btn primary-btn start-test" href="{% url fo.match_welcome request.session.ElectionInstance.id %}">
                         <span>
-                            <span class="icon"></span>{% trans 'Test niet meer beschikbaar' %}
+                            <span class="icon"></span>{% trans 'Doe de test' %}
                         </span>
                     </a>
-                    <p class="disabled">{% trans "or" %}</p>
+                    <p>{% trans "or" %}</p>
                     <a class="big-btn list-candidates" href="{% url fo.election %}">
                         <span>
                             <span class="icon"></span>{% trans 'Bekijk de kandidaten' %}
@@ -68,9 +67,9 @@
             {% else %}
                 <div class="bd disabled">
                     <h2>&nbsp;<span class="num">2</span></h2>
-                    <a class="big-btn primary-btn start-test no-test">
+                    <a class="big-btn primary-btn start-test">
                         <span>
-                            <span class="icon"></span>{% trans 'Test niet meer beschikbaar' %}
+                            <span class="icon"></span>{% trans 'Doe de test' %}
                         </span>
                     </a>
                     <p>{% trans "or" %}</p>
