@@ -79,7 +79,7 @@ MIDDLEWARE_CLASSES = (
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'frontoffice.middleware.SubdomainMiddleware',
+    'frontoffice.middleware.ElectionInstanceMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -180,6 +180,7 @@ ELECTIONS_POLITICIAN_LIMITATION = {'politicianprofile__isnull': False}
 ELECTIONS_PROFILE_APP = 'political_profiles'
 
 ELECTIONS_ELECTION_EVENT_ID = 1
+ELECTIONS_ELECTION_INSTANCE_ID = 1
 
 
 

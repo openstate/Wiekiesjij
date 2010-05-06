@@ -13,8 +13,22 @@ class Migration:
             ('election_instance', orm['elections.ElectionInstanceQuestion:election_instance']),
             ('question', orm['elections.ElectionInstanceQuestion:question']),
             ('locked', orm['elections.ElectionInstanceQuestion:locked']),
+            ('position', orm['elections.ElectionInstanceQuestion:position']),
         ))
         db.send_create_signal('elections', ['ElectionInstanceQuestion'])
+        
+        # Adding model 'CouncilEvent'
+        db.create_table('elections_councilevent', (
+            ('id', orm['elections.CouncilEvent:id']),
+            ('council', orm['elections.CouncilEvent:council']),
+            ('title', orm['elections.CouncilEvent:title']),
+            ('originator', orm['elections.CouncilEvent:originator']),
+            ('location', orm['elections.CouncilEvent:location']),
+            ('message', orm['elections.CouncilEvent:message']),
+            ('event_datetime', orm['elections.CouncilEvent:event_datetime']),
+            ('sent_datetime', orm['elections.CouncilEvent:sent_datetime']),
+        ))
+        db.send_create_signal('elections', ['CouncilEvent'])
         
         # Adding model 'Council'
         db.create_table('elections_council', (
@@ -31,21 +45,24 @@ class Migration:
             ('seats', orm['elections.Council:seats']),
             ('website', orm['elections.Council:website']),
             ('picture', orm['elections.Council:picture']),
-            ('desciption', orm['elections.Council:desciption']),
+            ('description', orm['elections.Council:description']),
             ('history', orm['elections.Council:history']),
             ('background_color', orm['elections.Council:background_color']),
             ('foreground_color', orm['elections.Council:foreground_color']),
             ('another_color', orm['elections.Council:another_color']),
+            ('credit_warning', orm['elections.Council:credit_warning']),
+            ('credit', orm['elections.Council:credit']),
         ))
         db.send_create_signal('elections', ['Council'])
         
         # Adding model 'ElectionEvent'
         db.create_table('elections_electionevent', (
             ('id', orm['elections.ElectionEvent:id']),
+            ('default_date', orm['elections.ElectionEvent:default_date']),
             ('name', orm['elections.ElectionEvent:name']),
             ('parent_region', orm['elections.ElectionEvent:parent_region']),
             ('level', orm['elections.ElectionEvent:level']),
-            ('desciption', orm['elections.ElectionEvent:desciption']),
+            ('description', orm['elections.ElectionEvent:description']),
             ('question_due_period', orm['elections.ElectionEvent:question_due_period']),
             ('profile_due_period', orm['elections.ElectionEvent:profile_due_period']),
             ('candidate_due_period', orm['elections.ElectionEvent:candidate_due_period']),
@@ -71,6 +88,14 @@ class Migration:
             ('list_length', orm['elections.ElectionInstanceParty:list_length']),
         ))
         db.send_create_signal('elections', ['ElectionInstanceParty'])
+        
+        # Adding model 'SmsSubscription'
+        db.create_table('elections_smssubscription', (
+            ('id', orm['elections.SmsSubscription:id']),
+            ('council_event', orm['elections.SmsSubscription:council_event']),
+            ('phone_number', orm['elections.SmsSubscription:phone_number']),
+        ))
+        db.send_create_signal('elections', ['SmsSubscription'])
         
         # Adding model 'ElectionInstanceQuestionAnswer'
         db.create_table('elections_electioninstancequestionanswer', (
@@ -125,6 +150,7 @@ class Migration:
             ('manifesto', orm['elections.Party:manifesto']),
             ('logo', orm['elections.Party:logo']),
             ('num_seats', orm['elections.Party:num_seats']),
+            ('movie', orm['elections.Party:movie']),
         ))
         db.send_create_signal('elections', ['Party'])
         
@@ -159,21 +185,36 @@ class Migration:
         # Creating unique_together for [election_instance, position] on ElectionInstanceParty.
         db.create_unique('elections_electioninstanceparty', ['election_instance_id', 'position'])
         
+        # Creating unique_together for [election_party_instance, candidate] on Candidacy.
+        db.create_unique('elections_candidacy', ['election_party_instance_id', 'candidate_id'])
+        
         # Creating unique_together for [election_instance_question, candidate] on ElectionInstanceQuestionAnswer.
         db.create_unique('elections_electioninstancequestionanswer', ['election_instance_question_id', 'candidate_id'])
+        
+        # Creating unique_together for [election_party_instance, position] on Candidacy.
+        db.create_unique('elections_candidacy', ['election_party_instance_id', 'position'])
         
     
     
     def backwards(self, orm):
         
+        # Deleting unique_together for [election_party_instance, position] on Candidacy.
+        db.delete_unique('elections_candidacy', ['election_party_instance_id', 'position'])
+        
         # Deleting unique_together for [election_instance_question, candidate] on ElectionInstanceQuestionAnswer.
         db.delete_unique('elections_electioninstancequestionanswer', ['election_instance_question_id', 'candidate_id'])
+        
+        # Deleting unique_together for [election_party_instance, candidate] on Candidacy.
+        db.delete_unique('elections_candidacy', ['election_party_instance_id', 'candidate_id'])
         
         # Deleting unique_together for [election_instance, position] on ElectionInstanceParty.
         db.delete_unique('elections_electioninstanceparty', ['election_instance_id', 'position'])
         
         # Deleting model 'ElectionInstanceQuestion'
         db.delete_table('elections_electioninstancequestion')
+        
+        # Deleting model 'CouncilEvent'
+        db.delete_table('elections_councilevent')
         
         # Deleting model 'Council'
         db.delete_table('elections_council')
@@ -186,6 +227,9 @@ class Migration:
         
         # Deleting model 'ElectionInstanceParty'
         db.delete_table('elections_electioninstanceparty')
+        
+        # Deleting model 'SmsSubscription'
+        db.delete_table('elections_smssubscription')
         
         # Deleting model 'ElectionInstanceQuestionAnswer'
         db.delete_table('elections_electioninstancequestionanswer')
@@ -249,8 +293,9 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'elections.candidacy': {
+            'Meta': {'unique_together': "(('election_party_instance', 'candidate'), ('election_party_instance', 'position'))"},
             'answers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Answer']"}),
-            'candidate': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
+            'candidate': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'elections'", 'to': "orm['auth.User']"}),
             'election_party_instance': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'candidates'", 'to': "orm['elections.ElectionInstanceParty']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {})
@@ -260,10 +305,12 @@ class Migration:
             'another_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
             'background_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
             'chanceries': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"}),
-            'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'credit': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'max_length': '8'}),
+            'credit_warning': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'foreground_color': ('django.db.models.fields.CharField', [], {'max_length': '6', 'null': 'True', 'blank': 'True'}),
-            'history': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'history': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'house_num': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -276,9 +323,20 @@ class Migration:
             'town': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
+        'elections.councilevent': {
+            'council': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'events'", 'to': "orm['elections.Council']"}),
+            'event_datetime': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.TextField', [], {}),
+            'message': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
+            'originator': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
+            'sent_datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
         'elections.electionevent': {
             'candidate_due_period': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'desciption': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'default_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -294,7 +352,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modules': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.ElectionInstanceModule']", 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'num_lists': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'num_lists': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'parties': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['elections.Party']"}),
             'questions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questions.Question']", 'null': 'True', 'blank': 'True'}),
             'start_date': ('django.db.models.fields.DateTimeField', [], {}),
@@ -308,9 +366,9 @@ class Migration:
         },
         'elections.electioninstanceparty': {
             'Meta': {'unique_together': "(('election_instance', 'position'),)"},
-            'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
+            'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'election_instance_parties'", 'to': "orm['elections.ElectionInstance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'list_length': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'list_length': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'party': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'election_instance_parties'", 'to': "orm['elections.Party']"}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
@@ -318,6 +376,7 @@ class Migration:
             'election_instance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['elections.ElectionInstance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questions.Question']"})
         },
         'elections.electioninstancequestionanswer': {
@@ -328,7 +387,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'elections.party': {
-            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'address_city': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'address_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'address_postalcode': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
@@ -343,6 +402,7 @@ class Migration:
             'logo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'manifesto': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'manifesto_summary': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'movie': ('django.db.models.fields.URLField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'num_seats': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'region': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
@@ -350,14 +410,26 @@ class Migration:
             'telephone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'website': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
-        'questions.answer': {
+        'elections.smssubscription': {
+            'council_event': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sms_subscriptions'", 'to': "orm['elections.CouncilEvent']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'phone_number': ('django.db.models.fields.CharField', [], {'max_length': '15'})
+        },
+        'questions.answer': {
+            'frontoffice_value': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'meta': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm['questions.Question']"}),
             'value': ('django.db.models.fields.TextField', [], {})
         },
         'questions.question': {
+            'frontend_title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
+            'has_no_preference': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'help_text': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'question_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'question_type': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'result_title': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'theme': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})

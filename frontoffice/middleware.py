@@ -4,7 +4,20 @@ from django.core.cache import cache
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+from elections.settings import ELECTION_INSTANCE_ID
 from elections.models import ElectionInstance
+
+
+class ElectionInstanceMiddleware:
+    """
+        Sets the election instance id in the session
+    """
+    
+    def process_request(self, request):
+        if not 'ElectionInstance' in request.session:
+            ei = ElectionInstance.objects.get(pk=ELECTION_INSTANCE_ID)
+            request.session['ElectionInstance'] = {'id': ei.id, 'name': ei.name}
+    
 
 class SubdomainMiddleware:
     """ Make the subdomain publicly available to classes """
