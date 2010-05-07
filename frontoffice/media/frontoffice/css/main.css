@@ -1169,6 +1169,61 @@
 						background-position:left bottom;
 						}
 						
+			
+			.buttons .col {
+				width:280px;
+				}	
+			.buttons .take-test-col {
+				width:420px;
+				}	
+			.buttons .mod {
+				margin:20px 0 40px;
+				padding:0 10px;
+				height:16em;
+				background:none;
+				position:relative;
+				}
+			.buttons p {
+				font-size:1.4em;
+				padding:0 10px;
+				}
+				.buttons .take-test p {
+					font-size:24px;
+					line-height:1.2em;
+					}
+			
+			
+			.buttons a.huge-btn {
+				display:block;
+				height:85px;
+				width:260px;
+				text-indent:-9999em;
+				background-color:#000;
+				position:absolute;
+				left:10px;
+				bottom:0;
+				outline:none;
+				}
+				.buttons a.huge-btn:hover {
+					background-position:left bottom;
+					}
+					
+					
+			.buttons .list-stats {
+				background:url(../img/view-stats.gif) left top no-repeat;
+				}
+			.buttons .list-candidates {
+				background:url(../img/view-candidates.gif) left top no-repeat;
+				}
+			.buttons a.start-test {
+				background:url(../img/take-test.gif) left top no-repeat;
+				width:400px;
+				height:110px;
+				}
+				
+			
+			
+						
 	/* 	candidate browse
 		----------------------------------------------------------------------------------------- */	
 		
