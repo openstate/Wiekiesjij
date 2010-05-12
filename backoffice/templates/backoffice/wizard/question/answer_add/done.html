@@ -31,7 +31,7 @@
 {% block step_title %}{% trans "Done" %}{% endblock step_title %}
 
 {% block content %}
-	
+<div class="mod">
 	{% if message %}
 		<p>Hartelijk dank voor het invullen van uw profiel! U kunt uw profiel blijven aanpassen tot en met <strong>30 januari</strong> via onderstaande link. Mocht u enige moeilijkheden zijn tegengekomen dan kunt u ons te allen tijde bereiken via onze helpdesk.</p>
 		<p><a href="{% url bo.politician_profile_setup eip_id=eip_id user_id=user_id %}">Link om uw gegevens aan te passen</a></p>
@@ -45,7 +45,7 @@
 		</div>
 	</form>
 	{% endif %}
-	
+</div>	
 {% endblock content %}
 
 

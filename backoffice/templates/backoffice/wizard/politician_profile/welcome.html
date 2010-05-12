@@ -8,8 +8,10 @@
 {% block cols %}
 <div class="col size1of2">
     <div class="mod intro">
+    	{% comment %}
         <h2>{% trans 'Welcome' %} {{ politician.name }}</h2>
         <p>{% trans "Youve been invited to create a profile for Wiekiesjij for the" %} {{ election_event.name }}.</p>
+        {% endcomment %}
         
         <h2>{%trans 'Welkom' %} </h2>
         <p>{% trans "Hartelijk dank voor uw deelname aan Wiekiesjij. Hier kunt u uw profiel aanmaken voor de Wiekiesjij stemwijzer. Wiekiesjij is de voorkeurstemhulp van Nederland en is in de afgelopen verkiezingen meer dan 2 miljoen keer gebruikt door de Nederlandse kiezers. Door het invullen van uw profiel en het beantwoorden van een aantal vragen zijn wij in staat om de bezoekers te koppelen aan hun favoriete kandidaten. Op die manier worden de kiezers en de individuele kandidaten dichter tot elkaar gebracht." %}</p>
