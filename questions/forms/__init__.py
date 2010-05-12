@@ -102,6 +102,126 @@ class PartyQuestionForm(BetterForm, TemplateForm):
 
         except Exception:
             raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
+            
+
+class MyNoPrefModelChoiceIterator(object):
+    def __init__(self, field):
+        self.field = field
+        self.queryset = field.queryset
+
+    def __iter__(self):
+        if self.field.cache_choices:
+            if self.field.choice_cache is None:
+                self.field.choice_cache = [
+                    self.choice(obj) for obj in self.queryset.all()
+                ]
+            for choice in self.field.choice_cache:
+                yield choice
+        else:
+            for obj in self.queryset.all():
+                yield self.choice(obj)
+        
+        if self.field.empty_label is not None:
+            yield (u"no_pref", self.field.empty_label)
+
+    def choice(self, obj):
+        if self.field.to_field_name:
+            key = obj.serializable_value(self.field.to_field_name)
+        else:
+            key = obj.pk
+        return (key, self.field.label_from_instance(obj))       
+        
+            
+class WorkExpMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def label_from_instance(self, obj):
+        return obj.sector
+        
+    def _get_choices(self):
+        # If self._choices is set, then somebody must have manually set
+        # the property self.choices. In this case, just return self._choices.
+        if hasattr(self, '_choices'):
+            return self._choices
+                
+        # Otherwise, execute the QuerySet in self.queryset to determine the
+        # choices dynamically. Return a fresh QuerySetIterator that has not been
+        # consumed. Note that we're instantiating a new QuerySetIterator *each*
+        # time _get_choices() is called (and, thus, each time self.choices is
+        # accessed) so that we can ensure the QuerySet has not been consumed. This
+        # construct might look complicated but it allows for lazy evaluation of
+        # the queryset.
+        return MyNoPrefModelChoiceIterator(self)
+        
+    def clean(self, value):
+        if 'no_pref' in value:
+            return ['no_pref']
+        else:
+            return super(self.__class__, self).clean(value)
+
+    choices = property(_get_choices, forms.ChoiceField._set_choices)
+
+class WorkTypeQuestionForm(BetterForm, TemplateForm):
+    value = WorkExpMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+
+    class Meta:
+        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
+    def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        try:
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
+
+
+class PolExpMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def label_from_instance(self, obj):
+        return obj.type
+        
+    def _get_choices(self):
+        # If self._choices is set, then somebody must have manually set
+        # the property self.choices. In this case, just return self._choices.
+        if hasattr(self, '_choices'):
+            return self._choices
+
+        # Otherwise, execute the QuerySet in self.queryset to determine the
+        # choices dynamically. Return a fresh QuerySetIterator that has not been
+        # consumed. Note that we're instantiating a new QuerySetIterator *each*
+        # time _get_choices() is called (and, thus, each time self.choices is
+        # accessed) so that we can ensure the QuerySet has not been consumed. This
+        # construct might look complicated but it allows for lazy evaluation of
+        # the queryset.
+        return MyNoPrefModelChoiceIterator(self)
+        
+    def clean(self, value):
+        if 'no_pref' in value:
+            return ['no_pref']
+        else:
+            return super(self.__class__, self).clean(value)
+            
+    choices = property(_get_choices, forms.ChoiceField._set_choices)
+
+class PolTypeQuestionForm(BetterForm, TemplateForm):
+    value = PolExpMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
+
+    class Meta:
+        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
+    def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        try:
+            self.fields['value'].empty_label = empty_label
+            self.fields['value'].queryset = queryset
+
+        except Exception:
+            raise ModelAnswerFormError('You need to provide a model to the ModelAnswerForm')
 
 class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
     '''
@@ -141,7 +261,8 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
                 GENDERS_A = copy.deepcopy(GENDERS)
                 GENDERS_A.append(('no_pref', _('Geen voorkeur')))
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=GENDERS_A), choices=GENDERS_A)})
-
+            elif QTYPE_MODEL_EDUCATION_LEVEL == question_instance.question_type:
+                self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             else:
                 pass #TODO raise error
 

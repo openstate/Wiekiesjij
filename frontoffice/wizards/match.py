@@ -2,24 +2,22 @@ import copy
 import json
 
 from django.conf import settings
-from math import ceil
-from django.db import transaction
-
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from utils.multipathform import Step, MultiPathFormWizard
 from utils.netutils import getip
-from django.conf import settings
 
 
-from questions.forms import VisitorAnswerQuestionForm, PartyQuestionForm
+from questions.forms import VisitorAnswerQuestionForm, PartyQuestionForm, WorkTypeQuestionForm, PolTypeQuestionForm
 from questions.forms.types import ThemeAnswerForm
 from questions.models import Question, Answer
 from elections.models import Candidacy, ElectionInstanceParty, ElectionInstance
 from questions.settings import QTYPE_MODEL_PROFILE_QUESTION_WEIGHT, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_MODEL_PARTY
+from questions.settings import QTYPE_MODEL_WORK_EXPERIENCE_TYPE, QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE
 from questions.settings import FRONTOFFICE_QUESTION_TYPES, BACKOFFICE_QUESTION_TYPES, MULTIPLE_ANSWER_TYPES
 from political_profiles.models import EducationLevel, PoliticianProfile, Education
+from political_profiles.models import WorkExperienceSector, PoliticalExperienceType
 from frontoffice.models import VisitorResult, CandidateAnswers
 
 from questions.forms import AnswerQuestionForm
@@ -49,7 +47,7 @@ class BestCandidate(MultiPathFormWizard):
         #Get all questions
         questions = self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('-electioninstancequestion__position')
         steps_tree = []
-
+        
         # Looping through the questions
         idx = 1;
         for question in questions:
@@ -59,8 +57,7 @@ class BestCandidate(MultiPathFormWizard):
                 empty_label = _('Geen voorkeur')
             else:
                 empty_label=None
-
-
+                
             if question.question_type in BACKOFFICE_QUESTION_TYPES:
                 form = {str(question.id): VisitorAnswerQuestionForm}
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
@@ -75,7 +72,7 @@ class BestCandidate(MultiPathFormWizard):
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
 
             elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
-                form = {str(question.id): AnswerQuestionForm}
+                form = {str(question.id): VisitorAnswerQuestionForm}
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
 
             elif QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
@@ -92,6 +89,13 @@ class BestCandidate(MultiPathFormWizard):
             elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
                 form = {str(question.id): ThemeAnswerForm}
                 fkwargs= {str(question.id): {'queryset': self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('electioninstancequestion__position'), 'empty_label':empty_label}}
+                
+            elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
+                form = {str(question.id): WorkTypeQuestionForm}
+                fkwargs= {str(question.id): {'queryset': WorkExperienceSector.objects.all(), 'empty_label' :empty_label}}
+            elif QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE == question.question_type:
+                form = {str(question.id): PolTypeQuestionForm}
+                fkwargs= {str(question.id): {'queryset': PoliticalExperienceType.objects.all(), 'empty_label' :empty_label}}
             else:
                 pass
 
@@ -295,9 +299,15 @@ class BestCandidate(MultiPathFormWizard):
                     start = parts[0]
                     if len(parts) > 1:
                         end=parts[1]
-                    if end == 'G':
+                    if end == '':
                         for candidate in self.candidates:
                             if candidate.age >= int(start):
+                                candidate_scores[candidate].append({question.id: 1})
+                                
+                            all_candidate_answers[candidate][question_id] = candidate.age
+                    elif start == '':
+                        for candidate in self.candidates:
+                            if candidate.age < int(end):
                                 candidate_scores[candidate].append({question.id: 1})
                                 
                             all_candidate_answers[candidate][question_id] = candidate.age
@@ -323,6 +333,10 @@ class BestCandidate(MultiPathFormWizard):
 
                     self.multiply_questions = answer_value[0]
 
+                elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
+                    pass
+                elif QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE == question.question_type:
+                    pass
                 else:
                     pass
 
