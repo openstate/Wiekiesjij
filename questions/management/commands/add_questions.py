@@ -15,10 +15,9 @@ class Command(BaseCommand):
 
         try:
             qs1 = QuestionSet.objects.get(name='BasicSet1')
-        except QuestionSet.DoesNotExist:
-            print 'Run add_questions first'
             return
-
+        except QuestionSet.DoesNotExist:
+            qs1 = QuestionSet.objects.create(name='BasicSet1')
 
         q1 = Question.objects.create(
             title=u'De volgende partijen maken kans op mijn stem:',
@@ -35,7 +34,7 @@ class Command(BaseCommand):
         
         q2 = Question.objects.create(
             title=u'Wat is de belangrijkste uitdaging waar Nederland voor staat?',
-            frontoffice_title=u'De belangrijkste uitdaging(en) waarvoor Nederland staat is:',
+            frontend_title=u'De belangrijkste uitdaging(en) waarvoor Nederland staat is:',
             question_type=settings.QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Belangrijkste uitdaging(en) voor Nederland',
             theme='q2',
@@ -72,7 +71,7 @@ class Command(BaseCommand):
         
         q3 = Question.objects.create(
             title=u'Welke partijen zitten in uw regeringscoalitie (kies minimaal 3 partijen):',
-            frontoffice_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
+            frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
             question_type=settings.QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Regeringscoalitie',
             theme='q3',
@@ -114,7 +113,7 @@ class Command(BaseCommand):
         
         q4 = Question.objects.create(
             title=u'Ik steun de volgende kandidaat-premier:',
-            frontoffice_title=u'Mijn kandidaat ziet het liefst als premier:',
+            frontend_title=u'Mijn kandidaat ziet het liefst als premier:',
             question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
             result_title=u'Premier',
             theme='q4',
@@ -144,7 +143,7 @@ class Command(BaseCommand):
         
         q5 = Question.objects.create(
             title=u'Als parlementariër leg ik de meeste nadruk op:',
-            frontoffice_title=u'Mijn ideale kandidaat moet de meeste nadruk leggen op:',
+            frontend_title=u'Mijn ideale kandidaat moet de meeste nadruk leggen op:',
             question_type=settings.QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'De nadruk van de kandidaat',
             theme='q5',
@@ -173,7 +172,7 @@ class Command(BaseCommand):
         
         q6 = Question.objects.create(
             title=u'Ik heb kennis van:',
-            frontoffice_title=u'Waar ligt de expertise van uw kandidaat?',
+            frontend_title=u'Waar ligt de expertise van uw kandidaat?',
             question_type=settings.QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Expertise',
             theme='q6',
@@ -208,7 +207,7 @@ class Command(BaseCommand):
         
         q7 = Question.objects.create(
             title=u'Welke werkervaring heeft uw kandidaat?',
-            frontoffice_title=u'Welke werkervaring heeft uw kandidaat?',
+            frontend_title=u'Welke werkervaring heeft uw kandidaat?',
             question_type=settings.QTYPE_MODEL_WORK_EXPERIENCE_TYPE,
             result_title=u'Werkervaring',
             theme='q7',
@@ -223,7 +222,7 @@ class Command(BaseCommand):
         
         q8 = Question.objects.create(
             title=u'Heeft uw kandidaat politieke ervaring?',
-            frontoffice_title=u'Heeft uw kandidaat politieke ervaring?',
+            frontend_title=u'Heeft uw kandidaat politieke ervaring?',
             question_type=settings.QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE,
             result_title=u'Politieke ervaring',
             theme='q8',
@@ -238,7 +237,7 @@ class Command(BaseCommand):
         
         q9 = Question.objects.create(
             title=u'Ik zet mij vooral in voor:',
-            frontoffice_title=u'Voor welke groep of groepen zet uw kandidaat zich extra in?',
+            frontend_title=u'Voor welke groep of groepen zet uw kandidaat zich extra in?',
             question_type=settings.QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Doelgroep(en) van de kandidaat',
             theme='q9',
@@ -271,7 +270,7 @@ class Command(BaseCommand):
         
         q10 = Question.objects.create(
             title=u'Ik haal mijn persoonlijke motivatie voornamelijk uit het streven naar:',
-            frontoffice_title=u'Mijn kandidaat haalt zijn persoonlijke motivatie uit het streven naar:',
+            frontend_title=u'Mijn kandidaat haalt zijn persoonlijke motivatie uit het streven naar:',
             question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
             result_title=u'Persoonlijke motivatie',
             theme='q10',
@@ -336,7 +335,7 @@ class Command(BaseCommand):
         
         q12 = Question.objects.create(
             title=u'Op welke manier speelt religie bij uw werk in de politiek?',
-            frontoffice_title=u'Op welke manier speelt religie een rol bij uw ideale kandidaat?',
+            frontend_title=u'Op welke manier speelt religie een rol bij uw ideale kandidaat?',
             question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
             result_title=u'Religie',
             theme='q12',

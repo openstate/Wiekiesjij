@@ -1,12 +1,17 @@
 from django.contrib import admin
 
-from questions.models import Question, QuestionSet, Answer
+from questions.models import Question, QuestionSet, Answer, QuestionSetQuestion
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'frontend_title', 'theme',)
 
 admin.site.register(Question, QuestionAdmin)
+    
+class QuestionSetQuestionAdmin(admin.ModelAdmin):
+    list_display = ('question', 'questionset', 'position', )
+    list_filter = ('questionset', )
+admin.site.register(QuestionSetQuestion, QuestionSetQuestionAdmin)
 
 class QuestionSetAdmin(admin.ModelAdmin):
     pass

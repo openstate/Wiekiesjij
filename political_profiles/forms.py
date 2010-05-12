@@ -14,7 +14,7 @@ from utils.formutils import TemplateForm
 from utils.widgets import DateTimePicker, HiddenDateTimePicker, DateSelectPicker, ImageWidget
 from utils.fields import NameField, AddressField, YoutubeURLField, ClearableImageField
 
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, MEDIA, PETS, CHARITIES
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, NEWSPAPER, TRANSPORT, MEDIA, PETS, CHARITIES, SMOKER, PROVINCES
 from political_profiles.models import EducationLevel, WorkExperienceSector, PoliticalExperienceType, PoliticalGoal
 from political_profiles.models import Connection, Appearance, PoliticalExperience, Education, WorkExperience, Link, Interest, ChanceryProfile, ContactProfile
 
@@ -43,12 +43,26 @@ class PoliticianProfileLifeForm(BetterForm, TemplateForm):
     '''
     PoliticianProfile admin
     '''
-    marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=MARITAL_STATUS)
+    EMPTY_OPT = ('', '------')
+    OPT_MARITAL = copy.deepcopy(MARITAL_STATUS)
+    OPT_MARITAL.insert(0, EMPTY_OPT)
+    OPT_RELIGION = copy.deepcopy(RELIGION)
+    OPT_RELIGION.insert(0, EMPTY_OPT)
+    OPT_SMOKER = copy.deepcopy(SMOKER)
+    OPT_SMOKER.insert(0, EMPTY_OPT)
+    OPT_DIET = copy.deepcopy(DIET)
+    OPT_DIET.insert(0, EMPTY_OPT)
+    OPT_PROVINCES = copy.deepcopy(PROVINCES)
+    OPT_PROVINCES.insert(0, EMPTY_OPT)
+     
+    
+    marital_status  = forms.ChoiceField(label=_('Marital Status'),choices=OPT_MARITAL, required=False)
     num_children    = forms.IntegerField(label=_('Number of Children'), required=False)
-    religion        = forms.ChoiceField(label=_('Religion'),choices=RELIGION)
+    religion        = forms.ChoiceField(label=_('Religion'),choices=OPT_RELIGION, required=False)
     #religous_group  = forms.CharField(label=_('Geloofsgemeenschap'), max_length=255, required=False)
-    smoker          = forms.CharField(label=_('Do you smoke?'), widget=forms.widgets.RadioSelect(choices=[('true', _('Yes')), ('false', _('No'))]) )
-    diet            = forms.ChoiceField(label=_(u'Are you a vegitarian?'),choices=DIET)
+    smoker          = forms.ChoiceField(label=_('Do you smoke?'), choices=OPT_SMOKER, required=False)
+    diet            = forms.ChoiceField(label=_(u'Wat is uw Dieet?'), choices=OPT_DIET, required=False)
+    province        = forms.ChoiceField(label=_(u'In welke provincie woont u?'), choices=OPT_PROVINCES, required=False)
 
 class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     '''

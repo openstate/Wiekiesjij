@@ -47,19 +47,19 @@ MEDIA  = [
         ('DISCOVERYCHANNEL', 'Discovery Channel'),
         ('NATIONALGEOGRAPHIC', 'National Geographic'),
         ('BUITENLANDSEZENDER', 'Buitenlandse zender'),
-        ('RTV_NOORD', 'RTV Noord'),
-        ('RTV_NOORD_HOLLAND', 'RTV Noord Holland'),
-        ('RTV_OOST', 'RTV Oost'),
-        ('RTV_WEST', 'RTV West'),
-        ('RTV_EEMLAND', 'RTV Eemland'),
-        ('RTV_UTRECHT', 'RTV Utrecht'),
-        ('TV_ENSCHEDE', 'TV Enschede'),
-        ('TV_AMSTERDAM', 'TV Amsterdam'),
-        ('STADSOMROEP_DENHAAG', 'Stadsomroep Den Haag'),
-        ('AT5', 'AT5'),
-        ('OOGTV', 'Oog TV'),
-        ('OMROEP_AMERSFOORT', 'Omroep Amersfoort'),
-        ('OMROEP_BRABANT', 'Omroep Brabant'),
+        # ('RTV_NOORD', 'RTV Noord'),
+        #         ('RTV_NOORD_HOLLAND', 'RTV Noord Holland'),
+        #         ('RTV_OOST', 'RTV Oost'),
+        #         ('RTV_WEST', 'RTV West'),
+        #         ('RTV_EEMLAND', 'RTV Eemland'),
+        #         ('RTV_UTRECHT', 'RTV Utrecht'),
+        #         ('TV_ENSCHEDE', 'TV Enschede'),
+        #         ('TV_AMSTERDAM', 'TV Amsterdam'),
+        #         ('STADSOMROEP_DENHAAG', 'Stadsomroep Den Haag'),
+        #         ('AT5', 'AT5'),
+        #         ('OOGTV', 'Oog TV'),
+        #         ('OMROEP_AMERSFOORT', 'Omroep Amersfoort'),
+        #         ('OMROEP_BRABANT', 'Omroep Brabant'),
         ]
 TRANSPORT  = [
         ('WALKING','Lopen'),
@@ -84,22 +84,26 @@ NEWSPAPER  = [
             ('SPITS', u'Sp!ts'),
             ('METRO', u'Metro'),
             ('NRCNEXT', u'nrc.next'),
-            ('AD_DENHAAG', u'AD Den Haag'),
-            ('TWENTSE_COURANT_TUBANTIA', u'Twentse Courant Tubantia'),
-            ('NOORDHOLLANDS_DAGBLAD', u'Noordhollands Dagblad'),
-            ('AD_AMSTERDAM', u'AD Amsterdam'),
-            ('GRONINGEN_COURANT', u'Groninger Courant'),
-            ('DAGBLAD_VH_NOORDEN', u'Dagblad van het Noorden'),
-            ('BRABANTS_DAGBLAD', u'Brabants Dagblad'),
-            ('GOOI__EN_EEMLANDER', u'Gooi- en Eemlander'),
+            # ('AD_DENHAAG', u'AD Den Haag'),
+            #             ('TWENTSE_COURANT_TUBANTIA', u'Twentse Courant Tubantia'),
+            #             ('NOORDHOLLANDS_DAGBLAD', u'Noordhollands Dagblad'),
+            #             ('AD_AMSTERDAM', u'AD Amsterdam'),
+            #             ('GRONINGEN_COURANT', u'Groninger Courant'),
+            #             ('DAGBLAD_VH_NOORDEN', u'Dagblad van het Noorden'),
+            #             ('BRABANTS_DAGBLAD', u'Brabants Dagblad'),
+            #             ('GOOI__EN_EEMLANDER', u'Gooi- en Eemlander'),
             ('AD_AMSERSFOORT', u'AD Amersfoortse Courant'),
             ('BUITENLANDSE_KRANT', 'Buitenlandse krant'),
             ('ANDERS', u'Anders'),
         ]
 DIET  = [
-        ('YES', 'Ja'),
-        ('NEE', 'Nee'),
+        ('ALL', u'Vleeseter'),
+        ('VEG', u'Vegetariër'),
         ]
+SMOKER = [
+    ('NO', u'Nee'),
+    ('YES', u'Ja'),
+]
 RELIGION = [
         ('NONE', 'Geen'),
         ('RKK', 'Rooms-Katholieke kerk'),
@@ -152,6 +156,20 @@ MARITAL_STATUS = [
         ('Single', 'Alleenstaand'),
         ]
 
+PROVINCES = [
+    ('Drenthe', 'Drenthe'),
+    ('Overijssel', 'Overijssel'),
+    ('Flevoland', 'Flevoland'),
+    ('Friesland', 'Friesland'),
+    ('Gelderland', 'Gelderland'),
+    ('Groningen', 'Groningen'),
+    ('Limburg', 'Limburg'),
+    ('Noord-Brabant', 'Noord-Brabant'),
+    ('Noord-Holland', 'Noord-Holland'),
+    ('Utrecht', 'Utrecht'),
+    ('Zeeland', 'Zeeland'),
+    ('Zuid-Holland', 'Zuid-Holland'),
+]
 class ConnectionType(models.Model):
     """
             Type of connection.
@@ -245,7 +263,8 @@ class PoliticianProfile(Profile):
     num_children    = models.PositiveIntegerField(_('Number of Children'), max_length=3, null=True, blank=True)
     religion        = models.CharField(_('Religion'), max_length=255, choices=RELIGION, blank=True, null=True)
     religious_group = models.CharField(_('Religious group'), max_length=255, blank=True, null=True)
-    smoker          = models.BooleanField(_('Smoker'), default=False)
+    smoker          = models.CharField(_('Smoker'), choices=SMOKER, max_length=255, blank=True, null=True)
+    province        = models.CharField(_('Province'), choices=PROVINCES, max_length=255, blank=True, null=True)
     diet            = models.CharField(_('Diet'), max_length=25, choices=DIET, blank=True, null=True)
     fav_news        = models.CharField(_('Favourite Newspaper'), max_length=25, choices=NEWSPAPER, blank=True, null=True)
     transport       = models.CharField(_('What is your regular method of transport'), max_length=25, choices=TRANSPORT, blank=True, null=True)

@@ -23,7 +23,7 @@ class ElectionInstancePartyAdmin(admin.ModelAdmin):
 admin.site.register(ElectionInstanceParty, ElectionInstancePartyAdmin)
 
 class ElectionInstanceQuestionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('question', 'position',)
 
 admin.site.register(ElectionInstanceQuestion, ElectionInstanceQuestionAdmin)
 
