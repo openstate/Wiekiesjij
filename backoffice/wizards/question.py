@@ -1,20 +1,17 @@
-import datetime
-
 from django.db import transaction
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 
 from utils.multipathform import Step, MultiPathFormWizard
 
-from questions.forms.types import MultipleAnswerForm, BooleanForm, MultipleChoiceForm
-from questions.forms import SelectQuestionForm, AnswerQuestionForm
+from questions.forms import AnswerQuestionForm
 from questions.models import Question
 from elections.models import Candidacy
-from questions.settings import MULTIPLE_ANSWER_TYPES, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL
+from questions.settings import MULTIPLE_ANSWER_TYPES
 from questions.settings import BACKOFFICE_QUESTION_TYPES
 
-from elections.models import ElectionInstance, ElectionInstanceParty, ElectionInstanceQuestion, ElectionInstanceQuestionAnswer
-from elections.functions import get_profile_forms, create_profile, profile_invite_email_templates, get_profile_model
+from elections.models import ElectionInstanceParty
+from elections.functions import get_profile_model
 
 class AnswerQuestion(MultiPathFormWizard):
     '''
@@ -64,7 +61,7 @@ class AnswerQuestion(MultiPathFormWizard):
                         else:
                             question_answers = answer_id
                         
-            except Exception, e:
+            except Exception:
 
                 # Otherwise we shall specify an initial value for it
                 question_answers = ''
