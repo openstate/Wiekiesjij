@@ -134,6 +134,7 @@ class BestCandidate(MultiPathFormWizard):
         self.multiply_questions = []
         candidate_ids = []
         questions_skipped = []
+        candidate_excludes = []
 
         # get list of candidate ids and create a dictionay entry for each candidate to keep array of scores
         for candidate in self.candidates:
@@ -206,15 +207,11 @@ class BestCandidate(MultiPathFormWizard):
                         candidate_scores[candidate].append({question.id: new_score})
                         
                 elif QTYPE_MODEL_PARTY == question.question_type:
-                    party_names = []
-                    for value in answer_value:
-                        party_names.append(value.name)
-                        for candidate in self.candidates:
-                            all_candidate_answers[candidate][question_id] = candidate.party().id
-                            
-                            if candidate.party() == value:
-                                
-                                candidate_scores[candidate].append({question.id: 1})
+                    party_names = [value.name for value in answer_value]
+                    for candidate in self.candidates:
+                        all_candidate_answers[candidate][question_id] = candidate.party().id        
+                        if not candidate.party() in answer_value:
+                            candidate_excludes.append(candidate)
 
                     all_visitor_answers[question_id] = party_names
 
@@ -349,14 +346,13 @@ class BestCandidate(MultiPathFormWizard):
                     if answered == False:
                         candidate_scores[candidate].append({question.id: 0})
 
-
         #Add Weighting
         num_weighted_questions = 0
         for question in all_questions:
             if str(question.id) not in questions_skipped:
                   if question.theme in self.multiply_questions:
                     num_weighted_questions = num_weighted_questions + 1
-        number_of_questions = (((num_questions -1) + num_weighted_questions ) - len(questions_skipped))
+        number_of_questions = (((num_questions - 2) + num_weighted_questions ) - len(questions_skipped))
 
         for candidate in self.candidates:
             for question in candidate_scores[candidate]:
@@ -377,7 +373,10 @@ class BestCandidate(MultiPathFormWizard):
 
         candidates_total_scores = {}
         for candidate in self.candidates:
-
+            #Skip candidates excluded based on party
+            if candidate in candidate_excludes:
+                continue
+                
             total = 0
             for question in candidate_scores[candidate]:
                for question_id, score in question.iteritems():
