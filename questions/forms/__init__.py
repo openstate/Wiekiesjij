@@ -166,7 +166,7 @@ class WorkTypeQuestionForm(BetterForm, TemplateForm):
     value = WorkExpMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
 
     class Meta:
-        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
+        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default',)}),)
     def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
@@ -212,7 +212,7 @@ class PolTypeQuestionForm(BetterForm, TemplateForm):
     value = PolExpMultipleModelChoiceField(label=_('Answer'), queryset=None, widget=widgets.CheckboxSelectMultiple)
 
     class Meta:
-        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default','party-selection')}),)
+        fieldsets = (('main', {'fields': ('value',), 'legend': '', 'classes': ('default',)}),)
     def __init__(self, queryset=None, empty_label=_('Geen voorkeur'), *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
