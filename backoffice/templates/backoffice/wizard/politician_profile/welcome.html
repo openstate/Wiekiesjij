@@ -7,25 +7,16 @@
 
 {% block cols %}
 <div class="col size1of2">
-    <div class="mod intro">
-    	{% comment %}
-        <h2>{% trans 'Welcome' %} {{ politician.name }}</h2>
-        <p>{% trans "Youve been invited to create a profile for Wiekiesjij for the" %} {{ election_event.name }}.</p>
-        {% endcomment %}
-        
-        <h2>{%trans 'Welkom' %} </h2>
-        <p>{% trans "Hartelijk dank voor uw deelname aan Wiekiesjij. Hier kunt u uw profiel aanmaken voor de Wiekiesjij stemwijzer. Wiekiesjij is de voorkeurstemhulp van Nederland en is in de afgelopen verkiezingen meer dan 2 miljoen keer gebruikt door de Nederlandse kiezers. Door het invullen van uw profiel en het beantwoorden van een aantal vragen zijn wij in staat om de bezoekers te koppelen aan hun favoriete kandidaten. Op die manier worden de kiezers en de individuele kandidaten dichter tot elkaar gebracht." %}</p>
-		<p>{% trans "Het invullen van de vragenwizard zal 20-30 minuten duren afhankelijk van de uitgebreidheid van de gegevens die u op uw profiel kwijt wil. U kunt altijd terugkeren naar deze wizard door de link in de e-mail te volgen om uw gegevens aan te passen of aan te vullen." %}</p>
-		<p>{% trans "Heeft u een vraag over de invulwizard of over wiekiesjij, kunt u een email sturen naar " %}<a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>.</p>
-		<p>{% trans "Veel succes met het invullen van de vragenwizard. Druk op ‘klik hier om de registratie te starten’ om met het invullen te beginnen." %}</p>
-        <a href="{% url bo.politician_profile_setup eip_id user_id %}" class="btn next">{% trans "Click here to start the registration wizard" %}</a>
+    <div class="mod intro">        
+        <h2>Welkom</h2>
+		<p>Hartelijk dank voor uw deelname aan Wiekiesjij. U kunt hier uw profiel aanmaken voor de Wiekiesjij stemwijzer. Wiekiesjij is de voorkeurstemhulp van Nederland en is in de afgelopen verkiezingen meer dan een miljoen keer gebruikt door de Nederlandse kiezers. Door het invullen van uw profiel en het beantwoorden van een aantal vragen zijn wij in staat om de bezoekers te koppelen aan hun favoriete kandidaten.</p>
+		<p>Het invullen van de vragenwizard zal ongeveer 45 minuten duren afhankelijk van de uitgebreidheid van de gegevens die u op uw profiel kwijt wil. U kunt altijd terugkeren naar deze wizard door naar <a href="{% url fo.login %}">www.wiekiesjij.nl/{% url fo.login %}</a> te gaan en uw e-mailadres en gekozen wachtwoord in te vullen.</p>
+		<p>Heeft u een vraag over de invulwizard of over Wiekiesjij, stuur dan vooral een e-mail naar <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a></p>
+		<p>Veel succes met het invullen van de vragenwizard. Druk op ‘klik hier om de registratie te starten’ om met het invullen te beginnen.</p>
+        <a href="{% url bo.politician_profile_setup eip_id user_id %}" class="btn next">Klik hier om de registratie te starten</a>
     </div>
 </div>
 <div class="col size1of2">
-        {% comment %}
-	<div class="mod intro-movie">
-    	<object width="452" height="279"><param name="movie" value="http://www.youtube-nocookie.com/v/QzU7Zxi5Pfc&hl=en_US&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube-nocookie.com/v/QzU7Zxi5Pfc&hl=en_US&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="452" height="279"></embed></object>
-        </div>
-        {% endcomment %}
+		
 </div>
 {% endblock cols %}
