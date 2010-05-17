@@ -19,10 +19,8 @@
 
          Met vriendelijke groet,
 
-
-
-        Stef van Grieken
-        Het Nieuwe Stemmen
+         Lenneke van Mameren
+         Projectleider Wiekiesjij
    
 
 {% endblock content %}
