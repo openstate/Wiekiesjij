@@ -24,7 +24,7 @@
 
 {% block sidebar %}
   Helpdesk
-	Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via 088-7000125
+	Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via 06-53327743
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:

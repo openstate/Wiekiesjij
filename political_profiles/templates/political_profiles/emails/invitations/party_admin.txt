@@ -5,33 +5,34 @@
 
     De komende periode zult u volop campagne voeren zodat uw partij met een zo groot mogelijk aantal zetels aan een nieuwe termijn kan starten. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.
 
-    Uw gemeente zal voor de komende verkiezingen aandacht schenken aan uw partij en kandidaten met Wiekiesjij. Wiekiesjij is een stemwijzer voor individuele politici in plaats van politieke partijen. Wiekiesjij stelt een aantal vragen aan de bezoekers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat. Hiermee pogen wij en uw gemeente om de raadsleden en de kandidaten beter bekend te maken bij het (jongere) publiek.
+    Voor de Tweede Kamerverkiezingen zal dit jaar Wiekiesjij weer worden ingezet. Met Wiekiesjij geven wij de individuele kandidaten die uw partij gekozen heeft een manier om zichzelf te presenteren. Wiekiesjij is een stemwijzer voor individuele politici in plaats van politieke partijen. Wiekiesjij stelt een aantal vragen aan de bezoekers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat. Hiermee pogen wij de kandidaten beter bekend te maken bij het (jongere) publiek.
 
-    Om Wiekiesjij goed te laten werken worden alle kandidaten die uw partij heeft vastgesteld voor de gemeenteraadsverkiezingen uitgenodigd. Om deze uitnodiging te kunnen versturen verzoeken wij u om via uw beheerspagina ons uw kandidatenlijst en email adressen door te geven.
+     Om Wiekiesjij goed te laten werken worden alle kandidaten die uw partij heeft vastgesteld voor de verkiezingen uitgenodigd. Om deze uitnodiging te kunnen versturen verzoeken wij u om via uw beheerspagina ons uw kandidatenlijst en email adressen door te geven.
 
-    Op deze beheerderspagina kunt u ook het profiel van uw partij dat in Wiekiesjij wordt getoond aanpassen. Zo kunt u uw partijprogramma, speerpunten en social networks binnen Wiekiesjij aanbieden.
+    Op deze beheerderspagina kunt u ook het profiel van uw partij dat in Wiekiesjij wordt getoond aanpassen. Zo kunt u uw partijprogramma, speerpunten, youtube film en social networks binnen Wiekiesjij aanbieden.
 
-    U kunt uw beheerspagina vinden via: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
+        U kunt uw beheerspagina vinden via: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-    Wiekiesjij is eerder succesvol voor de Tweede Kamer, Provinciale en Europese verkiezingen ingezet en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor de campagne, specifiek voor de doelgroep jongeren.
+        Wiekiesjij is eerder succesvol voor de Tweede Kamer, Provinciale, Gemeente en Europes verkiezingen ingezet en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor de campagne, specifiek voor de doelgroep jongeren.
 
-    Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de kandidatenlijst met de benodigde contactgegevens tegemoet! Voor eventuele vragen kunt u altijd mailen of bellen met onze helpdesk.
+        Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de kandidatenlijst met de benodigde contactgegevens tegemoet! In de bijlage van deze email kunt u een handleiding waarin de procedure nogmaals wordt uitgelegd. Voor eventuele vragen kunt u altijd mailen onze helpdesk. Omdat wij geen subsidie hebben ontvangen voor Wiekiesjij kunnen alleen partijcontactpersonen telefonische contact opnemen met een van onze vrijwilligers. Kandidaten kunnen zich richten tot support@wiekiesjij.nl. Wij wensen u heel veel succes met uw campagne.
 
-    Met vriendelijke groet,
+         Met vriendelijke groet,
 
 
 
-    Lenneke van Mameren
-    Projectleider Wiekiesjij
+        Stef van Grieken
+        Het Nieuwe Stemmen
+   
 
 {% endblock content %}
 
 
 {% block sidebar %}  
     Helpdesk
-	Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via 088-7000125
+	Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via 06-53327743
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de partijgegevens:
-	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_partijen.pdf
+	http://{{ domain }}/media/static/backoffice/manuals/handleiding_setup_partijen_tweedekamer.pdf
 {% endblock sidebar %}
