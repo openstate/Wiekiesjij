@@ -284,7 +284,7 @@ class Command(BaseCommand):
         q10_answers = [
             ("Een betere wereld","Een betere wereld"),
             ("Een sterker en beter Nederland","Een sterker en beter Nederland"),
-            ("Het versterken van zijn/haar regio","Het versterken van mijn regio")
+            ("Het versterken van zijn/haar regio","Het versterken van mijn regio"),
             ("Een krachtige partij","Een krachtige partij"),
             ("Persoonlijke ontplooiing","Persoonlijke ontplooiing"),
             ("Anders","Anders"),
