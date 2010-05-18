@@ -26,6 +26,7 @@
                 {% endif %}
             </div>
             <div class="popularityMeter">
+				{% comment %}
                 <div class="meter">
                     <div class="active" style="height: {{ eip.party.popularity|default:0 }}%">
                     	{{ eip.party.popularity|default:0 }}%
@@ -35,6 +36,8 @@
                 <span class="bottom">0%</span>
                 <span class="total">{{ eip.party.popularity|default:0 }}%</span>
                 <p class="expl">* <a href="#expl">{% trans "Toelichting" %}</a></p>
+				{% endcomment %}
+				<p class="empty">{% trans "Binnenkort vind je hier de populariteitsmeter." %}</p>
             </div>
             <p>
                 {{ eip.party.description }}
