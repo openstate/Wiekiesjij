@@ -36,7 +36,7 @@ class Command(BaseCommand):
             name='Tweede kamer',
             region='Nederland',
             level='landelijk',
-            abbreviation='tweedekamer',
+            abbreviation='Tweede kamer',
             email='info@wiekiesjij.nl',
             street='Nieuwe boteringenstraat',
             house_num='30',
