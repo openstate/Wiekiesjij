@@ -17,7 +17,7 @@ class Command(BaseCommand):
             "Bij defensie",
             "In het onderwijs",
             "In de politiek of openbaar bestuur",
-            "Bij politie of justitie",
+            "Bij de politie of justitie",
             "In de zorg",
         ]
         for sector in work_sectors:

@@ -19,3 +19,9 @@
         <a href="{% url bo.politician_profile_education eip_id user_id %}" class="cancel">{% trans "Cancel" %}</a>
 	</div>
 {% endblock buttons %}
+
+{% block help-message %}
+	{% blockwrap template='helptext' %}
+		Indien uw vervolgopleiding niet in de lijst staat, kies dan het niveau-equivalent
+    {% endblockwrap %}
+{% endblock help-message %}

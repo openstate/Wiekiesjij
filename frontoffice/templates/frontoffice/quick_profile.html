@@ -41,6 +41,10 @@
                     <th>{% trans 'Gender' %}</th>
                     <td>{{ profile.get_gender_display }}</td>
                 </tr>
+				<tr>
+					<th>{% trans "Provincie" %}</th>
+					<td>{{ profile.get_province_display|default:_('Not known') }}</td>
+				</tr>
                 <tr>
                     <th>{% trans 'Marital status' %}</th>
                     <td>{{ profile.get_marital_status_display|default:_('Not known') }}</td>

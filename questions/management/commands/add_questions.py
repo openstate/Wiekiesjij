@@ -70,8 +70,8 @@ class Command(BaseCommand):
         print "Added basic question 2"
         
         q3 = Question.objects.create(
-            title=u'Welke partijen zitten in uw regeringscoalitie (kies minimaal 3 partijen):',
-            frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
+            title=u'Welke partijen zitten in uw regeringscoalitie:',
+            frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen:',
             question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Regeringscoalitie',
             theme='q3',
@@ -319,11 +319,12 @@ class Command(BaseCommand):
         )
         Answer.objects.create(
             question=q11,
-            value=u'Wetenschappelijk Onderwijs',
-            meta=u'Universitair',
-            frontoffice_value=u'Wetenschappelijk Onderwijs',
+            value=u'Middelbaar Beroepsonderwijs',
+            meta=u'MBO',
+            frontoffice_value=u'Middelbaar Beroepsonderwijs',
             position=2,
         )
+
         Answer.objects.create(
             question=q11,
             value=u'Hoger Beroepsonderwijs',
@@ -333,9 +334,9 @@ class Command(BaseCommand):
         )
         Answer.objects.create(
             question=q11,
-            value=u'Middelbaar Beroepsonderwijs',
-            meta=u'MBO',
-            frontoffice_value=u'Middelbaar Beroepsonderwijs',
+            value=u'Wetenschappelijk Onderwijs',
+            meta=u'Universitair',
+            frontoffice_value=u'Wetenschappelijk Onderwijs',
             position=4,
         )
         print "Added basic question 11"
@@ -355,7 +356,7 @@ class Command(BaseCommand):
         )
         q12_answers = [
             ("Religie is leidend voor zijn/haar politiek handelen", "Religie is leidend voor mijn politiek handelen"),
-            ("Religie is inspiratiebron voor zijn/haar politiek handelen", "Religie is inspiratiebron voor mijn politiek handelen"),
+            ("Religie is een inspiratiebron voor zijn/haar politiek handelen", "Religie is een inspiratiebron voor mijn politiek handelen"),
             ("Religie inspireert hem/haar persoonlijk", "Religie inspireert mij persoonlijk"),
             ("Religie speelt voor hem/haar geen rol", "Religie speelt voor mij geen rol"),
         ]

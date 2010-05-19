@@ -97,7 +97,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
 
     name = forms.CharField(label=_('Name'), required=False)
     election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name')
-    region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)
+    #region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS), required=False)
     start_age = forms.IntegerField(label=_('Lowest Age'), required=False)
     end_age = forms.IntegerField(label=_('Oldest Age'), required=False)

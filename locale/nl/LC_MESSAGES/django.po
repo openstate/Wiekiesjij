@@ -2544,7 +2544,7 @@ msgstr "SMS Originator"
 #: political_profiles/forms.py:295
 #: political_profiles/models.py:446
 msgid "Location"
-msgstr "Lokatie"
+msgstr "Locatie"
 
 #: elections/models.py:445
 #: sms/models.py:82
@@ -2565,7 +2565,7 @@ msgstr "Raad evenement"
 
 #: elections/templates/elections/_council_event.html:7
 msgid "Locatie"
-msgstr "Lokatie"
+msgstr "Locatie"
 
 #: elections/templates/elections/events.html:11
 #: elections/templates/elections/iframe.html:23

@@ -63,7 +63,7 @@
 <!-- FAVORITE TAB -->
 
             <div class="bd favs">
-                <table>                
+                <table>
                     <tr>
                         <th>{% trans 'Religion' %}</th>
                         <td>{{ profile.get_religion_display|default:_('Not known') }}<br/>
@@ -121,7 +121,7 @@
                         <td>{{ profile.fav_sport|default:'' }}</td>
                     </tr>
                     <tr class="last">
-                        <th>{% trans 'Club' %}</th>
+                        <th>{% trans 'Voetbalclub' %}</th>
                         <td>{{ profile.fav_club|default:'' }}</td>
                     </tr>
                 </table>

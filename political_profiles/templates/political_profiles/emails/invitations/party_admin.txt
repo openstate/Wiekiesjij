@@ -28,7 +28,7 @@
 
 {% block sidebar %}  
     Helpdesk
-	Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via 06-53327743
+	Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via http://www.hetnieuwestemmen.nl/wiekiesjij-1/ of support@wiekiesjij.nl.
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de partijgegevens:

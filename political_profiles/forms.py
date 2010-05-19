@@ -87,7 +87,7 @@ class PoliticianProfileExtraForm(BetterForm, TemplateForm):
     fav_pet         = forms.ChoiceField(label=_('... Pet?'),choices=OPT_PETS, required=False)
     hobby           = forms.CharField(label=_('... Hobby?'),max_length=255, required=False )
     fav_sport       = forms.CharField(label=_('... Sport?'), max_length=255, required=False )
-    fav_club        = forms.CharField(label=_('... Sport Club?'), max_length=255, required=False)
+    fav_club        = forms.CharField(label=_('... Voetbal Club?'), max_length=255, required=False)
     
 
 class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
