@@ -1193,7 +1193,7 @@
 					}
 			
 			
-			.buttons a.huge-btn {
+			.buttons .huge-btn {
 				display:block;
 				height:85px;
 				width:260px;
@@ -1217,6 +1217,11 @@
 				}
 			.buttons a.start-test {
 				background:url(../img/take-test.gif) left top no-repeat;
+				width:400px;
+				height:110px;
+				}
+			.buttons span.start-test {
+				background:url(../img/take-test-disabled.gif) left top no-repeat;
 				width:400px;
 				height:110px;
 				}
