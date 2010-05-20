@@ -297,11 +297,11 @@ def politician_profile_filter(request):
 
             if form.cleaned_data['smoker'] != '---------' and form.cleaned_data['smoker']:
                 if form.cleaned_data['smoker'] == '1':
-                    filtered_politicians = filtered_politicians.filter(smoker=1)
+                    filtered_politicians = filtered_politicians.filter(smoker='YES;')
                     new_path = _new_url(path, 'smoker', form.cleaned_data['smoker'])
                     filters.append((_('Smoker'), _('Yes'), new_path))
                 else:
-                    filtered_politicians = filtered_politicians.filter(smoker=0)
+                    filtered_politicians = filtered_politicians.filter(smoker='NO')
                     new_path = _new_url(path, 'smoker', form.cleaned_data['smoker'])
                     filters.append((_('Smoker'), _('No'), new_path))
 

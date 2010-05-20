@@ -104,7 +104,7 @@ def _get_gender_data(election_instance_id):
 
 def _get_smoke_data(election_instance_id):
     query = """
-        SELECT eip.id, SUM(CASE p.smoker WHEN 1 THEN 1 ELSE 0 END) AS smoker_count, SUM(CASE p.smoker WHEN 0 THEN 1 ELSE 0 END) AS nonsmoker_count
+        SELECT eip.id, SUM(CASE p.smoker WHEN 'YES' THEN 1 ELSE 0 END) AS smoker_count, SUM(CASE p.smoker WHEN 'NO' THEN 1 ELSE 0 END) AS nonsmoker_count
         FROM elections_electioninstanceparty eip
         INNER JOIN elections_candidacy ec ON eip.id = ec.election_party_instance_id
         INNER JOIN political_profiles_politicianprofile p ON p.user_id = ec.candidate_id

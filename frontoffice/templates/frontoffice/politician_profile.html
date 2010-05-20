@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                         <th>{% trans 'Smoker' %}</th>
-                        <td>{% if profile.smoker %}{% trans 'smoker' %}{% else %}{% trans 'non-smoker' %}{% endif %}</td>
+                        <td>{{ profile.get_smoker_display|default:_('Not known') }}</td>
                     </tr>
                     <tr>
                         <th>{% trans 'Vegitarian' %}</th>
