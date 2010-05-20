@@ -28,5 +28,5 @@
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
-	http://{{ domain }}/media/static/backoffice/manuals/handleiding_setup_politici_tweedekamer
+	http://{{ domain }}/media/static/backoffice/manuals/handleiding_setup_politici_tweedekamer.pdf
 {% endblock sidebar %}
