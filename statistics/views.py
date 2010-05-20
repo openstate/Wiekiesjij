@@ -125,7 +125,7 @@ def _get_smoke_data(election_instance_id):
 
 def _get_vegetarian_data(election_instance_id):
     query = """
-        SELECT eip.id, SUM(CASE p.diet WHEN 'NEE' THEN 1 ELSE 0 END) AS nonveggie_count, SUM(CASE p.diet WHEN 'YES' THEN 1 ELSE 0 END) AS veggie_count
+        SELECT eip.id, SUM(CASE p.diet WHEN 'ALL' THEN 1 ELSE 0 END) AS nonveggie_count, SUM(CASE p.diet WHEN 'VEG' THEN 1 ELSE 0 END) AS veggie_count
         FROM elections_electioninstanceparty eip
         INNER JOIN elections_candidacy ec ON eip.id = ec.election_party_instance_id
         INNER JOIN political_profiles_politicianprofile p ON p.user_id = ec.candidate_id
