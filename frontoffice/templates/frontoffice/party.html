@@ -67,8 +67,10 @@
             <div class="ballotPosition">
             	<a href="{% url fo.election eip.id %}">
             	{% blocktrans with eip.party.name|title as party_name and eip.position as position and eip.election_instance.name as municipality %}
-                    {{ party_name }} is list {{ position }} in municipality {{ municipality }}
+                    
+                    {{ party_name }} is Lijst {{ position }} voor de Tweede Kamer Verkiezingen 2010
                 {% endblocktrans %}
+                {#{{ party_name }} is list {{ position }} in municipality {{ municipality }}#}
                 </a>
             </div>
         </div>
@@ -166,7 +168,7 @@
     
     <p class="explanation"><a name="expl">
         * {% blocktrans %}
-            De populariteit van een partij is de gemiddelde populariteit van haar kandidaten in verhouding tot de andere partijen in de regio.
+            De populariteit van een partij is de gemiddelde populariteit van haar kandidaten in verhouding tot de andere partijen. <!--in de regio.-->
         {% endblocktrans %}
         </a>
     </p>

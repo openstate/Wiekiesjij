@@ -131,8 +131,9 @@
 			{% for candidacy in profile.user.elections.all %}
 				<a href="{% url fo.election candidacy.election_party_instance.id %}">
 				{% blocktrans with profile.first_name as name and candidacy.position as position and candidacy.election_party_instance.party.abbreviation as party and candidacy.election_party_instance.election_instance.name as region %}
-	                {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }}
+	                {{ name }} is  <span>nummer {{ position }}</span> op de lijst van <span>{{ party }}</span> voor de Tweede Kamer Verkiezingen 2010
 	            {% endblocktrans %}</a><br />
+                {# {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }} #}
 			{% endfor %}
             
             </a>
