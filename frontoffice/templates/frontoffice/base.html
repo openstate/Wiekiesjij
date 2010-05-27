@@ -43,7 +43,7 @@
             <ul class="tabs">
             {% block menu %}
                 {% if request.session.ElectionInstance %}
-                <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% url fo.match_welcome request.session.ElectionInstance.id %}">{% trans 'Take the test' %}</a></li>
+                {#<li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% url fo.match_welcome request.session.ElectionInstance.id %}">{% trans 'Take the test' %}</a></li>#}
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
                 <li class="{% block menu_statistics %}{% endblock %}"><a href="{% url statistics.index %}">{% trans 'Statistics' %}</a></li>
                 {% endif %}
