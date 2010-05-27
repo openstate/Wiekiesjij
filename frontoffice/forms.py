@@ -110,7 +110,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     work_exp_years = forms.IntegerField(label=_('Mimimum years of work experience'), required=False)
     #smoker = forms.BooleanField(label=_('Smoker'), widget=forms.widgets.NullBooleanSelect(), required=False)
     smoker = forms.ChoiceField(label=_('Smoker'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
-    diet = forms.ChoiceField(choices=DIET, label=_(u'Vegitariër'), required=False)
+    diet = forms.ChoiceField(choices=DIET, label=_(u'Vegetariër'), required=False)
     goals = forms.CharField(label=_('Goals'), required=False)
 
 
