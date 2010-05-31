@@ -354,6 +354,9 @@ class BestCandidate(MultiPathFormWizard):
                     num_weighted_questions = num_weighted_questions + 1
         number_of_questions = (((num_questions - 2) + num_weighted_questions ) - len(questions_skipped))
 
+		if number_of_questions < 1:
+			number_of_questions = 1
+
         for candidate in self.candidates:
             for question in candidate_scores[candidate]:
                 for question_id, score in question.iteritems():
