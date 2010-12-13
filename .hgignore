@@ -3,3 +3,4 @@ dev.db
 media/
 tmp/
 *.pyc
+env/
