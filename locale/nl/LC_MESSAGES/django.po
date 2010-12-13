@@ -1997,7 +1997,7 @@ msgstr "Welke modules wilt u aan zetten voor deze instantie?"
 
 #: elections/forms.py:150
 msgid "Insert the name of the municipality here."
-msgstr "Vul de naam van de gemeente hier in."
+msgstr "Vul de naam van de provincie hier in."
 
 #: elections/forms.py:151
 #: elections/models.py:19
@@ -2010,7 +2010,7 @@ msgstr "Regio"
 
 #: elections/forms.py:151
 msgid "Probably the same as the name of your municipality."
-msgstr "Waarschijnlijk dezelfde naam als uw gemeente"
+msgstr "Waarschijnlijk dezelfde naam als uw provincie"
 
 #: elections/forms.py:152
 #: elections/models.py:20

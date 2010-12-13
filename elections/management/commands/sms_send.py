@@ -29,7 +29,7 @@ class Command(BaseCommand):
                         send_email(
                                 'Credits Negative -- Error',
                                 'info@wiekiesjij.nl',
-                                'bmcmahon@gmail.com',
+                                'exceptions@getlogic.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                         )

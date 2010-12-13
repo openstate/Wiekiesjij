@@ -23,7 +23,7 @@ def credit_left():
         send_email(
                 'Credits Negative -- IMPORTANT',
                 'info@wiekiesjij.nl',
-                'bmcmahon@gmail.com',
+                'exceptions@getlogic.nl',
                 {'message': message },
                 {'plain': 'elections/credits_low.txt'},
         )
@@ -37,7 +37,7 @@ def credit_left():
         send_email(
                     'Credits Low',
                     'info@wiekiesjij.nl',
-                    'bmcmahon@gmail.com',
+                    'exceptions@getlogic.nl',
                     {'message': message },
                     {'plain': 'elections/credits_low.txt'},
         )

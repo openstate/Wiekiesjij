@@ -86,7 +86,7 @@ class Council(models.Model):
                     send_email(
                                 _('A Councils Credit is Low'),
                                 'info@wiekiesjij.nl',
-                                'bmcmahon@gmail.com',
+                                'exceptions@getlogic.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                     )
@@ -101,7 +101,7 @@ class Council(models.Model):
                     send_email(
                                 _('Your Credit is Low'),
                                 'info@wiekiesjij.nl',
-                                'bmcmahon@gmail.com',
+                                'exceptions@getlogic.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                     )

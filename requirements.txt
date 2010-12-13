@@ -1,4 +1,4 @@
-Django==1.1.1
+Django==1.2.3
 django-debug-toolbar==0.8.1
 django-extensions==0.4.1
 django-form-utils==0.1.6
@@ -6,13 +6,14 @@ python-dateutil
 monthdelta
 feedparser==4.1
 django-pagination==1.0.5
-
-
-
+sorl-thumbnail==3.2.5
+South==0.7.3
+django-staticfiles==0.3.2
 
 # Source installs
--e hg+https://MrOxiMoron@bitbucket.org/MrOxiMoron/south/@4c830d13ad151db3e8ca184662183e737e4a2b6f#egg=South-tip
--e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
+
+#-e hg+https://MrOxiMoron@bitbucket.org/MrOxiMoron/south/@4c830d13ad151db3e8ca184662183e737e4a2b6f#egg=South-tip
+#-e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
 -e hg+https://bitbucket.org/ubernostrum/django-registration/@073835a4269f13fc97cbe377677cf5fd4f52e930#egg=django_registration-tip
 -e svn+http://django-tagging.googlecode.com/svn/trunk/#egg=tagging
--e hg+https://bitbucket.org/jezdez/django-staticfiles/@6f803ec3df13df01d5c7192577861b5574537a4d#egg=django-staticfiles
+#-e hg+https://bitbucket.org/jezdez/django-staticfiles/@6f803ec3df13df01d5c7192577861b5574537a4d#egg=django-staticfiles

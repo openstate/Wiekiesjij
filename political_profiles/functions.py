@@ -1,6 +1,6 @@
 from utils.unicode_csv import UnicodeReader
 from django.conf import settings
-from django.forms.fields import email_re
+from django.core.validators import email_re
 from datetime import timedelta, datetime, date
 import monthdelta
 from dateutil import relativedelta

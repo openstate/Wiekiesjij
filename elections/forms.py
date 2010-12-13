@@ -147,9 +147,9 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
 
-    name = forms.CharField(help_text=_('Insert the name of the municipality here.'))
-    region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your municipality.'))
-    level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a municipality election, the level would be Municipality.'))
+    name = forms.CharField(help_text=_('Insert the name of the province here.'))
+    region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your province.'))
+    level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a province election, the level would be Province.'))
     question_set = forms.ModelChoiceField(label=_('Question set'), queryset=QuestionSet.objects.all(), empty_label=_('(None)'), help_text=_('The question set to use for this election instance'))
     
     class Meta:

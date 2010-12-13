@@ -79,7 +79,7 @@ MIDDLEWARE_CLASSES = (
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'frontoffice.middleware.ElectionInstanceMiddleware',
+    'frontoffice.middleware.SubdomainMiddleware'
 )
 
 ROOT_URLCONF = 'urls'
@@ -188,6 +188,8 @@ ELECTIONS_ELECTION_INSTANCE_ID = 1
 WIZARD_TIMEOUT = False
 WIZARD_KEEP_DATA = False
 WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 if DEBUG and DEBUG_TOOLBAR:
