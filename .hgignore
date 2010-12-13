@@ -4,3 +4,4 @@ media/
 tmp/
 *.pyc
 env/
+local_settings.py
