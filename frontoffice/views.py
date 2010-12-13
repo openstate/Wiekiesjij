@@ -186,33 +186,30 @@ def politician_profile_filter(request):
         path = request.get_full_path()
         region_filtered = False
         filters = []
-        
-        
-        region_id = request.session['ElectionInstance']['id']
 
-        # if not request.GET and 'ElectionInstance' in request.session:
-        #             return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
+        if not request.GET and 'ElectionInstance' in request.session:
+            return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
 
         if form.is_valid():
             # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
 
-            if region_id: #form.cleaned_data['region'] != '---------' and form.cleaned_data['region']:
-                election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=region_id)
+            if form.cleaned_data['region'] != '---------' and form.cleaned_data['region']:
+                election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=form.cleaned_data['region'].id)
                 eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
                 elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
                 candidates = User.objects.filter(elections__in=elections_candidates)
                 politicians = PoliticianProfile.objects.filter(user__in=candidates).order_by('?')
                 filtered_politicians = politicians
 
-                #new_path = _new_url(path, 'region', form.cleaned_data['region'].id)
-                region_filtered = request.session['ElectionInstance']['name']
+                new_path = _new_url(path, 'region', form.cleaned_data['region'].id)
+                region_filtered = form.cleaned_data['region'].name
 
-                #filters.append((_('Region'), form.cleaned_data['region'].name, new_path))
+                filters.append((_('Region'), form.cleaned_data['region'].name, new_path))
 
-                #sess = {'id': form.cleaned_data['region'].id, 'name': form.cleaned_data['region'].name}
-                #request.session['ElectionInstance'] = sess
+                sess = {'id': form.cleaned_data['region'].id, 'name': form.cleaned_data['region'].name}
+                request.session['ElectionInstance'] = sess
 
             if form.cleaned_data['name']:
                 name_filter = None
