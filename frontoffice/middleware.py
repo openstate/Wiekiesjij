@@ -52,4 +52,4 @@ class SubdomainMiddleware:
             if ei_id:
                 request.session['ElectionInstance'] = {'id': ei_id, 'name': ei_name}
                 url = reverse('fo.match_welcome', kwargs={'election_instance_id': ei_id})
-                return HttpResponseRedirect('http://%s%s' % (domain, url))
+                return HttpResponseRedirect('http://www.%s%s' % (domain, url))
