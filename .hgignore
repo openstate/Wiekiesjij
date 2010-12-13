@@ -2,3 +2,4 @@ syntax: glob
 dev.db
 media/
 tmp/
+*.pyc
