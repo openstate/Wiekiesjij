@@ -554,7 +554,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
             else:
                 questions_dict[key]['doubled'] = False
 
-    num_questions = len(visitors_answer) -1 - skipped + weighted
+    num_questions = len(visitors_answer) -2 - skipped + weighted
     for key in questions_dict.keys():
 
         question = questions_dict[key]['question']

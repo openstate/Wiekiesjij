@@ -119,7 +119,7 @@ class Command(BaseCommand):
         
         
         q4 = Question.objects.create(
-            title=u'mijn expertise ligt op het gebied van:',
+            title=u'Mijn expertise ligt op het gebied van:',
             frontend_title=u'Waar ligt de expertise van uw kandidaat?',
             question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Expertise',
@@ -201,7 +201,7 @@ class Command(BaseCommand):
         q7 = Question.objects.create(
             title=u'Ik zet mij vooral in voor:',
             frontend_title=u'Voor welke groep of groepen zet uw kandidaat zich extra in?',
-            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
+            question_type=settings.QTYPE_NORM_POLONECHOICE_VISONECHOICE,
             result_title=u'Doelgroep(en) van de kandidaat',
             theme='q7',
             has_no_preference=True,
@@ -232,7 +232,7 @@ class Command(BaseCommand):
         q8zh = Question.objects.create(
             title=u'Ik woon in de regio:',
             frontend_title=u'In welke regio woont uw ideale kandidaat?',
-            question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Regio van de kandidaat',
             theme='q8',
             has_no_preference=True,
@@ -267,10 +267,10 @@ class Command(BaseCommand):
         q8lm = Question.objects.create(
             title=u'Ik woon in de regio:',
             frontend_title=u'In welke regio woont uw ideale kandidaat?',
-            question_type=settings.QTYPE_NORM_POLONECHOICE_VISMULTICHOICE,
+            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Regio van de kandidaat',
             theme='q8',
-            has_no_preference=False,
+            has_no_preference=True,
         )
         QuestionSetQuestion.objects.create(
                 question=q8lm,

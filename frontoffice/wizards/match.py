@@ -283,7 +283,7 @@ class BestCandidate(MultiPathFormWizard):
                     all_visitor_answers[question_id] = answer_value
                     for value in answer_value:
 
-                        for candidate in self.candidates:
+                        for candidate in self.candidates.all():
                             all_candidate_answers[candidate][question_id] = candidate.religion
                             if candidate.religion == value:
                                 candidate_scores[candidate].append({question.id: 1})
@@ -331,11 +331,22 @@ class BestCandidate(MultiPathFormWizard):
                     self.multiply_questions = answer_value[0]
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
-                    pass
+                    all_visitor_answers[question_id] = [a.id for a in answer_value]
+                    queryset = self.candidates.all()
+                    for a in answer_value:
+                        queryset |= queryset.filter(work__sector=a)    
+                    for candidate in queryset:
+                        candidate_scores[candidate].append({question.id: 1})
+                        all_candidate_answers[candidate][question_id] = list(set([s.sector_id for s in candidate.work.all()]))
+                        
                 elif QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE == question.question_type:
-                    pass
-                else:
-                    pass
+                    all_visitor_answers[question_id] = [a.id for a in answer_value]
+                    queryset = self.candidates.all()
+                    for a in answer_value:
+                        queryset |= queryset.filter(political__type=a)    
+                    for candidate in queryset:
+                        candidate_scores[candidate].append({question.id: 1})
+                        all_candidate_answers[candidate][question_id] = list(set([s.type_id for s in candidate.political.all()]))
 
                 # fill out list with default score of 0 for each candidate, if not already there
                 for candidate in self.candidates:
@@ -415,7 +426,6 @@ class BestCandidate(MultiPathFormWizard):
         for candidate, score in sorted_candidates[:5]:
 
             candidate_ans = CandidateAnswers()
-            candidate_ans.save()
             candidate_ans.candidate = candidate.user
             candidate_ans.candidate_answers = json.dumps(all_candidate_answers[candidate])
             candidate_ans.candidates_score = candidates_total_scores[candidate]
@@ -428,7 +438,7 @@ class BestCandidate(MultiPathFormWizard):
                 send_email(
                             'Error: score more than 100 in results',
                             'info@wiekiesjij.nl',
-                            'exceptions+wkjwizard@accepte.nl',
+                            'exceptions+wkjwizard@getlogic.nl',
                             {'hash': new_visitor.hash, 'real_score': real_score},
                             {'plain': 'questions/score_error.txt'},
                 )

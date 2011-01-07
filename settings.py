@@ -206,7 +206,7 @@ if DEBUG and DEBUG_TOOLBAR:
     )
     
     DEBUG_TOOLBAR_CONFIG = {
-       'INTERCEPT_REDIRECTS': False,
+       'INTERCEPT_REDIRECTS': True,
     }
     
     DEBUG_TOOLBAR_PANELS = (

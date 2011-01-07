@@ -4,7 +4,7 @@
     If no user is logged in, no comments can be made.
 """
 
-__author__="jan.harkema@accepte.nl" #Little ego trippin'
+__author__="jan.harkema@getlogic.nl" #Little ego trippin'
 
 from authorized_comments.models import AuthorizedComment
 from authorized_comments.forms import AuthorizedCommentForm
