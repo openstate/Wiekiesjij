@@ -80,6 +80,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'frontoffice.middleware.SubdomainMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -126,6 +127,7 @@ INSTALLED_APPS = (
     'registration',
     'opensocial',
     'statistics',
+    'debug_toolbar',
 )
 
 COMMENTS_APP = 'authorized_comments'
@@ -175,51 +177,4 @@ WIZARD_TIMEOUT = False
 WIZARD_KEEP_DATA = False
 WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-if DEBUG and DEBUG_TOOLBAR:
-
-    #debug_toolbar
-    MIDDLEWARE_CLASSES += (
-       'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
-    
-    
-    
-    INSTALLED_APPS += (
-       'debug_toolbar',
-    )
-    
-    DEBUG_TOOLBAR_CONFIG = {
-       'INTERCEPT_REDIRECTS': True,
-    }
-    
-    DEBUG_TOOLBAR_PANELS = (
-        'debug_toolbar.panels.version.VersionDebugPanel',
-        'debug_toolbar.panels.timer.TimerDebugPanel',
-        'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-        'debug_toolbar.panels.headers.HeaderDebugPanel',
-        'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-        'debug_toolbar.panels.sql.SQLDebugPanel',
-        'debug_toolbar.panels.template.TemplateDebugPanel',
-        'debug_toolbar.panels.cache.CacheDebugPanel',
-        'debug_toolbar.panels.signals.SignalDebugPanel',
-        'debug_toolbar.panels.logger.LoggingPanel',
-    )
-        
-    #end debug_toolbar
-
-if not DEBUG:
-    MIDDLEWARE_CLASSES += (
-        'utils.middleware.PostLogMiddleware',
-    )
-    UTILS_POSTLOG_URLS = (
-        r'^/backoffice/election/\d+/setup',
-        r'^/backoffice/election/\d+/edit',
-        r'^/backoffice/election/\d+/add_party',
-        r'^/backoffice/party/\d+/setup',
-        r'^/backoffice/party/\d+/edit',
-        r'^/backoffice/party/\d+/add_candidate',
-        r'^/backoffice/welcome/',
-    )
-    
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    
