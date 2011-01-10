@@ -89,7 +89,7 @@ def select(name):
         exit(1)
     elif name == ENV_LIVE:
        env.user_name = env.project_name
-       env.hosts = #TODO: ['109.74.203.181']
+       env.hosts = ['109.74.206.55']
        env.hostname = '%(project_name)s.nl' % env
        env.settings = 'settings.live_settings'
        env.processes = 2
