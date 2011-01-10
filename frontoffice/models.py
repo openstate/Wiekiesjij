@@ -16,7 +16,7 @@ class VisitorResult(models.Model):
     hash                = models.CharField(_('Hash'), max_length=32, unique=True)
     datetime_stamp      = models.DateTimeField(_('Date Time Stamp'), default=datetime.now)
     visitor_answers     = models.TextField(_('Visitor Answer List'), blank=True, null=True)
-    telephone           = models.CharField(_('Phone Number'), max_length=12, blank=True, null=True)
+    telephone           = models.CharField(_('Phone Number'), max_length=50, blank=True, null=True)
     election_instance   = models.ForeignKey(ElectionInstance, related_name='visitor_results', verbose_name=_('Election Instance'), blank=True, null=True)
     sent                = models.DateTimeField(_('Dent DateTime'), blank=True, null=True)
 
