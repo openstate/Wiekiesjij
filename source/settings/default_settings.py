@@ -147,11 +147,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
-
 
 #Settings
 COMMON_PARTIES =  (('CDA', _('CDA')),
