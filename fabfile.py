@@ -330,8 +330,6 @@ def _upload_to_server():
     local('hg archive -r %(tag)s -t tgz %(release)s.tar.gz' % env)
 
     #TODO: Log deployment
-    sudo('mkdir -p %(base_path)smedia/' % env, user=env.user_name)
-    sudo('chmod og+rw %(base_path)smedia/' % env, user=env.user_name)
     sudo('mkdir -p %(base_path)sreleases/%(release)s/' % env, user=env.user_name)
     sudo('mkdir -p %(base_path)spackages/' % env, user=env.user_name)
     sudo('chmod og+rw %(base_path)spackages/' % env, user=env.user_name)
