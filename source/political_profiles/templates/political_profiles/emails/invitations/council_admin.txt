@@ -3,28 +3,27 @@
 {% block content %}  
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-    Hartelijk dank voor uw deelname aan het project Wiekiesjij. De komende periode zullen wij volop aan de slag gaan om Wiekiesjij voor uw gemeente gereed te maken. Om dit te doen zullen wij u, de contactpersonen van de partijen en de kandidaten middels een geautomatiseerd proces uitnodigen om mee te doen.
+    Hartelijk dank voor uw deelname aan het project Wiekiesjij. De komende periode zullen wij volop aan de slag gaan met Wiekiesjij voor uw provincie. Om dit te doen zullen wij u, de contactpersonen van de partijen en de kandidaten middels een geautomatiseerd proces uitnodigen om mee te doen.
 
-    Om te beginnen willen wij u vragen om een lijst van de contactpersonen en contactgegevens van de deelnemende politieke partijen in te vullen in Wiekiesjij. Deze contactgegevens hebben wij nodig om de politieke partijen te benaderen zodat hun kandidaten allemaal hun profielen kunnen invullen.
+	Om te beginnen willen wij u vragen om een lijst van de contactpersonen en contactgegevens van de deelnemende politieke partijen in te vullen in Wiekiesjij. Deze contactgegevens hebben wij nodig om de politieke partijen te benaderen zodat hun kandidaten allemaal hun profielen kunnen invullen.
 
-    Wanneer u op de onderstaande link drukt zult u op de beheerders pagina van Wiekiesjij voor uw gemeente terecht komen. Naast het invoeren van de contactgegevens kunt u hier ook de voortgang van het invullen van de kandidaat profielen volgen en informatie over de verkiezingen aanpassen. Het is van belang dat zo veel mogelijk kandidaten hun profiel invullen zodat bezoekers van uitputtende informatie kunnen worden voorzien. Houdt u alstublieft deze voortgang in de gaten.
+	Wanneer u op de onderstaande link drukt zult u op de beheerders pagina van Wiekiesjij voor uw provincie terecht komen. Naast het invoeren van de contactgegevens kunt u hier ook de voortgang van het invullen van de kandidaat profielen volgen en informatie over de verkiezingen aanpassen. Het is van belang dat zo veel mogelijk kandidaten hun profiel invullen, dus houdt u alstublieft deze voortgang in de gaten.
 
-    Vul de partij contactpersonen in via http://{{ domain }}{% url invitations.index hash=invitation.hash %}
+	Vul de partij contactpersonen in via http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-    Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de lijst met contactpersonen zo spoedig mogelijk tegemoet!
+    Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de lijst met contactpersonen zo spoedig mogelijk tegemoet! Voor vragen kunt u altijd mailen naar support@wiekiesjij.nl
 
-    Met vriendelijke groet,
+	Met vriendelijke groet,
 
-    Lenneke van Mameren
-    Projectleider Wiekiesjij
+	Het team van Wiekiesjij
 {% endblock content %}
 
 
 {% block sidebar %}  
     Helpdesk
-	Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via http://www.hetnieuwestemmen.nl/wiekiesjij-1/ of support@wiekiesjij.nl.
+	Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via  support@wiekiesjij.nl.
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
-	http://{{ domain }}/media/static/backoffice/manuals/wiekiesjij_snellestart_griffie.pdf
+	http://{{ domain }}/static/backoffice/manuals/wiekiesjij_setup_griffie.pdf
 {% endblock sidebar %}

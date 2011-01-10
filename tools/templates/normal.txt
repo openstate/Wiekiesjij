@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+    ServerName %(hostname)s
+    ServerAlias *.%(hostname)s
+	ServerAlias wiekiesjij-or.nl
+	ServerAlias *.wiekiesjij-or.nl
+	ServerAlias wiekiesjijondernemingsraad.nl
+	ServerAlias *.wiekiesjijondernemingsraad.nl
+    
+    ErrorLog /var/log/apache2/%(project_name)s_%(environment)s.error.log
+	CustomLog /var/log/apache2/%(project_name)s_%(environment)s.access.log common
+    
+    DocumentRoot %(base_path)smedia/
+    Alias /media/ %(base_path)smedia/
+    Alias /static/ %(base_path)sreleases/current/static/
+
+	WSGIDaemonProcess %(user_name)s-%(environment)s user=%(user_name)s group=%(user_name)s processes=%(processes)s threads=%(threads)s
+    WSGIProcessGroup  %(user_name)s-%(environment)s
+
+    WSGIPassAuthorization On 
+    
+    WSGIScriptAlias / %(base_path)sreleases/current/wsgi/%(environment)s.py
+</VirtualHost>

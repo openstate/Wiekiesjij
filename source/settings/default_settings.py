@@ -1,5 +1,5 @@
 import os
-PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
+PROJECT_DIR = lambda base : os.path.join(os.path.dirname(__file__), '../', base).replace('\\','/')
 
 _ = lambda a: a
 
@@ -52,11 +52,11 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/static/admin/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 #Static files settings
-STATIC_ROOT = PROJECT_DIR('media/static')
-STATIC_URL = '/media/static/'
+STATIC_ROOT = PROJECT_DIR('static')
+STATIC_URL = '/static/'
 
 #Directory for temporary files
 TMP_ROOT = PROJECT_DIR('tmp')

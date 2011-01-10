@@ -1,0 +1,101 @@
+/* ---------------	BASIC STYLING --------------- */
+
+body {
+	padding: 0;
+	margin: 0;
+	background:#939393 url(../images/body-bg.png) repeat-x;
+	font-size:11px;
+	font-family: 'Droid Sans', arial, serif;
+	color: #2d2d2d;
+	}
+
+h1 {
+	font-family: 'Droid Sans', arial, serif;
+	font-size: 22px; 
+	margin: 0 0 10px 0; 
+	padding: 0; 
+	font-weight:normal;
+	color:#a5a5a5;
+	}
+
+h2 {
+	font-family: 'Droid Sans', arial, serif;
+	font-size: 18px; 
+	margin: 0 0 3px 0;
+	padding: 0; 
+	color: #6e6e6e;
+	font-weight: normal;
+	}
+	
+p {
+	font-family: 'Droid Sans', arial, serif;
+	font-size: 16px; 
+	margin: 0 0 10px 0; 
+	padding: 0; 
+	color: #6e6e6e;
+	line-height: 1.4em;
+	}
+
+a {
+	font-size: 1.0em; 
+	margin: 0; 
+	padding: 0; 
+	color: #6e6e6e;
+	text-decoration: underline;
+	outline:none;
+	}
+
+a:hover {
+	text-decoration:none;
+	color:#343434;
+	}
+
+
+/* --------------- PAGINA --------------- */
+
+#wrapper {
+	width:1000px;
+	margin:0 auto;
+	position:relative;
+	}
+
+#wrapper .header {
+	background:url(../images/header-bg.jpg) no-repeat;
+	height:163px;
+	position:relative;
+}
+
+#wrapper .header a.logo {
+	display:block;
+	height:70px;
+	width:240px;
+	position:absolute;
+	top:44px;
+	left:355px;
+	text-indent:-9999px;
+}
+
+#wrapper .content {
+	text-align:center;
+	height:205px;
+	overflow:hidden;_zoom:1;	
+}
+
+#wrapper .content span.title {
+	text-indent:-9999px;
+	width:424px;
+	height:28px;
+	position:relative;
+	margin:54px auto 15px;
+	background:url(../images/website-in-onderhoud.png) no-repeat;
+	display:block;
+}
+
+
+
+#wrapper .footer {
+	background:url(../images/footer-bg.jpg) no-repeat;
+	text-align:center;
+	min-height:442px;
+	padding:10px 0 0 0;
+}

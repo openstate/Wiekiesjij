@@ -1,0 +1,20 @@
+<VirtualHost *:80>
+    ServerName %(hostname)s
+	ServerAlias *.%(hostname)s
+	ServerAlias wiekiesjij-or.nl
+	ServerAlias *.wiekiesjij-or.nl
+	ServerAlias wiekiesjijondernemingsraad.nl
+	ServerAlias *.wiekiesjijondernemingsraad.nl
+    
+    ErrorLog /var/log/apache2/%(project_name)s_%(environment)s.error.log
+	CustomLog /var/log/apache2/%(project_name)s_%(environment)s.access.log common
+    
+    DocumentRoot %(base_path)sreleases/current/maintenance/
+	
+	<IfModule mod_rewrite.c>
+	RewriteEngine on
+	Options +FollowSymLinks 
+	RewriteCond $1 !\.(gif|jpe?g|png|ico|css|js)$
+	RewriteRule ^.*$ /index.html [L]
+	</IfModule>
+</VirtualHost>

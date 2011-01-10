@@ -5,25 +5,32 @@
 {% end_stylegroup %}
 
 {% block content %}
-	<p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},</p>
-	<p style="{% use_stylegroup 'font' %}">De komende periode zult u volop campagne voeren zodat uw partij met een zo groot mogelijk aantal zetels aan een nieuwe termijn kan starten. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.</p>
-	<p style="{% use_stylegroup 'font' %}">Voor de Tweede Kamerverkiezingen zal dit jaar Wiekiesjij weer worden ingezet. Met Wiekiesjij geven wij de individuele kandidaten die uw partij gekozen heeft een manier om zichzelf te presenteren. Wiekiesjij is een stemwijzer voor individuele politici in plaats van politieke partijen. Wiekiesjij stelt een aantal vragen aan de bezoekers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat. Hiermee pogen wij de kandidaten beter bekend te maken bij het (jongere) publiek.</p>
-	<p style="{% use_stylegroup 'font' %}">Om Wiekiesjij goed te laten werken worden alle kandidaten die uw partij heeft vastgesteld voor de verkiezingen uitgenodigd. Om deze uitnodiging te kunnen versturen verzoeken wij u om via uw beheerspagina ons uw kandidatenlijst en email adressen door te geven.</p>
-	<p style="{% use_stylegroup 'font' %}">Op deze beheerderspagina kunt u ook het profiel van uw partij dat in Wiekiesjij wordt getoond aanpassen. Zo kunt u uw partijprogramma, speerpunten, youtube film en social networks binnen Wiekiesjij aanbieden.</p>
-	<p style="{% use_stylegroup 'font' %}">U kunt uw beheerspagina vinden via: <a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.index hash=invitation.hash %}</a></p>
-	<p style="{% use_stylegroup 'font' %}">Wiekiesjij is eerder succesvol voor de Tweede Kamer, Provinciale, Gemeente en Europes verkiezingen ingezet en blijkt een populair middel te zijn voor met name de jongere kiezers als aanvulling op de andere stemwijzers. Wiekiesjij heeft ondertussen al meer dan een miljoen unieke bezoekers gehad en is daarmee een belangrijk onderdeel voor de campagne, specifiek voor de doelgroep jongeren.</p>
-	<p style="{% use_stylegroup 'font' %}">Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de kandidatenlijst met de benodigde contactgegevens tegemoet! In de bijlage van deze email kunt u een handleiding waarin de procedure nogmaals wordt uitgelegd. Voor eventuele vragen kunt u altijd mailen onze helpdesk. Omdat wij geen subsidie hebben ontvangen voor Wiekiesjij kunnen alleen partijcontactpersonen telefonische contact opnemen met een van onze vrijwilligers. Kandidaten kunnen zich richten tot <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>. Wij wensen u heel veel succes met uw campagne.</p>
-	<p style="{% use_stylegroup 'font' %}">Met vriendelijke groet,</p>
-	<p style="{% use_stylegroup 'font' %}">Lenneke van Mameren<br/>
-	Projectleider Wiekiesjij</p>
+    <p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Bij de komende Provinciale Statenverkiezingen zal Wiekiesjij worden ingezet in uw provincie. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Wiekiesjij is een kieswijzer gericht op individuele kandidaten en geeft hen hierdoor een manier om zichzelf te presenteren. Wiekiesjij stelt een aantal vragen aan de kiezers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat.</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Om Wiekiesjij goed te laten werken worden alle kandidaten van uw partij uitgenodigd. Om deze uitnodiging te kunnen versturen verzoeken wij u om via uw beheerspagina ons uw kandidatenlijst en email-adressen door te geven.</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Op deze beheerderspagina kunt u ook het profiel van uw partij dat in Wiekiesjij wordt getoond aanpassen. Zo kunt u uw partijprogramma, speerpunten, youtube film en social networks binnen Wiekiesjij aanbieden.</p>
+
+    <p style="{% use_stylegroup 'font' %}">	U vindt uw beheerspagina via: <a href="http://{{ domain }}{% url invitations.index hash=invitation.hash %}">http://{{ domain }}{% url invitations.index hash=invitation.hash %}</a></p>
+
+    <p style="{% use_stylegroup 'font' %}">      Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de kandidatenlijst met de benodigde contactgegevens tegemoet! In de bijlage van deze email kunt u een handleiding waarin de procedure nogmaals wordt uitgelegd. Voor eventuele vragen kunt u altijd contact opnemen met <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>. Wij wensen u heel veel succes met uw campagne.</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Met vriendelijke groet,</p>
+
+    <p style="{% use_stylegroup 'font' %}">	Het team van Wiekiesjij</p>
+    <p style="{% use_stylegroup 'font' %}">	<a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a></p>
 {% endblock content %}
 
 
 {% block sidebar %}
 	<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
-	<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via <a href="http://www.hetnieuwestemmen.nl/wiekiesjij-1/">http://www.hetnieuwestemmen.nl/wiekiesjij-1/</a> of <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a></p>
+	<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina of het invullen van de partijgegevens? Neemt u dan contact met ons op via <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a></p>
 	<br/>
 	<h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
-	<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de partijgegevens? <a href="http://{{ domain }}/media/static/backoffice/manuals/handleiding_setup_partijen_tweedekamer.pdf">Download hier de handleiding</a> voor het invoeren van de contactgegevens</p>
+	<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de partijgegevens? <a href="http://{{ domain }}/static/backoffice/manuals/handleiding_setup_partijen.pdf">Download hier de handleiding</a> voor het invoeren van de contactgegevens</p>
 	<br/>
 {% endblock sidebar %}
