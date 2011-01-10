@@ -27,6 +27,7 @@ class Command(BaseCommand):
         q1 = Question.objects.create(
             title=u'De volgende partijen maken kans op mijn stem:',
             question_type=settings.QTYPE_MODEL_PARTY,
+            result_title=u'Partij',
             theme='q1',
             has_no_preference=False,
         )

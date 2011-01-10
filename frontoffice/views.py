@@ -592,6 +592,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 eip = get_object_or_404(Party,id=questions_dict[key]['candidate'])
                 temp_list.append(eip.name)
                 questions_dict[key]['candidate'] = temp_list
+                questions_dict[key]['score'] = 100
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
 
