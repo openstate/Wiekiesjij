@@ -10,6 +10,7 @@ sorl-thumbnail==3.2.5
 South==0.7.3
 django-staticfiles==0.3.4
 django-newcache==0.2.4
+python-memcached==1.47
 
 # Source installs
 
