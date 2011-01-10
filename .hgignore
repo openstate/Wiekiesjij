@@ -1,7 +1,6 @@
 syntax: glob
 dev.db
-media/
 tmp/
 *.pyc
 env/
-local_settings.py
+local_settings.py   

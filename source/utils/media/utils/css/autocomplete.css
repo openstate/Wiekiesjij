@@ -1,0 +1,22 @@
+/* 
+    Document   : autocomplete.css
+    Created on : Dec 4, 2009, 2:34:52 PM
+    Author     : jaharkema
+    Description: Used for styling the autocomplete results
+*/
+
+
+root { 
+    display: block;
+}
+
+.ac_results {
+    background-color: #FFFFFF;
+    border:3px double #000000;
+}
+
+.ac_results ul {
+    list-style-type: none;
+    padding-left: 2px;
+    padding-top: 2px;
+}
