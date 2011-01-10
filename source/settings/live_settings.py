@@ -20,7 +20,7 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-EMAIL_BACKEND = 'getlogic.utils.EmailLogBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_SUBJECT_PREFIX = '[WieKiesJij PS]'
 
 #Change roots for user uploaded content and static files
