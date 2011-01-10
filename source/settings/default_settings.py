@@ -86,7 +86,7 @@ MIDDLEWARE_CLASSES = (
     'utils.middleware.PermissionDeniedMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'frontoffice.middleware.SubdomainMiddleware'
+    'frontoffice.middleware.SubdomainMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
