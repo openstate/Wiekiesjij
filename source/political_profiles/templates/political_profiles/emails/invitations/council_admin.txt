@@ -11,7 +11,7 @@
 
 	Vul de partij contactpersonen in via http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-    Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de lijst met contactpersonen zo spoedig mogelijk tegemoet! Voor vragen kunt u altijd mailen naar support@wiekiesjij.nl
+    Voor vragen kunt u altijd mailen naar support@wiekiesjij.nl
 
 	Met vriendelijke groet,
 
@@ -25,5 +25,5 @@
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
-	http://{{ domain }}/static/backoffice/manuals/wiekiesjij_setup_griffie.pdf
+	http://{{ domain }}/static/backoffice/manuals/handleiding_setup_griffie.pdf
 {% endblock sidebar %}

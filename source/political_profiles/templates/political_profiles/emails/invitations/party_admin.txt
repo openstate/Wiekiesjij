@@ -13,7 +13,7 @@
 
 	U vindt uw beheerspagina via: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-       Alvast hartelijk dank voor uw tijd en moeite en ik zie graag de kandidatenlijst met de benodigde contactgegevens tegemoet! In de bijlage van deze email kunt u een handleiding waarin de procedure nogmaals wordt uitgelegd. Voor eventuele vragen kunt u altijd contact opnemen met support@wiekiesjij.nl. Wij wensen u heel veel succes met uw campagne.
+       In de bijlage van deze email kunt u een handleiding waarin de procedure nogmaals wordt uitgelegd. Voor eventuele vragen kunt u altijd contact opnemen met support@wiekiesjij.nl. Wij wensen u heel veel succes met uw campagne.
 
 	Met vriendelijke groet,
 

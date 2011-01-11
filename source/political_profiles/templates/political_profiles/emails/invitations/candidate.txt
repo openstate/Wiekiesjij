@@ -9,13 +9,13 @@
 
 	Hieronder zult u de link vinden om te beginnen met het invullen van uw profiel. Middels de link wordt u in staat gesteld om een wachtwoord aan te maken en in te loggen.  
 
-	Belangrijk! Het profiel van Wiekiesjij bestaat uit verschillende onderdelen. Mocht u tijdens het invullen tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u het onderdeel waarmee u bezig bent eerst helemaal afrondt.
+	Belangrijk! Het profiel van Wiekiesjij bestaat uit verschillende stappen. Mocht u tijdens het invullen tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u de stap waarmee u bezig bent eerst helemaal afrondt.
 
 	  Klik hier om te beginnen: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
 	Daarna kunt u voortaan met uw e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url fo.login %} loggen en uw account blijven bekijken. U vindt in de bijlage een handleiding om u te helpen bij het invullen van uw profiel.
 
-	Wiekiesjij wordt reeds sinds 2006 bij alle verkiezingen gedraaid en blijkt een populair middel te zijn als aanvulling op de andere stemwijzers, vooral voor jongeren. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne.
+	Wiekiesjij wordt sinds 2006 bij alle verkiezingen gedraaid en blijkt een populair middel te zijn als aanvulling op de andere stemwijzers, vooral voor jongeren. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne.
 
 	Voor vragen of opmerkingen kunt u te allen tijde contact opnemen met onze helpdesk. Alvast hartelijk dank voor uw tijd en moeite en veel succes met uw campagne!  
 
@@ -32,5 +32,5 @@
 
 	Handleiding
 	Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens:
-	http://{{ domain }}/static/backoffice/manuals/handleiding_setup_kandidaat.pdf
+	http://{{ domain }}/static/backoffice/manuals/handleiding_kandidaten.pdf
 {% endblock sidebar %}
