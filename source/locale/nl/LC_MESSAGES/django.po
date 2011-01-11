@@ -658,7 +658,7 @@ msgstr "Acties die nog gedaan moeten worden:"
 
 #: backoffice/templates/backoffice/election_instance_view.html:28
 msgid "You did not completely fill in the council profile."
-msgstr "U heeft het raadsprofiel niet volledig ingevuld."
+msgstr "U heeft het Provinciale Staten profiel niet volledig ingevuld."
 
 #: backoffice/templates/backoffice/election_instance_view.html:28
 #: backoffice/templates/backoffice/election_instance_view.html:61
@@ -1097,7 +1097,7 @@ msgstr "Deze administratieve contactpersoon de verkizingsinstantie verder instel
 
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:11
 msgid "Do you want to skip the council setup for this council?"
-msgstr "Wilt u doorgaan met het instellen van deze raad?"
+msgstr "Wilt u doorgaan met het instellen van deze Provinciale Staten?"
 
 #: backoffice/templates/backoffice/wizard/addelection/step1.html:14
 msgid "Skip council setup"
@@ -1118,7 +1118,7 @@ msgstr "Een nieuwe partij voegen <br/>&amp; een contactpersoon uitnodigen"
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:7
 msgid "This contact will be invited to complete further setup for this party. If you want, you can skip the rest of the steps for fillng in this party."
-msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze raad in te voeren."
+msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze Provinciale Staten in te voeren."
 
 #: backoffice/templates/backoffice/wizard/addelectionparty/step1.html:9
 msgid "Do you want to skip the party setup for this party?"
@@ -1163,7 +1163,7 @@ msgstr "Deze verkiezing"
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:8
 #: backoffice/wizards/electioninstance.py:216
 msgid "The Council"
-msgstr "De raad"
+msgstr "De Provinciale Staten"
 
 #: backoffice/templates/backoffice/wizard/council/edit/base.html:24
 #: backoffice/templates/backoffice/wizard/council/edit/step3.html:9
@@ -1174,7 +1174,7 @@ msgstr "De raad"
 #: backoffice/templates/backoffice/wizard/election_setup/step6.html:9
 #: backoffice/wizards/electioninstance.py:220
 msgid "More Council"
-msgstr "Meer raad"
+msgstr "Meer Provinciale Staten"
 
 #: backoffice/templates/backoffice/wizard/council/edit/step1.html:4
 #: backoffice/templates/backoffice/wizard/election_setup/step2.html:4
@@ -1189,24 +1189,24 @@ msgstr "Op deze pagina vult u de stamgegevens voor de verkiezingen in."
 #: backoffice/templates/backoffice/wizard/council/edit/step1.html:18
 #: backoffice/templates/backoffice/wizard/election_setup/step2.html:18
 msgid "Next: The Council"
-msgstr "Volgende: De raad"
+msgstr "Volgende: De Provinciale Staten"
 
 #: backoffice/templates/backoffice/wizard/council/edit/step2.html:4
 #: backoffice/templates/backoffice/wizard/council/edit/step3.html:4
 #: backoffice/templates/backoffice/wizard/election_setup/step3.html:4
 #: backoffice/templates/backoffice/wizard/election_setup/step4.html:4
 msgid "De raad instellen"
-msgstr "De raad instellen"
+msgstr "De Provinciale Staten instellen"
 
 #: backoffice/templates/backoffice/wizard/council/edit/step2.html:11
 #: backoffice/templates/backoffice/wizard/election_setup/step3.html:11
 msgid "Op deze pagina vult u de contactinformatie van de gemeenteraad in."
-msgstr "Op deze pagina vult u de contactinformatie van de gemeenteraad in."
+msgstr "Op deze pagina vult u de contactinformatie van de Provinciale Staten in."
 
 #: backoffice/templates/backoffice/wizard/council/edit/step3.html:13
 #: backoffice/templates/backoffice/wizard/election_setup/step4.html:13
 msgid "Op deze pagina vult u de overige gegevens van de gemeenteraad in. "
-msgstr "Op deze pagina vult u de overige gegevens van de gemeenteraad in. "
+msgstr "Op deze pagina vult u de overige gegevens van de Provinciale Staten in. "
 
 #: backoffice/templates/backoffice/wizard/council/edit/step3.html:20
 #: backoffice/templates/backoffice/wizard/council/edit/step4.html:22
@@ -1268,7 +1268,7 @@ msgstr "Opslaan"
 
 #: backoffice/templates/backoffice/wizard/editelection/step1.html:9
 msgid "Save and start council setup"
-msgstr "Opslaan en stel de raad in"
+msgstr "Opslaan en stel de Provinciale Staten in"
 
 #: backoffice/templates/backoffice/wizard/election_setup/base.html:4
 msgid "Add an election instance"
@@ -1866,11 +1866,11 @@ msgstr "Details over deze verkiezing"
 
 #: backoffice/wizards/electioninstance.py:214
 msgid "Proceed to Council Setup"
-msgstr "Ga door naar het instellen van de raad"
+msgstr "Ga door naar het instellen van de Provinciale Staten"
 
 #: backoffice/wizards/electioninstance.py:216
 msgid "Council contact information"
-msgstr "Contactinformatie van de raad"
+msgstr "Contactinformatie van de Provinciale Staten"
 
 #: backoffice/wizards/electioninstance.py:218
 msgid "Proceed"
@@ -1894,7 +1894,7 @@ msgstr "Stel de styling in"
 
 #: backoffice/wizards/electioninstance.py:226
 msgid "On this page you can setup the styling for the Wiekiesjij? instance for your council."
-msgstr "Op deze pagina kunt u de styling instellen voor Wiekiesjij? voor uw raad"
+msgstr "Op deze pagina kunt u de styling instellen voor Wiekiesjij? voor uw Provinciale Staten"
 
 #: backoffice/wizards/electioninstance.py:227
 msgid "Proceed to Party selection"
@@ -1926,15 +1926,15 @@ msgstr "Zetels"
 
 #: elections/forms.py:92
 msgid "Wat is het huidige aantal zetels in uw gemeenteraad."
-msgstr "Wat is het huidige aantal zetels in uw gemeenteraad."
+msgstr "Wat is het huidige aantal zetels in uw Provinciale Staten."
 
 #: elections/forms.py:107
 msgid "Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen)."
-msgstr "Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen)."
+msgstr "Geef hier de naam van uw Provinciale Staten op (bv. Groningen)."
 
 #: elections/forms.py:108
 msgid "Address of the Council"
-msgstr "Adres van de raad"
+msgstr "Adres van de Provinciale Staten"
 
 #: elections/forms.py:108
 #: political_profiles/forms.py:205
@@ -1950,15 +1950,15 @@ msgstr "E-mail"
 
 #: elections/forms.py:109
 msgid "Vul hier het algemene email adres van de gemeenteraad in."
-msgstr "Vul hier het algemene email adres van de gemeenteraad in."
+msgstr "Vul hier het algemene email adres van de Provinciale Staten in."
 
 #: elections/forms.py:110
 msgid "Website of the Council"
-msgstr "Website van de raad"
+msgstr "Website van de Provinciale Staten"
 
 #: elections/forms.py:110
 msgid "Vul hier de permanente website van de raad in."
-msgstr "Vul hier de permanente website van de raad in."
+msgstr "Vul hier de permanente website van de Provinciale Staten in."
 
 #: elections/forms.py:145
 msgid "Which modules do you want to enable for this instance?"
@@ -2017,7 +2017,7 @@ msgstr "Verkiezingswebsite"
 
 #: elections/forms.py:167
 msgid "Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen."
-msgstr "Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen."
+msgstr "Als uw Provinciale Staten een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen."
 
 #: elections/forms.py:168
 msgid "Number of parties in this election."
@@ -2204,7 +2204,7 @@ msgstr "Plaatsnaam"
 #: political_profiles/models.py:378
 #: political_profiles/models.py:408
 msgid "Councils Website"
-msgstr "Website van de raad"
+msgstr "Website van de Provinciale Staten"
 
 #: elections/models.py:32
 #: political_profiles/forms.py:98
@@ -2216,16 +2216,16 @@ msgstr "Afbeelding"
 
 #: elections/models.py:33
 msgid "A picture that will be used when displaying council details."
-msgstr "Een afbeelding die gebruikt zal worden bij het laten zien van de details van de raad."
+msgstr "Een afbeelding die gebruikt zal worden bij het laten zien van de details van de Provinciale Staten."
 
 #: elections/models.py:35
 #: political_profiles/models.py:380
 msgid "A short description of the council"
-msgstr "Een korte beschrijving van de raad"
+msgstr "Een korte beschrijving van de Provinciale Staten"
 
 #: elections/models.py:36
 msgid "Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."
-msgstr "Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."
+msgstr "Hier kunt u een korte geschiedenis en beschrijving van uw Provinciale Staten invullen."
 
 #: elections/models.py:38
 msgid "Background color"
@@ -4125,11 +4125,11 @@ msgstr "De uitnodiging wordt verzonden naar dit adres."
 
 #: political_profiles/forms.py:174
 msgid "Invite the administrative contact for this council:"
-msgstr "Nodig de administratieve contactpersoon voor deze raad uit:"
+msgstr "Nodig de administratieve contactpersoon voor deze Provinciale Staten uit:"
 
 #: political_profiles/forms.py:175
 msgid "This contact will be invited to complete further setup for this council."
-msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze raad in te voeren."
+msgstr "Deze contactpersoon zal uitgenodigd worden om verdere instellingen voor deze Provinciale Staten in te voeren."
 
 #: political_profiles/forms.py:207
 #: political_profiles/forms.py:265
@@ -4157,11 +4157,11 @@ msgstr "Griffie contactinformatie"
 
 #: political_profiles/forms.py:222
 msgid "Use Councils Address"
-msgstr "Gebruik het adres van de raad"
+msgstr "Gebruik het adres van de Provinciale Staten"
 
 #: political_profiles/forms.py:222
 msgid "Select if you want to use the same address as the councils address"
-msgstr "Selecteer als u hetzelfde adres wilt gebruiken als het adres van de raad"
+msgstr "Selecteer als u hetzelfde adres wilt gebruiken als het adres van de Provinciale Staten"
 
 #: political_profiles/forms.py:237
 msgid "Invite the administrative contact for this party:"
@@ -5012,7 +5012,7 @@ msgstr "Onbekend"
 #~ msgstr "De Griffie"
 
 #~ msgid "Same as council."
-#~ msgstr "De raad"
+#~ msgstr "De Provinciale Staten"
 
 #~ msgid "delete"
 #~ msgstr "verwijder"

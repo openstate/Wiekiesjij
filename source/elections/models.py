@@ -33,7 +33,7 @@ class Council(models.Model):
                                      help_text=_("A picture that will be used when displaying council details."),)
     description          = models.TextField(_('Description'), null=True, blank=True,
                                            help_text=_("A short description of the council"),)
-    history             = models.TextField(_('History'), help_text=_("Hier kunt u een korte geschiedenis en beschrijving van uw gemeenteraad invullen."),
+    history             = models.TextField(_('History'), help_text=_("Hier kunt u een korte geschiedenis en beschrijving van uw Provinciale Staten invullen."),
                                            null=True, blank=True)
     background_color   = models.CharField(_('Background color'), max_length=6, null=True, blank=True)
     foreground_color   = models.CharField(_('Foreground color'), max_length=6, null=True, blank=True)

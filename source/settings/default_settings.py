@@ -137,6 +137,8 @@ INSTALLED_APPS = (
     'debug_toolbar',
 )
 
+DEFAULT_FROM_EMAIL = 'info@wiekiesjij.nl'
+
 COMMENTS_APP = 'authorized_comments'
 
 GOOGLE_ANALYTICS_CODE = False #'UA-1376555-5'

@@ -89,7 +89,7 @@ class CouncilForm(BetterModelForm, TemplateForm):
     ChanceryProfile admin
     '''
     
-    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('Wat is het huidige aantal zetels in uw gemeenteraad.'))
+    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('Wat is het huidige aantal zetels in uw Provinciale Staten.'))
 	
     def __init__(self, *args, **kwargs):
         super(CouncilForm, self).__init__(*args, **kwargs)
@@ -104,10 +104,10 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
     Council information form (used in 2. Election overview)
     '''
 
-    name = forms.CharField(label=_('Name'), help_text=_('Geef hier de naam van uw raad op (bv. Gemeenteraad Groningen).'))
+    name = forms.CharField(label=_('Name'), help_text=_('Geef hier de naam van uw Provinciale Staten op (bv. Groningen).'))
     address = AddressField(label=_('Address of the Council'), help_text=_('Vul hier uw contactinformatie in.'))
-    email = forms.EmailField(label=_('E-Mail'), help_text=_('Vul hier het algemene email adres van de gemeenteraad in.'))
-    website = forms.URLField(label=_('Website of the Council'), help_text=_('Vul hier de permanente website van de raad in.'), required=False)
+    email = forms.EmailField(label=_('E-Mail'), help_text=_('Vul hier het algemene email adres van de Provinciale Staten in.'))
+    website = forms.URLField(label=_('Website of the Council'), help_text=_('Vul hier de permanente website van de Provinciale Staten in.'), required=False)
 
 
     class Meta:
@@ -164,7 +164,7 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
         label=_('When does this election take place?'), 
         widget=DateTimePicker)
     start_date.hidden_widget = HiddenDateTimePicker
-    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('Als uw raad een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen.'))
+    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('Als uw Provinciale Staten een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
     
     class Meta:
