@@ -1,0 +1,8 @@
+MAILTO=exceptions+servers@getlogic.nl
+15,45 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations candidate >> /dev/null 2>&1
+0,30 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations party_admin >> /dev/null 2>&1
+
+
+
+
+

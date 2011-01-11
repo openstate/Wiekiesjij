@@ -1,0 +1,14 @@
+- Bucket aanmaken/bestaande gebruiken
+- Zorgen dat de juiste directories bestaan.
+
+$ sudo apt-get install make g++ libcurl4-openssl-dev libssl-dev libxml2-dev libfuse-dev fuse-utils libcurl3
+$ wget http://s3fs.googlecode.com/files/s3fs-1.19.tar.gz
+$ tar xzvf s3fs-1.19.tar.gz
+$ cd s3fs-1.19
+$ ./configure
+$ make
+$ make install
+$ sudo echo "AKIAJNYUY7YMUNAAJZSQ:hWuhxWxnka36TryI2YLpyot/vOsibmAKLqYIPVkp" > /etc/passwd-s3fs
+$ sudo chmod 640 /etc/passwd-s3fs
+$ sudo echo "s3fs#wiekiesjij-ps      /data/projects/wiekiesjij/live/media    fuse    url=https://s3.amazonaws.com,allow_other,use_cache=/tmp/s3fs 0 0" >> /etc/fstab
+$ sudo mount /data/projects/wiekiesjij/live/media
