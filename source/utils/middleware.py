@@ -111,7 +111,7 @@ class PostLogMiddleware(object):
                     PostLog.objects.create(
                         path=request.path,
                         user=user,
-                        ipaddress=getip(request)
+                        ipaddress=getip(request),
                         data=json.dumps(request.POST, sort_keys=True, indent=2)
                     )
             
