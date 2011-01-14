@@ -1,4 +1,4 @@
 MAILTO=exceptions@getlogic.nl
-20,50 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations candidate >> /dev/null 2>&1
-0,30 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations party_admin >> /dev/null 2>&1
-10,40 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations council_admin >> /dev/null 2>&1
+#20,50 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations candidate --settings=settings.live_settings >> /dev/null 2>&1
+0,30 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations party_admin --settings=settings.live_settings >> /dev/null 2>&1
+10,40 * * * * /data/projects/wiekiesjij/live/releases/current/env/bin/python /data/projects/wiekiesjij/live/releases/current/source/manage.py send_invitations council_admin --settings=settings.live_settings >> /dev/null 2>&1
