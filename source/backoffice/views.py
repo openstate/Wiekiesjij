@@ -142,8 +142,16 @@ def election_party_create(request, id, position):
     check_permissions(request,id, 'council_admin')
     instance = get_object_or_404(ElectionInstance, pk=id)
     #Fix for double submit exception
-    if ElectionInstanceParty.objects.get(position=position, election_instance_id=id).exists():
-        return redirect('bo.election_instance_view', id=id)
+    try:
+        eip = ElectionInstanceParty.objects.get(position=position, election_instance_id=id)
+    except ElectionInstanceParty.DoesNotExist:
+        eip = None
+        
+    if eip:
+        if request.POST.get('skip', None) is not None:
+            return redirect('bo.election_instance_view', id=id)
+        return redirect('bo.election_party_edit', id=eip.id)
+        
     wizard = AddElectionPartyWizard(instance, position)
     return wizard(request)
 
