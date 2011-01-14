@@ -8,6 +8,7 @@ from django.views.debug import technical_500_response
 from django.conf import settings as django_settings
 
 from utils.exceptions import PermissionDeniedException
+from utils.netutils import getip
 from utils import settings
 from utils.models import PostLog
 from django.http import HttpResponseRedirect
@@ -110,7 +111,7 @@ class PostLogMiddleware(object):
                     PostLog.objects.create(
                         path=request.path,
                         user=user,
-                        ipaddress=request.META['REMOTE_ADDR'],
+                        ipaddress=getip(request)
                         data=json.dumps(request.POST, sort_keys=True, indent=2)
                     )
             
@@ -126,5 +127,5 @@ class UserBasedExceptionMiddleware(object):
         @see http://ericholscher.com/blog/2008/nov/15/debugging-django-production-environments/
     """
     def process_exception(self, request, exception):
-        if request.user.is_superuser or request.META.get('REMOTE_ADDR') in django_settings.INTERNAL_IPS:
+        if request.user.is_superuser or getip(request) in django_settings.INTERNAL_IPS:
             return technical_500_response(request, *sys.exc_info())
