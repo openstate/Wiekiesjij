@@ -10,7 +10,7 @@ def cal_political_experience_days(sender, instance, **kwargs):
     all_months = []
     #Get all politican political experience instances
     for experience in instance.politician.political.all():
-        # when saving a new instance it saves the object first to get and idThis makes sure that the code is only 
+        # when saving a new instance it saves the object first to get and idThis makes sure that the code is only
         # done on instances that are fully complete.
         if experience.startdate:
             # check if they are currently getting experience or if they have an end date
@@ -81,7 +81,7 @@ def get_candidates_from_csv(session, skip_positions=[], existing_candidates=[]):
     for line in lines:
         candidate_data = dict(zip(('position', 'last_name', 'middle_name', 'first_name', 'initials', 'email', 'gender'),
             (line[0], line[1], line[2], line[3], line[4], line[5], line[6])))
-            
+
         # extra validation
         if not email_re.match(candidate_data['email']):
             continue
@@ -89,12 +89,14 @@ def get_candidates_from_csv(session, skip_positions=[], existing_candidates=[]):
             position = int(candidate_data['position'])
         except ValueError:
             continue
-        if candidate_data['gender'] not in ['Female', 'Male']:
+
+        if candidate_data['gender'].lower() not in ['female', 'male']:
             continue
-            
+        candidate_data['gender'] = candidate_data['gender'].lower().capitalize()
+
         if candidate_data['email'] in existing_candidates:
             continue
-        
+
         if not int(candidate_data['position']) in skip_positions:
             candidates.update({candidate_data['position']: candidate_data})
 
@@ -125,7 +127,7 @@ def get_parties_from_csv(session, skip_lists=[]):
         party_data = dict(zip(('list', 'name', 'abbreviation', 'contact_last_name',
             'contact_middle_name', 'contact_first_name', 'contact_email', 'contact_gender'),
             (line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7])))
-            
+
         # extra validation
         if not email_re.match(party_data['contact_email']):
             continue
@@ -135,7 +137,7 @@ def get_parties_from_csv(session, skip_lists=[]):
             continue
         if party_data['contact_gender'] not in ['Female', 'Male']:
             continue
-                
+
         if not int(party_data['list']) in skip_lists:
             parties.update({party_data['list']: party_data})
 
