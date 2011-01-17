@@ -27,7 +27,7 @@
 
     clean_up
         Provides a way to clean up old releases
-    
+
 
 """
 import re
@@ -83,10 +83,14 @@ def select(name):
 
     if name == ENV_DEV:
         print(colors.red('Development environment not specified'))
-        exit(1) 
-    elif name == ENV_STAGING:
-        print(colors.red('Staging environment not specified'))
         exit(1)
+    elif name == ENV_STAGING:
+       env.user_name = env.project_name
+       env.hosts = ['109.74.206.55']
+       env.hostname = '%(project_name)s.staging.getlogic.nl' % env
+       env.settings = 'settings.staging_settings'
+       env.processes = 2
+       env.threads = 6
     elif name == ENV_LIVE:
        env.user_name = env.project_name
        env.hosts = ['109.74.206.55']
