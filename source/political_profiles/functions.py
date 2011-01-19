@@ -59,6 +59,7 @@ def cal_work_experience_days(sender, instance, **kwargs):
 
 def get_candidates_from_csv(session, skip_positions=[], existing_candidates=[]):
     candidates = {}
+    existing_candidates = list(existing_candidates)
 
     #Get file from session and read it
     file = open(settings.TMP_ROOT + '/' + session['csv_candidate_filename'] , 'rb')
@@ -96,6 +97,7 @@ def get_candidates_from_csv(session, skip_positions=[], existing_candidates=[]):
 
         if candidate_data['email'] in existing_candidates:
             continue
+        existing_candidates.append(candidate_data['email'])
 
         if not int(candidate_data['position']) in skip_positions:
             candidates.update({candidate_data['position']: candidate_data})
