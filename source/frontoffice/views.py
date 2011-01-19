@@ -509,7 +509,6 @@ def match_result_details(request, hash, candidate_id, iframe=None):
     request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
 
     candidate = result.candidate_answers.get(candidate=candidate_id)
-    visitors_profile = VisitorProfile.objects.filter(user=request.user)
 
     visitors_answer =  json.loads(result.visitor_answers)
     candidate_answer =  json.loads(candidate.candidate_answers)
