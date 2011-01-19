@@ -100,6 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'staticfiles.context_processors.static_url',
     'elections.context_processors.election_event',
+    'frontoffice.context_processors.homepage_placeholder',
 )
 
 TEMPLATE_DIRS = (
@@ -179,6 +180,7 @@ ELECTIONS_PROFILE_APP = 'political_profiles'
 ELECTIONS_ELECTION_EVENT_ID = 1
 ELECTIONS_ELECTION_INSTANCE_ID = 1
 
+HOMEPAGE_PLACEHOLDER = False
 
 
 # Wizard specific settings

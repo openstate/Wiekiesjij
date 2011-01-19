@@ -40,10 +40,10 @@ urlpatterns = patterns('',
 )
 
 #home page
-
-urlpatterns += patterns('frontoffice.views',
-    url(r'^$', 'home', name = 'fo.home'),
-)
+if not settings.HOMEPAGE_PLACEHOLDER:
+    urlpatterns += patterns('frontoffice.views',
+        url(r'^$', 'home', name = 'fo.home'),
+    )
 
 urlpatterns += patterns('frontoffice.views',
     url(r'^redirect/$', 'redirect_view', name='fo.redirect'),

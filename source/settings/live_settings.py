@@ -43,3 +43,6 @@ UTILS_POSTLOG_URLS = (
         r'^/backoffice/party/\d+/add_candidate',
         r'^/backoffice/welcome/',
     )
+
+#Disable menu on homepage and show static page on /
+HOMEPAGE_PLACEHOLDER = True
