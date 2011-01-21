@@ -29,7 +29,7 @@ class PasswordResetForm(forms.Form):
         return email
 
     def save(self, domain_override=None, email_template_name='registration/password_reset_email.html',
-             use_https=False, token_generator=default_token_generator):
+             use_https=False, token_generator=default_token_generator, request=None):
         """
         Generates a one-use only link for resetting password and sends to the user
         """
