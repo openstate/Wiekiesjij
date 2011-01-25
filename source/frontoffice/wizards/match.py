@@ -409,8 +409,6 @@ class BestCandidate(MultiPathFormWizard):
             candidates_total_scores[candidate] = total
         visitor = VisitorResult()
 
-        import ipdb; ipdb.set_trace()
-
         new_visitor = visitor.create()
 
         new_visitor.ipaddress=getip(request)
