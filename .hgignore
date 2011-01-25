@@ -4,3 +4,4 @@ source/tmp/*
 *.pyc
 env/
 local_settings.py
+.DS_Store

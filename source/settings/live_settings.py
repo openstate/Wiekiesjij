@@ -45,4 +45,4 @@ UTILS_POSTLOG_URLS = (
     )
 
 #Disable menu on homepage and show static page on /
-HOMEPAGE_PLACEHOLDER = True
+HOMEPAGE_PLACEHOLDER = False
