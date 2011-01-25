@@ -35,7 +35,7 @@ class BestCandidate(MultiPathFormWizard):
 
         elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
         self.elections_candidacies = elections_candidates
-        
+
         # get a list of candidate ids
         self.user_ids=[] # this is a list of user ids
         for elections_candidate in  elections_candidates:
@@ -47,7 +47,7 @@ class BestCandidate(MultiPathFormWizard):
         #Get all questions
         questions = self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('-electioninstancequestion__position')
         steps_tree = []
-        
+
         # Looping through the questions
         idx = 1;
         for question in questions:
@@ -57,7 +57,7 @@ class BestCandidate(MultiPathFormWizard):
                 empty_label = _('Geen voorkeur')
             else:
                 empty_label=None
-                
+
             if question.question_type in BACKOFFICE_QUESTION_TYPES:
                 form = {str(question.id): VisitorAnswerQuestionForm}
                 fkwargs={str(question.id): {'question_instance_id': question.id}}
@@ -89,7 +89,7 @@ class BestCandidate(MultiPathFormWizard):
             elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
                 form = {str(question.id): ThemeAnswerForm}
                 fkwargs= {str(question.id): {'queryset': self.election_instance.questions.filter(question_type__in=FRONTOFFICE_QUESTION_TYPES).order_by('electioninstancequestion__position'), 'empty_label':empty_label}}
-                
+
             elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
                 form = {str(question.id): WorkTypeQuestionForm}
                 fkwargs= {str(question.id): {'queryset': WorkExperienceSector.objects.all(), 'empty_label' :empty_label}}
@@ -103,7 +103,7 @@ class BestCandidate(MultiPathFormWizard):
                 parent = 'frontoffice/iframe.html'
             else:
                 parent = 'frontoffice/wizard/base.html'
-                
+
             step = Step(str(question.id),
                      forms=form,
                      template='frontoffice/wizard/test/step1.html',
@@ -168,7 +168,7 @@ class BestCandidate(MultiPathFormWizard):
                 if question.question_type not in MULTIPLE_ANSWER_TYPES:
                     empty_list.append(answer_value)
                     answer_value = empty_list
-                else:    
+                else:
                     answer_value = list(answer_value)
                 #all_visitor_answers[question_id] = answer_value
                 #if no preference is selected question is ignored
@@ -194,7 +194,7 @@ class BestCandidate(MultiPathFormWizard):
                                 if question.question_type == QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE:
                                     answer = Answer.objects.get(id=value)
                                     politicians_answer = Answer.objects.get(id=int(candidate_question_answers[candidate][int(question_id)][0]) )
-                                    
+
                                     if int(politicians_answer.meta) >= int(answer.meta):
                                         score = 1
                                 else:
@@ -205,11 +205,11 @@ class BestCandidate(MultiPathFormWizard):
                         else:
                             new_score = 0
                         candidate_scores[candidate].append({question.id: new_score})
-                        
+
                 elif QTYPE_MODEL_PARTY == question.question_type:
                     party_names = [value.name for value in answer_value]
                     for candidate in self.candidates:
-                        all_candidate_answers[candidate][question_id] = candidate.party().id        
+                        all_candidate_answers[candidate][question_id] = candidate.party().id
                         if not candidate.party() in answer_value:
                             candidate_excludes.append(candidate)
 
@@ -224,14 +224,14 @@ class BestCandidate(MultiPathFormWizard):
                     if len(parts) > 1:
                         end= parts[1]
                     else:
-                        end = int(parts[0]) + 1                    
+                        end = int(parts[0]) + 1
                     if end == 'G':
                         for candidate in self.candidates:
                             if candidate.political_experience_days == None:
                                 candidate.political_experience_days = 0
                             if (int(candidate.political_experience_days)/365) >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
-                               
+
                             all_candidate_answers[candidate][question_id] = (int(candidate.political_experience_days)/365)
                     else:
                         for candidate in self.candidates:
@@ -240,7 +240,7 @@ class BestCandidate(MultiPathFormWizard):
                                 candidate.political_experience_days = 0
                             if (int(candidate.political_experience_days)/365) in range(int(start),(int(end))):
                                 candidate_scores[candidate].append({question.id: 1})
-                                
+
                             all_candidate_answers[candidate][question_id] = (int(candidate.political_experience_days)/365)
 
                 elif QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
@@ -252,7 +252,7 @@ class BestCandidate(MultiPathFormWizard):
                         levels = EducationLevel.objects.exclude(level__in=exclude_list)
                     else:
                         levels = EducationLevel.objects.filter(level=answer_value)
-                        
+
                     # Check all levels that the politican can be in to be a match
                     level_names = []
                     for level in levels:
@@ -277,7 +277,7 @@ class BestCandidate(MultiPathFormWizard):
                                         answered = True
                                 if answered == False:
                                     candidate_scores[candidate].append({question.id: 1})
-                                    
+
                     all_visitor_answers[question_id] = level_names
                 elif QTYPE_MODEL_PROFILE_RELIGION == question.question_type:
                     all_visitor_answers[question_id] = answer_value
@@ -287,7 +287,7 @@ class BestCandidate(MultiPathFormWizard):
                             all_candidate_answers[candidate][question_id] = candidate.religion
                             if candidate.religion == value:
                                 candidate_scores[candidate].append({question.id: 1})
-                               
+
 
                 elif QTYPE_MODEL_PROFILE_AGE == question.question_type:
                     all_visitor_answers[question_id] = answer_value
@@ -300,20 +300,20 @@ class BestCandidate(MultiPathFormWizard):
                         for candidate in self.candidates:
                             if candidate.age >= int(start):
                                 candidate_scores[candidate].append({question.id: 1})
-                                
+
                             all_candidate_answers[candidate][question_id] = candidate.age
                     elif start == '':
                         for candidate in self.candidates:
                             if candidate.age < int(end):
                                 candidate_scores[candidate].append({question.id: 1})
-                                
+
                             all_candidate_answers[candidate][question_id] = candidate.age
                     else:
                         for candidate in self.candidates:
-                            
+
                             if candidate.age in range(int(start),int(end)):
                                 candidate_scores[candidate].append({question.id: 1})
-                                
+
                             all_candidate_answers[candidate][question_id] = candidate.age
 
                 elif QTYPE_MODEL_PROFILE_GENDER == question.question_type:
@@ -321,7 +321,7 @@ class BestCandidate(MultiPathFormWizard):
                     for candidate in self.candidates:
                         if candidate.gender == answer_value[0]:
                             candidate_scores[candidate].append({question.id: 1})
-                            
+
                         all_candidate_answers[candidate][question_id] = candidate.gender
 
                 elif QTYPE_MODEL_PROFILE_QUESTION_WEIGHT == question.question_type:
@@ -332,18 +332,18 @@ class BestCandidate(MultiPathFormWizard):
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
                     all_visitor_answers[question_id] = [a.id for a in answer_value]
-                    queryset = self.candidates.all()
+                    queryset = self.candidates.all().distinct()
                     for a in answer_value:
-                        queryset |= queryset.filter(work__sector=a)    
+                        queryset |= queryset.filter(work__sector=a)
                     for candidate in queryset:
                         candidate_scores[candidate].append({question.id: 1})
                         all_candidate_answers[candidate][question_id] = list(set([s.sector_id for s in candidate.work.all()]))
-                        
+
                 elif QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE == question.question_type:
                     all_visitor_answers[question_id] = [a.id for a in answer_value]
-                    queryset = self.candidates.all()
+                    queryset = self.candidates.all().distinct()
                     for a in answer_value:
-                        queryset |= queryset.filter(political__type=a)    
+                        queryset |= queryset.filter(political__type=a)
                     for candidate in queryset:
                         candidate_scores[candidate].append({question.id: 1})
                         all_candidate_answers[candidate][question_id] = list(set([s.type_id for s in candidate.political.all()]))
@@ -373,9 +373,9 @@ class BestCandidate(MultiPathFormWizard):
                 for question_id, score in question.iteritems():
                     qid = question_id
                     for q in all_questions:
-                        
+
                         if qid == q.id:
-                            
+
                             if q.theme in self.multiply_questions:
                                 score = score * 2
                                 score = float(float(score * 100)/number_of_questions)
@@ -383,14 +383,14 @@ class BestCandidate(MultiPathFormWizard):
                             else:
                                 score = float(float(score * 100)/number_of_questions)
                                 question[question_id] = score
-                            
+
 
         candidates_total_scores = {}
         for candidate in self.candidates:
             #Skip candidates excluded based on party
             if candidate in candidate_excludes:
                 continue
-                
+
             total = 0
             for question in candidate_scores[candidate]:
                for question_id, score in question.iteritems():
@@ -408,7 +408,8 @@ class BestCandidate(MultiPathFormWizard):
 
             candidates_total_scores[candidate] = total
         visitor = VisitorResult()
-        
+
+        import ipdb; ipdb.set_trace()
 
         new_visitor = visitor.create()
 
