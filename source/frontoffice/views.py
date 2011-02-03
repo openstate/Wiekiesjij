@@ -63,9 +63,9 @@ def _new_url(path, field, value):
 
 def match_results(request, hash, iframe=None):
     result = get_object_or_404(VisitorResult,hash=hash)
-    
+
     request.session['ElectionInstance'] = dict(id=result.election_instance.id, name=result.election_instance.name)
-    
+
     candidates = result.candidate_answers.all()
     if request.user.is_authenticated() and request.user.profile and request.user.profile.type == 'visitor':
         visitors_profile = request.user.profile
@@ -355,7 +355,7 @@ def politician_profile(request, id, tab = "favs"):
     if Candidacy.objects.filter(candidate=user).count() == 0:
         return Http404()
     showtab = tab
-    
+
     election_instance = get_object_or_404(ElectionInstance, pk=profile.party().current_eip.election_instance.pk)
     request.session['ElectionInstance'] = dict(id=election_instance.id, name=election_instance.name)
 
@@ -367,8 +367,8 @@ def politician_profile(request, id, tab = "favs"):
     #Getting the twitter RSS feed URL
     try:
         twitter = profile.connections.filter(type__type='Twitter')[0] #Raises an exception if no twitter account is entered
-        regex = re.compile(r"^(https?://)?(www\.)?(twitter\.com/)?(?P<id>[A-Za-z0-9\-=_]+)")
-        match = regex.match(twitter.url)
+        regex = re.compile(r"/(?P<id>[A-Za-z0-9\-=_]+)/?$")
+        match = regex.search(twitter.url)
         username = match.group('id')
         twitter_url = mark_safe("""http://www.twitter.com/statuses/user_timeline/%(username)s.rss""" % {'username':username})
     except:
