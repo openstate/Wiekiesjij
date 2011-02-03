@@ -46,3 +46,4 @@ UTILS_POSTLOG_URLS = (
 
 #Disable menu on homepage and show static page on /
 HOMEPAGE_PLACEHOLDER = False
+GOOGLE_ANALYTICS_CODE = 'UA-1376555-5'
