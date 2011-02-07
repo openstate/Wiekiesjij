@@ -165,8 +165,9 @@ def pull_feed(feed_url, posts_to_show=5, cache_expires=60):
     #is cache expired? default 60 minutes (60*60)
     if (cache_age + cache_expires*60 < time.time()):
         try: #refresh cache
-            urllib.urlretrieve(feed_url, CACHE_FILE)
-        except IOError: #if downloading fails, proceed using cached file
+            opener = urllib.URLopener()
+            opener.retrieve(feed_url, CACHE_FILE)
+        except (IOError, EOFError): #if downloading fails, proceed using cached file
             pass
     
     try:
