@@ -20,7 +20,6 @@ from political_profiles.models import EducationLevel, PoliticianProfile, Educati
 from political_profiles.models import WorkExperienceSector, PoliticalExperienceType
 from frontoffice.models import VisitorResult, CandidateAnswers
 
-from questions.forms import AnswerQuestionForm
 from utils.emails import send_email
 
 class BestCandidate(MultiPathFormWizard):
@@ -398,7 +397,7 @@ class BestCandidate(MultiPathFormWizard):
 
             #candidates_total_scores[candidate] = ceil(total)
             if total > 99 and settings.DEBUG == False:
-                if total > 100:
+                if int(total) > 100:
                     real_score = total
                 total = 100
 
