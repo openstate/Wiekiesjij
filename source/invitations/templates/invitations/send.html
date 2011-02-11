@@ -10,7 +10,11 @@
 		<ul>
 		{% ifequal invitation.type 'council_admin' %}
 			{% for council in invitation.user_to.councils.all %}
-				<li><a href="{% url bo.election_instance_view council.election_instance.pk %}">{{ council.name }}</a></li>
+				{% if council.election_instance %}
+					<li><a href="{% url bo.election_instance_view council.election_instance.pk %}">{{ council.name }}</a></li>
+					{% else %}
+					<li>{{ council.name }}</li>
+				{% endif %}
 			{% endfor %}
 		{% endifequal %}
 		{% ifequal invitation.type 'party_admin' %}
@@ -35,5 +39,5 @@
              </div>
         </form>
    	</div>
-</div> 
+</div>
 {% endblock content %}
