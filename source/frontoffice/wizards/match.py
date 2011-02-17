@@ -1,5 +1,7 @@
 import copy
 import json
+import random
+from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -40,7 +42,7 @@ class BestCandidate(MultiPathFormWizard):
         for elections_candidate in  elections_candidates:
             self.user_ids.append(elections_candidate.candidate_id)
         users = User.objects.filter(pk__in=self.user_ids)
-        candidates = PoliticianProfile.objects.filter(user__in=users)
+        candidates = PoliticianProfile.objects.filter(user__in=users).order_by('?')
         self.candidates = candidates # list of Politician Profiles in this election instance
 
         #Get all questions
@@ -331,18 +333,14 @@ class BestCandidate(MultiPathFormWizard):
 
                 elif QTYPE_MODEL_WORK_EXPERIENCE_TYPE == question.question_type:
                     all_visitor_answers[question_id] = [a.id for a in answer_value]
-                    queryset = self.candidates.all().distinct()
-                    for a in answer_value:
-                        queryset |= queryset.filter(work__sector=a)
+                    queryset = self.candidates.all().distinct().filter(work__sector__in=answer_value)
                     for candidate in queryset:
                         candidate_scores[candidate].append({question.id: 1})
                         all_candidate_answers[candidate][question_id] = list(set([s.sector_id for s in candidate.work.all()]))
 
                 elif QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE == question.question_type:
                     all_visitor_answers[question_id] = [a.id for a in answer_value]
-                    queryset = self.candidates.all().distinct()
-                    for a in answer_value:
-                        queryset |= queryset.filter(political__type=a)
+                    queryset = self.candidates.all().distinct().filter(political__type__in=answer_value)
                     for candidate in queryset:
                         candidate_scores[candidate].append({question.id: 1})
                         all_candidate_answers[candidate][question_id] = list(set([s.type_id for s in candidate.political.all()]))
@@ -418,8 +416,12 @@ class BestCandidate(MultiPathFormWizard):
             new_visitor.user = request.user
         new_visitor.visitor_answers = json.dumps(all_visitor_answers)
         new_visitor.save()
+        
+        sorted_candidates = [(k, candidates_total_scores[k]) for k in candidates_total_scores.keys()]
+        random.seed()
+        random.shuffle(sorted_candidates)
 
-        sorted_candidates = [(k, candidates_total_scores[k]) for k in sorted(candidates_total_scores, key=candidates_total_scores.get, reverse=True)]
+        sorted_candidates = sorted(sorted_candidates, key=itemgetter(1), reverse=True)
 
         for candidate, score in sorted_candidates[:5]:
 
