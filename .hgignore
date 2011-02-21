@@ -6,3 +6,4 @@ env/
 local_settings.py
 .DS_Store
 source/media/media/*
+source/media/defaults/*q85.jpg
