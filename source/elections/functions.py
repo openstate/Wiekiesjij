@@ -75,10 +75,10 @@ def get_popularity(election_instance_id):
         
         winsec = 24*60*60 * UserStatistics.view_interval.days + UserStatistics.view_interval.seconds
 
-        if stts.DATABASE_ENGINE[0:6] == "sqlite":
+        if stts.DATABASES['default']['ENGINE'].find('sqlite') != -1:
             pop = """COALESCE((({0} / ({0} + (strftime('%%s', 'now') - strftime('%%s', us.profile_hits_up)))) * us.profile_hits), 0) as pop""".format(winsec)
 
-        elif stts.DATABASE_ENGINE == 'mysql':
+        elif stts.DATABASES['default']['ENGINE'].find('mysql') != -1:
             pop = """COALESCE((({0} / ({0} + time_to_sec(timediff(now(), us.profile_hits_up)))) * us.profile_hits), 0) as pop""".format(winsec)
             
         else:
