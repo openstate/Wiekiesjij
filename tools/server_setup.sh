@@ -31,7 +31,7 @@ dpkg-reconfigure --frontend noninteractive tzdata
 
 # Django setup
 apt-get -y install mercurial git-core bzr memcached
-apt-get -y install python python-dev python-setuptools python-psycopg2 python-imaging python-virtualenv python-mysqldb
+apt-get -y install python python-dev python-setuptools python-psycopg2 python-imaging python-virtualenv python-mysqldb python-gevent
 easy_install -U distribute pip
 pip install virtualenv
 mkdir /var/projects

@@ -4,4 +4,4 @@ bind = 'unix:///var/run/%(hostname)s.sock'
 pidfile = '/var/run/%(hostname)s.pid'
 workers = '2'
 deamon = True
-worker_class = 'gevent'
+#worker_class = 'gevent'
