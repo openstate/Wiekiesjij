@@ -86,20 +86,20 @@ def select(name):
         exit(1)
     elif name == ENV_STAGING:
        env.user_name = env.project_name
-       env.hosts = ['109.74.206.55']
+       env.hosts = ['host62.griv.nl']
        env.hostname = '%(project_name)s.staging.getlogic.nl' % env
        env.settings = 'settings.staging_settings'
        env.processes = 2
        env.threads = 6
     elif name == ENV_LIVE:
        env.user_name = env.project_name
-       env.hosts = ['109.74.206.55']
+       env.hosts = ['host62.griv.nl']
        env.hostname = '%(project_name)s.nl' % env
        env.settings = 'settings.live_settings'
        env.processes = 2
        env.threads = 6
 
-    env.base_path = '/data/projects/%(project_name)s/%(environment)s/' % env
+    env.base_path = '/var/projects/%(project_name)s/%(environment)s/' % env
     env.apache_config = '/etc/apache2/sites-available/%(project_name)s_%(environment)s' % env
     env.nginx_config = '/opt/nginx/conf/sites-available/%(project_name)s_%(environment)s' % env
 
