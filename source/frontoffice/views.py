@@ -489,15 +489,18 @@ def thumbs_down(request, goal_id):
 
 
 def home(request):
-    region = None
-    if request.method == 'POST':
-        form = RegionSelectForm(request.POST)
-        if form.is_valid():
-            region = form.cleaned_data['region']
-            dict = {'id': region.id, 'name': region.name}
-            request.session['ElectionInstance'] = dict
-    else:
-        form = RegionSelectForm()
+    region = 1
+    #if request.method == 'POST':
+    #    form = RegionSelectForm(request.POST)
+    #    if form.is_valid():
+    #        region = form.cleaned_data['region']
+    #        dict = {'id': region.id, 'name': region.name}
+    #        request.session['ElectionInstance'] = dict
+    #else:
+    #    form = RegionSelectForm()
+    dict = {'id': 1, 'name': 'Tweede kamer verkiezingen 2012'}
+    request.session['ElectionInstance'] = dict
+    form = RegionSelectForm()
 
     if 'ElectionInstance' in request.session:
         initial_dict = {'region': request.session['ElectionInstance'].get('id')}

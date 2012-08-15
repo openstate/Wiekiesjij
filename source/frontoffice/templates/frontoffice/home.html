@@ -22,13 +22,13 @@
         </div>
     </div>
     <div class="mod title">
-    	<h1>{% trans "Voorkeurstemwijzer Provinciale Statenverkiezingen 2011" %}</h1>
+    	<h1>{% trans "Voorkeurstemwijzer voor de landelijke verkiezingen van 12 september 2012" %}</h1> <!-- Provinciale Statenverkiezingen 2011" %}</h1> -->
     </div>
 </div>
 
 <form action="" id="form" method="POST">
 
-    <div class="col size1of2">
+<!--    <div class="col size1of2">
         <div class="mod select-region">
             <div id="selector" class="bd">
                 <h2><span class="num">1</span> {% trans 'Selecteer uw regio' %} </h2>
@@ -46,40 +46,26 @@
             </div>
         </div>
     </div>
+    -->
+    <input type="hidden" name="region" value="1">
 
-    <div class="col size1of2">
+    <!-- <div class="col size1of2"> -->
+    <div style="width:90%">
         <div class="mod start-actions">
-            {% if request.session.ElectionInstance %}
                 <div class="bd">
-                    <h2>&nbsp;<span class="num">2</span></h2>
-                    <a class="big-btn primary-btn start-test" href="{% url fo.match_welcome request.session.ElectionInstance.id %}">
-                        <span>
-                            <span class="icon"></span>{% trans 'Doe de test' %}
-                        </span>
-                    </a>
-                    <p>{% trans "or" %}</p>
-                    <a class="big-btn list-candidates" href="{% url fo.election %}">
-                        <span>
-                            <span class="icon"></span>{% trans 'Bekijk de kandidaten' %}
-                        </span>
-                    </a>
-                </div>
-            {% else %}
-                <div class="bd disabled">
-                    <h2>&nbsp;<span class="num">2</span></h2>
-                    <a class="big-btn primary-btn start-test">
-                        <span>
-                            <span class="icon"></span>{% trans 'Doe de test' %}
-                        </span>
-                    </a>
-                    <p>{% trans "or" %}</p>
-                    <a class="big-btn list-candidates">
-                        <span>
-                            <span class="icon"></span>{% trans 'Bekijk de kandidaten' %}
-                        </span>
-                    </a>
-                </div>
-            {% endif %}
+                <h2>&nbsp;<!--<span class="num">2</span>--></h2>
+                <a class="big-btn primary-btn start-test" href="{% url fo.match_welcome 1 %}">
+                    <span>
+                        <span class="icon"></span>{% trans 'Doe de test' %}
+                    </span>
+                </a>
+                <p>{% trans "or" %}</p>
+                <a class="big-btn list-candidates" href="{% url fo.election 1 %}">
+                    <span>
+                        <span class="icon"></span>{% trans 'Bekijk de kandidaten' %}
+                    </span>
+                </a>
+            </div>
         </div>
     </div>
 </form>
