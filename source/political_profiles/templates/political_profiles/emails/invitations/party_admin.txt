@@ -3,7 +3,7 @@
 {% block content %}
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-	Bij de komende Provinciale Statenverkiezingen zal Wiekiesjij worden ingezet in uw provincie. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.
+	Bij de komende Tweede Kamer-verkiezingen zal Wiekiesjij weer worden gelanceerd. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.
 
 	Wiekiesjij is een kieswijzer gericht op individuele kandidaten en geeft hen hierdoor een manier om zichzelf te presenteren. Wiekiesjij stelt een aantal vragen aan de kiezers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat.
 
