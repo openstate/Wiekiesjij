@@ -1,5 +1,5 @@
 """
-
+    ACHTUNG. This is broken. Do not use it on the production server
     Usage:
 
 
@@ -30,6 +30,8 @@
 
 
 """
+print "DO NOT USE THIS"
+exit(1)
 import re
 import os
 import time
@@ -85,6 +87,8 @@ def select(name):
         print(colors.red('Development environment not specified'))
         exit(1)
     elif name == ENV_STAGING:
+       print "Not implemented"
+       exit(1)
        env.user_name = env.project_name
        env.hosts = ['host62.griv.nl']
        env.hostname = '%(project_name)s.staging.getlogic.nl' % env
@@ -93,7 +97,7 @@ def select(name):
        env.threads = 6
     elif name == ENV_LIVE:
        env.user_name = env.project_name
-       env.hosts = ['host62.griv.nl']
+       env.hosts = ['wiekiesjij@host62.griv.nl']
        env.hostname = '%(project_name)s.nl' % env
        env.settings = 'settings.live_settings'
        env.processes = 2
@@ -114,6 +118,8 @@ def clean_up():
     """
         Cleanup old releases
     """
+    print "Not implemented"
+    exit (1)
     require('hosts', 'environment', provided_by=[select])
 
     with hide('output', 'running', 'warnings'):
@@ -191,19 +197,19 @@ def deploy():
 
     with hide('output', 'running', 'warnings'):
 
-        while True:
+        while False:
             env.tag = prompt(colors.magenta("Which tag do you want to deploy to %(environment)s:" % env))
             if _check_tag(env.tag):
                 break
 
         env.release_time = time.strftime('%Y%m%d-%H%M%S')
-        env.revision = _get_revision_for_tag()
+        env.revision = local('git describe --tags HEAD', capture=True)
 
         env.release = "%s-%s" % (env.release_time, env.revision)
 
         _print("environment", env.environment)
         _print("project", env.project_name)
-        _print("tag", env.tag)
+        #_print("tag", env.tag)
 
         identify()
 
@@ -293,6 +299,8 @@ def _check_tag(tag):
     """
         Check if the given tag is valid
     """
+    print "Not implemented"
+    exit(1)
     with settings(warn_only=True):
         output = local('hg tags | grep "^%s "' % tag)
     return not output.failed or len(output) != 0
@@ -329,10 +337,10 @@ def _upload_to_server():
         Upload the code to the server
     """
     require('hosts', 'environment', 'base_path', provided_by=[select])
-    require('release', 'tag', provided_by=[deploy])
+    require('release', provided_by=[deploy])
 
-    local('hg archive -r %(tag)s -t tgz %(release)s.tar.gz' % env)
-
+    #local('hg archive -r %(tag)s -t tgz %(release)s.tar.gz' % env)
+    local('git archive --format=tar HEAD| gzip > %(release)s.tar.gz' % env)
     #TODO: Log deployment
     sudo('mkdir -p %(base_path)sreleases/%(release)s/' % env, user=env.user_name)
     sudo('mkdir -p %(base_path)spackages/' % env, user=env.user_name)
@@ -354,7 +362,8 @@ def _install_requirements():
     require('hosts', 'environment', 'base_path', provided_by=[select])
     require('release', provided_by=[deploy])
 
-    changeset = local('hg log requirements.txt -r %(revision)s:0 -l 1 --template "{node}\\n"' % env) #TODO: before the given tag !
+    #changeset = local('hg log requirements.txt -r %(revision)s:0 -l 1 --template "{node}\\n"' % env) #TODO: before the given tag !
+    changeset = 'XXX'
 
     env.pybundle = '%s.pybundle' % changeset
 
