@@ -7,7 +7,7 @@ from utils.widgets import AutoCompleter, ColorPicker, HiddenDateTimePicker, Date
 from utils.fields import AddressField, YoutubeURLField
 from utils.formutils import TemplateForm
 
-#from utils.validators import 
+#from utils.validators import
 #from utils.fields import ZipCodeField, PhoneField
 from elections.models import Candidacy, Council, ElectionEvent, ElectionInstance, ElectionInstanceQuestion, Party
 from elections.models import ElectionInstanceParty, ElectionInstanceModule
@@ -66,7 +66,7 @@ class InitialCouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
-    
+
     #address = AddressField(_('Address'))
 
     class Meta:
@@ -83,18 +83,18 @@ class InitialCouncilForm(BetterModelForm, TemplateForm):
             self.cleaned_data[key] = self.cleaned_data['address'].split(' ')[fields.index(key)]
         return self.cleaned_data['address']
     '''
-        
+
 class CouncilForm(BetterModelForm, TemplateForm):
     '''
     ChanceryProfile admin
     '''
-    
-    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('Wat is het huidige aantal zetels in uw Provinciale Staten.'))
-	
+
+    seats = forms.IntegerField(label=_('Seats'), required=False, help_text=_('Wat is het huidige aantal zetels in uw Tweede Kamer.'))
+
     def __init__(self, *args, **kwargs):
         super(CouncilForm, self).__init__(*args, **kwargs)
         self.fields['history'].widget = forms.widgets.Textarea()
-    
+
     class Meta:
         model = Council
         fields = ('seats', 'history', )
@@ -104,10 +104,10 @@ class CouncilContactInformationForm(BetterForm, TemplateForm):
     Council information form (used in 2. Election overview)
     '''
 
-    name = forms.CharField(label=_('Name'), help_text=_('Geef hier de naam van uw Provinciale Staten op (bv. Groningen).'))
+    name = forms.CharField(label=_('Name'), help_text=_('Geef hier de naam van uw Tweede Kamer op.).'))
     address = AddressField(label=_('Address of the Council'), help_text=_('Vul hier uw contactinformatie in.'))
-    email = forms.EmailField(label=_('E-Mail'), help_text=_('Vul hier het algemene email adres van de Provinciale Staten in.'))
-    website = forms.URLField(label=_('Website of the Council'), help_text=_('Vul hier de permanente website van de Provinciale Staten in.'), required=False)
+    email = forms.EmailField(label=_('E-Mail'), help_text=_('We gebruiken hier het emailadres van wiekiesjij.nl'))
+    website = forms.URLField(label=_('Website of the Council'), help_text=_('Vul hier de permanente website van de Tweede Kamer in.'), required=False)
 
 
     class Meta:
@@ -142,16 +142,16 @@ class InitialElectionInstanceForm(BetterModelForm, TemplateForm):
     '''
 
     modules = forms.ModelMultipleChoiceField(required=False,
-                            label=_('Which modules do you want to enable for this instance?'), 
+                            label=_('Which modules do you want to enable for this instance?'),
 
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
 
-    name = forms.CharField(help_text=_('Insert the name of the province here.'))
-    region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your province.'))
-    level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a province election, the level would be Province.'))
+    name = forms.CharField(help_text=_('Insert the name of the country here.'))
+    region = forms.CharField(label=_('Region'), widget=AutoCompleter(model=Council, field='region'), help_text=_('Probably the same as the name of your country.'))
+    level = forms.CharField(label=_('Level'), widget=AutoCompleter(model=Council, field='level'), help_text=_('For example for a national election, the level would be Country.'))
     question_set = forms.ModelChoiceField(label=_('Question set'), queryset=QuestionSet.objects.all(), empty_label=_('(None)'), help_text=_('The question set to use for this election instance'))
-    
+
     class Meta:
         model = ElectionInstance
         fields = ('name', 'region', 'level', 'modules')
@@ -161,29 +161,29 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
      ElectionInstance admin
     '''
     start_date = forms.DateTimeField(
-        label=_('When does this election take place?'), 
+        label=_('When does this election take place?'),
         widget=DateTimePicker)
     start_date.hidden_widget = HiddenDateTimePicker
-    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('Als uw Provinciale Staten een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen.'))
+    website = forms.URLField(label=_('Election Website'), required=False, initial='http://', help_text=_('Als uw Tweede Kamer een speciale promotie website heeft voor deze verkiezing, kunt u de URL hier invullen.'))
     num_lists = forms.IntegerField(label=_('Number of parties in this election.'), required=False, help_text=_('How many parties are taking part in this election?'))
-    
+
     class Meta:
         model = ElectionInstance
         fields = ('start_date', 'website', 'num_lists')
-        
-        
+
+
     def __init__(self, *args, **kwargs):
         if 'instance' in kwargs:
             self.instance = kwargs['instance']
             self.instance.start_date = self.instance.election_event.default_date
-            
+
         super(ElectionInstanceForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
             self.fields['start_date'].help_text = _('Vul hier het moment in dat de stembussen sluiten. De datum %(def_date)s is de standaard datum voor %(ev_name)s.') % {
                 'def_date': self.instance.election_event.default_date.strftime('%d-%m-%Y'),
                 'ev_name': self.instance.election_event.name,
             }
-            
+
 
     def clean_num_lists(self):
         """
@@ -192,10 +192,10 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
         # No checking for unbound form
         if not self.instance:
             return self.cleaned_data['num_lists']
-            
+
         num_lists = self.cleaned_data['num_lists']
         largest_position = 0
-        
+
         for eip in self.instance.election_instance_parties.all():
            if eip.position > largest_position:
                largest_position = eip.position
@@ -204,20 +204,20 @@ class ElectionInstanceForm(BetterModelForm, TemplateForm):
            raise forms.ValidationError( _('Number needs to be at least %(largest_position)s because there is a party in this position already.') % {'largest_position':largest_position, 'num_lists': num_lists } )
 
         return self.cleaned_data['num_lists']
-    
+
 
 class EditElectionInstanceForm(BetterModelForm, TemplateForm):
     """
     EditElectionInstanceForm
     """
     modules = forms.ModelMultipleChoiceField(required=False,
-                            label=_('Modules'), 
+                            label=_('Modules'),
                             queryset=ElectionInstanceModule.objects,
                             widget=forms.widgets.CheckboxSelectMultiple)
-    
+
     class Meta:
         model = ElectionInstance
-        fields = ('name', 'modules')                     
+        fields = ('name', 'modules')
 
 class ElectionInstanceQuestionForm(BetterModelForm, TemplateForm):
     '''
@@ -234,14 +234,14 @@ class PartyForm(BetterModelForm, TemplateForm):
 
     class Meta:
         model = Party
-        
+
 class InitialElectionPartyForm(BetterForm, TemplateForm):
-    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'), max_length=255) 
+    name = forms.CharField(label=_('Full party name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'), max_length=255)
     abbreviation = forms.CharField(label=_('Abbreviated Party Name'), help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD).'), required=True, max_length=20)
     #list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=1, max_value=100, help_text=_('The number of positions available for this election'))
     position = forms.IntegerField(widget=forms.widgets.HiddenInput())
-    
-    
+
+
 class ElectionPartyContactForm(BetterForm, TemplateForm):
     name = forms.CharField(label=_('Full party name'), max_length=255, widget=AutoCompleter(model=Party, field='name'), help_text=_('Vul hier de volledige naam van uw partij in (b.v. Volkspartij voor Vrijheid en Democratie).'))
     abbreviation = forms.CharField(label=_('Abbreviated party name'), max_length=20 , help_text=_('Vul hier de afkorting van uw partij in (b.v. VVD). (20 tekens)'), required=True)
