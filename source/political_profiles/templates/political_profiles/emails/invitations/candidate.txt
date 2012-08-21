@@ -3,9 +3,10 @@
 {% block content %}
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-	Voor de komende verkiezingen zal Het Nieuwe Stemmen in samenwerking met de provincie en uw partij Wiekiesjij inzetten voor de komende verkiezingen. Om Wiekiesjij goed te laten werken hebben wij u nodig om uw profiel in te vullen. Wiekiesjij is een stemwijzer die de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken. Hiermee maken we de kandidaten beter bekend bij de kiezers.
+	Voor de komende verkiezingen zal Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij lanceren. Om Wiekiesjij goed te laten werken hebben wij u nodig om uw profiel in te vullen. Wiekiesjij is een stemwijzer die de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken. Hiermee maken we de kandidaten beter bekend bij de kiezers.
 
 	Het is noodzakelijk dat u zo snel mogelijk alle vragen van uw profiel invult zodat de bezoekers bij u terecht kunnen komen als favoriete kandidaat. Hierbij willen wij wel graag opmerken dat niet alle vragen verplicht zijn en dat wij uiteraard vertrouwelijk om gaan met uw contactgegevens. 
+  Tevens zullen er dit jaar vragen in de vragenlijst zitten die niet op u profiel komen te staan maar die zullen worden gebruikt om onze bezoekers een beter beeld te geven van de kandidaten over het algemeen. Deze vragen zijn op anonieme basis en optioneel. Ze zullen duidelijk als zodanig aangegeven zijn,
 
 	Hieronder zult u de link vinden om te beginnen met het invullen van uw profiel. Middels de link wordt u in staat gesteld om een wachtwoord aan te maken en in te loggen.  
 
