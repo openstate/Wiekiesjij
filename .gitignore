@@ -5,5 +5,5 @@ source/dev.db
 source/dev.db.backup
 *.pyc
 .ropeproject
-.cache
-.upload
+*.cache
+*.upload
