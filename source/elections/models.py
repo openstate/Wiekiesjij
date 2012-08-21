@@ -86,7 +86,7 @@ class Council(models.Model):
                     send_email(
                                 _('A Councils Credit is Low'),
                                 'info@wiekiesjij.nl',
-                                'exceptions@getlogic.nl',
+                                'webmaster@wiekiesjij.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                     )
@@ -101,7 +101,7 @@ class Council(models.Model):
                     send_email(
                                 _('Your Credit is Low'),
                                 'info@wiekiesjij.nl',
-                                'exceptions@getlogic.nl',
+                                'webmaster@wiekiesjij.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                     )
@@ -324,7 +324,7 @@ class Party(models.Model):
             candpop, partypop = get_popularity(self.current_eip.election_instance_id)
             self._popularity = int(partypop.get(self.current_eip.pk, 0))
         if self._popularity < 20:
-            return 20    
+            return 20
         return self._popularity
 
     def profile_incomplete(self):

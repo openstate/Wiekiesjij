@@ -1,5 +1,5 @@
-USERNAME='Getlogic'
-PASSWORD='accepte_media'
+USERNAME='XXX'
+PASSWORD='XXX'
 DEFAULT_MOLLIEGW="http://www.mollie.nl/xml/sms/"
 SECURE_MOLLIEGW="http://www.mollie.nl/xml/sms/"
 CREDITS_MOLLIEGW="http://www.mollie.nl/xml/credits/"

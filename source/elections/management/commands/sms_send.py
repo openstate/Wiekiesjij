@@ -8,7 +8,7 @@ from utils.emails import send_email
 
 class Command(BaseCommand):
     help = 'Sends sms at correct time'
-    
+
     def handle(self, *args, **options):
         councils = Council.objects.all()
         accepte_credit =  get_credit()
@@ -29,7 +29,7 @@ class Command(BaseCommand):
                         send_email(
                                 'Credits Negative -- Error',
                                 'info@wiekiesjij.nl',
-                                'exceptions@getlogic.nl',
+                                'webmaster@wiekiesjij.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                         )

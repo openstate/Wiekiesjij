@@ -16,7 +16,7 @@ DATABASES = {
 
 
 ADMINS = (
-    ('WieKiesJij PS', 'exceptions@getlogic.nl'),
+    ('WieKiesJij PS', 'webmaster@wiekiesjij.nl'),
 )
 MANAGERS = ADMINS
 

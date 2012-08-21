@@ -416,7 +416,7 @@ class BestCandidate(MultiPathFormWizard):
             new_visitor.user = request.user
         new_visitor.visitor_answers = json.dumps(all_visitor_answers)
         new_visitor.save()
-        
+
         sorted_candidates = [(k, candidates_total_scores[k]) for k in candidates_total_scores.keys()]
         random.seed()
         random.shuffle(sorted_candidates)
@@ -438,7 +438,7 @@ class BestCandidate(MultiPathFormWizard):
                 send_email(
                             'Error: score more than 100 in results',
                             'info@wiekiesjij.nl',
-                            'exceptions+wkjwizard@getlogic.nl',
+                            'webmaster@wiekiesjij.nl',
                             {'hash': new_visitor.hash, 'real_score': real_score},
                             {'plain': 'questions/score_error.txt'},
                 )

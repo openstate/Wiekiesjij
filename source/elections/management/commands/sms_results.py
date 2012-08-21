@@ -7,12 +7,12 @@ from sms.models import get_credit
 from utils.emails import send_email
 class Command(BaseCommand):
     help = 'Sends smss at correct time'
-    
+
     def handle(self, *args, **options):
         accepte_credits = get_credit()
         for election_instance in ElectionInstance.objects.all():
             if election_instance.modules.filter(slug='SMS').count() != 0:
-            
+
                 phone_nums = VisitorResult.objects.filter(election_instance=election_instance).exclude(telephone=None).values('telephone').distinct()
                 for phone_num in phone_nums:
                     if accepte_credits > 0:
@@ -37,7 +37,7 @@ class Command(BaseCommand):
                         send_email(
                                 'Credits Negative -- Error',
                                 'info@wiekiesjij.nl',
-                                'exceptions@getlogic.nl',
+                                'webmaster@wiekiesjij.nl',
                                 {'message': message },
                                 {'plain': 'elections/credits_low.txt'},
                         )

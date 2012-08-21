@@ -23,7 +23,7 @@ def credit_left():
         send_email(
                 'Credits Negative -- IMPORTANT',
                 'info@wiekiesjij.nl',
-                'exceptions@getlogic.nl',
+                'webmaster@wiekiesjij.nl',
                 {'message': message },
                 {'plain': 'elections/credits_low.txt'},
         )
@@ -33,11 +33,11 @@ def credit_left():
 
         message = 'Accepte may not have enough credit bought. Currently Accepte has %s credits left. Councils have reserved: %s. %s credits have not been reserved. Total (Acceptes credits - reserver - non_reserved): %s' %(str(credit_left), str(councils_credit), str(over_drawn),str(margin))
 
-     
+
         send_email(
                     'Credits Low',
                     'info@wiekiesjij.nl',
-                    'exceptions@getlogic.nl',
+                    'webmaster@wiekiesjij.nl',
                     {'message': message },
                     {'plain': 'elections/credits_low.txt'},
         )
