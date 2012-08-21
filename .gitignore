@@ -1,5 +1,9 @@
+env/
+build/
 source/settings/local_settings.py
 source/dev.db
 source/dev.db.backup
 *.pyc
 .ropeproject
+.cache
+.upload
