@@ -24,7 +24,7 @@ from questions.models import Question, Answer
 from questions import settings as qsettings
 from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES
 from frontoffice.decorators import visitors_only
 from django.contrib.auth.decorators import login_required
 
@@ -625,6 +625,10 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = temp_list
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
+        
+        elif qsettings.QTYPE_MODEL_SELECT_FAVORITE_COALITION == question.question_type:
+            pass
+            # TODO UITWERKEN
 
         elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
             if 'no_pref' not in questions_dict[key]['visitor']:

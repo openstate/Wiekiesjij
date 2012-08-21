@@ -170,6 +170,31 @@ PROVINCES = [
     ('Zeeland', 'Zeeland'),
     ('Zuid-Holland', 'Zuid-Holland'),
 ]
+
+PARTIES = [
+    ('VVD', 'Volkspartij voor Vrijheid en Democratie (VVD)'),
+    ('PVDA', 'Partij van de Arbeid (PvdA)'),
+    ('PVV', 'Partij voor de Vrijheid (PVV)'),
+    ('CDA', 'Christen Democratisch Appèl (CDA)'),
+    ('SP', 'Socialistische Partij (SP)'),
+    ('D66', 'Democraten 66 (D66)'),
+    ('GL', 'GroenLinks'),
+    ('CU', 'ChristenUnie'),
+    ('SGP', 'Staatkundig Gereformeerde Partij'),
+    ('PVDD', 'Partij voor de Dieren'),
+    ('PIRATENPARTIJ', 'Piratenpartij', ''),
+    ('MENS', 'Partij voor Mens en Spirit (MenS)'),
+    ('NL', 'Nederland Lokaal'),
+    ('LB', 'Libertarische Partij'),
+    ('DPK', 'Democratisch Politiek Keerpunt (DPK)'),
+    ('50Plus','50Plus'),
+    ('LIBDEM','Liberaal Democratische Partij (LibDem)'),
+    ('AEP','Anti Europa Partij'),
+    ('SOPN','Soeverein Onafhankelijke Pioniers Nederland (SOPN)'),
+    ('PVDT','Partij van de Toekomst (PvdT)'),
+    ('Politieke Partij NXD','Politieke Partij NXD'),
+]
+
 class ConnectionType(models.Model):
     """
             Type of connection.

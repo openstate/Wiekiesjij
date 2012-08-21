@@ -14,7 +14,7 @@ from utils.formutils import TemplateForm
 # TODO make better imports
 from questions.exceptions import ModelAnswerFormError
 from questions.models import Question, Answer
-from questions.settings import MULTIPLE_ANSWER_TYPES, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QUESTION_TYPE_CHOICES
+from questions.settings import MULTIPLE_ANSWER_TYPES, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QUESTION_TYPE_CHOICES, QTYPE_MODEL_SELECT_FAVORITE_COALITION
 
 class SelectQuestionForm(BetterModelForm, TemplateForm):
     '''
@@ -251,6 +251,9 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)}) #RadioBoolean() #widgets.NullBooleanSelect()
             elif QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
+            elif QTYPE_MODEL_SELECT_FAVORITE_COALITION == question_instance.question_type:
+                pass 
+                #TODO uitwerken
             elif QTYPE_MODEL_PROFILE_RELIGION == question_instance.question_type:
                 RELIGION_A = copy.deepcopy(RELIGION)
                 RELIGION_A.append(('no_pref', _('Geen voorkeur')))

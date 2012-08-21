@@ -68,11 +68,10 @@ class Command(BaseCommand):
                 )
         print "Added basic question 2"
         
-        # TODO nieuw type vraag; minimaal 3 aanvinken
         q3 = Question.objects.create(
             title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
             frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
-            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
+            question_type=settings.QTYPE_MODEL_SELECT_FAVORITE_COALITION,
             result_title=u'Coalitie',
             theme='q3',
             has_no_preference=True,
