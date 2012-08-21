@@ -3,3 +3,4 @@ source/dev.db
 source/dev.db.backup
 *.pyc
 .ropeproject
+*~
