@@ -14,7 +14,7 @@ from utils.formutils import TemplateForm
 # TODO make better imports
 from questions.exceptions import ModelAnswerFormError
 from questions.models import Question, Answer
-from questions.settings import MULTIPLE_ANSWER_TYPES, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QUESTION_TYPE_CHOICES
+from questions.settings import MULTIPLE_ANSWER_TYPES, QTYPE_NORM_POLONECHOICE_VISONECHOICE_RANGE, QTYPE_MODEL_POLITICAL_EXPERIENCE_YEARS, QTYPE_MODEL_EDUCATION_LEVEL, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PROFILE_AGE, QTYPE_MODEL_PROFILE_GENDER, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QUESTION_TYPE_CHOICES, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE
 
 from django.core import validators
 class MinNumAnswersValidator(validators.BaseValidator):
@@ -50,6 +50,7 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
     '''
     def __init__(self, question_instance_id, *args, **kwargs):
         
+
         question_types = dict(QUESTION_TYPE_CHOICES)
 
         question_instance = Question.objects.get(id=question_instance_id)
@@ -61,11 +62,11 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
             choices = map(lambda x: (x.id, x.value), question_instance.answers.all())
             #if question_instance.has_no_preference:
             #choices.append(('no_pref', _('Geen voorkeur')))
-            myValidators = []
-            if question_instance.min_num_answers > 0:
-                myValidators.append(MinNumAnswersValidator(question_instance.min_num_answers))
-                
+
             if question_instance.question_type in MULTIPLE_ANSWER_TYPES:
+                myValidators = []
+                if (QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE == question_instance.question_type):
+                    myValidators.append(MinNumAnswersValidator(3))
                 self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices, validators=myValidators)})
             elif QTYPE_NORM_POLONECHOICE_VISONECHOICE == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
@@ -75,7 +76,6 @@ class AnswerQuestionForm(BetterForm, TemplateForm):
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
             elif QTYPE_MODEL_EDUCATION_LEVEL == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})
-
             else:
                 #print "This question type doenst know what type of form to show"
                 #print question_instance.question_type
@@ -252,10 +252,11 @@ class VisitorAnswerQuestionForm(BetterForm, TemplateForm):
             choices = map(lambda x: (x.id, x.get_frontoffice_value()), question_instance.answers.all())
             if question_instance.has_no_preference:
                 choices.append(('no_pref', _('Geen voorkeur')))
-            myValidators = []
-            if question_instance.min_num_answers > 0:
-                myValidators.append(MinNumAnswersValidator(question_instance.min_num_answers))
             if QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE == question_instance.question_type:
+                self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices)})
+            elif QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE == question_instance.question_type:
+                myValidators = []
+                myValidators.append(MinNumAnswersValidator(3))
                 self.base_fields.update({'value': forms.MultipleChoiceField(label=_('Answer'), widget=widgets.CheckboxSelectMultiple(choices=choices), choices=choices, validators=myValidators)})
             elif QTYPE_NORM_POLONECHOICE_VISONECHOICE == question_instance.question_type:
                 self.base_fields.update({'value': forms.ChoiceField(label=_('Answer'), widget=widgets.RadioSelect(choices=choices), choices=choices)})

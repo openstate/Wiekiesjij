@@ -24,8 +24,7 @@ class Migration:
             ('theme', orm['questions.Question:theme']),
             ('has_no_preference', orm['questions.Question:has_no_preference']),
             ('result_title', orm['questions.Question:result_title']),
-            ('help_text', orm['questions.Question:help_text']),
-            ('min_num_answers', orm['questions.Question:min_num_answers']),
+            ('help_text', orm['questions.Question:help_text'])
         ))
         db.send_create_signal('questions', ['Question'])
         
@@ -85,8 +84,7 @@ class Migration:
             'result_title': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'theme': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'}),
-            'min_num_answers': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
+            'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})
         },
         'questions.questionset': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
