@@ -45,7 +45,9 @@
                 {% if request.session.ElectionInstance and not HOMEPAGE_PLACEHOLDER %}
                 <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% url fo.match_welcome request.session.ElectionInstance.id %}">{% trans 'Take the test' %}</a></li>
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
+		{% comment %}
                 <li class="{% block menu_statistics %}{% endblock %}"><a href="{% url statistics.index %}">{% trans 'Statistics' %}</a></li>
+		{% endcomment %}
                 {% endif %}
                 <li class="{% block menu_organisation %}{% endblock %}"><a href="/over-ons/">{% trans 'Over Ons' %}</a></li>
             {% endblock menu %}
