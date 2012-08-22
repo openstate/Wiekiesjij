@@ -625,7 +625,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                 questions_dict[key]['candidate'] = temp_list
             else:
                 questions_dict[key]['candidate'] = ['Not Answered']
-        
+
         elif qsettings.QTYPE_MODEL_EDUCATION_LEVEL == question.question_type:
             if 'no_pref' not in questions_dict[key]['visitor']:
                 questions_dict[key]['visitor'] = questions_dict[key]['visitor']

@@ -10,7 +10,7 @@ class Question(models.Model):
         A question, has a simple title and a description
         The question type determines how the question is displayed
     """
-    
+
     title           = models.CharField(_('Title'), max_length=255)
     frontend_title  = models.CharField(_('Frontend title'), max_length=255, default='')
     question_type   = models.CharField(_('Type of question'), max_length=10, choices=QUESTION_TYPE_CHOICES)
@@ -19,7 +19,7 @@ class Question(models.Model):
     has_no_preference   = models.BooleanField(_('Has a no-preference option'), default=False)
     result_title    = models.TextField(_('Question'), blank=True, null=True)
     help_text       = models.TextField(_('Help Text'), blank=True, null=True)
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
 
@@ -46,27 +46,27 @@ class QuestionSet(models.Model):
     """
     name        = models.CharField(_('Name'), max_length=255)
     questions   = models.ManyToManyField(Question, verbose_name=_('Questions'), through='QuestionSetQuestion')
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Question set'), _('Question sets')
-        
+
     def __unicode__(self):
         return self.name
-        
+
 class QuestionSetQuestion(models.Model):
     """
         Links a question and a set together using a position
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'))
     questionset = models.ForeignKey(QuestionSet, verbose_name=_('Question set'))
-    
-    
+
+
     position    = models.PositiveIntegerField(_('Position'), default=0)
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Question set question'), _('Question set questions')
         ordering = ('position', 'questionset')
-        
+
     def move_down(self):
         '''
         Changes the position value with next row
@@ -78,7 +78,7 @@ class QuestionSetQuestion(models.Model):
         Changes the position value with previous row
         '''
         return move_up(self, 'position', 1, {'questionset': self.questionset.id})
-    
+
 
 class Answer(models.Model):
     """
@@ -88,17 +88,18 @@ class Answer(models.Model):
     question    = models.ForeignKey(Question, verbose_name=_('Question'), related_name='answers',
                                     limit_choices_to={'question_type__in': (QTYPE_NORM_POLONECHOICE_VISONECHOICE,       # politician one choice & visitor one choice
                                                                             QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,   # politician multiple choices & visitor multiple choices
+                                                                            QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE,   # politician multiple choices & visitor multiple choices
                                                                             QTYPE_NORM_POLBOOL_VISBOOL)})               # politician true/false & visitor true/false
     value       = models.TextField(_('Value'))
     frontoffice_value = models.TextField(_('Frontoffice value'), blank=True, null=True)
     meta        = models.CharField(_('Meta'), max_length=255, blank=True, null=True, editable=False)
-    
+
     position    = models.PositiveIntegerField(_('Position'), default=0)
-    
+
     class Meta:
         verbose_name, verbose_name_plural = _('Answer'), _('Answers')
         ordering = ('position', 'question')
-    
+
     def move_down(self):
         '''
         Changes the position value with next row
@@ -119,7 +120,7 @@ class Answer(models.Model):
             return self.question.title
         else:
             return self.value
-            
+
     def get_frontoffice_value(self):
         """
             Return self.frontoffice_value or self.value if empty
