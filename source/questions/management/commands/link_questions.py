@@ -23,6 +23,7 @@ class Command(BaseCommand):
             for qsq in qs.questionsetquestion_set.order_by('position'):
 
                 if ei.questions.filter(pk=qsq.question.pk).count() != 0:
+                    print "%s has questions" % ei
                     continue
 
                 print "Linking question %s, position %s to ElectionInstance %s", (qsq.question, qsq.position, ei)

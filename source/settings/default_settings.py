@@ -121,14 +121,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.flatpages',
     'django.contrib.comments',
-    
+
     #general utils
     'south',
     'django_extensions',
     'staticfiles',
     'sorl.thumbnail',
     'pagination',
-    
+
     'elections',
     'political_profiles',
     'authorized_comments',
@@ -194,4 +194,4 @@ WIZARD_TIMEOUT = False
 WIZARD_KEEP_DATA = False
 WIZARD_UPLOAD_TEMP_DIR = PROJECT_DIR('tmp')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
