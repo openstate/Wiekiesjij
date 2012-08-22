@@ -71,10 +71,11 @@ class Command(BaseCommand):
         q3 = Question.objects.create(
             title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
             frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
-            question_type=settings.QTYPE_MODEL_SELECT_FAVORITE_COALITION,
+            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Coalitie',
             theme='q3',
             has_no_preference=True,
+            min_num_answers=3
         )
         QuestionSetQuestion.objects.create(
                 question=q3,

@@ -185,7 +185,8 @@ class Migration:
             'result_title': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'theme': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'})
+            'weight': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'}),
+            'min_num_answers': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         }
     }
     
