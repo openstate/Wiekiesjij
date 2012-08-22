@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 position=1,
         )
         print "Added basic question 1"
-        
+
         q2 = Question.objects.create(
             title=u'De belangrijkste uitdaging(en) waarvoor Nederland staat is:',
             frontend_title=u'De belangrijkste uitdaging(en) waarvoor Nederland staat is:',
@@ -67,7 +67,7 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 2"
-        
+
         q3 = Question.objects.create(
             title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
             frontend_title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
@@ -110,8 +110,8 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 3"
-        
-        
+
+
         q4 = Question.objects.create(
             title=u'Wie ziet u het liefst als premier?',
             frontend_title=u'Mijn kandidaat ziet het liefst als premier:',
@@ -137,10 +137,10 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 4"
-        
-        
+
+
         q5 = Question.objects.create(
-            title=u'Ik leg de meeste nadruk leggen op:',
+            title=u'Ik leg de meeste nadruk op:',
             frontend_title=u'Mijn ideale kandidaat moet de meeste nadruk leggen op: (meer antwoorden mogelijk)',
             question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
             result_title=u'Nadruk',
@@ -167,8 +167,8 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 5"
-        
-        
+
+
         q6 = Question.objects.create(
             title=u'Mijn expertise ligt in:',
             frontend_title=u'Waar ligt de expertise van uw kandidaat?: (meer antwoorden mogelijk)',
@@ -203,8 +203,8 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 6"
-        
-        
+
+
         q7 = Question.objects.create(
             title=u'Welke werkervaring heeft uw kandidaat?',
             frontend_title=u'Welke werkervaring heeft uw kandidaat?',
@@ -219,7 +219,7 @@ class Command(BaseCommand):
                 position=7,
         )
         print "Added basic question 7"
-        
+
 
         q8 = Question.objects.create(
             title=u'Heeft uw kandidaat politieke ervaring?',
@@ -235,8 +235,8 @@ class Command(BaseCommand):
                 position=8,
         )
         print "Added basic question 8"
-        
-        
+
+
         q9 = Question.objects.create(
             title=u'Ik zet mij vooral in voor:',
             frontend_title=u'Voor welke groep of groepen zet uw kandidaat zich extra in?',
@@ -269,7 +269,7 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 9"
-        
+
         q10 = Question.objects.create(
             title=u'Ik haal mijn motivatie voornamelijk uit:',
             frontend_title=u'Waaruit haalt uw ideale kandidaat zijn of haar motivatie?',
@@ -290,7 +290,7 @@ class Command(BaseCommand):
             ("Een krachtige partij", "Een krachtige partij"),
             ("Persoonlijke ontplooiing", "Persoonlijke ontplooiing"),
             ("Anders", "Anders"),
-            
+
         ]
         for position, (fo_answer, answer) in enumerate(q10_answers):
             Answer.objects.create(
@@ -300,7 +300,7 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 10"
-        
+
         q11 = Question.objects.create(
             title=u'Mijn ideale kandidaat heeft de volgende vervolgopleiding afgerond:',
             question_type=settings.QTYPE_MODEL_EDUCATION_LEVEL,
@@ -342,7 +342,7 @@ class Command(BaseCommand):
             position=4,
         )
         print "Added basic question 11"
-        
+
         q12 = Question.objects.create(
             title=u'Op welke manier speelt religie bij uw werk in de politiek?',
             frontend_title=u'Op welke manier speelt religie een rol bij uw ideale kandidaat?',
@@ -369,7 +369,7 @@ class Command(BaseCommand):
                 position=position+1,
                 )
         print "Added basic question 12"
-        
+
         q13 = Question.objects.create(
             title=u'In welke leeftijdsgroep zit uw ideale kandidaat?',
             question_type=settings.QTYPE_MODEL_PROFILE_AGE,
@@ -404,7 +404,7 @@ class Command(BaseCommand):
             position=3,
         )
         print "Added basic question 13"
-        
+
         q14 = Question.objects.create(
             title=u'Wilt u een voorkeur uitspreken voor een man of vrouw?',
             question_type=settings.QTYPE_MODEL_PROFILE_GENDER,
@@ -418,7 +418,7 @@ class Command(BaseCommand):
                 position=14,
         )
         print "Added basic question 14"
- 
+
         q15 = Question.objects.create(
             title=u'U heeft nu alle vragen beantwoord. Hieronder kunt u aangeven welke vragen u extra belangrijk vindt. Het is overigens niet verplicht extra gewicht aan bepaalde vragen te geven:',
             question_type=settings.QTYPE_MODEL_PROFILE_QUESTION_WEIGHT,
