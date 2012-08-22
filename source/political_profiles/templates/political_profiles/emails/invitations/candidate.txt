@@ -3,20 +3,22 @@
 {% block content %}
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-	Voor de komende verkiezingen zal Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij lanceren. Om Wiekiesjij goed te laten werken hebben wij u nodig om uw profiel in te vullen. Wiekiesjij is een stemwijzer die de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken. Hiermee maken we de kandidaten beter bekend bij de kiezers.
+	Voor de komende verkiezingen zal Stichting Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij.nl lanceren. Wiekiesjij is een stemwijzer die advies geeft welk kandidaat-Kamerlid op een bepaalde lijst het best bij de voorkeuren van de kiezer past.
+Dit doet zij door de bezoeker te bevragen op zijn voorkeur t.a.v. bijvoorbeeld opleiding, expertise, politieke ervaring en persoonskenmerken. Op die manier willen we de kandidaten áchter de lijsttrekker beter bekend maken bij de kiezers. 
+Eerdere versies van Wiekiesjij.nl bij 2e Kamerverkiezingen en Provinciale Statenverkiezingen trokken enkele miljoenen unieke bezoekers.
 
-	Het is noodzakelijk dat u zo snel mogelijk alle vragen van uw profiel invult zodat de bezoekers bij u terecht kunnen komen als favoriete kandidaat. Hierbij willen wij wel graag opmerken dat niet alle vragen verplicht zijn en dat wij uiteraard vertrouwelijk om gaan met uw contactgegevens. 
-  Tevens zullen er dit jaar vragen in de vragenlijst zitten die niet op u profiel komen te staan maar die zullen worden gebruikt om onze bezoekers een beter beeld te geven van de kandidaten over het algemeen. Deze vragen zijn op anonieme basis en optioneel. Ze zullen duidelijk als zodanig aangegeven zijn,
+Wij verzoeken u dan ook om zo spoedig mogelijk uw profiel in te vullen, zodat u goed vindbaar bent. Het is niet verplicht om alle vragen in te vullen en uiteraard gaan wij zorgvuldig om met uw contactgegevens. 
+  Naast de 'publieke' vragen die in de database zullen worden opgenomen zullen een aantal vragen niet op uw profiel worden geplaatst, de antwoorden op deze vragen blijven dus anoniem. De antwoorden op de 'anonieme vragen' zullen worden gebruikt om onze bezoekers een beter beeld te krijgen van de voorkeuren van kandidaten ten aanzien van bijvoorbeeld de gewenste coalitie of positionering van de eigen partij. 
 
-	Hieronder zult u de link vinden om te beginnen met het invullen van uw profiel. Middels de link wordt u in staat gesteld om een wachtwoord aan te maken en in te loggen.  
+Hieronder vindt u de link  om te beginnen met het invullen van uw profiel. Middels de link kunt u een wachtwoord aanmaken en vervolgens inloggen.  
 
 	Belangrijk! Het profiel van Wiekiesjij bestaat uit verschillende stappen. Mocht u tijdens het invullen tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u de stap waarmee u bezig bent eerst helemaal afrondt.
 
 	  Klik hier om te beginnen: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
-	Daarna kunt u voortaan met uw e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url fo.login %} loggen en uw account blijven bekijken. U vindt in de bijlage een handleiding om u te helpen bij het invullen van uw profiel.
+	Na registratie kunt u met uw e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url fo.login %} inloggen en uw account bekijkenm en bijwerken. U vindt in de bijlage een handleiding om u te helpen bij het invullen van uw profiel.
 
-	Wiekiesjij wordt sinds 2006 bij alle verkiezingen gedraaid en blijkt een populair middel te zijn als aanvulling op de andere stemwijzers, vooral voor jongeren. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne.
+	Wiekiesjij wordt sinds 2006 bij alle verkiezingen gedraaid en blijkt een populair als aanvulling op andere stemwijzers, vooral voor jongere kiezers. Doordat Wiekiesjij.nl een stemwijzer is die de kiezer leidt naar individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne.
 
 	Voor vragen of opmerkingen kunt u te allen tijde contact opnemen met onze helpdesk. Alvast hartelijk dank voor uw tijd en moeite en veel succes met uw campagne!  
 
