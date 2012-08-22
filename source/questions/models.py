@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from utils.functions import move_up, move_down
 from django.core import serializers
 
-from questions.settings import QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE
+from questions.settings import QUESTION_TYPE_CHOICES, QTYPE_NORM_POLONECHOICE_VISONECHOICE, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_NORM_POLBOOL_VISBOOL, QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE
 class Question(models.Model):
     """
         A question, has a simple title and a description
@@ -19,6 +19,7 @@ class Question(models.Model):
     has_no_preference   = models.BooleanField(_('Has a no-preference option'), default=False)
     result_title    = models.TextField(_('Question'), blank=True, null=True)
     help_text       = models.TextField(_('Help Text'), blank=True, null=True)
+    min_num_answers = models.PositiveIntegerField(_('Minimal number of answers'), default=0,)
     
     class Meta:
         verbose_name, verbose_name_plural = _('Question'), _('Questions')
@@ -86,11 +87,9 @@ class Answer(models.Model):
         (This is one of the selectable answers, they get created with the question)
     """
     question    = models.ForeignKey(Question, verbose_name=_('Question'), related_name='answers',
-                                    limit_choices_to={'question_type__in': (QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                                                                            QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
-                                                                            QTYPE_NORM_POLONECHOICE_VISONECHOICE,
-                                                                            QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,
-                                                                            QTYPE_NORM_POLBOOL_VISBOOL)})
+                                    limit_choices_to={'question_type__in': (QTYPE_NORM_POLONECHOICE_VISONECHOICE,       # politician one choice & visitor one choice
+                                                                            QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE,   # politician multiple choices & visitor multiple choices
+                                                                            QTYPE_NORM_POLBOOL_VISBOOL)})               # politician true/false & visitor true/false
     value       = models.TextField(_('Value'))
     frontoffice_value = models.TextField(_('Frontoffice value'), blank=True, null=True)
     meta        = models.CharField(_('Meta'), max_length=255, blank=True, null=True, editable=False)

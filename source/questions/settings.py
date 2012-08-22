@@ -2,18 +2,19 @@ from django.utils.translation import ugettext_lazy as _
 
 
 PROFILE_QUESTION_WEIGHT_OPTIONS = (
-('q2', 'Belangrijkste streven kandidaat'),
-('q3', 'Nadruk kandidaat'),
-('q4', 'Expertise kandidaat'),
-('q5', 'Werkervaring kandidaat'),
-('q6', 'Politieke-ervaring kandidaat'),
-('q7', 'Doelgroep(en) van de kandidaat'),
-('q8', 'Regio van de kandidaat'),
-('q9', 'Motivatie van de kandidaat'),
-('q10', 'Opleiding kandidaat'),
-('q11', 'Religieuze motivatie kandidaat'),
-('q12', 'Leeftijd kandidaat'),
-('q13', 'Geslacht kandidaat'),
+('q2', 'Uitdagingen voor Nederland'),
+('q3', 'Coalitie'),
+('q4', 'Premier'),
+('q5', 'Nadruk kandidaat'),
+('q6', 'Expertise kandidaat'),
+('q7', 'Werkervaring kandidaat'),
+('q8', 'Politieke-ervaring kandidaat'),
+('q9', 'Doelgroep(en) van de kandidaat'),
+('q10', 'Motivatie van de kandidaat'),
+('q11', 'Opleiding kandidaat'),
+('q12', 'Religieuze motivatie kandidaat'),
+('q13', 'Leeftijd kandidaat'),
+('q14', 'Geslacht kandidaat'),
 )
 
 
@@ -51,7 +52,6 @@ QUESTION_TYPE_CHOICES = (
 (QTYPE_MODEL_POLMULTICHOICE_VISONECHOICE, _('Politcian profile detais are used, Visitor Selects One')),
 (QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, _('Politcian profile detais are used, Visitor Selects Multiple')),
 (QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE, _('Politcian model information has multiple correct answers, Visitor Selects Miltiple')),
-
 )
 # Question types that will return multiple answers
 MULTIPLE_ANSWER_TYPES = (QTYPE_MODEL_POLITICAL_EXPERIENCE_TYPE, QTYPE_MODEL_WORK_EXPERIENCE_TYPE, QTYPE_MODEL_PROFILE_RELIGION, QTYPE_MODEL_PARTY, QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE, QTYPE_MODEL_POLONECHOICE_VISMULTICHOICE, QTYPE_MODEL_POLMULTICHOICE_VISMULTICHOICE)

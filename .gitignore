@@ -7,3 +7,4 @@ source/dev.db.backup
 .ropeproject
 *.cache
 *.upload
+*~
