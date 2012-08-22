@@ -25,9 +25,12 @@ class Command(BaseCommand):
                 if ei.questions.filter(pk=qsq.question.pk).count() != 0:
                     continue
 
-                ElectionInstanceQuestion.objects.create(
-                    election_instance = ei,
-                    position = qsq.position,
-                    question=qsq.question,
-                    locked=True,
-                )
+                print "Linking question %s, position %s to ElectionInstance %s", (qsq.question, qsq.position, ei)
+
+                if False:
+                    ElectionInstanceQuestion.objects.create(
+                        election_instance = ei,
+                        position = qsq.position,
+                        question=qsq.question,
+                        locked=True,
+                    )
