@@ -3,13 +3,17 @@
 {% block content %}
     Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
 
-	Bij de komende Tweede Kamer-verkiezingen zal Wiekiesjij weer worden gelanceerd. Naast het programma dat uw partij heeft vastgesteld zullen ook de kwaliteiten van uw kandidaten reden zijn voor een stem van de kiezer op uw partij.
+	Voor de komende verkiezingen zal Stichting Het Nieuwe Stemmen opnieuw de 'voorkeursstemwijzer' Wiekiesjij.nl lanceren. Wiekiesjij is een stemwijzer die advies geeft welk kandidaat-Kamerlid op een bepaalde lijst het best bij de voorkeuren van de kiezer past.
+Dit doet zij door de bezoeker te bevragen op zijn voorkeur t.a.v. bijvoorbeeld opleiding, expertise, politieke ervaring en persoonskenmerken. 
+Op die manier willen we de kandidaten áchter de lijsttrekker beter bekend maken bij de kiezers. 
+Eerdere versies van Wiekiesjij.nl bij 2e Kamerverkiezingen en Provinciale Statenverkiezingen trokken enkele miljoenen unieke bezoekers.
 
-	Wiekiesjij is een kieswijzer gericht op individuele kandidaten en geeft hen hierdoor een manier om zichzelf te presenteren. Wiekiesjij stelt een aantal vragen aan de kiezers over hun voorkeur wat betreft expertise, ervaring, opleiding en persoonskenmerken en zoekt hierbij de juiste kandidaat.
+Wij zullen alle kandidaat-Kamerleden op de lijst van uw partij uitnodigen om zo spoedig mogelijk hun profielen in te vullen, zodat ze goed vindbaar zijn. 
+Het is niet verplicht om alle vragen in te vullen en uiteraard gaan wij zorgvuldig om met de contactgegevens. 
+ Om hen daartoe een uitnodiging te kunnen versturen verzoeken wij u om via een daartoe voor u gecreëerde beheerspagina de kandidatenlijst en email-adressen door te geven.
 
-	Om Wiekiesjij goed te laten werken worden alle kandidaten van uw partij uitgenodigd. Om deze uitnodiging te kunnen versturen verzoeken wij u om via uw beheerspagina ons uw kandidatenlijst en email-adressen door te geven.
-
-	Op deze beheerderspagina kunt u ook het profiel van uw partij dat in Wiekiesjij wordt getoond aanpassen. Zo kunt u uw partijprogramma, speerpunten, youtube film en social networks binnen Wiekiesjij aanbieden.
+	Op deze beheerderspagina kunt u ook het profiel van uw partij aanpassen zoals dat op Wiekiesjij.nl wordt getoond. 
+Zo kunt u bijvoorbeeld uw partijprogramma, de speerpunten, een youtube-filmpje en social network streams aanbieden.
 
 	U vindt uw beheerspagina via: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
 
