@@ -195,6 +195,17 @@ PARTIES = [
     ('Politieke Partij NXD','Politieke Partij NXD'),
 ]
 
+POSITION_WITHIN_PARTY = [
+    ('LEFT', 'Iets linkser'),
+    ('MIDDLE', 'Precies in het midden'),
+    ('RIGHT', 'Iets rechtser'),
+]
+
+DOES_CAMPAIGN = [
+    ('YES', 'Ja'),
+    ('NO', 'Nee'),
+]
+
 class ConnectionType(models.Model):
     """
             Type of connection.
@@ -301,6 +312,9 @@ class PoliticianProfile(Profile):
     fav_pet         = models.CharField(_('What is your favourite pet'), max_length=255, choices=PETS, blank=True, null=True)
     political_experience_days      = models.PositiveIntegerField(_('Days of political experience'), max_length=10, null=True, blank=True, editable=False)
     work_experience_days           = models.PositiveIntegerField(_('Days of work experience'), max_length=10, null=True, blank=True, editable=False)
+    
+    position_within_party           = models.CharField('Waar zou u uzelf plaatsen binnen het politieke spectrum van uw partij?', max_length=255, choices=POSITION_WITHIN_PARTY, blank=False, null=False, default='MIDDLE')
+    own_campaign                    = models.CharField('Gaat u een voorkeurs- c.q. persoonlijke campagne voeren?', max_length=255, choices=DOES_CAMPAIGN, blank=False, null=False, default='NO')
 
     hns_dev                 = models.BooleanField(_('I agree to my information being added to HNS.Dev'), blank=True, default=False)
     science                 = models.BooleanField(_('I agree to my information being used for scientific purposes'), blank=True, default=False)
