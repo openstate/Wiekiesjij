@@ -1,37 +1,42 @@
-{% extends 'backoffice/wizard/politician_profile/base.html' %}
-{% load i18n utils_tags %}
+{% extends 'backoffice/wizard/politician_profile/base.html' %} {% load i18n utils_tags %}
 
 {% block group0 %}history{% endblock %}
-{% block group1 %}history{% endblock %}
-{% block step1 %}history{% endblock %}
-{% block step2 %}history{% endblock %}
-{% block step3 %}history{% endblock %}
+{% block group1 %}history{% endblock %} 
+{% block step1 %}history{% endblock %} 
+{% block step2 %}history{% endblock %} 
+{% block step3 %}history{% endblock %} 
 {% block step4 %}history{% endblock %}
 {% block step5 %}history{% endblock %}
 {% block group2 %}history{% endblock %}
-{% block step6 %}history{% endblock %}
-{% block step7 %}history{% endblock %}
-{% block step8 %}history{% endblock %}
-{% block group3 %}history{% endblock %}
-{% block step9 %}history{% endblock %}
-{% block step10 %}history{% endblock %}
-{% block step11 %}history{% endblock %}
-{% block group4 %}history{% endblock %}
-{% block step12 %}history{% endblock %}
+{% block step6 %}history{% endblock %} 
+{% block step7 %}history{% endblock %} 
+{% block step8 %}history{% endblock %} 
+{% block group3 %}history{% endblock %} 
+{% block step9 %}history{% endblock %} 
+{% block step10 %}history{% endblock %} 
+{% block step11 %}history{% endblock %} 
+{% block group4 %}history{% endblock %} 
+{% block step12 %}history{% endblock %} 
 {% block group5 %}active{% endblock %}
 
-{% block question-steps %}
-    {% for q in questions %}
-		<li class="{% ifcompare q current_question %}active{% smaller %}history{% bigger %}future{% endifcompare %}{% if forloop.last %} last{% endif %}">{{ q|add:"12" }}</li>
-    {% endfor %}
-{% endblock question-steps %}
+{% block question-steps %} 
+{% for q in questions %} 
+    <li class="{% ifcompare q current_question %}active{% smaller %}history{% bigger %}future{% endifcompare %}
+    {% if forloop.last %} last{% endif %}">{{ q|add:"12" }}</li> 
+    {% endfor %} 
+    {% endblock question-steps %}
 
-{% block step_title %}
-    {#<span class="question-num">{% trans "Question" %} {{ current_question|add:"12" }}:</span>#} {{ question_title }}
-{% endblock step_title %}
+    {% block step_title %} 
+    {#<span class="question-num">{% trans "Question" %} {{ current_question|add:"12" }}:</span>#} 
+    {{ question_title }} 
+    {% endblock step_title %}
 
-{% block help-message %}
-	{% blockwrap template='helptext' %}
+{% block help-message %} {% blockwrap template='helptext' %} 
+    {% if secret = 'secret' %}
+    <p><strong>Let op! Deze vragen is anoniem in die zin dat de antwoorden die
+    de kandidaten hierop geven NIET op kandidaat-niveau zullen worden
+    gepubliceerd. </strong></p>
+    {% endif %}
 		{% trans "In het gedeelte ‘extra vragen’ treft u een aantal vragen aan die terug zullen komen in de vragenmodule van Wiekiesjij. Deze vragen zijn concrete stellingen uit de vragenmodule. De rest van de vragen heeft u reeds beantwoord door middel van de informatie die u heeft ingevoerd voor uw profiel." %}
 		</p>
 		<p><strong>{% trans "Let op!" %}</strong> {% trans "Bij de vragen waar meerdere antwoorden mogelijk zijn, zal het aanvinken van meer of alle beleidsterreinen niet leiden tot meer of minder kans om als favoriete kandidaat te eindigen voor de bezoeker. Voor meer informatie over deze vragen verwijs ik u door naar de handleiding." %}
