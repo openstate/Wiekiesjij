@@ -1,38 +1,67 @@
 {% extends 'political_profiles/emails/invitations/base.html' %} {% load i18n email_tags %} {% stylegroup "font" %} font: 13px Arial, Helvetiva, sans-serif; {% end_stylegroup %} {% block content %}
 
-Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},
+<p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{
+invitation.user_to.profile.full_name }},</p>
 
-Voor de komende verkiezingen zal Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij lanceren. Om Wiekiesjij goed te laten werken hebben wij u nodig om uw profiel in te vullen. Wiekiesjij is een stemwijzer die de juiste politicus bij de kiezer zoekt. Dit doet zij door de bezoeker een aantal vragen in te laten vullen over waar hun voorkeur ligt wat betreft opleiding, expertise, politieke ervaring en persoonskenmerken. Hiermee maken we de kandidaten beter bekend bij de kiezers.
+<p style="{% use_stylegroup 'font' %}">Voor de komende verkiezingen zal Stichting Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij.nl lanceren. Wiekiesjij is een stemwijzer die advies geeft welk kandidaat-Kamerlid op een bepaalde lijst het best bij de voorkeuren van de kiezer past.
+Dit doet zij door de bezoeker te bevragen op zijn voorkeur t.a.v. bijvoorbeeld opleiding, expertise, politieke ervaring en persoonskenmerken. Op die manier willen we de kandidaten áchter de lijsttrekker beter bekend maken bij de kiezers. 
+Eerdere versies van Wiekiesjij.nl bij 2e Kamerverkiezingen en Provinciale
+Statenverkiezingen trokken enkele miljoenen unieke bezoekers.</p>
 
-Het is noodzakelijk dat u zo snel mogelijk alle vragen van uw profiel invult zodat de bezoekers bij u terecht kunnen komen als favoriete kandidaat. Hierbij willen wij wel graag opmerken dat niet alle vragen verplicht zijn en dat wij uiteraard vertrouwelijk om gaan met uw contactgegevens.  Tevens zullen er dit jaar vragen in de vragenlijst zitten die niet op u profiel komen te staan maar die zullen worden gebruikt om onze bezoekers een beter beeld te geven van de kandidaten over het algemeen. Deze vragen zijn op anonieme basis en optioneel. Ze zullen duidelijk als zodanig aangegeven zijn,
+<p style="{% use_stylegroup 'font' %}">Wij verzoeken u dan ook om zo spoedig mogelijk uw profiel in te vullen, zodat u goed vindbaar bent. Het is niet verplicht om alle vragen in te vullen en uiteraard gaan wij zorgvuldig om met uw contactgegevens. 
+  Naast de 'publieke' vragen die in de database zullen worden opgenomen zullen
+  een aantal vragen niet op uw profiel worden geplaatst, de antwoorden op deze
+  vragen blijven dus anoniem. De antwoorden op de 'anonieme vragen' zullen
+  worden gebruikt om onze bezoekers een beter beeld te krijgen van de
+  voorkeuren van kandidaten ten aanzien van bijvoorbeeld de gewenste coalitie
+  of positionering van de eigen partij. </p>
 
-Hieronder zult u de link vinden om te beginnen met het invullen van uw profiel. Middels de link wordt u in staat gesteld om een wachtwoord aan te maken en in te loggen.  
+  <p style="{% use_stylegroup 'font' %}">Hieronder vindt u de link  om te
+  beginnen met het invullen van uw profiel. Middels de link kunt u een
+  wachtwoord aanmaken en vervolgens inloggen.  </p>
 
-Belangrijk! Het profiel van Wiekiesjij bestaat uit verschillende stappen. Mocht u tijdens het invullen tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u de stap waarmee u bezig bent eerst helemaal afrondt.
+  <p style="{% use_stylegroup 'font' %}">Belangrijk! Het profiel van
+  Wiekiesjij bestaat uit verschillende stappen. Mocht u tijdens het invullen
+  tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u de stap
+  waarmee u bezig bent eerst helemaal afrondt.</p>
 
-Klik hier om te beginnen: http://{{ domain }}{% url invitations.index hash=invitation.hash %}
+  <p style="{% use_stylegroup 'font' %}">Klik hier om te beginnen: http://{{
+  domain }}{% url invitations.index hash=invitation.hash %}</p>
 
-Daarna kunt u voortaan met uw e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url fo.login %} loggen en uw account blijven bekijken. U vindt in de bijlage een handleiding om u te helpen bij het invullen van uw profiel.
+  <p style="{% use_stylegroup 'font' %}">Na registratie kunt u met uw
+  e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url
+  fo.login %} inloggen en uw account bekijkenm en bijwerken. U vindt in de
+  bijlage een handleiding om u te helpen bij het invullen van uw profiel.</p>
 
-Wiekiesjij wordt sinds 2006 bij alle verkiezingen gedraaid en blijkt een populair middel te zijn als aanvulling op de andere stemwijzers, vooral voor jongeren. Doordat Wiekiesjij een stemwijzer is voor individuele politici kan het van grote toegevoegde waarde zijn voor uw persoonlijke campagne.
+  <p style="{% use_stylegroup 'font' %}">Wiekiesjij wordt sinds 2006 bij alle
+  verkiezingen gedraaid en blijkt een populair als aanvulling op andere
+  stemwijzers, vooral voor jongere kiezers. Doordat Wiekiesjij.nl een
+  stemwijzer is die de kiezer leidt naar individuele politici kan het van
+  grote toegevoegde waarde zijn voor uw persoonlijke campagne.</p>
 
-Voor vragen of opmerkingen kunt u te allen tijde contact opnemen met onze helpdesk. Alvast hartelijk dank voor uw tijd en moeite en veel succes met uw campagne!  
+  <p style="{% use_stylegroup 'font' %}">Voor vragen of opmerkingen kunt u te
+  allen tijde contact opnemen met onze helpdesk. Alvast hartelijk dank voor uw
+  tijd en moeite en veel succes met uw campagne!  </p>
 
-Met vriendelijke groet,
+  <p style="{% use_stylegroup 'font' %}">Met vriendelijke groet,</p>
 
-Het team van Wiekiesjij
-
-support@wiekiesjij.nl
+  <p style="{% use_stylegroup 'font' %}">Het team van Wiekiesjij</p>
+  <p style="{% use_stylegroup 'font' %}">support@wiekiesjij.nl</p>
 
 {% endblock content %} {% block sidebar %}
-Helpdesk
+<h1 style="{% use_stylegroup 'sidebar-header' %}">Helpdesk</h1>
 
-Heeft u vragen over de beheerderspagina of het invullen van de contactgegevens? Neemt u dan contact met ons op via support@wiekiesjij.nl
+<p style="{% use_stylegroup 'font' %}">Heeft u vragen over de beheerderspagina
+of het invullen van de contactgegevens? Neemt u dan contact met ons op via
+<a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a></p>
 
 
-Handleiding
+<h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
 
-Heeft u moeite met het invullen van de contactgegevens? Download hier de handleiding voor het invoeren van de contactgegevens
+<p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de
+contactgegevens?  <a href="http://{{ domain }}/static/backoffice/manuals/handleiding_kandidaten.pdf">Download hier
+    de handleiding</a>voor het invoeren van de
+contactgegevens</p>
 
 
 {% endblock sidebar %}
