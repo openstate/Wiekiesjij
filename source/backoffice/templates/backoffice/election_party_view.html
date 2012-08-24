@@ -37,7 +37,12 @@
 
 	<div class="mod overview candidates">
         
+		{% comment %}
+		<!-- replaced by the invisible button below for now -->
 		<a href="{% url bo.csv_candidates_step1 eip.id %}" class="add-batch btn">{% trans "Import multiple candidates via Excel / CSV" %}</a>
+		{% endcomment %}
+		<a href="{% url bo.csv_candidates_step1 eip.id %}" class="btn" style="background: white; border: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
         <h2>{% trans 'Candidates for this party' %}:</h2>
         {% for index, can in eip.candidate_dict.items %}
         <div class="item">
@@ -85,7 +90,20 @@
         <div class="item add-slot">
         	<a href="{% url bo.election_party_grow eip.id %}" class="add">{% trans 'Add a new position to this list' %}</a>
        	</div>
-  	</div>
+	<div class="item">
+	<h3 style="color: black;">Indien u al een excelbestand heeft met de e-mail
+	adressen van de kandidaten, kunt u deze naar ons opsturen.</h3>  
+	<p>Wij hebben de volgende informatie nodig:</p>
+	<ul>
+		<li>positie op de lijst</li>
+		<li>voornaam</li>
+		<li>achternaam</li>
+		<li>e-mail adres</li>
+		<li>man / vrouw</li>
+	</ul>
+	<p>Stuur het bestand naar: <a href="mailto:support@wiekiesjij.nl">support@wiekiesjij.nl</a>. </p>
+	</div>
+</div>
 {% endblock content %}
 
 

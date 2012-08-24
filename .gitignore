@@ -8,3 +8,4 @@ source/dev.db.backup
 *~
 *.cache
 *.upload
+source/tmp/*.csv
