@@ -31,16 +31,18 @@
     {{ question_title }} 
     {% endblock step_title %}
 
-{% block help-message %} {% blockwrap template='helptext' %} 
-    {% if secret = 'secret' %}
-    <p><strong>Let op! Deze vragen is anoniem in die zin dat de antwoorden die
+{% block help-message %} 
+{% blockwrap template='helptext' %} 
+{% if secret = 'secret' %}
+    <p style="color: white; background: #ED2227; padding-left: 10px;"><strong>Let op! Deze en volgende vragen zijn anoniem in die zin dat de antwoorden die
     de kandidaten hierop geven NIET op kandidaat-niveau zullen worden
     gepubliceerd. </strong></p>
-    {% endif %}
+{% else %}
 		{% trans "In het gedeelte ‘extra vragen’ treft u een aantal vragen aan die terug zullen komen in de vragenmodule van Wiekiesjij. Deze vragen zijn concrete stellingen uit de vragenmodule. De rest van de vragen heeft u reeds beantwoord door middel van de informatie die u heeft ingevoerd voor uw profiel." %}
 		</p>
 		<p><strong>{% trans "Let op!" %}</strong> {% trans "Bij de vragen waar meerdere antwoorden mogelijk zijn, zal het aanvinken van meer of alle beleidsterreinen niet leiden tot meer of minder kans om als favoriete kandidaat te eindigen voor de bezoeker. Voor meer informatie over deze vragen verwijs ik u door naar de handleiding." %}
-    {% endblockwrap %}
+{% endif %}
+{% endblockwrap %}
 {% endblock help-message %}
 
 
