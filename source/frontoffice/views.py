@@ -144,6 +144,7 @@ def election(request, id=None):
         return redirect('fo.home')
     else:
         election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
+    election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID)
     selected_eip = None
     eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances).order_by('position')
     if id:
@@ -489,7 +490,7 @@ def thumbs_down(request, goal_id):
 
 
 def home(request):
-    region = 1
+    region = 6
     #if request.method == 'POST':
     #    form = RegionSelectForm(request.POST)
     #    if form.is_valid():
