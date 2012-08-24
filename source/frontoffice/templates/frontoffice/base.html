@@ -23,8 +23,9 @@
         <div id="header" {% if request.session.ElectionInstance %} class="regional"{% endif %}>
 
             <h1 class="branding"><a href="/" title="{% trans 'Go home' %}">WieKiesJij?</a></h1>
+            {% comment %}
             <!-- {% if request.session.ElectionInstance %}<h2 class="regional">Provinciale Statenverkiezingen 2011{#: {{ request.session.ElectionInstance.name }}#}</h2>{% endif %} -->
-
+            {% endcomment %}
 
             <p class="user-info">
                 {% if user.is_authenticated %}
