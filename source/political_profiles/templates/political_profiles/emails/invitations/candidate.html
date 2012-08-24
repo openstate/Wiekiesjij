@@ -1,7 +1,6 @@
 {% extends 'political_profiles/emails/invitations/base.html' %} {% load i18n email_tags %} {% stylegroup "font" %} font: 13px Arial, Helvetiva, sans-serif; {% end_stylegroup %} {% block content %}
 
-<p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{
-invitation.user_to.profile.full_name }},</p>
+<p style="{% use_stylegroup 'font' %}">Geachte heer/mevrouw {{ invitation.user_to.profile.full_name }},</p>
 
 <p style="{% use_stylegroup 'font' %}">Voor de komende verkiezingen zal Stichting Het Nieuwe Stemmen wederom de 'voorkeursstem-wijzer' Wiekiesjij.nl lanceren. Wiekiesjij is een stemwijzer die advies geeft welk kandidaat-Kamerlid op een bepaalde lijst het best bij de voorkeuren van de kiezer past.
 Dit doet zij door de bezoeker te bevragen op zijn voorkeur t.a.v. bijvoorbeeld opleiding, expertise, politieke ervaring en persoonskenmerken. Op die manier willen we de kandidaten áchter de lijsttrekker beter bekend maken bij de kiezers. 
@@ -25,12 +24,10 @@ Statenverkiezingen trokken enkele miljoenen unieke bezoekers.</p>
   tijdelijk de website willen verlaten, zorgt u er dan wel voor dat u de stap
   waarmee u bezig bent eerst helemaal afrondt.</p>
 
-  <p style="{% use_stylegroup 'font' %}">Klik hier om te beginnen: http://{{
-  domain }}{% url invitations.index hash=invitation.hash %}</p>
+  <p style="{% use_stylegroup 'font' %}">Klik hier om te beginnen: http://{{ domain }}{% url invitations.index hash=invitation.hash %}</p>
 
   <p style="{% use_stylegroup 'font' %}">Na registratie kunt u met uw
-  e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url
-  fo.login %} inloggen en uw account bekijkenm en bijwerken. U vindt in de
+  e-mailadres en het zojuist gekozen wachtwoord op http://{{ domain }}{% url fo.login %} inloggen en uw account bekijkenm en bijwerken. U vindt in de
   bijlage een handleiding om u te helpen bij het invullen van uw profiel.</p>
 
   <p style="{% use_stylegroup 'font' %}">Wiekiesjij wordt sinds 2006 bij alle
@@ -59,8 +56,7 @@ of het invullen van de contactgegevens? Neemt u dan contact met ons op via
 <h1 style="{% use_stylegroup 'sidebar-header' %}">Handleiding</h1>
 
 <p style="{% use_stylegroup 'font' %}">Heeft u moeite met het invullen van de
-contactgegevens?  <a href="http://{{ domain }}/static/backoffice/manuals/handleiding_kandidaten.pdf">Download hier
-    de handleiding</a>voor het invoeren van de
+contactgegevens?  <a href="http://{{ domain }}/static/backoffice/manuals/handleiding_kandidaten.pdf">Download hier de handleiding</a>voor het invoeren van de
 contactgegevens</p>
 
 
