@@ -52,7 +52,6 @@ class BestCandidate(MultiPathFormWizard):
         # Looping through the questions
         idx = 1;
         for question in questions:
-
             # Finds out if you should add a no preference option to the question
             if question.has_no_preference:
                 empty_label = _('Geen voorkeur')

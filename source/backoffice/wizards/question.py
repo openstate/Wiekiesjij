@@ -9,6 +9,7 @@ from questions.models import Question
 from elections.models import Candidacy
 from questions.settings import MULTIPLE_ANSWER_TYPES
 from questions.settings import BACKOFFICE_QUESTION_TYPES
+from questions.settings import FRONTOFFICE_QUESTION_TYPES
 
 from elections.models import ElectionInstanceParty
 from elections.functions import get_profile_model
@@ -47,7 +48,6 @@ class AnswerQuestion(MultiPathFormWizard):
         # Looping through the questions
         idx = 1;
         for question in questions:
- 
             try:
                 # Here we need to get the answer given for the step
                 question_answers = []
@@ -60,17 +60,22 @@ class AnswerQuestion(MultiPathFormWizard):
                             question_answers.append(answer_id)
                         else:
                             question_answers = answer_id
-                        
+
             except Exception:
 
                 # Otherwise we shall specify an initial value for it
                 question_answers = ''
 
+            if not question.question_type in FRONTOFFICE_QUESTION_TYPES:
+                secret = 'secret'
+            else:
+                secret = 'not secret'
+
             step = Step(str(question.id),
                      forms={str(question.id): AnswerQuestionForm},
                      template='backoffice/wizard/question/answer_add/step.html',
                      initial={str(question.id): {'value': question_answers}}, # TODO: Fix this = load the data!
-                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.title, 'initial': question_answers},
+                     extra_context={'questions': range(0, questions.count()), 'current_question': questions.count() - idx, 'question_title': question.title, 'initial': question_answers, 'secret': secret},
                      form_kwargs={str(question.id): {'question_instance_id': question.id}})
             steps_tree.append(step)
             idx += 1
@@ -114,7 +119,7 @@ class AnswerQuestion(MultiPathFormWizard):
             raise
         else:
             transaction.commit()
-            
+
         return redirect('bo.answer_question_done', election_instance_party_id=self.election_instance_party_id, user_id=self.user_id)
 
 

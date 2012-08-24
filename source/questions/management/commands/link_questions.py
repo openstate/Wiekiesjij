@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            qs = QuestionSet.objects.get(name='Landelijk Set')
+            qs = QuestionSet.objects.get(name='TEST Landelijk Set')
             print qs
         except QuestionSet.DoesNotExist:
             print "No questionset found."
@@ -26,7 +26,7 @@ class Command(BaseCommand):
                     print "%s has questions" % ei
                     continue
 
-                print "Linking question %s, position %s to ElectionInstance %s", (qsq.question, qsq.position, ei)
+                print "Linking question %s, position %s to ElectionInstance %s" % (qsq.question, qsq.position, ei)
 
                 if False:
                     ElectionInstanceQuestion.objects.create(
