@@ -253,7 +253,7 @@ class ElectionPartyContactForm(BetterForm, TemplateForm):
 class ElectionPartyAdditionalForm(BetterForm, TemplateForm):
     list_length = forms.IntegerField(label=_('Number of candidates in this election'), min_value=0, help_text=_('Vul hier het aantal kandidaten die uw partij deze verkiezingen representeren in.'), required = False)
     slogan = forms.CharField(max_length=255, label=_('Slogan'), help_text=_('Vul hier uw verkiezingsslogan in. (255 tekens) '), required = False)
-    movie  = YoutubeURLField(label=_('Movie'), help_text=_('Link to YouTube video'), required=False)
+    movie  = YoutubeURLField(label=_('Movie'), help_text=_('Link naar YouTube video. LET OP: gebruik de lange versie van de link, die begint met http://www.youtube.com/'), required=False)
     logo = forms.ImageField(_('Logo'), widget=ImageWidget())
     num_seats = forms.IntegerField(label=_('Current number of seats'), min_value=0, help_text=_('Vul hier het huidige aantal zetels in (vul 0 in als u momenteel geen zetels heeft).'), required = False)
 
