@@ -44,11 +44,13 @@
             <ul class="tabs">
             {% block menu %}
                 {% if request.session.ElectionInstance and not HOMEPAGE_PLACEHOLDER %}
+		{% if SEPTEMBER %}
                 <li class="do-test {% block menu_take_test %}{% endblock %}"><a href="{% url fo.match_welcome 7 %}">{% trans 'Take the test' %}</a></li>
+		{% endif %}
                 <li class="{% block menu_candidates %}{% endblock %}"><a href="{% url fo.election %}">{% trans 'Candidates' %}</a></li>
-		{% comment %}
+		{% if STATICS_FIXED %}
                 <li class="{% block menu_statistics %}{% endblock %}"><a href="{% url statistics.index %}">{% trans 'Statistics' %}</a></li>
-		{% endcomment %}
+		{% endif %}
                 {% endif %}
                 <li class="{% block menu_organisation %}{% endblock %}"><a href="/over-ons/">{% trans 'Over Ons' %}</a></li>
             {% endblock menu %}
