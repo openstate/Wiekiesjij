@@ -10,8 +10,8 @@ class Command(BaseCommand):
 	users = User.objects.annotate(num_elect = Count('elections')).filter(num_elect__gt = 1)
 	print "%s users participating in multiple elections" % users.count()
 	for u in users:
-	    for c in u.elections.select_related('election_party_instance__party'):
-		print u.email, u.profile.last_name, c.election_party_instance.party
+	    for candidacy in u.elections.select_related('election_party_instance__party').order_by('-id'):
+		print u.email, u.profile.last_name, candidacy.id, candidacy.election_party_instance, candidacy.election_party_instance.party
 
 # candidacy = self.user.elections.select_related('election_party_instance__party').order_by('position')
 #         if candidacy.count() != 0:

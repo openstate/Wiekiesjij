@@ -57,10 +57,10 @@ def redirect_view(request):
         election_instance = request.user.councils.all()[0].election_instances.all()[0]
         return redirect('bo.election_instance_view', id=election_instance.id )
     elif request.user.profile.type == 'party_admin':
-        election_instance_party = request.user.parties.all()[0].election_instance_parties.all()[0]
+        election_instance_party = request.user.parties.all().order_by('-id')[0].election_instance_parties.all()[0]
         return redirect('bo.election_party_view', id=election_instance_party.id)
     elif request.user.profile.type == 'candidate':
-        election_instance_party = request.user.elections.all()[0].election_party_instance
+        election_instance_party = request.user.elections.all().order_by('-id')[0].election_party_instance
         return redirect('bo.politician_welcome', eip_id=election_instance_party.id)
     else:
         raise PermissionDeniedException()

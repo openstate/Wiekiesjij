@@ -319,7 +319,8 @@ class PoliticianProfile(Profile):
         return self._popularity
 
     def get_first_candidacy(self):
-        candidacy = self.user.elections.order_by('position').all()
+	# JB 20120826 We now pick the candidacy with the highest id; this should be the most recent one
+        candidacy = self.user.elections.order_by('-id').all()
         if candidacy.count() != 0:
             return candidacy[0]
         return None
@@ -340,7 +341,8 @@ class PoliticianProfile(Profile):
 
     def region(self):
         "returns the region the politician is currently in"
-        candidacy = self.user.elections.all()
+	# JB 20120826 We now pick the candidacy with the highest id; this should be the most recent one
+        candidacy = self.user.elections.all().order_by('-id')
         if candidacy.count() != 0:
             return candidacy[0].election_party_instance.election_instance.council.region
         return None
@@ -349,14 +351,16 @@ class PoliticianProfile(Profile):
         "Returns the party  of the candidate"
         # Currently there is only one but this needs to be modified at a later
         # date for when there are past elections and so more partys
-        candidacy = self.user.elections.select_related('election_party_instance__party').order_by('position')
+	# JB 20120826 We now pick the candidacy with the highest id; this should be the most recent one
+        candidacy = self.user.elections.select_related('election_party_instance__party').order_by('-id')
         if candidacy.count() != 0:
             return candidacy[0].election_party_instance.party
         return None
 
     def election_party(self):
         """ Returns election party wrapper. """
-        candidacy = self.user.elections.all().select_related('election_party_instance__party').order_by('position')
+	# JB 20120826 We now pick the candidacy with the highest id; this should be the most recent one
+        candidacy = self.user.elections.all().select_related('election_party_instance__party').order_by('-id')
         if candidacy.count() != 0:
             return candidacy[0].election_party_instance
         return None

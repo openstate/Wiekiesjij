@@ -130,11 +130,13 @@
         <div class="ballotPosition">
         	<p>{{ profile.introduction|default:'' }}</p>
 			{% for candidacy in profile.user.elections.all %}
+			    {% if forloop.last %}
 				<a href="{% url fo.election candidacy.election_party_instance.id %}">
 				{% blocktrans with profile.first_name as name and candidacy.position as position and candidacy.election_party_instance.party.abbreviation as party and candidacy.election_party_instance.election_instance.name as region %}
 	                {{ name }} is  <span>nummer {{ position }}</span> op de lijst van <span>{{ party }}</span> voor de Tweede Kamerverkiezingen 2012
 	            {% endblocktrans %}</a><br />
                 {# {{ name }} is  number {{ position }} on the election list of {{ party }} in {{ region }} #}
+			   {% endif %}
 			{% endfor %}
             
             </a>
