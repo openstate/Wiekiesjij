@@ -31,8 +31,9 @@
 {% endif %}
 
 <div class="mod overview parties">
-	<a href="{% url bo.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties via Excel / CSV' %}</a>
     <h2>{% trans 'All parties for this election' %}:</h2>
+	<a href="{% url bo.csv_parties_step1 instance.id %}" class="add-batch btn">{% trans 'Import multiple parties via Excel / CSV' %}</a> &nbsp;
+	<a href="{% url bo.election_instance_export_view instance.id %}" class="add-batch btn">{% trans 'Exporteer beknopte partijgegevens via Excel / CSV' %}</a>
 
     {% for index, eip in instance.party_dict.items %}
     <div class="item">

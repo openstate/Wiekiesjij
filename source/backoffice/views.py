@@ -110,7 +110,7 @@ def election_instance_export_view(request, id):
     """
 
     check_permissions(request, id, 'council_admin')
-    instance = get_object_or_404(ElectionInstance, pk=id)
+    ei = get_object_or_404(ElectionInstance, pk=id)
 
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=partijen.csv'
@@ -118,16 +118,31 @@ def election_instance_export_view(request, id):
 
     writer.writerow(['positie', 'partij', 'contactpersoon voornaam',
                      'contactperson achternaam', 'contactpersoon-email',
-                     'telefoon', 'partij-email', ' ', 'kandidaat voornaam',
-                     'kandidaat achternaam', 'kandidaat email', 'kandidaat actief', 'profielfoto'])
-    for i, eip in instance.party_dict().items():
+                     'telefoon', 'partij-email', ' ', 'kandidaat positie', 'kandidaat voornaam',
+                     'kandidaat achternaam', 'kandidaat email', 'kandidaat actief', 'compleet?'])
+
+    for pidx, eip in ei.party_dict().items():
         if eip:
             contact = eip.party.contacts.all()[0]
-            for candidate in eip.candidates.all():
-                writer.writerow([i, eip.party, contact.profile.first_name,
+            for cidx, candidate in eip.candidate_dict().items():
+                cu = candidate.candidate
+                # JB 20120828 Would prefer to use
+                # candidate.questions_incomplete(), but there's something wrong
+                # with that
+                questions = ei.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES)
+                if 0 < (questions.count() - candidate.answers.count()):
+                    complete = "Incompleet"
+                else:
+                    complete = "Compleet"
+
+                writer.writerow([pidx, eip.party, contact.profile.first_name,
                                  contact.profile.last_name, contact.email,
                                  eip.party.telephone, eip.party.email, '',
-                                candidate.first_name, candidate.last_name,])
+                                 cidx, cu.profile.first_name,
+                                 cu.profile.last_name,
+                                 cu.email,
+                                 cu.is_active,
+                                 complete])
 
     return response
 
