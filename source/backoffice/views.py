@@ -116,11 +116,18 @@ def election_instance_export_view(request, id):
     response['Content-Disposition'] = 'attachment; filename=partijen.csv'
     writer = csv.writer(response)
 
-    writer.writerow(['positie', 'partij', 'contactpersoon voornaam', 'contactperson achternaam', 'contactpersoon-email', 'telefoon', 'partij-email'])
+    writer.writerow(['positie', 'partij', 'contactpersoon voornaam',
+                     'contactperson achternaam', 'contactpersoon-email',
+                     'telefoon', 'partij-email', ' ', 'kandidaat voornaam',
+                     'kandidaat achternaam', 'kandidaat email', 'kandidaat actief', 'profielfoto'])
     for i, eip in instance.party_dict().items():
         if eip:
             contact = eip.party.contacts.all()[0]
-            writer.writerow([i, eip.party, contact.profile.first_name, contact.profile.last_name, contact.email,  eip.party.telephone, eip.party.email])
+            for candidate in eip.candidates.all():
+                writer.writerow([i, eip.party, contact.profile.first_name,
+                                 contact.profile.last_name, contact.email,
+                                 eip.party.telephone, eip.party.email, '',
+                                candidate.first_name, candidate.last_name,])
 
     return response
 
