@@ -12,12 +12,12 @@ urlpatterns = patterns('',
 urlpatterns += patterns('backoffice.views',
 
     url(r'^$', 'election_event', name='bo.election_event'),
-    
+
     url(r'^redirect/$', 'redirect_view', name='bo.redirect'),
     url(r'^permission_denied/$', 'permission_denied', name='bo.permission_denied'),
-    
+
     url(r'^add/$', 'add_election_instance', name='bo.add_election_instance'),
-    
+
     #Chancery Wizard
     url(r'^election/(?P<election_instance_id>\d+)/setup/$', 'election_setup', name='bo.election_setup'),
     url(r'^election/(?P<election_instance_id>\d+)/setup/done/$', 'election_setup_done', name='bo.election_setup_done'),
@@ -25,18 +25,19 @@ urlpatterns += patterns('backoffice.views',
 
     #Staff Views
     url(r'^election/(?P<id>\d+)/$', 'election_instance_view', name='bo.election_instance_view'),
+    url(r'^election/(?P<id>\d+)/export/$', 'election_instance_export_view', name='bo.election_instance_export_view'),
     url(r'^election/(?P<election_instance_id>\d+)/questions/$', 'question_overview', name='bo.question_overview'),
     url(r'^election/(?P<id>\d+)/edit/$', 'edit_election_instance', name='bo.edit_election_instance'),
     url(r'^election/(?P<id>\d+)/edit-council/$', 'council_edit', name='bo.edit_council'),
     url(r'^election/(?P<id>\d+)/add_party/(?P<position>\d+)/$', 'election_party_create', name='bo.election_party_create'),
     url(r'^election/(?P<id>\d+)/shrink/$', 'election_instance_shrink', name='bo.election_instance_shrink'),
     url(r'^election/(?P<id>\d+)/grow/$', 'election_instance_grow', name='bo.election_instance_grow'),
-    
+
     #Party Contact Wizard
     url(r'^party/(?P<id>\d+)/setup/(?P<user_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
     url(r'^party/(?P<id>\d+)/setup/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
     url(r'^party/(?P<id>\d+)/setup/done/$', 'party_contact_wizard_done', name='bo.party_contact_wizard_done'),
-    
+
     url(r'^party/(?P<id>\d+)/$', 'election_party_view', name='bo.election_party_view'),
     url(r'^party/(?P<id>\d+)/edit/$', 'election_party_edit', name='bo.election_party_edit'),
     url(r'^party/(?P<id>\d+)/up/$', 'election_party_up', name='bo.election_party_up'),
@@ -44,10 +45,10 @@ urlpatterns += patterns('backoffice.views',
     url(r'^party/(?P<id>\d+)/shrink/$', 'election_party_shrink', name='bo.election_party_shrink'),
     url(r'^party/(?P<id>\d+)/grow/$', 'election_party_grow', name='bo.election_party_grow'),
     url(r'^party/(?P<id>\d+)/add_candidate/(?P<pos>\d+)/$', 'election_party_add_candidate', name='bo.election_party_add_candidate'),
-    
-   
-    
-    
+
+
+
+
     url(r'^candidate/(?P<id>\d+)/edit/$', 'candidate_edit', name='bo.candidate_edit'),
     url(r'^candidate/(?P<id>\d+)/up/$', 'candidate_up', name='bo.candidate_up'),
     url(r'^candidate/(?P<id>\d+)/down/$', 'candidate_down', name='bo.candidate_down'),
@@ -67,12 +68,12 @@ urlpatterns += patterns('backoffice.views',
     url(r'^welcome/(?P<eip_id>\d+)/$', 'politician_welcome', name='bo.politician_welcome'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/$', 'politician_profile_setup', name='bo.politician_profile_setup'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/done$', 'politician_profile_setup_done', name='bo.politician_profile_setup_done'),
-    
+
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal$', 'politician_profile_goal', name='bo.politician_profile_goal'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/add/$', 'politician_profile_goal_wizard', name='bo.politician_profile_goal_wizard'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/edit/(?P<goal_id>\d+)$', 'politician_profile_goal_wizard', name='bo.politician_profile_goal_wizard_edit'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/goal/delete/(?P<goal_id>\d+)$', 'politician_profile_goal_delete', name='bo.politician_profile_goal_delete'),
-    
+
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work$', 'politician_profile_work', name='bo.politician_profile_work'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work/add/$', 'politician_profile_work_wizard', name='bo.politician_profile_work_wizard'),
     url(r'^welcome/(?P<eip_id>\d+)/(?P<user_id>\d+)/work/edit/(?P<work_id>\d+)$', 'politician_profile_work_wizard', name='bo.politician_profile_work_wizard_edit'),

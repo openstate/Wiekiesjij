@@ -6,6 +6,7 @@
 
 import os
 import time
+import csv
 
 from django.db import transaction
 from django.conf import settings
@@ -13,7 +14,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
@@ -101,6 +102,27 @@ def election_instance_view(request, id):
         enough = False
 
     return render_to_response('backoffice/election_instance_view.html', {'pos_credit_left':pos_credit_left,'credit_left':credit_left,'allocated':allocated,'enough':enough,'instance': instance}, context_instance=RequestContext(request))
+
+@council_admin_required
+def election_instance_export_view(request, id):
+    """
+    Export a csv file containing an overview of parties for this election instance
+    """
+
+    check_permissions(request, id, 'council_admin')
+    instance = get_object_or_404(ElectionInstance, pk=id)
+
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=somefilename.csv'
+    writer = csv.writer(response)
+
+    writer.writerow(['positie', 'partij', 'contactpersoon voornaam', 'contactperson achternaam', 'contactpersoon-email', 'telefoon', 'partij-email'])
+    for i, eip in instance.party_dict().items():
+        if eip:
+            contact = eip.party.contacts.all()[0]
+            writer.writerow([i, eip.party, contact.profile.first_name, contact.profile.last_name, contact.email,  eip.party.telephone, eip.party.email])
+
+    return response
 
 @staff_required
 def question_overview(request, election_instance_id):
