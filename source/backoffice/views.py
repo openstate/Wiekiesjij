@@ -120,7 +120,7 @@ def election_instance_export_view(request, id):
     for i, eip in instance.party_dict().items():
         if eip:
             contact = eip.party.contacts.all()[0]
-            writer.writerow([i, eip.party, contact.profile.first_name, contact.profile.last_name, contact.email,  eip.party.telephone, eip.party.email])
+            writer.writerow([i, eip.party, contact.profile.first_name, contact.profile.last_name, contact.email,  "%s" % eip.party.telephone, eip.party.email])
 
     return response
 
