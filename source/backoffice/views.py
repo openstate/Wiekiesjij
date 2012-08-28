@@ -177,6 +177,61 @@ def election_party_create(request, id, position):
     wizard = AddElectionPartyWizard(instance, position)
     return wizard(request)
 
+def dictfetchall(cursor):
+    "Returns all rows from a cursor as a dict"
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+@party_admin_required
+def election_statistics_view(request, id):
+    check_permissions(request,id, 'party_admin')
+
+    from django.db import connection
+    cursor = connection.cursor()
+    cursor.execute("""
+SELECT
+	  g.name as partijNaam
+	, f.list_length as lijstLengte
+	, e.aantalKandidatenAangemaakt
+	, e.aantalKandidatenAlEensIngelogd
+	, e.aantalKandidatenKlaar
+FROM
+	 elections_electioninstanceparty f
+	LEFT OUTER JOIN  (
+			SELECT 
+				election_party_instance_id
+				, COUNT(candidate_id) AS aantalKandidatenAangemaakt
+				, SUM(is_active) AS aantalKandidatenAlEensIngelogd
+				, SUM(heeftVragenIngevuld) AS aantalKandidatenKlaar
+			FROM
+				(
+					SELECT 
+						  a.election_party_instance_id
+						, a.candidate_id
+						, b.is_active
+						, d.heeftVragenIngevuld
+					FROM
+						elections_candidacy a
+						LEFT OUTER JOIN (SELECT id, is_active FROM auth_user) b ON (b.id = a.candidate_id)
+						LEFT OUTER JOIN (SELECT id, user_id FROM political_profiles_politicianprofile) c ON (a.candidate_id = c.user_id)
+						LEFT OUTER JOIN (
+							SELECT candidacy_id, COUNT(id) > 0 as heeftVragenIngevuld FROM elections_candidacy_answers GROUP BY candidacy_id
+						) d ON (c.id = d.candidacy_id)
+				) h
+			GROUP BY
+				election_party_instance_id
+	) e  ON (e.election_party_instance_id = f.id)
+	LEFT OUTER JOIN elections_party g ON (e.election_party_instance_id = g.id)
+WHERE f.election_instance_id = %s
+    """, [id]);
+    statistics = dictfetchall(cursor)
+    eip = get_object_or_404(ElectionInstanceParty, pk=id)
+    return render_to_response('backoffice/statistics.html', {'instance': eip.election_instance, 'eip': eip, 'statistics': statistics}, context_instance=RequestContext(request))
+    
+
 @party_admin_required
 def election_party_edit(request, id):
     check_permissions(request,id, 'party_admin')

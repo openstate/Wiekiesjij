@@ -34,6 +34,7 @@ urlpatterns += patterns('backoffice.views',
     url(r'^election/(?P<id>\d+)/grow/$', 'election_instance_grow', name='bo.election_instance_grow'),
 
     #Party Contact Wizard
+    url(r'^statistics/(?P<id>\d+)/$', 'election_statistics_view', name='bo.election_statistics_view'),
     url(r'^party/(?P<id>\d+)/setup/(?P<user_id>\d+)/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
     url(r'^party/(?P<id>\d+)/setup/$', 'party_contact_wizard', name='bo.party_contact_wizard'),
     url(r'^party/(?P<id>\d+)/setup/done/$', 'party_contact_wizard_done', name='bo.party_contact_wizard_done'),
