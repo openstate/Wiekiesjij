@@ -113,7 +113,7 @@ def election_instance_export_view(request, id):
     instance = get_object_or_404(ElectionInstance, pk=id)
 
     response = HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=somefilename.csv'
+    response['Content-Disposition'] = 'attachment; filename=partijen.csv'
     writer = csv.writer(response)
 
     writer.writerow(['positie', 'partij', 'contactpersoon voornaam', 'contactperson achternaam', 'contactpersoon-email', 'telefoon', 'partij-email'])
