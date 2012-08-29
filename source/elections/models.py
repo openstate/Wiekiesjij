@@ -328,7 +328,7 @@ class Party(models.Model):
         return self._popularity
 
     def profile_incomplete(self):
-        return not self.address_street or not self.address_number or not self.address_postalcode or not self.address_city or not self.abbreviation or not self.name
+        return not self.address_street or not self.address_number or not self.address_postalcode or not self.address_city or not self.abbreviation or not self.name or not self.description
 
     @property
     def address(self):
