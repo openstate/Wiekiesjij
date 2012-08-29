@@ -1,0 +1,32 @@
+{% extends 'backoffice/base.html' %}
+{% load i18n %}
+
+{% block title %}Statistieken{% endblock title %}
+{% block page-title %}Statistieken{% endblock page-title %}
+{% block back-link %}
+<a href="{% url bo.election_instance_view instance.id %}" class="back">{% trans 'Back to' %} {{ instance.name }}</a>
+{% endblock back-link %}
+
+{% block breadcrumbs %}
+{% if user.is_staff %}
+	<li><a href="{% url bo.election_event %}">{{ instance.election_event.name }}</a></li>
+{% else %}
+	<li>{{ instance.election_event.name }}</li>
+{% endif %}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+<table>
+<tr><th>Partij</th><th>Kandidaten op de lijst</th><th>Kandidaten aangemaakt</th><th>Kandidaten al eens ingelogd</th><th>Profiel compleet</th></tr>
+{% for stat in statistics %} 
+    <tr>
+        <td>{{ stat.partijNaam }}</td>
+        <td>{{ stat.lijstLengte }}</td>
+        <td>{{ stat.aantalKandidatenAangemaakt }}</td>
+        <td>{{ stat.aantalKandidatenAlEensIngelogd }}</td>
+        <td>{{ stat.aantalKandidatenKlaar }}</td> 
+    </tr>
+{% endfor %} 
+</table>
+{% endblock content %}
