@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from utils.emails import send_email
 
 from elections.functions import get_popularity
-
+from questions.settings import BACKOFFICE_QUESTION_TYPES
 
 
 class Council(models.Model):
@@ -420,6 +420,19 @@ class ElectionInstanceParty(models.Model):
 
     def candidates_questions_incomplete(self):
         return len(filter(lambda x: x.questions_incomplete(), self.candidates.all()))
+
+    def candidates_active(self):
+        return self.candidates.filter(candidate__is_active=True).count()
+
+    def candidates_complete(self):
+        qc = self.election_instance.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES).count()
+        return self.candidates.annotate(num_answers=models.Count('answers')).filter(num_answers__gt=qc).count()
+
+    def candidate_completeness_perc(self):
+        try:
+            return 100 * self.candidates_complete()/self.list_length
+        except:
+            return 0
 
     def __unicode__(self):
         return self.election_instance.council.name + " - " + self.party.name

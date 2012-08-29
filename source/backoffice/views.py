@@ -125,7 +125,7 @@ def election_instance_export_view(request, id):
         if eip:
             contact = eip.party.contacts.all()[0]
             for cidx, candidate in eip.candidate_dict().items():
-		row = [pidx, eip.party, 
+		row = [pidx, eip.party,
 			contact.profile.first_name.encode('utf-8'),
 			contact.profile.last_name.encode('utf-8'),
 			contact.email,
@@ -141,17 +141,28 @@ def election_instance_export_view(request, id):
                     else:
                         complete = "Compleet"
 
-		    row = row + [cidx, 
+		    row = row + [cidx,
 				cu.profile.first_name.encode('utf-8'),
 				cu.profile.last_name.encode('utf-8'),
                                  cu.email,
                                  cu.is_active,
                                  complete]
-    
+
 
 		writer.writerow(row)
 
     return response
+
+@party_admin_required
+def election_instance_statistics_view(request, id):
+    """
+    Show an overview of parties, and completeness of their respective candidate profiles
+    """
+
+    check_permissions(request, id, 'party_admin')
+    instance = get_object_or_404(ElectionInstance, pk=id)
+
+    return render_to_response('backoffice/election_instance_statistics_view.html', {'instance': instance}, context_instance=RequestContext(request))
 
 @staff_required
 def question_overview(request, election_instance_id):
@@ -230,14 +241,14 @@ SELECT
 FROM
 	 elections_electioninstanceparty f
 	LEFT OUTER JOIN  (
-			SELECT 
+			SELECT
 				election_party_instance_id
 				, COUNT(candidate_id) AS aantalKandidatenAangemaakt
 				, SUM(is_active) AS aantalKandidatenAlEensIngelogd
 				, SUM(heeftVragenIngevuld) AS aantalKandidatenKlaar
 			FROM
 				(
-					SELECT 
+					SELECT
 						  a.election_party_instance_id
 						, a.candidate_id
 						, b.is_active
@@ -259,7 +270,7 @@ WHERE f.election_instance_id = %s
     statistics = dictfetchall(cursor)
     eip = get_object_or_404(ElectionInstanceParty, pk=id)
     return render_to_response('backoffice/statistics.html', {'instance': eip.election_instance, 'eip': eip, 'statistics': statistics}, context_instance=RequestContext(request))
-    
+
 
 @party_admin_required
 def election_party_edit(request, id):
