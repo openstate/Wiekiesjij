@@ -24,7 +24,7 @@ from questions.models import Question, Answer
 from questions import settings as qsettings
 from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES, PROVINCES
 from frontoffice.decorators import visitors_only
 from django.contrib.auth.decorators import login_required
 
@@ -171,6 +171,7 @@ def politician_profile_filter(request):
     party_data = {}
     gender = dict(GENDERS)
     religion = dict(RELIGION)
+    province = dict(PROVINCES)
     marital_status = dict(MARITAL_STATUS)
     diet = dict(DIET)
 
@@ -188,7 +189,8 @@ def politician_profile_filter(request):
         region_filtered = False
         filters = []
 
-        if not request.GET and 'ElectionInstance' in request.session:
+        #JB20120829 Disabled this redirect. For TK2012 we have only one region, and this is causing confusion
+        if False and not request.GET and 'ElectionInstance' in request.session:
             return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
 
         if form.is_valid():
@@ -196,7 +198,16 @@ def politician_profile_filter(request):
             # Process the data in form.cleaned_data
             # ...
 
-            if form.cleaned_data['region'] != '---------' and form.cleaned_data['region']:
+            if 'eip' in form.cleaned_data and form.cleaned_data['eip'] and form.cleaned_data['eip'] != '---------':
+                eip = get_object_or_404(ElectionInstanceParty, pk=form.cleaned_data['eip'])
+                elections_candidates = Candidacy.objects.filter(election_party_instance=eip.id)
+                candidates =  User.objects.filter(elections__in=elections_candidates)
+                politicians = PoliticianProfile.objects.filter(user__in=candidates).order_by('?')
+                filtered_politicians = politicians
+                new_path = _new_url(path, 'eip', eip.id)
+                filters.append((_('Party'), eip.party.abbreviation, new_path))
+
+            if 'region' in form.cleaned_data and form.cleaned_data['region'] != '---------' :
                 election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID, id=form.cleaned_data['region'].id)
                 eips = ElectionInstanceParty.objects.filter(election_instance__in=election_instances)
                 elections_candidates = Candidacy.objects.filter(election_party_instance__in=eips)
@@ -282,6 +293,11 @@ def politician_profile_filter(request):
                 filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])
                 new_path = _new_url(path, 'religion', form.cleaned_data['religion'])
                 filters.append((_('Religion'), religion[form.cleaned_data['religion']], new_path))
+
+            if form.cleaned_data['province'] != '---------' and form.cleaned_data['province']:
+                filtered_politicians = filtered_politicians.filter(province=form.cleaned_data['province'])
+                new_path = _new_url(path, 'province', form.cleaned_data['province'])
+                filters.append((_('Province'), province[form.cleaned_data['province']], new_path))
 
             if form.cleaned_data['marital_status'] != '---------' and form.cleaned_data['marital_status']:
                 filtered_politicians = filtered_politicians.filter(marital_status=form.cleaned_data['marital_status'])

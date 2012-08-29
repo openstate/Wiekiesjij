@@ -3,7 +3,7 @@ from django.conf import settings
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PROVINCES
 from political_profiles.models import EducationLevel
 import copy
 from form_utils.forms import BetterForm
@@ -11,7 +11,7 @@ from utils.formutils import TemplateForm
 from utils.fields import NameField, DutchMobilePhoneField
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
-from elections.models import ElectionInstance
+from elections.models import ElectionInstance, ElectionInstanceParty
 from django.contrib.sites.models import Site
 from django.utils.http import int_to_base36
 
@@ -93,14 +93,21 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     RELIGION_A.insert(0,either,)
     MARITAL_STATUS_A = copy.deepcopy(MARITAL_STATUS)
     MARITAL_STATUS_A.insert(0,either,)
-
-
-    name = forms.CharField(label=_('Name'), required=False)
+    PROVINCES_A = copy.deepcopy(PROVINCES)
+    PROVINCES_A.insert(0, either,)
     election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name')
-    region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)
+    #JB this only works because we have a single electioninstance for TK2012. Adapt when switching to multiple selectioninstances
+    eips = ElectionInstanceParty.objects.filter(election_instance=settings.ELECTIONS_ELECTION_INSTANCE_ID)
+    EIPS = [(eip.id, eip.party.abbreviation) for eip in eips]
+    EIPS.insert(0, either,)
+
+    eip = forms.ChoiceField(label=_('Party'), choices=EIPS, required=False)
+    name = forms.CharField(label=_('Name'), required=False)
+    #region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)
     gender = forms.CharField(label=_('Gender'), widget=forms.widgets.RadioSelect(choices=GENDERS), required=False)
     start_age = forms.IntegerField(label=_('Lowest Age'), required=False)
     end_age = forms.IntegerField(label=_('Oldest Age'), required=False)
+    province = forms.ChoiceField(label=_('Province'), choices=PROVINCES_A, required=False)
     marital_status = forms.ChoiceField(label=_('Marital Status'), choices=MARITAL_STATUS_A, required=False)
     #children = forms.NullBooleanField(label=_('Children'), widget=forms.widgets.NullBooleanSelect(), required=False )
     children = forms.ChoiceField(label=_('Children'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
