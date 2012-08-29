@@ -125,24 +125,31 @@ def election_instance_export_view(request, id):
         if eip:
             contact = eip.party.contacts.all()[0]
             for cidx, candidate in eip.candidate_dict().items():
-                cu = candidate.candidate
-                # JB 20120828 Would prefer to use
-                # candidate.questions_incomplete(), but there's something wrong
-                # with that
-                questions = ei.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES)
-                if 0 < (questions.count() - candidate.answers.count()):
-                    complete = "Incompleet"
-                else:
-                    complete = "Compleet"
+		row = [pidx, eip.party, 
+			contact.profile.first_name.encode('utf-8'),
+			contact.profile.last_name.encode('utf-8'),
+			contact.email,
+			eip.party.telephone, eip.party.email,'',]
+		if candidate:
+		    cu = candidate.candidate
+		    # JB 20120828 Would prefer to use
+                    # candidate.questions_incomplete(), but there's something wrong
+                    # with that
+                    questions = ei.questions.filter(question_type__in=BACKOFFICE_QUESTION_TYPES)
+                    if 0 < (questions.count() - candidate.answers.count()):
+                        complete = "Incompleet"
+                    else:
+                        complete = "Compleet"
 
-                writer.writerow([pidx, eip.party, contact.profile.first_name,
-                                 contact.profile.last_name, contact.email,
-                                 eip.party.telephone, eip.party.email, '',
-                                 cidx, cu.profile.first_name,
-                                 cu.profile.last_name,
+		    row = row + [cidx, 
+				cu.profile.first_name.encode('utf-8'),
+				cu.profile.last_name.encode('utf-8'),
                                  cu.email,
                                  cu.is_active,
-                                 complete])
+                                 complete]
+    
+
+		writer.writerow(row)
 
     return response
 
