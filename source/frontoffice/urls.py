@@ -65,6 +65,7 @@ urlpatterns += patterns('frontoffice.views',
     #politician browser
     url(r'^election/$', 'election', name='fo.election'),
     url(r'^election/(?P<id>\d+)/$', 'election', name='fo.election'),
+    url(r'^election/(?P<id>\d+)/ingevuldPerPartij/$', 'election_instance_statistics_view', name='fo.election_instance_statistics_view'),    
 
     #visitor profile page
     url(r'^visitor/edit_profile/$', 'edit_visitor_profile', name='fo.visitor.edit_profile'),
