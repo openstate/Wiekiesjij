@@ -699,3 +699,11 @@ def match_result_details(request, hash, candidate_id, iframe=None):
     returndict = {'hash': hash, 'questions':questions_dict,'candidate':candidate,'parent': parent, 'iframe': iframe, 'election_instance': result.election_instance}
 
     return render_to_response('frontoffice/match_details.html', returndict, context_instance=RequestContext(request))
+
+
+def election_instance_statistics_view(request, id):
+    """
+    Show an overview of parties, and completeness of their respective candidate profiles
+    """
+    instance = get_object_or_404(ElectionInstance, pk=id)
+    return render_to_response('frontoffice/election_instance_statistics_view.html', {'instance': instance}, context_instance=RequestContext(request))

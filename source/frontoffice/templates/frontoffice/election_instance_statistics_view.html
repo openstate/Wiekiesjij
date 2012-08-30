@@ -1,0 +1,61 @@
+{% extends 'frontoffice/base.html' %}
+{% load i18n utils_tags thumbnail %}
+
+{% block title %}{{ instance.name }}{% endblock title %}
+{% block page-title %}{{ instance.name }}{% endblock page-title %}
+{% block back-link %}
+{% if user.is_staff %}
+<a href="{% url bo.election_event %}" class="back">{% trans 'Back to' %} {{ instance.election_event.name }}</a>
+{% endif %}
+{% endblock back-link %}
+
+{% block content %}
+
+<div class="mod overview parties">
+    <h2>{% trans 'All parties for this election' %}:</h2>
+
+    <table style="padding:10px; margin: 2px;">
+        <tr>
+            <th>Partij</th>
+            <th>Partijprofiel</th>
+            <th>Kandidaten op de lijst</th>
+            <th>Kandidaten uitgenodigd</th>
+            <th>Kandidaten ingelogd</th>
+            <th>Kandidaten compleet</th>
+            <th>Percentage compleet</th>
+        </tr>
+
+
+    {% for index, eip in instance.party_dict.items %}
+    <tr>
+        {% if eip %}
+            <td>
+			{% if eip.party.logo %}
+            	<div class="image"><img src="{% thumbnail eip.party.logo 70x40 %}" alt="{{ eip.party.abbreviation }}" /></div>
+            {% else %}
+                <div>{{ eip.party.name }}</div>
+           	{% endif %}
+            </td>
+            <td>{% if eip.party.profile_incomplete %}
+                incompleet
+                {%else%}
+                compleet
+                {%endif%}
+            <td>{{ eip.list_length }}</td>
+            <td>{{ eip.candidates_invited }}</td>
+            <td>{{ eip.candidates_active }}</td>
+            <td>{{ eip.candidates_complete }}</td>
+            {%comment%}candidates_profile_complete/_questions_complete?{%endcomment%}
+            <td>{{ eip.candidate_completeness_perc }} %</td>
+        {% endif %}
+    </tr>
+    {% empty %}
+            <p class="empty">{% trans "There are no parties defined yet for this election." %}</p>
+    {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}
+
+{% block sidebar %}
+{% endblock sidebar%}
