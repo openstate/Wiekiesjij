@@ -22,5 +22,6 @@
 	<div class="form-submit">
 		<button class="primary next" type="submit">{% trans 'Save' %}</button>
         <a href="{% url bo.politician_profile_interest eip_id user_id %}" class="cancel">{% trans "Cancel" %}</a>
+        <button class="primary prev" type="button" onclick="history.back();">{% trans 'Vorige stap' %}</button>
 	</div>
 {% endblock buttons %}

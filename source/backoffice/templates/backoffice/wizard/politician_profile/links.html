@@ -38,6 +38,7 @@
     <a href="{% url bo.politician_profile_link_wizard eip_id user_id %}" class="add add-item">{% trans "Add a new link" %}</a>
     <div class="form-submit">        
         <a href="{% url bo.politician_profile_appearance eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
+        <button class="primary prev" type="button" onclick="history.back();">{% trans 'Vorige stap' %}</button>
     </div>
 </div>
 {% endblock content %}

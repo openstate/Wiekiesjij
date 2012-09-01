@@ -46,6 +46,7 @@
 		{% else %}
 			<a href="{% url bo.answer_question_done eip_id user_id %}" class="btn next primary">{% trans "Volgende stap" %}</a>
 		{% endif %}
+        <button class="primary prev" type="button" onclick="history.back();">{% trans 'Vorige stap' %}</button>
 	</div>
 </div>
 {% endblock content %}
