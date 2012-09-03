@@ -134,13 +134,13 @@ class BestCandidate(MultiPathFormWizard):
         self.multiply_questions = []
         candidate_ids = []
         questions_skipped = []
-        
+
         # get party-list
         users_of_allowed_parties = []
         for path, forms in form_dict.iteritems():
             for question_id, form in forms.iteritems():
                 num_questions = num_questions + 1
-                question = Question.objects.get(id=question_id) 
+                question = Question.objects.get(id=question_id)
                 answer_value = form.cleaned_data['value']
                 if QTYPE_MODEL_PARTY == question.question_type:
                     for party in answer_value:
@@ -156,7 +156,7 @@ class BestCandidate(MultiPathFormWizard):
 
         # get list of candidate ids and create a dictionay entry for each candidate to keep array of scores
         for candidate in candidateSelection:
-            
+
             candidate_scores[candidate] = []
             candidate_ids.append(candidate.id)
         # get a list of answers that each candidate has chosen and store them in a dictionary
@@ -178,8 +178,10 @@ class BestCandidate(MultiPathFormWizard):
         all_questions = []
         for path, forms in form_dict.iteritems():
             for question_id, form in forms.iteritems():
-                num_questions = num_questions + 1
                 question = Question.objects.get(id=question_id)
+                if len(question.question_type) > 1 and question.question_type[1] == 'S':
+                    continue
+                num_questions = num_questions + 1
                 all_questions.append(question)
                 answer_value = form.cleaned_data['value']
                 empty_list = []
