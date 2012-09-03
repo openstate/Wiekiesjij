@@ -195,6 +195,20 @@ PARTIES = [
     ('Politieke Partij NXD','Politieke Partij NXD'),
 ]
 
+EXPERTISE = [
+    ('BZK', 'Burger en bestuur'),
+    ('FIN', 'Economie en financiën'),
+    ('SOC', 'Sociale zaken en werkgelegenheid'),
+    ('OW', 'Onderwijs, cultuur en wetenschap'),
+    ('IM', 'Integratie, immigratie en inburgering'),
+    ('RO', 'Volkshuisvesting en ruimtelijke ordening'),
+    ('VERK', 'Verkeer en vervoer'),
+    ('LW', 'Landbouw, milieu en natuur'),
+    ('VWS', 'Volksgezondheid, welzijn en sport'),
+    ('JUS', 'Openbare orde en veiligheid'),
+    ('BUIT', 'Buitenlandse zaken, ontwikkelingssamenwerking en defensie'),
+]
+
 class ConnectionType(models.Model):
     """
             Type of connection.

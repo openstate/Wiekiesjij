@@ -24,7 +24,7 @@ from questions.models import Question, Answer
 from questions import settings as qsettings
 from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty
 from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES, PROVINCES
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES, PROVINCES, EXPERTISE
 from frontoffice.decorators import visitors_only
 from django.contrib.auth.decorators import login_required
 
@@ -171,6 +171,7 @@ def politician_profile_filter(request):
     party_data = {}
     gender = dict(GENDERS)
     religion = dict(RELIGION)
+    expertise = dict(EXPERTISE)
     province = dict(PROVINCES)
     marital_status = dict(MARITAL_STATUS)
     diet = dict(DIET)
@@ -188,7 +189,30 @@ def politician_profile_filter(request):
         path = request.get_full_path()
         region_filtered = False
         filters = []
-
+        
+        # get a list of answers that each candidate has chosen and store them in a dictionary
+        candidates_for_answer = {}
+        multiQuestionTitles = [u'Expertise']
+        multiQuestions = Question.objects.filter(result_title__in=multiQuestionTitles)
+        allAnswerIds = {}
+        answerIdsForQuestion = {}
+        for multiQuestion in multiQuestions:
+            choices = map(lambda x: (x.id, x.value), multiQuestion.answers.all())
+            answerIdsForQuestion[multiQuestion.id] = choices
+            allAnswerIds.update(choices)
+        
+        #candidacies = PoliticianProfile.objects.filter(user__in=candidates)
+        candidacies = Candidacy.objects.filter(election_party_instance__in=eips)
+        for candidate in candidacies:
+            question_answers = candidate.answers.filter(id__in=allAnswerIds)
+            #for question_answer in question_answers:
+            #    if question_answer.question_id in candidate_question_answers[candidate.candidate.profile].keys():
+            #        candidate_question_answers[candidate.candidate.profile][question_answer.question_id].append(question_answer.id)
+            #    else:
+            #        answer_list = []
+            #        answer_list.append(question_answer.id)
+            #        candidate_question_answers[candidate.candidate.profile][question_answer.question_id] = answer_list
+                    
         #JB20120829 Disabled this redirect. For TK2012 we have only one region, and this is causing confusion
         if False and not request.GET and 'ElectionInstance' in request.session:
             return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
@@ -288,6 +312,11 @@ def politician_profile_filter(request):
             #    filtered_politicians = filtered_politicians.filter(work_experience_days__gte=(form.cleaned_data['work_exp_years'] * 365))
             #    new_path = _new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
             #    filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
+            
+            if form.cleaned_data['epertise'] != '---------' and form.cleaned_data['epertise']:
+                #filtered_politicians = filtered_politicians.filter(expertise=form.cleaned_data['epertise'])
+                new_path = _new_url(path, 'epertise', form.cleaned_data['epertise'])
+                filters.append((_('Epertise'), expertise[form.cleaned_data['epertise']], new_path))
 
             if form.cleaned_data['religion'] != '---------' and form.cleaned_data['religion']:
                 filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])

@@ -3,7 +3,7 @@ from django.conf import settings
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PROVINCES
+from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PROVINCES, EXPERTISE
 from political_profiles.models import EducationLevel
 import copy
 from form_utils.forms import BetterForm
@@ -94,7 +94,9 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     MARITAL_STATUS_A = copy.deepcopy(MARITAL_STATUS)
     MARITAL_STATUS_A.insert(0,either,)
     PROVINCES_A = copy.deepcopy(PROVINCES)
-    PROVINCES_A.insert(0, either,)
+    PROVINCES_A.insert(0, either)
+    EXPERTISE_A = copy.deepcopy(EXPERTISE)
+    EXPERTISE_A.insert(0, either)
     election_instances = ElectionInstance.objects.filter(election_event = settings.ELECTIONS_ELECTION_EVENT_ID).order_by('name')
     #JB this only works because we have a single electioninstance for TK2012. Adapt when switching to multiple selectioninstances
     eips = ElectionInstanceParty.objects.filter(election_instance=settings.ELECTIONS_ELECTION_INSTANCE_ID)
@@ -115,6 +117,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     religion = forms.ChoiceField(choices=RELIGION_A, label=_('Religon'), required=False)
     education = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('Education Level'), required=False)
     political_exp_years = forms.IntegerField(label=_('Minimum years of political experience'), required=False)
+    epertise = forms.ChoiceField(label=_('Expertise'), choices=EXPERTISE_A, required=False)
     #work_exp_years = forms.IntegerField(label=_('Mimimum years of work experience'), required=False)
     #smoker = forms.BooleanField(label=_('Smoker'), widget=forms.widgets.NullBooleanSelect(), required=False)
     smoker = forms.ChoiceField(label=_('Smoker'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
