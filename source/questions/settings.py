@@ -2,18 +2,18 @@ from django.utils.translation import ugettext_lazy as _
 
 
 PROFILE_QUESTION_WEIGHT_OPTIONS = (
-    ('q2', 'Belangrijkste streven kandidaat'),
+    ('q2', 'Uitdagingen voor Nederland'),
     ('q3', 'Nadruk kandidaat'),
     ('q4', 'Expertise kandidaat'),
     ('q5', 'Werkervaring kandidaat'),
     ('q6', 'Politieke ervaring kandidaat'),
     ('q7', 'Doelgroep(en) van de kandidaat'),
-    ('q8', 'Regio van de kandidaat'),
-    ('q9', 'Motivatie van de kandidaat'),
-    ('q10', 'Opleiding kandidaat'),
-    ('q11', 'Religieuze motivatie kandidaat'),
-    ('q12', 'Leeftijd kandidaat'),
-    ('q13', 'Geslacht kandidaat'),
+    ('q8', 'Motivatie van de kandidaat'),
+    ('q9', 'Opleiding kandidaat'),
+    ('q10', 'Religieuze motivatie kandidaat'),
+    ('q11', 'Leeftijd kandidaat'),
+    ('q12', 'Geslacht kandidaat'),
+    ('q12', 'Coalitie'),
 )
 
 
