@@ -13,7 +13,7 @@ PROFILE_QUESTION_WEIGHT_OPTIONS = (
     ('q10', 'Religieuze motivatie kandidaat'),
     ('q11', 'Leeftijd kandidaat'),
     ('q12', 'Geslacht kandidaat'),
-    ('q12', 'Coalitie'),
+    ('q13', 'Coalitie'),
 )
 
 
