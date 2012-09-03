@@ -14,22 +14,22 @@
 <div class="mod overview parties">
     <h2>{% trans 'All parties for this election' %}:</h2>
 
-    <table style="padding:10px; margin: 2px;">
+    <table>
         <tr>
-            <th>Partij</th>
-            <th>Partijprofiel</th>
-            <th>Kandidaten op de lijst</th>
-            <th>Kandidaten uitgenodigd</th>
-            <th>Kandidaten ingelogd</th>
-            <th>Kandidaten compleet</th>
-            <th>Percentage compleet</th>
+            <th style="font-weight:bold;padding:3px;">Partij</th>
+            <th style="font-weight:bold;padding:3px;">Partijprofiel</th>
+            <th style="font-weight:bold;padding:3px;">Aantal op de lijst</th>
+            <th style="font-weight:bold;padding:3px;">Aantal uitgenodigd</th>
+            <th style="font-weight:bold;padding:3px;">Aantal ingelogd</th>
+            <th style="font-weight:bold;padding:3px;">Aantal compleet</th>
+            <th style="font-weight:bold;padding:3px;">Percentage compleet</th>
         </tr>
 
 
     {% for index, eip in instance.party_dict.items %}
     <tr>
         {% if eip %}
-            <td>
+            <td style="padding:3px;">
 			{% if eip.party.logo %}
             	<div class="image"><img src="{% thumbnail eip.party.logo 70x40 %}" alt="{{ eip.party.abbreviation }}" /></div>
             {% else %}
