@@ -158,7 +158,7 @@ UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 #Internal ip's used for debug toolbar and UserBasedExceptionMiddleware
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', '80.101.42.161')
 
 AUTHENTICATION_BACKENDS = (
     'utils.auth_backend.EmailBackend',
