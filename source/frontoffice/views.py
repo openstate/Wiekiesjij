@@ -297,7 +297,6 @@ def politician_profile_filter(request):
                 for expertiseQuestion in expertiseQuestions:
                     expertiseAnswers.update(map(lambda x: (x.id, x.value), expertiseQuestion.answers.all()))
                 targetAnswerId = []
-                print expertiseAnswers
                 for (id, value) in expertiseAnswers.iteritems():
                     if value.encode('utf-8','ignore') == expertise[form.cleaned_data['expertise']]:
                         targetAnswerId.append(id)
