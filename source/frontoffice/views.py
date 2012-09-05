@@ -284,10 +284,10 @@ def politician_profile_filter(request):
                 new_path = _new_url(path, 'political_exp_years', form.cleaned_data['political_exp_years'])
                 filters.append((_('Years political experience'), form.cleaned_data['political_exp_years'], new_path))
 
-            if form.cleaned_data['work_exp_years']:
-                filtered_politicians = filtered_politicians.filter(work_experience_days__gte=(form.cleaned_data['work_exp_years'] * 365))
-                new_path = _new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
-                filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
+            #if form.cleaned_data['work_exp_years']:
+            #    filtered_politicians = filtered_politicians.filter(work_experience_days__gte=(form.cleaned_data['work_exp_years'] * 365))
+            #    new_path = _new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
+            #    filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
 
             if form.cleaned_data['religion'] != '---------' and form.cleaned_data['religion']:
                 filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])

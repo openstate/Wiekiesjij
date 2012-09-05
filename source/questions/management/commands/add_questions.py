@@ -754,6 +754,7 @@ class Command(BaseCommand):
             "Liberaal Democratische Partij (LibDem)",
             "Anti Europa Partij",
             "Soeverein Onafhankelijke Pioniers Nederland (SOPN)",
+            "Partij van de Toekomst",
         ]
         for position, answer in enumerate(q27_answers):
             Answer.objects.create(
