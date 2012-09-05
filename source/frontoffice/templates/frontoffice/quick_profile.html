@@ -71,6 +71,18 @@
                         </ul>
                     </td>
                 </tr>
+                <tr>
+                    <th>{% trans 'Expertises' %}</th>
+                    <td><ul>{% for expertise in expertises %}
+                            <li>
+                                {{ expertise }}
+                            </li>
+                            {% empty %}
+                            <li> {{ _('Not known') }}</li>
+                            {% endfor %}                    
+                        </ul>
+                    </td>
+                </tr>               
                 <tr class="fan">
                     <td colspan="2">
 						{% ifequal profile.fans.count 1  %}

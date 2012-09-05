@@ -117,7 +117,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     religion = forms.ChoiceField(choices=RELIGION_A, label=_('Religon'), required=False)
     education = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('Education Level'), required=False)
     political_exp_years = forms.IntegerField(label=_('Minimum years of political experience'), required=False)
-    epertise = forms.ChoiceField(label=_('Expertise'), choices=EXPERTISE_A, required=False)
+    expertise = forms.ChoiceField(label=_('Expertise'), choices=EXPERTISE_A, required=False)
     #work_exp_years = forms.IntegerField(label=_('Mimimum years of work experience'), required=False)
     #smoker = forms.BooleanField(label=_('Smoker'), widget=forms.widgets.NullBooleanSelect(), required=False)
     smoker = forms.ChoiceField(label=_('Smoker'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )

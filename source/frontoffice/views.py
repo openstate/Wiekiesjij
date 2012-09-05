@@ -189,31 +189,9 @@ def politician_profile_filter(request):
         path = request.get_full_path()
         region_filtered = False
         filters = []
-        
-        # get a list of answers that each candidate has chosen and store them in a dictionary
-        candidates_for_answer = {}
-        multiQuestionTitles = [u'Expertise']
-        multiQuestions = Question.objects.filter(result_title__in=multiQuestionTitles)
-        allAnswerIds = {}
-        answerIdsForQuestion = {}
-        for multiQuestion in multiQuestions:
-            choices = map(lambda x: (x.id, x.value), multiQuestion.answers.all())
-            answerIdsForQuestion[multiQuestion.id] = choices
-            allAnswerIds.update(choices)
-        
-        #candidacies = PoliticianProfile.objects.filter(user__in=candidates)
-        candidacies = Candidacy.objects.filter(election_party_instance__in=eips)
-        for candidate in candidacies:
-            question_answers = candidate.answers.filter(id__in=allAnswerIds)
-            #for question_answer in question_answers:
-            #    if question_answer.question_id in candidate_question_answers[candidate.candidate.profile].keys():
-            #        candidate_question_answers[candidate.candidate.profile][question_answer.question_id].append(question_answer.id)
-            #    else:
-            #        answer_list = []
-            #        answer_list.append(question_answer.id)
-            #        candidate_question_answers[candidate.candidate.profile][question_answer.question_id] = answer_list
                     
         #JB20120829 Disabled this redirect. For TK2012 we have only one region, and this is causing confusion
+        candidacies = Candidacy.objects.filter(election_party_instance__in=eips)
         if False and not request.GET and 'ElectionInstance' in request.session:
             return redirect("%s?region=%d" % (path, request.session['ElectionInstance']['id']))
 
@@ -313,10 +291,20 @@ def politician_profile_filter(request):
             #    new_path = _new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
             #    filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
             
-            if form.cleaned_data['epertise'] != '---------' and form.cleaned_data['epertise']:
-                #filtered_politicians = filtered_politicians.filter(expertise=form.cleaned_data['epertise'])
-                new_path = _new_url(path, 'epertise', form.cleaned_data['epertise'])
-                filters.append((_('Epertise'), expertise[form.cleaned_data['epertise']], new_path))
+            if form.cleaned_data['expertise'] != '---------' and form.cleaned_data['expertise']:
+                expertiseQuestion = Question.objects.filter(result_title__in=[u'Expertise'])[0]
+                expertiseAnswers =  map(lambda x: (x.id, x.value), expertiseQuestion.answers.all())
+                targetAnswerId = []
+                for (id, value) in expertiseAnswers:
+                    if value == expertise[form.cleaned_data['expertise']]:
+                        targetAnswerId.append(id)
+                print targetAnswerId.append
+                candidatesWithExpertise = Candidacy.objects.filter(answers__in=targetAnswerId)
+                print candidatesWithExpertise
+                usersWithExpertise = User.objects.filter(elections__in=candidatesWithExpertise)
+                filtered_politicians = filtered_politicians.filter(user__in=usersWithExpertise)
+                new_path = _new_url(path, 'expertise', form.cleaned_data['expertise'])
+                filters.append((_('Expertise'), expertise[form.cleaned_data['expertise']], new_path))
 
             if form.cleaned_data['religion'] != '---------' and form.cleaned_data['religion']:
                 filtered_politicians = filtered_politicians.filter(religion=form.cleaned_data['religion'])
@@ -398,8 +386,10 @@ def politician_profile_filter(request):
 def politician_profile(request, id, tab = "favs"):
     user = get_object_or_404(User, pk=id)
     profile = get_object_or_404(PoliticianProfile, user=user)
-    if Candidacy.objects.filter(candidate=user).count() == 0:
+    candidacy = Candidacy.objects.filter(candidate=user)
+    if candidacy.count() == 0:
         return Http404()
+    candidate = candidacy[0]
     showtab = tab
 
     current_eip = getattr(profile.party(), 'current_eip')
@@ -428,8 +418,15 @@ def politician_profile(request, id, tab = "favs"):
 
     #record view
     user.statistics.update_profile_views(request)
-
-    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'back':back}, context_instance=RequestContext(request))
+    
+    # retrieve expertises
+    expertiseQuestion = Question.objects.filter(result_title__in=[u'Expertise'])[0]
+    expertiseAnswers = expertiseQuestion.answers.all()
+    expertises = []
+    for answer in candidate.answers.all():
+        if answer in expertiseAnswers:
+            expertises.append(answer.value)
+    return render_to_response('frontoffice/politician_profile.html', {'profile':profile,'twitter_url':twitter_url,'showtab':showtab, 'back':back, 'expertises': expertises}, context_instance=RequestContext(request))
 
 def politician_comments(request, id):
     user = get_object_or_404(User, pk=id)
