@@ -236,10 +236,10 @@ def politician_profile_filter(request):
                 new_path = _new_url(path, 'name', form.cleaned_data['name'])
                 filters.append((_('Name'), form.cleaned_data['name'], new_path))
 
-            if form.cleaned_data['gender'] != 'All' and form.cleaned_data['gender']:
-                filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
-                new_path = _new_url(path, 'gender', form.cleaned_data['gender'])
-                filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
+#            if form.cleaned_data['gender'] != 'All' and form.cleaned_data['gender']:
+#                filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
+#                new_path = _new_url(path, 'gender', form.cleaned_data['gender'])
+#                filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
 
             if form.cleaned_data['children']  != '---------' and form.cleaned_data['children']:
                 if form.cleaned_data['children'] == '1':
