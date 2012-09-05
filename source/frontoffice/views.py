@@ -421,8 +421,10 @@ def politician_profile(request, id, tab = "favs"):
     user.statistics.update_profile_views(request)
     
     # retrieve expertises
-    expertiseQuestion = Question.objects.filter(result_title__in=[u'Expertise'])[0]
-    expertiseAnswers = expertiseQuestion.answers.all()
+    expertiseQuestions = Question.objects.filter(result_title__in=[u'Expertise'])
+    expertiseAnswers= []
+    for expertiseQuestion in expertiseQuestions:
+        expertiseAnswers.extend(expertiseQuestion.answers.all())
     expertises = []
     for answer in candidate.answers.all():
         if answer in expertiseAnswers:
