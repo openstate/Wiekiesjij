@@ -6,6 +6,7 @@ from operator import itemgetter
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
+from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from utils.multipathform import Step, MultiPathFormWizard
 from utils.netutils import getip
