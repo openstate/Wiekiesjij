@@ -33,7 +33,10 @@
                 {% block step-header %}
                 
                 <h2 class="question">
+			{% comment %}Don't mention election_instance.name for TK2012; there is only one
                 	{% block step_title %}{% trans "Welkom bij Wiekiesjij voor" %} {{ election_instance.name }}{% endblock step_title %}
+			{%endcomment%}
+                	{% block step_title %}{% trans "Welkom bij Wiekiesjij" %}{% endblock step_title %}
                     
                     <!--<a class="additionPlus" href="#">Toelichting</a>-->
                 </h2>
@@ -64,7 +67,7 @@
                 </form>
                 
                 <p class="intro">
-                	Met de stemhulp Wiekiesjij kunt u eenvoudig bepalen welke kandidaat het beste bij u past. Door middel van een aantal vragen over de achtergrond, persoonskenmerken en ervaring van de kandidaten zoeken wij de beste overeenkomst. Bij sommige vragen kunt u meerdere antwoorden selecteren.
+                	Met de voorkeurstemhulp Wiekiesjij kunt u eenvoudig bepalen welke kandidaat het beste bij u past. Door middel van een aantal vragen over de achtergrond, persoonskenmerken en ervaring van de kandidaten zoeken wij de beste overeenkomst. Bij sommige vragen kunt u meerdere antwoorden selecteren.
                     
                 </p>
            	</div>

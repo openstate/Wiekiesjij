@@ -2,6 +2,10 @@ from settings.default_settings import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+#DEBUG_TOOLBAR = True
+#Internal ip's used for debug toolbar and UserBasedExceptionMiddleware
+#INTERNAL_IPS = ('127.0.0.1', '80.101.42.161')
+
 
 DATABASES = {
     'default': {

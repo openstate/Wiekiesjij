@@ -3,7 +3,7 @@ PROJECT_DIR = lambda base : os.path.abspath(os.path.join(os.path.dirname(__file_
 
 _ = lambda a: a
 
-DEBUG = True
+DEBUG = False
 DEBUG_TOOLBAR = DEBUG
 TEMPLATE_DEBUG = DEBUG
 TEMPLATE_COMMENTS = True
@@ -158,7 +158,7 @@ UTILS_PERMISSION_DENIED_URL = '/backoffice/permission_denied/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 #Internal ip's used for debug toolbar and UserBasedExceptionMiddleware
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1')
 
 AUTHENTICATION_BACKENDS = (
     'utils.auth_backend.EmailBackend',

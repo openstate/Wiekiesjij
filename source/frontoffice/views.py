@@ -575,6 +575,14 @@ def match_result_details(request, hash, candidate_id, iframe=None):
 
         qid = str(qid)
         question = get_object_or_404(Question ,id=qid)
+	# JB20120903 Suppressing the .._MIN_THREE question type from our detailed view
+	# the MIN_THREE question type is uniquely used for the prefered
+	# coalition of visitor /and/ candidate. 
+	# We want to use it for the overall matching score, but it's still sensitive
+	# to display the specific matchingscore for that question
+	if question.question_type == qsettings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE:
+	    continue
+
         questions_dict[qid] = {}
         questions_dict[qid]['visitor'] = ans
         questions_dict[qid]['question'] = question
@@ -636,6 +644,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
                     questions_dict[key]['candidate'] = ['Not Answered']
             else:
                 questions_dict[key]['visitor'] = ['Question Skipped']
+
         elif qsettings.QTYPE_MODEL_PARTY == question.question_type:
             questions_dict[key]['type'] = 'party'
             if 'candidate' in questions_dict[key].keys():

@@ -95,7 +95,7 @@ class PoliticianProfilePoliticalForm(BetterForm, TemplateForm):
         Political related forms
     """
     introduction    = forms.CharField(label=_('Introduction'), widget=forms.Textarea(), required=False, help_text=_('Hier kunt u een korte toelichting geven over uzelf, waarom u zich kandidaat stelt en wat uw plannen zijn.'))
-    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(), help_text=_('Deze foto zal getoond worden op uw profiel en in het kandidatenoverzicht bij uw partij. Wij willen u verzoeken om een staande foto (verticaal) te gebruiken.'))
+    picture         = ClearableImageField(label=_('Picture'), required=False, widget=ImageWidget(), help_text=_('Deze foto zal getoond worden op uw profiel en in het kandidatenoverzicht bij uw partij. Wij willen u verzoeken om een staande foto (verticaal) te gebruiken.\n De foto mag niet groter zijn dan 500KB. Met een iPad is het niet mogelijk een foto toe te voegen. Indien u op een iPad werkt graag deze stap overslaan en waar mogelijk via een PC een foto toevoegen.'))
     movie           = YoutubeURLField(label=_('Movie'), required=False, help_text=_(u'Link naar een persoonlijke YouTube video. Deze vindt u rechts in het grijze vlak onder URL op de website van YouTube.'))
       
 #

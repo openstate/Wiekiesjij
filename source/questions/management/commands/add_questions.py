@@ -11,6 +11,8 @@ class Command(BaseCommand):
     help = 'Adds questions'
 
     def handle(self, *args, **options):
+	print "ACHTUNG: Script out of sync with production db at 20120903"
+	exit(1)
         try:
             landelijk_set = QuestionSet.objects.get(name='TEST Landelijk Set')
             return
@@ -722,7 +724,7 @@ class Command(BaseCommand):
         q27 = Question.objects.create(
             title=u'In mijn regeringscoalitie zitten de volgende partijen (kies minimaal 3 partijen):',
             frontend_title=u'',
-            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE_SECRET,
+            question_type=settings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE,
             result_title=u'Coalitie',
             theme='q27',
             has_no_preference=True
