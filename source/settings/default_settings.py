@@ -1,6 +1,5 @@
 import os
 PROJECT_DIR = lambda base : os.path.abspath(os.path.join(os.path.dirname(__file__), '../', base).replace('\\','/'))
-
 _ = lambda a: a
 
 DEBUG = False
