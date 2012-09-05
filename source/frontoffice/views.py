@@ -292,15 +292,16 @@ def politician_profile_filter(request):
             #    filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
             
             if form.cleaned_data['expertise'] != '---------' and form.cleaned_data['expertise']:
-                expertiseQuestion = Question.objects.filter(result_title__in=[u'Expertise'])[0]
-                expertiseAnswers =  map(lambda x: (x.id, x.value), expertiseQuestion.answers.all())
+                expertiseQuestions = Question.objects.filter(result_title__in=[u'Expertise'])
+                expertiseAnswers= {}
+                for expertiseQuestion in expertiseQuestions:
+                    expertiseAnswers.update(map(lambda x: (x.id, x.value), expertiseQuestion.answers.all()))
                 targetAnswerId = []
-                for (id, value) in expertiseAnswers:
-                    if value == expertise[form.cleaned_data['expertise']]:
+                print expertiseAnswers
+                for (id, value) in expertiseAnswers.iteritems():
+                    if value.encode('utf-8','ignore') == expertise[form.cleaned_data['expertise']]:
                         targetAnswerId.append(id)
-                print targetAnswerId.append
                 candidatesWithExpertise = Candidacy.objects.filter(answers__in=targetAnswerId)
-                print candidatesWithExpertise
                 usersWithExpertise = User.objects.filter(elections__in=candidatesWithExpertise)
                 filtered_politicians = filtered_politicians.filter(user__in=usersWithExpertise)
                 new_path = _new_url(path, 'expertise', form.cleaned_data['expertise'])
