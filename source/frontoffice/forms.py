@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PROVINCES, EXPERTISE
-from political_profiles.models import EducationLevel
+from political_profiles.models import EducationLevel, WorkExperienceSector
 import copy
 from form_utils.forms import BetterForm
 from utils.formutils import TemplateForm
@@ -116,6 +116,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     children = forms.ChoiceField(label=_('Children'), choices=[('---------', _('---------')), (1, _('Yes')), (2, _('No')),], required=False )
     religion = forms.ChoiceField(choices=RELIGION_A, label=_('Religon'), required=False)
     education = forms.ModelChoiceField(queryset=EducationLevel.objects, label=_('Education Level'), required=False)
+    sector = forms.ModelChoiceField(queryset=WorkExperienceSector.objects, label=_('Werkervaring in sector'), required=False)
     political_exp_years = forms.IntegerField(label=_('Minimum years of political experience'), required=False)
     expertise = forms.ChoiceField(label=_('Expertise'), choices=EXPERTISE_A, required=False)
     #work_exp_years = forms.IntegerField(label=_('Mimimum years of work experience'), required=False)

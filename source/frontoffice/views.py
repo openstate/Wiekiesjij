@@ -275,10 +275,14 @@ def politician_profile_filter(request):
                 new_path = _new_url(path, 'end_age', form.cleaned_data['end_age'])
                 filters.append((_('Oldest'), form.cleaned_data['end_age'], new_path))
 
+            if form.cleaned_data['sector'] != '---------' and form.cleaned_data['sector']:
+                filtered_politicians = filtered_politicians.filter(work__sector=form.cleaned_data['sector'])
+                new_path = _new_url(path, 'sector', form.cleaned_data['sector'].id)
+                filters.append((_('Sector'), form.cleaned_data['sector'], new_path))
+
             if form.cleaned_data['education'] != '---------' and form.cleaned_data['education']:
                 filtered_politicians = filtered_politicians.filter(education__level=form.cleaned_data['education'])
                 new_path = _new_url(path, 'education', form.cleaned_data['education'].id)
-
                 filters.append((_('Education'), form.cleaned_data['education'], new_path))
 
             if form.cleaned_data['political_exp_years']:
