@@ -189,7 +189,7 @@ def politician_profile_filter(request):
         path = request.get_full_path()
         region_filtered = False
         filters = []
-                    
+
         #JB20120829 Disabled this redirect. For TK2012 we have only one region, and this is causing confusion
         candidacies = Candidacy.objects.filter(election_party_instance__in=eips)
         if False and not request.GET and 'ElectionInstance' in request.session:
@@ -236,10 +236,10 @@ def politician_profile_filter(request):
                 new_path = _new_url(path, 'name', form.cleaned_data['name'])
                 filters.append((_('Name'), form.cleaned_data['name'], new_path))
 
-#            if form.cleaned_data['gender'] != 'All' and form.cleaned_data['gender']:
-#                filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
-#                new_path = _new_url(path, 'gender', form.cleaned_data['gender'])
-#                filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
+            if form.cleaned_data['gender'] != 'All' and form.cleaned_data['gender']:
+                filtered_politicians = filtered_politicians.filter(gender=form.cleaned_data['gender'])
+                new_path = _new_url(path, 'gender', form.cleaned_data['gender'])
+                filters.append((_('Gender'), gender[form.cleaned_data['gender']], new_path))
 
             if form.cleaned_data['children']  != '---------' and form.cleaned_data['children']:
                 if form.cleaned_data['children'] == '1':
@@ -294,7 +294,7 @@ def politician_profile_filter(request):
             #    filtered_politicians = filtered_politicians.filter(work_experience_days__gte=(form.cleaned_data['work_exp_years'] * 365))
             #    new_path = _new_url(path, 'work_exp_years', form.cleaned_data['work_exp_years'])
             #    filters.append((_('Years work experience'), form.cleaned_data['work_exp_years'], new_path))
-            
+
             if form.cleaned_data['expertise'] != '---------' and form.cleaned_data['expertise']:
                 expertiseQuestions = Question.objects.filter(result_title__in=[u'Expertise'])
                 expertiseAnswers= {}
@@ -422,7 +422,7 @@ def politician_profile(request, id, tab = "favs"):
 
     #record view
     user.statistics.update_profile_views(request)
-    
+
     # retrieve expertises
     expertiseQuestions = Question.objects.filter(result_title__in=[u'Expertise'])
     expertiseAnswers= []
@@ -583,7 +583,7 @@ def match_result_details(request, hash, candidate_id, iframe=None):
         question = get_object_or_404(Question ,id=qid)
 	# JB20120903 Suppressing the .._MIN_THREE question type from our detailed view
 	# the MIN_THREE question type is uniquely used for the prefered
-	# coalition of visitor /and/ candidate. 
+	# coalition of visitor /and/ candidate.
 	# We want to use it for the overall matching score, but it's still sensitive
 	# to display the specific matchingscore for that question
 	if question.question_type == qsettings.QTYPE_NORM_POLMULTICHOICE_VISMULTICHOICE_MIN_THREE:
