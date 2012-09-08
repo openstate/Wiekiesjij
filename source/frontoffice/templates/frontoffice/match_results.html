@@ -54,7 +54,11 @@
                             <img alt="{{ profile.full_name }}" src="{% if forloop.first %}{% if iframe %}{% thumbnail 'defaults/pol-dummy.jpg' 36x46 upscale %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 77x95 upscale %}{% endif %}{% else %}{% thumbnail 'defaults/pol-dummy.jpg' 58x72 upscale %}{% endif %}" />
                         {% endif %}
                         </div>
+                        {% if SCORES_FIXED %}
                         <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ candidate.candidates_score }}%</span></span>
+                        {% else %}
+                        <span class="matchmeter">{% trans "Overeenkomst" %} <span class="score">{{ forloop.counter }}</span></span>
+                        {% endif %}
 						<a href="{% url fo.politician_profile candidate.candidate.id %}" class="btn next" {% if iframe %}target="_blank"{% endif %}>{% trans "View profile" %}</a>                        <h2><a href="{% url fo.politician_profile candidate.candidate.id %}" {% if iframe %}target="_blank"{% endif %}>{{ candidate.candidate.profile.full_name }}</a></h2>
 			{% comment %}
                         <a href="{% url fo.match_result_details hash candidate.candidate.id    %}" class="btn next" {% if iframe %}target="_blank"{% endif %} style="margin-top:.3em;">{% trans "Details" %}</a>

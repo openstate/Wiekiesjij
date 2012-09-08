@@ -56,8 +56,14 @@
         <div class="mod start-actions">
                 <div class="bd">
                 <h2>&nbsp;<!--<span class="num">2</span>--></h2>
+                <a class="big-btn primary-btn start-test" href="{% url fo.politician_profile_filter %} ">
+                    <span style="font-weight: bold;">
+                        <span class="icon"></span>{% trans 'Kies zelf' %}
+                    </span>
+                </a>
+                <p>{% trans "or" %}</p>
 		{% if 1 %}
-			<a class="big-btn primary-btn start-test" href="http://matching.wiekiesjij.nl{% url fo.match_welcome 7 %}">
+			<a class="big-btn list-candidates" href="http://matching.wiekiesjij.nl{% url fo.match_welcome 7 %}">
 			    <span>
 				<span class="icon"></span>{% trans 'Doe de test' %}
 			    </span>
@@ -69,12 +75,6 @@
 			    </span>
 			</a>
 		{% endif %}
-                <p>{% trans "or" %}</p>
-                <a class="big-btn list-candidates" href="{% url fo.politician_profile_filter %} ">
-                    <span style="font-weight: bold;">
-                        <span class="icon"></span>{% trans 'Kies zelf' %}
-                    </span>
-                </a>
             </div>
         </div>
     </div>
