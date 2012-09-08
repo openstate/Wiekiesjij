@@ -381,7 +381,8 @@ class PoliticianProfile(Profile):
 
     def position(self):
         "Returns the position of the candidate on the party's list"
-        candidacy = self.user.elections.order_by('position').all()
+        # JB 20120908 We now pick the election with the highest id; this should be the most recent one
+        candidacy = self.user.elections.order_by('-id').all()
         if candidacy.count() != 0:
             return candidacy[0].position
         return None
