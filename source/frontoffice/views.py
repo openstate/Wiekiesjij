@@ -229,7 +229,6 @@ def politician_profile_filter(request):
             if 'elected' in form.cleaned_data and form.cleaned_data['elected'] != 'All' and form.cleaned_data['elected']:
                 filtered_politicians = filtered_politicians.filter(user__elections__elected=(form.cleaned_data['elected']=='True'))
                 new_path = _new_url(path, 'elected', form.cleaned_data['elected'])
-                print "elected", form.cleaned_data['elected'], elected[form.cleaned_data['elected']]
                 filters.append((_('Gekozen'), elected[form.cleaned_data['elected']], new_path))
 
             if form.cleaned_data['name']:
@@ -356,7 +355,7 @@ def politician_profile_filter(request):
             #no query executed so far, so we see if we can do some caching stuff here :)
             cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
             data = cache.get(cache_key)
-            if True or data is None:
+            if data is None:
                 #Force query to execute
                 politicians = list(filtered_politicians)
 
