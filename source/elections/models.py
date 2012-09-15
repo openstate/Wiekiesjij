@@ -361,6 +361,7 @@ class Candidacy(models.Model):
                                         limit_choices_to=settings.POLITICIAN_LIMITATION,
                                         verbose_name=_('Politician'), related_name='elections')
     position                    = models.PositiveIntegerField(_('Position'))
+    elected                     = models.NullBooleanField(_('Elected'))
     answers                     = models.ManyToManyField('questions.Answer', verbose_name=_('Answers'))
 
 
