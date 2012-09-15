@@ -11,7 +11,7 @@ from utils.formutils import TemplateForm
 from utils.fields import NameField, DutchMobilePhoneField
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
-from elections.models import ElectionInstance, ElectionInstanceParty
+from elections.models import ElectionInstance, ElectionInstanceParty, ELECTED
 from django.contrib.sites.models import Site
 from django.utils.http import int_to_base36
 
@@ -85,6 +85,8 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     PoliticianFilter Form - used in the filtering and searching of candidates.
     '''
     either = ('---------', _('---------'))
+    ELECTED_A = copy.deepcopy(ELECTED)
+    ELECTED_A.insert(0,('All', _('All')),)
     GENDERS_A = copy.deepcopy(GENDERS)
     GENDERS_A.insert(0,('All', _('All')),)
     DIET_A = DIET
@@ -103,6 +105,7 @@ class PoliticianFilterForm(BetterForm, TemplateForm):
     EIPS = [(eip.id, eip.party.abbreviation) for eip in eips]
     EIPS.insert(0, either,)
 
+    elected = forms.ChoiceField(label='Gekozen', choices=ELECTED_A, required=False)
     eip = forms.ChoiceField(label=_('Party'), choices=EIPS, required=False)
     name = forms.CharField(label=_('Name'), required=False)
     #region = RegionChoiceField(queryset=election_instances, label=_('Region'), required=False)

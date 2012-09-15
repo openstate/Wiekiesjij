@@ -22,7 +22,7 @@ from frontoffice.forms import PoliticianFilterForm, VisitorProfileForm, RegionSe
 from frontoffice.models import VisitorResult
 from questions.models import Question, Answer
 from questions import settings as qsettings
-from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty
+from elections.models import Party, Candidacy, ElectionInstance, ElectionInstanceParty, ELECTED
 from political_profiles.models import Education, PoliticianProfile, PoliticalGoal, GoalRanking, VisitorProfile, WorkExperienceSector, EducationLevel
 from political_profiles.models import RELIGION, DIET, MARITAL_STATUS, GENDERS, PARTIES, PROVINCES, EXPERTISE
 from frontoffice.decorators import visitors_only
@@ -170,6 +170,7 @@ def politician_profile_filter(request):
     politicians = []
     party_data = {}
     gender = dict(GENDERS)
+    elected = dict(ELECTED)
     religion = dict(RELIGION)
     expertise = dict(EXPERTISE)
     province = dict(PROVINCES)
@@ -224,6 +225,12 @@ def politician_profile_filter(request):
 
                 sess = {'id': form.cleaned_data['region'].id, 'name': form.cleaned_data['region'].name}
                 request.session['ElectionInstance'] = sess
+
+            if 'elected' in form.cleaned_data and form.cleaned_data['elected'] != 'All' and form.cleaned_data['elected']:
+                filtered_politicians = filtered_politicians.filter(user__elections__elected=(form.cleaned_data['elected']=='True'))
+                new_path = _new_url(path, 'elected', form.cleaned_data['elected'])
+                print "elected", form.cleaned_data['elected'], elected[form.cleaned_data['elected']]
+                filters.append((_('Gekozen'), elected[form.cleaned_data['elected']], new_path))
 
             if form.cleaned_data['name']:
                 name_filter = None
@@ -349,7 +356,7 @@ def politician_profile_filter(request):
             #no query executed so far, so we see if we can do some caching stuff here :)
             cache_key = hashlib.sha224(str(filtered_politicians.query)).hexdigest()
             data = cache.get(cache_key)
-            if data is None:
+            if True or data is None:
                 #Force query to execute
                 politicians = list(filtered_politicians)
 

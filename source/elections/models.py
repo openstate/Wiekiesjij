@@ -10,6 +10,11 @@ from utils.emails import send_email
 from elections.functions import get_popularity
 from questions.settings import BACKOFFICE_QUESTION_TYPES
 
+ELECTED = [
+         ('True','Gekozen'),
+         ('False','Niet gekozen'),
+         ]
+
 
 class Council(models.Model):
     """
