@@ -18,11 +18,14 @@
 <div class="col lastCol">
 	<div class="mod introduction">
     	<div class="bd">                
-				<p>Hier kunt u de individuele kandidaten leren kennen door middel van een paar simpele vragen. Begin hieronder met de test of zoek zelf tussen alle kandidaten!</p>
+                <p>Hier kunt u van de gekozen kamerleden en niet gekozen kandidaten 
+                hun politieke en persoonlijke achtergronden leren kennen.
+                </p>
         </div>
     </div>
+
     <div class="mod title">
-    	<h1>{% trans "Voorkeurstemhulp voor de Tweede Kamerverkiezingen 2012" %}</h1> <!-- Provinciale Statenverkiezingen 2011" %}</h1> -->
+    	<h1>{% trans "Kennismaking Tweede Kamerleden" %}</h1> <!-- Provinciale Statenverkiezingen 2011" %}</h1> -->
     </div>
 </div>
 
@@ -56,25 +59,19 @@
         <div class="mod start-actions">
                 <div class="bd">
                 <h2>&nbsp;<!--<span class="num">2</span>--></h2>
-                <a class="big-btn primary-btn start-test" href="{% url fo.politician_profile_filter %} ">
+                <a class="big-btn primary-btn start-test" href="{% url fo.politician_profile_filter %}?elected=True">
                     <span style="font-weight: bold;">
-                        <span class="icon"></span>{% trans 'Kies zelf' %}
+                        <span class="icon"></span>{% trans 'Bekijk nu de gekozen Tweede Kamerleden' %}
                     </span>
                 </a>
+            {% if 0 %}
                 <p>{% trans "or" %}</p>
-		{% if 1 %}
 			<a class="big-btn list-candidates" href="http://matching.wiekiesjij.nl{% url fo.match_welcome 7 %}">
 			    <span>
 				<span class="icon"></span>{% trans 'Doe de test' %}
 			    </span>
 			</a>
-		{% else %}
-			<a class="big-btn primary-btn start-test" href="">
-			    <span>
-				<span class="icon"></span>Vanaf begin september is de stemwijzer live
-			    </span>
-			</a>
-		{% endif %}
+            {% endif %}
             </div>
         </div>
     </div>

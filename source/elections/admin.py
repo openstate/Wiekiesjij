@@ -41,7 +41,7 @@ admin.site.register(Party, PartyAdmin)
 class CandidacyAdmin(admin.ModelAdmin):
     list_display = ('candidate_name', 'election_party_instance', 'position', 'elected')
     list_filter = ('election_party_instance', )
-    actions = ['mark_elected',]
+    actions = ['mark_elected', 'mark_not_elected']
 
 
     # Yes, this is inefficient. Fixit.
@@ -50,6 +50,9 @@ class CandidacyAdmin(admin.ModelAdmin):
 
     def mark_elected(self, request, queryset):
         queryset.update(elected=True)
+
+    def mark_not_elected(self, request, queryset):
+        queryset.update(elected=False)
 
 admin.site.register(Candidacy, CandidacyAdmin)
 
